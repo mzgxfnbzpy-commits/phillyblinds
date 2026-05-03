@@ -353,6 +353,27 @@
         <button class="opt-btn" onclick="selOpt(this,'hw-rings');updateQuote()">No rings needed</button>
       </div>
     </div>
+    <div class="hw-section" style="border-top:1px solid #eee;padding-top:18px;margin-top:4px">
+      <span class="hw-form-label">Add motorization? <span style="font-weight:400;color:#aaa">(optional)</span></span>
+      <div class="opt-row" id="hw-motor">
+        <button class="opt-btn sel" onclick="selOpt(this,'hw-motor');toggleMotor(false);updateQuote()">No thanks &ndash; manual</button>
+        <button class="opt-btn" onclick="selOpt(this,'hw-motor');toggleMotor(true);updateQuote()">Yes, motorize it</button>
+      </div>
+      <div id="motor-brand-wrap" style="display:none;margin-top:10px">
+        <div class="form-group">
+          <label>Motor brand</label>
+          <select id="hw-motor-brand" onchange="updateQuote()">
+            <option value="">No preference &ndash; recommend me one</option>
+            <option value="lutron">Lutron Sivoia QS / Palladiom</option>
+            <option value="somfy">Somfy</option>
+            <option value="automate">Automate</option>
+            <option value="rollease">Rollease Acmeda</option>
+            <option value="hd">Hunter Douglas PowerView</option>
+          </select>
+        </div>
+        <div style="font-size:11px;color:#888;line-height:1.5;margin-top:-6px">All systems support app &amp; voice control (Alexa, Google, Apple HomeKit).</div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -409,6 +430,7 @@
         <div class="quote-row"><span class="quote-key">Rings</span><span class="quote-val" id="qs-rings">&mdash;</span></div>
         <div class="quote-row"><span class="quote-key">Windows</span><span class="quote-val" id="qs-dims">&mdash;</span></div>
         <div class="quote-row"><span class="quote-key">Mount type</span><span class="quote-val" id="qs-mount">&mdash;</span></div>
+        <div class="quote-row"><span class="quote-key">Motorization</span><span class="quote-val" id="qs-motor">&mdash;</span></div>
         <div class="quote-note">Custom drapery is quoted per project. We'll prepare your detailed quote within 24 hours of receiving your request.</div>
       </div>
     </div>
@@ -462,6 +484,14 @@
   </div>
 </div>
 
+<div class="section section-warm">
+  <div class="section-label">Our work</div>
+  <div class="section-title">60 custom drapery installations</div>
+  <div class="section-sub">Every panel was fabricated and installed by Philly Blinds.</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-bottom:16px" id="mini-portfolio"></div>
+  <a href="gallery.html" class="btn-gold">See all 60 photos + 3 videos &rarr;</a>
+</div>
+
 <div class="cta-banner">
   <div>
     <h2>Not sure where to start?</h2>
@@ -480,8 +510,28 @@
 renderNav('Drapery & hardware');
 renderFooter(false);
 
+// ── Mini portfolio ─────────────────────────────────────────────
+const drapeFiles = ['IMG_4927.JPEG','IMG_2861.JPEG','IMG_3018.JPEG','IMG_3023.JPEG','IMG_3032.JPEG','IMG_3034.JPEG','IMG_3367.JPEG','IMG_3575.JPEG','IMG_3578.JPEG'];
+(function(){
+  const g = document.getElementById('mini-portfolio');
+  if (!g) return;
+  g.innerHTML = drapeFiles.map((f,i) =>
+    `<div style="border-radius:10px;overflow:hidden;border:1px solid #e8e8e4;cursor:pointer" onclick="window.location='gallery.html'">
+       <div style="height:110px;overflow:hidden">
+         <img src="../images/portfolio/${f}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block">
+       </div>
+     </div>`
+  ).join('');
+})();
+
 var _selStyle = '';
 var _selFabric = '';
+var _motorOn = false;
+
+function toggleMotor(on) {
+  _motorOn = on;
+  document.getElementById('motor-brand-wrap').style.display = on ? 'block' : 'none';
+}
 
 function selStyle(el, name) {
   document.querySelectorAll('#style-grid .style-card').forEach(function(c) { c.classList.remove('sel'); });
@@ -549,6 +599,14 @@ function updateQuote() {
   document.getElementById('qs-rings').textContent = getOpt('hw-rings');
   document.getElementById('qs-dims').textContent = dims.length ? dims.join(', ') : (qty + ' window' + (qty > 1 ? 's' : '') + ' — dims pending');
   document.getElementById('qs-mount').textContent = getOpt('mount-type');
+
+  var motorQs = 'No';
+  if (_motorOn) {
+    var brandEl = document.getElementById('hw-motor-brand');
+    var brandVal = brandEl && brandEl.value ? brandEl.value : 'Yes (brand TBD)';
+    motorQs = 'Yes — ' + (brandVal === '' ? 'brand TBD' : brandVal);
+  }
+  document.getElementById('qs-motor').textContent = motorQs;
 }
 
 function submitQuoteForm() {
