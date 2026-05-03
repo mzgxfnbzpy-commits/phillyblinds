@@ -136,6 +136,20 @@ Every page MUST include:
 **Motorization is ALWAYS a sub-option inside each product configurator.**
 NEVER a separate top-level page, product, or nav item.
 
+### Motorization brand compatibility — CRITICAL
+| Product | Motor options |
+|---------|--------------|
+| Norman brand shades (roller, cellular, zebra, woven) | **Norman Motorization only** — no Lutron/Somfy/etc. |
+| Custom Roller Shades (Philly Blinds custom fab) | Any brand: Lutron Serena, Somfy, Automate, Rollease Acmeda |
+| Custom Roman Shades (Philly Blinds custom fab) | Any brand: Lutron Serena, Somfy, Automate, Rollease Acmeda |
+| Drapery hardware (Kirsch, Paris Texas, Orion, Forest, Select) | **Brand-specific** — each manufacturer only supports certain motors/track systems. Do NOT show a generic motor list for drapery hardware — verify per brand before adding motor options. |
+| Hunter Douglas (Silhouette, Pirouette) | PowerView — always custom quote, no instant pricing |
+
+### Product naming rules
+- Non-Norman custom fabricated roller shades → **"Custom Roller Shades"** (not just "Roller Shades")
+- Non-Norman custom fabricated roman shades → **"Custom Roman Shades"** (not just "Roman Shades")
+- Norman brand products → "Norman [Product Name]" when displayed in the configurator title
+
 ### Fabric rule — always 3 paths
 1. We supply fabric (on-site consultation available)
 2. Customer supplies fabric (ships to us)

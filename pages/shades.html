@@ -508,8 +508,8 @@
                 <option value="somfy">Somfy</option>
                 <option value="automate">Automate</option>
                 <option value="rollease">Rollease Acmeda</option>
-                <option value="hd">Hunter Douglas PowerView</option>
               </select>
+              <div class="tooltip-note" id="motor-brand-note" style="margin-top:4px">Choose your preferred motor brand — we'll confirm compatibility at order.</div>
             </div>
           </div>
         </div>
@@ -833,6 +833,30 @@ function selectBrand(brand) {
   document.getElementById('brand-norman-content').style.display = brand === 'norman' ? 'block' : 'none';
   document.getElementById('brand-pb-content').style.display    = brand === 'pb'     ? 'block' : 'none';
   document.getElementById('brand-other-content').style.display = brand === 'other'  ? 'block' : 'none';
+
+  // Update config title
+  if (brand === 'pb') {
+    document.getElementById('config-product-name').textContent = 'Custom Roller Shade';
+  } else if (brand === 'norman' && currentProduct) {
+    const card = document.getElementById('card-' + currentProduct);
+    const pname = card ? card.querySelector('.product-name').textContent : 'Shade';
+    document.getElementById('config-product-name').textContent = 'Norman ' + pname;
+  }
+
+  // Swap motor dropdown: Norman products use Norman Motorization only
+  const motorSel  = document.getElementById('sel-motor-brand');
+  const motorNote = document.getElementById('motor-brand-note');
+  if (brand === 'norman') {
+    motorSel.innerHTML = '<option value="norman">Norman Motorization</option>';
+    if (motorNote) motorNote.textContent = 'Norman products use Norman\'s proprietary motorization system.';
+  } else {
+    motorSel.innerHTML =
+      '<option value="lutron">Lutron Serena</option>' +
+      '<option value="somfy">Somfy</option>' +
+      '<option value="automate">Automate</option>' +
+      '<option value="rollease">Rollease Acmeda</option>';
+    if (motorNote) motorNote.textContent = 'Choose your preferred motor brand — we\'ll confirm compatibility at order.';
+  }
 
   if (brand === 'norman' && currentProduct) {
     configureForProduct(currentProduct);
