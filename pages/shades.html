@@ -89,10 +89,22 @@
 .qty-num{width:40px;text-align:center;border-top:1px solid #ddd;border-bottom:1px solid #ddd;border-left:none;border-right:none;height:32px;font-size:13px;font-weight:500;color:#111;font-family:var(--font);background:#fff}
 .qty-num:focus{outline:none}
 
+/* ---- BRAND CHOOSER ---- */
+.brand-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.brand-btn{flex:1;min-width:140px;background:#fff;border:1.5px solid #e8e8e4;border-radius:10px;padding:12px 14px;cursor:pointer;text-align:left;transition:border-color 0.15s,box-shadow 0.15s;font-family:var(--font)}
+.brand-btn:hover{border-color:var(--gold);box-shadow:0 2px 8px rgba(200,151,63,0.1)}
+.brand-btn.sel{border:2px solid var(--gold);background:var(--gold-mid);box-shadow:0 2px 12px rgba(200,151,63,0.18)}
+.brand-btn.disabled{opacity:0.4;pointer-events:none;cursor:not-allowed}
+.brand-btn-name{display:block;font-size:13px;font-weight:600;color:#111;margin-bottom:2px}
+.brand-btn.sel .brand-btn-name{color:var(--espresso)}
+.brand-btn-sub{display:block;font-size:11px;color:#888;line-height:1.4}
+.brand-btn.sel .brand-btn-sub{color:#5C3D0A}
+
 @media(max-width:600px){
   .brands-grid{grid-template-columns:1fr}
   .dim-row{grid-template-columns:1fr}
   .config-head{flex-direction:column;align-items:flex-start;gap:8px}
+  .brand-btn{min-width:100%}
 }
 </style>
 </head>
@@ -269,8 +281,34 @@
     <div class="config-head">
       <button class="config-back" onclick="clearProduct()">&#8592; Change product</button>
       <div class="config-title" id="config-product-name">Roller Shades</div>
-      <span class="badge badge-instant">Instant price</span>
+      <span class="badge badge-instant" id="config-badge">Instant price</span>
     </div>
+
+    <!-- ── BRAND / COMPANY CHOOSER ────────────────────────────── -->
+    <div class="step-block" id="brand-chooser">
+      <div class="step-label">First — choose manufacturer</div>
+      <div class="step-title">Who is making your shade?</div>
+      <div class="brand-row" id="grp-brand">
+        <button class="brand-btn" id="btn-brand-norman" onclick="selectBrand('norman')">
+          <span class="brand-btn-name">Norman</span>
+          <span class="brand-btn-sub">Premium manufacturer · full options</span>
+        </button>
+        <button class="brand-btn" id="btn-brand-pb" onclick="selectBrand('pb')">
+          <span class="brand-btn-name">Philly Blinds Custom</span>
+          <span class="brand-btn-sub">Our in-house fabrication · roller shades</span>
+        </button>
+        <button class="brand-btn" id="btn-brand-other" onclick="selectBrand('other')">
+          <span class="brand-btn-name">Other / Not sure</span>
+          <span class="brand-btn-sub">We'll recommend the right brand</span>
+        </button>
+      </div>
+      <div id="pb-only-note" class="tooltip-note" style="display:none;margin-top:6px;color:#888">
+        Philly Blinds Custom fabrication is available for <strong>roller shades only</strong>. Choose Norman or Other for this product type.
+      </div>
+    </div>
+
+    <!-- ── NORMAN FORM ─────────────────────────────────────────── -->
+    <div id="brand-norman-content" style="display:none">
 
     <!-- Step A: Measure path -->
     <div class="step-block">
@@ -515,6 +553,76 @@
       </div><!-- /inputs-block -->
 
     </div><!-- /step-block measure -->
+    </div><!-- /brand-norman-content -->
+
+    <!-- ── PHILLY BLINDS CUSTOM FORM (roller only) ────────────── -->
+    <div id="brand-pb-content" style="display:none">
+      <div style="background:var(--gold-mid);border:1px solid #E8DCC8;border-radius:10px;padding:14px 18px;margin-bottom:20px">
+        <div style="font-size:12px;font-weight:600;color:#5C3D0A;margin-bottom:4px">Philly Blinds Custom — Roller Shades</div>
+        <div style="font-size:12px;color:#5C3D0A;line-height:1.6">We fabricate custom roller shades in-house. Bring your own fabric or choose from our collection. Pricing quoted after we review your specs.</div>
+      </div>
+      <div class="dim-row">
+        <div class="form-group"><label>Width (inches)</label><input type="number" id="pb-width" min="12" max="144" step="0.5" placeholder="e.g. 36"></div>
+        <div class="form-group"><label>Height (inches)</label><input type="number" id="pb-height" min="12" max="132" step="0.5" placeholder="e.g. 72"></div>
+      </div>
+      <div class="step-title" style="font-size:12px;margin-bottom:8px">Mount type</div>
+      <div class="opt-row" id="pb-grp-mount">
+        <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-mount')">Inside mount</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-mount')">Outside mount</button>
+      </div>
+      <div class="step-title" style="font-size:12px;margin:14px 0 8px">Light control</div>
+      <div class="opt-row" id="pb-grp-light">
+        <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-light')">Light filtering</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-light')">Room darkening</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-light')">Blackout</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-light')">Solar screen</button>
+      </div>
+      <div class="step-title" style="font-size:12px;margin:14px 0 8px">Fabric</div>
+      <div class="opt-row" id="pb-grp-fabric">
+        <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-fabric')">You supply fabric</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric')">We supply fabric</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric')">Not sure — consult me</button>
+      </div>
+      <div class="form-group" style="margin-top:14px"><label>Fabric notes / description</label><textarea id="pb-fabric-notes" placeholder="e.g. Sunbrella Linen Chestnut, 54″ wide — or describe what you're looking for"></textarea></div>
+      <hr class="price-divider" style="margin:18px 0">
+      <div class="form-row">
+        <div class="form-group"><label>Your name *</label><input type="text" id="pb-name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="pb-phone" placeholder="(215) 555-0100"></div>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" id="pb-email" placeholder="jane@example.com"></div>
+      <button class="btn-gold" onclick="submitPBForm()" style="width:100%;padding:13px;margin-top:4px">Send custom fabrication request &rarr;</button>
+      <div class="success-state" id="pb-success">
+        <h3>Request received!</h3>
+        <p>We'll follow up within a few hours. For anything urgent: <strong>(609) 742-1720</strong> — available 24/7.</p>
+      </div>
+    </div><!-- /brand-pb-content -->
+
+    <!-- ── OTHER BRAND / NOT SURE ──────────────────────────────── -->
+    <div id="brand-other-content" style="display:none">
+      <div style="background:var(--espresso-mid);border:0.5px solid var(--border-dark);border-radius:10px;padding:14px 18px;margin-bottom:20px">
+        <div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:4px">Custom quote — any brand</div>
+        <div style="font-size:12px;color:var(--text-dark);line-height:1.6">We carry Norman, Wallace, Hunter Douglas, and many more. Tell us what you need and we'll match you to the right product and manufacturer.</div>
+      </div>
+      <div class="form-group"><label>What product are you looking for?</label><input type="text" id="oth-product" placeholder="e.g. woven wood shade, zebra blind, cellular"></div>
+      <div class="dim-row">
+        <div class="form-group"><label>Approx. width (inches)</label><input type="number" id="oth-width" min="12" max="300" placeholder="e.g. 60"></div>
+        <div class="form-group"><label>Approx. height (inches)</label><input type="number" id="oth-height" min="12" max="200" placeholder="e.g. 84"></div>
+      </div>
+      <div class="form-group"><label>Brand preference (if any)</label><input type="text" id="oth-brand" placeholder="e.g. Hunter Douglas, or leave blank if not sure"></div>
+      <div class="form-group"><label>Notes</label><textarea id="oth-notes" placeholder="Room name, style preference, budget range, timeline — anything helpful"></textarea></div>
+      <hr class="price-divider" style="margin:18px 0">
+      <div class="form-row">
+        <div class="form-group"><label>Your name *</label><input type="text" id="oth-name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="oth-phone" placeholder="(215) 555-0100"></div>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" id="oth-email" placeholder="jane@example.com"></div>
+      <button class="btn-gold" onclick="submitOtherForm()" style="width:100%;padding:13px;margin-top:4px">Send quote request &rarr;</button>
+      <div class="success-state" id="oth-success">
+        <h3>Quote request received!</h3>
+        <p>We'll be in touch within a few hours. Urgent? Call <strong>(609) 742-1720</strong> — available 24/7.</p>
+      </div>
+    </div><!-- /brand-other-content -->
+
   </div><!-- /instant-config -->
 
   <!-- HUNTER DOUGLAS CUSTOM QUOTE PANEL -->
@@ -667,18 +775,18 @@ const MIN_ORDER = 85;
 
 // ─── State ───────────────────────────────────────────────────
 let currentProduct = null;
+let currentBrand   = null;
 let motorOn = false;
 
 // ─── selectProduct ───────────────────────────────────────────
 function selectProduct(productId, productName, isInstant) {
-  // Deselect all cards
   document.querySelectorAll('.product-card').forEach(c => c.classList.remove('selected'));
   const card = document.getElementById('card-' + productId);
   if (card) card.classList.add('selected');
 
   currentProduct = productId;
+  currentBrand   = null;
 
-  // Show configurator section
   const sec = document.getElementById('configurator-section');
   sec.style.display = 'block';
 
@@ -687,21 +795,49 @@ function selectProduct(productId, productName, isInstant) {
     document.getElementById('hd-config').classList.remove('open');
     document.getElementById('config-product-name').textContent = productName;
 
-    // Configure per-product options and size limits
-    configureForProduct(productId);
-    updatePrice();
+    // Reset brand chooser — hide all brand content, clear selections
+    document.querySelectorAll('.brand-btn').forEach(b => b.classList.remove('sel'));
+    ['brand-norman-content','brand-pb-content','brand-other-content'].forEach(id => {
+      document.getElementById(id).style.display = 'none';
+    });
+
+    // PB Custom is only valid for roller — dim the button for other products
+    const pbBtn = document.getElementById('btn-brand-pb');
+    if (productId === 'roller') {
+      pbBtn.classList.remove('disabled');
+      document.getElementById('pb-only-note').style.display = 'none';
+    } else {
+      pbBtn.classList.add('disabled');
+      document.getElementById('pb-only-note').style.display = 'block';
+    }
+
   } else {
     document.getElementById('instant-config').classList.remove('open');
     document.getElementById('hd-config').classList.add('open');
     document.getElementById('hd-product-name').textContent = productName;
-    // Pre-select the correct product in the HD dropdown
     const hdSel = document.getElementById('hd-product-sel');
     if (productId === 'silhouette') hdSel.value = 'silhouette';
     else if (productId === 'pirouette') hdSel.value = 'pirouette';
   }
 
-  // Scroll to configurator smoothly
   sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── selectBrand ─────────────────────────────────────────────
+function selectBrand(brand) {
+  currentBrand = brand;
+
+  document.querySelectorAll('.brand-btn').forEach(b => b.classList.remove('sel'));
+  document.getElementById('btn-brand-' + brand).classList.add('sel');
+
+  document.getElementById('brand-norman-content').style.display = brand === 'norman' ? 'block' : 'none';
+  document.getElementById('brand-pb-content').style.display    = brand === 'pb'     ? 'block' : 'none';
+  document.getElementById('brand-other-content').style.display = brand === 'other'  ? 'block' : 'none';
+
+  if (brand === 'norman' && currentProduct) {
+    configureForProduct(currentProduct);
+    updatePrice();
+  }
 }
 
 // ─── clearProduct ────────────────────────────────────────────
@@ -922,6 +1058,24 @@ function submitShadeForm() {
   const s = document.getElementById('shade-success');
   s.classList.add('show');
   s.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── submitPBForm ─────────────────────────────────────────────
+function submitPBForm() {
+  const name  = document.getElementById('pb-name').value.trim();
+  const phone = document.getElementById('pb-phone').value.trim();
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  document.getElementById('pb-success').classList.add('show');
+  document.getElementById('pb-success').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── submitOtherForm ──────────────────────────────────────────
+function submitOtherForm() {
+  const name  = document.getElementById('oth-name').value.trim();
+  const phone = document.getElementById('oth-phone').value.trim();
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  document.getElementById('oth-success').classList.add('show');
+  document.getElementById('oth-success').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // ─── submitQuoteForm ─────────────────────────────────────────
