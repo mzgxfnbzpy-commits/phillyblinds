@@ -11,6 +11,7 @@ function renderNav(activePage) {
     { href: '../pages/gallery.html', label: 'Our work' },
     { href: '../pages/measure.html', label: 'How to measure' },
     { href: '../pages/about.html', label: 'About' },
+    { href: '../pages/fabric-calculator.html', label: 'Fabric calculator' },
   ];
   const isHome = activePage === 'home';
   const prefix = isHome ? 'pages/' : '../pages/';
