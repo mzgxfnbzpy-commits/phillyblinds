@@ -282,6 +282,56 @@
       </div>
       <a class="measure-link" href="measure.html">Not sure? See our measuring guide &rarr;</a>
       <div class="inputs-block show" id="measure-inputs">
+
+        <!-- OPERATING SYSTEM (shown per product, drives size limits) -->
+        <div class="step-block" id="op-system-block" style="display:none">
+          <div class="step-label">Step 2</div>
+          <div class="step-title">Operating system</div>
+
+          <!-- Roller -->
+          <div id="op-roller" style="display:none">
+            <div class="opt-row" id="grp-op-roller">
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-roller');updateSizeLimits()">Spring</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-op-roller');updateSizeLimits()">Cordless</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-roller');updateSizeLimits()">Continuous loop</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-roller');updateSizeLimits();autoMotor()">Motorized</button>
+            </div>
+            <div class="tooltip-note" style="margin-top:4px">Cordless is child &amp; pet safe. Continuous loop handles any size. Motorized adds app &amp; voice control.</div>
+          </div>
+
+          <!-- Cellular -->
+          <div id="op-cellular" style="display:none">
+            <div class="opt-row" id="grp-op-cellular">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits()">SmartRise Cordless</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits()">TDBU Cordless</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits()">Cord loop</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();autoMotor()">Motorized</button>
+            </div>
+            <div id="tdbu-note" class="tooltip-note" style="display:none;margin-top:4px;color:#1D4ED8">Top-Down / Bottom-Up: raises from the top <em>or</em> the bottom — ideal for privacy with natural light. Max 60 sq ft.</div>
+          </div>
+
+          <!-- Zebra / Banded -->
+          <div id="op-zebra" style="display:none">
+            <div class="opt-row" id="grp-op-zebra">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-op-zebra');updateSizeLimits()">Soft-Touch Cordless</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-zebra');updateSizeLimits()">Continuous loop</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-zebra');updateSizeLimits()">Battery motor</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-zebra');updateSizeLimits();autoMotor()">Wand motor</button>
+            </div>
+          </div>
+
+          <!-- Woven Wood -->
+          <div id="op-woven" style="display:none">
+            <div class="opt-row" id="grp-op-woven">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-op-woven');updateSizeLimits()">Cord lift</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-woven');updateSizeLimits()">Cordless</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-woven');updateSizeLimits();autoMotor()">Motorized</button>
+            </div>
+          </div>
+
+          <div id="op-system-note" class="tooltip-note" style="margin-top:6px;color:var(--gold);font-weight:500"></div>
+        </div>
+
         <!-- Step B: Dimensions -->
         <div class="step-block" style="margin-bottom:14px">
           <div class="step-label">Step 2</div>
@@ -579,11 +629,38 @@ const RATES = {
   zebra:    20,
   woven:    18
 };
+// Absolute product minimums (across all systems)
 const PRODUCT_LIMITS = {
   roller:   { minW: 12, maxW: 144, minH: 12, maxH: 132 },
-  cellular: { minW: 12, maxW: 96,  minH: 12, maxH: 120 },
+  cellular: { minW: 12, maxW: 120, minH: 12, maxH: 144 },
   zebra:    { minW: 12, maxW: 106, minH: 18, maxH: 125 },
   woven:    { minW: 12, maxW: 96,  minH: 12, maxH: 108 }
+};
+// Per-system size limits from manufacturer catalogs
+const SYSTEM_LIMITS = {
+  roller: {
+    'Spring':          { maxW: 72,  maxH: 96,  note: 'Spring max 72″W × 96″H — pull-to-release operation' },
+    'Cordless':        { maxW: 72,  maxH: 84,  note: 'Cordless max 72″W × 84″H — child & pet safe certified' },
+    'Continuous loop': { maxW: 144, maxH: 132, note: 'Continuous loop max 144″W × 132″H — handles any size smoothly' },
+    'Motorized':       { maxW: 144, maxH: 132, note: 'Motorized max 144″W × 132″H — app, remote & voice control' },
+  },
+  cellular: {
+    'SmartRise Cordless': { maxW: 108, maxH: 120, note: 'SmartRise Cordless max 108″W × 120″H — child & pet safe' },
+    'TDBU Cordless':      { maxW: 108, maxH: 108, note: 'Top-Down/Bottom-Up max 108″W × 108″H — 60 sqft area limit' },
+    'Cord loop':          { maxW: 120, maxH: 144, note: 'Cord loop max 120″W × 144″H — best for large windows' },
+    'Motorized':          { maxW: 120, maxH: 144, note: 'Motorized max 120″W × 144″H — app, remote & voice control' },
+  },
+  zebra: {
+    'Soft-Touch Cordless': { maxW: 98,  maxH: 84,  note: 'Soft-Touch Cordless max 98″W × 84″H — child & pet safe' },
+    'Continuous loop':     { maxW: 106, maxH: 125, note: 'Continuous loop max 106″W × 125″H' },
+    'Battery motor':       { maxW: 98,  maxH: 84,  note: 'Battery motor max 98″W × 84″H — rechargeable, no wiring needed' },
+    'Wand motor':          { maxW: 106, maxH: 125, note: 'Wand motor max 106″W × 125″H — standard motor operation' },
+  },
+  woven: {
+    'Cord lift':  { maxW: 96, maxH: 108, note: 'Cord lift max 96″W × 108″H' },
+    'Cordless':   { maxW: 72, maxH: 84,  note: 'Cordless max 72″W × 84″H — varies by fabric weave weight' },
+    'Motorized':  { maxW: 96, maxH: 108, note: 'Motorized max 96″W × 108″H — app, remote & voice control' },
+  }
 };
 const MOTOR_UPCHARGE = 95;
 const MIN_ORDER = 85;
@@ -665,38 +742,84 @@ function toggleMotor(on) {
 
 // ─── configureForProduct ─────────────────────────────────────
 function configureForProduct(productId) {
-  // Per-product size limits
   const limits = PRODUCT_LIMITS[productId] || PRODUCT_LIMITS.roller;
   const wEl = document.getElementById('inp-width');
   const hEl = document.getElementById('inp-height');
   wEl.min = limits.minW; wEl.max = limits.maxW;
   hEl.min = limits.minH; hEl.max = limits.maxH;
-  // Clear stale dimensions when switching products
   wEl.value = ''; hEl.value = '';
 
-  // Show correct light control section for this product
+  // Show/hide operating system selector
+  const hasSystem = ['roller','cellular','zebra','woven'].includes(productId);
+  document.getElementById('op-system-block').style.display = hasSystem ? 'block' : 'none';
+  ['roller','cellular','zebra','woven'].forEach(function(p) {
+    document.getElementById('op-' + p).style.display = (p === productId) ? 'block' : 'none';
+  });
+  // Renumber: op-system is Step 2, dimensions becomes Step 3
+  if (hasSystem) {
+    document.querySelector('#op-system-block .step-label').textContent = 'Step 2';
+    document.querySelector('#measure-inputs > .step-block:nth-child(2) .step-label').textContent = 'Step 3';
+  }
+
+  // Show correct light control section
   ['roller', 'cellular', 'zebra', 'woven'].forEach(function(p) {
     document.getElementById('light-' + p).style.display = (p === productId) ? 'block' : 'none';
   });
-
-  // Step 3 title
   document.getElementById('light-step-title').textContent =
     productId === 'woven' ? 'Liner / light control' : 'Light control';
 
-  // Cellular-specific options
+  // Product-specific option blocks
   document.getElementById('cellular-opts').style.display =
     productId === 'cellular' ? 'block' : 'none';
-
-  // Woven wood material preference
   document.getElementById('woven-material-opts').style.display =
     productId === 'woven' ? 'block' : 'none';
 
-  // Reset solar openness on product switch
+  // Reset solar openness
   document.getElementById('solar-openness').style.display = 'none';
 
-  // Show per-product size range
+  // Set system limits for the default selected system
+  updateSizeLimits();
+}
+
+// ─── updateSizeLimits ────────────────────────────────────────
+// Reads the selected operating system and updates size input limits + notes
+function updateSizeLimits() {
+  if (!currentProduct || !SYSTEM_LIMITS[currentProduct]) return;
+
+  const grpId = 'grp-op-' + currentProduct;
+  const btn = document.querySelector('#' + grpId + ' .opt-btn.sel');
+  if (!btn) return;
+  const sysName = btn.textContent.trim();
+  const lim = SYSTEM_LIMITS[currentProduct][sysName];
+  if (!lim) return;
+
+  // Update input maxes to reflect this system
+  document.getElementById('inp-width').max  = lim.maxW;
+  document.getElementById('inp-height').max = lim.maxH;
+
+  // Show system note
+  document.getElementById('op-system-note').textContent = lim.note;
+
+  // TDBU-specific callout
+  const tdbuNote = document.getElementById('tdbu-note');
+  if (tdbuNote) tdbuNote.style.display = sysName === 'TDBU Cordless' ? 'block' : 'none';
+
+  // Update size-note below the inputs
   document.getElementById('size-note').textContent =
-    'Max size for this product: ' + limits.maxW + '″ W × ' + limits.maxH + '″ H';
+    sysName + ' max: ' + lim.maxW + '″ W × ' + lim.maxH + '″ H';
+
+  updatePrice();
+}
+
+// ─── autoMotor ───────────────────────────────────────────────
+// Auto-activates the motorization toggle when a motor system is chosen
+function autoMotor() {
+  const motorBtns = document.querySelectorAll('#grp-motor .opt-btn');
+  if (motorBtns.length >= 2) {
+    motorBtns[0].classList.remove('sel');
+    motorBtns[1].classList.add('sel');
+    toggleMotor(true);
+  }
 }
 
 // ─── toggleSolar ─────────────────────────────────────────────
@@ -733,8 +856,28 @@ function updatePrice() {
   document.getElementById('pb-qty').textContent = qty;
 
   const limits = PRODUCT_LIMITS[currentProduct] || PRODUCT_LIMITS.roller;
-  if (!w || !h || w < limits.minW || w > limits.maxW || h < limits.minH || h > limits.maxH) {
-    document.getElementById('pb-dims').textContent = 'Enter valid width & height';
+
+  // Get active system limits (may be tighter than product-wide limits)
+  let activeMaxW = limits.maxW, activeMaxH = limits.maxH;
+  const sysGrp = document.querySelector('#grp-op-' + currentProduct + ' .opt-btn.sel');
+  if (sysGrp && SYSTEM_LIMITS[currentProduct]) {
+    const sysLim = SYSTEM_LIMITS[currentProduct][sysGrp.textContent.trim()];
+    if (sysLim) { activeMaxW = sysLim.maxW; activeMaxH = sysLim.maxH; }
+  }
+
+  // Real-time size warning
+  const sizeNote = document.getElementById('size-note');
+  if (w && h && (w > activeMaxW || h > activeMaxH)) {
+    const sys = sysGrp ? sysGrp.textContent.trim() : 'this system';
+    sizeNote.style.color = '#DC2626';
+    sizeNote.textContent = '⚠ ' + (w > activeMaxW ? 'Width exceeds ' + activeMaxW + '″' : 'Height exceeds ' + activeMaxH + '″') + ' max for ' + sys;
+  } else if (sysGrp) {
+    sizeNote.style.color = 'var(--gold)';
+    sizeNote.textContent = sysGrp.textContent.trim() + ' max: ' + activeMaxW + '″ W × ' + activeMaxH + '″ H';
+  }
+
+  if (!w || !h || w < limits.minW || w > activeMaxW || h < limits.minH || h > activeMaxH) {
+    document.getElementById('pb-dims').textContent = w > activeMaxW || h > activeMaxH ? 'Size exceeds system limit — call for options' : 'Enter valid width & height';
     document.getElementById('pb-sqft').textContent = '—';
     document.getElementById('pb-base').textContent = '—';
     document.getElementById('pb-total').textContent = '—';
