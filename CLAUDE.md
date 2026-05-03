@@ -98,16 +98,19 @@ Every page MUST include:
 | pages/measure.html | Measure guide (shades) | 5 tabs, SVG diagrams, all developer handoff notes |
 | pages/about.html | About | Family story, team, services, service areas |
 | pages/fabric-calculator.html | Fabric calculator | Drapery, Roman, Cornice — 4 bugs fixed from ChatGPT version |
-| css/global.css | Shared styles | 771 lines — complete |
+| pages/shades.html | All shades & blinds | Per-product configurator, correct specs from catalogs |
+| pages/roman-shades.html | Roman shades | 3 styles, fabric paths, instant pricing, correct size limits |
+| pages/drapery.html | Custom drapery & hardware | Quote-only, 4 pleat styles, hardware brands |
+| pages/shutters.html | Plantation shutters | Quote-only, 4 Norman shutter lines, louver/frame options |
+| pages/catalogs.html | Spec catalogs download | 32 PDFs, Norman/Wallace/Woven/Kirsch, pricing whited out |
+| pages/product-specs.html | Product specifications | 9 tabs, 20+ products with full specs from real catalogs |
+| pages/soluna-roller-shades.html | Norman Soluna detail page | Full product deep-dive template |
+| css/global.css | Shared styles | Complete |
 | js/shared.js | Shared nav/footer | Renders nav and footer on all pages |
 
-### ❌ STILL PLACEHOLDER — NEEDS BUILDING
+### ❌ STILL NEEDED
 | File | Page | Priority |
 |------|------|----------|
-| pages/shades.html | All shades | 🔴 HIGH — biggest product page |
-| pages/roman-shades.html | Roman shades | 🔴 HIGH |
-| pages/drapery.html | Drapery & hardware | 🔴 HIGH — fully designed in chat |
-| pages/shutters.html | Plantation shutters | 🟡 MEDIUM |
 | pages/measure-shutters.html | Measure guide (shutters) | 🟡 MEDIUM — 3W×3H rules, different from shades |
 | pages/measure-drapes.html | Measure guide (drapes) | 🟡 MEDIUM |
 

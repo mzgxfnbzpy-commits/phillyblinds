@@ -294,9 +294,10 @@
             </div>
             <div class="form-group">
               <label>Height (inches)</label>
-              <input type="number" id="inp-height" min="12" max="120" step="0.5" placeholder="e.g. 48" oninput="updatePrice()">
+              <input type="number" id="inp-height" min="12" max="132" step="0.5" placeholder="e.g. 48" oninput="updatePrice()">
             </div>
           </div>
+          <div class="tooltip-note" id="size-note" style="margin-top:-4px;margin-bottom:8px;color:var(--gold)"></div>
           <div class="step-title" style="font-size:12px;margin-bottom:8px">Mount type</div>
           <div class="opt-row" id="grp-mount">
             <button class="opt-btn sel" onclick="selOpt(this,'grp-mount');updatePrice()">Inside mount</button>
@@ -311,23 +312,96 @@
           </div>
         </div>
 
-        <!-- Step C: Light control -->
-        <div class="step-block">
+        <!-- Step C: Light / fabric options — per product -->
+        <div class="step-block" id="step-light">
           <div class="step-label">Step 3</div>
-          <div class="step-title">Light control</div>
-          <div class="opt-row" id="grp-light">
-            <button class="opt-btn sel" onclick="selOpt(this,'grp-light');updatePrice()">Light Filtering</button>
-            <button class="opt-btn" onclick="selOpt(this,'grp-light');updatePrice()">Room Darkening</button>
-            <button class="opt-btn" onclick="selOpt(this,'grp-light');updatePrice()">Blackout</button>
-          </div>
-          <!-- Zebra-only weave options (shown/hidden by JS) -->
-          <div id="zebra-weave-opts" style="display:none">
-            <div class="tooltip-note" style="margin-bottom:6px">Fabric weave (Zebra shades):</div>
-            <div class="opt-row" id="grp-weave">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-weave');updatePrice()">Open Weave</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-weave');updatePrice()">Semi-Open</button>
+          <div class="step-title" id="light-step-title">Light control</div>
+
+          <!-- ROLLER: LF · RD · Blackout · Solar -->
+          <div id="light-roller" style="display:none">
+            <div class="opt-row" id="grp-light-roller">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);updatePrice()">Light Filtering</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);updatePrice()">Room Darkening</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);updatePrice()">Blackout</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(true);updatePrice()">Solar</button>
+            </div>
+            <div id="solar-openness" style="display:none;margin-top:10px">
+              <div class="tooltip-note" style="margin-bottom:6px">Solar openness factor (% of light allowed through):</div>
+              <div class="opt-row" id="grp-solar">
+                <button class="opt-btn sel" onclick="selOpt(this,'grp-solar');updatePrice()">1%</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-solar');updatePrice()">3%</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-solar');updatePrice()">5%</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-solar');updatePrice()">10%</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-solar');updatePrice()">14%</button>
+              </div>
             </div>
           </div>
+
+          <!-- CELLULAR: Sheer · LF · Blackout (no "Room Darkening" — blackout cell IS room-darkening) -->
+          <div id="light-cellular" style="display:none">
+            <div class="opt-row" id="grp-light-cellular">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-light-cellular');updatePrice()">Sheer</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light-cellular');updatePrice()">Light Filtering</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light-cellular');updatePrice()">Blackout</button>
+            </div>
+            <div class="tooltip-note" style="margin-top:4px">Cellular shades use cell construction for insulation — blackout cells provide full room-darkening performance.</div>
+          </div>
+
+          <!-- ZEBRA: Translucent · Room Darkening only — no blackout in this style -->
+          <div id="light-zebra" style="display:none">
+            <div class="opt-row" id="grp-light-zebra">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-light-zebra');updatePrice()">Translucent</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light-zebra');updatePrice()">Room Darkening</button>
+            </div>
+            <div class="tooltip-note" style="margin-top:4px">Zebra/banded shades come in translucent or room-darkening only — full blackout is not available in this style.</div>
+          </div>
+
+          <!-- WOVEN WOOD: natural light filtering + liner choice -->
+          <div id="light-woven" style="display:none">
+            <div class="tooltip-note" style="margin-bottom:8px">Natural woven shades filter light through the weave. Add a liner for extra privacy or room-darkening:</div>
+            <div class="opt-row" id="grp-light-woven">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-light-woven');updatePrice()">No liner</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light-woven');updatePrice()">Privacy liner</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light-woven');updatePrice()">Blackout liner</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CELLULAR ONLY: cell type + cell size -->
+        <div class="step-block" id="cellular-opts" style="display:none">
+          <div class="step-label">Step 3b</div>
+          <div class="step-title">Cell options</div>
+          <div style="margin-bottom:14px">
+            <div class="step-title" style="font-size:12px;margin-bottom:8px">Cell type</div>
+            <div class="opt-row" id="grp-cell-type">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-type')">Single cell</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-type')">Double cell</button>
+            </div>
+            <div class="tooltip-note">Double cell traps more air — better insulation for extreme temperatures.</div>
+          </div>
+          <div>
+            <div class="step-title" style="font-size:12px;margin-bottom:8px">Cell size</div>
+            <div class="opt-row" id="grp-cell-size">
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-size')">3&#8260;8&rdquo;</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-size')">9&#8260;16&rdquo;</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-size')">3&#8260;4&rdquo;</button>
+            </div>
+            <div class="tooltip-note">Larger cell = more texture &amp; insulation. Smaller cell = cleaner raised profile.</div>
+          </div>
+        </div>
+
+        <!-- WOVEN WOOD ONLY: material preference -->
+        <div class="step-block" id="woven-material-opts" style="display:none">
+          <div class="step-label">Step 3b</div>
+          <div class="step-title">Material preference</div>
+          <div class="opt-row" id="grp-woven-material">
+            <button class="opt-btn sel" onclick="selOpt(this,'grp-woven-material')">Bamboo</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-woven-material')">Jute</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-woven-material')">Seagrass</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-woven-material')">Rattan</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-woven-material')">Grasscloth</button>
+          </div>
+          <div class="tooltip-note">Material preference noted on your quote — final availability confirmed at consultation.</div>
         </div>
 
         <!-- Step D: Motorization -->
@@ -505,6 +579,12 @@ const RATES = {
   zebra:    20,
   woven:    18
 };
+const PRODUCT_LIMITS = {
+  roller:   { minW: 12, maxW: 144, minH: 12, maxH: 132 },
+  cellular: { minW: 12, maxW: 96,  minH: 12, maxH: 120 },
+  zebra:    { minW: 12, maxW: 106, minH: 18, maxH: 125 },
+  woven:    { minW: 12, maxW: 96,  minH: 12, maxH: 108 }
+};
 const MOTOR_UPCHARGE = 95;
 const MIN_ORDER = 85;
 
@@ -530,14 +610,8 @@ function selectProduct(productId, productName, isInstant) {
     document.getElementById('hd-config').classList.remove('open');
     document.getElementById('config-product-name').textContent = productName;
 
-    // Show/hide zebra-only weave options
-    const zebraOpts = document.getElementById('zebra-weave-opts');
-    if (productId === 'zebra') {
-      zebraOpts.style.display = 'block';
-    } else {
-      zebraOpts.style.display = 'none';
-    }
-
+    // Configure per-product options and size limits
+    configureForProduct(productId);
     updatePrice();
   } else {
     document.getElementById('instant-config').classList.remove('open');
@@ -589,6 +663,47 @@ function toggleMotor(on) {
   updatePrice();
 }
 
+// ─── configureForProduct ─────────────────────────────────────
+function configureForProduct(productId) {
+  // Per-product size limits
+  const limits = PRODUCT_LIMITS[productId] || PRODUCT_LIMITS.roller;
+  const wEl = document.getElementById('inp-width');
+  const hEl = document.getElementById('inp-height');
+  wEl.min = limits.minW; wEl.max = limits.maxW;
+  hEl.min = limits.minH; hEl.max = limits.maxH;
+  // Clear stale dimensions when switching products
+  wEl.value = ''; hEl.value = '';
+
+  // Show correct light control section for this product
+  ['roller', 'cellular', 'zebra', 'woven'].forEach(function(p) {
+    document.getElementById('light-' + p).style.display = (p === productId) ? 'block' : 'none';
+  });
+
+  // Step 3 title
+  document.getElementById('light-step-title').textContent =
+    productId === 'woven' ? 'Liner / light control' : 'Light control';
+
+  // Cellular-specific options
+  document.getElementById('cellular-opts').style.display =
+    productId === 'cellular' ? 'block' : 'none';
+
+  // Woven wood material preference
+  document.getElementById('woven-material-opts').style.display =
+    productId === 'woven' ? 'block' : 'none';
+
+  // Reset solar openness on product switch
+  document.getElementById('solar-openness').style.display = 'none';
+
+  // Show per-product size range
+  document.getElementById('size-note').textContent =
+    'Max size for this product: ' + limits.maxW + '″ W × ' + limits.maxH + '″ H';
+}
+
+// ─── toggleSolar ─────────────────────────────────────────────
+function toggleSolar(on) {
+  document.getElementById('solar-openness').style.display = on ? 'block' : 'none';
+}
+
 // ─── adjustQty / clampQty ────────────────────────────────────
 function adjustQty(delta) {
   const inp = document.getElementById('inp-qty');
@@ -617,7 +732,8 @@ function updatePrice() {
   document.getElementById('pb-product').textContent = document.getElementById('config-product-name').textContent;
   document.getElementById('pb-qty').textContent = qty;
 
-  if (!w || !h || w < 12 || w > 144 || h < 12 || h > 120) {
+  const limits = PRODUCT_LIMITS[currentProduct] || PRODUCT_LIMITS.roller;
+  if (!w || !h || w < limits.minW || w > limits.maxW || h < limits.minH || h > limits.maxH) {
     document.getElementById('pb-dims').textContent = 'Enter valid width & height';
     document.getElementById('pb-sqft').textContent = '—';
     document.getElementById('pb-base').textContent = '—';
