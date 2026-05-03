@@ -1,4 +1,6 @@
 .vercel
 
-# Internal pricing PDFs — never push to GitHub or Vercel
-pdfs/
+# Internal wholesale pricing docs — stay local only
+pdfs/wholesale-pricing/
+
+# pdfs/specs/ is intentionally PUBLIC — served by Vercel as downloads
