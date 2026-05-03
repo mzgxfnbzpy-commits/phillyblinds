@@ -189,9 +189,8 @@
             <div class="opt-row" id="d-panels">
               <button class="opt-btn" onclick="selOpt(this,'d-panels');calcDrapery()" data-val="1">One way draw</button>
               <button class="opt-btn sel" onclick="selOpt(this,'d-panels');calcDrapery()" data-val="2">Split draw</button>
-              <button class="opt-btn" onclick="selOpt(this,'d-panels');calcDrapery()" data-val="4">4-panel split</button>
             </div>
-            <div class="field-hint">One way = all fabric stacks to one side. Split draw = panels meet in the center.</div>
+            <div class="field-hint">One way = all fabric stacks to one side. Split draw = two panels meet in the center.</div>
           </div>
 
           <div class="field-group">
@@ -213,21 +212,42 @@
           </div>
 
           <hr class="calc-divider">
+          <div style="font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Recommended allowances <span style="font-weight:400;color:#aaa;text-transform:none;letter-spacing:0">(editable)</span></div>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
             <div class="field-group" style="margin-bottom:0">
-              <label class="field-label">Header allowance</label>
+              <label class="field-label">Top header</label>
               <div class="num-input">
-                <input type="number" id="d-header" value="4" min="0" max="12" oninput="calcDrapery()">
+                <input type="number" id="d-top" value="8" min="0" max="16" oninput="calcDrapery()">
                 <span class="num-unit">in</span>
               </div>
+              <div class="field-hint">Standard: 8″ (pinch pleat / ripplefold)</div>
             </div>
             <div class="field-group" style="margin-bottom:0">
-              <label class="field-label">Hem allowance</label>
+              <label class="field-label">Bottom hem</label>
               <div class="num-input">
-                <input type="number" id="d-hem" value="8" min="0" max="16" oninput="calcDrapery()">
+                <input type="number" id="d-bot" value="8" min="0" max="16" oninput="calcDrapery()">
                 <span class="num-unit">in</span>
               </div>
+              <div class="field-hint">Standard: 8″ (double 4″ hem)</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="field-group" style="margin-bottom:0">
+              <label class="field-label">Return side (per panel)</label>
+              <div class="num-input">
+                <input type="number" id="d-return" value="4" min="0" max="16" oninput="calcDrapery()">
+                <span class="num-unit">in</span>
+              </div>
+              <div class="field-hint">Increase for deeper rod projections</div>
+            </div>
+            <div class="field-group" style="margin-bottom:0">
+              <label class="field-label">Leading edge (per panel)</label>
+              <div class="num-input">
+                <input type="number" id="d-lead" value="4" min="0" max="8" oninput="calcDrapery()">
+                <span class="num-unit">in</span>
+              </div>
+              <div class="field-hint">Standard: 4″ center overlap / hem</div>
             </div>
           </div>
 
@@ -328,21 +348,32 @@
           </div>
 
           <hr class="calc-divider">
+          <div style="font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Recommended allowances <span style="font-weight:400;color:#aaa;text-transform:none;letter-spacing:0">(editable)</span></div>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
             <div class="field-group" style="margin-bottom:0">
-              <label class="field-label">Side hem allowance</label>
+              <label class="field-label">Side hem <span style="color:#aaa;font-weight:400">each side</span></label>
               <div class="num-input">
-                <input type="number" id="r-sidehem" value="3" min="0" max="8" oninput="calcRoman()">
-                <span class="num-unit">in total</span>
+                <input type="number" id="r-side" value="4" min="0" max="8" oninput="calcRoman()">
+                <span class="num-unit">in</span>
               </div>
+              <div class="field-hint">× 2 sides = cut width add</div>
             </div>
             <div class="field-group" style="margin-bottom:0">
-              <label class="field-label">Top + bottom allowance</label>
+              <label class="field-label">Top mount</label>
               <div class="num-input">
-                <input type="number" id="r-topbot" value="9" min="0" max="16" oninput="calcRoman()">
-                <span class="num-unit">in total</span>
+                <input type="number" id="r-top" value="1" min="0" max="6" oninput="calcRoman()">
+                <span class="num-unit">in</span>
               </div>
+              <div class="field-hint">Staple / mounting board wrap</div>
+            </div>
+            <div class="field-group" style="margin-bottom:0">
+              <label class="field-label">Bottom hem</label>
+              <div class="num-input">
+                <input type="number" id="r-bot" value="8" min="0" max="16" oninput="calcRoman()">
+                <span class="num-unit">in</span>
+              </div>
+              <div class="field-hint">Standard: 8″ (double 4″ hem)</div>
             </div>
           </div>
 
@@ -442,13 +473,33 @@
           </div>
 
           <hr class="calc-divider">
-          <div class="field-group" style="margin-bottom:0">
-            <label class="field-label">Edge wrap allowance <span style="color:#aaa;font-weight:400">(top + bottom)</span></label>
-            <div class="num-input">
-              <input type="number" id="c-wrap" value="8" min="4" max="16" oninput="calcCornice()">
-              <span class="num-unit">in total</span>
+          <div style="font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Recommended allowances <span style="font-weight:400;color:#aaa;text-transform:none;letter-spacing:0">(editable)</span></div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+            <div class="field-group" style="margin-bottom:0">
+              <label class="field-label">Top wrap</label>
+              <div class="num-input">
+                <input type="number" id="c-top" value="4" min="0" max="8" oninput="calcCornice()">
+                <span class="num-unit">in</span>
+              </div>
+              <div class="field-hint">Folds over top board</div>
             </div>
-            <div class="field-hint">Fabric folds over the top and bottom edges to staple to the back.</div>
+            <div class="field-group" style="margin-bottom:0">
+              <label class="field-label">Bottom wrap</label>
+              <div class="num-input">
+                <input type="number" id="c-bot" value="4" min="0" max="8" oninput="calcCornice()">
+                <span class="num-unit">in</span>
+              </div>
+              <div class="field-hint">Folds under bottom edge</div>
+            </div>
+            <div class="field-group" style="margin-bottom:0">
+              <label class="field-label">Side tuck <span style="color:#aaa;font-weight:400">each side</span></label>
+              <div class="num-input">
+                <input type="number" id="c-side" value="4" min="0" max="8" oninput="calcCornice()">
+                <span class="num-unit">in</span>
+              </div>
+              <div class="field-hint">× 2 sides = width add</div>
+            </div>
           </div>
 
           <button class="reset-btn" onclick="resetCornice()">Reset</button>
@@ -531,35 +582,36 @@ function fmtYards(y) {
 
 // ── Drapery Calculator ────────────────────────────────────────
 function calcDrapery() {
-  const width   = v('d-width');
-  const length  = v('d-length');
+  const width    = v('d-width');
+  const length   = v('d-length');
   const fullness = getOptVal('d-fullness');
-  const panels  = getOptVal('d-panels');
-  const fabricW = getOptVal('d-fabricw');
-  const repeat  = v('d-repeat') || 0;
-  const header  = v('d-header') != null ? v('d-header') : 4;
-  const hem     = v('d-hem')    != null ? v('d-hem')    : 8;
+  const panels   = getOptVal('d-panels');
+  const fabricW  = getOptVal('d-fabricw');
+  const repeat   = v('d-repeat') || 0;
+  const topHem   = v('d-top')    != null ? v('d-top')    : 8;
+  const botHem   = v('d-bot')    != null ? v('d-bot')    : 8;
+  const retAllow = v('d-return') != null ? v('d-return') : 4;
+  const leadAllow= v('d-lead')   != null ? v('d-lead')   : 4;
 
   if (!width || !length) {
     document.getElementById('d-result-body').innerHTML = emptyState();
     return;
   }
 
-  // Cut length per width (inches)
-  const cutLength = length + header + hem + (repeat > 0 ? repeat : 0);
-  // Total gathered width needed
-  const totalGathered = width * fullness;
-  // Widths needed per panel
-  const widthsPerPanel = Math.ceil((totalGathered / panels) / fabricW);
-  // Total fabric widths
+  // Cut length = drop + top header + bottom hem + pattern repeat
+  const cutLength = length + topHem + botHem + (repeat > 0 ? repeat : 0);
+  // Flat fabric needed per panel (ungathered) + side allowances
+  const flatPerPanel = (width * fullness) / panels;
+  const cutWidthPerPanel = flatPerPanel + retAllow + leadAllow;
+  // Widths from bolt per panel
+  const widthsPerPanel = Math.ceil(cutWidthPerPanel / fabricW);
   const totalWidths = widthsPerPanel * panels;
-  // Raw yards (no buffer)
   const rawYards = (totalWidths * cutLength) / 36;
-  // Rounded up to nearest 0.25yd + 10% buffer
   const finalYards = roundUp(rawYards * 1.10);
+  // Lining: same widths, no pattern repeat
+  const liningYards = roundUp((totalWidths * (length + topHem + botHem)) / 36 * 1.05);
 
-  const drawLabel = panels === 1 ? 'One way draw' : panels === 2 ? 'Split draw (2 panels)' : '4-panel split';
-  const liningYards = roundUp((totalWidths * (length + header + hem)) / 36 * 1.05);
+  const drawLabel = panels === 1 ? 'One way draw' : 'Split draw (2 panels)';
 
   document.getElementById('d-result-body').innerHTML = `
     <div class="result-row">
@@ -571,30 +623,35 @@ function calcDrapery() {
       <span class="result-val">${fmtYards(liningYards)}<span class="val-unit">yds</span></span>
     </div>
     <div class="result-breakdown">
-      <h4>Cut length breakdown</h4>
+      <h4>Cut length</h4>
       <div class="breakdown-row"><span>Finished drop</span><span>${length}″</span></div>
-      <div class="breakdown-row"><span>+ Header allowance</span><span>+${header}″</span></div>
-      <div class="breakdown-row"><span>+ Hem allowance</span><span>+${hem}″</span></div>
+      <div class="breakdown-row"><span>+ Top header</span><span>+${topHem}″</span></div>
+      <div class="breakdown-row"><span>+ Bottom hem</span><span>+${botHem}″</span></div>
       ${repeat > 0 ? `<div class="breakdown-row"><span>+ Pattern repeat</span><span>+${repeat}″</span></div>` : ''}
-      <div class="breakdown-row" style="border-top:1px solid #2A201A;margin-top:4px;padding-top:4px"><span><strong>= Cut length</strong></span><span><strong>${cutLength.toFixed(1)}″</strong></span></div>
+      <div class="breakdown-row" style="border-top:1px solid #3A2E24;margin-top:4px;padding-top:4px"><span><strong>= Cut length</strong></span><span><strong>${cutLength.toFixed(1)}″</strong></span></div>
     </div>
     <div class="result-breakdown">
-      <h4>Width breakdown</h4>
+      <h4>Cut width (per panel)</h4>
       <div class="breakdown-row"><span>Draw type</span><span>${drawLabel}</span></div>
-      <div class="breakdown-row"><span>Total gathered width</span><span>${(width * fullness).toFixed(1)}″</span></div>
-      <div class="breakdown-row"><span>Widths from bolt per panel</span><span>${widthsPerPanel} × ${fabricW}″ bolt</span></div>
+      <div class="breakdown-row"><span>Flat fabric per panel</span><span>${flatPerPanel.toFixed(1)}″</span></div>
+      <div class="breakdown-row"><span>+ Return allowance</span><span>+${retAllow}″</span></div>
+      <div class="breakdown-row"><span>+ Leading edge</span><span>+${leadAllow}″</span></div>
+      <div class="breakdown-row" style="border-top:1px solid #3A2E24;margin-top:4px;padding-top:4px"><span><strong>= Cut width / panel</strong></span><span><strong>${cutWidthPerPanel.toFixed(1)}″</strong></span></div>
+      <div class="breakdown-row"><span>Widths from bolt / panel</span><span>${widthsPerPanel} × ${fabricW}″</span></div>
       <div class="breakdown-row"><span>Total fabric widths</span><span>${totalWidths}</span></div>
       <div class="breakdown-row"><span>Raw yardage</span><span>${rawYards.toFixed(2)} yds</span></div>
       <div class="breakdown-row"><span>+10% waste buffer</span><span>+${(rawYards * 0.10).toFixed(2)} yds</span></div>
     </div>
-    ${repeat > 0 ? `<div class="result-note">Pattern repeat of ${repeat}″ added to each cut length. Buy one extra repeat per fabric width for matching seams at a split draw center.</div>` : ''}
+    ${repeat > 0 ? `<div class="result-note">Pattern repeat of ${repeat}″ added to cut length. For seam matching at a split-draw center, add one extra repeat per fabric width.</div>` : ''}
   `;
 }
 
 function resetDrapery() {
   ['d-width','d-length','d-repeat'].forEach(id => { document.getElementById(id).value = ''; });
-  document.getElementById('d-header').value = '4';
-  document.getElementById('d-hem').value = '8';
+  document.getElementById('d-top').value    = '8';
+  document.getElementById('d-bot').value    = '8';
+  document.getElementById('d-return').value = '4';
+  document.getElementById('d-lead').value   = '4';
   setDefault('d-fullness','2.0');
   setDefault('d-panels','2');
   setDefault('d-fabricw','54');
@@ -603,22 +660,24 @@ function resetDrapery() {
 
 // ── Roman Shade Calculator ────────────────────────────────────
 function calcRoman() {
-  const width   = v('r-width');
-  const length  = v('r-length');
-  const qty     = v('r-qty') || 1;
-  const fabricW = getOptVal('r-fabricw');
-  const repeat  = v('r-repeat') || 0;
-  const lining  = getOptStr('r-lining');
-  const sideHem = v('r-sidehem') != null ? v('r-sidehem') : 3;
-  const topBot  = v('r-topbot')  != null ? v('r-topbot')  : 9;
+  const width    = v('r-width');
+  const length   = v('r-length');
+  const qty      = v('r-qty') || 1;
+  const fabricW  = getOptVal('r-fabricw');
+  const repeat   = v('r-repeat') || 0;
+  const lining   = getOptStr('r-lining');
+  const sideEach = v('r-side') != null ? v('r-side') : 4;
+  const topMount = v('r-top')  != null ? v('r-top')  : 1;
+  const botHem   = v('r-bot')  != null ? v('r-bot')  : 8;
 
   if (!width || !length) {
     document.getElementById('r-result-body').innerHTML = emptyState();
     return;
   }
 
-  const cutWidth  = width + sideHem;
-  const cutLength = length + topBot + (repeat > 0 ? repeat : 0);
+  const sideTotal = sideEach * 2;
+  const cutWidth  = width + sideTotal;
+  const cutLength = length + topMount + botHem + (repeat > 0 ? repeat : 0);
   const widthsPerShade = Math.ceil(cutWidth / fabricW);
   const yardsPerShade  = (widthsPerShade * cutLength) / 36;
   const totalFaceYards = roundUp(yardsPerShade * qty * 1.10);
@@ -626,7 +685,7 @@ function calcRoman() {
   let liningLine = '';
   let liningYards = 0;
   if (lining !== 'none') {
-    const lineCutLength = length + topBot; // no repeat needed for lining
+    const lineCutLength = length + topMount + botHem;
     liningYards = roundUp((Math.ceil(cutWidth / fabricW) * lineCutLength / 36) * qty * 1.05);
     liningLine = `
       <div class="result-row">
@@ -642,24 +701,34 @@ function calcRoman() {
     </div>
     ${liningLine}
     <div class="result-breakdown">
-      <h4>Breakdown (per shade)</h4>
-      <div class="breakdown-row"><span>Cut width</span><span>${cutWidth.toFixed(1)}″</span></div>
-      <div class="breakdown-row"><span>Cut length</span><span>${cutLength.toFixed(1)}″</span></div>
-      <div class="breakdown-row"><span>Widths from bolt</span><span>${widthsPerShade}</span></div>
-      <div class="breakdown-row"><span>Yards per shade (raw)</span><span>${yardsPerShade.toFixed(2)} yds</span></div>
-      <div class="breakdown-row"><span>Number of shades</span><span>${qty}</span></div>
+      <h4>Cut width</h4>
+      <div class="breakdown-row"><span>Finished width</span><span>${width}″</span></div>
+      <div class="breakdown-row"><span>+ Side hems (${sideEach}″ × 2)</span><span>+${sideTotal}″</span></div>
+      <div class="breakdown-row" style="border-top:1px solid #3A2E24;margin-top:4px;padding-top:4px"><span><strong>= Cut width</strong></span><span><strong>${cutWidth.toFixed(1)}″</strong></span></div>
     </div>
-    ${widthsPerShade > 1 ? '<div class="result-note">Shade is wider than the bolt — a vertical seam is required. Position seam at the edge, not center.</div>' : ''}
-    ${repeat > 0 ? `<div class="result-note" style="margin-top:6px">Pattern repeat of ${repeat}″ is added to each cut length. Buy extra to align folds at pattern breaks.</div>` : ''}
+    <div class="result-breakdown">
+      <h4>Cut length</h4>
+      <div class="breakdown-row"><span>Finished drop</span><span>${length}″</span></div>
+      <div class="breakdown-row"><span>+ Top mount allowance</span><span>+${topMount}″</span></div>
+      <div class="breakdown-row"><span>+ Bottom hem</span><span>+${botHem}″</span></div>
+      ${repeat > 0 ? `<div class="breakdown-row"><span>+ Pattern repeat</span><span>+${repeat}″</span></div>` : ''}
+      <div class="breakdown-row" style="border-top:1px solid #3A2E24;margin-top:4px;padding-top:4px"><span><strong>= Cut length</strong></span><span><strong>${cutLength.toFixed(1)}″</strong></span></div>
+      <div class="breakdown-row"><span>Widths from bolt</span><span>${widthsPerShade} × ${fabricW}″</span></div>
+      <div class="breakdown-row"><span>Yards / shade (raw)</span><span>${yardsPerShade.toFixed(2)} yds</span></div>
+      <div class="breakdown-row"><span>Qty</span><span>${qty} shade${qty > 1 ? 's' : ''}</span></div>
+    </div>
+    ${widthsPerShade > 1 ? '<div class="result-note">Shade wider than bolt — seam required. Position at edge, not center.</div>' : ''}
+    ${repeat > 0 ? `<div class="result-note" style="margin-top:6px">Pattern repeat of ${repeat}″ added to cut length. Buy extra to align folds at pattern breaks.</div>` : ''}
   `;
 }
 
 function resetRoman() {
   ['r-width','r-length'].forEach(id => { document.getElementById(id).value = ''; });
-  document.getElementById('r-qty').value = '1';
+  document.getElementById('r-qty').value    = '1';
   document.getElementById('r-repeat').value = '0';
-  document.getElementById('r-sidehem').value = '3';
-  document.getElementById('r-topbot').value = '9';
+  document.getElementById('r-side').value   = '4';
+  document.getElementById('r-top').value    = '1';
+  document.getElementById('r-bot').value    = '8';
   setDefault('r-fabricw','54');
   setDefault('r-lining','standard');
   document.getElementById('r-result-body').innerHTML = emptyState();
@@ -667,28 +736,30 @@ function resetRoman() {
 
 // ── Cornice Calculator ────────────────────────────────────────
 function calcCornice() {
-  const faceW  = v('c-width');
-  const ret    = v('c-return') != null ? v('c-return') : 4;
-  const height = v('c-height');
-  const qty    = v('c-qty') || 1;
+  const faceW   = v('c-width');
+  const ret     = v('c-return') != null ? v('c-return') : 4;
+  const height  = v('c-height');
+  const qty     = v('c-qty') || 1;
   const fabricW = getOptVal('c-fabricw');
-  const repeat = v('c-repeat') || 0;
-  const wrap   = v('c-wrap') != null ? v('c-wrap') : 8;
+  const repeat  = v('c-repeat') || 0;
+  const topWrap = v('c-top')  != null ? v('c-top')  : 4;
+  const botWrap = v('c-bot')  != null ? v('c-bot')  : 4;
+  const sideTuck= v('c-side') != null ? v('c-side') : 4;
 
   if (!faceW || !height) {
     document.getElementById('c-result-body').innerHTML = emptyState();
     return;
   }
 
-  // Total horizontal run = face + 2 returns + 4" side tuck
-  const totalRun  = faceW + (2 * ret) + 4;
-  const cutHeight = height + wrap + (repeat > 0 ? repeat : 0);
+  const sideTuckTotal = sideTuck * 2;
+  const totalRun  = faceW + (2 * ret) + sideTuckTotal;
+  const cutHeight = height + topWrap + botWrap + (repeat > 0 ? repeat : 0);
   const widthsNeeded = Math.ceil(totalRun / fabricW);
   const yardsPerCornice = (widthsNeeded * cutHeight) / 36;
   const totalYards = roundUp(yardsPerCornice * qty * 1.10);
 
   const seamNote = widthsNeeded > 1
-    ? '<div class="result-note">Face is wider than bolt — a seam is required. Position at a return, never at the face center.</div>'
+    ? '<div class="result-note">Face wider than bolt — seam required. Position at a return, never face center.</div>'
     : '';
 
   document.getElementById('c-result-body').innerHTML = `
@@ -697,24 +768,36 @@ function calcCornice() {
       <span class="result-val">${fmtYards(totalYards)}<span class="val-unit">yds</span></span>
     </div>
     <div class="result-breakdown">
-      <h4>Breakdown (per cornice)</h4>
-      <div class="breakdown-row"><span>Total horizontal run</span><span>${totalRun.toFixed(1)}″</span></div>
-      <div class="breakdown-row"><span>Cut height</span><span>${cutHeight.toFixed(1)}″</span></div>
-      <div class="breakdown-row"><span>Widths from bolt</span><span>${widthsNeeded}</span></div>
-      <div class="breakdown-row"><span>Yards per cornice (raw)</span><span>${yardsPerCornice.toFixed(2)} yds</span></div>
-      <div class="breakdown-row"><span>Number of cornices</span><span>${qty}</span></div>
+      <h4>Horizontal run</h4>
+      <div class="breakdown-row"><span>Face width</span><span>${faceW}″</span></div>
+      <div class="breakdown-row"><span>+ Returns (${ret}″ × 2)</span><span>+${(ret*2).toFixed(0)}″</span></div>
+      <div class="breakdown-row"><span>+ Side tuck (${sideTuck}″ × 2)</span><span>+${sideTuckTotal}″</span></div>
+      <div class="breakdown-row" style="border-top:1px solid #3A2E24;margin-top:4px;padding-top:4px"><span><strong>= Total run</strong></span><span><strong>${totalRun.toFixed(1)}″</strong></span></div>
+    </div>
+    <div class="result-breakdown">
+      <h4>Cut height</h4>
+      <div class="breakdown-row"><span>Cornice height</span><span>${height}″</span></div>
+      <div class="breakdown-row"><span>+ Top wrap</span><span>+${topWrap}″</span></div>
+      <div class="breakdown-row"><span>+ Bottom wrap</span><span>+${botWrap}″</span></div>
+      ${repeat > 0 ? `<div class="breakdown-row"><span>+ Pattern repeat</span><span>+${repeat}″</span></div>` : ''}
+      <div class="breakdown-row" style="border-top:1px solid #3A2E24;margin-top:4px;padding-top:4px"><span><strong>= Cut height</strong></span><span><strong>${cutHeight.toFixed(1)}″</strong></span></div>
+      <div class="breakdown-row"><span>Widths from bolt</span><span>${widthsNeeded} × ${fabricW}″</span></div>
+      <div class="breakdown-row"><span>Yards / cornice (raw)</span><span>${yardsPerCornice.toFixed(2)} yds</span></div>
+      <div class="breakdown-row"><span>Qty</span><span>${qty} cornice${qty > 1 ? 's' : ''}</span></div>
     </div>
     ${seamNote}
-    ${repeat > 0 ? `<div class="result-note" style="margin-top:6px">Pattern repeat of ${repeat}″ added to cut height. Buy one additional repeat per cornice for centering the pattern on the face.</div>` : ''}
+    ${repeat > 0 ? `<div class="result-note" style="margin-top:6px">Pattern repeat of ${repeat}″ added to cut height. Buy one extra repeat per cornice for centering on the face.</div>` : ''}
   `;
 }
 
 function resetCornice() {
   ['c-width','c-height'].forEach(id => { document.getElementById(id).value = ''; });
   document.getElementById('c-return').value = '4';
-  document.getElementById('c-qty').value = '1';
+  document.getElementById('c-qty').value    = '1';
   document.getElementById('c-repeat').value = '0';
-  document.getElementById('c-wrap').value = '8';
+  document.getElementById('c-top').value    = '4';
+  document.getElementById('c-bot').value    = '4';
+  document.getElementById('c-side').value   = '4';
   setDefault('c-fabricw','54');
   document.getElementById('c-result-body').innerHTML = emptyState();
 }
