@@ -1,1 +1,4 @@
 .vercel
+
+# Internal pricing PDFs — never push to GitHub or Vercel
+pdfs/
