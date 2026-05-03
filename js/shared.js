@@ -17,20 +17,33 @@ function renderNav(activePage) {
   const isHome = activePage === 'home';
   const prefix = isHome ? 'pages/' : '../pages/';
 
+  const root = isHome ? 'index.html' : '../index.html';
+  const consultHref = isHome ? 'pages/consult.html' : '../pages/consult.html';
+
   document.getElementById('site-nav').innerHTML = `
-    <a class="nav-logo" href="${isHome ? 'index.html' : '../index.html'}">Philly<em>Blinds</em></a>
-    <div class="nav-links">
-      ${pages.map(p => {
-        const href = isHome ? p.href.replace('../', '') : p.href;
-        const active = p.label === activePage ? ' active' : '';
-        return `<a href="${href}" class="${active}">${p.label}</a>`;
-      }).join('')}
+    <div class="nav-identity">
+      <span class="nav-company">Michael J. Healy Installations LLC</span>
+      <div class="nav-brand-row">
+        <a class="nav-brand-active" href="${root}">Philly Blinds</a>
+        <span class="nav-brand-sep">·</span>
+        <span class="nav-brand-other">Blindznation</span>
+      </div>
     </div>
-    <div class="nav-right">
-      <a class="nav-phone" href="tel:6097421720">
-        📞 (609) 742-1720 <span class="badge-24">24/7</span>
-      </a>
-      <a class="nav-cta" href="${isHome ? 'pages/consult.html' : '../pages/consult.html'}">Free consultation</a>
+    <div class="nav-main">
+      <a class="nav-logo" href="${root}">Philly<em>Blinds</em></a>
+      <div class="nav-links">
+        ${pages.map(p => {
+          const href = isHome ? p.href.replace('../', '') : p.href;
+          const active = p.label === activePage ? ' active' : '';
+          return `<a href="${href}" class="${active}">${p.label}</a>`;
+        }).join('')}
+      </div>
+      <div class="nav-right">
+        <a class="nav-phone" href="tel:6097421720">
+          📞 (609) 742-1720 <span class="badge-24">24/7</span>
+        </a>
+        <a class="nav-cta" href="${consultHref}">Free consultation</a>
+      </div>
     </div>
   `;
 }
@@ -41,6 +54,8 @@ function renderFooter(isHome) {
     <div class="footer-grid">
       <div class="footer-col">
         <div class="footer-logo">Philly<em>Blinds</em></div>
+        <div class="footer-brand-alt">Blindznation</div>
+        <div class="footer-company">Michael J. Healy Installations LLC</div>
         <div class="footer-tagline">Professional window treatment installation across Philadelphia &amp; surrounding areas.</div>
         <div class="footer-phone">(609) 742-1720</div>
       </div>
