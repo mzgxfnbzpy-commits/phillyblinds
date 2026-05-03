@@ -12,7 +12,6 @@ function renderNav(activePage) {
     { href: '../pages/measure.html', label: 'How to measure' },
     { href: '../pages/about.html', label: 'About' },
     { href: '../pages/fabric-calculator.html', label: 'Fabric calculator' },
-    { href: '../pages/product-specs.html', label: 'Product specs' },
     { href: '../pages/catalogs.html', label: 'Catalogs' },
   ];
   const isHome = activePage === 'home';
