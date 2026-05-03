@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Drapery &amp; Hardware — Philly Blinds</title>
+<link rel="stylesheet" href="../css/global.css">
+<style>
+.page-hero{background:var(--espresso);padding:44px 28px 40px}
+.breadcrumb{font-size:11px;color:var(--text-faint);margin-bottom:14px}
+.breadcrumb a{color:var(--text-muted);text-decoration:none}
+.breadcrumb a:hover{color:var(--cream)}
+.page-hero h1{font-size:32px;font-weight:500;color:var(--cream);letter-spacing:-0.5px;margin-bottom:10px;line-height:1.2}
+.page-hero .sub{font-size:14px;color:var(--text-dark);line-height:1.7;max-width:520px;margin-bottom:20px}
+.hero-trust{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.hero-trust a{font-size:14px;font-weight:500;color:var(--gold);text-decoration:none}
+.hero-trust-badge{font-size:11px;color:var(--text-faint);padding:5px 12px;border:0.5px solid var(--border-dark);border-radius:20px}
+.step-header{margin-bottom:24px}
+.step-num{font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;font-weight:500;margin-bottom:5px}
+.step-title{font-size:20px;font-weight:500;letter-spacing:-0.3px;color:#1a1a1a}
+.step-title-light{font-size:20px;font-weight:500;letter-spacing:-0.3px;color:var(--cream)}
+.step-sub{font-size:13px;color:#666;margin-top:4px;line-height:1.6}
+.step-sub-light{font-size:13px;color:var(--text-dark);margin-top:4px;line-height:1.6}
+.style-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-top:20px}
+.style-card{background:#fff;border:1.5px solid #e8e8e4;border-radius:12px;overflow:hidden;cursor:pointer;transition:border-color 0.15s,box-shadow 0.15s}
+.style-card:hover{border-color:var(--gold);box-shadow:0 2px 12px rgba(200,151,63,0.12)}
+.style-card.sel{border:2px solid var(--gold);box-shadow:0 2px 16px rgba(200,151,63,0.2)}
+.style-card.sel .style-label-bar{background:var(--gold)}
+.style-card.sel .style-name{color:var(--espresso)}
+.style-svg-wrap{background:#F8F4EE;padding:18px;display:flex;align-items:center;justify-content:center}
+.style-label-bar{background:#f2ede6;padding:12px 14px;transition:background 0.15s}
+.style-name{font-size:13px;font-weight:500;color:#222;margin-bottom:2px}
+.style-desc{font-size:11px;color:#888;line-height:1.4}
+.style-card.sel .style-desc{color:var(--espresso)}
+.fabric-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:20px}
+.fabric-card{background:#fff;border:1.5px solid #e8e8e4;border-radius:12px;padding:22px;cursor:pointer;transition:border-color 0.15s,box-shadow 0.15s}
+.fabric-card:hover{border-color:var(--gold);box-shadow:0 2px 12px rgba(200,151,63,0.1)}
+.fabric-card.sel{border:2px solid var(--gold);background:var(--gold-mid)}
+.fabric-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.fabric-icon-gold{background:rgba(200,151,63,0.15)}
+.fabric-icon-cream{background:rgba(245,236,215,0.6)}
+.fabric-icon-soft{background:#EFF5E8}
+.fabric-card h3{font-size:14px;font-weight:500;color:#111;margin-bottom:4px}
+.fabric-card p{font-size:12px;color:#666;line-height:1.5}
+.fabric-card a{font-size:12px;color:var(--gold);font-weight:500;text-decoration:none;display:inline-block;margin-top:6px}
+.fabric-card.sel h3{color:var(--espresso)}
+.hardware-brands{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.brand-pill{padding:6px 14px;border:1px solid #ddd;border-radius:20px;font-size:12px;color:#555;background:#fff;cursor:default}
+.brand-pill-more{padding:6px 14px;border:1px dashed #ccc;border-radius:20px;font-size:12px;color:#999;background:#fafafa}
+.hw-form{background:#fff;border:1px solid #e8e8e4;border-radius:12px;padding:24px}
+.hw-form-label{font-size:12px;font-weight:500;color:#444;margin-bottom:8px;display:block}
+.hw-section{margin-bottom:20px}
+.quote-box{background:var(--espresso-mid);border:0.5px solid var(--border-dark);border-radius:14px;padding:24px;position:sticky;top:70px}
+.quote-box-head{font-size:11px;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;font-weight:500;margin-bottom:16px}
+.quote-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:8px 0;border-bottom:0.5px solid var(--border-dark)}
+.quote-row:last-of-type{border-bottom:none}
+.quote-key{font-size:11px;color:var(--text-faint);white-space:nowrap}
+.quote-val{font-size:12px;color:var(--cream);text-align:right;line-height:1.4}
+.quote-note{font-size:11px;color:var(--text-faint);margin-top:14px;line-height:1.6;padding-top:14px;border-top:0.5px solid var(--border-dark)}
+.two-col{display:grid;grid-template-columns:1fr 340px;gap:28px;align-items:start}
+.contact-form-wrap{background:#fff;border:1px solid #e8e8e4;border-radius:12px;padding:28px}
+.success-box{display:none;background:#EAF3DE;border-radius:12px;padding:32px;text-align:center}
+.success-box h3{font-size:18px;font-weight:500;color:#27500A;margin-bottom:8px}
+.success-box p{font-size:13px;color:#3B6D11;line-height:1.6;margin-bottom:16px}
+.win-dimensions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.measure-hint{font-size:12px;color:var(--text-muted);margin-top:-6px;margin-bottom:14px;line-height:1.5}
+.measure-hint a{color:var(--gold);text-decoration:none;font-weight:500}
+.type-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.type-btn{padding:9px 16px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;cursor:pointer;background:#fff;color:#333;font-family:var(--font);transition:all 0.12s;text-align:center}
+.type-btn:hover{border-color:var(--gold)}
+.type-btn.sel{border:2px solid var(--gold);color:#854F0B;font-weight:500;background:var(--gold-mid)}
+@media(max-width:900px){.two-col{grid-template-columns:1fr}.quote-box{position:static}}
+@media(max-width:600px){.style-grid{grid-template-columns:repeat(2,1fr)}.fabric-grid{grid-template-columns:1fr}.page-hero h1{font-size:24px}}
+</style>
+</head>
+<body>
+<nav class="site-nav" id="site-nav"></nav>
+
+<div class="page-hero">
+  <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; Custom drapery &amp; hardware</div>
+  <div class="section-label">Fully custom &bull; Philadelphia &amp; surrounding area</div>
+  <h1>Custom Drapery &amp; Hardware</h1>
+  <p class="sub">Handcrafted drapery panels made to your exact windows, your fabric, your style. From pinch pleat to ripple fold — we handle every detail from measurement to installation.</p>
+  <div class="hero-trust">
+    <a href="tel:6097421720">(609) 742-1720</a>
+    <span class="hero-trust-badge">Available 24/7</span>
+    <span class="hero-trust-badge">Free in-home consultation</span>
+    <span class="hero-trust-badge">Quote within 24 hrs</span>
+  </div>
+</div>
+
+<div class="section section-warm">
+  <div class="step-header">
+    <div class="step-num">Step 1 of 4</div>
+    <div class="step-title">Choose your drapery style</div>
+    <div class="step-sub">Select the heading style that best fits your room. Not sure? We'll advise during your consultation.</div>
+  </div>
+  <div class="style-grid" id="style-grid">
+
+    <div class="style-card" onclick="selStyle(this,'Pinch Pleat')">
+      <div class="style-svg-wrap">
+        <svg viewBox="0 0 60 80" width="60" height="80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="6" width="52" height="4" rx="2" fill="#8B6914"/>
+          <line x1="4" y1="8" x2="56" y2="8" stroke="#8B6914" stroke-width="1"/>
+          <g>
+            <line x1="16" y1="10" x2="13" y2="20" stroke="#C8973F" stroke-width="1.5"/>
+            <line x1="16" y1="10" x2="16" y2="20" stroke="#C8973F" stroke-width="1.5"/>
+            <line x1="16" y1="10" x2="19" y2="20" stroke="#C8973F" stroke-width="1.5"/>
+            <line x1="13" y1="20" x2="7" y2="75" stroke="#C8973F" stroke-width="1.5"/>
+            <line x1="19" y1="20" x2="25" y2="75" stroke="#C8973F" stroke-width="1.5"/>
+            <line x1="16" y1="20" x2="16" y2="75" stroke="#F5ECD7" stroke-width="0.8"/>
+          </g>
+          <g>
+            <line x1="37" y1="10" x2="34" y2="20" stroke="#C8973F" stroke-width="1.5"/>
+            <line x1="37" y1="10" x2="37" y2="20" stroke="#C8973F" stroke-width="1.5"/>
+            <line x1="37" y1="10" x2="40" y2="20" stroke="#C8973F" stroke-width="1.5"/>
+            <line x1="34" y1="20" x2="28" y2="75" stroke="#C8973F" stroke-width="1.5"/>
+            <line x1="40" y1="20" x2="46" y2="75" stroke="#C8973F" stroke-width="1.5"/>
+            <line x1="37" y1="20" x2="37" y2="75" stroke="#F5ECD7" stroke-width="0.8"/>
+          </g>
+          <line x1="7" y1="75" x2="25" y2="75" stroke="#8B6914" stroke-width="0.7"/>
+          <line x1="28" y1="75" x2="46" y2="75" stroke="#8B6914" stroke-width="0.7"/>
+        </svg>
+      </div>
+      <div class="style-label-bar">
+        <div class="style-name">Pinch Pleat</div>
+        <div class="style-desc">Classic 3-finger pleats, formal &amp; traditional</div>
+      </div>
+    </div>
+
+    <div class="style-card" onclick="selStyle(this,'Ripple Fold')">
+      <div class="style-svg-wrap">
+        <svg viewBox="0 0 60 80" width="60" height="80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="6" width="52" height="4" rx="2" fill="#8B6914"/>
+          <path d="M10 12 C14 24, 10 38, 14 50 C18 62, 14 70, 14 76" stroke="#C8973F" stroke-width="1.8" fill="none"/>
+          <path d="M20 12 C24 24, 20 38, 24 50 C28 62, 24 70, 24 76" stroke="#F5ECD7" stroke-width="1.2" fill="none"/>
+          <path d="M30 12 C34 24, 30 38, 34 50 C38 62, 34 70, 34 76" stroke="#C8973F" stroke-width="1.8" fill="none"/>
+          <path d="M40 12 C44 24, 40 38, 44 50 C48 62, 44 70, 44 76" stroke="#F5ECD7" stroke-width="1.2" fill="none"/>
+          <path d="M50 12 C54 24, 50 38, 54 50 C58 62, 54 70, 54 76" stroke="#C8973F" stroke-width="1.8" fill="none"/>
+        </svg>
+      </div>
+      <div class="style-label-bar">
+        <div class="style-name">Ripple Fold</div>
+        <div class="style-desc">S-curve wave, modern &amp; clean</div>
+      </div>
+    </div>
+
+    <div class="style-card" onclick="selStyle(this,'Eyelet / Grommet')">
+      <div class="style-svg-wrap">
+        <svg viewBox="0 0 60 80" width="60" height="80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="10" width="52" height="3.5" rx="1.5" fill="#8B6914"/>
+          <circle cx="14" cy="11.5" r="4.5" stroke="#8B6914" stroke-width="1.8" fill="#F8F4EE"/>
+          <circle cx="26" cy="11.5" r="4.5" stroke="#8B6914" stroke-width="1.8" fill="#F8F4EE"/>
+          <circle cx="38" cy="11.5" r="4.5" stroke="#8B6914" stroke-width="1.8" fill="#F8F4EE"/>
+          <circle cx="50" cy="11.5" r="4.5" stroke="#8B6914" stroke-width="1.8" fill="#F8F4EE"/>
+          <path d="M8 16 C12 26, 8 34, 14 40 C20 46, 20 54, 14 60 C10 66, 10 72, 12 76" stroke="#C8973F" stroke-width="1.5" fill="none"/>
+          <path d="M20 16 C20 26, 20 34, 20 44 C20 54, 20 64, 20 76" stroke="#F5ECD7" stroke-width="1" fill="none"/>
+          <path d="M32 16 C32 26, 32 34, 32 44 C32 54, 32 64, 32 76" stroke="#C8973F" stroke-width="1.5" fill="none"/>
+          <path d="M44 16 C44 26, 44 34, 44 44 C44 54, 44 64, 44 76" stroke="#F5ECD7" stroke-width="1" fill="none"/>
+          <path d="M52 16 C56 26, 52 34, 58 40 C64 46, 56 54, 50 60 C46 66, 46 72, 50 76" stroke="#C8973F" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <div class="style-label-bar">
+        <div class="style-name">Eyelet / Grommet</div>
+        <div class="style-desc">Metal rings at top, contemporary</div>
+      </div>
+    </div>
+
+    <div class="style-card" onclick="selStyle(this,'Tab Top')">
+      <div class="style-svg-wrap">
+        <svg viewBox="0 0 60 80" width="60" height="80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="8" width="52" height="3.5" rx="1.5" fill="#8B6914"/>
+          <rect x="11" y="6" width="6" height="8" rx="2" stroke="#C8973F" stroke-width="1.5" fill="none"/>
+          <rect x="23" y="6" width="6" height="8" rx="2" stroke="#C8973F" stroke-width="1.5" fill="none"/>
+          <rect x="35" y="6" width="6" height="8" rx="2" stroke="#C8973F" stroke-width="1.5" fill="none"/>
+          <rect x="47" y="6" width="6" height="8" rx="2" stroke="#C8973F" stroke-width="1.5" fill="none"/>
+          <line x1="8" y1="16" x2="8" y2="76" stroke="#C8973F" stroke-width="1.5"/>
+          <line x1="52" y1="16" x2="52" y2="76" stroke="#C8973F" stroke-width="1.5"/>
+          <line x1="19" y1="16" x2="19" y2="76" stroke="#F5ECD7" stroke-width="1"/>
+          <line x1="30" y1="16" x2="30" y2="76" stroke="#F5ECD7" stroke-width="1"/>
+          <line x1="41" y1="16" x2="41" y2="76" stroke="#F5ECD7" stroke-width="1"/>
+          <line x1="8" y1="76" x2="52" y2="76" stroke="#8B6914" stroke-width="0.7"/>
+        </svg>
+      </div>
+      <div class="style-label-bar">
+        <div class="style-name">Tab Top</div>
+        <div class="style-desc">Fabric loops over rod, casual &amp; relaxed</div>
+      </div>
+    </div>
+
+    <div class="style-card" onclick="selStyle(this,'Goblet Pleat')">
+      <div class="style-svg-wrap">
+        <svg viewBox="0 0 60 80" width="60" height="80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="6" width="52" height="4" rx="2" fill="#8B6914"/>
+          <path d="M11 10 C8 12, 7 16, 9 20 C11 24, 15 24, 17 20 C19 16, 18 12, 15 10 Z" stroke="#C8973F" stroke-width="1.4" fill="rgba(200,151,63,0.15)"/>
+          <line x1="11" y1="20" x2="7" y2="76" stroke="#C8973F" stroke-width="1.5"/>
+          <line x1="17" y1="20" x2="23" y2="76" stroke="#C8973F" stroke-width="1.5"/>
+          <line x1="14" y1="24" x2="14" y2="76" stroke="#F5ECD7" stroke-width="0.8"/>
+          <path d="M28 10 C25 12, 24 16, 26 20 C28 24, 32 24, 34 20 C36 16, 35 12, 32 10 Z" stroke="#C8973F" stroke-width="1.4" fill="rgba(200,151,63,0.15)"/>
+          <line x1="26" y1="20" x2="22" y2="76" stroke="#C8973F" stroke-width="1.5"/>
+          <line x1="34" y1="20" x2="38" y2="76" stroke="#C8973F" stroke-width="1.5"/>
+          <line x1="30" y1="24" x2="30" y2="76" stroke="#F5ECD7" stroke-width="0.8"/>
+          <path d="M44 10 C41 12, 40 16, 42 20 C44 24, 48 24, 50 20 C52 16, 51 12, 48 10 Z" stroke="#C8973F" stroke-width="1.4" fill="rgba(200,151,63,0.15)"/>
+          <line x1="42" y1="20" x2="37" y2="76" stroke="#C8973F" stroke-width="1.5"/>
+          <line x1="50" y1="20" x2="55" y2="76" stroke="#C8973F" stroke-width="1.5"/>
+          <line x1="46" y1="24" x2="46" y2="76" stroke="#F5ECD7" stroke-width="0.8"/>
+        </svg>
+      </div>
+      <div class="style-label-bar">
+        <div class="style-name">Goblet Pleat</div>
+        <div class="style-desc">Wine-glass pleats, luxurious &amp; formal</div>
+      </div>
+    </div>
+
+    <div class="style-card" onclick="selStyle(this,'Flat Panel')">
+      <div class="style-svg-wrap">
+        <svg viewBox="0 0 60 80" width="60" height="80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="6" width="52" height="4" rx="2" fill="#8B6914"/>
+          <rect x="8" y="10" width="44" height="66" rx="1" fill="rgba(200,151,63,0.12)" stroke="#C8973F" stroke-width="1.4"/>
+          <line x1="22" y1="10" x2="22" y2="76" stroke="#F5ECD7" stroke-width="0.9"/>
+          <line x1="38" y1="10" x2="38" y2="76" stroke="#F5ECD7" stroke-width="0.9"/>
+        </svg>
+      </div>
+      <div class="style-label-bar">
+        <div class="style-name">Flat Panel</div>
+        <div class="style-desc">Minimalist flat hanging, clean &amp; modern</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section section-white">
+  <div class="step-header">
+    <div class="step-num">Step 2 of 4</div>
+    <div class="step-title">Who is supplying the fabric?</div>
+    <div class="step-sub">We work with all three paths — choose what applies to your project.</div>
+  </div>
+  <div class="fabric-grid">
+
+    <div class="fabric-card" onclick="selFabricPath(this,'We supply fabric')">
+      <div class="fabric-icon fabric-icon-gold">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="5" width="14" height="10" rx="2" stroke="#C8973F" stroke-width="1.5"/>
+          <line x1="3" y1="9" x2="17" y2="9" stroke="#C8973F" stroke-width="1"/>
+        </svg>
+      </div>
+      <h3>We supply the fabric</h3>
+      <p>Choose from our curated fabric collection. We bring samples to your home during the consultation and help you select the perfect material, weight, and lining.</p>
+    </div>
+
+    <div class="fabric-card" onclick="selFabricPath(this,'Customer supplies fabric')">
+      <div class="fabric-icon fabric-icon-cream">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 16 L10 4 L15 16" stroke="#C8973F" stroke-width="1.5" stroke-linejoin="round"/>
+          <line x1="7" y1="12" x2="13" y2="12" stroke="#C8973F" stroke-width="1"/>
+        </svg>
+      </div>
+      <h3>I'm supplying my own fabric</h3>
+      <p>Have fabric you love? Ship it to us or drop it off. We'll handle the cutting, construction, lining, and hardware. Fabric must meet minimum yardage requirements.</p>
+    </div>
+
+    <div class="fabric-card" onclick="selFabricPath(this,'Not sure yet')">
+      <div class="fabric-icon fabric-icon-soft">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10" cy="10" r="7" stroke="#5A8040" stroke-width="1.5"/>
+          <path d="M10 6 C10 6, 8 7.5, 8 9 C8 10.5, 10 10.5, 10 12" stroke="#5A8040" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="10" cy="14.5" r="0.8" fill="#5A8040"/>
+        </svg>
+      </div>
+      <h3>Not sure yet</h3>
+      <p>No problem at all. Book a free consultation and we'll walk you through all the options together. There's no commitment required.</p>
+      <a href="consult.html">Book free consult &rsaquo;</a>
+    </div>
+
+  </div>
+</div>
+
+<div class="section section-warm">
+  <div class="step-header">
+    <div class="step-num">Step 3 of 4</div>
+    <div class="step-title">Drapery hardware</div>
+    <div class="step-sub">Configure your rod, finish, and accessories. We carry all major brands and can source specialty hardware on request.</div>
+  </div>
+
+  <div class="hardware-brands">
+    <span class="brand-pill">Kirsch</span>
+    <span class="brand-pill">Paris Texas</span>
+    <span class="brand-pill">Orion</span>
+    <span class="brand-pill">Forest</span>
+    <span class="brand-pill">Select</span>
+    <span class="brand-pill-more">+ more on request</span>
+  </div>
+
+  <div class="hw-form">
+    <div class="hw-section">
+      <span class="hw-form-label">Hardware type</span>
+      <div class="type-row" id="hw-type">
+        <button class="type-btn" onclick="selOpt(this,'hw-type');updateQuote()">Traverse rod</button>
+        <button class="type-btn" onclick="selOpt(this,'hw-type');updateQuote()">Decorative rod</button>
+        <button class="type-btn" onclick="selOpt(this,'hw-type');updateQuote()">Track system</button>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Brand preference</label>
+        <select id="hw-brand" onchange="updateQuote()">
+          <option value="">Select a brand</option>
+          <option>Kirsch</option>
+          <option>Paris Texas</option>
+          <option>Orion</option>
+          <option>Forest</option>
+          <option>Select</option>
+          <option>Other (specify in notes)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Rod diameter</label>
+        <div class="opt-row" id="hw-diameter">
+          <button class="opt-btn" onclick="selOpt(this,'hw-diameter');updateQuote()">3/4&quot;</button>
+          <button class="opt-btn" onclick="selOpt(this,'hw-diameter');updateQuote()">1&quot;</button>
+          <button class="opt-btn" onclick="selOpt(this,'hw-diameter');updateQuote()">1-3/8&quot;</button>
+          <button class="opt-btn" onclick="selOpt(this,'hw-diameter');updateQuote()">1-3/4&quot;</button>
+          <button class="opt-btn" onclick="selOpt(this,'hw-diameter');updateQuote()">2&quot;</button>
+        </div>
+      </div>
+    </div>
+    <div class="hw-section">
+      <span class="hw-form-label">Finish</span>
+      <div class="opt-row" id="hw-finish">
+        <button class="opt-btn" onclick="selOpt(this,'hw-finish');updateQuote()">Matte Black</button>
+        <button class="opt-btn" onclick="selOpt(this,'hw-finish');updateQuote()">Polished Nickel</button>
+        <button class="opt-btn" onclick="selOpt(this,'hw-finish');updateQuote()">Brushed Gold</button>
+        <button class="opt-btn" onclick="selOpt(this,'hw-finish');updateQuote()">Bronze</button>
+        <button class="opt-btn" onclick="selOpt(this,'hw-finish');updateQuote()">Chrome</button>
+        <button class="opt-btn" onclick="selOpt(this,'hw-finish');updateQuote()">White</button>
+      </div>
+    </div>
+    <div class="hw-section">
+      <span class="hw-form-label">Finial style</span>
+      <div class="opt-row" id="hw-finial">
+        <button class="opt-btn" onclick="selOpt(this,'hw-finial');updateQuote()">Ball</button>
+        <button class="opt-btn" onclick="selOpt(this,'hw-finial');updateQuote()">Spear</button>
+        <button class="opt-btn" onclick="selOpt(this,'hw-finial');updateQuote()">Disc</button>
+        <button class="opt-btn" onclick="selOpt(this,'hw-finial');updateQuote()">Returns (no finial)</button>
+      </div>
+    </div>
+    <div class="hw-section">
+      <span class="hw-form-label">Rings</span>
+      <div class="opt-row" id="hw-rings">
+        <button class="opt-btn" onclick="selOpt(this,'hw-rings');updateQuote()">Yes &ndash; clip rings</button>
+        <button class="opt-btn" onclick="selOpt(this,'hw-rings');updateQuote()">Yes &ndash; ripple fold rings</button>
+        <button class="opt-btn" onclick="selOpt(this,'hw-rings');updateQuote()">No rings needed</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section section-white">
+  <div class="step-header">
+    <div class="step-num">Step 4 of 4</div>
+    <div class="step-title">Window dimensions</div>
+    <div class="step-sub">Enter your measurements below. If you haven't measured yet, our measuring guide walks you through it step by step.</div>
+  </div>
+  <p class="measure-hint">Need help measuring? <a href="measure.html">See our drapery measuring guide &rsaquo;</a></p>
+
+  <div class="two-col">
+    <div>
+      <div class="hw-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Number of windows</label>
+            <select id="win-qty" onchange="updateWinDims();updateQuote()">
+              <option value="1">1 window</option>
+              <option value="2">2 windows</option>
+              <option value="3">3 windows</option>
+              <option value="4">4 windows</option>
+              <option value="5">5 windows</option>
+              <option value="6">6 windows</option>
+              <option value="7">7 windows</option>
+              <option value="8">8 windows</option>
+              <option value="9">9 windows</option>
+              <option value="10">10 windows</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Mount type</label>
+            <div class="opt-row" id="mount-type">
+              <button class="opt-btn" onclick="selOpt(this,'mount-type');updateQuote()">Ceiling mount</button>
+              <button class="opt-btn" onclick="selOpt(this,'mount-type');updateQuote()">Wall mount</button>
+              <button class="opt-btn" onclick="selOpt(this,'mount-type');updateQuote()">Crown molding</button>
+            </div>
+          </div>
+        </div>
+        <div id="win-dims-wrap"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="quote-box" id="quote-box">
+        <div class="quote-box-head">Your quote summary</div>
+        <div class="quote-row"><span class="quote-key">Drapery style</span><span class="quote-val" id="qs-style">&mdash;</span></div>
+        <div class="quote-row"><span class="quote-key">Fabric path</span><span class="quote-val" id="qs-fabric">&mdash;</span></div>
+        <div class="quote-row"><span class="quote-key">Hardware type</span><span class="quote-val" id="qs-hwtype">&mdash;</span></div>
+        <div class="quote-row"><span class="quote-key">Brand</span><span class="quote-val" id="qs-brand">&mdash;</span></div>
+        <div class="quote-row"><span class="quote-key">Finish</span><span class="quote-val" id="qs-finish">&mdash;</span></div>
+        <div class="quote-row"><span class="quote-key">Diameter</span><span class="quote-val" id="qs-diam">&mdash;</span></div>
+        <div class="quote-row"><span class="quote-key">Finial</span><span class="quote-val" id="qs-finial">&mdash;</span></div>
+        <div class="quote-row"><span class="quote-key">Rings</span><span class="quote-val" id="qs-rings">&mdash;</span></div>
+        <div class="quote-row"><span class="quote-key">Windows</span><span class="quote-val" id="qs-dims">&mdash;</span></div>
+        <div class="quote-row"><span class="quote-key">Mount type</span><span class="quote-val" id="qs-mount">&mdash;</span></div>
+        <div class="quote-note">Custom drapery is quoted per project. We'll prepare your detailed quote within 24 hours of receiving your request.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section section-warm">
+  <div class="step-header">
+    <div class="step-num">Almost done</div>
+    <div class="step-title">Request your custom quote</div>
+    <div class="step-sub">Leave your contact details and we'll follow up with a detailed written quote within 24 hours.</div>
+  </div>
+
+  <div id="contact-form-section">
+    <div class="contact-form-wrap">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your name *</label>
+          <input type="text" id="cf-name" placeholder="Jane Smith">
+        </div>
+        <div class="form-group">
+          <label>Phone *</label>
+          <input type="tel" id="cf-phone" placeholder="(215) 555-0100">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="cf-email" placeholder="jane@example.com">
+      </div>
+      <div class="form-group">
+        <label>Notes or questions</label>
+        <textarea id="cf-notes" placeholder="Anything helpful — room names, ceiling height, lining preference, timeline, etc."></textarea>
+      </div>
+      <div class="call-strip" style="margin-bottom:16px">
+        <div class="call-text">Prefer to talk it through? We're here 24/7 and happy to walk the whole project with you by phone.</div>
+        <a class="call-num" href="tel:6097421720">(609) 742-1720</a>
+      </div>
+      <button class="btn-gold" onclick="submitQuoteForm()" style="width:100%;padding:14px;font-size:14px">Request custom quote</button>
+    </div>
+  </div>
+
+  <div class="success-box" id="form-success">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:12px">
+      <circle cx="20" cy="20" r="18" stroke="#27500A" stroke-width="2"/>
+      <path d="M12 20 L18 26 L28 14" stroke="#27500A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <h3>Quote request received</h3>
+    <p>Thank you — we'll review your selections and prepare a detailed written quote within 24 hours. You'll receive it by phone or email, whichever you prefer.</p>
+    <p style="margin-top:8px">For anything urgent, reach us any time at <strong>(609) 742-1720</strong>.</p>
+    <a class="btn-dark" href="consult.html" style="margin-top:16px;display:inline-block">Book a free in-home visit</a>
+  </div>
+</div>
+
+<div class="cta-banner">
+  <div>
+    <h2>Not sure where to start?</h2>
+    <p>Book a free in-home consultation — we'll measure, advise, and quote everything on the spot.</p>
+  </div>
+  <div class="cta-banner-btns">
+    <a class="btn-dark" href="consult.html">Book free consultation</a>
+    <a class="btn-outline" href="tel:6097421720">(609) 742-1720</a>
+  </div>
+</div>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="../js/shared.js"></script>
+<script>
+renderNav('Drapery & hardware');
+renderFooter(false);
+
+var _selStyle = '';
+var _selFabric = '';
+
+function selStyle(el, name) {
+  document.querySelectorAll('#style-grid .style-card').forEach(function(c) { c.classList.remove('sel'); });
+  if (_selStyle === name) {
+    _selStyle = '';
+  } else {
+    el.classList.add('sel');
+    _selStyle = name;
+  }
+  updateQuote();
+}
+
+function selFabricPath(el, name) {
+  document.querySelectorAll('.fabric-card').forEach(function(c) { c.classList.remove('sel'); });
+  if (_selFabric === name) {
+    _selFabric = '';
+  } else {
+    el.classList.add('sel');
+    _selFabric = name;
+  }
+  updateQuote();
+}
+
+function updateWinDims() {
+  var qty = parseInt(document.getElementById('win-qty').value, 10);
+  var wrap = document.getElementById('win-dims-wrap');
+  var html = '';
+  if (qty === 1) {
+    html += '<div class="win-dimensions">';
+    html += '<div class="form-group"><label>Width (inches)</label><input type="number" id="w-w1" min="12" max="240" placeholder="e.g. 84" onchange="updateQuote()"></div>';
+    html += '<div class="form-group"><label>Height (inches)</label><input type="number" id="w-h1" min="12" max="200" placeholder="e.g. 96" onchange="updateQuote()"></div>';
+    html += '</div>';
+  } else {
+    for (var i = 1; i <= qty; i++) {
+      html += '<div style="margin-bottom:10px"><div class="hw-form-label" style="font-size:11px;color:#888;margin-bottom:6px">Window ' + i + '</div>';
+      html += '<div class="win-dimensions">';
+      html += '<div class="form-group"><label>Width (in)</label><input type="number" id="w-w' + i + '" min="12" max="240" placeholder="e.g. 84" onchange="updateQuote()"></div>';
+      html += '<div class="form-group"><label>Height (in)</label><input type="number" id="w-h' + i + '" min="12" max="200" placeholder="e.g. 96" onchange="updateQuote()"></div>';
+      html += '</div></div>';
+    }
+  }
+  wrap.innerHTML = html;
+}
+
+function updateQuote() {
+  var qty = parseInt(document.getElementById('win-qty').value, 10);
+  var dims = [];
+  for (var i = 1; i <= qty; i++) {
+    var wEl = document.getElementById('w-w' + i);
+    var hEl = document.getElementById('w-h' + i);
+    if (wEl && hEl && wEl.value && hEl.value) {
+      dims.push(wEl.value + '"W x ' + hEl.value + '"H');
+    }
+  }
+  var brandEl = document.getElementById('hw-brand');
+  var brandVal = brandEl && brandEl.value ? brandEl.value : '—';
+
+  document.getElementById('qs-style').textContent = _selStyle || '—';
+  document.getElementById('qs-fabric').textContent = _selFabric || '—';
+  document.getElementById('qs-hwtype').textContent = getOpt('hw-type');
+  document.getElementById('qs-brand').textContent = brandVal;
+  document.getElementById('qs-finish').textContent = getOpt('hw-finish');
+  document.getElementById('qs-diam').textContent = getOpt('hw-diameter');
+  document.getElementById('qs-finial').textContent = getOpt('hw-finial');
+  document.getElementById('qs-rings').textContent = getOpt('hw-rings');
+  document.getElementById('qs-dims').textContent = dims.length ? dims.join(', ') : (qty + ' window' + (qty > 1 ? 's' : '') + ' — dims pending');
+  document.getElementById('qs-mount').textContent = getOpt('mount-type');
+}
+
+function submitQuoteForm() {
+  var name = document.getElementById('cf-name').value.trim();
+  var phone = document.getElementById('cf-phone').value.trim();
+  if (!name || !phone) {
+    alert('Please enter your name and phone number so we can follow up.');
+    return;
+  }
+  document.getElementById('contact-form-section').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+}
+
+updateWinDims();
+updateQuote();
+</script>
+</body>
+</html>

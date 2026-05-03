@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plantation Shutters — Philly Blinds</title>
+<link rel="stylesheet" href="../css/global.css">
+<style>
+.page-hero{background:var(--espresso);padding:48px 28px 44px;position:relative;overflow:hidden}
+.hero-deco{position:absolute;right:0;top:0;bottom:0;width:180px;background:var(--espresso-mid);opacity:0.5}
+.hero-inner{max-width:560px;position:relative;z-index:1}
+.breadcrumb{font-size:11px;color:var(--text-faint);margin-bottom:16px}
+.breadcrumb a{color:var(--text-muted);text-decoration:none}
+.breadcrumb a:hover{color:var(--cream)}
+.page-hero h1{font-size:32px;font-weight:500;color:var(--cream);letter-spacing:-0.5px;margin-bottom:10px;line-height:1.2}
+.page-hero p{font-size:14px;color:var(--text-dark);line-height:1.7;margin-bottom:20px;max-width:440px}
+.hero-badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.hero-phone{font-size:12px;color:var(--text-dark);margin-top:14px}
+.hero-phone a{color:var(--gold);font-weight:500;text-decoration:none}
+
+.quote-notice{background:#FBF7F0;border:1px solid rgba(200,151,63,0.3);border-radius:12px;padding:22px 24px;margin-bottom:24px;display:flex;gap:20px;align-items:flex-start}
+.quote-notice-icon{flex-shrink:0;color:var(--gold)}
+.quote-notice-heading{font-size:14px;font-weight:500;color:#1a1a1a;margin-bottom:8px}
+.quote-notice-body{font-size:13px;color:#555;line-height:1.7;margin-bottom:10px}
+.quote-notice-phone{font-size:13px}
+.quote-notice-phone a{color:var(--gold);font-weight:500;text-decoration:none}
+
+.config-two-col{display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start}
+@media(max-width:900px){.config-two-col{grid-template-columns:1fr}}
+
+.config-step-heading{font-size:15px;font-weight:500;color:#1a1a1a;margin-bottom:12px;letter-spacing:-0.2px}
+
+.mat-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px}
+@media(max-width:600px){.mat-cards{grid-template-columns:1fr}}
+.mat-card{border:1px solid #e8e8e4;border-radius:8px;padding:10px 12px}
+.mat-card-name{font-size:11px;font-weight:600;color:#333;margin-bottom:3px}
+.mat-card-desc{font-size:10px;color:#777;line-height:1.5}
+
+.config-note{font-size:11px;color:#888;line-height:1.6;margin-top:-8px;margin-bottom:16px}
+
+.config-section{margin-bottom:26px}
+
+.config-cards-4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px}
+@media(max-width:700px){.config-cards-4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:400px){.config-cards-4{grid-template-columns:1fr}}
+
+.special-note{background:#FFF8EC;border:1px solid rgba(200,151,63,0.4);border-radius:8px;padding:12px 14px;font-size:12px;color:#7A4F00;line-height:1.6;margin-top:4px;margin-bottom:12px}
+
+.motor-brand-selector{background:#f9f9f7;border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-top:8px;margin-bottom:4px}
+.motor-brand-selector .form-group{margin-bottom:6px}
+.motor-brand-note{font-size:11px;color:#888;margin-top:4px}
+
+.custom-color-note{background:#F7F5FF;border:1px solid rgba(100,80,200,0.15);border-radius:8px;padding:10px 14px;font-size:12px;color:#444;line-height:1.6;margin-top:4px;margin-bottom:4px}
+
+.measure-info-card{background:#FBF7F0;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 16px;margin-top:14px}
+.measure-info-card h4{font-size:13px;font-weight:500;color:#1a1a1a;margin-bottom:6px}
+.measure-info-card p{font-size:12px;color:#555;line-height:1.7;margin-bottom:10px}
+
+.quote-box{background:var(--espresso);border-radius:14px;padding:22px;position:sticky;top:70px}
+.quote-box-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:16px}
+.quote-row{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;margin-bottom:9px;gap:8px}
+.quote-row-label{color:var(--text-muted);white-space:nowrap}
+.quote-row-val{color:var(--cream);text-align:right;font-weight:500}
+.quote-divider{border:none;border-top:0.5px solid var(--border-dark);margin:14px 0}
+.quote-notice-inline{font-size:11px;color:var(--text-dark);line-height:1.6;margin-bottom:14px}
+.quote-box-phone{font-size:12px;color:var(--text-muted);text-align:center;margin-top:10px}
+.quote-box-phone a{color:var(--gold);text-decoration:none;font-weight:500}
+
+.success-box{background:#EAF3DE;border-radius:12px;padding:22px;text-align:center;margin-top:16px}
+.success-box h3{font-size:15px;font-weight:500;color:#27500A;margin-bottom:6px}
+.success-box p{font-size:13px;color:#3B6D11;line-height:1.6}
+
+.brand-pill{background:var(--espresso-mid);border:0.5px solid var(--border-dark);border-radius:8px;padding:8px 16px;font-size:12px;font-weight:500;color:var(--cream)}
+.brand-note{font-size:13px;color:var(--text-dark);margin-top:14px;line-height:1.6}
+.pill-row{display:flex;flex-wrap:wrap;gap:8px}
+
+@media(max-width:600px){
+  .config-two-col{grid-template-columns:1fr}
+  .mat-cards{grid-template-columns:1fr}
+  .config-cards-4{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav" id="site-nav"></nav>
+
+<!-- SECTION 1: HERO -->
+<div class="page-hero">
+  <div class="hero-deco"></div>
+  <div class="hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; Plantation shutters</div>
+    <h1>Plantation Shutters</h1>
+    <p>Custom-crafted, professionally installed. Always quoted per project.</p>
+    <div class="hero-badges">
+      <span class="badge badge-quote">Custom quote</span>
+      <span style="font-size:12px;color:var(--text-muted)">&middot; professional installation included</span>
+    </div>
+    <div class="hero-phone"><a href="tel:6097421720">(609) 742-1720</a> &middot; 24/7</div>
+  </div>
+</div>
+
+<!-- SECTION 2: CUSTOM QUOTE NOTICE -->
+<div class="section section-warm">
+  <div class="quote-notice">
+    <div class="quote-notice-icon">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <rect x="4" y="10" width="24" height="14" rx="2" stroke="#C8973F" stroke-width="1.5" fill="none"/>
+        <line x1="4" y1="14" x2="28" y2="14" stroke="#C8973F" stroke-width="1.2"/>
+        <line x1="8" y1="14" x2="8" y2="10" stroke="#C8973F" stroke-width="1.2"/>
+        <line x1="12" y1="14" x2="12" y2="11.5" stroke="#C8973F" stroke-width="1"/>
+        <line x1="16" y1="14" x2="16" y2="10" stroke="#C8973F" stroke-width="1.2"/>
+        <line x1="20" y1="14" x2="20" y2="11.5" stroke="#C8973F" stroke-width="1"/>
+        <line x1="24" y1="14" x2="24" y2="10" stroke="#C8973F" stroke-width="1.2"/>
+        <line x1="4" y1="18" x2="7" y2="18" stroke="#C8973F" stroke-width="1"/>
+        <line x1="9" y1="18" x2="12" y2="18" stroke="#C8973F" stroke-width="1"/>
+        <line x1="14" y1="18" x2="17" y2="18" stroke="#C8973F" stroke-width="1"/>
+        <line x1="19" y1="18" x2="22" y2="18" stroke="#C8973F" stroke-width="1"/>
+        <line x1="24" y1="18" x2="28" y2="18" stroke="#C8973F" stroke-width="1"/>
+      </svg>
+    </div>
+    <div>
+      <div class="quote-notice-heading">Every shutter is custom measured and fabricated</div>
+      <div class="quote-notice-body">Plantation shutters are built to the exact dimensions of your windows. We'll measure during a free in-home visit, fabricate your shutters, and install them — all handled by our team. You'll receive a detailed written quote within 24 hours.</div>
+      <div class="quote-notice-phone"><a href="tel:6097421720">(609) 742-1720</a> &middot; call or text anytime</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: CONFIGURATOR -->
+<div class="section section-white">
+  <div class="section-label">Configure your shutters</div>
+  <div class="section-title">Tell us about your project</div>
+  <div class="section-sub">Your selections help us prepare an accurate quote.</div>
+
+  <div class="config-two-col">
+
+    <!-- LEFT: Form -->
+    <div>
+
+      <!-- STEP A: Material -->
+      <div class="config-section">
+        <div class="config-step-heading">Material</div>
+        <div class="opt-row" id="shutter-material">
+          <button class="opt-btn" onclick="selOpt(this,'shutter-material');updateShutterQuote()">Basswood</button>
+          <button class="opt-btn" onclick="selOpt(this,'shutter-material');updateShutterQuote()">Polywood / Composite</button>
+          <button class="opt-btn" onclick="selOpt(this,'shutter-material');updateShutterQuote()">MDF (painted)</button>
+        </div>
+        <div class="mat-cards">
+          <div class="mat-card">
+            <div class="mat-card-name">Basswood</div>
+            <div class="mat-card-desc">Real wood. Rich grain, warmth. Best for low-humidity rooms.</div>
+          </div>
+          <div class="mat-card">
+            <div class="mat-card-name">Polywood / Composite</div>
+            <div class="mat-card-desc">Moisture-resistant. Perfect for bathrooms, kitchens, coastal homes.</div>
+          </div>
+          <div class="mat-card">
+            <div class="mat-card-name">MDF (painted)</div>
+            <div class="mat-card-desc">Budget-friendly. Smooth finish. Painted only, not stained.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP B: Louver size -->
+      <div class="config-section">
+        <div class="config-step-heading">Louver size</div>
+        <div class="opt-row" id="louver-size">
+          <button class="opt-btn" onclick="selOpt(this,'louver-size');updateShutterQuote()">2.5&quot;</button>
+          <button class="opt-btn" onclick="selOpt(this,'louver-size');updateShutterQuote()">3.5&quot;</button>
+          <button class="opt-btn" onclick="selOpt(this,'louver-size');updateShutterQuote()">4.5&quot;</button>
+        </div>
+        <div class="config-note">Larger louvers provide more view-through and a more contemporary look. 3.5&quot; is the most popular.</div>
+      </div>
+
+      <!-- STEP C: Panel configuration -->
+      <div class="config-section">
+        <div class="config-step-heading">Panel configuration</div>
+        <div class="opt-row" id="panel-config">
+          <button class="opt-btn" onclick="selOpt(this,'panel-config');handleSpecialShape(this);updateShutterQuote()">Full height</button>
+          <button class="opt-btn" onclick="selOpt(this,'panel-config');handleSpecialShape(this);updateShutterQuote()">Caf&eacute; style</button>
+          <button class="opt-btn" onclick="selOpt(this,'panel-config');handleSpecialShape(this);updateShutterQuote()">Tier-on-tier</button>
+          <button class="opt-btn" onclick="selOpt(this,'panel-config');handleSpecialShape(this);updateShutterQuote()">Special shape</button>
+        </div>
+        <div class="config-cards-4">
+          <div class="mat-card">
+            <div class="mat-card-name">Full height</div>
+            <div class="mat-card-desc">Covers the entire window in one panel set.</div>
+          </div>
+          <div class="mat-card">
+            <div class="mat-card-name">Caf&eacute; style</div>
+            <div class="mat-card-desc">Covers lower half only. Keeps top open for light and view.</div>
+          </div>
+          <div class="mat-card">
+            <div class="mat-card-name">Tier-on-tier</div>
+            <div class="mat-card-desc">Top and bottom panels operate independently.</div>
+          </div>
+          <div class="mat-card">
+            <div class="mat-card-name">Special shape</div>
+            <div class="mat-card-desc">Arched tops, circles, angles, French doors. Always custom.</div>
+          </div>
+        </div>
+        <div id="special-shape-note" style="display:none" class="special-note">Special shape shutters are always custom-engineered. Please describe your window shape in the notes field at the bottom of the form.</div>
+      </div>
+
+      <!-- STEP D: Frame style -->
+      <div class="config-section">
+        <div class="config-step-heading">Frame style</div>
+        <div class="opt-row" id="frame-style">
+          <button class="opt-btn" onclick="selOpt(this,'frame-style');updateShutterQuote()">L-frame</button>
+          <button class="opt-btn" onclick="selOpt(this,'frame-style');updateShutterQuote()">Z-frame</button>
+          <button class="opt-btn" onclick="selOpt(this,'frame-style');updateShutterQuote()">Hidden / flush frame</button>
+        </div>
+        <div class="config-note">L-frame is standard for most windows. Z-frame goes over existing trim. Hidden frame is a premium flush-mount option.</div>
+      </div>
+
+      <!-- STEP E: Tilt rod -->
+      <div class="config-section">
+        <div class="config-step-heading">Tilt rod</div>
+        <div class="opt-row" id="tilt-rod">
+          <button class="opt-btn" onclick="selOpt(this,'tilt-rod');handleTiltRod(this);updateShutterQuote()">Center tilt rod</button>
+          <button class="opt-btn" onclick="selOpt(this,'tilt-rod');handleTiltRod(this);updateShutterQuote()">Offset tilt rod</button>
+          <button class="opt-btn" onclick="selOpt(this,'tilt-rod');handleTiltRod(this);updateShutterQuote()">Hidden tilt (Clearview)</button>
+          <button class="opt-btn" onclick="selOpt(this,'tilt-rod');handleTiltRod(this);updateShutterQuote()">Motorized tilt</button>
+        </div>
+        <div id="motor-tilt-brand" style="display:none" class="motor-brand-selector">
+          <div class="form-group" style="margin-bottom:4px">
+            <label>Motor brand</label>
+            <select onchange="updateShutterQuote()">
+              <option>Lutron</option>
+              <option>Somfy</option>
+              <option>Automate</option>
+            </select>
+          </div>
+          <div class="motor-brand-note">Motor pricing varies — included in your custom quote.</div>
+        </div>
+      </div>
+
+      <!-- STEP F: Color / finish -->
+      <div class="config-section">
+        <div class="config-step-heading">Color / finish</div>
+        <div class="opt-row" id="shutter-color">
+          <button class="opt-btn" onclick="selOpt(this,'shutter-color');handleCustomColor(this);updateShutterQuote()">Bright White</button>
+          <button class="opt-btn" onclick="selOpt(this,'shutter-color');handleCustomColor(this);updateShutterQuote()">Antique White</button>
+          <button class="opt-btn" onclick="selOpt(this,'shutter-color');handleCustomColor(this);updateShutterQuote()">Linen</button>
+          <button class="opt-btn" onclick="selOpt(this,'shutter-color');handleCustomColor(this);updateShutterQuote()">Custom color</button>
+        </div>
+        <div id="custom-color-note" style="display:none" class="custom-color-note">Describe your color in the notes field below, or provide a paint chip reference when we visit.</div>
+      </div>
+
+      <!-- STEP G: Window details -->
+      <div class="config-section">
+        <div class="config-step-heading">Window details</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Number of windows</label>
+            <select id="win-count" onchange="updateShutterQuote()">
+              <option>1 window</option>
+              <option>2 windows</option>
+              <option>3 windows</option>
+              <option>4 windows</option>
+              <option>5 windows</option>
+              <option>6 windows</option>
+              <option>7 windows</option>
+              <option>8 windows</option>
+              <option>9 windows</option>
+              <option>10 windows</option>
+              <option>11 windows</option>
+              <option>12 windows</option>
+              <option>13 windows</option>
+              <option>14 windows</option>
+              <option>15 windows</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Window type</label>
+            <select id="win-type" onchange="updateShutterQuote()">
+              <option>Standard rectangular</option>
+              <option>Arched top</option>
+              <option>Full arch / circle</option>
+              <option>Angled / triangle</option>
+              <option>Sliding door</option>
+              <option>French door</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="measure-info-card">
+          <h4>Shutter measuring uses 3W &times; 3H rules</h4>
+          <p>Unlike shades, shutters require 3 width measurements and 3 height measurements per window. Deductions vary depending on your chosen frame style. Our team handles all measuring during the free in-home visit &mdash; or describe your windows and we'll guide you.</p>
+          <a class="btn-gold" href="consult.html" style="font-size:12px;padding:8px 16px">Book a free in-home visit &rarr;</a>
+        </div>
+      </div>
+
+    </div><!-- /left col -->
+
+    <!-- RIGHT: Quote summary -->
+    <div>
+      <div class="quote-box">
+        <div class="quote-box-title">Your shutter summary</div>
+
+        <div class="quote-row">
+          <span class="quote-row-label">Material</span>
+          <span class="quote-row-val" id="qs-material">&mdash;</span>
+        </div>
+        <div class="quote-row">
+          <span class="quote-row-label">Louver size</span>
+          <span class="quote-row-val" id="qs-louver">&mdash;</span>
+        </div>
+        <div class="quote-row">
+          <span class="quote-row-label">Panel config</span>
+          <span class="quote-row-val" id="qs-panel">&mdash;</span>
+        </div>
+        <div class="quote-row">
+          <span class="quote-row-label">Frame style</span>
+          <span class="quote-row-val" id="qs-frame">&mdash;</span>
+        </div>
+        <div class="quote-row">
+          <span class="quote-row-label">Tilt rod</span>
+          <span class="quote-row-val" id="qs-tilt">&mdash;</span>
+        </div>
+        <div class="quote-row">
+          <span class="quote-row-label">Color</span>
+          <span class="quote-row-val" id="qs-color">&mdash;</span>
+        </div>
+        <div class="quote-row">
+          <span class="quote-row-label">Windows</span>
+          <span class="quote-row-val" id="qs-windows">1 window</span>
+        </div>
+        <div class="quote-row">
+          <span class="quote-row-label">Window type</span>
+          <span class="quote-row-val" id="qs-wintype">Standard rectangular</span>
+        </div>
+
+        <hr class="quote-divider">
+        <div class="quote-notice-inline">Custom quote &mdash; typically within 24 hours</div>
+        <button class="btn-gold" style="width:100%;padding:13px;text-align:center" onclick="showContactForm()">Request custom quote</button>
+        <div class="quote-box-phone"><a href="tel:6097421720">(609) 742-1720</a> &middot; call or text anytime</div>
+      </div>
+    </div><!-- /right col -->
+
+  </div><!-- /config-two-col -->
+</div>
+
+<!-- SECTION 4: CONTACT FORM -->
+<div class="section section-warm" id="contact-section" style="display:none">
+  <div class="section-title">Request your custom quote</div>
+  <div class="section-sub">Our team will review your selections and provide a written quote within 24 hours.</div>
+
+  <div id="shutter-form-inner">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Your name *</label>
+        <input type="text" id="sf-name" placeholder="Jane Smith">
+      </div>
+      <div class="form-group">
+        <label>Phone *</label>
+        <input type="tel" id="sf-phone" placeholder="(215) 555-0100">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" placeholder="jane@example.com">
+    </div>
+    <div class="form-group">
+      <label>Notes</label>
+      <textarea placeholder="Describe your windows — special shapes, number, room names, etc." style="min-height:90px"></textarea>
+    </div>
+    <div class="call-strip" style="margin-bottom:16px">
+      <div class="call-text">Prefer to talk? We're available 24/7.</div>
+      <a class="call-num" href="tel:6097421720">(609) 742-1720</a>
+    </div>
+    <button class="btn-gold" onclick="submitShutterForm()" style="width:100%;padding:13px">Submit request</button>
+  </div>
+
+  <div id="shutter-success" style="display:none" class="success-box">
+    <h3>Quote request received.</h3>
+    <p>We'll be in touch within 24 hours. For urgent needs: <strong>(609) 742-1720</strong></p>
+  </div>
+</div>
+
+<!-- SECTION 5: BRANDS -->
+<div class="section section-dark">
+  <div class="section-label" style="color:var(--gold)">Brands we carry</div>
+  <div class="section-title-light" style="margin-bottom:6px">Shutter brands</div>
+  <div class="section-sub-light">Precision-crafted from the leading manufacturers in the industry.</div>
+  <div class="pill-row" style="margin-bottom:16px">
+    <div class="brand-pill">Norman</div>
+    <div class="brand-pill">Hunter Douglas</div>
+    <div class="brand-pill">Palm Beach</div>
+    <div style="background:transparent;border:0.5px solid var(--border-dark);border-radius:8px;padding:8px 16px;font-size:12px;color:var(--text-muted)">Others available</div>
+  </div>
+  <div class="brand-note">Don't see your preferred brand? We source from multiple manufacturers &mdash; ask us.</div>
+  <div class="call-strip" style="margin-top:18px">
+    <div class="call-text">Questions about shutter brands or materials? We're happy to help.</div>
+    <a class="call-num" href="tel:6097421720">(609) 742-1720</a>
+  </div>
+</div>
+
+<!-- SECTION 6: CTA BANNER -->
+<div class="cta-banner">
+  <div>
+    <h2>Ready to get started?</h2>
+    <p>Book a free in-home visit &mdash; we measure, advise, and quote on the spot.</p>
+  </div>
+  <div class="cta-banner-btns">
+    <a class="btn-dark" href="consult.html">Book free in-home visit</a>
+    <a class="btn-outline" href="tel:6097421720">(609) 742-1720</a>
+  </div>
+</div>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="../js/shared.js"></script>
+<script>
+renderNav('Shutters');
+renderFooter(false);
+
+function handleSpecialShape(el) {
+  const note = document.getElementById('special-shape-note');
+  const isSpecial = el.textContent.trim().startsWith('Special');
+  note.style.display = isSpecial ? 'block' : 'none';
+}
+
+function handleTiltRod(el) {
+  const motorSel = document.getElementById('motor-tilt-brand');
+  motorSel.style.display = el.textContent.trim().startsWith('Motorized') ? 'block' : 'none';
+  updateShutterQuote();
+}
+
+function handleCustomColor(el) {
+  const note = document.getElementById('custom-color-note');
+  note.style.display = el.textContent.trim() === 'Custom color' ? 'block' : 'none';
+}
+
+function updateShutterQuote() {
+  const g = (id) => { const s = document.querySelector('#' + id + ' .opt-btn.sel'); return s ? s.textContent.trim() : '—'; };
+  document.getElementById('qs-material').textContent = g('shutter-material');
+  document.getElementById('qs-louver').textContent = g('louver-size');
+  document.getElementById('qs-panel').textContent = g('panel-config');
+  document.getElementById('qs-frame').textContent = g('frame-style');
+  document.getElementById('qs-tilt').textContent = g('tilt-rod');
+  document.getElementById('qs-color').textContent = g('shutter-color');
+  const wc = document.getElementById('win-count');
+  const wt = document.getElementById('win-type');
+  document.getElementById('qs-windows').textContent = wc ? wc.value : '—';
+  document.getElementById('qs-wintype').textContent = wt ? wt.value : '—';
+}
+
+function showContactForm() {
+  const s = document.getElementById('contact-section');
+  s.style.display = 'block';
+  s.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function submitShutterForm() {
+  const name = document.getElementById('sf-name').value.trim();
+  const phone = document.getElementById('sf-phone').value.trim();
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  document.getElementById('shutter-form-inner').style.display = 'none';
+  document.getElementById('shutter-success').style.display = 'block';
+  document.getElementById('shutter-success').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+</body>
+</html>

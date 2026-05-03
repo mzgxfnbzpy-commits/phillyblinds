@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Work — Philly Blinds Gallery</title>
+<link rel="stylesheet" href="../css/global.css">
+<style>
+.page-hero{background:var(--espresso);padding:40px 28px 36px}
+.breadcrumb{font-size:11px;color:var(--text-faint);margin-bottom:14px}
+.breadcrumb a{color:var(--text-muted);text-decoration:none}.breadcrumb a:hover{color:var(--gold)}
+.page-hero h1{font-size:28px;font-weight:500;color:var(--cream);letter-spacing:-0.4px;margin-bottom:8px}
+.page-hero p{font-size:13px;color:var(--text-dark);line-height:1.7;max-width:480px}
+.tab-bar{display:flex;gap:0;background:var(--gold-mid);border-bottom:1px solid #e8e8e4;padding:0 24px;overflow-x:auto}
+.gtab{padding:12px 18px;font-size:13px;cursor:pointer;color:#666;border-bottom:2px solid transparent;white-space:nowrap}
+.gtab.on{color:#111;border-bottom-color:var(--gold);font-weight:500}
+.section{padding:28px 24px;background:var(--gold-mid)}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:8px}
+.pcard{border-radius:10px;overflow:hidden;cursor:pointer;border:1px solid #e8e8e4;transition:border-color 0.15s;background:#fff}
+.pcard:hover{border-color:var(--gold)}
+.pthumb{height:118px;overflow:hidden}
+.pthumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.2s}
+.pcard:hover .pthumb img{transform:scale(1.05)}
+.vthumb{height:118px;display:flex;align-items:center;justify-content:center;position:relative}
+.play-btn{width:36px;height:36px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;position:absolute}
+.vtag{position:absolute;bottom:6px;right:7px;font-size:10px;font-weight:500;padding:2px 7px;border-radius:8px}
+.motor-badge{position:absolute;top:6px;left:7px;font-size:10px;font-weight:500;padding:2px 7px;border-radius:8px;background:#E6F1FB;color:#0C447C}
+.vbody{padding:9px 10px 10px}
+.vname{font-size:12px;font-weight:500;color:#111;line-height:1.3}
+.panel{display:none}.panel.active{display:block}
+.empty-note{color:#999;font-size:13px;font-style:italic;padding:32px 0;text-align:center}
+</style>
+</head>
+<body>
+<nav class="site-nav" id="site-nav"></nav>
+
+<div class="page-hero">
+  <div class="breadcrumb"><a href="../index.html">Home</a> › Our work</div>
+  <h1>Our work</h1>
+  <p>Real installations — browse by product type. Every photo and video is a completed job by Philly Blinds.</p>
+</div>
+
+<div class="tab-bar">
+  <div class="gtab on" onclick="showG('drapes',this)">Custom draperies (60)</div>
+  <div class="gtab" onclick="showG('roman',this)">Roman shades (11)</div>
+  <div class="gtab" onclick="showG('roller',this)">Roller shades (4)</div>
+  <div class="gtab" onclick="showG('cellular',this)">Cellular shades</div>
+  <div class="gtab" onclick="showG('zebra',this)">Zebra shades</div>
+  <div class="gtab" onclick="showG('shutters',this)">Shutters</div>
+  <div class="gtab" onclick="showG('videos',this)">Videos (14)</div>
+</div>
+
+<div class="section">
+  <div id="panel-drapes" class="panel active">
+    <div class="pgrid" id="grid-drapes"></div>
+  </div>
+  <div id="panel-roman" class="panel">
+    <div class="pgrid" id="grid-roman"></div>
+  </div>
+  <div id="panel-roller" class="panel">
+    <div class="pgrid" id="grid-roller"></div>
+  </div>
+  <div id="panel-cellular" class="panel">
+    <div class="empty-note">Photos coming soon — check back shortly or <a href="tel:6097421720" style="color:var(--gold)">call us</a> to see samples in person.</div>
+  </div>
+  <div id="panel-zebra" class="panel">
+    <div class="empty-note">Photos coming soon — check back shortly or <a href="tel:6097421720" style="color:var(--gold)">call us</a> to see samples in person.</div>
+  </div>
+  <div id="panel-shutters" class="panel">
+    <div class="empty-note">Photos coming soon — check back shortly or <a href="tel:6097421720" style="color:var(--gold)">call us</a> to see samples in person.</div>
+  </div>
+  <div id="panel-videos" class="panel">
+    <div class="pgrid" id="grid-videos"></div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lb-wrap" id="lightbox">
+  <div class="lb-box">
+    <img id="lb-img" class="lb-img" src="" alt="" style="display:none">
+    <div id="lb-screen" style="display:none;background:#111;height:200px;align-items:center;justify-content:center;color:#fff;font-size:13px"></div>
+    <div class="lb-foot">
+      <div class="lb-nav">
+        <button onclick="navLB(-1)">← Prev</button>
+        <button onclick="navLB(1)">Next →</button>
+      </div>
+      <span class="lb-count" id="lb-count"></span>
+      <a class="nav-cta" href="../pages/consult.html" style="font-size:11px;padding:7px 12px">Request this style →</a>
+      <button class="lb-close" onclick="closeLB()">✕</button>
+    </div>
+  </div>
+</div>
+
+<div class="cta-banner" style="margin-top:0">
+  <div><h2>See something you like?</h2><p>Call or text us — we'll make it happen for your home.</p></div>
+  <a class="btn-dark" href="tel:6097421720">(609) 742-1720 · 24/7</a>
+</div>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="../js/shared.js"></script>
+<script>
+renderNav('Our work'); renderFooter(false);
+
+const base='../';
+const drapeFiles=['IMG_4927.JPEG','IMG_2861.JPEG','IMG_3018.JPEG','IMG_3023.JPEG','IMG_3032.JPEG','IMG_3034.JPEG','IMG_3367.JPEG','IMG_3575.JPEG','IMG_3578.JPEG','IMG_3615.JPEG','IMG_3616.JPEG','IMG_4767.JPEG','IMG_4791.JPEG','IMG_4792.JPEG','IMG_4920.JPEG','IMG_4922.JPEG','IMG_4924.JPEG','IMG_4925.JPEG','IMG_2716.JPEG','IMG_2723.JPEG','IMG_2726.JPEG','IMG_2732.JPEG','IMG_2733.JPEG','IMG_2747.JPEG','IMG_2754.JPEG','IMG_2806.JPEG','IMG_2850.JPEG','IMG_2851.JPEG','IMG_2853.JPEG','IMG_2854.JPEG','IMG_2684.JPEG','IMG_1959.JPEG','IMG_1962.JPEG','IMG_1965.JPEG','IMG_1966.JPEG','IMG_2014.JPEG','IMG_2016.JPEG','IMG_2017.JPEG','IMG_2019.JPEG','IMG_2020.JPEG','IMG_2022.JPEG','IMG_2681.JPEG','0BD8C37F-98A4-4B7D-9703-B72D4FC1AE31.JPG','1AAF691A-868D-4B47-B05A-79582C62D55C.jpg','05F1958F-2CF3-4A9D-83A3-2D84A050AA54.JPG','5A65FBE6-7AB9-4535-8D62-64482C37378D.jpg','5CA381D9-4644-42EA-8977-14BCEE517279.JPEG','6AB7DA55-1C77-45B6-874D-1C48DC0DE414.JPEG','8A171BD2-2D59-4D91-8055-76B9EEF0D9B3.JPEG','09F3C90B-FC44-42D9-A881-B976E9F35567.JPEG','624C1D52-5E26-40F4-A216-96525F35677A.jpg','844F7124-DA35-4094-974E-9A2B1B795040.JPG','42544ACF-F287-4F3F-810B-B98A92843CBB.JPG','1044365A-6787-4095-90B3-4F82011BBA3C.JPG','64507409-6249-4D66-8BBD-DE1A62796429.JPEG','74313161-6696-4E7C-A596-3CC597861783.JPG','A4EC67A6-44DF-47F3-83D2-B414652EA94F.JPG','B80FD70C-AFA3-4D5A-8003-3E7D6C2EC6B0-1.JPG','C25AC8C2-D5E1-430E-992C-A4732D98E1FA.JPEG','41231734-8063-434D-A4B9-FB33AE52C342.JPG'];
+const romanFiles=['CB132874-2AF3-4EEA-B87F-B1587D04A309.JPG','IMG_0592.JPEG','IMG_0599.JPEG','IMG_0603.JPEG','IMG_0604.JPEG','IMG_0699.JPEG','IMG_0732.JPEG','448E74BE-9249-43A5-94DB-F3092460702C.JPG','506E0E70-EFA5-4132-880C-9B678A67B9FF.JPEG','5048388E-1B01-4F2A-B6CC-9450F9EB3388.JPG','60217592364__67DA8A85-9CCF-42C0-B741-F0F3C33FDB36.JPG'];
+const rollerFiles=['u3916193617_custom_roller_shades_high_end_in_hpuse_motorized__5be2f23c-3f34-47dc-86d1-3cbbbda7fc96_0.png','u3916193617_custom_roller_shades_high_end_in_hpuse_motorized__5be2f23c-3f34-47dc-86d1-3cbbbda7fc96_1.png','u3916193617_custom_roller_shades_high_end_in_hpuse_motorized__5be2f23c-3f34-47dc-86d1-3cbbbda7fc96_2.png','u3916193617_custom_roller_shades_high_end_in_hpuse_motorized__5be2f23c-3f34-47dc-86d1-3cbbbda7fc96_3.png'];
+const videos=[
+  {file:'Cellular_shades.MP4',name:'Motorized cellular shades',cat:'Cellular',motor:true,color:'#EAF3DE',stroke:'#3B6D11'},
+  {file:'Manual_Roller_Shade.MP4',name:'Motorized roller shade',cat:'Roller',motor:true,color:'#E6F1FB',stroke:'#185FA5'},
+  {file:'Roller_shades__2_.MP4',name:'Motorized roller shades',cat:'Roller',motor:true,color:'#B5D4F4',stroke:'#0C447C'},
+  {file:'roller_shades__3_.MP4',name:'Motorized roller shades',cat:'Roller',motor:true,color:'#85B7EB',stroke:'#042C53'},
+  {file:'roller_shades__4_.MP4',name:'Motorized roller shades',cat:'Roller',motor:true,color:'#378ADD',stroke:'#042C53'},
+  {file:'Roller_shades.mp4',name:'Motorized roller shades',cat:'Roller',motor:true,color:'#B5D4F4',stroke:'#185FA5'},
+  {file:'Roller_shades_Magnetic_on_Garage_door.mp4',name:'Roller shades — garage door',cat:'Specialty',motor:true,color:'#D3D1C7',stroke:'#5F5E5A'},
+  {file:'Manual_Silhouette.MP4',name:'Manual Silhouette shading',cat:'Premium',motor:false,color:'#EEEDFE',stroke:'#534AB7'},
+  {file:'roman_shade.MOV',name:'Motorized Roman shade',cat:'Roman',motor:true,color:'#FBEAF0',stroke:'#D4537E'},
+  {file:'shutter.MP4',name:'Motorized plantation shutters',cat:'Shutters',motor:true,color:'#FAECE7',stroke:'#D85A30'},
+  {file:'Zebra_Banded_Shade.mp4',name:'Motorized zebra banded shade',cat:'Zebra',motor:true,color:'#EEEDFE',stroke:'#7F77DD'},
+  {file:'custom_drapes.MOV',name:'Motorized custom drapes',cat:'Drapes',motor:true,color:'#FBEAF0',stroke:'#993556'},
+  {file:'drapes.MP4',name:'Motorized drapes',cat:'Drapes',motor:true,color:'#F4C0D1',stroke:'#72243E'},
+  {file:'triangle_drapes.MP4',name:'Motorized triangle drapes',cat:'Drapes',motor:true,color:'#ED93B1',stroke:'#993556'},
+];
+
+let currentList=[];let currentIdx=0;let currentType='photo';
+
+function buildPhotoGrid(containerId, files, imgPath){
+  const g=document.getElementById(containerId);
+  g.innerHTML=files.map((f,i)=>`<div class="pcard" onclick="openPhoto(${i},'${containerId}')"><div class="pthumb"><img src="${imgPath}${f}" loading="lazy" alt=""></div></div>`).join('');
+}
+
+function buildVideoGrid(){
+  const g=document.getElementById('grid-videos');
+  g.innerHTML=videos.map((v,i)=>`
+    <div class="pcard" onclick="openVideo(${i})">
+      <div class="vthumb" style="background:${v.color}">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="5" y="8" width="38" height="26" rx="2" fill="${v.color}" stroke="${v.stroke}" stroke-width="1"/><line x1="5" y1="14" x2="43" y2="14" stroke="${v.stroke}" stroke-width="0.7" opacity="0.4"/><line x1="5" y1="21" x2="43" y2="21" stroke="${v.stroke}" stroke-width="0.7" opacity="0.4"/><line x1="5" y1="28" x2="43" y2="28" stroke="${v.stroke}" stroke-width="0.7" opacity="0.4"/></svg>
+        <div class="play-btn"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M3 1.5l7 4-7 4V1.5z" fill="#1C1510"/></svg></div>
+        <div class="vtag" style="background:${v.color};color:${v.stroke}">${v.cat}</div>
+        ${v.motor?'<div class="motor-badge">Motorized</div>':'<div class="motor-badge" style="background:#F1EFE8;color:#444">Manual</div>'}
+      </div>
+      <div class="vbody"><div class="vname">${v.name}</div></div>
+    </div>`).join('');
+}
+
+let photoLists={};
+function openPhoto(i, gridId){
+  if(!photoLists[gridId]){
+    photoLists['grid-drapes']=drapeFiles.map(f=>'../images/portfolio/'+f);
+    photoLists['grid-roman']=romanFiles.map(f=>'../images/portfolio/'+f);
+    photoLists['grid-roller']=rollerFiles.map(f=>'../images/portfolio/'+f);
+  }
+  currentList=photoLists[gridId]; currentIdx=i; currentType='photo';
+  document.getElementById('lb-img').style.display='block';
+  document.getElementById('lb-screen').style.display='none';
+  document.getElementById('lb-img').src=currentList[i];
+  document.getElementById('lb-count').textContent=(i+1)+' / '+currentList.length;
+  document.getElementById('lightbox').classList.add('open');
+}
+function openVideo(i){
+  currentList=videos; currentIdx=i; currentType='video';
+  const v=videos[i];
+  document.getElementById('lb-img').style.display='none';
+  const scr=document.getElementById('lb-screen');
+  scr.style.display='flex'; scr.style.flexDirection='column'; scr.style.alignItems='center'; scr.style.justifyContent='center'; scr.style.gap='8px';
+  scr.style.background=v.color;
+  scr.innerHTML=`<svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="rgba(255,255,255,0.2)"/><path d="M18 14l18 10-18 10V14z" fill="${v.stroke}"/></svg><div style="font-size:12px;color:${v.stroke};font-weight:500">${v.name}</div><div style="font-size:11px;color:${v.stroke};opacity:0.7">Video plays on live site</div>`;
+  document.getElementById('lb-count').textContent=(i+1)+' / '+videos.length;
+  document.getElementById('lightbox').classList.add('open');
+}
+function navLB(d){
+  const len=currentList.length;
+  currentIdx=(currentIdx+d+len)%len;
+  currentType==='photo'?openPhoto(currentIdx,Object.keys(photoLists).find(k=>photoLists[k]===currentList)):openVideo(currentIdx);
+}
+function closeLB(){document.getElementById('lightbox').classList.remove('open')}
+
+function showG(id,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.gtab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('panel-'+id).classList.add('active');
+  el.classList.add('on');
+}
+
+buildPhotoGrid('grid-drapes', drapeFiles, '../images/portfolio/');
+buildPhotoGrid('grid-roman', romanFiles, '../images/portfolio/');
+buildPhotoGrid('grid-roller', rollerFiles, '../images/portfolio/');
+buildVideoGrid();
+</script>
+</body>
+</html>

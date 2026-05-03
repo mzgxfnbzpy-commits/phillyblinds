@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Philly Blinds — Custom Window Treatments | Philadelphia</title>
+<link rel="stylesheet" href="css/global.css">
+<style>
+.hero{background:var(--espresso);padding:60px 28px 52px;position:relative;overflow:hidden}
+.hero-deco{position:absolute;right:0;top:0;bottom:0;width:220px;background:var(--espresso-mid);opacity:0.5}
+.hero-inner{max-width:520px;position:relative;z-index:1}
+.hero-eyebrow{font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:14px;font-weight:500}
+.hero h1{font-size:38px;font-weight:500;color:var(--cream);line-height:1.2;letter-spacing:-0.8px;margin-bottom:14px}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero p{font-size:14px;color:var(--text-dark);line-height:1.7;margin-bottom:28px;max-width:400px}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px}
+.trust-row{display:flex;gap:20px;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-muted)}
+.trust-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
+
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px}
+.product-card{background:#fff;border:1px solid #e8e8e4;border-radius:12px;overflow:hidden;cursor:pointer;transition:border-color 0.15s;text-decoration:none;display:block}
+.product-card:hover{border-color:var(--gold)}
+.product-img{height:90px;display:flex;align-items:center;justify-content:center;position:relative}
+.motor-chip{position:absolute;bottom:6px;right:6px;background:var(--espresso);color:var(--gold);font-size:9px;padding:2px 6px;border-radius:6px;font-weight:500}
+.product-body{padding:10px 12px 12px}
+.product-name{font-size:13px;font-weight:500;margin-bottom:2px;color:#111}
+.product-sub{font-size:11px;color:#666;margin-bottom:6px}
+
+.motor-note{display:inline-flex;align-items:center;gap:6px;background:var(--espresso-mid);border-radius:8px;padding:7px 12px;margin-bottom:20px;font-size:12px;color:var(--gold)}
+.motor-dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+
+.how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
+.how-card{background:var(--espresso-mid);border-radius:12px;padding:18px 14px}
+.how-num{width:28px;height:28px;border-radius:50%;background:var(--gold);color:var(--espresso);font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.how-title{font-size:13px;font-weight:500;color:var(--cream);margin-bottom:5px}
+.how-desc{font-size:11px;color:var(--text-muted);line-height:1.5}
+
+.path-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.path-card{border-radius:12px;padding:20px 16px;cursor:pointer;border:1px solid #e8e8e4;background:#fff;transition:border-color 0.15s;text-decoration:none;display:block}
+.path-card:hover{border-color:var(--gold)}
+.path-card.featured{border:2px solid var(--gold)}
+.path-icon{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.path-card h3{font-size:13px;font-weight:500;margin-bottom:4px;color:#111}
+.path-card p{font-size:11px;color:#666;line-height:1.5}
+.path-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;margin-bottom:8px;font-weight:500}
+
+.brands-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:10px}
+.brand-pill{background:var(--espresso-mid);border:0.5px solid var(--border-dark);border-radius:8px;padding:9px 18px;font-size:13px;font-weight:500;color:var(--cream)}
+.brand-more{background:transparent;border:0.5px solid var(--border-dark);border-radius:8px;padding:9px 18px;font-size:13px;color:var(--text-faint);font-style:italic}
+
+.fabric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:20px}
+.fabric-card{background:var(--espresso-mid);border-radius:10px;padding:16px}
+.fabric-icon{width:32px;height:32px;border-radius:6px;background:var(--espresso);display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+.fabric-title{font-size:13px;font-weight:500;color:var(--cream);margin-bottom:4px}
+.fabric-desc{font-size:11px;color:var(--text-muted);line-height:1.6}
+.fabric-tag{display:inline-block;margin-top:8px;font-size:10px;padding:2px 8px;border-radius:6px;background:var(--espresso);color:var(--gold);border:0.5px solid var(--border-dark)}
+
+.tcard{background:var(--espresso-mid);border-radius:12px;padding:18px}
+.tcard-stars{color:var(--gold);font-size:13px;margin-bottom:8px;letter-spacing:1px}
+.tcard-text{font-size:12px;color:var(--text-dark);line-height:1.6;margin-bottom:12px}
+.tcard-name{font-size:11px;color:var(--text-faint);font-weight:500}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+</style>
+</head>
+<body>
+
+<nav class="site-nav" id="site-nav"></nav>
+
+<div class="hero">
+  <div class="hero-deco"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Philadelphia & surrounding areas</div>
+    <h1>Window treatments<br>crafted for<br><em>your</em> home</h1>
+    <p>From roller shades to custom draperies — every product available manual or fully motorized. We design, fabricate, and install.</p>
+    <div class="hero-btns">
+      <a class="btn-gold" href="pages/shades.html">Shop all products</a>
+      <a class="btn-ghost-light" href="pages/consult.html">Book free in-home visit</a>
+    </div>
+    <div class="trust-row">
+      <div class="trust-item"><div class="trust-dot"></div>Motorization available on every product</div>
+      <div class="trust-item"><div class="trust-dot"></div>Custom fabrication</div>
+      <div class="trust-item"><div class="trust-dot"></div>Professional installation</div>
+    </div>
+  </div>
+</div>
+
+<div class="section section-warm">
+  <div class="section-label">Products</div>
+  <div class="section-title">Every window treatment, beautifully done</div>
+  <div class="section-sub">Choose your product — then decide if you want manual or motorized inside the configurator.</div>
+  <div class="motor-note"><div class="motor-dot"></div>Motorization is available as an option on every product below</div>
+  <div class="product-grid">
+    <a class="product-card" href="pages/shades.html">
+      <div class="product-img" style="background:#F5ECD7">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="6" y="5" width="32" height="4" rx="2" fill="#C8973F"/><rect x="6" y="12" width="32" height="22" rx="2" fill="#FBF7F0" stroke="#C8973F" stroke-width="1"/><line x1="6" y1="20" x2="38" y2="20" stroke="#C8973F" stroke-width="0.6" opacity="0.3"/><line x1="22" y1="34" x2="22" y2="40" stroke="#C8973F" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <div class="motor-chip">+ motorized</div>
+      </div>
+      <div class="product-body">
+        <div class="product-name">Roller shades</div>
+        <div class="product-sub">Solar, light filtering & blackout</div>
+        <span class="badge badge-instant">Instant price</span>
+      </div>
+    </a>
+    <a class="product-card" href="pages/shades.html">
+      <div class="product-img" style="background:#EDF5E8">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="6" y="5" width="32" height="4" rx="2" fill="#3B6D11"/><rect x="6" y="12" width="32" height="22" rx="2" fill="#EAF3DE" stroke="#3B6D11" stroke-width="1"/><line x1="6" y1="17" x2="38" y2="17" stroke="#3B6D11" stroke-width="0.7" opacity="0.5"/><line x1="6" y1="22" x2="38" y2="22" stroke="#3B6D11" stroke-width="0.7" opacity="0.5"/><line x1="6" y1="27" x2="38" y2="27" stroke="#3B6D11" stroke-width="0.7" opacity="0.5"/><line x1="22" y1="34" x2="22" y2="40" stroke="#3B6D11" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <div class="motor-chip">+ motorized</div>
+      </div>
+      <div class="product-body">
+        <div class="product-name">Cellular shades</div>
+        <div class="product-sub">Insulating honeycomb</div>
+        <span class="badge badge-instant">Instant price</span>
+      </div>
+    </a>
+    <a class="product-card" href="pages/roman-shades.html">
+      <div class="product-img" style="background:#FBEAF0">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="6" y="5" width="32" height="4" rx="2" fill="#993556"/><rect x="6" y="12" width="32" height="6" rx="1" fill="#F4C0D1"/><rect x="6" y="20" width="32" height="6" rx="1" fill="#ED93B1"/><rect x="6" y="28" width="32" height="5" rx="1" fill="#F4C0D1"/><line x1="22" y1="34" x2="22" y2="40" stroke="#993556" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <div class="motor-chip">+ motorized</div>
+      </div>
+      <div class="product-body">
+        <div class="product-name">Roman shades</div>
+        <div class="product-sub">Flat, hobbled & relaxed</div>
+        <span class="badge badge-instant">Instant price</span>
+      </div>
+    </a>
+    <a class="product-card" href="pages/shades.html">
+      <div class="product-img" style="background:#FAEEDA">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="6" y="5" width="32" height="4" rx="2" fill="#854F0B"/><rect x="6" y="12" width="32" height="22" rx="2" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/><line x1="6" y1="16" x2="38" y2="16" stroke="#854F0B" stroke-width="1" opacity="0.4"/><line x1="6" y1="20" x2="38" y2="20" stroke="#854F0B" stroke-width="1" opacity="0.4"/><line x1="6" y1="24" x2="38" y2="24" stroke="#854F0B" stroke-width="1" opacity="0.4"/><line x1="6" y1="28" x2="38" y2="28" stroke="#854F0B" stroke-width="1" opacity="0.4"/><line x1="22" y1="34" x2="22" y2="40" stroke="#854F0B" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <div class="motor-chip">+ motorized</div>
+      </div>
+      <div class="product-body">
+        <div class="product-name">Woven wood shades</div>
+        <div class="product-sub">Bamboo, rattan & jute</div>
+        <span class="badge badge-instant">Instant price</span>
+      </div>
+    </a>
+    <a class="product-card" href="pages/shades.html">
+      <div class="product-img" style="background:#EEEDFE">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="6" y="5" width="32" height="4" rx="2" fill="#534AB7"/><rect x="6" y="12" width="32" height="4" rx="1" fill="#AFA9EC"/><rect x="6" y="18" width="32" height="4" rx="1" fill="#EEEDFE" stroke="#7F77DD" stroke-width="0.5"/><rect x="6" y="24" width="32" height="4" rx="1" fill="#AFA9EC"/><rect x="6" y="30" width="32" height="3" rx="1" fill="#EEEDFE" stroke="#7F77DD" stroke-width="0.5"/><line x1="22" y1="34" x2="22" y2="40" stroke="#534AB7" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <div class="motor-chip">+ motorized</div>
+      </div>
+      <div class="product-body">
+        <div class="product-name">Zebra shades</div>
+        <div class="product-sub">Dual-fabric banded</div>
+        <span class="badge badge-instant">Instant price</span>
+      </div>
+    </a>
+    <a class="product-card" href="pages/shades.html">
+      <div class="product-img" style="background:#FBF7F0">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="6" y="5" width="32" height="3" rx="1.5" fill="#854F0B"/><rect x="6" y="11" width="32" height="2.5" rx="1" fill="#EF9F27"/><rect x="6" y="16" width="32" height="2.5" rx="1" fill="#854F0B"/><rect x="6" y="21" width="32" height="2.5" rx="1" fill="#EF9F27"/><rect x="6" y="26" width="32" height="2.5" rx="1" fill="#854F0B"/><rect x="6" y="31" width="32" height="2.5" rx="1" fill="#EF9F27"/><line x1="22" y1="34" x2="22" y2="40" stroke="#854F0B" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <div class="motor-chip">+ motorized</div>
+      </div>
+      <div class="product-body">
+        <div class="product-name">Wood blinds</div>
+        <div class="product-sub">Real wood & faux wood</div>
+        <span class="badge badge-instant">Instant price</span>
+      </div>
+    </a>
+    <a class="product-card" href="pages/drapery.html">
+      <div class="product-img" style="background:#F0EBE0">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="6" y="5" width="32" height="3" rx="1.5" fill="#8B6914"/><path d="M9 10 Q10 22 9 36" stroke="#C8973F" stroke-width="3.5" stroke-linecap="round" fill="none"/><path d="M35 10 Q34 22 35 36" stroke="#C8973F" stroke-width="3.5" stroke-linecap="round" fill="none"/><path d="M15 10 Q22 20 22 36" stroke="#F5ECD7" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M29 10 Q22 20 22 36" stroke="#F5ECD7" stroke-width="2.5" stroke-linecap="round" fill="none"/></svg>
+        <div class="motor-chip">+ motorized</div>
+      </div>
+      <div class="product-body">
+        <div class="product-name">Custom drapery</div>
+        <div class="product-sub">Pinch pleat, ripple fold & more</div>
+        <span class="badge badge-quote">Custom quote</span>
+      </div>
+    </a>
+    <a class="product-card" href="pages/shades.html">
+      <div class="product-img" style="background:#EEEDFE">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="6" y="5" width="32" height="4" rx="2" fill="#534AB7" opacity="0.7"/><rect x="6" y="12" width="32" height="22" rx="2" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/><line x1="6" y1="19" x2="38" y2="19" stroke="#534AB7" stroke-width="2" opacity="0.4"/><line x1="6" y1="26" x2="38" y2="26" stroke="#534AB7" stroke-width="2" opacity="0.4"/></svg>
+        <div class="motor-chip">+ motorized</div>
+      </div>
+      <div class="product-body">
+        <div class="product-name">Silhouette shadings</div>
+        <div class="product-sub">Hunter Douglas premium</div>
+        <span class="badge badge-quote">Custom quote</span>
+      </div>
+    </a>
+    <a class="product-card" href="pages/shutters.html">
+      <div class="product-img" style="background:#FAECE7">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="6" y="5" width="14" height="30" rx="1.5" fill="#F0997B"/><rect x="24" y="5" width="14" height="30" rx="1.5" fill="#D85A30"/><rect x="8" y="11" width="10" height="2" rx="1" fill="#fff"/><rect x="8" y="17" width="10" height="2" rx="1" fill="#fff"/><rect x="8" y="23" width="10" height="2" rx="1" fill="#fff"/><rect x="26" y="11" width="10" height="2" rx="1" fill="#fff"/><rect x="26" y="17" width="10" height="2" rx="1" fill="#fff"/><rect x="26" y="23" width="10" height="2" rx="1" fill="#fff"/></svg>
+      </div>
+      <div class="product-body">
+        <div class="product-name">Plantation shutters</div>
+        <div class="product-sub">Wood & composite</div>
+        <span class="badge badge-quote">Custom quote</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<div class="section section-dark">
+  <div class="section-label">Brands we carry</div>
+  <div class="brands-row">
+    <div class="brand-pill">Lutron</div>
+    <div class="brand-pill">Somfy</div>
+    <div class="brand-pill">Norman</div>
+    <div class="brand-pill">Hunter Douglas</div>
+    <div class="brand-pill">Automate</div>
+    <div class="brand-pill">Rollease Acmeda</div>
+    <div class="brand-more">& many more</div>
+  </div>
+  <div style="text-align:center;font-size:12px;color:var(--gold);margin-bottom:32px">Don't see your brand? We can source almost any manufacturer — just ask.</div>
+  <hr class="divider-dark">
+  <div class="section-label">Fabric & material</div>
+  <div class="fabric-grid">
+    <div class="fabric-card">
+      <div class="fabric-icon">🧵</div>
+      <div class="fabric-title">We supply the fabric</div>
+      <div class="fabric-desc">Full library of fabrics, sheers, blackouts, textures, and patterns. On-site consultation to help you decide.</div>
+      <div class="fabric-tag">On-site consultation available</div>
+    </div>
+    <div class="fabric-card">
+      <div class="fabric-icon">📦</div>
+      <div class="fabric-title">You supply the fabric</div>
+      <div class="fabric-desc">Ship your fabric to us and we'll fabricate your shades, blinds, or drapes using your material.</div>
+      <div class="fabric-tag">Customer fabric welcome</div>
+    </div>
+    <div class="fabric-card">
+      <div class="fabric-icon">🏠</div>
+      <div class="fabric-title">On-site consultation</div>
+      <div class="fabric-desc">Not sure what's right? We come to you, bring samples, and help you design the perfect window treatment.</div>
+      <div class="fabric-tag">Free in-home visit</div>
+    </div>
+  </div>
+</div>
+
+<div class="section section-warm">
+  <div class="section-label">How it works</div>
+  <div class="section-title">From first look to final install</div>
+  <div class="section-sub">Three simple paths — whatever works for you.</div>
+  <div class="how-grid">
+    <div class="how-card"><div class="how-num">1</div><div class="how-title">Pick your product</div><div class="how-desc">Browse by type — roller, cellular, drapery, shutters, and more.</div></div>
+    <div class="how-card"><div class="how-num">2</div><div class="how-title">Configure every detail</div><div class="how-desc">Fabric, mount, manual or motorized — see your price live.</div></div>
+    <div class="how-card"><div class="how-num">3</div><div class="how-title">Order or get a quote</div><div class="how-desc">Standard products price instantly. Premium products quoted within 24 hrs.</div></div>
+    <div class="how-card"><div class="how-num">4</div><div class="how-title">Professional install</div><div class="how-desc">We handle delivery, fitting, and smart home integration.</div></div>
+  </div>
+</div>
+
+<div class="section section-warm" style="border-top:1px solid #ede9e0">
+  <div class="section-label">Get started</div>
+  <div class="section-title">How would you like to order?</div>
+  <div class="section-sub">Pick the path that fits where you are right now.</div>
+  <div class="path-grid">
+    <a class="path-card featured" href="pages/measure.html">
+      <div class="path-icon" style="background:var(--gold-light)">📐</div>
+      <div class="path-tag" style="background:var(--gold-light);color:#854F0B">Fastest</div>
+      <h3>I have my measurements</h3>
+      <p>Enter exact sizes and order directly online.</p>
+    </a>
+    <a class="path-card" href="pages/measure.html">
+      <div class="path-icon" style="background:#E6F1FB">📏</div>
+      <div class="path-tag" style="background:#E6F1FB;color:#0C447C">Step-by-step</div>
+      <h3>Help me measure</h3>
+      <p>Our guide walks you through it with diagrams.</p>
+    </a>
+    <a class="path-card" href="pages/consult.html">
+      <div class="path-icon" style="background:var(--gold-mid)">🏠</div>
+      <div class="path-tag" style="background:var(--gold-mid);color:#854F0B">White glove</div>
+      <h3>Send someone to measure</h3>
+      <p>We visit, measure everything, and handle it all.</p>
+    </a>
+  </div>
+  <div style="margin-top:14px;text-align:center;font-size:12px;color:#666">
+    Not sure? <a href="tel:6097421720" style="color:var(--gold);font-weight:500">(609) 742-1720 · call or text 24/7</a>
+  </div>
+</div>
+
+<div class="section section-dark">
+  <div class="section-label" style="color:var(--gold)">What clients say</div>
+  <div class="section-title-light">Trusted across the Philadelphia area</div>
+  <div class="section-sub-light">From Philly row homes to mountain retreats.</div>
+  <div class="tgrid">
+    <div class="tcard"><div class="tcard-stars">★★★★★</div><div class="tcard-text">"The motorized shades completely changed how we use our living room. Installation was flawless."</div><div class="tcard-name">Sarah M. · Philadelphia, PA</div></div>
+    <div class="tcard"><div class="tcard-stars">★★★★★</div><div class="tcard-text">"Custom drapes for our entire home including the double-height great room. Stunning result."</div><div class="tcard-name">James & Lisa R. · Bryn Mawr, PA</div></div>
+    <div class="tcard"><div class="tcard-stars">★★★★★</div><div class="tcard-text">"Called at 9pm with a question and got a real answer. That kind of service is rare."</div><div class="tcard-name">David K. · Cherry Hill, NJ</div></div>
+  </div>
+</div>
+
+<div class="cta-banner">
+  <div><h2>Ready to transform your windows?</h2><p>Call or text us anytime — we'll walk you through every option.</p></div>
+  <div class="cta-banner-btns">
+    <a class="btn-dark" href="tel:6097421720">(609) 742-1720 · 24/7</a>
+    <a class="btn-outline" href="pages/consult.html">Book free consultation</a>
+  </div>
+</div>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="js/shared.js"></script>
+<script>renderNav('home'); renderFooter(true);</script>
+</body>
+</html>

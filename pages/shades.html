@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shades &amp; Blinds — Philly Blinds</title>
+<link rel="stylesheet" href="../css/global.css">
+<style>
+/* ---- HERO ---- */
+.page-hero{background:var(--espresso);padding:48px 28px 44px;position:relative;overflow:hidden}
+.hero-deco{position:absolute;right:0;top:0;bottom:0;width:180px;background:var(--espresso-mid);opacity:0.5}
+.hero-inner{max-width:560px;position:relative;z-index:1}
+.breadcrumb{font-size:11px;color:var(--text-faint);margin-bottom:16px}
+.breadcrumb a{color:var(--text-muted);text-decoration:none}
+.breadcrumb a:hover{color:var(--cream)}
+.page-hero h1{font-size:32px;font-weight:500;color:var(--cream);letter-spacing:-0.5px;margin-bottom:10px;line-height:1.2}
+.page-hero p{font-size:14px;color:var(--text-dark);line-height:1.7;margin-bottom:20px;max-width:440px}
+.hero-badges{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ---- PRODUCT GRID ---- */
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.product-card{background:#fff;border:1px solid #e8e8e4;border-radius:12px;overflow:hidden;cursor:pointer;transition:border-color 0.15s,box-shadow 0.15s;display:block;text-align:left}
+.product-card:hover{border-color:var(--gold);box-shadow:0 2px 12px rgba(200,151,63,0.12)}
+.product-card.selected{border:2px solid var(--gold);box-shadow:0 2px 16px rgba(200,151,63,0.2)}
+.product-img{height:90px;display:flex;align-items:center;justify-content:center;position:relative}
+.motor-chip{position:absolute;bottom:6px;right:6px;background:var(--espresso);color:var(--gold);font-size:9px;padding:2px 6px;border-radius:6px;font-weight:500}
+.product-body{padding:10px 12px 12px}
+.product-name{font-size:13px;font-weight:500;margin-bottom:2px;color:#111}
+.product-sub{font-size:11px;color:#666;margin-bottom:7px;line-height:1.4}
+
+/* ---- CONFIGURATOR ---- */
+.configurator{display:none;background:#fff;border:1px solid #e8e8e4;border-radius:14px;padding:28px;margin-top:0}
+.configurator.open{display:block}
+.config-head{display:flex;align-items:center;gap:14px;margin-bottom:24px;flex-wrap:wrap}
+.config-title{font-size:18px;font-weight:500;color:#111;letter-spacing:-0.3px}
+.config-back{font-size:12px;color:var(--gold);cursor:pointer;text-decoration:none;border:none;background:none;font-family:var(--font);padding:0}
+.config-back:hover{text-decoration:underline}
+.step-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:8px}
+.step-block{margin-bottom:22px}
+.step-title{font-size:13px;font-weight:500;color:#111;margin-bottom:10px}
+.tooltip-note{font-size:11px;color:#888;margin-top:4px;line-height:1.5}
+.measure-link{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--gold);font-weight:500;text-decoration:none;margin-bottom:10px}
+.measure-link:hover{text-decoration:underline}
+.inputs-block{display:none}
+.inputs-block.show{display:block}
+.dim-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px}
+.motor-sub{display:none;margin-top:10px}
+.motor-sub.show{display:block}
+
+/* ---- PRICE BOX ---- */
+.price-box{background:var(--espresso-mid);border:0.5px solid var(--border-dark);border-radius:12px;padding:20px 22px;margin-top:4px}
+.price-box-head{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:14px}
+.price-line{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:var(--text-dark);margin-bottom:7px}
+.price-line span:last-child{color:var(--cream)}
+.price-divider{border:none;border-top:0.5px solid var(--border-dark);margin:10px 0}
+.price-total{display:flex;justify-content:space-between;align-items:baseline;font-size:16px;font-weight:500;color:var(--cream)}
+.price-total span:last-child{color:var(--gold);font-size:22px}
+.price-note{font-size:11px;color:var(--text-faint);margin-top:8px}
+.price-min-note{font-size:11px;color:var(--gold);margin-top:4px}
+
+/* ---- FORMS ---- */
+.submit-form{display:none;margin-top:20px;padding-top:20px;border-top:1px solid #e8e8e4}
+.submit-form.show{display:block}
+.success-state{display:none;background:#EAF3DE;border-radius:12px;padding:22px;text-align:center;margin-top:16px}
+.success-state.show{display:block}
+.success-state h3{font-size:15px;font-weight:500;color:#27500A;margin-bottom:6px}
+.success-state p{font-size:13px;color:#3B6D11}
+
+/* ---- HUNTER DOUGLAS PANEL ---- */
+.hd-panel{display:none}
+.hd-panel.open{display:block}
+.hd-info{background:var(--espresso-mid);border:0.5px solid var(--border-dark);border-radius:12px;padding:20px 22px;margin-bottom:22px}
+.hd-info-title{font-size:14px;font-weight:500;color:var(--cream);margin-bottom:8px}
+.hd-info-text{font-size:12px;color:var(--text-dark);line-height:1.7}
+
+/* ---- BRANDS SECTION ---- */
+.brands-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.brands-group-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-faint);font-weight:500;margin-bottom:12px}
+.pill-row{display:flex;flex-wrap:wrap;gap:8px}
+.brand-pill{background:var(--espresso-mid);border:0.5px solid var(--border-dark);border-radius:8px;padding:8px 16px;font-size:12px;font-weight:500;color:var(--cream)}
+.brand-pill-motor{background:transparent;border:0.5px solid var(--border-dark);border-radius:8px;padding:7px 14px;font-size:11px;color:var(--text-muted)}
+
+/* ---- QUANTITY BUTTONS ---- */
+.qty-btns{display:flex;align-items:center;gap:0}
+.qty-btn{width:32px;height:32px;border:1px solid #ddd;background:#fff;font-size:16px;cursor:pointer;color:#333;font-family:var(--font);transition:background 0.1s;display:flex;align-items:center;justify-content:center}
+.qty-btn:first-child{border-radius:8px 0 0 8px}
+.qty-btn:last-child{border-radius:0 8px 8px 0}
+.qty-btn:hover{background:var(--gold-mid)}
+.qty-num{width:40px;text-align:center;border-top:1px solid #ddd;border-bottom:1px solid #ddd;border-left:none;border-right:none;height:32px;font-size:13px;font-weight:500;color:#111;font-family:var(--font);background:#fff}
+.qty-num:focus{outline:none}
+
+@media(max-width:600px){
+  .brands-grid{grid-template-columns:1fr}
+  .dim-row{grid-template-columns:1fr}
+  .config-head{flex-direction:column;align-items:flex-start;gap:8px}
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav" id="site-nav"></nav>
+
+<!-- SECTION 1: HERO -->
+<div class="page-hero">
+  <div class="hero-deco"></div>
+  <div class="hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; Shades &amp; Blinds</div>
+    <h1>Shades &amp; Blinds</h1>
+    <p>From airy roller shades to premium Hunter Douglas silhouettes — we custom-fabricate and install every window treatment we sell.</p>
+    <div class="hero-badges">
+      <span class="badge badge-instant">Instant pricing on most products</span>
+      <span class="badge badge-motor">+ motorization on every product</span>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2: PRODUCT SELECTOR -->
+<div class="section section-warm">
+  <div class="section-label">Choose a product</div>
+  <div class="section-title">What kind of shade are you looking for?</div>
+  <div class="section-sub">Click a product to configure it and see your price — or request a custom quote.</div>
+
+  <div class="product-grid" id="product-grid">
+
+    <!-- Roller Shades -->
+    <div class="product-card" id="card-roller" onclick="selectProduct('roller','Roller Shades',true)">
+      <div class="product-img" style="background:#F5ECD7">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+          <rect x="5" y="4" width="34" height="5" rx="2.5" fill="#C8973F"/>
+          <rect x="7" y="10" width="30" height="23" rx="2" fill="#FBF7F0" stroke="#C8973F" stroke-width="0.8"/>
+          <line x1="22" y1="33" x2="22" y2="41" stroke="#C8973F" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="22" cy="41" r="1.5" fill="#C8973F"/>
+        </svg>
+        <div class="motor-chip">+ motorized</div>
+      </div>
+      <div class="product-body">
+        <div class="product-name">Roller Shades</div>
+        <div class="product-sub">Solar, light filtering &amp; blackout</div>
+        <span class="badge badge-instant">Instant price</span>
+      </div>
+    </div>
+
+    <!-- Cellular / Honeycomb -->
+    <div class="product-card" id="card-cellular" onclick="selectProduct('cellular','Cellular / Honeycomb Shades',true)">
+      <div class="product-img" style="background:#EFF5F8">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+          <rect x="5" y="4" width="34" height="5" rx="2.5" fill="#C8973F"/>
+          <!-- row 1 hexagons -->
+          <polygon points="12,11 15,9 18,11 18,15 15,17 12,15" fill="#BDD9E8" stroke="#7AB4CC" stroke-width="0.6"/>
+          <polygon points="20,11 23,9 26,11 26,15 23,17 20,15" fill="#BDD9E8" stroke="#7AB4CC" stroke-width="0.6"/>
+          <polygon points="28,11 31,9 34,11 34,15 31,17 28,15" fill="#BDD9E8" stroke="#7AB4CC" stroke-width="0.6"/>
+          <!-- row 2 hexagons (offset) -->
+          <polygon points="16,18 19,16 22,18 22,22 19,24 16,22" fill="#BDD9E8" stroke="#7AB4CC" stroke-width="0.6"/>
+          <polygon points="24,18 27,16 30,18 30,22 27,24 24,22" fill="#BDD9E8" stroke="#7AB4CC" stroke-width="0.6"/>
+          <!-- row 3 hexagons -->
+          <polygon points="12,25 15,23 18,25 18,29 15,31 12,29" fill="#BDD9E8" stroke="#7AB4CC" stroke-width="0.6"/>
+          <polygon points="20,25 23,23 26,25 26,29 23,31 20,29" fill="#BDD9E8" stroke="#7AB4CC" stroke-width="0.6"/>
+          <polygon points="28,25 31,23 34,25 34,29 31,31 28,29" fill="#BDD9E8" stroke="#7AB4CC" stroke-width="0.6"/>
+          <line x1="22" y1="33" x2="22" y2="41" stroke="#C8973F" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="22" cy="41" r="1.5" fill="#C8973F"/>
+        </svg>
+        <div class="motor-chip">+ motorized</div>
+      </div>
+      <div class="product-body">
+        <div class="product-name">Cellular Shades</div>
+        <div class="product-sub">Insulating honeycomb structure</div>
+        <span class="badge badge-instant">Instant price</span>
+      </div>
+    </div>
+
+    <!-- Zebra Shades -->
+    <div class="product-card" id="card-zebra" onclick="selectProduct('zebra','Zebra Shades',true)">
+      <div class="product-img" style="background:#F0EDF8">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+          <rect x="5" y="4" width="34" height="5" rx="2.5" fill="#C8973F"/>
+          <rect x="7" y="11" width="30" height="4" rx="1" fill="#C8B4F0"/>
+          <rect x="7" y="16" width="30" height="3.5" rx="1" fill="#F0EDF8" stroke="#A882D8" stroke-width="0.4"/>
+          <rect x="7" y="20.5" width="30" height="4" rx="1" fill="#C8B4F0"/>
+          <rect x="7" y="25.5" width="30" height="3.5" rx="1" fill="#F0EDF8" stroke="#A882D8" stroke-width="0.4"/>
+          <rect x="7" y="30" width="30" height="3" rx="1" fill="#C8B4F0"/>
+          <line x1="22" y1="34" x2="22" y2="41" stroke="#C8973F" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="22" cy="41" r="1.5" fill="#C8973F"/>
+        </svg>
+        <div class="motor-chip">+ motorized</div>
+      </div>
+      <div class="product-body">
+        <div class="product-name">Zebra Shades</div>
+        <div class="product-sub">Dual-fabric banded sheer</div>
+        <span class="badge badge-instant">Instant price</span>
+      </div>
+    </div>
+
+    <!-- Woven Wood -->
+    <div class="product-card" id="card-woven" onclick="selectProduct('woven','Woven Wood / Natural Shades',true)">
+      <div class="product-img" style="background:#FAF0E0">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+          <rect x="5" y="4" width="34" height="5" rx="2.5" fill="#C8973F"/>
+          <rect x="7" y="10" width="30" height="24" rx="2" fill="#FAEBD7"/>
+          <line x1="7" y1="14" x2="37" y2="14" stroke="#8B5E2E" stroke-width="1.2" opacity="0.7"/>
+          <line x1="7" y1="17.5" x2="37" y2="17.5" stroke="#A0713C" stroke-width="0.8" opacity="0.5"/>
+          <line x1="7" y1="21" x2="37" y2="21" stroke="#8B5E2E" stroke-width="1.2" opacity="0.6"/>
+          <line x1="7" y1="24.5" x2="37" y2="24.5" stroke="#C4894E" stroke-width="0.7" opacity="0.4"/>
+          <line x1="7" y1="28" x2="37" y2="28" stroke="#8B5E2E" stroke-width="1.2" opacity="0.7"/>
+          <line x1="7" y1="31.5" x2="37" y2="31.5" stroke="#A0713C" stroke-width="0.8" opacity="0.4"/>
+          <line x1="22" y1="34" x2="22" y2="41" stroke="#C8973F" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="22" cy="41" r="1.5" fill="#C8973F"/>
+        </svg>
+        <div class="motor-chip">+ motorized</div>
+      </div>
+      <div class="product-body">
+        <div class="product-name">Woven Wood Shades</div>
+        <div class="product-sub">Bamboo, rattan &amp; jute</div>
+        <span class="badge badge-instant">Instant price</span>
+      </div>
+    </div>
+
+    <!-- Silhouette (Hunter Douglas) -->
+    <div class="product-card" id="card-silhouette" onclick="selectProduct('silhouette','Silhouette Shadings',false)">
+      <div class="product-img" style="background:#EEEEFD">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+          <rect x="5" y="4" width="34" height="5" rx="2.5" fill="#C8973F"/>
+          <!-- soft vane shapes -->
+          <ellipse cx="22" cy="16" rx="13" ry="3.5" fill="#B8B0EA" opacity="0.7"/>
+          <ellipse cx="22" cy="16" rx="13" ry="1.5" fill="#D0CCF5"/>
+          <ellipse cx="22" cy="24" rx="13" ry="3.5" fill="#B8B0EA" opacity="0.7"/>
+          <ellipse cx="22" cy="24" rx="13" ry="1.5" fill="#D0CCF5"/>
+          <ellipse cx="22" cy="32" rx="13" ry="3.5" fill="#B8B0EA" opacity="0.7"/>
+          <ellipse cx="22" cy="32" rx="13" ry="1.5" fill="#D0CCF5"/>
+        </svg>
+        <div class="motor-chip">+ motorized</div>
+      </div>
+      <div class="product-body">
+        <div class="product-name">Silhouette Shadings</div>
+        <div class="product-sub">Hunter Douglas — soft vane</div>
+        <span class="badge badge-quote">Custom quote</span>
+      </div>
+    </div>
+
+    <!-- Pirouette (Hunter Douglas) -->
+    <div class="product-card" id="card-pirouette" onclick="selectProduct('pirouette','Pirouette Shadings',false)">
+      <div class="product-img" style="background:#F0F8EE">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+          <rect x="5" y="4" width="34" height="5" rx="2.5" fill="#C8973F"/>
+          <!-- S-curve vane shapes — more structured -->
+          <path d="M9 12 Q18 10 22 14 Q26 18 35 16" stroke="#8FC98A" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path d="M9 12 Q18 10 22 14 Q26 18 35 16" stroke="#C5E8C2" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.6"/>
+          <path d="M9 20 Q18 18 22 22 Q26 26 35 24" stroke="#8FC98A" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path d="M9 20 Q18 18 22 22 Q26 26 35 24" stroke="#C5E8C2" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.6"/>
+          <path d="M9 28 Q18 26 22 30 Q26 34 35 32" stroke="#8FC98A" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path d="M9 28 Q18 26 22 30 Q26 34 35 32" stroke="#C5E8C2" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.6"/>
+        </svg>
+        <div class="motor-chip">+ motorized</div>
+      </div>
+      <div class="product-body">
+        <div class="product-name">Pirouette Shadings</div>
+        <div class="product-sub">Hunter Douglas — structured vane</div>
+        <span class="badge badge-quote">Custom quote</span>
+      </div>
+    </div>
+
+  </div><!-- /product-grid -->
+</div>
+
+<!-- SECTION 3: CONFIGURATOR -->
+<div class="section section-white" id="configurator-section" style="display:none">
+
+  <!-- INSTANT PRICE CONFIGURATOR -->
+  <div class="configurator open" id="instant-config">
+    <div class="config-head">
+      <button class="config-back" onclick="clearProduct()">&#8592; Change product</button>
+      <div class="config-title" id="config-product-name">Roller Shades</div>
+      <span class="badge badge-instant">Instant price</span>
+    </div>
+
+    <!-- Step A: Measure path -->
+    <div class="step-block">
+      <div class="step-label">Step 1</div>
+      <div class="step-title">Do you have your measurements?</div>
+      <div class="opt-row" id="grp-measure">
+        <button class="opt-btn" onclick="selOpt(this,'grp-measure');toggleMeasure('help')">Help me measure</button>
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-measure');toggleMeasure('have')">I have my measurements</button>
+      </div>
+      <a class="measure-link" href="measure.html">Not sure? See our measuring guide &rarr;</a>
+      <div class="inputs-block show" id="measure-inputs">
+        <!-- Step B: Dimensions -->
+        <div class="step-block" style="margin-bottom:14px">
+          <div class="step-label">Step 2</div>
+          <div class="step-title">Window measurements</div>
+          <div class="dim-row">
+            <div class="form-group">
+              <label>Width (inches)</label>
+              <input type="number" id="inp-width" min="12" max="144" step="0.5" placeholder="e.g. 36.5" oninput="updatePrice()">
+              <div class="tooltip-note">e.g. 36&nbsp;&frac12;&rdquo; &rarr; enter 36.5</div>
+            </div>
+            <div class="form-group">
+              <label>Height (inches)</label>
+              <input type="number" id="inp-height" min="12" max="120" step="0.5" placeholder="e.g. 48" oninput="updatePrice()">
+            </div>
+          </div>
+          <div class="step-title" style="font-size:12px;margin-bottom:8px">Mount type</div>
+          <div class="opt-row" id="grp-mount">
+            <button class="opt-btn sel" onclick="selOpt(this,'grp-mount');updatePrice()">Inside mount</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-mount');updatePrice()">Outside mount</button>
+          </div>
+          <div class="tooltip-note" style="margin-top:-8px;margin-bottom:12px">Inside mount requires a minimum 2&frac34;&rdquo; window depth.</div>
+          <div class="step-title" style="font-size:12px;margin-bottom:8px">Quantity</div>
+          <div class="qty-btns">
+            <button class="qty-btn" onclick="adjustQty(-1)">&#8722;</button>
+            <input class="qty-num" type="number" id="inp-qty" value="1" min="1" max="10" oninput="clampQty();updatePrice()">
+            <button class="qty-btn" onclick="adjustQty(1)">&#43;</button>
+          </div>
+        </div>
+
+        <!-- Step C: Light control -->
+        <div class="step-block">
+          <div class="step-label">Step 3</div>
+          <div class="step-title">Light control</div>
+          <div class="opt-row" id="grp-light">
+            <button class="opt-btn sel" onclick="selOpt(this,'grp-light');updatePrice()">Light Filtering</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-light');updatePrice()">Room Darkening</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-light');updatePrice()">Blackout</button>
+          </div>
+          <!-- Zebra-only weave options (shown/hidden by JS) -->
+          <div id="zebra-weave-opts" style="display:none">
+            <div class="tooltip-note" style="margin-bottom:6px">Fabric weave (Zebra shades):</div>
+            <div class="opt-row" id="grp-weave">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-weave');updatePrice()">Open Weave</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-weave');updatePrice()">Semi-Open</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step D: Motorization -->
+        <div class="step-block">
+          <div class="step-label">Step 4</div>
+          <div class="step-title">Add motorization? <span style="font-weight:400;color:#888">(optional)</span></div>
+          <div class="opt-row" id="grp-motor">
+            <button class="opt-btn sel" onclick="selOpt(this,'grp-motor');toggleMotor(false)">No thanks — manual</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-motor');toggleMotor(true)">Yes, add motorization</button>
+          </div>
+          <div class="motor-sub" id="motor-sub">
+            <div class="form-group">
+              <label>Motor brand</label>
+              <select id="sel-motor-brand" onchange="updatePrice()">
+                <option value="lutron">Lutron Serena</option>
+                <option value="somfy">Somfy</option>
+                <option value="automate">Automate</option>
+                <option value="rollease">Rollease Acmeda</option>
+                <option value="hd">Hunter Douglas PowerView</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step E: Price box -->
+        <div class="step-block">
+          <div class="step-label">Step 5</div>
+          <div class="step-title">Estimated price</div>
+          <div class="price-box" id="price-box">
+            <div class="price-box-head">Live estimate</div>
+            <div class="price-line"><span id="pb-product">—</span><span></span></div>
+            <div class="price-line"><span>Dimensions</span><span id="pb-dims">Enter width &amp; height</span></div>
+            <div class="price-line"><span>Square footage</span><span id="pb-sqft">—</span></div>
+            <div class="price-line"><span>Base price / shade</span><span id="pb-base">—</span></div>
+            <div class="price-line"><span>Qty</span><span id="pb-qty">1</span></div>
+            <div class="price-line" id="pb-motor-row" style="display:none"><span>Motorization</span><span id="pb-motor">—</span></div>
+            <hr class="price-divider">
+            <div class="price-total"><span>Est. total</span><span id="pb-total">—</span></div>
+            <div class="price-note">Final price confirmed at order. Minimum $85 per shade.</div>
+            <div class="price-min-note" id="pb-min-note" style="display:none">Minimum order applied.</div>
+          </div>
+        </div>
+
+        <!-- Step F: Submit -->
+        <button class="btn-gold" onclick="showShadeForm()" style="width:100%;padding:13px;margin-top:4px">Get exact quote &rarr;</button>
+        <div class="submit-form" id="shade-submit-form">
+          <div class="step-title" style="margin-bottom:14px">Your contact details</div>
+          <div class="form-row">
+            <div class="form-group"><label>Your name *</label><input type="text" id="sf-name" placeholder="Jane Smith"></div>
+            <div class="form-group"><label>Phone *</label><input type="tel" id="sf-phone" placeholder="(215) 555-0100"></div>
+          </div>
+          <div class="form-group"><label>Email</label><input type="email" id="sf-email" placeholder="jane@example.com"></div>
+          <div class="form-group"><label>Any notes?</label><textarea id="sf-notes" placeholder="e.g. looking for blackout in bedroom, open to fabric samples"></textarea></div>
+          <button class="btn-gold" onclick="submitShadeForm()" style="width:100%;padding:13px">Send quote request</button>
+        </div>
+        <div class="success-state" id="shade-success">
+          <h3>Quote request sent!</h3>
+          <p>We'll confirm your exact price within a few hours. For anything urgent, call us at <strong>(609) 742-1720</strong> &mdash; available 24/7.</p>
+        </div>
+
+      </div><!-- /inputs-block -->
+
+    </div><!-- /step-block measure -->
+  </div><!-- /instant-config -->
+
+  <!-- HUNTER DOUGLAS CUSTOM QUOTE PANEL -->
+  <div class="hd-panel" id="hd-config">
+    <div class="config-head">
+      <button class="config-back" onclick="clearProduct()">&#8592; Change product</button>
+      <div class="config-title" id="hd-product-name">Silhouette Shadings</div>
+      <span class="badge badge-quote">Custom quote</span>
+    </div>
+    <div class="hd-info">
+      <div class="hd-info-title">Hunter Douglas — custom quoted by our specialists</div>
+      <div class="hd-info-text">Silhouette and Pirouette Shadings are precision Hunter Douglas products with proprietary fabrics, vane geometry, and PowerView motorization options. Because the variables are highly specific to your windows, we provide a custom written quote — typically within 24 hours. Tell us what you're interested in and we'll take it from there.</div>
+    </div>
+    <div class="form-group">
+      <label>Your name *</label>
+      <input type="text" id="hd-name" placeholder="Jane Smith">
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Phone *</label><input type="tel" id="hd-phone" placeholder="(215) 555-0100"></div>
+      <div class="form-group"><label>Email</label><input type="email" id="hd-email" placeholder="jane@example.com"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Product interested in</label>
+        <select id="hd-product-sel">
+          <option value="silhouette">Silhouette Shadings</option>
+          <option value="pirouette">Pirouette Shadings</option>
+          <option value="both">Both — not sure yet</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Number of windows (approx)</label>
+        <select id="hd-wincount">
+          <option>1 window</option>
+          <option>2–3 windows</option>
+          <option>4–6 windows</option>
+          <option>7–10 windows</option>
+          <option>More than 10</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Notes / questions</label>
+      <textarea id="hd-notes" placeholder="e.g. interested in PowerView motorization, have 3 large arch windows in living room"></textarea>
+    </div>
+    <button class="btn-gold" onclick="submitQuoteForm()" style="width:100%;padding:13px">Request custom quote</button>
+    <div class="success-state" id="hd-success">
+      <h3>Quote request received!</h3>
+      <p>A Hunter Douglas specialist will reach out within 24 hours. For anything urgent, call <strong>(609) 742-1720</strong> &mdash; available 24/7.</p>
+    </div>
+  </div><!-- /hd-config -->
+
+</div><!-- /configurator-section -->
+
+<!-- SECTION 4: BRANDS -->
+<div class="section section-dark">
+  <div class="section-label" style="color:var(--gold)">Brands we carry</div>
+  <div class="section-title-light" style="margin-bottom:6px">Shade &amp; motor brands</div>
+  <div class="section-sub-light">We source from the best — manual or motorized, budget-friendly or ultra-premium.</div>
+  <div class="brands-grid">
+    <div>
+      <div class="brands-group-title">Shade brands</div>
+      <div class="pill-row">
+        <div class="brand-pill">Norman</div>
+        <div class="brand-pill">Hunter Douglas</div>
+        <div class="brand-pill-motor">+ others</div>
+      </div>
+    </div>
+    <div>
+      <div class="brands-group-title">Motorization brands</div>
+      <div class="pill-row">
+        <div class="brand-pill">Lutron</div>
+        <div class="brand-pill">Somfy</div>
+        <div class="brand-pill">Automate</div>
+        <div class="brand-pill">Rollease Acmeda</div>
+        <div class="brand-pill">HD PowerView</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:18px">
+    <div class="call-strip">
+      <div class="call-text">Don't see your brand? We source almost any manufacturer &mdash; just ask.</div>
+      <a class="call-num" href="tel:6097421720">(609) 742-1720</a>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5: CTA BANNER -->
+<div class="cta-banner">
+  <div>
+    <h2>Not sure what you need?</h2>
+    <p>Book a free in-home consultation &mdash; we bring samples and do the measuring for you.</p>
+  </div>
+  <div class="cta-banner-btns">
+    <a class="btn-dark" href="tel:6097421720">(609) 742-1720 &middot; 24/7</a>
+    <a class="btn-outline" href="consult.html">Book free consultation</a>
+  </div>
+</div>
+
+<!-- SECTION 6: FOOTER -->
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="../js/shared.js"></script>
+<script>
+renderNav('Shades & blinds');
+renderFooter(false);
+
+// ─── Product rates ───────────────────────────────────────────
+const RATES = {
+  roller:   22,
+  cellular: 26,
+  zebra:    20,
+  woven:    18
+};
+const MOTOR_UPCHARGE = 95;
+const MIN_ORDER = 85;
+
+// ─── State ───────────────────────────────────────────────────
+let currentProduct = null;
+let motorOn = false;
+
+// ─── selectProduct ───────────────────────────────────────────
+function selectProduct(productId, productName, isInstant) {
+  // Deselect all cards
+  document.querySelectorAll('.product-card').forEach(c => c.classList.remove('selected'));
+  const card = document.getElementById('card-' + productId);
+  if (card) card.classList.add('selected');
+
+  currentProduct = productId;
+
+  // Show configurator section
+  const sec = document.getElementById('configurator-section');
+  sec.style.display = 'block';
+
+  if (isInstant) {
+    document.getElementById('instant-config').classList.add('open');
+    document.getElementById('hd-config').classList.remove('open');
+    document.getElementById('config-product-name').textContent = productName;
+
+    // Show/hide zebra-only weave options
+    const zebraOpts = document.getElementById('zebra-weave-opts');
+    if (productId === 'zebra') {
+      zebraOpts.style.display = 'block';
+    } else {
+      zebraOpts.style.display = 'none';
+    }
+
+    updatePrice();
+  } else {
+    document.getElementById('instant-config').classList.remove('open');
+    document.getElementById('hd-config').classList.add('open');
+    document.getElementById('hd-product-name').textContent = productName;
+    // Pre-select the correct product in the HD dropdown
+    const hdSel = document.getElementById('hd-product-sel');
+    if (productId === 'silhouette') hdSel.value = 'silhouette';
+    else if (productId === 'pirouette') hdSel.value = 'pirouette';
+  }
+
+  // Scroll to configurator smoothly
+  sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── clearProduct ────────────────────────────────────────────
+function clearProduct() {
+  document.querySelectorAll('.product-card').forEach(c => c.classList.remove('selected'));
+  currentProduct = null;
+  document.getElementById('configurator-section').style.display = 'none';
+  document.getElementById('instant-config').classList.remove('open');
+  document.getElementById('hd-config').classList.remove('open');
+  // Scroll back to product grid
+  document.getElementById('product-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── toggleMeasure ───────────────────────────────────────────
+function toggleMeasure(mode) {
+  const block = document.getElementById('measure-inputs');
+  if (mode === 'help') {
+    block.classList.remove('show');
+  } else {
+    block.classList.add('show');
+  }
+}
+
+// ─── toggleMotor ─────────────────────────────────────────────
+function toggleMotor(on) {
+  motorOn = on;
+  const sub = document.getElementById('motor-sub');
+  const row = document.getElementById('pb-motor-row');
+  if (on) {
+    sub.classList.add('show');
+    row.style.display = 'flex';
+  } else {
+    sub.classList.remove('show');
+    row.style.display = 'none';
+  }
+  updatePrice();
+}
+
+// ─── adjustQty / clampQty ────────────────────────────────────
+function adjustQty(delta) {
+  const inp = document.getElementById('inp-qty');
+  let v = parseInt(inp.value) || 1;
+  v = Math.min(10, Math.max(1, v + delta));
+  inp.value = v;
+  updatePrice();
+}
+function clampQty() {
+  const inp = document.getElementById('inp-qty');
+  let v = parseInt(inp.value);
+  if (isNaN(v) || v < 1) v = 1;
+  if (v > 10) v = 10;
+  inp.value = v;
+}
+
+// ─── updatePrice ─────────────────────────────────────────────
+function updatePrice() {
+  if (!currentProduct || !(currentProduct in RATES)) return;
+
+  const w = parseFloat(document.getElementById('inp-width').value);
+  const h = parseFloat(document.getElementById('inp-height').value);
+  const qty = parseInt(document.getElementById('inp-qty').value) || 1;
+  const rate = RATES[currentProduct];
+
+  document.getElementById('pb-product').textContent = document.getElementById('config-product-name').textContent;
+  document.getElementById('pb-qty').textContent = qty;
+
+  if (!w || !h || w < 12 || w > 144 || h < 12 || h > 120) {
+    document.getElementById('pb-dims').textContent = 'Enter valid width & height';
+    document.getElementById('pb-sqft').textContent = '—';
+    document.getElementById('pb-base').textContent = '—';
+    document.getElementById('pb-total').textContent = '—';
+    document.getElementById('pb-min-note').style.display = 'none';
+    if (motorOn) document.getElementById('pb-motor').textContent = '+$' + MOTOR_UPCHARGE + ' / shade';
+    return;
+  }
+
+  const sqft = (w / 12) * (h / 12);
+  const basePerShade = Math.max(MIN_ORDER, sqft * rate);
+  const motorCost = motorOn ? MOTOR_UPCHARGE * qty : 0;
+  const total = (basePerShade * qty) + motorCost;
+
+  document.getElementById('pb-dims').textContent = w + '" W × ' + h + '" H';
+  document.getElementById('pb-sqft').textContent = sqft.toFixed(2) + ' sqft';
+  document.getElementById('pb-base').textContent = '$' + rate + '/sqft → $' + basePerShade.toFixed(2);
+  if (motorOn) {
+    document.getElementById('pb-motor').textContent = '+$' + MOTOR_UPCHARGE + ' × ' + qty + ' = $' + (MOTOR_UPCHARGE * qty).toFixed(2);
+  }
+  document.getElementById('pb-total').textContent = '$' + total.toFixed(2);
+
+  const minApplied = (basePerShade === MIN_ORDER);
+  document.getElementById('pb-min-note').style.display = minApplied ? 'block' : 'none';
+}
+
+// ─── showShadeForm ───────────────────────────────────────────
+function showShadeForm() {
+  const f = document.getElementById('shade-submit-form');
+  f.classList.add('show');
+  f.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── submitShadeForm ─────────────────────────────────────────
+function submitShadeForm() {
+  const name = document.getElementById('sf-name').value.trim();
+  const phone = document.getElementById('sf-phone').value.trim();
+  if (!name || !phone) {
+    alert('Please enter your name and phone number.');
+    return;
+  }
+  document.getElementById('shade-submit-form').classList.remove('show');
+  const s = document.getElementById('shade-success');
+  s.classList.add('show');
+  s.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── submitQuoteForm ─────────────────────────────────────────
+function submitQuoteForm() {
+  const name = document.getElementById('hd-name').value.trim();
+  const phone = document.getElementById('hd-phone').value.trim();
+  if (!name || !phone) {
+    alert('Please enter your name and phone number.');
+    return;
+  }
+  const s = document.getElementById('hd-success');
+  s.classList.add('show');
+  s.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+</body>
+</html>
