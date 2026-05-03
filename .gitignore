@@ -4,3 +4,4 @@
 pdfs/wholesale-pricing/
 
 # pdfs/specs/ is intentionally PUBLIC — served by Vercel as downloads
+node_modules/
