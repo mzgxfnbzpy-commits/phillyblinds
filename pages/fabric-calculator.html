@@ -185,12 +185,13 @@
           </div>
 
           <div class="field-group">
-            <label class="field-label">Number of panels</label>
+            <label class="field-label">Draw type</label>
             <div class="opt-row" id="d-panels">
-              <button class="opt-btn" onclick="selOpt(this,'d-panels');calcDrapery()" data-val="1">1 panel</button>
-              <button class="opt-btn sel" onclick="selOpt(this,'d-panels');calcDrapery()" data-val="2">2 panels</button>
-              <button class="opt-btn" onclick="selOpt(this,'d-panels');calcDrapery()" data-val="4">4 panels</button>
+              <button class="opt-btn" onclick="selOpt(this,'d-panels');calcDrapery()" data-val="1">One way draw</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'d-panels');calcDrapery()" data-val="2">Split draw</button>
+              <button class="opt-btn" onclick="selOpt(this,'d-panels');calcDrapery()" data-val="4">4-panel split</button>
             </div>
+            <div class="field-hint">One way = all fabric stacks to one side. Split draw = panels meet in the center.</div>
           </div>
 
           <div class="field-group">
@@ -495,7 +496,7 @@
 
 <script src="../js/shared.js"></script>
 <script>
-renderNav('');
+renderNav('Fabric calculator');
 renderFooter(false);
 
 // ── Tab switching ──────────────────────────────────────────────
@@ -557,6 +558,9 @@ function calcDrapery() {
   // Rounded up to nearest 0.25yd + 10% buffer
   const finalYards = roundUp(rawYards * 1.10);
 
+  const drawLabel = panels === 1 ? 'One way draw' : panels === 2 ? 'Split draw (2 panels)' : '4-panel split';
+  const liningYards = roundUp((totalWidths * (length + header + hem)) / 36 * 1.05);
+
   document.getElementById('d-result-body').innerHTML = `
     <div class="result-row">
       <span class="result-label">Face fabric</span>
@@ -564,16 +568,26 @@ function calcDrapery() {
     </div>
     <div class="result-row">
       <span class="result-label">Lining (if lined)</span>
-      <span class="result-val">${fmtYards(roundUp((totalWidths * (length + header + hem)) / 36 * 1.05))}<span class="val-unit">yds</span></span>
+      <span class="result-val">${fmtYards(liningYards)}<span class="val-unit">yds</span></span>
     </div>
     <div class="result-breakdown">
-      <h4>Breakdown</h4>
-      <div class="breakdown-row"><span>Cut length per width</span><span>${cutLength.toFixed(1)}″</span></div>
-      <div class="breakdown-row"><span>Fabric widths needed</span><span>${totalWidths}</span></div>
-      <div class="breakdown-row"><span>Raw yardage</span><span>${rawYards.toFixed(2)} yds</span></div>
-      <div class="breakdown-row"><span>+10% waste buffer</span><span>${(rawYards * 0.10).toFixed(2)} yds</span></div>
+      <h4>Cut length breakdown</h4>
+      <div class="breakdown-row"><span>Finished drop</span><span>${length}″</span></div>
+      <div class="breakdown-row"><span>+ Header allowance</span><span>+${header}″</span></div>
+      <div class="breakdown-row"><span>+ Hem allowance</span><span>+${hem}″</span></div>
+      ${repeat > 0 ? `<div class="breakdown-row"><span>+ Pattern repeat</span><span>+${repeat}″</span></div>` : ''}
+      <div class="breakdown-row" style="border-top:1px solid #2A201A;margin-top:4px;padding-top:4px"><span><strong>= Cut length</strong></span><span><strong>${cutLength.toFixed(1)}″</strong></span></div>
     </div>
-    ${repeat > 0 ? `<div class="result-note">Pattern repeat of ${repeat}″ adds one full repeat to each cut length. Consider buying an additional repeat per seam for centering.</div>` : ''}
+    <div class="result-breakdown">
+      <h4>Width breakdown</h4>
+      <div class="breakdown-row"><span>Draw type</span><span>${drawLabel}</span></div>
+      <div class="breakdown-row"><span>Total gathered width</span><span>${(width * fullness).toFixed(1)}″</span></div>
+      <div class="breakdown-row"><span>Widths from bolt per panel</span><span>${widthsPerPanel} × ${fabricW}″ bolt</span></div>
+      <div class="breakdown-row"><span>Total fabric widths</span><span>${totalWidths}</span></div>
+      <div class="breakdown-row"><span>Raw yardage</span><span>${rawYards.toFixed(2)} yds</span></div>
+      <div class="breakdown-row"><span>+10% waste buffer</span><span>+${(rawYards * 0.10).toFixed(2)} yds</span></div>
+    </div>
+    ${repeat > 0 ? `<div class="result-note">Pattern repeat of ${repeat}″ added to each cut length. Buy one extra repeat per fabric width for matching seams at a split draw center.</div>` : ''}
   `;
 }
 
