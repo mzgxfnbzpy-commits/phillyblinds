@@ -2140,6 +2140,137 @@ function rnSetLift(type) {
   rnUpdatePrice();
 }
 
+// ════════════════════════════════════════════════════════════════
+// SOLUNA COLOR COORDINATION RULE ENGINE (Norman 2026 spec)
+// ════════════════════════════════════════════════════════════════
+
+const COLOR_OPTIONS = {
+  standardHardware:      ["White", "Cottage White", "Black", "Silver"],
+  beadChain:             ["White", "Cottage White", "Black", "Silver", "Nature", "Terra", "Sahara", "Chocolate", "Stainless Steel"],
+  fasciaPlain:           ["White", "Cottage White", "Black", "Anodized Silver"],
+  plainHemBar:           ["White", "Cottage White", "Black", "Anodized Silver"],
+  fabricWrappedEndCaps:  ["White", "Cottage White", "Black", "Silver", "Nature", "Terra", "Sahara", "Chocolate"],
+  chargingPort:          ["White", "Cottage White", "Black", "Silver", "Nature", "Terra", "Sahara", "Chocolate"],
+  lightGuard360:         ["White", "Cottage White", "Black", "Silver", "Bronze"],
+  cassette:              ["White", "Cottage White", "Black", "Silver"]
+};
+
+const SYSTEM_RULES = {
+  standardHardware: {
+    description: "Standard hardware includes brackets, raceway, end plugs, clutch, bracket covers, tension dial, and back of fabric-wrapped hem bar.",
+    defaultBasedOnFabric: true, overrideAvailable: true,
+    options: COLOR_OPTIONS.standardHardware,
+    notes: [
+      "Silver is optional only when hardware is exposed (no raceway or valance).",
+      "Raceway mounting brackets are nickel-plated by default — cannot be color overridden.",
+      "Norman Smart Motor button box and wire connector box are white when bracket color is Silver."
+    ]
+  },
+  beadChain: {
+    description: "Plastic bead chain and required tension device.",
+    defaultBasedOnFabric: true, overrideAvailable: true,
+    options: COLOR_OPTIONS.beadChain,
+    rules: [
+      "Tension device is required and cannot be removed.",
+      "Tension device color coordinates with selected bead chain color.",
+      "If Stainless Steel chain is selected, tension device coordinates with standard hardware color."
+    ]
+  },
+  squareFascia: {
+    validShapes: ["Square"], validMaterials: ["Metal", "Fabric Wrapped"],
+    colorOptions: { metal: ["White", "Cottage White", "Black", "Anodized Silver"], fabricWrapped: "Fabric selected by user" },
+    rules: ["Square fascia may be metal or fabric wrapped.", "Anodized Silver available for plain square fascia.", "Metal fascia is square only."]
+  },
+  curvedFascia: {
+    validShapes: ["Curved"], validMaterials: ["Fabric Wrapped"],
+    colorOptions: { fabricWrapped: "Fabric selected by user", endCaps: COLOR_OPTIONS.fabricWrappedEndCaps },
+    rules: ["Curved fascia must be fabric wrapped.", "Curved metal fascia is not allowed.", "End caps use Color Coordination 2 options."]
+  },
+  plainHemBar: {
+    validOptions: ["Fabric Wrapped", "Sealed Pocket"],
+    colorOptions: { plain: ["White", "Cottage White", "Black", "Anodized Silver"], fabricWrappedEndCaps: COLOR_OPTIONS.fabricWrappedEndCaps },
+    rules: [
+      "Fabric-wrapped hem bar: front = selected fabric, back = standard hardware color.",
+      "End caps for fabric-wrapped hem bar use Color Coordination 2.",
+      "Anodized Silver available for plain hem bar."
+    ]
+  },
+  chargingPort: {
+    appliesWhen: ["Motorized", "Rechargeable Battery"], overrideAvailable: true,
+    options: COLOR_OPTIONS.chargingPort,
+    rules: ["Show only for rechargeable motorized shades.", "Default follows fabric color coordination.", "User may override using Color Coordination 2 options."]
+  },
+  dualShade: {
+    rules: [
+      "Standard Hardware Color Coordination 1 override is disabled on dual shades.",
+      "Raceway, brackets, and bracket covers match front shade color coordination.",
+      "Clutch, end plug, chain match the fabric of that individual shade.",
+      "Use Special Instructions for custom color overrides."
+    ]
+  },
+  lightGuard360: {
+    colorOptions: COLOR_OPTIONS.lightGuard360,
+    rules: ["Housing color must be selected manually.", "Fabric Color Coordination 1 and 2 do not apply.", "Standard hardware is black.", "LG360 must not use default fabric coordination."]
+  },
+  cassetteSystem: {
+    colorOptions: COLOR_OPTIONS.cassette,
+    rules: [
+      "Cassette color must be selected manually.",
+      "Cassette selection determines color coordination for plain hem bars.",
+      "Fabric Color Coordination 1 and 2 only apply to end caps for fabric-wrapped hem bar and bead chain for CCL.",
+      "Standard hardware is black."
+    ]
+  }
+};
+
+function getAvailableColorOptions(config) {
+  const { systemType, fasciaShape, fasciaMaterial, hemBarType, operatingSystem, motorType, isDualShade } = config;
+  if (isDualShade) return { warning: "Dual shade: standard hardware override disabled. Use Special Instructions.", rules: SYSTEM_RULES.dualShade.rules };
+  if (systemType === "LightGuard 360") return { colorOptions: SYSTEM_RULES.lightGuard360.colorOptions, rules: SYSTEM_RULES.lightGuard360.rules };
+  if (systemType === "Cassette")       return { colorOptions: SYSTEM_RULES.cassetteSystem.colorOptions, rules: SYSTEM_RULES.cassetteSystem.rules };
+  if (fasciaShape === "Square" && fasciaMaterial === "Metal")           return { fasciaColors: SYSTEM_RULES.squareFascia.colorOptions.metal, rules: SYSTEM_RULES.squareFascia.rules };
+  if (fasciaShape === "Square" && fasciaMaterial === "Fabric Wrapped")  return { fasciaColor: "Fabric selected by user", endCapColors: COLOR_OPTIONS.fabricWrappedEndCaps, rules: SYSTEM_RULES.squareFascia.rules };
+  if (fasciaShape === "Curved") return { fasciaColor: "Fabric selected by user", endCapColors: COLOR_OPTIONS.fabricWrappedEndCaps, rules: SYSTEM_RULES.curvedFascia.rules };
+  if (hemBarType === "Fabric Wrapped") return { hemBarFront: "Fabric selected by user", hemBarBack: "Standard hardware coordination", endCapColors: COLOR_OPTIONS.fabricWrappedEndCaps, rules: SYSTEM_RULES.plainHemBar.rules };
+  if (operatingSystem === "Motorized" && motorType === "Rechargeable Battery") return { chargingPortColors: COLOR_OPTIONS.chargingPort, rules: SYSTEM_RULES.chargingPort.rules };
+  return { standardHardwareColors: COLOR_OPTIONS.standardHardware, beadChainColors: COLOR_OPTIONS.beadChain, rules: [...SYSTEM_RULES.standardHardware.notes, ...SYSTEM_RULES.beadChain.rules] };
+}
+
+function validateSolunaColorConfig(config) {
+  const errors = [];
+  if (config.fasciaShape === "Flat")                                              errors.push("Flat fascia is not a valid Soluna option.");
+  if (config.fasciaShape === "Curved" && config.fasciaMaterial === "Metal")       errors.push("Curved fascia must be fabric wrapped — curved metal is not allowed.");
+  if (config.fasciaMaterial === "Metal" && config.fasciaShape !== "Square")       errors.push("Metal fascia is only available as square fascia.");
+  if (config.operatingSystem === "Cord Loop" && config.tensionDevice === false)   errors.push("Safety tension device is required for cord loop — cannot be removed.");
+  if (config.systemType === "LightGuard 360" && config.usesFabricDefaultColor)   errors.push("LightGuard 360 requires manual housing color selection — fabric defaults do not apply.");
+  if (config.systemType === "Cassette" && !config.cassetteColor)                 errors.push("Cassette color must be selected.");
+  return { valid: errors.length === 0, errors };
+}
+
+// ─── rnBuildConfig ───────────────────────────────────────────
+// Reads current UI state → builds config object for rule engine
+function rnBuildConfig() {
+  const g = function(id) { const b = document.querySelector('#' + id + ' .opt-btn.sel, #' + id + ' .rn-fc-sel .rn-fc-name'); return b ? b.textContent.trim() : ''; };
+  const hrBtn = document.querySelector('#rn-grp-headrail .opt-btn.sel');
+  const hrText = hrBtn ? hrBtn.textContent.trim() : 'Open Roll';
+  const isPremium = document.getElementById('rn-premium-hw').style.display !== 'none';
+
+  return {
+    systemType:         hrText.includes('Cassette') ? 'Cassette' : hrText.includes('Fascia') ? 'Fascia' : 'Open Roll',
+    lightGuard:         (document.querySelector('#rn-grp-lg .opt-btn.sel') || {}).textContent || 'None',
+    fasciaShape:        g('rn-grp-fascia-shape'),
+    fasciaMaterial:     g('rn-grp-fascia-mat'),
+    hemBarType:         g('rn-grp-hem-type'),
+    operatingSystem:    rnLiftType === 'motor' ? 'Motorized' : rnLiftType === 'cord' ? 'Cord Loop' : 'Cordless',
+    motorType:          'Battery / Wired (TBD)',
+    isDualShade:        rnSystemType === 'dual',
+    tensionDevice:      true,         // always required
+    cassetteColor:      null,         // placeholder until cassette color picker added
+    usesFabricDefaultColor: !isPremium,
+    premiumFinish:      isPremium ? g('rn-grp-premium-finish') : null
+  };
+}
+
 // ─── Premium hardware color mapping (Norman Soluna 2026 spec) ─
 const PREMIUM_FINISH_MAP = {
   bronze: { bracket: 'Bronze',       hem: 'Bronze',       chain: 'Chocolate', motor: 'Black' },
@@ -2328,6 +2459,10 @@ function rnRunValidation() {
   if (rnFabricType === 'solar' || rnFabricType === 'commercial') {
     warnings.push('Solar openness tolerance is approximately ±10%. Actual visibility and glare control will vary by lighting conditions.');
   }
+
+  // Run the color coordination rule engine
+  const colorResult = validateSolunaColorConfig(rnBuildConfig());
+  colorResult.errors.forEach(function(e) { errors.push(e); });
 
   const alertEl = document.getElementById('rn-compat-alerts');
   if (!alertEl) return;
