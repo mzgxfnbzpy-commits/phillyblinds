@@ -329,23 +329,28 @@
           <!-- Roller -->
           <div id="op-roller" style="display:none">
             <div class="opt-row" id="grp-op-roller">
-              <button class="opt-btn" onclick="selOpt(this,'grp-op-roller');updateSizeLimits()">Spring</button>
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-op-roller');updateSizeLimits()">Cordless</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-op-roller');updateSizeLimits()">Continuous loop</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-op-roller');updateSizeLimits();autoMotor()">Motorized</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-roller');updateSizeLimits();toggleChainOpts(false)">Spring</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-op-roller');updateSizeLimits();toggleChainOpts(false)">Cordless</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-roller');updateSizeLimits();toggleChainOpts(true)">Continuous loop</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-roller');updateSizeLimits();autoMotor();toggleChainOpts(false)">Motorized</button>
             </div>
-            <div class="tooltip-note" style="margin-top:4px">Cordless is child &amp; pet safe. Continuous loop handles any size. Motorized adds app &amp; voice control.</div>
+            <div class="tooltip-note" style="margin-top:4px">Cordless is child &amp; pet safe. Continuous loop handles oversized windows. Motorized adds app &amp; voice control.</div>
           </div>
 
           <!-- Cellular -->
           <div id="op-cellular" style="display:none">
+            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:7px">Lift direction</div>
+            <div class="opt-row" id="grp-cellular-lift">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-cellular-lift');updateSizeLimits()">Bottom Up</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cellular-lift');updateSizeLimits()">Top Down / Bottom Up</button>
+            </div>
+            <div id="tdbu-note" class="tooltip-note" style="display:none;margin-top:-4px;margin-bottom:10px">Top Down / Bottom Up: shade raises from the bottom <em>or</em> lowers from the top — ideal for privacy with natural light. Max 60 sq ft.</div>
+            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:7px;margin-top:10px">Operating system</div>
             <div class="opt-row" id="grp-op-cellular">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits()">SmartRise Cordless</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits()">TDBU Cordless</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits()">Cord loop</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits()">Cordless</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits()">Cord</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();autoMotor()">Motorized</button>
             </div>
-            <div id="tdbu-note" class="tooltip-note" style="display:none;margin-top:4px;color:#1D4ED8">Top-Down / Bottom-Up: raises from the top <em>or</em> the bottom — ideal for privacy with natural light. Max 60 sq ft.</div>
           </div>
 
           <!-- Zebra / Banded -->
@@ -490,6 +495,58 @@
             <button class="opt-btn" onclick="selOpt(this,'grp-woven-material')">Grasscloth</button>
           </div>
           <div class="tooltip-note">Material preference noted on your quote — final availability confirmed at consultation.</div>
+        </div>
+
+        <!-- ROLLER ONLY: hardware & finish -->
+        <div class="step-block" id="roller-hardware-opts" style="display:none">
+          <div class="step-label">Step 3b</div>
+          <div class="step-title">Hardware &amp; finish</div>
+
+          <div style="margin-bottom:16px">
+            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:8px">Fascia style</div>
+            <div class="opt-row" id="grp-fascia">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-fascia')">Open Roll</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-fascia')">Fabric Fascia</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-fascia')">Aluminum Fascia</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-fascia')">Standard Cassette</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-fascia')">Square Cassette</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-fascia')">Round Cassette</button>
+            </div>
+            <div class="tooltip-note">Open Roll is standard. Cassettes enclose the tube — cleaner look, better light block at the top.</div>
+          </div>
+
+          <div id="chain-opts" style="display:none;margin-bottom:16px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
+            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:8px">Chain or cord type</div>
+            <div class="opt-row" id="grp-chain-type">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-chain-type')">Metal chain</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-chain-type')">Cord loop</button>
+            </div>
+            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:8px;margin-top:12px">Chain / cord length</div>
+            <div class="opt-row" id="grp-chain-length">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-chain-length')">Standard (18&quot;)</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-chain-length')">Extended (36&quot;)</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-chain-length')">Extra long (48&quot;)</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-chain-length')">Custom length</button>
+            </div>
+          </div>
+
+          <div>
+            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:8px">End caps</div>
+            <div class="opt-row" id="grp-endcap">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-endcap')">Standard</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-endcap')">Designer</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROLLER + CELLULAR: fabric & color placeholder -->
+        <div class="step-block" id="fabric-color-block" style="display:none">
+          <div class="step-label">Step 3c</div>
+          <div class="step-title">Fabric &amp; color</div>
+          <div style="background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px;padding:14px 16px;font-size:12px;color:#555;line-height:1.7">
+            Full fabric swatches and color library coming very soon.<br>
+            <strong>For now:</strong> describe your preference in the notes field below — color, opacity, pattern, texture — and we'll follow up with matching options from our library.
+          </div>
         </div>
 
         <!-- Step D: Motorization -->
@@ -809,10 +866,9 @@ const SYSTEM_LIMITS = {
     'Motorized':       { maxW: 144, maxH: 132, note: 'Motorized max 144″W × 132″H — app, remote & voice control' },
   },
   cellular: {
-    'SmartRise Cordless': { maxW: 108, maxH: 120, note: 'SmartRise Cordless max 108″W × 120″H — child & pet safe' },
-    'TDBU Cordless':      { maxW: 108, maxH: 108, note: 'Top-Down/Bottom-Up max 108″W × 108″H — 60 sqft area limit' },
-    'Cord loop':          { maxW: 120, maxH: 144, note: 'Cord loop max 120″W × 144″H — best for large windows' },
-    'Motorized':          { maxW: 120, maxH: 144, note: 'Motorized max 120″W × 144″H — app, remote & voice control' },
+    'Cordless':  { maxW: 108, maxH: 120, note: 'Cordless max 108″W × 120″H — child & pet safe' },
+    'Cord':      { maxW: 120, maxH: 144, note: 'Cord max 120″W × 144″H — best for larger windows' },
+    'Motorized': { maxW: 120, maxH: 144, note: 'Motorized max 120″W × 144″H — app, remote & voice control' },
   },
   zebra: {
     'Soft-Touch Cordless': { maxW: 98,  maxH: 84,  note: 'Soft-Touch Cordless max 98″W × 84″H — child & pet safe' },
@@ -989,6 +1045,12 @@ function configureForProduct(productId) {
     productId === 'cellular' ? 'block' : 'none';
   document.getElementById('woven-material-opts').style.display =
     productId === 'woven' ? 'block' : 'none';
+  document.getElementById('roller-hardware-opts').style.display =
+    productId === 'roller' ? 'block' : 'none';
+  document.getElementById('fabric-color-block').style.display =
+    (productId === 'roller' || productId === 'cellular') ? 'block' : 'none';
+  // Always reset chain-opts when switching products
+  document.getElementById('chain-opts').style.display = 'none';
 
   // Reset solar openness
   document.getElementById('solar-openness').style.display = 'none';
@@ -1016,15 +1078,26 @@ function updateSizeLimits() {
   // Show system note
   document.getElementById('op-system-note').textContent = lim.note;
 
-  // TDBU-specific callout
+  // TDBU callout — driven by lift direction, not operating system
   const tdbuNote = document.getElementById('tdbu-note');
-  if (tdbuNote) tdbuNote.style.display = sysName === 'TDBU Cordless' ? 'block' : 'none';
+  if (tdbuNote) {
+    const liftBtn = document.querySelector('#grp-cellular-lift .opt-btn.sel');
+    const isTdbu  = currentProduct === 'cellular' && liftBtn &&
+                    liftBtn.textContent.trim() === 'Top Down / Bottom Up';
+    tdbuNote.style.display = isTdbu ? 'block' : 'none';
+  }
 
   // Update size-note below the inputs
   document.getElementById('size-note').textContent =
     sysName + ' max: ' + lim.maxW + '″ W × ' + lim.maxH + '″ H';
 
   updatePrice();
+}
+
+// ─── toggleChainOpts ─────────────────────────────────────────
+function toggleChainOpts(on) {
+  const el = document.getElementById('chain-opts');
+  if (el) el.style.display = on ? 'block' : 'none';
 }
 
 // ─── autoMotor ───────────────────────────────────────────────
@@ -1142,6 +1215,17 @@ function submitShadeForm() {
   const qty = document.getElementById('inp-qty').value;
   const motorBrand = motorOn ? (document.getElementById('sel-motor-brand') || {}).value || 'Yes' : 'No';
 
+  // Roller hardware extras
+  const isRoller   = currentProduct === 'roller';
+  const isCellular = currentProduct === 'cellular';
+  const fascia      = isRoller   ? '\nFascia:       ' + getOpt('grp-fascia')   : '';
+  const endcap      = isRoller   ? '\nEnd caps:     ' + getOpt('grp-endcap')  : '';
+  const chainType   = isRoller   ? '\nChain type:   ' + getOpt('grp-chain-type')   : '';
+  const chainLen    = isRoller   ? '\nChain length: ' + getOpt('grp-chain-length')  : '';
+  const cellLift    = isCellular ? '\nLift:         ' + getOpt('grp-cellular-lift') : '';
+  const cellSize    = isCellular ? '\nCell size:    ' + getOpt('grp-cell-size')     : '';
+  const cellType    = isCellular ? '\nCell type:    ' + getOpt('grp-cell-type')     : '';
+
   const body =
     'SHADE QUOTE REQUEST\n' +
     '───────────────────────────────\n' +
@@ -1154,6 +1238,9 @@ function submitShadeForm() {
     'Height:       ' + (h || '—') + '"\n' +
     'Qty:          ' + (qty || 1) + '\n' +
     'Mount:        ' + getOpt('grp-mount') + '\n' +
+    'Operating:    ' + getOpt('grp-op-' + currentProduct) +
+    cellLift + cellSize + cellType +
+    fascia + endcap + chainType + chainLen + '\n' +
     'Motorization: ' + (motorOn ? 'Yes — ' + motorBrand : 'No') + '\n\n' +
     'Delivery: ' + delivery + '\n\n' +
     'Notes:\n' + (notes || '(none)');
