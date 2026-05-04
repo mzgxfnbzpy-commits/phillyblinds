@@ -959,33 +959,21 @@
           </div>
         </div>
 
-        <!-- ROLLER + CELLULAR: fabric collection & color picker -->
+        <!-- ROLLER + CELLULAR: flat fabric picker (Collection – Color) -->
         <div class="step-block" id="fabric-color-block" style="display:none">
           <div class="step-label">Step 3c</div>
-          <div class="step-title">Fabric collection &amp; color</div>
+          <div class="step-title">Fabric &amp; color</div>
 
-          <!-- Roller: fabric type already chosen in Step 2 → pick collection → color -->
-          <div id="roller-coll-wrap">
-            <div style="margin-bottom:14px">
-              <div class="step-title" style="font-size:12px;margin-bottom:8px">Collection</div>
-              <div id="roller-coll-list"></div>
-            </div>
-            <div id="roller-color-wrap" style="display:none;margin-bottom:14px">
-              <div class="step-title" style="font-size:12px;margin-bottom:8px">Color</div>
-              <div id="roller-color-list"></div>
-            </div>
+          <!-- Roller -->
+          <div id="roller-fabric-wrap">
+            <div id="roller-fabric-summary" style="font-size:11px;color:#888;margin-bottom:10px;line-height:1.5"></div>
+            <div id="roller-fabric-grid"></div>
           </div>
 
-          <!-- Cellular: fabric type chosen above → pick collection → color -->
-          <div id="cell-coll-wrap" style="display:none">
-            <div style="margin-bottom:14px">
-              <div class="step-title" style="font-size:12px;margin-bottom:8px">Collection</div>
-              <div id="cell-coll-list"></div>
-            </div>
-            <div id="cell-color-wrap" style="display:none;margin-bottom:14px">
-              <div class="step-title" style="font-size:12px;margin-bottom:8px">Color</div>
-              <div id="cell-color-list"></div>
-            </div>
+          <!-- Cellular -->
+          <div id="cell-fabric-wrap" style="display:none">
+            <div id="cell-fabric-summary" style="font-size:11px;color:#888;margin-bottom:10px;line-height:1.5"></div>
+            <div id="cell-fabric-grid"></div>
           </div>
         </div>
 
@@ -1614,16 +1602,16 @@ function configureForProduct(productId) {
     productId === 'roller' ? 'block' : 'none';
   document.getElementById('fabric-color-block').style.display =
     (productId === 'roller' || productId === 'cellular') ? 'block' : 'none';
-  const rcw = document.getElementById('roller-coll-wrap');
-  const ccw = document.getElementById('cell-coll-wrap');
+  const rcw = document.getElementById('roller-fabric-wrap');
+  const ccw = document.getElementById('cell-fabric-wrap');
   if (productId === 'roller') {
     if (rcw) rcw.style.display = 'block';
     if (ccw) ccw.style.display = 'none';
-    renderFabricCollections('roller');
+    renderFlatFabricGrid('roller');
   } else if (productId === 'cellular') {
     if (rcw) rcw.style.display = 'none';
     if (ccw) ccw.style.display = 'block';
-    renderFabricCollections('cell');
+    renderFlatFabricGrid('cell');
   }
   // Always reset chain-opts when switching products
   document.getElementById('chain-opts').style.display = 'none';
@@ -1765,7 +1753,7 @@ function filterCellSizes(fabric) {
       }
     }
   }
-  if (currentProduct === 'cellular') renderFabricCollections('cell');
+  if (currentProduct === 'cellular') renderFlatFabricGrid('cell');
 }
 
 // ─── showCellularLiftNote ─────────────────────────────────────
@@ -2324,8 +2312,21 @@ const CELL_COLLECTIONS = {
   ]
 };
 
-// ─── renderFabricCollections ──────────────────────────────────
-function renderFabricCollections(product) {
+// ─── Fabric type → human label maps ──────────────────────────
+const RN_FABRIC_LABELS = {
+  'sheer':'Sheer','lf':'Light Filtering','natural':'Natural',
+  'rd':'Room Darkening','solar':'Solar Screen','commercial':'Commercial Solar'
+};
+const CELL_FABRIC_LABELS = {
+  'lf':'Light Filtering','rd':'Room Darkening','sheer':'Sheer',
+  'designer-lf':'Designer Light Filtering','designer-rd':'Designer Room Darkening',
+  'ashton':'Designer Ashton','fr':'Flame Resistant LF/RD','fr-essentials':'FR Essentials',
+  'solus':'Solus','woven-breeze':'Woven Breeze','woven-windsong':'Woven Windsong','dn':'Day & Night'
+};
+
+// ─── renderFlatFabricGrid ─────────────────────────────────────
+// Flat one-step picker: "Collection – Color" buttons, no intermediate step
+function renderFlatFabricGrid(product) {
   const colls = product === 'roller'
     ? (SOLUNA_COLLECTIONS[rnFabricType] || [])
     : (CELL_COLLECTIONS[currentCellFabric] || []);
@@ -2336,61 +2337,54 @@ function renderFabricCollections(product) {
     currentCellColls   = colls; currentCellColl   = null; currentCellColor   = null;
   }
 
-  const listId      = product === 'roller' ? 'roller-coll-list'  : 'cell-coll-list';
-  const colorListId = product === 'roller' ? 'roller-color-list' : 'cell-color-list';
-  const colorWrapId = product === 'roller' ? 'roller-color-wrap' : 'cell-color-wrap';
-  const collList    = document.getElementById(listId);
-  const colorWrap   = document.getElementById(colorWrapId);
-  if (!collList) return;
-  colorWrap.style.display = 'none';
-  document.getElementById(colorListId).innerHTML = '';
+  const summaryId = product === 'roller' ? 'roller-fabric-summary' : 'cell-fabric-summary';
+  const gridId    = product === 'roller' ? 'roller-fabric-grid'    : 'cell-fabric-grid';
+  const summaryEl = document.getElementById(summaryId);
+  const gridEl    = document.getElementById(gridId);
+  if (!summaryEl || !gridEl) return;
+
+  // Small inline summary line
+  const typeLabel = product === 'roller'
+    ? (RN_FABRIC_LABELS[rnFabricType] || '')
+    : (CELL_FABRIC_LABELS[currentCellFabric] || '');
+  const collNames = colls.map(function(c){ return c.name; }).join(', ');
+  summaryEl.textContent = collNames ? typeLabel + ' collections: ' + collNames : '';
 
   if (!colls.length) {
-    collList.innerHTML = '<div class="tooltip-note">Color options coming soon for this fabric type.</div>';
+    gridEl.innerHTML = '<div class="tooltip-note">Fabric options coming soon.</div>';
     return;
   }
 
-  const btns = colls.map(function(c, i) {
-    return '<button class="opt-btn" style="font-size:11px" onclick="selFabricColl(this,\'' + product + '\',' + i + ')">' + c.name + '</button>';
-  }).join('');
-  collList.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:6px">' + btns + '</div>';
+  let btns = '';
+  colls.forEach(function(coll, ci) {
+    if (coll.colors.length) {
+      coll.colors.forEach(function(color, ki) {
+        btns += '<button class="opt-btn" style="font-size:11px" onclick="selFlatFabric(this,\'' + product + '\',' + ci + ',' + ki + ')">'
+              + coll.name + ' – ' + color + '</button>';
+      });
+    } else {
+      // Collection present but no colors yet — show collection name as selectable
+      btns += '<button class="opt-btn" style="font-size:11px;opacity:0.75" onclick="selFlatFabric(this,\'' + product + '\',' + ci + ',-1)">'
+            + coll.name + '</button>';
+    }
+  });
+  gridEl.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:6px">' + btns + '</div>';
 }
 
-function selFabricColl(el, product, idx) {
-  const listId = product === 'roller' ? 'roller-coll-list' : 'cell-coll-list';
-  document.querySelectorAll('#' + listId + ' .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
+function selFlatFabric(el, product, ci, ki) {
+  const gridId = product === 'roller' ? 'roller-fabric-grid' : 'cell-fabric-grid';
+  document.querySelectorAll('#' + gridId + ' .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
   el.classList.add('sel');
-
   const colls = product === 'roller' ? currentRollerColls : currentCellColls;
-  const coll  = colls[idx];
+  const coll  = colls[ci];
   if (!coll) return;
-  if (product === 'roller') currentRollerColl = coll.name;
-  else                      currentCellColl   = coll.name;
-
-  const colorListId = product === 'roller' ? 'roller-color-list' : 'cell-color-list';
-  const colorWrapId = product === 'roller' ? 'roller-color-wrap' : 'cell-color-wrap';
-  const colorList   = document.getElementById(colorListId);
-  const colorWrap   = document.getElementById(colorWrapId);
-
-  if (!coll.colors.length) {
-    colorList.innerHTML = '<div class="tooltip-note">Color options coming soon — describe your preference in the notes below.</div>';
-    colorWrap.style.display = 'block';
-    return;
+  if (product === 'roller') {
+    currentRollerColl  = coll.name;
+    currentRollerColor = ki >= 0 ? coll.colors[ki] : '';
+  } else {
+    currentCellColl  = coll.name;
+    currentCellColor = ki >= 0 ? coll.colors[ki] : '';
   }
-
-  const colorBtns = coll.colors.map(function(color) {
-    return '<button class="opt-btn" style="font-size:11px" onclick="selFabricColor(this,\'' + product + '\')">' + color + '</button>';
-  }).join('');
-  colorList.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:6px">' + colorBtns + '</div>';
-  colorWrap.style.display = 'block';
-}
-
-function selFabricColor(el, product) {
-  const listId = product === 'roller' ? 'roller-color-list' : 'cell-color-list';
-  document.querySelectorAll('#' + listId + ' .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
-  el.classList.add('sel');
-  if (product === 'roller') currentRollerColor = el.textContent;
-  else                      currentCellColor   = el.textContent;
 }
 let rnSystemType   = 'standard';
 let rnLiftType     = 'cord';
@@ -2443,7 +2437,7 @@ function rnSetFabric(type) {
   if (noteEl) noteEl.textContent = RN_FABRIC_NOTES[type] || '';
   rnRunValidation();
   rnUpdatePrice();
-  renderFabricCollections('roller');
+  renderFlatFabricGrid('roller');
 }
 
 // ─── rnSetFabricWidth ────────────────────────────────────────
