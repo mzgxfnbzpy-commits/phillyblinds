@@ -359,19 +359,8 @@
         <button class="opt-btn sel" onclick="selOpt(this,'hw-motor');toggleMotor(false);updateQuote()">No thanks &ndash; manual</button>
         <button class="opt-btn" onclick="selOpt(this,'hw-motor');toggleMotor(true);updateQuote()">Yes, motorize it</button>
       </div>
-      <div id="motor-brand-wrap" style="display:none;margin-top:10px">
-        <div class="form-group">
-          <label>Motor brand</label>
-          <select id="hw-motor-brand" onchange="updateQuote()">
-            <option value="">No preference &ndash; recommend me one</option>
-            <option value="lutron">Lutron Sivoia QS / Palladiom</option>
-            <option value="somfy">Somfy</option>
-            <option value="automate">Automate</option>
-            <option value="rollease">Rollease Acmeda</option>
-            <option value="hd">Hunter Douglas PowerView</option>
-          </select>
-        </div>
-        <div style="font-size:11px;color:#888;line-height:1.5;margin-top:-6px">All systems support app &amp; voice control (Alexa, Google, Apple HomeKit).</div>
+      <div id="motor-brand-wrap" style="display:none;margin-top:10px;font-size:12px;color:#555;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px;padding:12px 14px;line-height:1.6">
+        Motor brand compatibility depends on the hardware system you select. If you have a preference — <strong>Somfy, Lutron Sivoia, Rollease Acmeda</strong>, or other — please mention it in the notes field below and we'll confirm compatibility with your chosen hardware.
       </div>
     </div>
   </div>
@@ -462,7 +451,21 @@
       </div>
       <div class="form-group">
         <label>Notes or questions</label>
-        <textarea id="cf-notes" placeholder="Anything helpful — room names, ceiling height, lining preference, timeline, etc."></textarea>
+        <textarea id="cf-notes" placeholder="Room names, ceiling height, lining preference, motor brand preference (if motorizing), timeline, etc."></textarea>
+      </div>
+      <div class="delivery-section">
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+        <div class="opt-row" id="grp-del-drp">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-drp');document.getElementById('del-drp-s').style.display='block';document.getElementById('del-drp-p').style.display='none'">Ship to me</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-del-drp');document.getElementById('del-drp-s').style.display='none';document.getElementById('del-drp-p').style.display='block'">I'll pick up</button>
+        </div>
+        <div id="del-drp-s" class="delivery-note">
+          Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — a shipping estimate will be included with your quote.
+          <div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional costs and will be itemized separately in your quote.</div>
+        </div>
+        <div id="del-drp-p" class="delivery-note" style="display:none">
+          Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.
+        </div>
       </div>
       <div class="call-strip" style="margin-bottom:16px">
         <div class="call-text">Prefer to talk it through? We're here 24/7 and happy to walk the whole project with you by phone.</div>
@@ -616,8 +619,49 @@ function submitQuoteForm() {
     alert('Please enter your name and phone number so we can follow up.');
     return;
   }
+  var email  = document.getElementById('cf-email').value.trim();
+  var notes  = document.getElementById('cf-notes').value.trim();
+  var delBtn = document.querySelector('#grp-del-drp .opt-btn.sel');
+  var delTxt = delBtn ? delBtn.textContent.trim() : 'Ship to me';
+
+  var qty  = parseInt(document.getElementById('win-qty').value, 10);
+  var dims = [];
+  for (var i = 1; i <= qty; i++) {
+    var wEl = document.getElementById('w-w' + i), hEl = document.getElementById('w-h' + i);
+    if (wEl && hEl && wEl.value && hEl.value) dims.push('Win ' + i + ': ' + wEl.value + '"W x ' + hEl.value + '"H');
+  }
+
+  var body =
+    'CUSTOM DRAPERY & HARDWARE QUOTE REQUEST\n' +
+    '─────────────────────────────────────────\n' +
+    'Name:  ' + name + '\n' +
+    'Phone: ' + phone + '\n' +
+    'Email: ' + (email || '—') + '\n\n' +
+    'DRAPERY\n' +
+    'Style:       ' + (_selStyle  || '—') + '\n' +
+    'Fabric path: ' + (_selFabric || '—') + '\n\n' +
+    'HARDWARE\n' +
+    'Type:         ' + getOpt('hw-type')      + '\n' +
+    'Brand:        ' + (document.getElementById('hw-brand').value || '—') + '\n' +
+    'Diameter:     ' + getOpt('hw-diameter')  + '\n' +
+    'Finish:       ' + getOpt('hw-finish')    + '\n' +
+    'Finial:       ' + getOpt('hw-finial')    + '\n' +
+    'Rings:        ' + getOpt('hw-rings')     + '\n' +
+    'Motorization: ' + (_motorOn ? 'Yes (see notes for brand preference)' : 'No') + '\n\n' +
+    'WINDOWS\n' +
+    'Mount: ' + getOpt('mount-type') + '\n' +
+    (dims.length ? dims.join('\n') : 'Dimensions: not yet provided') + '\n\n' +
+    'Delivery: ' + delTxt + '\n\n' +
+    'NOTES\n' + (notes || '(none)');
+
+  window.location.href = 'mailto:blindznation@gmail.com' +
+    '?subject=' + encodeURIComponent('Drapery Quote Request — ' + name) +
+    '&body='    + encodeURIComponent(body);
+
   document.getElementById('contact-form-section').style.display = 'none';
-  document.getElementById('form-success').style.display = 'block';
+  var s = document.getElementById('form-success');
+  s.style.display = 'block';
+  s.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 updateWinDims();

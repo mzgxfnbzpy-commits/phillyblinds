@@ -152,6 +152,11 @@ body {
 .lb-count { font-size: 11px; color: #999; }
 .lb-close { cursor: pointer; color: #999; border: none; background: none; font-size: 20px; line-height: 1; padding: 0 4px; }
 
+/* ---- DELIVERY SECTION ---- */
+.delivery-section { background: #fafaf8; border: 1px solid #e8e8e4; border-radius: 10px; padding: 16px 18px; margin-bottom: 16px; }
+.delivery-note { font-size: 12px; color: #555; line-height: 1.6; margin-top: 10px; }
+.delivery-tariff { margin-top: 8px; font-size: 11px; color: #7A5C0A; background: rgba(200,151,63,0.08); border: 1px solid rgba(200,151,63,0.2); border-radius: 8px; padding: 8px 12px; line-height: 1.6; }
+
 /* ---- UTILITIES ---- */
 .text-gold { color: var(--gold); }
 .text-cream { color: var(--cream); }

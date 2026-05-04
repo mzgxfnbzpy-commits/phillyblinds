@@ -361,11 +361,25 @@
     </div>
     <div class="form-group">
       <label>Email</label>
-      <input type="email" placeholder="jane@example.com">
+      <input type="email" id="sf-email" placeholder="jane@example.com">
     </div>
     <div class="form-group">
       <label>Notes</label>
-      <textarea placeholder="Describe your windows — special shapes, number, room names, etc." style="min-height:90px"></textarea>
+      <textarea id="sf-notes" placeholder="Describe your windows — special shapes, number, room names, etc." style="min-height:90px"></textarea>
+    </div>
+    <div class="delivery-section">
+      <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+      <div class="opt-row" id="grp-del-sht">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-del-sht');document.getElementById('del-sht-s').style.display='block';document.getElementById('del-sht-p').style.display='none'">Ship to me</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-del-sht');document.getElementById('del-sht-s').style.display='none';document.getElementById('del-sht-p').style.display='block'">I'll pick up</button>
+      </div>
+      <div id="del-sht-s" class="delivery-note">
+        Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.
+        <div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately in your quote.</div>
+      </div>
+      <div id="del-sht-p" class="delivery-note" style="display:none">
+        Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.
+      </div>
     </div>
     <div class="call-strip" style="margin-bottom:16px">
       <div class="call-text">Prefer to talk? We're available 24/7.</div>
@@ -458,6 +472,34 @@ function submitShutterForm() {
   const name = document.getElementById('sf-name').value.trim();
   const phone = document.getElementById('sf-phone').value.trim();
   if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+
+  const email    = document.getElementById('sf-email').value.trim();
+  const notes    = document.getElementById('sf-notes').value.trim();
+  const delBtn   = document.querySelector('#grp-del-sht .opt-btn.sel');
+  const delivery = delBtn ? delBtn.textContent.trim() : 'Ship to me';
+  const g = (id) => { const s = document.querySelector('#' + id + ' .opt-btn.sel'); return s ? s.textContent.trim() : '—'; };
+
+  const body =
+    'SHUTTER QUOTE REQUEST\n' +
+    '─────────────────────\n' +
+    'Name:  ' + name  + '\n' +
+    'Phone: ' + phone + '\n' +
+    'Email: ' + (email || '—') + '\n\n' +
+    'Material:     ' + g('shutter-material') + '\n' +
+    'Louver size:  ' + g('louver-size')      + '\n' +
+    'Panel config: ' + g('panel-config')     + '\n' +
+    'Frame style:  ' + g('frame-style')      + '\n' +
+    'Tilt rod:     ' + g('tilt-rod')         + '\n' +
+    'Color:        ' + g('shutter-color')    + '\n' +
+    'Windows:      ' + (document.getElementById('win-count') ? document.getElementById('win-count').value : '—') + '\n' +
+    'Window type:  ' + (document.getElementById('win-type')  ? document.getElementById('win-type').value  : '—') + '\n\n' +
+    'Delivery: ' + delivery + '\n\n' +
+    'Notes:\n' + (notes || '(none)');
+
+  window.location.href = 'mailto:blindznation@gmail.com' +
+    '?subject=' + encodeURIComponent('Shutter Quote — ' + name) +
+    '&body='    + encodeURIComponent(body);
+
   document.getElementById('shutter-form-inner').style.display = 'none';
   document.getElementById('shutter-success').style.display = 'block';
   document.getElementById('shutter-success').scrollIntoView({ behavior: 'smooth', block: 'start' });

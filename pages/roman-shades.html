@@ -337,6 +337,20 @@
       <label for="rf-notes">Notes (optional)</label>
       <textarea id="rf-notes" rows="3" placeholder="Window details, fabric ideas, questions..."></textarea>
     </div>
+    <div class="delivery-section">
+      <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+      <div class="opt-row" id="grp-del-rom">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-del-rom');document.getElementById('del-rom-s').style.display='block';document.getElementById('del-rom-p').style.display='none'">Ship to me</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-del-rom');document.getElementById('del-rom-s').style.display='none';document.getElementById('del-rom-p').style.display='block'">I'll pick up</button>
+      </div>
+      <div id="del-rom-s" class="delivery-note">
+        Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.
+        <div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately in your quote.</div>
+      </div>
+      <div id="del-rom-p" class="delivery-note" style="display:none">
+        Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.
+      </div>
+    </div>
     <div class="call-strip" style="margin-bottom:16px;">
       <span>Prefer to talk?</span>
       <a href="tel:6097421720">(609) 742-1720</a>
@@ -455,6 +469,35 @@ function submitRomanForm() {
   var name = document.getElementById('rf-name').value.trim();
   var phone = document.getElementById('rf-phone').value.trim();
   if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+
+  var email    = document.getElementById('rf-email').value.trim();
+  var notes    = document.getElementById('rf-notes').value.trim();
+  var delBtn   = document.querySelector('#grp-del-rom .opt-btn.sel');
+  var delivery = delBtn ? delBtn.textContent.trim() : 'Ship to me';
+  var w   = document.getElementById('inp-width').value;
+  var h   = document.getElementById('inp-height').value;
+  var qty = document.getElementById('inp-qty').value;
+  var motorBrand = motorOn ? (document.getElementById('motor-brand') || {}).value || 'Yes' : 'No';
+
+  var body =
+    'CUSTOM ROMAN SHADE QUOTE REQUEST\n' +
+    '─────────────────────────────────\n' +
+    'Name:  ' + name  + '\n' +
+    'Phone: ' + phone + '\n' +
+    'Email: ' + (email || '—') + '\n\n' +
+    'Style:        ' + (_selStyle  || '—') + '\n' +
+    'Fabric path:  ' + (_selFabric || '—') + '\n' +
+    'Width:        ' + (w   || '—') + '"\n' +
+    'Height:       ' + (h   || '—') + '"\n' +
+    'Qty:          ' + (qty || 1)   + '\n' +
+    'Motorization: ' + (motorOn ? 'Yes — ' + motorBrand : 'No') + '\n\n' +
+    'Delivery: ' + delivery + '\n\n' +
+    'Notes:\n' + (notes || '(none)');
+
+  window.location.href = 'mailto:blindznation@gmail.com' +
+    '?subject=' + encodeURIComponent('Custom Roman Shade Quote — ' + name) +
+    '&body='    + encodeURIComponent(body);
+
   document.getElementById('roman-form-inner').style.display = 'none';
   document.getElementById('roman-success').style.display = 'block';
 }

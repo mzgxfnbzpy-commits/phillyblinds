@@ -543,6 +543,20 @@
           </div>
           <div class="form-group"><label>Email</label><input type="email" id="sf-email" placeholder="jane@example.com"></div>
           <div class="form-group"><label>Any notes?</label><textarea id="sf-notes" placeholder="e.g. looking for blackout in bedroom, open to fabric samples"></textarea></div>
+          <div class="delivery-section">
+            <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+            <div class="opt-row" id="grp-del-sf">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-del-sf');document.getElementById('del-sf-s').style.display='block';document.getElementById('del-sf-p').style.display='none'">Ship to me</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-del-sf');document.getElementById('del-sf-s').style.display='none';document.getElementById('del-sf-p').style.display='block'">I'll pick up</button>
+            </div>
+            <div id="del-sf-s" class="delivery-note">
+              Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.
+              <div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately in your quote.</div>
+            </div>
+            <div id="del-sf-p" class="delivery-note" style="display:none">
+              Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.
+            </div>
+          </div>
           <button class="btn-gold" onclick="submitShadeForm()" style="width:100%;padding:13px">Send quote request</button>
         </div>
         <div class="success-state" id="shade-success">
@@ -590,6 +604,20 @@
         <div class="form-group"><label>Phone *</label><input type="tel" id="pb-phone" placeholder="(215) 555-0100"></div>
       </div>
       <div class="form-group"><label>Email</label><input type="email" id="pb-email" placeholder="jane@example.com"></div>
+      <div class="delivery-section">
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+        <div class="opt-row" id="grp-del-pb">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-pb');document.getElementById('del-pb-s').style.display='block';document.getElementById('del-pb-p').style.display='none'">Ship to me</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-del-pb');document.getElementById('del-pb-s').style.display='none';document.getElementById('del-pb-p').style.display='block'">I'll pick up</button>
+        </div>
+        <div id="del-pb-s" class="delivery-note">
+          Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.
+          <div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately in your quote.</div>
+        </div>
+        <div id="del-pb-p" class="delivery-note" style="display:none">
+          Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.
+        </div>
+      </div>
       <button class="btn-gold" onclick="submitPBForm()" style="width:100%;padding:13px;margin-top:4px">Send custom fabrication request &rarr;</button>
       <div class="success-state" id="pb-success">
         <h3>Request received!</h3>
@@ -616,6 +644,20 @@
         <div class="form-group"><label>Phone *</label><input type="tel" id="oth-phone" placeholder="(215) 555-0100"></div>
       </div>
       <div class="form-group"><label>Email</label><input type="email" id="oth-email" placeholder="jane@example.com"></div>
+      <div class="delivery-section">
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+        <div class="opt-row" id="grp-del-oth">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-oth');document.getElementById('del-oth-s').style.display='block';document.getElementById('del-oth-p').style.display='none'">Ship to me</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-del-oth');document.getElementById('del-oth-s').style.display='none';document.getElementById('del-oth-p').style.display='block'">I'll pick up</button>
+        </div>
+        <div id="del-oth-s" class="delivery-note">
+          Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.
+          <div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately in your quote.</div>
+        </div>
+        <div id="del-oth-p" class="delivery-note" style="display:none">
+          Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.
+        </div>
+      </div>
       <button class="btn-gold" onclick="submitOtherForm()" style="width:100%;padding:13px;margin-top:4px">Send quote request &rarr;</button>
       <div class="success-state" id="oth-success">
         <h3>Quote request received!</h3>
@@ -667,6 +709,20 @@
     <div class="form-group">
       <label>Notes / questions</label>
       <textarea id="hd-notes" placeholder="e.g. interested in PowerView motorization, have 3 large arch windows in living room"></textarea>
+    </div>
+    <div class="delivery-section">
+      <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+      <div class="opt-row" id="grp-del-hd">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-del-hd');document.getElementById('del-hd-s').style.display='block';document.getElementById('del-hd-p').style.display='none'">Ship to me</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-del-hd');document.getElementById('del-hd-s').style.display='none';document.getElementById('del-hd-p').style.display='block'">I'll pick up</button>
+      </div>
+      <div id="del-hd-s" class="delivery-note">
+        Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.
+        <div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately in your quote.</div>
+      </div>
+      <div id="del-hd-p" class="delivery-note" style="display:none">
+        Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.
+      </div>
     </div>
     <button class="btn-gold" onclick="submitQuoteForm()" style="width:100%;padding:13px">Request custom quote</button>
     <div class="success-state" id="hd-success">
@@ -1074,10 +1130,38 @@ function showShadeForm() {
 function submitShadeForm() {
   const name = document.getElementById('sf-name').value.trim();
   const phone = document.getElementById('sf-phone').value.trim();
-  if (!name || !phone) {
-    alert('Please enter your name and phone number.');
-    return;
-  }
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+
+  const email    = document.getElementById('sf-email').value.trim();
+  const notes    = document.getElementById('sf-notes').value.trim();
+  const delBtn   = document.querySelector('#grp-del-sf .opt-btn.sel');
+  const delivery = delBtn ? delBtn.textContent.trim() : 'Ship to me';
+  const pname    = (document.getElementById('config-product-name') || {}).textContent || currentProduct;
+  const w = document.getElementById('inp-width').value;
+  const h = document.getElementById('inp-height').value;
+  const qty = document.getElementById('inp-qty').value;
+  const motorBrand = motorOn ? (document.getElementById('sel-motor-brand') || {}).value || 'Yes' : 'No';
+
+  const body =
+    'SHADE QUOTE REQUEST\n' +
+    '───────────────────────────────\n' +
+    'Name:  ' + name  + '\n' +
+    'Phone: ' + phone + '\n' +
+    'Email: ' + (email || '—') + '\n\n' +
+    'Product:      ' + pname + '\n' +
+    'Brand:        ' + (currentBrand || '—') + '\n' +
+    'Width:        ' + (w || '—') + '"\n' +
+    'Height:       ' + (h || '—') + '"\n' +
+    'Qty:          ' + (qty || 1) + '\n' +
+    'Mount:        ' + getOpt('grp-mount') + '\n' +
+    'Motorization: ' + (motorOn ? 'Yes — ' + motorBrand : 'No') + '\n\n' +
+    'Delivery: ' + delivery + '\n\n' +
+    'Notes:\n' + (notes || '(none)');
+
+  window.location.href = 'mailto:blindznation@gmail.com' +
+    '?subject=' + encodeURIComponent('Shade Quote — ' + name) +
+    '&body='    + encodeURIComponent(body);
+
   document.getElementById('shade-submit-form').classList.remove('show');
   const s = document.getElementById('shade-success');
   s.classList.add('show');
@@ -1089,6 +1173,23 @@ function submitPBForm() {
   const name  = document.getElementById('pb-name').value.trim();
   const phone = document.getElementById('pb-phone').value.trim();
   if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  const email    = document.getElementById('pb-email').value.trim();
+  const delBtn   = document.querySelector('#grp-del-pb .opt-btn.sel');
+  const delivery = delBtn ? delBtn.textContent.trim() : 'Ship to me';
+  const w = document.getElementById('inp-width').value;
+  const h = document.getElementById('inp-height').value;
+  const body =
+    'CUSTOM ROLLER SHADE FABRICATION REQUEST\n' +
+    '──────────────────────────────────────\n' +
+    'Name:  ' + name  + '\n' +
+    'Phone: ' + phone + '\n' +
+    'Email: ' + (email || '—') + '\n\n' +
+    'Width:  ' + (w || '—') + '"\n' +
+    'Height: ' + (h || '—') + '"\n' +
+    'Delivery: ' + delivery;
+  window.location.href = 'mailto:blindznation@gmail.com' +
+    '?subject=' + encodeURIComponent('Custom Roller Shade Request — ' + name) +
+    '&body='    + encodeURIComponent(body);
   document.getElementById('pb-success').classList.add('show');
   document.getElementById('pb-success').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -1098,18 +1199,57 @@ function submitOtherForm() {
   const name  = document.getElementById('oth-name').value.trim();
   const phone = document.getElementById('oth-phone').value.trim();
   if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  const email    = document.getElementById('oth-email').value.trim();
+  const product  = document.getElementById('oth-product').value.trim();
+  const brand    = document.getElementById('oth-brand').value.trim();
+  const notes    = document.getElementById('oth-notes').value.trim();
+  const w        = document.getElementById('oth-width').value;
+  const h        = document.getElementById('oth-height').value;
+  const delBtn   = document.querySelector('#grp-del-oth .opt-btn.sel');
+  const delivery = delBtn ? delBtn.textContent.trim() : 'Ship to me';
+  const body =
+    'CUSTOM SHADE QUOTE REQUEST\n' +
+    '──────────────────────────\n' +
+    'Name:    ' + name  + '\n' +
+    'Phone:   ' + phone + '\n' +
+    'Email:   ' + (email || '—') + '\n\n' +
+    'Product: ' + (product || '—') + '\n' +
+    'Brand:   ' + (brand   || '—') + '\n' +
+    'Width:   ' + (w || '—') + '"\n' +
+    'Height:  ' + (h || '—') + '"\n\n' +
+    'Delivery: ' + delivery + '\n\n' +
+    'Notes:\n' + (notes || '(none)');
+  window.location.href = 'mailto:blindznation@gmail.com' +
+    '?subject=' + encodeURIComponent('Custom Shade Quote — ' + name) +
+    '&body='    + encodeURIComponent(body);
   document.getElementById('oth-success').classList.add('show');
   document.getElementById('oth-success').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// ─── submitQuoteForm ─────────────────────────────────────────
+// ─── submitQuoteForm (Hunter Douglas) ────────────────────────
 function submitQuoteForm() {
   const name = document.getElementById('hd-name').value.trim();
   const phone = document.getElementById('hd-phone').value.trim();
-  if (!name || !phone) {
-    alert('Please enter your name and phone number.');
-    return;
-  }
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  const email    = document.getElementById('hd-email').value.trim();
+  const product  = document.getElementById('hd-product-sel').value;
+  const wincount = document.getElementById('hd-wincount').value;
+  const notes    = document.getElementById('hd-notes').value.trim();
+  const delBtn   = document.querySelector('#grp-del-hd .opt-btn.sel');
+  const delivery = delBtn ? delBtn.textContent.trim() : 'Ship to me';
+  const body =
+    'HUNTER DOUGLAS QUOTE REQUEST\n' +
+    '─────────────────────────────\n' +
+    'Name:    ' + name  + '\n' +
+    'Phone:   ' + phone + '\n' +
+    'Email:   ' + (email || '—') + '\n\n' +
+    'Product: ' + product  + '\n' +
+    'Windows: ' + wincount + '\n\n' +
+    'Delivery: ' + delivery + '\n\n' +
+    'Notes:\n' + (notes || '(none)');
+  window.location.href = 'mailto:blindznation@gmail.com' +
+    '?subject=' + encodeURIComponent('Hunter Douglas Quote — ' + name) +
+    '&body='    + encodeURIComponent(body);
   const s = document.getElementById('hd-success');
   s.classList.add('show');
   s.scrollIntoView({ behavior: 'smooth', block: 'start' });
