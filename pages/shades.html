@@ -421,6 +421,11 @@
             </div>
             <div id="rn-rd-note" class="tooltip-note" style="display:none;margin-top:8px;color:var(--gold)">⚠ Room Darkening alone still allows edge light gaps. Add <strong>LightGuard 360™</strong> in Step 7 for true blackout.</div>
             <div id="rn-fabric-note" class="tooltip-note" style="margin-top:6px;color:#666"></div>
+            <!-- Inline fabric color picker — appears immediately after fabric type selection -->
+            <div id="rn-fabric-inline" style="margin-top:14px">
+              <div id="rn-fabric-inline-summary" style="font-size:11px;color:#888;margin-bottom:8px;line-height:1.5"></div>
+              <div id="rn-fabric-inline-grid"></div>
+            </div>
           </div>
 
           <!-- Step 3: Shade Size + auto fabric width compatibility -->
@@ -888,6 +893,11 @@
               <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('dn')">Day &amp; Night</button>
             </div>
             <div class="tooltip-note" id="fabric-cell-note">Light Filtering is available in all 6 cell sizes.</div>
+            <!-- Inline fabric color picker — appears immediately after fabric category selection -->
+            <div id="cell-fabric-inline" style="margin-top:12px">
+              <div id="cell-fabric-inline-summary" style="font-size:11px;color:#888;margin-bottom:8px;line-height:1.5"></div>
+              <div id="cell-fabric-inline-grid"></div>
+            </div>
           </div>
           <div style="margin-bottom:14px">
             <div class="step-title" style="font-size:12px;margin-bottom:8px">Cell size</div>
@@ -959,23 +969,6 @@
           </div>
         </div>
 
-        <!-- ROLLER + CELLULAR: flat fabric picker (Collection – Color) -->
-        <div class="step-block" id="fabric-color-block" style="display:none">
-          <div class="step-label">Step 3c</div>
-          <div class="step-title">Fabric &amp; color</div>
-
-          <!-- Roller -->
-          <div id="roller-fabric-wrap">
-            <div id="roller-fabric-summary" style="font-size:11px;color:#888;margin-bottom:10px;line-height:1.5"></div>
-            <div id="roller-fabric-grid"></div>
-          </div>
-
-          <!-- Cellular -->
-          <div id="cell-fabric-wrap" style="display:none">
-            <div id="cell-fabric-summary" style="font-size:11px;color:#888;margin-bottom:10px;line-height:1.5"></div>
-            <div id="cell-fabric-grid"></div>
-          </div>
-        </div>
 
         <!-- Step D: Motorization -->
         <div class="step-block">
@@ -1600,17 +1593,9 @@ function configureForProduct(productId) {
     productId === 'woven' ? 'block' : 'none';
   document.getElementById('roller-hardware-opts').style.display =
     productId === 'roller' ? 'block' : 'none';
-  document.getElementById('fabric-color-block').style.display =
-    (productId === 'roller' || productId === 'cellular') ? 'block' : 'none';
-  const rcw = document.getElementById('roller-fabric-wrap');
-  const ccw = document.getElementById('cell-fabric-wrap');
   if (productId === 'roller') {
-    if (rcw) rcw.style.display = 'block';
-    if (ccw) ccw.style.display = 'none';
     renderFlatFabricGrid('roller');
   } else if (productId === 'cellular') {
-    if (rcw) rcw.style.display = 'none';
-    if (ccw) ccw.style.display = 'block';
     renderFlatFabricGrid('cell');
   }
   // Always reset chain-opts when switching products
@@ -2337,8 +2322,8 @@ function renderFlatFabricGrid(product) {
     currentCellColls   = colls; currentCellColl   = null; currentCellColor   = null;
   }
 
-  const summaryId = product === 'roller' ? 'roller-fabric-summary' : 'cell-fabric-summary';
-  const gridId    = product === 'roller' ? 'roller-fabric-grid'    : 'cell-fabric-grid';
+  const summaryId = product === 'roller' ? 'rn-fabric-inline-summary' : 'cell-fabric-inline-summary';
+  const gridId    = product === 'roller' ? 'rn-fabric-inline-grid'    : 'cell-fabric-inline-grid';
   const summaryEl = document.getElementById(summaryId);
   const gridEl    = document.getElementById(gridId);
   if (!summaryEl || !gridEl) return;
@@ -2372,7 +2357,7 @@ function renderFlatFabricGrid(product) {
 }
 
 function selFlatFabric(el, product, ci, ki) {
-  const gridId = product === 'roller' ? 'roller-fabric-grid' : 'cell-fabric-grid';
+  const gridId = product === 'roller' ? 'rn-fabric-inline-grid' : 'cell-fabric-inline-grid';
   document.querySelectorAll('#' + gridId + ' .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
   el.classList.add('sel');
   const colls = product === 'roller' ? currentRollerColls : currentCellColls;
