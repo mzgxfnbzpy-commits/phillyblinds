@@ -707,11 +707,11 @@
             <div id="dn-note" class="tooltip-note" style="display:none;margin-top:4px;margin-bottom:6px">Day &amp; Night: two shades (sheer top + privacy bottom) in one headrail. Valid top: Sheer, Windsong, LF, Designer LF. Valid bottom: LF, RD, Designer, Solus. <strong>Not available in D&amp;N:</strong> Breeze, Ashton, FR/FR Essentials. Top &amp; bottom must match cell size.</div>
             <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:7px;margin-top:10px">Operating system</div>
             <div class="opt-row" id="grp-op-cellular">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits()">Cordless</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits()">Cord</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();autoMotor()">Motorized</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();cellularOpChange('cordless')">Cordless</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();cellularOpChange('cord')">Cord Loop</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();cellularOpChange('motor')">Motorized</button>
             </div>
-            <div class="tooltip-note" style="margin-top:4px">Cord supports larger sizes — up to 120″ W × 144″ H (SmartRelease upgrade available). Cordless max varies by cell size (96–108″ W).</div>
+            <div id="cellular-op-note" class="tooltip-note" style="margin-top:6px"></div>
           </div>
 
           <!-- Zebra / Banded -->
@@ -1287,7 +1287,7 @@ const SYSTEM_LIMITS = {
   },
   cellular: {
     'Cordless':  { maxW: 108, maxH: 120, note: 'Cordless max 108″W × 120″H — child & pet safe' },
-    'Cord':      { maxW: 120, maxH: 144, note: 'Cord max 120″W × 144″H — best for larger windows' },
+    'Cord Loop': { maxW: 120, maxH: 144, note: 'Cord Loop max 120″W × 144″H — best for larger windows' },
     'Motorized': { maxW: 120, maxH: 144, note: 'Motorized max 120″W × 144″H — app, remote & voice control' },
   },
   zebra: {
@@ -1434,29 +1434,40 @@ function toggleMotor(on) {
 }
 
 function checkMotorConflict() {
+  // For cellular, cellularOpChange() handles messaging — no red error needed.
+  // For other products (roller shared, zebra, woven): clear any stale motor note.
+  if (currentProduct === 'cellular') return;
   const opBlock = document.getElementById('op-system-block');
   if (!opBlock) return;
-  const sysBtn = currentProduct
-    ? document.querySelector('#grp-op-' + currentProduct + ' .opt-btn.sel')
-    : null;
-  const sysName = sysBtn ? sysBtn.textContent.trim() : '';
-  const conflict = motorOn && CORDLESS_SYSTEMS.some(s => sysName === s);
+  const warn = document.getElementById('motor-conflict-note');
+  if (warn) warn.remove();
+  opBlock.style.outline = opBlock.style.borderRadius = opBlock.style.padding = '';
+}
 
-  opBlock.style.outline      = conflict ? '2px solid #DC2626' : '';
-  opBlock.style.borderRadius = conflict ? '8px' : '';
-  opBlock.style.padding      = conflict ? '10px' : '';
+// ─── cellularOpChange ────────────────────────────────────────
+// Handles operating system selection for cellular shades.
+// Key rule: TDBU/D&N are lift MODES, not operating systems.
+// Cordless, Cord Loop, and Motorized are the operating system choices.
+// Any lift mode can pair with any compatible operating system.
+function cellularOpChange(type) {
+  const liftBtn  = document.querySelector('#grp-cellular-lift .opt-btn.sel');
+  const liftMode = liftBtn ? liftBtn.textContent.trim() : 'Bottom Up';
+  const note     = document.getElementById('cellular-op-note');
+  if (!note) return;
 
-  let warn = document.getElementById('motor-conflict-note');
-  if (conflict) {
-    if (!warn) {
-      warn = document.createElement('div');
-      warn.id = 'motor-conflict-note';
-      warn.style.cssText = 'font-size:11px;color:#DC2626;margin-top:8px;font-weight:500';
-      opBlock.appendChild(warn);
-    }
-    warn.textContent = '⚠ ' + sysName + ' is cordless — it cannot be separately motorized. Switch to Continuous loop or Motorized above to add a motor.';
-  } else if (warn) {
-    warn.remove();
+  if (type === 'cordless') {
+    // Cordless has no motor — auto-deactivate motorization if it was on
+    if (motorOn) toggleMotor(false);
+    note.innerHTML =
+      'Selected lift mode: <strong>' + liftMode + '</strong> &nbsp;·&nbsp; Selected operation: <strong>Cordless</strong><br>' +
+      'Cordless operation has no motor. To add a motor, change the operating system to <strong>Motorized</strong>.';
+  } else if (type === 'motor') {
+    // Motorized — auto-activate motorization toggle
+    autoMotor();
+    note.textContent = 'Selected operation: Motorized — choose motor brand and type in the section below.';
+  } else {
+    // Cord Loop
+    note.textContent = 'Cord Loop supports larger sizes (up to 120″ W × 144″ H). SmartRelease upgrade available.';
   }
 }
 
@@ -1622,6 +1633,14 @@ function filterCellSizes(fabric) {
 function showCellularLiftNote(mode) {
   document.getElementById('tdbu-note').style.display = mode === 'tdbu' ? 'block' : 'none';
   document.getElementById('dn-note').style.display   = mode === 'dn'   ? 'block' : 'none';
+  // Re-run the op system note so lift mode label stays current
+  const opBtn = document.querySelector('#grp-op-cellular .opt-btn.sel');
+  if (opBtn) {
+    const opText = opBtn.textContent.trim();
+    if (opText === 'Cordless') cellularOpChange('cordless');
+    else if (opText === 'Motorized') cellularOpChange('motor');
+    else cellularOpChange('cord');
+  }
 }
 
 // ─── adjustQty / clampQty ────────────────────────────────────
