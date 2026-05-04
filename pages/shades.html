@@ -874,14 +874,19 @@
           <div style="margin-bottom:14px">
             <div class="step-title" style="font-size:12px;margin-bottom:8px">Fabric category</div>
             <div class="opt-row" id="grp-cell-fabric">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('standard')">Standard (LF / RD)</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('lf')">Light Filtering</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('rd')">Room Darkening</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('sheer')">Sheer</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('designer-lf')">Designer LF</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('designer-rd')">Designer RD / Ashton</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('woven')">Woven (Breeze / Windsong)</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('fr')">Specialty / FR</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('designer-lf')">Designer Light Filtering</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('designer-rd')">Designer Room Darkening</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('ashton')">Designer Ashton</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('fr')">Flame Resistant LF / RD</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('fr-essentials')">FR Essentials</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('solus')">Solus</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('woven-breeze')">Woven Breeze</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('woven-windsong')">Woven Windsong</button>
             </div>
-            <div class="tooltip-note" id="fabric-cell-note">Standard LF &amp; RD work in all 6 cell sizes.</div>
+            <div class="tooltip-note" id="fabric-cell-note">Light Filtering is available in all 6 cell sizes.</div>
           </div>
           <div style="margin-bottom:14px">
             <div class="step-title" style="font-size:12px;margin-bottom:8px">Cell size</div>
@@ -1666,21 +1671,31 @@ function toggleLightGuardNote(on) {
 // ─── filterCellSizes ─────────────────────────────────────────
 // Fabric → cell size compatibility from Norman Portrait catalog
 const CELL_COMPAT = {
-  // fabric key → array of allowed cell-size button indices (0-5: 3/8S, 9/16S, 1/2D, 3/4S, 3/4D, 1¼S)
-  'standard':    [0,1,2,3,4,5],  // LF & RD — all 6
-  'sheer':       [0,  3,5],      // 3/8S, 3/4S, 1¼S (9/16S only in Day&Night, handled separately)
-  'designer-lf': [0,  3,5],      // 3/8S, 3/4S, 1¼S
-  'designer-rd': [    3,5],      // 3/4S, 1¼S only
-  'woven':       [    3,5],      // 3/4S, 1¼S only (Breeze/Windsong)
-  'fr':          [0,  3  ]       // 3/8S, 3/4S only — no doubles, no 9/16S
+  // indices: 0=3/8S · 1=9/16S · 2=1/2D · 3=3/4S · 4=3/4D · 5=1¼S
+  'lf':            [0,1,2,3,4,5],  // Light Filtering — all 6 sizes
+  'rd':            [0,1,2,3,4,5],  // Room Darkening — all 6 sizes
+  'sheer':         [0,  3,5],      // 3/8S, 3/4S, 1¼S (9/16S in D&N only)
+  'designer-lf':   [0,  3,5],      // 3/8S, 3/4S, 1¼S
+  'designer-rd':   [    3,5],      // 3/4S, 1¼S only
+  'ashton':        [    3,5],      // 3/4S, 1¼S only
+  'fr':            [0,  3  ],      // 3/8S, 3/4S only
+  'fr-essentials': [0,  3  ],      // 3/8S, 3/4S only
+  'solus':         [    3,5],      // 3/4S, 1¼S only
+  'woven-breeze':  [    3,5],      // 3/4S, 1¼S only
+  'woven-windsong':[    3,5],      // 3/4S, 1¼S only
 };
 const FABRIC_NOTES = {
-  'standard':    'Standard LF &amp; RD work in all 6 cell sizes.',
-  'sheer':       'Sheer is available in 3⁄8″S, 3⁄4″S, and 1 1⁄4″S only. (9⁄16″S is allowed only in Day &amp; Night mode.)',
-  'designer-lf': 'Designer LF is available in 3⁄8″S, 3⁄4″S, and 1 1⁄4″S. Incompatible sizes are grayed out.',
-  'designer-rd': 'Designer RD and Ashton are limited to 3⁄4″S and 1 1⁄4″S only.',
-  'woven':       'Woven fabrics (Breeze &amp; Windsong) are limited to 3⁄4″S and 1 1⁄4″S. Not available in Day &amp; Night.',
-  'fr':          'Flame Resistant / FR Essentials: available in 3⁄8″S and 3⁄4″S only. Not available in Day &amp; Night or double cell.'
+  'lf':            'Light Filtering is available in all 6 cell sizes.',
+  'rd':            'Room Darkening is available in all 6 cell sizes.',
+  'sheer':         'Sheer is available in 3⁄8″S, 3⁄4″S, and 1 1⁄4″S only. (9⁄16″S is allowed only in Day &amp; Night mode.)',
+  'designer-lf':   'Designer Light Filtering is available in 3⁄8″S, 3⁄4″S, and 1 1⁄4″S. Note: Rustica and Silverbrook colorways are not available in 3⁄8″S.',
+  'designer-rd':   'Designer Room Darkening is limited to 3⁄4″S and 1 1⁄4″S only.',
+  'ashton':        'Designer Ashton uses bonded colored yarns — texture and batch variation are normal. Limited to 3⁄4″S and 1 1⁄4″S only.',
+  'fr':            'Flame Resistant LF / RD: available in 3⁄8″S and 3⁄4″S only. No double cell.',
+  'fr-essentials': 'FR Essentials: available in 3⁄8″S and 3⁄4″S only. No double cell.',
+  'solus':         'Solus is available in 3⁄4″S and 1 1⁄4″S only.',
+  'woven-breeze':  'Woven Breeze: available in 3⁄4″S and 1 1⁄4″S only. Delicate fibers — trim any fraying with fabric scissors.',
+  'woven-windsong':'Woven Windsong: available in 3⁄4″S and 1 1⁄4″S only. Delicate fibers — trim any fraying with fabric scissors.',
 };
 
 function filterCellSizes(fabric) {
@@ -1699,7 +1714,22 @@ function filterCellSizes(fabric) {
     }
   });
   const noteEl = document.getElementById('fabric-cell-note');
-  if (noteEl) noteEl.innerHTML = FABRIC_NOTES[fabric] || '';
+  if (noteEl) {
+    noteEl.innerHTML = FABRIC_NOTES[fabric] || '';
+    // D&N live warning — append extra note if Day & Night is active
+    const liftBtn = document.querySelector('#grp-cellular-lift .opt-btn.sel');
+    if (liftBtn && liftBtn.textContent.trim() === 'Day & Night') {
+      const dnExcluded = ['woven-breeze','ashton','fr','fr-essentials'];
+      const dnTopOnly  = ['sheer','woven-windsong'];
+      if (dnExcluded.includes(fabric)) {
+        noteEl.innerHTML += ' <strong style="color:#DC2626">⚠ Not available in Day &amp; Night mode.</strong>';
+      } else if (dnTopOnly.includes(fabric)) {
+        noteEl.innerHTML += ' <span style="color:var(--gold)">In Day &amp; Night: top shade only.</span>';
+      } else if (fabric === 'solus') {
+        noteEl.innerHTML += ' <span style="color:var(--gold)">In Day &amp; Night: bottom shade only.</span>';
+      }
+    }
+  }
 }
 
 // ─── showCellularLiftNote ─────────────────────────────────────
@@ -2689,11 +2719,6 @@ function rnSubmitForm() {
 }
 
 // ─── showCellularLiftNote (already defined above, referenced here for context)
-// ─── Cellular D&N validation additions ───────────────────────
-// Called from filterCellSizes when D&N is active — extra restrictions from catalog:
-// Excluded from D&N: Woven Breeze, Ashton, FR fabrics, FR Essentials
-// Sheer = top only; Solus = bottom only; LF+RD only in 3/4"S or 1¼"S
-
 function showCartForm() {
   const w = document.getElementById('cart-contact-wrap');
   w.style.display = 'block';
