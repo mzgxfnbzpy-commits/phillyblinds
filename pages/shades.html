@@ -346,6 +346,240 @@
       <a class="measure-link" href="measure.html">Not sure? See our measuring guide &rarr;</a>
       <div class="inputs-block show" id="measure-inputs">
 
+        <!-- ══ NORMAN ROLLER — FULL 8-STEP CONFIGURATOR ══════════ -->
+        <!-- Shown only when product=roller + brand=Norman. All 8 steps in correct cascade order. -->
+        <div id="rn-wrap" style="display:none">
+
+          <!-- Step 1: Shade Configuration / System Type -->
+          <div class="step-block">
+            <div class="step-label">Step 1</div>
+            <div class="step-title">Shade configuration</div>
+            <div class="opt-row" id="rn-grp-system">
+              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-system');rnSetSystem('standard')">Standard Roller</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-system');rnSetSystem('dual')">Dual Shade</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-system');rnSetSystem('coupled2')">Coupled — 2 Shades</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-system');rnSetSystem('coupled3')">Coupled — 3 Shades</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-system');rnSetSystem('coupled4')">Coupled — 4 Shades</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-system');rnSetSystem('sidebyside')">Side-by-Side</button>
+            </div>
+            <div id="rn-system-note" class="tooltip-note" style="margin-top:6px">Standard: single shade per bracket set.</div>
+          </div>
+
+          <!-- Step 2: Fabric Type -->
+          <div class="step-block">
+            <div class="step-label">Step 2</div>
+            <div class="step-title">Fabric type</div>
+            <div class="opt-row" id="rn-grp-fabric">
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-fabric');rnSetFabric('sheer')">Sheer</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-fabric');rnSetFabric('lf')">Light Filtering</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-fabric');rnSetFabric('natural')">Natural</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-fabric');rnSetFabric('rd')">Room Darkening</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-fabric');rnSetFabric('solar')">Solar Screen</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-fabric');rnSetFabric('commercial')">Commercial Solar</button>
+            </div>
+            <div id="rn-solar-opts" style="display:none;margin-top:10px">
+              <div class="tooltip-note" style="margin-bottom:6px">Openness factor — lower % = less light &amp; more privacy (±10% tolerance is normal):</div>
+              <div class="opt-row" id="rn-grp-solar">
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-solar');rnUpdatePrice()">1% — max privacy</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-solar');rnUpdatePrice()">3% — standard</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-solar');rnUpdatePrice()">5% — balanced</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-solar');rnUpdatePrice()">7–10% — high visibility</button>
+              </div>
+            </div>
+            <div id="rn-rd-note" class="tooltip-note" style="display:none;margin-top:6px">Room Darkening alone is <strong>not</strong> true blackout — fabric stops most light but side gaps remain. Add LightGuard 360™ in Step 6 for full blackout.</div>
+          </div>
+
+          <!-- Step 2: Fabric Width -->
+          <div class="step-block">
+            <div class="step-label">Step 2</div>
+            <div class="step-title">Fabric width available</div>
+            <div class="tooltip-note" style="margin-bottom:8px">Your shade width cannot exceed the fabric roll width. Select the widest width that covers your window. Availability varies by collection — confirmed at order.</div>
+            <div class="opt-row" id="rn-grp-fw">
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-fw');rnSetFabricWidth(78)">78″</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-fw');rnSetFabricWidth(94.5)">94.5″</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-fw');rnSetFabricWidth(96)">96″</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-fw');rnSetFabricWidth(110)">110″</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-fw');rnSetFabricWidth(118)">118″</button>
+            </div>
+          </div>
+
+          <!-- Step 3: Shade Size -->
+          <div class="step-block">
+            <div class="step-label">Step 3</div>
+            <div class="step-title">Window measurements</div>
+            <div class="dim-row">
+              <div class="form-group">
+                <label>Width (inches)</label>
+                <input type="number" id="rn-width" min="12" max="118" step="0.5" placeholder="e.g. 36" oninput="rnUpdatePrice()">
+                <div class="tooltip-note" id="rn-width-note">Max = fabric width selected above</div>
+              </div>
+              <div class="form-group">
+                <label>Height (inches)</label>
+                <input type="number" id="rn-height" min="12" max="132" step="0.5" placeholder="e.g. 48" oninput="rnUpdatePrice()">
+              </div>
+            </div>
+            <div class="tooltip-note" id="rn-size-warning" style="color:#DC2626;display:none;margin-top:-4px;margin-bottom:8px"></div>
+            <div class="step-title" style="font-size:12px;margin-bottom:8px">Quantity</div>
+            <div class="qty-btns">
+              <button class="qty-btn" onclick="rnAdjQty(-1)">&#8722;</button>
+              <input class="qty-num" type="number" id="rn-qty" value="1" min="1" max="10" oninput="rnUpdatePrice()">
+              <button class="qty-btn" onclick="rnAdjQty(1)">&#43;</button>
+            </div>
+          </div>
+
+          <!-- Step 4: Lift System -->
+          <div class="step-block">
+            <div class="step-label">Step 4</div>
+            <div class="step-title">Lift system</div>
+            <div class="opt-row" id="rn-grp-lift">
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-lift');rnSetLift('cordless')">PrecisionLift™ Cordless</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-lift');rnSetLift('cord')">Continuous Cord Loop</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-lift');rnSetLift('smart')">SmartRelease™</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-lift');rnSetLift('motor')">Motorized</button>
+            </div>
+            <div id="rn-lift-note" class="tooltip-note" style="margin-top:5px">Cord Loop handles large widths &amp; heavy fabrics — child-safe tensioner required. Cordless max width varies by fabric weight. SmartRelease adds controlled descent.</div>
+            <div id="rn-motor-wrap" style="display:none;margin-top:12px">
+              <div class="form-group">
+                <label>Motor brand preference</label>
+                <select id="rn-motor-brand" onchange="rnUpdatePrice()">
+                  <option value="lutron">Lutron Serena</option>
+                  <option value="somfy">Somfy</option>
+                  <option value="automate">Automate</option>
+                  <option value="rollease">Rollease Acmeda</option>
+                </select>
+                <div class="tooltip-note" style="margin-top:4px">Motor compatibility confirmed at order — battery or hardwired options available.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 5: Mount Type -->
+          <div class="step-block">
+            <div class="step-label">Step 5</div>
+            <div class="step-title">Mount type</div>
+            <div class="opt-row" id="rn-grp-mount">
+              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-mount')">Inside mount</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-mount')">Outside mount</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-mount')">Ceiling mount</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-mount')">Door application</button>
+            </div>
+            <div class="tooltip-note" style="margin-top:4px">Inside mount requires min 2¾″ depth. Cassette and dual shades require more — confirmed at order. Door installs use magnetic hold-downs.</div>
+          </div>
+
+          <!-- Step 6: Headrail / Cassette / LightGuard / Hem Bar -->
+          <div class="step-block">
+            <div class="step-label">Step 6</div>
+            <div class="step-title">Headrail &amp; top treatment</div>
+            <div class="opt-row" id="rn-grp-headrail">
+              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-headrail')">Open roll</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-headrail')">Curved fascia</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-headrail')">Square fascia</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-headrail')">Fabric valance</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-headrail')">Wood valance</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-headrail')">Cassette</button>
+            </div>
+            <div style="margin-top:14px">
+              <div class="step-title" style="font-size:12px;margin-bottom:8px">Side channels (LightGuard)</div>
+              <div class="opt-row" id="rn-grp-lg">
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-lg');rnSetLG('none')">None</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-lg');rnSetLG('basic')">Basic Light Guard</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-lg');rnSetLG('360')">LightGuard 360™</button>
+              </div>
+              <div id="rn-lg-note" class="tooltip-note" style="display:none;margin-top:5px;color:var(--gold)">LightGuard 360™ = true blackout (side channels + top seal). Requires Room Darkening fabric + cassette headrail. We'll confirm at order.</div>
+            </div>
+            <div style="margin-top:14px">
+              <div class="step-title" style="font-size:12px;margin-bottom:8px">Hem bar</div>
+              <div class="opt-row" id="rn-grp-hem">
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-hem')">Plain</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-hem')">Fabric wrapped</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 7: Hardware Colors -->
+          <div class="step-block">
+            <div class="step-label">Step 7</div>
+            <div class="step-title">Hardware colors</div>
+            <div style="margin-bottom:14px">
+              <div class="step-title" style="font-size:12px;margin-bottom:5px">Color Coord. 1 — hardware, fascia, hem bar back</div>
+              <div class="opt-row" id="rn-grp-cc1">
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-cc1')">White</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cc1')">Cottage White</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cc1')">Black</button>
+              </div>
+            </div>
+            <div style="margin-bottom:14px">
+              <div class="step-title" style="font-size:12px;margin-bottom:5px">Color Coord. 2 — chain, end caps, tensioner</div>
+              <div class="opt-row" id="rn-grp-cc2">
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-cc2')">White</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cc2')">Cottage White</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cc2')">Black</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cc2')">Silver</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cc2')">Nature</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cc2')">Terra</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cc2')">Sahara</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cc2')">Chocolate</button>
+              </div>
+            </div>
+            <div>
+              <div class="step-title" style="font-size:12px;margin-bottom:5px">Chain type</div>
+              <div class="opt-row" id="rn-grp-chain">
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-chain')">Plastic bead</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain')">Stainless steel</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 8: Price + Compatibility + Submit -->
+          <div class="step-block">
+            <div class="step-label">Step 8</div>
+            <div class="step-title">Estimated price</div>
+            <div class="price-box" id="rn-price-box">
+              <div class="price-box-head">Live estimate</div>
+              <div class="price-line"><span>Product</span><span id="rn-pb-product">Norman Soluna Roller Shade</span></div>
+              <div class="price-line"><span>Fabric type</span><span id="rn-pb-fabric">—</span></div>
+              <div class="price-line"><span>Dimensions</span><span id="rn-pb-dims">Enter width &amp; height</span></div>
+              <div class="price-line"><span>Square footage</span><span id="rn-pb-sqft">—</span></div>
+              <div class="price-line"><span>Base / shade</span><span id="rn-pb-base">—</span></div>
+              <div class="price-line"><span>Qty</span><span id="rn-pb-qty">1</span></div>
+              <div class="price-line" id="rn-pb-motor-row" style="display:none"><span>Motorization</span><span id="rn-pb-motor">—</span></div>
+              <hr class="price-divider">
+              <div class="price-total"><span>Est. total</span><span id="rn-pb-total">—</span></div>
+              <div class="price-note">Estimate only · confirmed at order · min $85/shade</div>
+              <div class="price-min-note" id="rn-pb-min-note" style="display:none">Minimum order applied.</div>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <button class="btn-gold" onclick="rnShowForm()" style="width:100%;padding:13px;margin-top:4px">Get exact quote &rarr;</button>
+          <div class="submit-form" id="rn-submit-form">
+            <div class="step-title" style="margin-bottom:14px">Your contact details</div>
+            <div class="form-row">
+              <div class="form-group"><label>Your name *</label><input type="text" id="rn-sf-name" placeholder="Jane Smith"></div>
+              <div class="form-group"><label>Phone *</label><input type="tel" id="rn-sf-phone" placeholder="(215) 555-0100"></div>
+            </div>
+            <div class="form-group"><label>Email</label><input type="email" id="rn-sf-email" placeholder="jane@example.com"></div>
+            <div class="form-group"><label>Notes / fabric preference</label><textarea id="rn-sf-notes" placeholder="e.g. prefer neutral tone, looking for blackout, interested in motorization"></textarea></div>
+            <div class="delivery-section">
+              <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+              <div class="opt-row" id="grp-del-rn">
+                <button class="opt-btn sel" onclick="selOpt(this,'grp-del-rn');document.getElementById('del-rn-s').style.display='block';document.getElementById('del-rn-p').style.display='none'">Ship to me</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-del-rn');document.getElementById('del-rn-s').style.display='none';document.getElementById('del-rn-p').style.display='block'">I'll pick up</button>
+              </div>
+              <div id="del-rn-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately in your quote.</div></div>
+              <div id="del-rn-p" class="delivery-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.</div>
+            </div>
+            <button class="btn-gold" onclick="rnSubmitForm()" style="width:100%;padding:13px">Send quote request</button>
+          </div>
+          <div class="success-state" id="rn-success">
+            <h3>Quote request sent!</h3>
+            <p>We'll follow up within a few hours with fabric options and your exact price. Call <strong>(609) 742-1720</strong> for anything urgent — available 24/7.</p>
+          </div>
+
+        </div><!-- /rn-wrap -->
+
+        <!-- Wrapper hidden when Norman roller active (rn-wrap takes over) -->
+        <div id="shared-steps-wrap">
+
         <!-- OPERATING SYSTEM (shown per product, drives size limits) -->
         <div class="step-block" id="op-system-block" style="display:none">
           <div class="step-label">Step 2</div>
@@ -661,6 +895,7 @@
           <p>We'll confirm your exact price within a few hours. For anything urgent, call us at <strong>(609) 742-1720</strong> &mdash; available 24/7.</p>
         </div>
 
+        </div><!-- /shared-steps-wrap -->
       </div><!-- /inputs-block -->
 
     </div><!-- /step-block measure -->
@@ -1517,6 +1752,169 @@ function submitQuoteForm() {
   const s = document.getElementById('hd-success');
   s.classList.add('show');
   s.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ═══ CART / QUOTE LIST ════════════════════════════════════════
+let cart = [];
+let cartId = 0;
+
+function optVal(grpId) {
+  const b = document.querySelector('#' + grpId + ' .opt-btn.sel:not([disabled])');
+  return b ? b.textContent.trim() : '';
+}
+
+function buildCartItem() {
+  const w   = parseFloat(document.getElementById('inp-width').value);
+  const h   = parseFloat(document.getElementById('inp-height').value);
+  const qty = parseInt(document.getElementById('inp-qty').value) || 1;
+  if (!w || !h || !currentProduct || !currentBrand) return null;
+
+  const rate     = RATES[currentProduct] || 0;
+  const sqft     = (w / 12) * (h / 12);
+  const base     = Math.max(85, sqft * rate);
+  const motorCost = motorOn ? 95 * qty : 0;
+  const estimated = (base * qty) + motorCost;
+
+  const productName = document.getElementById('config-product-name').textContent;
+  const brandLabel  = currentBrand === 'norman' ? 'Norman'
+                    : currentBrand === 'pb'     ? 'Philly Blinds Custom'
+                    : 'Other';
+
+  const system = optVal('grp-op-' + currentProduct);
+  const light  = optVal('grp-light-' + currentProduct) ||
+                 optVal('grp-light-roller') ||
+                 optVal('grp-light-woven');
+  const mount  = optVal('grp-mount');
+
+  const tags = [mount, system, light].filter(Boolean);
+  if (currentProduct === 'cellular') {
+    const lift = optVal('grp-cellular-lift');
+    const ctype = optVal('grp-cell-type');
+    const csize = optVal('grp-cell-size');
+    if (lift)  tags.push(lift);
+    if (ctype) tags.push(ctype);
+    if (csize) tags.push(csize + ' cell');
+  }
+  if (currentProduct === 'roller') {
+    const fascia = optVal('grp-fascia');
+    if (fascia) tags.push(fascia);
+  }
+  if (motorOn) {
+    const mb = document.getElementById('sel-motor-brand');
+    tags.push('Motorized' + (mb && mb.selectedOptions[0] ? ' — ' + mb.selectedOptions[0].text : ''));
+  }
+
+  return {
+    id: ++cartId,
+    productName, brandLabel, w, h, qty,
+    tags, estimated,
+    brandColor: currentBrand === 'norman' ? '#1C3A6E'
+              : currentBrand === 'pb'     ? '#5C3D0A' : '#555'
+  };
+}
+
+function addToCart() {
+  const item = buildCartItem();
+  if (!item) {
+    alert('Please select a brand and enter width & height before adding to quote.');
+    return;
+  }
+  cart.push(item);
+  renderCart();
+  // Toast
+  const t = document.getElementById('add-toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+  // Scroll to cart
+  setTimeout(() => {
+    document.getElementById('cart-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 150);
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(i => i.id !== id);
+  renderCart();
+}
+
+function clearCart() {
+  if (!cart.length || confirm('Remove all items from your quote list?')) {
+    cart = [];
+    renderCart();
+  }
+}
+
+function renderCart() {
+  const sec      = document.getElementById('cart-section');
+  const itemsEl  = document.getElementById('cart-items');
+  const totalsEl = document.getElementById('cart-totals');
+  const emptyEl  = document.getElementById('cart-empty-msg');
+  const badge    = document.getElementById('cart-count-badge');
+
+  if (!cart.length) {
+    sec.style.display    = 'none';
+    emptyEl.style.display = 'block';
+    totalsEl.style.display = 'none';
+    return;
+  }
+
+  sec.style.display     = 'block';
+  emptyEl.style.display  = 'none';
+  totalsEl.style.display = 'block';
+  badge.textContent      = '(' + cart.length + ' item' + (cart.length !== 1 ? 's' : '') + ')';
+
+  let grand = 0;
+  itemsEl.innerHTML = cart.map(item => {
+    grand += item.estimated;
+    return `<div class="cart-item">
+      <div style="flex-shrink:0;padding-top:2px">
+        <span style="background:${item.brandColor};color:#fff;font-size:9px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;padding:2px 7px;border-radius:10px;white-space:nowrap">${item.brandLabel}</span>
+      </div>
+      <div class="ci-body">
+        <div class="ci-name">${item.productName}</div>
+        <div class="ci-specs">${item.w}″ W × ${item.h}″ H · Qty ${item.qty}${item.tags.length ? ' · ' + item.tags.join(' · ') : ''}</div>
+      </div>
+      <div class="ci-price">~$${item.estimated.toFixed(0)}</div>
+      <button class="ci-remove" onclick="removeFromCart(${item.id})" title="Remove item">&#x2715;</button>
+    </div>`;
+  }).join('');
+
+  document.getElementById('cart-grand-total').textContent = '~$' + grand.toFixed(0);
+}
+
+function showCartForm() {
+  const w = document.getElementById('cart-contact-wrap');
+  w.style.display = 'block';
+  w.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function submitCart() {
+  const name  = document.getElementById('cq-name').value.trim();
+  const phone = document.getElementById('cq-phone').value.trim();
+  const email = document.getElementById('cq-email').value.trim();
+  const notes = document.getElementById('cq-notes').value.trim();
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+
+  const lines = cart.map((item, i) =>
+    (i + 1) + '. ' + item.brandLabel + ' ' + item.productName +
+    '\n   ' + item.w + '″ W × ' + item.h + '″ H · Qty ' + item.qty +
+    (item.tags.length ? '\n   ' + item.tags.join(', ') : '') +
+    '\n   Est. ~$' + item.estimated.toFixed(0)
+  ).join('\n\n');
+
+  const body = 'QUOTE REQUEST — ' + cart.length + ' item(s)\n' +
+    '═══════════════════════════════════\n' +
+    'Name:  ' + name + '\nPhone: ' + phone + '\nEmail: ' + (email || '—') +
+    '\n\nITEMS:\n\n' + lines +
+    (notes ? '\n\nNOTES:\n' + notes : '');
+
+  window.location.href = 'mailto:blindznation@gmail.com' +
+    '?subject=' + encodeURIComponent('Shade Quote Request — ' + name) +
+    '&body='    + encodeURIComponent(body);
+
+  document.getElementById('cart-success-count').textContent =
+    cart.length + ' item' + (cart.length !== 1 ? 's' : '');
+  document.getElementById('cart-success').classList.add('show');
+  document.getElementById('cart-contact-wrap').style.display = 'none';
 }
 </script>
 </body>
