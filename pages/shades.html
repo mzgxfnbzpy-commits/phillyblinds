@@ -958,13 +958,33 @@
           </div>
         </div>
 
-        <!-- ROLLER + CELLULAR: fabric & color placeholder -->
+        <!-- ROLLER + CELLULAR: fabric collection & color picker -->
         <div class="step-block" id="fabric-color-block" style="display:none">
           <div class="step-label">Step 3c</div>
-          <div class="step-title">Fabric &amp; color</div>
-          <div style="background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px;padding:14px 16px;font-size:12px;color:#555;line-height:1.7">
-            Full fabric swatches and color library coming very soon.<br>
-            <strong>For now:</strong> describe your preference in the notes field below — color, opacity, pattern, texture — and we'll follow up with matching options from our library.
+          <div class="step-title">Fabric collection &amp; color</div>
+
+          <!-- Roller: fabric type already chosen in Step 2 → pick collection → color -->
+          <div id="roller-coll-wrap">
+            <div style="margin-bottom:14px">
+              <div class="step-title" style="font-size:12px;margin-bottom:8px">Collection</div>
+              <div id="roller-coll-list"></div>
+            </div>
+            <div id="roller-color-wrap" style="display:none;margin-bottom:14px">
+              <div class="step-title" style="font-size:12px;margin-bottom:8px">Color</div>
+              <div id="roller-color-list"></div>
+            </div>
+          </div>
+
+          <!-- Cellular: fabric type chosen above → pick collection → color -->
+          <div id="cell-coll-wrap" style="display:none">
+            <div style="margin-bottom:14px">
+              <div class="step-title" style="font-size:12px;margin-bottom:8px">Collection</div>
+              <div id="cell-coll-list"></div>
+            </div>
+            <div id="cell-color-wrap" style="display:none;margin-bottom:14px">
+              <div class="step-title" style="font-size:12px;margin-bottom:8px">Color</div>
+              <div id="cell-color-list"></div>
+            </div>
           </div>
         </div>
 
@@ -1593,6 +1613,17 @@ function configureForProduct(productId) {
     productId === 'roller' ? 'block' : 'none';
   document.getElementById('fabric-color-block').style.display =
     (productId === 'roller' || productId === 'cellular') ? 'block' : 'none';
+  const rcw = document.getElementById('roller-coll-wrap');
+  const ccw = document.getElementById('cell-coll-wrap');
+  if (productId === 'roller') {
+    if (rcw) rcw.style.display = 'block';
+    if (ccw) ccw.style.display = 'none';
+    renderFabricCollections('roller');
+  } else if (productId === 'cellular') {
+    if (rcw) rcw.style.display = 'none';
+    if (ccw) ccw.style.display = 'block';
+    renderFabricCollections('cell');
+  }
   // Always reset chain-opts when switching products
   document.getElementById('chain-opts').style.display = 'none';
 
@@ -1699,6 +1730,7 @@ const FABRIC_NOTES = {
 };
 
 function filterCellSizes(fabric) {
+  currentCellFabric = fabric;
   const allowed = CELL_COMPAT[fabric] || [0,1,2,3,4,5];
   const btns = document.getElementById('grp-cell-size').querySelectorAll('.opt-btn');
   btns.forEach(function(btn, idx) {
@@ -1730,6 +1762,7 @@ function filterCellSizes(fabric) {
       }
     }
   }
+  if (currentProduct === 'cellular') renderFabricCollections('cell');
 }
 
 // ─── showCellularLiftNote ─────────────────────────────────────
@@ -2031,10 +2064,12 @@ function buildCartItem() {
     const lift   = optVal('grp-cellular-lift');
     const cfabric = optVal('grp-cell-fabric');
     const csize  = optVal('grp-cell-size');
-    if (lift)   tags.push(lift);
-    if (cfabric) tags.push(cfabric);
-    if (ctype) tags.push(ctype);
-    if (csize) tags.push(csize + ' cell');
+    if (lift)              tags.push(lift);
+    if (cfabric)           tags.push(cfabric);
+    if (ctype)             tags.push(ctype);
+    if (csize)             tags.push(csize + ' cell');
+    if (currentCellColl)   tags.push(currentCellColl);
+    if (currentCellColor)  tags.push(currentCellColor);
   }
   if (currentProduct === 'roller' && currentBrand !== 'norman') {
     // Norman roller uses rn-wrap (not captured in cart item — separate quote flow)
@@ -2129,6 +2164,188 @@ function renderCart() {
 
 let rnFabricType   = 'lf';
 let rnFabricWidth  = 96;
+let currentCellFabric  = 'lf';
+let currentRollerColls = [];
+let currentCellColls   = [];
+let currentRollerColl  = null;
+let currentCellColl    = null;
+let currentRollerColor = null;
+let currentCellColor   = null;
+
+// ─── Norman Soluna roller fabric collections ──────────────────
+const SOLUNA_COLLECTIONS = {
+  'sheer': [
+    {name:'Dazzle',        colors:[]},
+    {name:'Scarlett',      colors:[]},
+    {name:'Lakeshore',     colors:[]}
+  ],
+  'lf': [
+    {name:'Kendra',    colors:[]},
+    {name:'Francis',   colors:[]},
+    {name:'Breeze',    colors:[]},
+    {name:'Hayes',     colors:[]},
+    {name:'Valerie',   colors:[]},
+    {name:'Emery',     colors:[]},
+    {name:'Brook',     colors:[]},
+    {name:'Chelsea',   colors:[]},
+    {name:'Sierra',    colors:[]},
+    {name:'Shimmer',   colors:[]},
+    {name:'Amelia',    colors:[]},
+    {name:'Lola LF',   colors:[]},
+    {name:'Clarissa',  colors:[]},
+    {name:'Verona LF', colors:[]},
+    {name:'Callie',    colors:[]},
+    {name:'Remy',      colors:[]}
+  ],
+  'natural': [
+    {name:'Aruba',       colors:[]},
+    {name:'Caroline',    colors:[]},
+    {name:'Samoa',       colors:[]},
+    {name:'Bali',        colors:[]},
+    {name:'Phuket',      colors:[]},
+    {name:'Bora Bora',   colors:[]},
+    {name:'Sumatra',     colors:[]},
+    {name:'Java',        colors:[]},
+    {name:'Riviera',     colors:[]},
+    {name:'Maui',        colors:[]},
+    {name:'Lake Tahoe',  colors:[]},
+    {name:'Catalina',    colors:[]},
+    {name:'Cove',        colors:[]}
+  ],
+  'rd': [
+    {name:'Garden',     colors:[]},
+    {name:'Elements',   colors:[]},
+    {name:'Jamaica',    colors:[]},
+    {name:'Bermuda',    colors:[]},
+    {name:'Fiji',       colors:[]},
+    {name:'Lola BO',    colors:[]},
+    {name:'Summerland', colors:[]},
+    {name:'Cory',       colors:[]},
+    {name:'Callie RD',  colors:[]},
+    {name:'Remy RD',    colors:[]},
+    {name:'Francis RD', colors:[]},
+    {name:'Breeze RD',  colors:[]},
+    {name:'Amelia RD',  colors:[]}
+  ],
+  'solar': [
+    {name:'Lakeview 1%',     colors:[]},
+    {name:'Lakeview 3%',     colors:[]},
+    {name:'Lakeview 7%',     colors:[]},
+    {name:'Lakeview 10%',    colors:[]},
+    {name:'Meadows 1%',      colors:[]},
+    {name:'Meadows 3%',      colors:[]},
+    {name:'Jubilee 3%',      colors:[]},
+    {name:'Moon 5%',         colors:[]},
+    {name:'Serene 1%',       colors:[]},
+    {name:'Serene 3%',       colors:[]},
+    {name:'Serene 7%',       colors:[]},
+    {name:'Flow 1%',         colors:[]},
+    {name:'Flow 5%',         colors:[]},
+    {name:'Flow 7%',         colors:[]},
+    {name:'Windsong 1%',     colors:[]},
+    {name:'Windsong 5%',     colors:[]},
+    {name:'Breeze Screen 1%',colors:['Linen Flax','Linen Natural','Linen Khaki','Linen Dune','Linen Graphite','Linen Almond Milk','Linen Stone','Linen Cloud','Linen Warm Ivory']},
+    {name:'Breeze Screen 3%',colors:[]},
+    {name:'Galaxy 3%',       colors:[]}
+  ],
+  'commercial': [
+    {name:'NA300 1%',  colors:[]},
+    {name:'NA300 3%',  colors:[]},
+    {name:'NA300 5%',  colors:[]},
+    {name:'NA400 1%',  colors:[]},
+    {name:'NA400 3%',  colors:[]},
+    {name:'NA400 5%',  colors:[]},
+    {name:'NA400 10%', colors:[]},
+    {name:'NA820 3%',  colors:[]}
+  ]
+};
+
+// ─── Norman Portrait cellular collections by fabric type ──────
+const CELL_COLLECTIONS = {
+  'lf': [
+    {name:'Essential',  colors:['White','Soft White','Ivory','Almond','Sand','Khaki','Light Gray','Stone','Slate','Charcoal']},
+    {name:'Classic',    colors:['Snow','Cream','Linen','Dune','Taupe','Clay','Ash','Graphite']},
+    {name:'SoftWeave',  colors:['Cotton','Linen','Flax','Oatmeal','Driftwood','Mist','Pebble','Steel']},
+    {name:'Insulate',   colors:['White','Soft White','Ivory','Sand','Khaki','Stone','Gray','Slate']},
+    {name:'Premium',    colors:['White','Ivory','Linen','Sand','Driftwood','Gray','Charcoal']}
+  ],
+  'rd': [
+    {name:'Essential BO', colors:['White','Soft White','Ivory','Beige','Gray','Charcoal','Black']},
+    {name:'Classic BO',   colors:['Snow','Cream','Linen','Taupe','Ash','Graphite','Black']},
+    {name:'SoftWeave BO', colors:['Cotton','Linen','Flax','Oatmeal','Driftwood','Pebble','Charcoal']},
+    {name:'Insulate BO',  colors:['White','Soft White','Ivory','Beige','Gray','Charcoal','Black']},
+    {name:'Premium BO',   colors:['White','Ivory','Beige','Gray','Charcoal','Black']}
+  ]
+};
+
+// ─── renderFabricCollections ──────────────────────────────────
+function renderFabricCollections(product) {
+  const colls = product === 'roller'
+    ? (SOLUNA_COLLECTIONS[rnFabricType] || [])
+    : (CELL_COLLECTIONS[currentCellFabric] || []);
+
+  if (product === 'roller') {
+    currentRollerColls = colls; currentRollerColl = null; currentRollerColor = null;
+  } else {
+    currentCellColls   = colls; currentCellColl   = null; currentCellColor   = null;
+  }
+
+  const listId      = product === 'roller' ? 'roller-coll-list'  : 'cell-coll-list';
+  const colorListId = product === 'roller' ? 'roller-color-list' : 'cell-color-list';
+  const colorWrapId = product === 'roller' ? 'roller-color-wrap' : 'cell-color-wrap';
+  const collList    = document.getElementById(listId);
+  const colorWrap   = document.getElementById(colorWrapId);
+  if (!collList) return;
+  colorWrap.style.display = 'none';
+  document.getElementById(colorListId).innerHTML = '';
+
+  if (!colls.length) {
+    collList.innerHTML = '<div class="tooltip-note">Color options coming soon for this fabric type.</div>';
+    return;
+  }
+
+  const btns = colls.map(function(c, i) {
+    return '<button class="opt-btn" style="font-size:11px" onclick="selFabricColl(this,\'' + product + '\',' + i + ')">' + c.name + '</button>';
+  }).join('');
+  collList.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:6px">' + btns + '</div>';
+}
+
+function selFabricColl(el, product, idx) {
+  const listId = product === 'roller' ? 'roller-coll-list' : 'cell-coll-list';
+  document.querySelectorAll('#' + listId + ' .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
+  el.classList.add('sel');
+
+  const colls = product === 'roller' ? currentRollerColls : currentCellColls;
+  const coll  = colls[idx];
+  if (!coll) return;
+  if (product === 'roller') currentRollerColl = coll.name;
+  else                      currentCellColl   = coll.name;
+
+  const colorListId = product === 'roller' ? 'roller-color-list' : 'cell-color-list';
+  const colorWrapId = product === 'roller' ? 'roller-color-wrap' : 'cell-color-wrap';
+  const colorList   = document.getElementById(colorListId);
+  const colorWrap   = document.getElementById(colorWrapId);
+
+  if (!coll.colors.length) {
+    colorList.innerHTML = '<div class="tooltip-note">Color options coming soon — describe your preference in the notes below.</div>';
+    colorWrap.style.display = 'block';
+    return;
+  }
+
+  const colorBtns = coll.colors.map(function(color) {
+    return '<button class="opt-btn" style="font-size:11px" onclick="selFabricColor(this,\'' + product + '\')">' + color + '</button>';
+  }).join('');
+  colorList.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:6px">' + colorBtns + '</div>';
+  colorWrap.style.display = 'block';
+}
+
+function selFabricColor(el, product) {
+  const listId = product === 'roller' ? 'roller-color-list' : 'cell-color-list';
+  document.querySelectorAll('#' + listId + ' .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
+  el.classList.add('sel');
+  if (product === 'roller') currentRollerColor = el.textContent;
+  else                      currentCellColor   = el.textContent;
+}
 let rnSystemType   = 'standard';
 let rnLiftType     = 'cord';
 const RN_RATE      = 22;   // placeholder $/sqft
@@ -2180,6 +2397,7 @@ function rnSetFabric(type) {
   if (noteEl) noteEl.textContent = RN_FABRIC_NOTES[type] || '';
   rnRunValidation();
   rnUpdatePrice();
+  renderFabricCollections('roller');
 }
 
 // ─── rnSetFabricWidth ────────────────────────────────────────
