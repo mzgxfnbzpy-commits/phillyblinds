@@ -89,6 +89,31 @@
 .qty-num{width:40px;text-align:center;border-top:1px solid #ddd;border-bottom:1px solid #ddd;border-left:none;border-right:none;height:32px;font-size:13px;font-weight:500;color:#111;font-family:var(--font);background:#fff}
 .qty-num:focus{outline:none}
 
+/* ---- CART / QUOTE LIST ---- */
+.cart-wrap{max-width:860px;margin:0 auto}
+.cart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--espresso)}
+.cart-header h2{font-size:18px;font-weight:500;letter-spacing:-0.3px;color:#111}
+.cart-clear{font-size:12px;color:#aaa;border:none;background:none;cursor:pointer;font-family:var(--font)}
+.cart-clear:hover{color:#DC2626}
+.cart-empty-msg{text-align:center;padding:28px;color:#aaa;font-size:13px;background:#fafaf8;border-radius:12px;border:1px dashed #e8e8e4}
+.cart-item{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:#fff;border:1px solid #e8e8e4;border-radius:10px;margin-bottom:8px;transition:border-color 0.15s}
+.cart-item:hover{border-color:var(--gold)}
+.ci-body{flex:1;min-width:0}
+.ci-name{font-size:13px;font-weight:600;color:#111;margin-bottom:3px}
+.ci-specs{font-size:11px;color:#888;line-height:1.6}
+.ci-price{font-size:14px;font-weight:500;color:var(--espresso);white-space:nowrap;min-width:60px;text-align:right;padding-top:2px}
+.ci-remove{background:none;border:none;color:#ccc;font-size:18px;cursor:pointer;padding:0 2px;line-height:1;flex-shrink:0;transition:color 0.15s;font-family:var(--font)}
+.ci-remove:hover{color:#DC2626}
+.cart-total-row{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0 0;margin-top:4px;border-top:2px solid var(--espresso)}
+.cart-total-label{font-size:13px;font-weight:500;color:#555}
+.cart-total-val{font-size:22px;font-weight:600;color:var(--espresso)}
+.cart-total-note{font-size:11px;color:#aaa;margin-top:3px}
+.cart-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.cart-contact{background:var(--espresso-mid);border:0.5px solid var(--border-dark);border-radius:12px;padding:22px;margin-top:16px}
+.cart-contact-head{font-size:13px;font-weight:500;color:var(--cream);margin-bottom:14px}
+.add-toast{position:fixed;bottom:24px;right:24px;background:var(--espresso);color:var(--gold);padding:11px 18px;border-radius:10px;font-size:13px;font-weight:500;z-index:500;opacity:0;transition:opacity 0.25s;pointer-events:none;display:flex;align-items:center;gap:8px}
+.add-toast.show{opacity:1}
+
 /* ---- BRAND CHOOSER ---- */
 .brand-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px}
 .brand-btn{flex:1;min-width:140px;background:#fff;border:1.5px solid #e8e8e4;border-radius:10px;padding:12px 14px;cursor:pointer;text-align:left;transition:border-color 0.15s,box-shadow 0.15s;font-family:var(--font)}
@@ -413,23 +438,25 @@
           <div class="step-label">Step 3</div>
           <div class="step-title" id="light-step-title">Light control</div>
 
-          <!-- ROLLER: LF · RD · Blackout · Solar -->
+          <!-- ROLLER: Sheer · LF · RD · LightGuard 360 · Solar -->
           <div id="light-roller" style="display:none">
             <div class="opt-row" id="grp-light-roller">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);updatePrice()">Light Filtering</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);updatePrice()">Room Darkening</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);updatePrice()">Blackout</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(true);updatePrice()">Solar</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);toggleLightGuardNote(false);updatePrice()">Sheer</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);toggleLightGuardNote(false);updatePrice()">Light Filtering</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);toggleLightGuardNote(true);updatePrice()">Room Darkening</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);toggleLightGuardNote(false);updatePrice()">LightGuard 360™</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(true);toggleLightGuardNote(false);updatePrice()">Solar Screen</button>
             </div>
+            <div id="lightguard-note" class="tooltip-note" style="display:none;margin-top:6px">Room Darkening fabric alone reduces but does not eliminate light. For true blackout add <strong>LightGuard 360™</strong> — full side channels + top seal. Select "LightGuard 360™" above to include it.</div>
             <div id="solar-openness" style="display:none;margin-top:10px">
-              <div class="tooltip-note" style="margin-bottom:6px">Solar openness factor (% of light allowed through):</div>
+              <div class="tooltip-note" style="margin-bottom:6px">Openness factor — lower % = less light &amp; more privacy:</div>
               <div class="opt-row" id="grp-solar">
-                <button class="opt-btn sel" onclick="selOpt(this,'grp-solar');updatePrice()">1%</button>
-                <button class="opt-btn" onclick="selOpt(this,'grp-solar');updatePrice()">3%</button>
-                <button class="opt-btn" onclick="selOpt(this,'grp-solar');updatePrice()">5%</button>
-                <button class="opt-btn" onclick="selOpt(this,'grp-solar');updatePrice()">10%</button>
-                <button class="opt-btn" onclick="selOpt(this,'grp-solar');updatePrice()">14%</button>
+                <button class="opt-btn sel" onclick="selOpt(this,'grp-solar');updatePrice()">1% — max privacy</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-solar');updatePrice()">3% — standard</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-solar');updatePrice()">5% — balanced</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-solar');updatePrice()">7–10% — high visibility</button>
               </div>
+              <div class="tooltip-note" style="margin-top:4px">±10% openness tolerance is normal and not a defect.</div>
             </div>
           </div>
 
@@ -600,8 +627,11 @@
           </div>
         </div>
 
-        <!-- Step F: Submit -->
-        <button class="btn-gold" onclick="showShadeForm()" style="width:100%;padding:13px;margin-top:4px">Get exact quote &rarr;</button>
+        <!-- Step F: Add to quote / submit -->
+        <button class="btn-gold" onclick="addToCart()" style="width:100%;padding:13px;margin-top:4px;font-size:14px">+ Add to quote list</button>
+        <div style="text-align:center;margin-top:8px">
+          <button onclick="showShadeForm()" style="font-size:12px;color:var(--gold);border:none;background:none;cursor:pointer;text-decoration:underline;font-family:var(--font)">Or request a quote for just this shade &rarr;</button>
+        </div>
         <div class="submit-form" id="shade-submit-form">
           <div class="step-title" style="margin-bottom:14px">Your contact details</div>
           <div class="form-row">
@@ -799,6 +829,52 @@
   </div><!-- /hd-config -->
 
 </div><!-- /configurator-section -->
+
+<!-- QUOTE CART -->
+<div id="cart-section" style="display:none">
+  <div class="section section-warm" style="padding-top:28px;padding-bottom:32px">
+    <div class="cart-wrap">
+      <div class="cart-header">
+        <h2>Your quote list <span id="cart-count-badge" style="font-size:13px;font-weight:400;color:#888"></span></h2>
+        <button class="cart-clear" onclick="clearCart()">Clear all</button>
+      </div>
+      <div id="cart-items"></div>
+      <div id="cart-totals" style="display:none">
+        <div class="cart-total-row">
+          <div>
+            <div class="cart-total-label">Estimated total</div>
+            <div class="cart-total-note">Estimates only — confirmed at order</div>
+          </div>
+          <span class="cart-total-val" id="cart-grand-total">$0</span>
+        </div>
+        <div class="cart-actions">
+          <button class="btn-gold" onclick="showCartForm()" style="padding:12px 22px">Request quote for all items &rarr;</button>
+          <button class="btn-outline" onclick="document.getElementById('product-grid').scrollIntoView({behavior:'smooth'})" style="padding:11px 18px">+ Add another item</button>
+        </div>
+        <div id="cart-contact-wrap" style="display:none">
+          <div class="cart-contact">
+            <div class="cart-contact-head">Your contact details</div>
+            <div class="form-row">
+              <div class="form-group"><label style="color:var(--text-dark)">Name *</label><input type="text" id="cq-name" placeholder="Jane Smith" style="background:#fff"></div>
+              <div class="form-group"><label style="color:var(--text-dark)">Phone *</label><input type="tel" id="cq-phone" placeholder="(215) 555-0100" style="background:#fff"></div>
+            </div>
+            <div class="form-group"><label style="color:var(--text-dark)">Email</label><input type="email" id="cq-email" placeholder="jane@example.com" style="background:#fff"></div>
+            <div class="form-group"><label style="color:var(--text-dark)">Notes</label><textarea id="cq-notes" placeholder="Room names, timeline, any special instructions" style="background:#fff"></textarea></div>
+            <button class="btn-gold" onclick="submitCart()" style="width:100%;padding:13px">Send full quote request &rarr;</button>
+          </div>
+          <div class="success-state" id="cart-success">
+            <h3>Quote request sent!</h3>
+            <p>We'll follow up within a few hours with exact pricing on all <span id="cart-success-count">your items</span>. Urgent? <strong>(609) 742-1720</strong> — 24/7.</p>
+          </div>
+        </div>
+      </div>
+      <div id="cart-empty-msg" class="cart-empty-msg">No items yet — configure a shade above and click "Add to quote list".</div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD TOAST -->
+<div class="add-toast" id="add-toast">&#10003; Added to quote list</div>
 
 <!-- SECTION 4: BRANDS -->
 <div class="section section-dark">
@@ -1151,6 +1227,12 @@ function autoMotor() {
 // ─── toggleSolar ─────────────────────────────────────────────
 function toggleSolar(on) {
   document.getElementById('solar-openness').style.display = on ? 'block' : 'none';
+}
+
+// ─── toggleLightGuardNote ────────────────────────────────────
+function toggleLightGuardNote(on) {
+  const el = document.getElementById('lightguard-note');
+  if (el) el.style.display = on ? 'block' : 'none';
 }
 
 // ─── filterCellSizes ─────────────────────────────────────────
