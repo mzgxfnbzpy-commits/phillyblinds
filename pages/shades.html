@@ -548,73 +548,127 @@
             <div class="tooltip-note" style="margin-top:5px">Hem bar color: <strong>Fabric Matched</strong> — matches the selected shade fabric. No separate color selection needed.</div>
           </div>
 
-          <!-- Step 7: Hardware & Control System — corrected structure -->
+          <!-- Step 7: Hardware Colors — Premium (Open Roll) or Standard (Fascia/Cassette) -->
           <div class="step-block">
             <div class="step-label">Step 7</div>
-            <div class="step-title">Hardware &amp; control colors</div>
+            <div class="step-title">Hardware colors</div>
 
-            <!-- 1. Control mechanism -->
-            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">1 — Control mechanism</div>
-            <div class="opt-row" id="rn-grp-control">
-              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-control');rnSetControl('chain')">Metal chain</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-control');rnSetControl('cord')">Cord loop (clutch)</button>
-            </div>
-            <div id="rn-control-note" class="tooltip-note" style="margin-top:4px;margin-bottom:14px">Metal chain: standard for most systems. Cord loop (clutch): used with Continuous Cord Loop lift system — must match your lift selection in Step 5.</div>
+            <!-- ── PREMIUM HARDWARE (Open Roll only) ────────────── -->
+            <div id="rn-premium-hw">
+              <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px">Premium Hardware — Open Roll only</div>
+              <div class="tooltip-note" style="margin-bottom:12px">Select one finish — all components (brackets, clutch, hem bar, chain, tensioner) auto-assign to match. No mix &amp; match.</div>
 
-            <!-- 2a. Chain color (default visible) -->
-            <div id="rn-chain-color-wrap" style="margin-bottom:14px">
-              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">2 — Chain color</div>
-              <div class="opt-row" id="rn-grp-chain-color">
-                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-chain-color')">White</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Cottage White</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Black</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Stainless / Silver</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Nature</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Sahara</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Terra</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Chocolate</button>
+              <!-- Finish selector -->
+              <div class="rn-fabric-cards" id="rn-grp-premium-finish" style="grid-template-columns:1fr 1fr 1fr">
+                <button class="rn-fabric-card" onclick="selRnFabric(this,'bronze');rnSetPremiumFinish('bronze')">
+                  <div class="rn-fc-name" style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#8B5E3C;flex-shrink:0;display:inline-block"></span>Bronze</div>
+                  <div class="rn-fc-desc">Brackets · Hem Bar · Chain: Chocolate</div>
+                </button>
+                <button class="rn-fabric-card" onclick="selRnFabric(this,'black');rnSetPremiumFinish('black')">
+                  <div class="rn-fc-name" style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#2D2D2D;flex-shrink:0;display:inline-block"></span>Brushed Black</div>
+                  <div class="rn-fc-desc">Brackets · Hem Bar · Chain: Black</div>
+                </button>
+                <button class="rn-fabric-card" onclick="selRnFabric(this,'brass');rnSetPremiumFinish('brass')">
+                  <div class="rn-fc-name" style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#B8963E;flex-shrink:0;display:inline-block"></span>Brass</div>
+                  <div class="rn-fc-desc">Brackets · Hem Bar · Chain: Brass</div>
+                </button>
+                <button class="rn-fabric-card" onclick="selRnFabric(this,'silver');rnSetPremiumFinish('silver')">
+                  <div class="rn-fc-name" style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#A0A0A0;flex-shrink:0;display:inline-block"></span>Matte Silver</div>
+                  <div class="rn-fc-desc">Brackets · Hem Bar · Chain: Silver</div>
+                </button>
+                <button class="rn-fabric-card" onclick="selRnFabric(this,'white');rnSetPremiumFinish('white')">
+                  <div class="rn-fc-name" style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#F0F0F0;border:1px solid #ccc;flex-shrink:0;display:inline-block"></span>White</div>
+                  <div class="rn-fc-desc">Brackets · Hem Bar · Chain: White</div>
+                </button>
+              </div>
+
+              <!-- Auto-assigned color summary -->
+              <div id="rn-premium-summary" style="display:none;margin-top:12px;padding:10px 14px;background:var(--espresso-mid);border-radius:8px;font-size:12px;color:var(--cream)">
+                <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;font-weight:600">Auto-assigned colors</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px">
+                  <div>Brackets &amp; Clutch: <strong id="rn-ps-bracket">—</strong></div>
+                  <div>Hem Bar: <strong id="rn-ps-hem">—</strong></div>
+                  <div>Chain &amp; Tensioner: <strong id="rn-ps-chain">—</strong></div>
+                  <div id="rn-ps-motor-row" style="display:none">Motor Accessories: <strong id="rn-ps-motor">—</strong></div>
+                </div>
+              </div>
+
+              <!-- Charging port (only if Motorized + Rechargeable) -->
+              <div id="rn-charging-port-wrap" style="display:none;margin-top:14px">
+                <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:5px">Charging port color <span style="font-weight:400;font-size:10px;color:#888">(default: fabric-matched · optional override)</span></div>
+                <div class="opt-row" id="rn-grp-charging">
+                  <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-charging')">Fabric matched</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">White</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Cottage White</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Black</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Silver</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Nature</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Terra</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Sahara</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Chocolate</button>
+                </div>
+              </div>
+
+              <!-- Tensioner mandatory notice -->
+              <div style="margin-top:14px;padding:10px 14px;background:#EFF6FF;border:1px solid #93C5FD;border-radius:8px;display:flex;align-items:flex-start;gap:10px">
+                <span style="font-size:15px;flex-shrink:0">✓</span>
+                <div style="font-size:11px;color:#1E3A5F;line-height:1.6"><strong style="color:#1E40AF">Safety tensioner included</strong> — required by code. Color auto-matches chain from finish table. Not optional.</div>
               </div>
             </div>
 
-            <!-- 2b. Cord loop color (hidden until cord loop selected) -->
-            <div id="rn-cord-color-wrap" style="display:none;margin-bottom:14px">
-              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">2 — Cord loop color</div>
-              <div class="opt-row" id="rn-grp-cord-color">
-                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-cord-color')">White</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cord-color')">Ivory / Cottage White</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cord-color')">Black</button>
-              </div>
-              <div class="tooltip-note" style="margin-top:4px">Cord loop color options are limited vs chain — final selection confirmed at order.</div>
-            </div>
+            <!-- ── STANDARD HARDWARE (Fascia / Cassette / LightGuard) ── -->
+            <div id="rn-standard-hw" style="display:none">
+              <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#666;margin-bottom:6px">Standard Hardware — Fascia / Cassette / LightGuard systems</div>
 
-            <!-- 3. Safety tensioner — mandatory, no toggle -->
-            <div style="margin-bottom:14px;padding:10px 14px;background:#EFF6FF;border:1px solid #93C5FD;border-radius:8px;display:flex;align-items:flex-start;gap:10px">
-              <span style="font-size:16px;flex-shrink:0">✓</span>
-              <div>
-                <div style="font-size:12px;font-weight:600;color:#1E40AF;margin-bottom:2px">Safety tensioner included — required by code</div>
-                <div style="font-size:11px;color:#1E3A5F;line-height:1.6">All cord loop and chain systems include a safety tensioner device. This is mandatory for residential installations per WCMA/ANSI safety standards. Tensioner color matches chain or cord loop color.</div>
+              <!-- Control mechanism -->
+              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Control mechanism</div>
+              <div class="opt-row" id="rn-grp-control">
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-control');rnSetControl('chain')">Metal chain</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-control');rnSetControl('cord')">Cord loop (clutch)</button>
               </div>
-            </div>
+              <div id="rn-control-note" class="tooltip-note" style="margin-top:4px;margin-bottom:14px">Metal chain: standard. Cord loop (clutch): pairs with Continuous Cord Loop lift system.</div>
 
-            <!-- 4. End caps -->
-            <div style="margin-bottom:14px">
-              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">4 — End caps</div>
-              <div class="opt-row" id="rn-grp-endcap">
-                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-endcap')">Match hardware color</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-endcap')">Custom color</button>
+              <!-- Chain colors -->
+              <div id="rn-chain-color-wrap" style="margin-bottom:14px">
+                <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Chain color</div>
+                <div class="opt-row" id="rn-grp-chain-color">
+                  <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-chain-color')">White</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Cottage White</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Black</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Silver</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Nature</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Sahara</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Terra</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Chocolate</button>
+                </div>
               </div>
-            </div>
 
-            <!-- 5. Hardware & bracket color -->
-            <div>
-              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">5 — Hardware &amp; bracket color</div>
-              <div class="opt-row" id="rn-grp-hw-color">
-                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-hw-color')">White</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')">Cottage White</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')">Black</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')">Anodized Silver</button>
+              <!-- Cord loop colors -->
+              <div id="rn-cord-color-wrap" style="display:none;margin-bottom:14px">
+                <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Cord loop color</div>
+                <div class="opt-row" id="rn-grp-cord-color">
+                  <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-cord-color')">White</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-cord-color')">Ivory / Cottage White</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-cord-color')">Black</button>
+                </div>
               </div>
-              <div class="tooltip-note" style="margin-top:4px">Applies to brackets, clutch housing, and mounting hardware. Set independently from hem bar and chain/cord colors.</div>
+
+              <!-- Hardware / bracket color -->
+              <div style="margin-bottom:14px">
+                <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Hardware &amp; bracket color</div>
+                <div class="opt-row" id="rn-grp-hw-color">
+                  <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-hw-color')">White</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')">Cottage White</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')">Black</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')">Anodized Silver</button>
+                </div>
+              </div>
+
+              <!-- Tensioner mandatory notice -->
+              <div style="padding:10px 14px;background:#EFF6FF;border:1px solid #93C5FD;border-radius:8px;display:flex;align-items:flex-start;gap:10px">
+                <span style="font-size:15px;flex-shrink:0">✓</span>
+                <div style="font-size:11px;color:#1E3A5F;line-height:1.6"><strong style="color:#1E40AF">Safety tensioner included</strong> — required by code. Color matches chain/cord selection. Not optional.</div>
+              </div>
             </div>
           </div>
 
@@ -2086,6 +2140,37 @@ function rnSetLift(type) {
   rnUpdatePrice();
 }
 
+// ─── Premium hardware color mapping (Norman Soluna 2026 spec) ─
+const PREMIUM_FINISH_MAP = {
+  bronze: { bracket: 'Bronze',       hem: 'Bronze',       chain: 'Chocolate', motor: 'Black' },
+  black:  { bracket: 'Brushed Black', hem: 'Brushed Black', chain: 'Black',     motor: 'Black' },
+  brass:  { bracket: 'Brass',         hem: 'Brass',         chain: 'Brass',     motor: 'White' },
+  silver: { bracket: 'Matte Silver',  hem: 'Matte Silver',  chain: 'Silver',    motor: 'White' },
+  white:  { bracket: 'White',         hem: 'White',         chain: 'White',     motor: 'White' }
+};
+
+function rnSetPremiumFinish(finish) {
+  const m = PREMIUM_FINISH_MAP[finish];
+  if (!m) return;
+  document.getElementById('rn-ps-bracket').textContent = m.bracket;
+  document.getElementById('rn-ps-hem').textContent     = m.hem;
+  document.getElementById('rn-ps-chain').textContent   = m.chain + ' (tensioner matches)';
+  // Motor accessories row shown only if motorized
+  if (rnLiftType === 'motor') {
+    document.getElementById('rn-ps-motor-row').style.display = 'block';
+    document.getElementById('rn-ps-motor').textContent       = m.motor;
+  }
+  document.getElementById('rn-premium-summary').style.display = 'block';
+}
+
+// ─── rnSwitchHardwareMode ────────────────────────────────────
+// Open Roll → Premium Hardware / Fascia|Cassette|LightGuard → Standard Hardware
+function rnSwitchHardwareMode(mode) {
+  // mode: 'premium' or 'standard'
+  document.getElementById('rn-premium-hw').style.display  = mode === 'premium'  ? 'block' : 'none';
+  document.getElementById('rn-standard-hw').style.display = mode === 'standard' ? 'block' : 'none';
+}
+
 // ─── rnSetFasciaShape ────────────────────────────────────────
 // Curved = ALWAYS Fabric Wrapped (auto-select + disable Metal)
 // Square = Metal OR Fabric Wrapped (both enabled)
@@ -2160,7 +2245,10 @@ function rnSetHeadrail(type) {
   };
   const n = document.getElementById('rn-headrail-note');
   if (n) n.textContent = notes[type] || '';
-  // If LightGuard 360 is selected but headrail changes away from cassette → warn
+  // Premium Hardware only available with Open Roll
+  rnSwitchHardwareMode(type === 'open' ? 'premium' : 'standard');
+
+  // If LightGuard 360 is selected but headrail changes away from cassette → deselect LG360
   const lgBtn = document.querySelector('#rn-grp-lg .opt-btn.sel');
   if (lgBtn && lgBtn.textContent.includes('360') && type !== 'cassette') {
     lgBtn.classList.remove('sel');
@@ -2186,17 +2274,17 @@ function rnSetControl(type) {
 function rnSetLG(type) {
   const note = document.getElementById('rn-lg-note');
   if (note) note.style.display = type === '360' ? 'block' : 'none';
-  // LightGuard 360 requires cassette — auto-switch headrail if needed
   if (type === '360') {
+    // LightGuard 360 requires Cassette — auto-switch headrail
     const hrBtn = document.querySelector('#rn-grp-headrail .opt-btn.sel');
-    const isOpen = hrBtn && !hrBtn.textContent.includes('Cassette');
-    if (isOpen) {
-      // Auto-select cassette
+    if (hrBtn && !hrBtn.textContent.includes('Cassette')) {
       document.querySelectorAll('#rn-grp-headrail .opt-btn').forEach(function(b) {
         b.classList.remove('sel');
         if (b.textContent.includes('Cassette')) { b.classList.add('sel'); rnSetHeadrail('cassette'); }
       });
     }
+    // LightGuard 360 → Standard Hardware (not Premium)
+    rnSwitchHardwareMode('standard');
   }
   rnRunValidation();
 }
@@ -2368,7 +2456,12 @@ function rnSubmitForm() {
     hrDetail = '\n  Cassette type:  ' + g('rn-grp-cassette');
   }
 
-  // Control detail
+  // Hardware mode: premium (open roll) or standard (fascia/cassette)
+  const isPremium = document.getElementById('rn-premium-hw').style.display !== 'none';
+  const premiumFinishBtn = document.querySelector('#rn-grp-premium-finish .rn-fc-sel .rn-fc-name');
+  const premiumFinish = isPremium && premiumFinishBtn ? premiumFinishBtn.textContent.trim() : null;
+
+  // Control detail (standard only)
   const ctrlType = g('rn-grp-control');
   const ctrlColor = ctrlType.includes('chain') || ctrlType.includes('Metal')
     ? g('rn-grp-chain-color')
@@ -2395,11 +2488,18 @@ function rnSubmitForm() {
     'Hem bar type:   ' + g('rn-grp-hem-type')  + '\n' +
     'Hem bar color:  Fabric Matched (auto)\n\n' +
     '── HARDWARE & COLORS ────────────────────\n' +
-    'Control:        ' + ctrlType              + '\n' +
-    'Control color:  ' + ctrlColor             + '\n' +
-    'Safety tensioner: Included (required by code)\n' +
-    'End caps:       ' + g('rn-grp-endcap')    + '\n' +
-    'Hardware color: ' + g('rn-grp-hw-color')  + '\n\n' +
+    (isPremium
+      ? 'Hardware mode:  Premium (Open Roll — no mix & match)\n' +
+        'Premium finish: ' + (premiumFinish || '—') + '\n' +
+        '  Brackets/Clutch: ' + (document.getElementById('rn-ps-bracket')||{}).textContent + '\n' +
+        '  Hem Bar:         ' + (document.getElementById('rn-ps-hem')||{}).textContent + '\n' +
+        '  Chain/Tensioner: ' + (document.getElementById('rn-ps-chain')||{}).textContent + '\n'
+      : 'Hardware mode:  Standard (Fascia/Cassette/LightGuard)\n' +
+        'Control:        ' + ctrlType + '\n' +
+        'Control color:  ' + ctrlColor + '\n' +
+        'Hardware color: ' + g('rn-grp-hw-color') + '\n'
+    ) +
+    'Safety tensioner: Included (required by code)\n\n' +
     'Delivery:       ' + delivery             + '\n\n' +
     'Notes:\n' + (notes || '(none)');
 
