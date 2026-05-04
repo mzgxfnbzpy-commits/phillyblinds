@@ -969,6 +969,23 @@
           </div>
         </div>
 
+        <!-- Step 3c: Fabric & color — flat Collection–Color grid -->
+        <div class="step-block" id="fabric-color-block" style="display:none">
+          <div class="step-label">Step 3c</div>
+          <div class="step-title">Fabric &amp; color</div>
+
+          <!-- Roller: type chosen in Step 2 → flat grid -->
+          <div id="roller-fabric-wrap">
+            <div id="roller-fabric-summary" style="font-size:11px;color:#888;margin-bottom:10px;line-height:1.5"></div>
+            <div id="roller-fabric-grid"></div>
+          </div>
+
+          <!-- Cellular: type chosen via fabric type buttons above → flat grid -->
+          <div id="cell-fabric-wrap" style="display:none">
+            <div id="cell-fabric-summary" style="font-size:11px;color:#888;margin-bottom:10px;line-height:1.5"></div>
+            <div id="cell-fabric-grid"></div>
+          </div>
+        </div>
 
         <!-- Step D: Motorization -->
         <div class="step-block">
@@ -1593,9 +1610,17 @@ function configureForProduct(productId) {
     productId === 'woven' ? 'block' : 'none';
   document.getElementById('roller-hardware-opts').style.display =
     productId === 'roller' ? 'block' : 'none';
+  document.getElementById('fabric-color-block').style.display =
+    (productId === 'roller' || productId === 'cellular') ? 'block' : 'none';
+  const rcw = document.getElementById('roller-fabric-wrap');
+  const ccw = document.getElementById('cell-fabric-wrap');
   if (productId === 'roller') {
+    if (rcw) rcw.style.display = 'block';
+    if (ccw) ccw.style.display = 'none';
     renderFlatFabricGrid('roller');
   } else if (productId === 'cellular') {
+    if (rcw) rcw.style.display = 'none';
+    if (ccw) ccw.style.display = 'block';
     renderFlatFabricGrid('cell');
   }
   // Always reset chain-opts when switching products
