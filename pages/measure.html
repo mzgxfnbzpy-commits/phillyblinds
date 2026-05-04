@@ -850,14 +850,14 @@
 
         <div class="diagram-box">
           <!--
-            SVG: Drapery Measuring Diagram
-            ViewBox 360 x 285 — room with ceiling/floor bars, left/right walls,
-            centered window frame. Six gold measurement arrows labeled A–F:
-            A = frame-to-frame outer width, B = frame-to-floor height,
-            C = left side clearance, D = right side clearance,
-            E = above-frame to ceiling, F = ceiling-to-floor height.
+            SVG: Drapery Clearance Diagram (simplified)
+            ViewBox 360 x 240 — ceiling bar, left/right walls, window frame.
+            Three arrows only: left clearance (C), right clearance (D),
+            above-frame clearance (E). Dashed guide lines drop from the
+            outside frame edges to show exactly where each arrow starts.
+            Arrows sit at frame mid-height, not near the floor.
           -->
-          <svg width="340" height="268" viewBox="0 0 360 285" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Drapery measuring diagram showing 6 key dimensions: frame width (A), frame-to-floor height (B), left clearance (C), right clearance (D), above-frame clearance (E), and ceiling-to-floor height (F)">
+          <svg width="340" height="226" viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Drapery clearance diagram: left side clearance from outside left edge of frame to wall, right side clearance from outside right edge of frame to wall, above-frame clearance from outside top edge of frame to ceiling">
 
             <defs>
               <marker id="dr-al" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -875,109 +875,91 @@
             </defs>
 
             <!-- Room background -->
-            <rect x="0" y="0" width="360" height="285" fill="#F0EBE0"/>
+            <rect x="0" y="0" width="360" height="240" fill="#F0EBE0"/>
 
             <!-- Ceiling bar -->
-            <rect x="0" y="0" width="360" height="20" fill="#8B7355"/>
-            <text x="180" y="13" text-anchor="middle" fill="#F5ECD7" font-size="8" font-family="system-ui,sans-serif" font-weight="500">CEILING</text>
-
-            <!-- Floor bar -->
-            <rect x="0" y="265" width="360" height="20" fill="#8B7355"/>
-            <text x="180" y="278" text-anchor="middle" fill="#F5ECD7" font-size="8" font-family="system-ui,sans-serif" font-weight="500">FLOOR</text>
+            <rect x="0" y="0" width="360" height="16" fill="#8B7355"/>
+            <text x="180" y="10.5" text-anchor="middle" fill="#F5ECD7" font-size="7.5" font-family="system-ui,sans-serif" font-weight="500">CEILING</text>
 
             <!-- Left wall -->
-            <rect x="0" y="20" width="20" height="245" fill="#8B7355"/>
+            <rect x="0" y="16" width="18" height="224" fill="#8B7355"/>
 
             <!-- Right wall -->
-            <rect x="340" y="20" width="20" height="245" fill="#8B7355"/>
+            <rect x="342" y="16" width="18" height="224" fill="#8B7355"/>
 
             <!-- Room interior -->
-            <rect x="20" y="20" width="320" height="245" fill="#F0EBE0"/>
+            <rect x="18" y="16" width="324" height="224" fill="#F0EBE0"/>
 
-            <!-- Window frame (outer casing) -->
-            <rect x="116" y="66" width="128" height="150" rx="2" fill="#8B7355"/>
+            <!-- Window frame (outer casing) — outside edges: left=120 right=240 top=58 -->
+            <rect x="120" y="58" width="120" height="152" rx="2" fill="#8B7355"/>
             <!-- Window sill -->
-            <rect x="109" y="214" width="142" height="7" rx="1" fill="#6B5535"/>
+            <rect x="112" y="208" width="136" height="7" rx="1" fill="#6B5535"/>
 
             <!-- Glass area -->
-            <rect x="128" y="78" width="104" height="126" rx="1" fill="#D9EEF7"/>
+            <rect x="132" y="70" width="96" height="126" rx="1" fill="#D9EEF7"/>
             <!-- Sash lines -->
-            <line x1="128" y1="141" x2="232" y2="141" stroke="#B0C8D8" stroke-width="1"/>
-            <line x1="180" y1="78" x2="180" y2="204" stroke="#B0C8D8" stroke-width="0.7"/>
+            <line x1="132" y1="133" x2="228" y2="133" stroke="#B0C8D8" stroke-width="1"/>
+            <line x1="180" y1="70" x2="180" y2="196" stroke="#B0C8D8" stroke-width="0.7"/>
             <!-- Glass glare -->
-            <line x1="138" y1="88" x2="153" y2="103" stroke="#fff" stroke-width="2" opacity="0.5"/>
-            <line x1="144" y1="88" x2="159" y2="103" stroke="#fff" stroke-width="1" opacity="0.25"/>
+            <line x1="142" y1="80" x2="157" y2="95" stroke="#fff" stroke-width="2" opacity="0.5"/>
 
-            <!-- ── A: Frame-to-frame outside width ── -->
-            <line x1="116" y1="50" x2="244" y2="50" stroke="#C8973F" stroke-width="1.8" marker-start="url(#dr-al)" marker-end="url(#dr-ar)"/>
-            <line x1="116" y1="44" x2="116" y2="56" stroke="#C8973F" stroke-width="1.5"/>
-            <line x1="244" y1="44" x2="244" y2="56" stroke="#C8973F" stroke-width="1.5"/>
-            <rect x="166" y="42" width="28" height="16" rx="3" fill="#1C1510"/>
-            <text x="180" y="53.5" text-anchor="middle" fill="#F5ECD7" font-size="10" font-weight="700" font-family="system-ui,sans-serif">A</text>
+            <!--
+              Dashed guide lines drop from the outside left and right frame edges
+              down to the arrow level (y=134), anchoring each arrow to the frame edge.
+            -->
+            <!-- Left edge guide: x=120, from frame top (y=58) to arrow level (y=134) -->
+            <line x1="120" y1="58" x2="120" y2="134" stroke="#C8973F" stroke-width="1" stroke-dasharray="4 3" opacity="0.55"/>
+            <!-- Right edge guide: x=240, same -->
+            <line x1="240" y1="58" x2="240" y2="134" stroke="#C8973F" stroke-width="1" stroke-dasharray="4 3" opacity="0.55"/>
 
-            <!-- ── B: Frame-to-floor height ── -->
-            <line x1="258" y1="66" x2="258" y2="265" stroke="#C8973F" stroke-width="1.8" marker-start="url(#dr-au)" marker-end="url(#dr-ad)"/>
-            <line x1="252" y1="66" x2="264" y2="66" stroke="#C8973F" stroke-width="1.5"/>
-            <line x1="252" y1="265" x2="264" y2="265" stroke="#C8973F" stroke-width="1.5"/>
-            <rect x="244" y="157" width="28" height="16" rx="3" fill="#1C1510"/>
-            <text x="258" y="168.5" text-anchor="middle" fill="#F5ECD7" font-size="10" font-weight="700" font-family="system-ui,sans-serif">B</text>
+            <!-- ── C: Left side clearance ── -->
+            <!-- From outside left edge of frame (x=120) to left wall (x=18), at mid-frame height -->
+            <line x1="18" y1="134" x2="120" y2="134" stroke="#C8973F" stroke-width="1.8" marker-start="url(#dr-al)" marker-end="url(#dr-ar)"/>
+            <line x1="18" y1="128" x2="18" y2="140" stroke="#C8973F" stroke-width="1.5"/>
+            <line x1="120" y1="128" x2="120" y2="140" stroke="#C8973F" stroke-width="1.5"/>
+            <rect x="55" y="126" width="28" height="16" rx="3" fill="#1C1510"/>
+            <text x="69" y="137.5" text-anchor="middle" fill="#F5ECD7" font-size="10" font-weight="700" font-family="system-ui,sans-serif">C</text>
 
-            <!-- ── C: Left side clearance (wall to frame left edge) ── -->
-            <line x1="20" y1="245" x2="116" y2="245" stroke="#C8973F" stroke-width="1.8" marker-start="url(#dr-al)" marker-end="url(#dr-ar)"/>
-            <line x1="20" y1="239" x2="20" y2="251" stroke="#C8973F" stroke-width="1.5"/>
-            <line x1="116" y1="239" x2="116" y2="251" stroke="#C8973F" stroke-width="1.5"/>
-            <rect x="54" y="237" width="28" height="16" rx="3" fill="#1C1510"/>
-            <text x="68" y="248.5" text-anchor="middle" fill="#F5ECD7" font-size="10" font-weight="700" font-family="system-ui,sans-serif">C</text>
+            <!-- ── D: Right side clearance ── -->
+            <!-- From outside right edge of frame (x=240) to right wall (x=342), at mid-frame height -->
+            <line x1="240" y1="134" x2="342" y2="134" stroke="#C8973F" stroke-width="1.8" marker-start="url(#dr-al)" marker-end="url(#dr-ar)"/>
+            <line x1="240" y1="128" x2="240" y2="140" stroke="#C8973F" stroke-width="1.5"/>
+            <line x1="342" y1="128" x2="342" y2="140" stroke="#C8973F" stroke-width="1.5"/>
+            <rect x="277" y="126" width="28" height="16" rx="3" fill="#1C1510"/>
+            <text x="291" y="137.5" text-anchor="middle" fill="#F5ECD7" font-size="10" font-weight="700" font-family="system-ui,sans-serif">D</text>
 
-            <!-- ── D: Right side clearance (frame right edge to wall) ── -->
-            <line x1="244" y1="245" x2="340" y2="245" stroke="#C8973F" stroke-width="1.8" marker-start="url(#dr-al)" marker-end="url(#dr-ar)"/>
-            <line x1="244" y1="239" x2="244" y2="251" stroke="#C8973F" stroke-width="1.5"/>
-            <line x1="340" y1="239" x2="340" y2="251" stroke="#C8973F" stroke-width="1.5"/>
-            <rect x="278" y="237" width="28" height="16" rx="3" fill="#1C1510"/>
-            <text x="292" y="248.5" text-anchor="middle" fill="#F5ECD7" font-size="10" font-weight="700" font-family="system-ui,sans-serif">D</text>
+            <!-- ── E: Above-frame clearance ── -->
+            <!-- From ceiling (y=16) down to outside top edge of frame (y=58), centred on frame -->
+            <line x1="180" y1="16" x2="180" y2="58" stroke="#C8973F" stroke-width="1.8" marker-start="url(#dr-au)" marker-end="url(#dr-ad)"/>
+            <line x1="174" y1="16" x2="186" y2="16" stroke="#C8973F" stroke-width="1.5"/>
+            <line x1="174" y1="58" x2="186" y2="58" stroke="#C8973F" stroke-width="1.5"/>
+            <rect x="166" y="29" width="28" height="16" rx="3" fill="#1C1510"/>
+            <text x="180" y="40.5" text-anchor="middle" fill="#F5ECD7" font-size="10" font-weight="700" font-family="system-ui,sans-serif">E</text>
 
-            <!-- ── E: Above-frame clearance (top of frame to ceiling) ── -->
-            <line x1="90" y1="20" x2="90" y2="66" stroke="#C8973F" stroke-width="1.8" marker-start="url(#dr-au)" marker-end="url(#dr-ad)"/>
-            <line x1="84" y1="20" x2="96" y2="20" stroke="#C8973F" stroke-width="1.5"/>
-            <line x1="84" y1="66" x2="96" y2="66" stroke="#C8973F" stroke-width="1.5"/>
-            <rect x="76" y="35" width="28" height="16" rx="3" fill="#1C1510"/>
-            <text x="90" y="46.5" text-anchor="middle" fill="#F5ECD7" font-size="10" font-weight="700" font-family="system-ui,sans-serif">E</text>
-
-            <!-- ── F: Ceiling-to-floor full room height (overlaid on left wall) ── -->
-            <line x1="10" y1="20" x2="10" y2="265" stroke="#C8973F" stroke-width="1.8" marker-start="url(#dr-au)" marker-end="url(#dr-ad)"/>
-            <line x1="4" y1="20" x2="16" y2="20" stroke="#C8973F" stroke-width="1.5"/>
-            <line x1="4" y1="265" x2="16" y2="265" stroke="#C8973F" stroke-width="1.5"/>
-            <!-- F label placed just inside the room, right of the left wall -->
-            <rect x="20" y="134" width="28" height="16" rx="3" fill="#1C1510"/>
-            <text x="34" y="145.5" text-anchor="middle" fill="#F5ECD7" font-size="10" font-weight="700" font-family="system-ui,sans-serif">F</text>
+            <!-- Caption -->
+            <text x="180" y="232" text-anchor="middle" fill="#7A6A58" font-size="9" font-family="system-ui,sans-serif">Arrows start at the outside edge of the frame</text>
 
           </svg>
         </div><!-- /diagram-box -->
 
         <div class="diagram-notes">
-          <div style="font-size:12px;font-weight:600;color:#111;margin-bottom:12px">What each letter means:</div>
+          <div style="font-size:12px;font-weight:600;color:#111;margin-bottom:12px">Three key clearances to measure:</div>
           <ul style="list-style:none;padding:0;margin:0 0 18px">
-            <li style="display:flex;gap:9px;align-items:flex-start;margin-bottom:10px;font-size:12px;color:#444;line-height:1.55">
-              <span class="key-chip">A</span> <strong>Frame-to-frame width</strong> &mdash; full outer width of the window or door frame
+            <li style="display:flex;gap:9px;align-items:flex-start;margin-bottom:12px;font-size:12px;color:#444;line-height:1.6">
+              <span class="key-chip">C</span>
+              <div><strong>Left side clearance</strong> &mdash; from the outside left edge of the frame to the nearest wall, TV, furniture, or cabinet on that side</div>
             </li>
-            <li style="display:flex;gap:9px;align-items:flex-start;margin-bottom:10px;font-size:12px;color:#444;line-height:1.55">
-              <span class="key-chip">B</span> <strong>Frame-to-floor height</strong> &mdash; top of frame straight down to the floor
+            <li style="display:flex;gap:9px;align-items:flex-start;margin-bottom:12px;font-size:12px;color:#444;line-height:1.6">
+              <span class="key-chip">D</span>
+              <div><strong>Right side clearance</strong> &mdash; from the outside right edge of the frame to the nearest wall, TV, furniture, or cabinet on that side</div>
             </li>
-            <li style="display:flex;gap:9px;align-items:flex-start;margin-bottom:10px;font-size:12px;color:#444;line-height:1.55">
-              <span class="key-chip">C</span> <strong>Left side clearance</strong> &mdash; left frame edge to nearest wall, TV, furniture, or cabinet
-            </li>
-            <li style="display:flex;gap:9px;align-items:flex-start;margin-bottom:10px;font-size:12px;color:#444;line-height:1.55">
-              <span class="key-chip">D</span> <strong>Right side clearance</strong> &mdash; right frame edge to nearest wall, TV, furniture, or cabinet
-            </li>
-            <li style="display:flex;gap:9px;align-items:flex-start;margin-bottom:10px;font-size:12px;color:#444;line-height:1.55">
-              <span class="key-chip">E</span> <strong>Above-frame clearance</strong> &mdash; top of frame up to ceiling or crown molding
-            </li>
-            <li style="display:flex;gap:9px;align-items:flex-start;margin-bottom:10px;font-size:12px;color:#444;line-height:1.55">
-              <span class="key-chip">F</span> <strong>Ceiling-to-floor height</strong> &mdash; full room height, ceiling to floor
+            <li style="display:flex;gap:9px;align-items:flex-start;margin-bottom:12px;font-size:12px;color:#444;line-height:1.6">
+              <span class="key-chip">E</span>
+              <div><strong>Above-frame clearance</strong> &mdash; from the outside top edge of the frame up to the ceiling or crown molding</div>
             </li>
           </ul>
           <div style="font-size:11px;color:#888;line-height:1.7;background:#fff;border:1px solid #E8DCC8;border-radius:8px;padding:10px 12px">
-            <strong style="color:#555">Tip:</strong> Send these 6 numbers plus clear photos and we handle all the drapery math &mdash; rod height, stack space, fullness, and panel sizes.
+            <strong style="color:#555">Also measure:</strong> frame-to-frame outside width, frame-to-floor height, and ceiling-to-floor height &mdash; all covered in the step list below.
           </div>
         </div><!-- /diagram-notes -->
 
