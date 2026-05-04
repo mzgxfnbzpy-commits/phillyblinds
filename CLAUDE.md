@@ -95,24 +95,25 @@ Every page MUST include:
 | index.html | Homepage | Full design, all sections |
 | pages/gallery.html | Gallery | 7 tabs, 75+ photos, 14 videos |
 | pages/consult.html | Consultation | 3 paths, booking forms |
-| pages/measure.html | Measure guide (shades) | 5 tabs, SVG diagrams, all developer handoff notes |
+| pages/measure.html | Measure guide (shades) | 5 tabs, SVG diagrams |
 | pages/about.html | About | Family story, team, services, service areas |
-| pages/fabric-calculator.html | Fabric calculator | Drapery, Roman, Cornice — 4 bugs fixed from ChatGPT version |
-| pages/shades.html | All shades & blinds | Per-product configurator, correct specs from catalogs |
-| pages/roman-shades.html | Roman shades | 3 styles, fabric paths, instant pricing, correct size limits |
-| pages/drapery.html | Custom drapery & hardware | Quote-only, 4 pleat styles, hardware brands |
-| pages/shutters.html | Plantation shutters | Quote-only, 4 Norman shutter lines, louver/frame options |
-| pages/catalogs.html | Spec catalogs download | 32 PDFs, Norman/Wallace/Woven/Kirsch, pricing whited out |
-| pages/product-specs.html | Product specifications | 9 tabs, 20+ products with full specs from real catalogs |
-| pages/soluna-roller-shades.html | Norman Soluna detail page | Full product deep-dive template |
-| css/global.css | Shared styles | Complete |
-| js/shared.js | Shared nav/footer | Renders nav and footer on all pages |
+| pages/fabric-calculator.html | Fabric calculator | Drapery, Roman, Cornice |
+| pages/shades.html | All shades & blinds | Per-product configurator; roller has fascia/cassette/chain/endcap options; cellular has lift direction (BU/TDBU) + operating system separate; fabric/color placeholder; all quote forms → mailto; delivery section on every form |
+| pages/roman-shades.html | Custom Roman Shades | 3 styles, fabric paths, instant pricing; renamed to Custom Roman Shades; mailto + delivery |
+| pages/drapery.html | Custom drapery & hardware | 6 pleat styles, hardware selector (type/brand/diameter/finish/finial/rings), motorization → notes only; mailto + delivery |
+| pages/shutters.html | Plantation shutters | 4 Norman shutter lines, louver/frame options; mailto + delivery |
+| pages/catalogs.html | Spec catalogs download | 32 PDFs across Norman/Wallace/Woven/Kirsch/hardware brands, pricing whited out |
+| pages/product-specs.html | Product specifications | 9 tabs, 20+ products with full specs |
+| pages/soluna-roller-shades.html | Norman Soluna detail page | Full product deep-dive |
+| css/global.css | Shared styles | Delivery section styles; identity bar styles |
+| js/shared.js | Shared nav/footer | Identity bar (Michael J. Healy Installations LLC + Philly Blinds · Blindznation); footer shows both brands + LLC name |
 
 ### ❌ STILL NEEDED
-| File | Page | Priority |
-|------|------|----------|
-| pages/measure-shutters.html | Measure guide (shutters) | 🟡 MEDIUM — 3W×3H rules, different from shades |
-| pages/measure-drapes.html | Measure guide (drapes) | 🟡 MEDIUM |
+| File | Page | Priority | Notes |
+|------|------|----------|-------|
+| pages/shades.html | Fabric/color picker | 🔴 HIGH — placeholder is live; wire in real swatches once uploaded | Add as a selector step for roller and cellular |
+| pages/measure-shutters.html | Measure guide (shutters) | 🟡 MEDIUM | 3W×3H rules, different from shades |
+| pages/measure-drapes.html | Measure guide (drapes) | 🟡 MEDIUM | Stack-back, return, rod height rules |
 
 ---
 
@@ -227,4 +228,5 @@ Update it when completing tasks — mark items done.
 ---
 
 *This file is the single source of truth. If you change anything on the project, update this file.*
-*Last agent to work on this: Claude.ai chat — May 2026*
+*Last agent to work on this: Claude Code — May 3, 2026*
+*Last session summary: Header redesign (identity bar, LLC + both brands); motorization rules (Norman=Norman only, Custom=any brand); delivery/pickup section on all quote forms; mailto submit on all forms to blindznation@gmail.com; drapery motor → notes only; roller hardware options (fascia, chain, end caps); cellular lift direction split from operating system; fabric/color placeholder for roller + cellular.*
