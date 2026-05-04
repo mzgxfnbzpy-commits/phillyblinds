@@ -885,6 +885,7 @@
               <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('solus')">Solus</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('woven-breeze')">Woven Breeze</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('woven-windsong')">Woven Windsong</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('dn')">Day &amp; Night</button>
             </div>
             <div class="tooltip-note" id="fabric-cell-note">Light Filtering is available in all 6 cell sizes.</div>
           </div>
@@ -1714,6 +1715,7 @@ const CELL_COMPAT = {
   'solus':         [    3,5],      // 3/4S, 1¼S only
   'woven-breeze':  [    3,5],      // 3/4S, 1¼S only
   'woven-windsong':[    3,5],      // 3/4S, 1¼S only
+  'dn':            [  1,3,5],      // Day & Night: 9/16S, 3/4S, 1¼S
 };
 const FABRIC_NOTES = {
   'lf':            'Light Filtering is available in all 6 cell sizes.',
@@ -1727,6 +1729,7 @@ const FABRIC_NOTES = {
   'solus':         'Solus is available in 3⁄4″S and 1 1⁄4″S only.',
   'woven-breeze':  'Woven Breeze: available in 3⁄4″S and 1 1⁄4″S only. Delicate fibers — trim any fraying with fabric scissors.',
   'woven-windsong':'Woven Windsong: available in 3⁄4″S and 1 1⁄4″S only. Delicate fibers — trim any fraying with fabric scissors.',
+  'dn':            'Day &amp; Night uses two fabrics (top + bottom) on one shade. Available in 9⁄16″S, 3⁄4″S, and 1 1⁄4″S. Select a fabric pairing below.',
 };
 
 function filterCellSizes(fabric) {
@@ -2275,6 +2278,49 @@ const CELL_COLLECTIONS = {
     {name:'SoftWeave BO', colors:['Cotton','Linen','Flax','Oatmeal','Driftwood','Pebble','Charcoal']},
     {name:'Insulate BO',  colors:['White','Soft White','Ivory','Beige','Gray','Charcoal','Black']},
     {name:'Premium BO',   colors:['White','Ivory','Beige','Gray','Charcoal','Black']}
+  ],
+  'sheer': [
+    {name:'Sheer',             colors:[]}
+  ],
+  'designer-lf': [
+    {name:'Rustica',           colors:[]},
+    {name:'Silverbrook',       colors:[]},
+    {name:'Designer LF',       colors:[]}
+  ],
+  'designer-rd': [
+    {name:'Designer RD',       colors:[]}
+  ],
+  'ashton': [
+    {name:'Ashton',            colors:[]}
+  ],
+  'fr': [
+    {name:'FR Light Filtering',colors:[]},
+    {name:'FR Room Darkening', colors:[]}
+  ],
+  'fr-essentials': [
+    {name:'FR Essentials',     colors:[]}
+  ],
+  'solus': [
+    {name:'Solus',             colors:[]}
+  ],
+  'woven-breeze': [
+    {name:'Woven Breeze',      colors:[]}
+  ],
+  'woven-windsong': [
+    {name:'Woven Windsong',    colors:[]}
+  ],
+  'dn': [
+    {name:'Sheer + LF',        colors:[]},
+    {name:'Sheer + RD',        colors:[]},
+    {name:'Sheer + Solus',     colors:[]},
+    {name:'LF + RD',           colors:[]},
+    {name:'LF + LF',           colors:[]},
+    {name:'LF + Solus',        colors:[]},
+    {name:'Woven Windsong + LF',   colors:[]},
+    {name:'Woven Windsong + RD',   colors:[]},
+    {name:'Woven Windsong + Solus',colors:[]},
+    {name:'Designer LF + LF', colors:[]},
+    {name:'Designer LF + RD', colors:[]}
   ]
 };
 
