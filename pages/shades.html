@@ -1046,33 +1046,67 @@
 
     <!-- ── PHILLY BLINDS CUSTOM FORM (roller only) ────────────── -->
     <div id="brand-pb-content" style="display:none">
+      <!-- Intro -->
       <div style="background:var(--gold-mid);border:1px solid #E8DCC8;border-radius:10px;padding:14px 18px;margin-bottom:20px">
-        <div style="font-size:12px;font-weight:600;color:#5C3D0A;margin-bottom:4px">Philly Blinds Custom — Roller Shades</div>
-        <div style="font-size:12px;color:#5C3D0A;line-height:1.6">We fabricate custom roller shades in-house. Bring your own fabric or choose from our collection. Pricing quoted after we review your specs.</div>
+        <div style="font-size:12px;font-weight:600;color:#5C3D0A;margin-bottom:4px">Philly Blinds Custom — Motorized Roller Shades</div>
+        <div style="font-size:12px;color:#5C3D0A;line-height:1.6">We custom fabricate and install motorized roller shades in-house. All units are motorized with your choice of control brand. Bring your own fabric or choose from our library — pricing quoted after we review your specs.</div>
       </div>
+
+      <!-- Size -->
       <div class="dim-row">
         <div class="form-group"><label>Width (inches)</label><input type="number" id="pb-width" min="12" max="144" step="0.5" placeholder="e.g. 36"></div>
         <div class="form-group"><label>Height (inches)</label><input type="number" id="pb-height" min="12" max="132" step="0.5" placeholder="e.g. 72"></div>
       </div>
+
+      <!-- Mount -->
       <div class="step-title" style="font-size:12px;margin-bottom:8px">Mount type</div>
       <div class="opt-row" id="pb-grp-mount">
         <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-mount')">Inside mount</button>
         <button class="opt-btn" onclick="selOpt(this,'pb-grp-mount')">Outside mount</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-mount')">Ceiling mount</button>
       </div>
-      <div class="step-title" style="font-size:12px;margin:14px 0 8px">Light control</div>
+
+      <!-- Light control -->
+      <div class="step-title" style="font-size:12px;margin:14px 0 8px">Light control goal</div>
       <div class="opt-row" id="pb-grp-light">
         <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-light')">Light filtering</button>
         <button class="opt-btn" onclick="selOpt(this,'pb-grp-light')">Room darkening</button>
         <button class="opt-btn" onclick="selOpt(this,'pb-grp-light')">Blackout</button>
         <button class="opt-btn" onclick="selOpt(this,'pb-grp-light')">Solar screen</button>
       </div>
+
+      <!-- Fascia (Fabric Wrapped or Metal only for custom fab) -->
+      <div class="step-title" style="font-size:12px;margin:14px 0 8px">Fascia type</div>
+      <div class="opt-row" id="pb-grp-fascia">
+        <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-fascia')">Fabric Wrapped fascia</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-fascia')">Metal fascia</button>
+      </div>
+      <div class="tooltip-note" style="margin-top:4px">Fabric Wrapped: fabric covers the headrail for a seamless look. Metal: aluminum fascia in White, Cottage White, Black, or Anodized Silver — confirmed at order.</div>
+
+      <!-- Motorization — always on, choose brand -->
+      <div style="margin-top:14px;padding:12px 14px;background:var(--espresso-mid);border-radius:8px">
+        <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Motorization — included on all units</div>
+        <div style="font-size:12px;font-weight:500;color:var(--cream);margin-bottom:6px">Motor brand preference</div>
+        <div class="opt-row" id="pb-grp-motor">
+          <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-motor')">Lutron Serena</button>
+          <button class="opt-btn" onclick="selOpt(this,'pb-grp-motor')">Somfy</button>
+          <button class="opt-btn" onclick="selOpt(this,'pb-grp-motor')">Automate</button>
+          <button class="opt-btn" onclick="selOpt(this,'pb-grp-motor')">Rollease Acmeda</button>
+          <button class="opt-btn" onclick="selOpt(this,'pb-grp-motor')">No preference</button>
+        </div>
+        <div style="font-size:11px;color:var(--text-dark);margin-top:6px;line-height:1.6">All motors are app &amp; voice control compatible. Battery or hardwired — confirmed at measurement visit. Safety tensioner always included for cord loop systems.</div>
+      </div>
+
+      <!-- Fabric sourcing -->
       <div class="step-title" style="font-size:12px;margin:14px 0 8px">Fabric</div>
       <div class="opt-row" id="pb-grp-fabric">
-        <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-fabric')">You supply fabric</button>
-        <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric')">We supply fabric</button>
+        <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-fabric')">We supply fabric</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric')">You supply fabric</button>
         <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric')">Not sure — consult me</button>
       </div>
-      <div class="form-group" style="margin-top:14px"><label>Fabric notes / description</label><textarea id="pb-fabric-notes" placeholder="e.g. Sunbrella Linen Chestnut, 54″ wide — or describe what you're looking for"></textarea></div>
+      <div class="form-group" style="margin-top:10px"><label>Fabric notes / description</label><textarea id="pb-fabric-notes" placeholder="e.g. prefer neutral linen, blackout needed in bedroom, open to fabric recommendations"></textarea></div>
+
+      <!-- Contact + Delivery -->
       <hr class="price-divider" style="margin:18px 0">
       <div class="form-row">
         <div class="form-group"><label>Your name *</label><input type="text" id="pb-name" placeholder="Jane Smith"></div>
@@ -1085,18 +1119,13 @@
           <button class="opt-btn sel" onclick="selOpt(this,'grp-del-pb');document.getElementById('del-pb-s').style.display='block';document.getElementById('del-pb-p').style.display='none'">Ship to me</button>
           <button class="opt-btn" onclick="selOpt(this,'grp-del-pb');document.getElementById('del-pb-s').style.display='none';document.getElementById('del-pb-p').style.display='block'">I'll pick up</button>
         </div>
-        <div id="del-pb-s" class="delivery-note">
-          Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.
-          <div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately in your quote.</div>
-        </div>
-        <div id="del-pb-p" class="delivery-note" style="display:none">
-          Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.
-        </div>
+        <div id="del-pb-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately.</div></div>
+        <div id="del-pb-p" class="delivery-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.</div>
       </div>
       <button class="btn-gold" onclick="submitPBForm()" style="width:100%;padding:13px;margin-top:4px">Send custom fabrication request &rarr;</button>
       <div class="success-state" id="pb-success">
         <h3>Request received!</h3>
-        <p>We'll follow up within a few hours. For anything urgent: <strong>(609) 742-1720</strong> — available 24/7.</p>
+        <p>We'll follow up within a few hours with fabric options and a quote. Call <strong>(609) 742-1720</strong> for anything urgent — available 24/7.</p>
       </div>
     </div><!-- /brand-pb-content -->
 
@@ -1802,10 +1831,11 @@ function submitShadeForm() {
   // Roller hardware extras
   const isRoller   = currentProduct === 'roller';
   const isCellular = currentProduct === 'cellular';
-  const fascia      = isRoller   ? '\nFascia:       ' + getOpt('grp-fascia')   : '';
-  const endcap      = isRoller   ? '\nEnd caps:     ' + getOpt('grp-endcap')  : '';
-  const chainType   = isRoller   ? '\nChain type:   ' + getOpt('grp-chain-type')   : '';
-  const chainLen    = isRoller   ? '\nChain length: ' + getOpt('grp-chain-length')  : '';
+  // Note: Norman roller uses rn-wrap (separate submit). These fields are for Other-brand/shared roller only.
+  const fascia    = (isRoller && currentBrand !== 'norman') ? '\nFascia:   ' + getOpt('grp-fascia') : '';
+  const endcap    = '';   // field removed from current UI
+  const chainType = '';   // field removed from current UI
+  const chainLen  = '';
   const cellLift    = isCellular ? '\nLift:         ' + getOpt('grp-cellular-lift') : '';
   const cellSize    = isCellular ? '\nCell size:    ' + getOpt('grp-cell-size')     : '';
   const cellType    = isCellular ? '\nCell type:    ' + getOpt('grp-cell-type')     : '';
@@ -1847,17 +1877,25 @@ function submitPBForm() {
   const email    = document.getElementById('pb-email').value.trim();
   const delBtn   = document.querySelector('#grp-del-pb .opt-btn.sel');
   const delivery = delBtn ? delBtn.textContent.trim() : 'Ship to me';
-  const w = document.getElementById('inp-width').value;
-  const h = document.getElementById('inp-height').value;
+  const w     = document.getElementById('pb-width').value;   // fixed: was inp-width
+  const h     = document.getElementById('pb-height').value;  // fixed: was inp-height
+  const gPB   = function(id) { const b = document.querySelector('#' + id + ' .opt-btn.sel'); return b ? b.textContent.trim() : '—'; };
+  const notes = (document.getElementById('pb-fabric-notes') || {}).value || '';
   const body =
-    'CUSTOM ROLLER SHADE FABRICATION REQUEST\n' +
-    '──────────────────────────────────────\n' +
-    'Name:  ' + name  + '\n' +
-    'Phone: ' + phone + '\n' +
-    'Email: ' + (email || '—') + '\n\n' +
-    'Width:  ' + (w || '—') + '"\n' +
-    'Height: ' + (h || '—') + '"\n' +
-    'Delivery: ' + delivery;
+    'PHILLY BLINDS CUSTOM — MOTORIZED ROLLER SHADE REQUEST\n' +
+    '═══════════════════════════════════════════════════════\n' +
+    'Name:           ' + name  + '\n' +
+    'Phone:          ' + phone + '\n' +
+    'Email:          ' + (email || '—') + '\n\n' +
+    'Width:          ' + (w || '—') + '″\n' +
+    'Height:         ' + (h || '—') + '″\n' +
+    'Mount type:     ' + gPB('pb-grp-mount')  + '\n' +
+    'Light control:  ' + gPB('pb-grp-light')  + '\n' +
+    'Fascia type:    ' + gPB('pb-grp-fascia') + '\n' +
+    'Motor brand:    ' + gPB('pb-grp-motor')  + '\n' +
+    'Fabric source:  ' + gPB('pb-grp-fabric') + '\n' +
+    'Delivery:       ' + delivery             + '\n\n' +
+    'Fabric notes:\n' + (notes || '(none)');
   window.location.href = 'mailto:blindznation@gmail.com' +
     '?subject=' + encodeURIComponent('Custom Roller Shade Request — ' + name) +
     '&body='    + encodeURIComponent(body);
@@ -1960,14 +1998,16 @@ function buildCartItem() {
 
   const tags = [mount, system, light].filter(Boolean);
   if (currentProduct === 'cellular') {
-    const lift = optVal('grp-cellular-lift');
-    const ctype = optVal('grp-cell-type');
-    const csize = optVal('grp-cell-size');
-    if (lift)  tags.push(lift);
+    const lift   = optVal('grp-cellular-lift');
+    const cfabric = optVal('grp-cell-fabric');
+    const csize  = optVal('grp-cell-size');
+    if (lift)   tags.push(lift);
+    if (cfabric) tags.push(cfabric);
     if (ctype) tags.push(ctype);
     if (csize) tags.push(csize + ' cell');
   }
-  if (currentProduct === 'roller') {
+  if (currentProduct === 'roller' && currentBrand !== 'norman') {
+    // Norman roller uses rn-wrap (not captured in cart item — separate quote flow)
     const fascia = optVal('grp-fascia');
     if (fascia) tags.push(fascia);
   }
