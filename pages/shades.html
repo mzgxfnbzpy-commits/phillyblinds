@@ -2347,8 +2347,8 @@ function renderFlatFabricGrid(product) {
     currentCellColls   = colls; currentCellColl   = null; currentCellColor   = null;
   }
 
-  const summaryId = product === 'roller' ? 'rn-fabric-inline-summary' : 'cell-fabric-inline-summary';
-  const gridId    = product === 'roller' ? 'rn-fabric-inline-grid'    : 'cell-fabric-inline-grid';
+  const summaryId = product === 'roller' ? 'rn-fabric-inline-summary' : 'cell-fabric-summary';
+  const gridId    = product === 'roller' ? 'rn-fabric-inline-grid'   : 'cell-fabric-grid';
   const summaryEl = document.getElementById(summaryId);
   const gridEl    = document.getElementById(gridId);
   if (!summaryEl || !gridEl) return;
@@ -2357,33 +2357,36 @@ function renderFlatFabricGrid(product) {
     ? (RN_FABRIC_LABELS[rnFabricType] || '')
     : (CELL_FABRIC_LABELS[currentCellFabric] || '');
 
-  // Build buttons — only collections that have colors mapped
-  let btns = '';
-  colls.forEach(function(coll, ci) {
-    coll.colors.forEach(function(color, ki) {
-      btns += '<button class="opt-btn" style="font-size:11px" onclick="selFlatFabric(this,\'' + product + '\',' + ci + ',' + ki + ')">'
-            + coll.name + ' – ' + color + '</button>';
-    });
-  });
-
-  if (!btns) {
-    // No colors mapped yet for this fabric type
+  if (!colls.length) {
     summaryEl.textContent = '';
     gridEl.innerHTML = '<div class="tooltip-note">Fabric options coming soon.</div>';
     return;
   }
 
-  // Summary line — list collection names, cap at 5 to keep it short
-  const mappedColls = colls.filter(function(c){ return c.colors.length > 0; });
-  const shown = mappedColls.slice(0, 5).map(function(c){ return c.name; }).join(', ');
-  const extra  = mappedColls.length > 5 ? ' +' + (mappedColls.length - 5) + ' more' : '';
+  // Summary line — all collection names
+  const shown = colls.slice(0, 6).map(function(c){ return c.name; }).join(', ');
+  const extra = colls.length > 6 ? ' +' + (colls.length - 6) + ' more' : '';
   summaryEl.textContent = typeLabel + ' collections: ' + shown + extra;
+
+  // Flat buttons: "Collection – Color" for mapped colors; plain "Collection" for unmapped
+  let btns = '';
+  colls.forEach(function(coll, ci) {
+    if (coll.colors.length) {
+      coll.colors.forEach(function(color, ki) {
+        btns += '<button class="opt-btn" style="font-size:11px" onclick="selFlatFabric(this,\'' + product + '\',' + ci + ',' + ki + ')">'
+              + coll.name + ' – ' + color + '</button>';
+      });
+    } else {
+      btns += '<button class="opt-btn" style="font-size:11px;opacity:0.65" onclick="selFlatFabric(this,\'' + product + '\',' + ci + ',-1)">'
+            + coll.name + '</button>';
+    }
+  });
 
   gridEl.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:6px">' + btns + '</div>';
 }
 
 function selFlatFabric(el, product, ci, ki) {
-  const gridId = product === 'roller' ? 'rn-fabric-inline-grid' : 'cell-fabric-inline-grid';
+  const gridId = product === 'roller' ? 'rn-fabric-inline-grid' : 'cell-fabric-grid';
   document.querySelectorAll('#' + gridId + ' .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
   el.classList.add('sel');
   const colls = product === 'roller' ? currentRollerColls : currentCellColls;
