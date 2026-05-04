@@ -339,18 +339,21 @@
 
           <!-- Cellular -->
           <div id="op-cellular" style="display:none">
-            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:7px">Lift direction</div>
+            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:7px">Lift mode</div>
             <div class="opt-row" id="grp-cellular-lift">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-cellular-lift');updateSizeLimits()">Bottom Up</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cellular-lift');updateSizeLimits()">Top Down / Bottom Up</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-cellular-lift');updateSizeLimits();showCellularLiftNote('bu')">Bottom Up</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cellular-lift');updateSizeLimits();showCellularLiftNote('tdbu')">Top Down / Bottom Up</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cellular-lift');updateSizeLimits();showCellularLiftNote('dn')">Day &amp; Night</button>
             </div>
-            <div id="tdbu-note" class="tooltip-note" style="display:none;margin-top:-4px;margin-bottom:10px">Top Down / Bottom Up: shade raises from the bottom <em>or</em> lowers from the top — ideal for privacy with natural light. Max 60 sq ft.</div>
+            <div id="tdbu-note" class="tooltip-note" style="display:none;margin-top:4px;margin-bottom:6px">TDBU: shade raises from bottom <em>and</em> lowers from top — privacy with natural light. Max height ~86″ · max 60 sq ft.</div>
+            <div id="dn-note" class="tooltip-note" style="display:none;margin-top:4px;margin-bottom:6px">Day &amp; Night: two shades in one headrail — sheer on top, privacy on bottom. Valid top fabrics: Sheer, Windsong, LF, Designer LF. Valid bottom: LF, RD, Designer, Solus. Breeze, Ashton, and FR fabrics are not available in Day &amp; Night. Top &amp; bottom must use the same cell size.</div>
             <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:7px;margin-top:10px">Operating system</div>
             <div class="opt-row" id="grp-op-cellular">
               <button class="opt-btn sel" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits()">Cordless</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits()">Cord</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();autoMotor()">Motorized</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits()">Cord / SmartRelease</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();autoMotor()">Norman Motorized</button>
             </div>
+            <div class="tooltip-note" style="margin-top:4px">Cord / SmartRelease supports larger sizes — up to 120″ W × 144″ H. Cordless max varies by cell size (96–108″ W).</div>
           </div>
 
           <!-- Zebra / Banded -->
@@ -467,12 +470,14 @@
           <div style="margin-bottom:14px">
             <div class="step-title" style="font-size:12px;margin-bottom:8px">Fabric category</div>
             <div class="opt-row" id="grp-cell-fabric">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-fabric')">Standard (LF / RD)</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric')">Designer</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric')">Woven</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric')">Specialty / FR</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('standard')">Standard (LF / RD)</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('sheer')">Sheer</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('designer-lf')">Designer LF</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('designer-rd')">Designer RD / Ashton</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('woven')">Woven (Breeze / Windsong)</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('fr')">Specialty / FR</button>
             </div>
-            <div class="tooltip-note">Standard LF &amp; RD work in all cell sizes. Designer, Woven, and Specialty are available in 3⁄4″ and 1 1⁄4″ only — noted in your quote.</div>
+            <div class="tooltip-note" id="fabric-cell-note">Standard LF &amp; RD work in all 6 cell sizes.</div>
           </div>
           <div style="margin-bottom:14px">
             <div class="step-title" style="font-size:12px;margin-bottom:8px">Cell size</div>
@@ -1146,6 +1151,51 @@ function autoMotor() {
 // ─── toggleSolar ─────────────────────────────────────────────
 function toggleSolar(on) {
   document.getElementById('solar-openness').style.display = on ? 'block' : 'none';
+}
+
+// ─── filterCellSizes ─────────────────────────────────────────
+// Fabric → cell size compatibility from Norman Portrait catalog
+const CELL_COMPAT = {
+  // fabric key → array of allowed cell-size button indices (0-5: 3/8S, 9/16S, 1/2D, 3/4S, 3/4D, 1¼S)
+  'standard':    [0,1,2,3,4,5],  // LF & RD — all 6
+  'sheer':       [0,  3,5],      // 3/8S, 3/4S, 1¼S (9/16S only in Day&Night, handled separately)
+  'designer-lf': [0,  3,5],      // 3/8S, 3/4S, 1¼S
+  'designer-rd': [    3,5],      // 3/4S, 1¼S only
+  'woven':       [    3,5],      // 3/4S, 1¼S only (Breeze/Windsong)
+  'fr':          [0,  3  ]       // 3/8S, 3/4S only — no doubles, no 9/16S
+};
+const FABRIC_NOTES = {
+  'standard':    'Standard LF &amp; RD work in all 6 cell sizes.',
+  'sheer':       'Sheer is available in 3⁄8″S, 3⁄4″S, and 1 1⁄4″S only. (9⁄16″S is allowed only in Day &amp; Night mode.)',
+  'designer-lf': 'Designer LF is available in 3⁄8″S, 3⁄4″S, and 1 1⁄4″S. Incompatible sizes are grayed out.',
+  'designer-rd': 'Designer RD and Ashton are limited to 3⁄4″S and 1 1⁄4″S only.',
+  'woven':       'Woven fabrics (Breeze &amp; Windsong) are limited to 3⁄4″S and 1 1⁄4″S. Not available in Day &amp; Night.',
+  'fr':          'Flame Resistant / FR Essentials: available in 3⁄8″S and 3⁄4″S only. Not available in Day &amp; Night or double cell.'
+};
+
+function filterCellSizes(fabric) {
+  const allowed = CELL_COMPAT[fabric] || [0,1,2,3,4,5];
+  const btns = document.getElementById('grp-cell-size').querySelectorAll('.opt-btn');
+  btns.forEach(function(btn, idx) {
+    const ok = allowed.includes(idx);
+    btn.disabled = !ok;
+    btn.style.opacity = ok ? '1' : '0.35';
+    btn.style.cursor = ok ? 'pointer' : 'not-allowed';
+    if (!ok && btn.classList.contains('sel')) {
+      btn.classList.remove('sel');
+      // Auto-select first valid
+      const firstValid = document.getElementById('grp-cell-size').querySelector('.opt-btn:not([disabled])');
+      if (firstValid) firstValid.classList.add('sel');
+    }
+  });
+  const noteEl = document.getElementById('fabric-cell-note');
+  if (noteEl) noteEl.innerHTML = FABRIC_NOTES[fabric] || '';
+}
+
+// ─── showCellularLiftNote ─────────────────────────────────────
+function showCellularLiftNote(mode) {
+  document.getElementById('tdbu-note').style.display = mode === 'tdbu' ? 'block' : 'none';
+  document.getElementById('dn-note').style.display   = mode === 'dn'   ? 'block' : 'none';
 }
 
 // ─── adjustQty / clampQty ────────────────────────────────────
