@@ -1003,18 +1003,43 @@ function toggleMeasure(mode) {
 }
 
 // ─── toggleMotor ─────────────────────────────────────────────
+const CORDLESS_SYSTEMS = ['Spring','Cordless','Soft-Touch Cordless','Battery motor'];
+
 function toggleMotor(on) {
   motorOn = on;
   const sub = document.getElementById('motor-sub');
   const row = document.getElementById('pb-motor-row');
-  if (on) {
-    sub.classList.add('show');
-    row.style.display = 'flex';
-  } else {
-    sub.classList.remove('show');
-    row.style.display = 'none';
-  }
+  if (on) { sub.classList.add('show'); row.style.display = 'flex'; }
+  else     { sub.classList.remove('show'); row.style.display = 'none'; }
+  checkMotorConflict();
   updatePrice();
+}
+
+function checkMotorConflict() {
+  const opBlock = document.getElementById('op-system-block');
+  if (!opBlock) return;
+  const sysBtn = currentProduct
+    ? document.querySelector('#grp-op-' + currentProduct + ' .opt-btn.sel')
+    : null;
+  const sysName = sysBtn ? sysBtn.textContent.trim() : '';
+  const conflict = motorOn && CORDLESS_SYSTEMS.some(s => sysName === s);
+
+  opBlock.style.outline      = conflict ? '2px solid #DC2626' : '';
+  opBlock.style.borderRadius = conflict ? '8px' : '';
+  opBlock.style.padding      = conflict ? '10px' : '';
+
+  let warn = document.getElementById('motor-conflict-note');
+  if (conflict) {
+    if (!warn) {
+      warn = document.createElement('div');
+      warn.id = 'motor-conflict-note';
+      warn.style.cssText = 'font-size:11px;color:#DC2626;margin-top:8px;font-weight:500';
+      opBlock.appendChild(warn);
+    }
+    warn.textContent = '⚠ ' + sysName + ' is cordless — it cannot be separately motorized. Switch to Continuous loop or Motorized above to add a motor.';
+  } else if (warn) {
+    warn.remove();
+  }
 }
 
 // ─── configureForProduct ─────────────────────────────────────
@@ -1096,6 +1121,8 @@ function updateSizeLimits() {
   document.getElementById('size-note').textContent =
     sysName + ' max: ' + lim.maxW + '″ W × ' + lim.maxH + '″ H';
 
+  // Re-check motor conflict whenever operating system changes
+  checkMotorConflict();
   updatePrice();
 }
 
@@ -1161,13 +1188,26 @@ function updatePrice() {
 
   // Real-time size warning
   const sizeNote = document.getElementById('size-note');
-  if (w && h && (w > activeMaxW || h > activeMaxH)) {
+  const sqftArea = w && h ? (w / 12) * (h / 12) : 0;
+
+  // TDBU cellular: 60 sqft max area limit
+  const liftBtn = document.querySelector('#grp-cellular-lift .opt-btn.sel');
+  const isTdbu  = currentProduct === 'cellular' && liftBtn &&
+                  liftBtn.textContent.trim() === 'Top Down / Bottom Up';
+  const tdbuOver = isTdbu && sqftArea > 60;
+
+  if (w && h && (w > activeMaxW || h > activeMaxH || tdbuOver)) {
     const sys = sysGrp ? sysGrp.textContent.trim() : 'this system';
     sizeNote.style.color = '#DC2626';
-    sizeNote.textContent = '⚠ ' + (w > activeMaxW ? 'Width exceeds ' + activeMaxW + '″' : 'Height exceeds ' + activeMaxH + '″') + ' max for ' + sys;
+    if (tdbuOver) {
+      sizeNote.textContent = '⚠ TDBU max area is 60 sqft — current size is ' + sqftArea.toFixed(1) + ' sqft. Reduce width or height.';
+    } else {
+      sizeNote.textContent = '⚠ ' + (w > activeMaxW ? 'Width exceeds ' + activeMaxW + '″' : 'Height exceeds ' + activeMaxH + '″') + ' max for ' + sys;
+    }
   } else if (sysGrp) {
     sizeNote.style.color = 'var(--gold)';
-    sizeNote.textContent = sysGrp.textContent.trim() + ' max: ' + activeMaxW + '″ W × ' + activeMaxH + '″ H';
+    sizeNote.textContent = sysGrp.textContent.trim() + ' max: ' + activeMaxW + '″ W × ' + activeMaxH + '″ H' +
+      (isTdbu ? ' · 60 sqft area limit' : '');
   }
 
   if (!w || !h || w < limits.minW || w > activeMaxW || h < limits.minH || h > activeMaxH) {
