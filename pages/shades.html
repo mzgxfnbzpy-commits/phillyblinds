@@ -460,26 +460,31 @@
           </div>
         </div>
 
-        <!-- CELLULAR ONLY: cell type + cell size -->
+        <!-- CELLULAR ONLY: fabric category + cell size -->
         <div class="step-block" id="cellular-opts" style="display:none">
           <div class="step-label">Step 3b</div>
           <div class="step-title">Cell options</div>
           <div style="margin-bottom:14px">
-            <div class="step-title" style="font-size:12px;margin-bottom:8px">Cell type</div>
-            <div class="opt-row" id="grp-cell-type">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-type')">Single cell</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-type')">Double cell</button>
+            <div class="step-title" style="font-size:12px;margin-bottom:8px">Fabric category</div>
+            <div class="opt-row" id="grp-cell-fabric">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-fabric')">Standard (LF / RD)</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric')">Designer</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric')">Woven</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric')">Specialty / FR</button>
             </div>
-            <div class="tooltip-note">Double cell traps more air — better insulation for extreme temperatures.</div>
+            <div class="tooltip-note">Standard LF &amp; RD work in all cell sizes. Designer, Woven, and Specialty are available in 3⁄4″ and 1 1⁄4″ only — noted in your quote.</div>
           </div>
-          <div>
+          <div style="margin-bottom:14px">
             <div class="step-title" style="font-size:12px;margin-bottom:8px">Cell size</div>
             <div class="opt-row" id="grp-cell-size">
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-size')">3&#8260;8&rdquo;</button>
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-size')">9&#8260;16&rdquo;</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-size')">3&#8260;4&rdquo;</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-size')">3&#8260;8&rdquo; S</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-size')">9&#8260;16&rdquo; S</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-size')">1&#8260;2&rdquo; D</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-size')">3&#8260;4&rdquo; S</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-size')">3&#8260;4&rdquo; D</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-size')">1 1&#8260;4&rdquo; S</button>
             </div>
-            <div class="tooltip-note">Larger cell = more texture &amp; insulation. Smaller cell = cleaner raised profile.</div>
+            <div class="tooltip-note">S = single cell &nbsp;·&nbsp; D = double cell. Larger cell = more insulation. Smaller cell = cleaner raised profile. Not all fabrics available in all sizes.</div>
           </div>
         </div>
 
