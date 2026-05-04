@@ -936,8 +936,37 @@
             <div class="tooltip-note" id="fabric-cell-note">Light Filtering is available in all 6 cell sizes.</div>
             <!-- Inline fabric color picker — appears immediately after fabric category selection -->
             <div id="cell-fabric-inline" style="margin-top:12px">
+              <!-- Standard fabric picker (hidden when D&N is selected) -->
               <div id="cell-fabric-inline-summary" style="font-size:11px;color:#888;margin-bottom:8px;line-height:1.5"></div>
               <div id="cell-fabric-inline-grid"></div>
+
+              <!-- Day & Night dual picker (shown only when D&N fabric type selected) -->
+              <div id="cell-dn-wrap" style="display:none">
+                <div class="tooltip-note" style="margin-bottom:10px;color:var(--gold)">
+                  ⚠ Day &amp; Night cellular: top and bottom fabrics must use the same cell size. Available in 9⁄16″S, 3⁄4″S, or 1 1⁄4″S only.
+                </div>
+                <!-- Top fabric -->
+                <div style="margin-bottom:14px">
+                  <div class="step-title" style="font-size:12px;margin-bottom:6px">Top fabric (Day side)</div>
+                  <div class="opt-row" id="grp-cell-dn-top">
+                    <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-dn-top');cellDnRender('top','sheer')">Sheer</button>
+                    <button class="opt-btn" onclick="selOpt(this,'grp-cell-dn-top');cellDnRender('top','lf')">Light Filtering</button>
+                    <button class="opt-btn" onclick="selOpt(this,'grp-cell-dn-top');cellDnRender('top','woven-windsong')">Woven Windsong</button>
+                    <button class="opt-btn" onclick="selOpt(this,'grp-cell-dn-top');cellDnRender('top','designer-lf')">Designer LF</button>
+                  </div>
+                  <div id="cell-dn-top-grid" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px"></div>
+                </div>
+                <!-- Bottom fabric -->
+                <div>
+                  <div class="step-title" style="font-size:12px;margin-bottom:6px">Bottom fabric (Night side)</div>
+                  <div class="opt-row" id="grp-cell-dn-bottom">
+                    <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-dn-bottom');cellDnRender('bottom','rd')">Room Darkening</button>
+                    <button class="opt-btn" onclick="selOpt(this,'grp-cell-dn-bottom');cellDnRender('bottom','lf')">Light Filtering</button>
+                    <button class="opt-btn" onclick="selOpt(this,'grp-cell-dn-bottom');cellDnRender('bottom','solus')">Solus</button>
+                  </div>
+                  <div id="cell-dn-bottom-grid" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px"></div>
+                </div>
+              </div>
             </div>
           </div>
           <div style="margin-bottom:14px">
@@ -2363,6 +2392,24 @@ function renderFlatFabricGrid(product) {
     currentCellColls   = colls; currentCellColl   = null; currentCellColor   = null;
   }
 
+  // For cellular D&N: swap to the dual picker instead of flat grid
+  if (product === 'cell' || product === 'cellular') {
+    const dnWrap  = document.getElementById('cell-dn-wrap');
+    const summary = document.getElementById('cell-fabric-inline-summary');
+    const grid    = document.getElementById('cell-fabric-inline-grid');
+    if (currentCellFabric === 'dn') {
+      if (dnWrap)  dnWrap.style.display  = 'block';
+      if (summary) summary.textContent   = '';
+      if (grid)    grid.innerHTML        = '';
+      // Auto-render default D&N selections
+      cellDnRender('top',    'sheer');
+      cellDnRender('bottom', 'rd');
+      return;
+    } else {
+      if (dnWrap) dnWrap.style.display = 'none';
+    }
+  }
+
   const summaryId = product === 'roller' ? 'rn-fabric-inline-summary' : 'cell-fabric-inline-summary';
   const gridId    = product === 'roller' ? 'rn-fabric-inline-grid'    : 'cell-fabric-inline-grid';
   const summaryEl = document.getElementById(summaryId);
@@ -2428,7 +2475,8 @@ const RN_SYSTEM_NOTES = {
   coupled2:  'Coupled 2: two panels linked, operated together. Must use same lift system. Center gap applies.',
   coupled3:  'Coupled 3: three panels linked. Two coupled surcharges apply.',
   coupled4:  'Coupled 4: four panels linked. Three coupled surcharges apply.',
-  sidebyside:'Side-by-Side: independent shades installed adjacent. Separate operation. Gap rules apply.'
+  sidebyside:'Side-by-Side: independent shades installed adjacent. Separate operation. Gap rules apply.',
+  dn:        'Day & Night: two fabrics in one headrail — sheer or light filtering on the day roll, room darkening on the night roll. Choose which roll faces the glass vs. the room.'
 };
 const RN_FABRIC_NOTES = {
   sheer:      'Sheer: minimal privacy, maximum view-through. Works with all standard systems.',
@@ -2444,6 +2492,100 @@ function rnSetSystem(type) {
   rnSystemType = type;
   const note = document.getElementById('rn-system-note');
   if (note) note.textContent = RN_SYSTEM_NOTES[type] || '';
+
+  const isDual = (type === 'dual' || type === 'dn');
+  const singleBlock = document.getElementById('rn-single-fabric-block');
+  const dualBlock   = document.getElementById('rn-dual-fabric');
+  if (singleBlock) singleBlock.style.display = isDual ? 'none' : 'block';
+  if (dualBlock)   dualBlock.style.display   = isDual ? 'block' : 'none';
+
+  if (isDual) {
+    // Pre-populate Day roll (sheer default) and Night roll (RD) on switch
+    rnLoadDualFabrics('day',   'sheer');
+    rnLoadDualFabrics('night', 'rd');
+  }
+}
+
+// ─── rnLoadDualFabrics ───────────────────────────────────────
+function rnLoadDualFabrics(roll, fabType) {
+  const summaryId = roll === 'day' ? 'rn-day-summary' : 'rn-night-summary';
+  const gridId    = roll === 'day' ? 'rn-day-grid'    : 'rn-night-grid';
+  const summaryEl = document.getElementById(summaryId);
+  const gridEl    = document.getElementById(gridId);
+  if (!summaryEl || !gridEl) return;
+
+  const colls = SOLUNA_COLLECTIONS[fabType] || [];
+  const label = RN_FABRIC_LABELS[fabType] || fabType;
+
+  if (!colls.length) {
+    summaryEl.textContent = '';
+    gridEl.innerHTML = '<div class="tooltip-note">Fabric options coming soon.</div>';
+    return;
+  }
+
+  const shown = colls.slice(0, 5).map(function(c){ return c.name; }).join(', ');
+  const extra = colls.length > 5 ? ' +' + (colls.length - 5) + ' more' : '';
+  summaryEl.textContent = label + ' collections: ' + shown + extra;
+
+  let btns = '';
+  colls.forEach(function(coll, ci) {
+    if (coll.colors.length) {
+      coll.colors.forEach(function(color, ki) {
+        btns += '<button class="opt-btn" style="font-size:11px" onclick="selDualFabric(this,\'' + roll + '\',' + ci + ',' + ki + ',\'' + fabType + '\')">'
+              + coll.name + ' – ' + color + '</button>';
+      });
+    } else {
+      btns += '<button class="opt-btn" style="font-size:11px;opacity:0.65" onclick="selDualFabric(this,\'' + roll + '\',' + ci + ',-1,\'' + fabType + '\')">'
+            + coll.name + '</button>';
+    }
+  });
+  gridEl.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:6px">' + btns + '</div>';
+}
+
+function selDualFabric(el, roll, ci, ki, fabType) {
+  const gridId = roll === 'day' ? 'rn-day-grid' : 'rn-night-grid';
+  document.querySelectorAll('#' + gridId + ' .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
+  el.classList.add('sel');
+  const colls = SOLUNA_COLLECTIONS[fabType] || [];
+  const coll  = colls[ci];
+  if (!coll) return;
+  if (roll === 'day') {
+    currentRollerColl  = coll.name;
+    currentRollerColor = ki >= 0 ? coll.colors[ki] : '';
+  }
+}
+
+// ─── cellDnRender ─────────────────────────────────────────────
+function cellDnRender(position, fabType) {
+  const gridId    = position === 'top' ? 'cell-dn-top-grid'    : 'cell-dn-bottom-grid';
+  const gridEl    = document.getElementById(gridId);
+  if (!gridEl) return;
+
+  const colls = CELL_COLLECTIONS[fabType] || [];
+  if (!colls.length) {
+    gridEl.innerHTML = '<div class="tooltip-note">Color options coming soon.</div>';
+    return;
+  }
+
+  let btns = '';
+  colls.forEach(function(coll, ci) {
+    if (coll.colors.length) {
+      coll.colors.forEach(function(color, ki) {
+        btns += '<button class="opt-btn" style="font-size:11px" onclick="selCellDnFabric(this,\'' + position + '\',' + ci + ',' + ki + ',\'' + fabType + '\')">'
+              + coll.name + ' – ' + color + '</button>';
+      });
+    } else {
+      btns += '<button class="opt-btn" style="font-size:11px;opacity:0.65" onclick="selCellDnFabric(this,\'' + position + '\',' + ci + ',-1,\'' + fabType + '\')">'
+            + coll.name + '</button>';
+    }
+  });
+  gridEl.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:6px">' + btns + '</div>';
+}
+
+function selCellDnFabric(el, position, ci, ki, fabType) {
+  const gridId = position === 'top' ? 'cell-dn-top-grid' : 'cell-dn-bottom-grid';
+  document.querySelectorAll('#' + gridId + ' .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
+  el.classList.add('sel');
 }
 
 // ─── selRnFabric ─────────────────────────────────────────────
