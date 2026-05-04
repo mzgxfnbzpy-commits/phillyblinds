@@ -219,7 +219,7 @@
     </div>
 
     <!-- Zebra Shades -->
-    <div class="product-card" id="card-zebra" onclick="selectProduct('zebra','Zebra Shades',true)">
+    <div class="product-card" id="card-zebra" onclick="selectProduct('zebra','Zebra Shades',false)">
       <div class="product-img" style="background:#F0EDF8">
         <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
           <rect x="5" y="4" width="34" height="5" rx="2.5" fill="#C8973F"/>
@@ -236,12 +236,12 @@
       <div class="product-body">
         <div class="product-name">Zebra Shades</div>
         <div class="product-sub">Dual-fabric banded sheer</div>
-        <span class="badge badge-instant">Instant price</span>
+        <span class="badge badge-quote">Custom quote</span>
       </div>
     </div>
 
     <!-- Woven Wood -->
-    <div class="product-card" id="card-woven" onclick="selectProduct('woven','Woven Wood / Natural Shades',true)">
+    <div class="product-card" id="card-woven" onclick="selectProduct('woven','Woven Wood / Natural Shades',false)">
       <div class="product-img" style="background:#FAF0E0">
         <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
           <rect x="5" y="4" width="34" height="5" rx="2.5" fill="#C8973F"/>
@@ -260,7 +260,7 @@
       <div class="product-body">
         <div class="product-name">Woven Wood Shades</div>
         <div class="product-sub">Bamboo, rattan &amp; jute</div>
-        <span class="badge badge-instant">Instant price</span>
+        <span class="badge badge-quote">Custom quote</span>
       </div>
     </div>
 
@@ -490,67 +490,141 @@
             <div class="tooltip-note" style="margin-top:4px">Inside mount requires min 2¾″ depth. Cassette and dual shades require more — confirmed at order. Door installs use magnetic hold-downs.</div>
           </div>
 
-          <!-- Step 6: Headrail / Cassette / LightGuard / Hem Bar -->
+          <!-- Step 6: Headrail & Top Treatment — corrected structure -->
           <div class="step-block">
             <div class="step-label">Step 6</div>
             <div class="step-title">Headrail &amp; top treatment</div>
+
+            <!-- Primary: headrail type -->
+            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:7px">Headrail type</div>
             <div class="opt-row" id="rn-grp-headrail">
-              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-headrail')">Open roll</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-headrail')">Curved fascia</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-headrail')">Square fascia</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-headrail')">Fabric valance</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-headrail')">Wood valance</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-headrail')">Cassette</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-headrail');rnSetHeadrail('open')">Open Roll</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-headrail');rnSetHeadrail('fascia')">Fascia System</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-headrail');rnSetHeadrail('cassette')">Cassette System</button>
             </div>
-            <div style="margin-top:14px">
-              <div class="step-title" style="font-size:12px;margin-bottom:8px">Side channels (LightGuard)</div>
-              <div class="opt-row" id="rn-grp-lg">
-                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-lg');rnSetLG('none')">None</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-lg');rnSetLG('basic')">Basic Light Guard</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-lg');rnSetLG('360')">LightGuard 360™</button>
+            <div id="rn-headrail-note" class="tooltip-note" style="margin-top:5px;margin-bottom:12px">Open Roll: exposed tube, most compact profile. Brackets are visible.</div>
+
+            <!-- Fascia sub-options (shown when Fascia System selected) -->
+            <div id="rn-fascia-opts" style="display:none;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px;margin-bottom:12px">
+              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Fascia shape</div>
+              <div class="opt-row" id="rn-grp-fascia-shape">
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-fascia-shape')">Square</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-fascia-shape')">Curved</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-fascia-shape')">Flat (low-profile)</button>
               </div>
-              <div id="rn-lg-note" class="tooltip-note" style="display:none;margin-top:5px;color:var(--gold)">LightGuard 360™ = true blackout (side channels + top seal). Requires Room Darkening fabric + cassette headrail. We'll confirm at order.</div>
+              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px;margin-top:12px">Fascia material</div>
+              <div class="opt-row" id="rn-grp-fascia-mat">
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-fascia-mat')">Metal (standard)</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-fascia-mat')">Fabric wrapped</button>
+              </div>
+              <div class="tooltip-note" style="margin-top:6px">Fabric-wrapped fascia not compatible with all fabrics and has max width limits. Flat fascia is metal only. Curved uses aluminum base with optional fabric wrap.</div>
             </div>
-            <div style="margin-top:14px">
-              <div class="step-title" style="font-size:12px;margin-bottom:8px">Hem bar</div>
-              <div class="opt-row" id="rn-grp-hem">
-                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-hem')">Plain</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-hem')">Fabric wrapped</button>
+
+            <!-- Cassette sub-options (shown when Cassette System selected) -->
+            <div id="rn-cassette-opts" style="display:none;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px;margin-bottom:12px">
+              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Cassette type</div>
+              <div class="opt-row" id="rn-grp-cassette">
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-cassette')">Slim cassette</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cassette')">Full cassette</button>
               </div>
+              <div class="tooltip-note" style="margin-top:5px">Full cassette encloses the tube completely — required for LightGuard 360™ and room-darkening / blackout systems. Larger sizes may need an upgraded tube diameter.</div>
+            </div>
+
+            <!-- Side channels / LightGuard -->
+            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:7px">Side channels (LightGuard)</div>
+            <div class="opt-row" id="rn-grp-lg">
+              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-lg');rnSetLG('none')">None</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-lg');rnSetLG('basic')">LightGap channels</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-lg');rnSetLG('360')">LightGuard 360™</button>
+            </div>
+            <div id="rn-lg-note" class="tooltip-note" style="display:none;margin-top:5px;margin-bottom:4px;color:var(--gold)">LightGuard 360™ = true blackout (full side channels + top seal). <strong>Requires:</strong> Room Darkening fabric + Cassette System. Not compatible with Open Roll or Fascia System.</div>
+            <div style="margin-bottom:12px"></div>
+
+            <!-- Hem bar — type + color independently selectable -->
+            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:7px">Hem bar (bottom bar)</div>
+            <div class="opt-row" id="rn-grp-hem-type">
+              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-hem-type')">Exposed aluminum</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-hem-type')">Fabric wrapped</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-hem-type')">Sealed pocket</button>
+            </div>
+            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px;margin-top:10px">Hem bar color <span style="font-weight:400;font-size:10px;color:#888">(independent of hardware color)</span></div>
+            <div class="opt-row" id="rn-grp-hem-color">
+              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-hem-color')">White</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-hem-color')">Cottage White</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-hem-color')">Black</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-hem-color')">Anodized Silver</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-hem-color')">Fabric matched</button>
             </div>
           </div>
 
-          <!-- Step 7: Hardware Colors -->
+          <!-- Step 7: Hardware & Control System — corrected structure -->
           <div class="step-block">
             <div class="step-label">Step 7</div>
-            <div class="step-title">Hardware colors</div>
-            <div style="margin-bottom:14px">
-              <div class="step-title" style="font-size:12px;margin-bottom:5px">Color Coord. 1 — hardware, fascia, hem bar back</div>
-              <div class="opt-row" id="rn-grp-cc1">
-                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-cc1')">White</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cc1')">Cottage White</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cc1')">Black</button>
+            <div class="step-title">Hardware &amp; control colors</div>
+
+            <!-- 1. Control mechanism -->
+            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">1 — Control mechanism</div>
+            <div class="opt-row" id="rn-grp-control">
+              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-control');rnSetControl('chain')">Metal chain</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-control');rnSetControl('cord')">Cord loop (clutch)</button>
+            </div>
+            <div id="rn-control-note" class="tooltip-note" style="margin-top:4px;margin-bottom:14px">Metal chain: standard for most systems. Cord loop (clutch): used with Continuous Cord Loop lift system — must match your lift selection in Step 5.</div>
+
+            <!-- 2a. Chain color (default visible) -->
+            <div id="rn-chain-color-wrap" style="margin-bottom:14px">
+              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">2 — Chain color</div>
+              <div class="opt-row" id="rn-grp-chain-color">
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-chain-color')">White</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Cottage White</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Black</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Stainless / Silver</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Nature</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Sahara</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Terra</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Chocolate</button>
               </div>
             </div>
+
+            <!-- 2b. Cord loop color (hidden until cord loop selected) -->
+            <div id="rn-cord-color-wrap" style="display:none;margin-bottom:14px">
+              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">2 — Cord loop color</div>
+              <div class="opt-row" id="rn-grp-cord-color">
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-cord-color')">White</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cord-color')">Ivory / Cottage White</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cord-color')">Black</button>
+              </div>
+              <div class="tooltip-note" style="margin-top:4px">Cord loop color options are limited vs chain — final selection confirmed at order.</div>
+            </div>
+
+            <!-- 3. Safety tensioner -->
             <div style="margin-bottom:14px">
-              <div class="step-title" style="font-size:12px;margin-bottom:5px">Color Coord. 2 — chain, end caps, tensioner</div>
-              <div class="opt-row" id="rn-grp-cc2">
-                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-cc2')">White</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cc2')">Cottage White</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cc2')">Black</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cc2')">Silver</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cc2')">Nature</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cc2')">Terra</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cc2')">Sahara</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cc2')">Chocolate</button>
+              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">3 — Safety tensioner</div>
+              <div class="opt-row" id="rn-grp-tensioner">
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-tensioner')">Yes — include tensioner</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-tensioner')">No — commercial / exempt</button>
+              </div>
+              <div class="tooltip-note" style="margin-top:4px">Required by code for cord/chain systems in residential installs where children may be present. Tensioner matches chain/cord color.</div>
+            </div>
+
+            <!-- 4. End caps -->
+            <div style="margin-bottom:14px">
+              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">4 — End caps</div>
+              <div class="opt-row" id="rn-grp-endcap">
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-endcap')">Match hardware color</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-endcap')">Custom color</button>
               </div>
             </div>
+
+            <!-- 5. Hardware & bracket color -->
             <div>
-              <div class="step-title" style="font-size:12px;margin-bottom:5px">Chain type</div>
-              <div class="opt-row" id="rn-grp-chain">
-                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-chain')">Plastic bead</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain')">Stainless steel</button>
+              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">5 — Hardware &amp; bracket color</div>
+              <div class="opt-row" id="rn-grp-hw-color">
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-hw-color')">White</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')">Cottage White</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')">Black</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')">Anodized Silver</button>
               </div>
+              <div class="tooltip-note" style="margin-top:4px">Applies to brackets, clutch housing, and mounting hardware. Set independently from hem bar and chain/cord colors.</div>
             </div>
           </div>
 
@@ -2003,10 +2077,57 @@ function rnSetLift(type) {
   rnUpdatePrice();
 }
 
+// ─── rnSetHeadrail ───────────────────────────────────────────
+function rnSetHeadrail(type) {
+  // Show/hide sub-options
+  document.getElementById('rn-fascia-opts').style.display   = type === 'fascia'   ? 'block' : 'none';
+  document.getElementById('rn-cassette-opts').style.display = type === 'cassette' ? 'block' : 'none';
+  // Note
+  const notes = {
+    open:     'Open Roll: exposed tube, most compact profile. Brackets are visible. Not compatible with LightGuard 360™.',
+    fascia:   'Fascia System: covers the tube with a decorative front panel. Choose shape and material below.',
+    cassette: 'Cassette System: fully enclosed headrail. Required for LightGuard 360™ and most room-darkening/blackout setups.'
+  };
+  const n = document.getElementById('rn-headrail-note');
+  if (n) n.textContent = notes[type] || '';
+  // If LightGuard 360 is selected but headrail changes away from cassette → warn
+  const lgBtn = document.querySelector('#rn-grp-lg .opt-btn.sel');
+  if (lgBtn && lgBtn.textContent.includes('360') && type !== 'cassette') {
+    lgBtn.classList.remove('sel');
+    document.querySelector('#rn-grp-lg .opt-btn').classList.add('sel');
+    document.getElementById('rn-lg-note').style.display = 'none';
+  }
+  rnRunValidation();
+}
+
+// ─── rnSetControl ────────────────────────────────────────────
+function rnSetControl(type) {
+  document.getElementById('rn-chain-color-wrap').style.display = type === 'chain' ? 'block' : 'none';
+  document.getElementById('rn-cord-color-wrap').style.display  = type === 'cord'  ? 'block' : 'none';
+  const note = document.getElementById('rn-control-note');
+  if (note) {
+    note.textContent = type === 'cord'
+      ? 'Cord loop (clutch): pairs with Continuous Cord Loop lift system. Color options are more limited than metal chain.'
+      : 'Metal chain: standard for most systems. Wide color selection. Plastic bead or stainless steel available.';
+  }
+}
+
 // ─── rnSetLG ─────────────────────────────────────────────────
 function rnSetLG(type) {
   const note = document.getElementById('rn-lg-note');
   if (note) note.style.display = type === '360' ? 'block' : 'none';
+  // LightGuard 360 requires cassette — auto-switch headrail if needed
+  if (type === '360') {
+    const hrBtn = document.querySelector('#rn-grp-headrail .opt-btn.sel');
+    const isOpen = hrBtn && !hrBtn.textContent.includes('Cassette');
+    if (isOpen) {
+      // Auto-select cassette
+      document.querySelectorAll('#rn-grp-headrail .opt-btn').forEach(function(b) {
+        b.classList.remove('sel');
+        if (b.textContent.includes('Cassette')) { b.classList.add('sel'); rnSetHeadrail('cassette'); }
+      });
+    }
+  }
   rnRunValidation();
 }
 
@@ -2166,29 +2287,50 @@ function rnSubmitForm() {
   const delBtn  = document.querySelector('#grp-del-rn .opt-btn.sel');
   const delivery = delBtn ? delBtn.textContent.trim() : 'Ship to me';
 
-  const g = id => { const b = document.querySelector('#' + id + ' .opt-btn.sel'); return b ? b.textContent.trim() : '—'; };
+  const g = function(id) { const b = document.querySelector('#' + id + ' .opt-btn.sel'); return b ? b.textContent.trim() : '—'; };
+
+  // Headrail detail lines
+  const hrType = g('rn-grp-headrail');
+  let hrDetail = '';
+  if (hrType.includes('Fascia')) {
+    hrDetail = '\n  Shape:          ' + g('rn-grp-fascia-shape') + '\n  Material:       ' + g('rn-grp-fascia-mat');
+  } else if (hrType.includes('Cassette')) {
+    hrDetail = '\n  Cassette type:  ' + g('rn-grp-cassette');
+  }
+
+  // Control detail
+  const ctrlType = g('rn-grp-control');
+  const ctrlColor = ctrlType.includes('chain') || ctrlType.includes('Metal')
+    ? g('rn-grp-chain-color')
+    : g('rn-grp-cord-color');
 
   const body =
     'NORMAN SOLUNA ROLLER SHADE QUOTE REQUEST\n' +
     '═════════════════════════════════════════\n' +
-    'Name:   ' + name  + '\n' +
-    'Phone:  ' + phone + '\n' +
-    'Email:  ' + (email || '—') + '\n\n' +
-    'Configuration:  ' + g('rn-grp-system') + '\n' +
-    'Fabric type:    ' + g('rn-grp-fabric')  + '\n' +
-    'Fabric width:   ' + rnFabricWidth + '″\n' +
+    'Name:           ' + name  + '\n' +
+    'Phone:          ' + phone + '\n' +
+    'Email:          ' + (email || '—') + '\n\n' +
+    '── SHADE CONFIGURATION ──────────────────\n' +
+    'System:         ' + g('rn-grp-system')   + '\n' +
+    'Fabric type:    ' + g('rn-grp-fabric')   + '\n' +
+    'Min fabric W:   ' + rnFabricWidth + '″ (auto from shade width)\n' +
     'Width:          ' + (w || '—') + '″\n' +
     'Height:         ' + (h || '—') + '″\n' +
     'Qty:            ' + qty + '\n' +
-    'Lift system:    ' + g('rn-grp-lift')    + '\n' +
-    'Mount type:     ' + g('rn-grp-mount')   + '\n' +
-    'Headrail:       ' + g('rn-grp-headrail') + '\n' +
-    'LightGuard:     ' + g('rn-grp-lg')      + '\n' +
-    'Hem bar:        ' + g('rn-grp-hem')     + '\n' +
-    'Color Coord 1:  ' + g('rn-grp-cc1')     + '\n' +
-    'Color Coord 2:  ' + g('rn-grp-cc2')     + '\n' +
-    'Chain type:     ' + g('rn-grp-chain')   + '\n' +
-    'Delivery:       ' + delivery            + '\n\n' +
+    'Lift system:    ' + g('rn-grp-lift')     + '\n' +
+    'Mount type:     ' + g('rn-grp-mount')    + '\n\n' +
+    '── HEADRAIL & TOP ───────────────────────\n' +
+    'Headrail type:  ' + hrType + hrDetail    + '\n' +
+    'LightGuard:     ' + g('rn-grp-lg')       + '\n' +
+    'Hem bar type:   ' + g('rn-grp-hem-type') + '\n' +
+    'Hem bar color:  ' + g('rn-grp-hem-color')+ '\n\n' +
+    '── HARDWARE & COLORS ────────────────────\n' +
+    'Control:        ' + ctrlType             + '\n' +
+    'Control color:  ' + ctrlColor            + '\n' +
+    'Tensioner:      ' + g('rn-grp-tensioner')+ '\n' +
+    'End caps:       ' + g('rn-grp-endcap')   + '\n' +
+    'Hardware color: ' + g('rn-grp-hw-color') + '\n\n' +
+    'Delivery:       ' + delivery             + '\n\n' +
     'Notes:\n' + (notes || '(none)');
 
   window.location.href = 'mailto:blindznation@gmail.com' +
