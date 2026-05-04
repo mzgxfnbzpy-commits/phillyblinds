@@ -131,6 +131,19 @@
   .config-head{flex-direction:column;align-items:flex-start;gap:8px}
   .brand-btn{min-width:100%}
 }
+
+/* ── ROLLER FABRIC TYPE CARDS ── */
+.rn-fabric-cards{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+@media(max-width:520px){.rn-fabric-cards{grid-template-columns:1fr}}
+.rn-fabric-card{background:#fff;border:1.5px solid #e8e8e4;border-radius:10px;padding:12px 14px;cursor:pointer;text-align:left;transition:border-color 0.15s,box-shadow 0.15s;font-family:var(--font);width:100%}
+.rn-fabric-card:hover{border-color:var(--gold);box-shadow:0 2px 8px rgba(200,151,63,0.12)}
+.rn-fabric-card.rn-fc-sel{border:2px solid var(--gold);background:var(--gold-mid)}
+.rn-fc-name{font-size:13px;font-weight:600;color:#111;margin-bottom:3px}
+.rn-fabric-card.rn-fc-sel .rn-fc-name{color:#5C3D0A}
+.rn-fc-desc{font-size:11px;color:#888;line-height:1.5}
+.rn-fabric-card.rn-fc-sel .rn-fc-desc{color:#7A5A28}
+.rn-fw-pill{display:inline-block;background:var(--espresso-mid);border:0.5px solid var(--border-dark);border-radius:6px;padding:2px 8px;font-size:10px;font-weight:500;color:var(--cream);margin:2px 2px 2px 0}
+.rn-fw-pill.unavail{background:#f5f5f5;border-color:#e0e0e0;color:#aaa;text-decoration:line-through}
 </style>
 </head>
 <body>
@@ -365,20 +378,40 @@
             <div id="rn-system-note" class="tooltip-note" style="margin-top:6px">Standard: single shade per bracket set.</div>
           </div>
 
-          <!-- Step 2: Fabric Type -->
+          <!-- Step 2: Fabric Type — visual cards with descriptions -->
           <div class="step-block">
             <div class="step-label">Step 2</div>
             <div class="step-title">Fabric type</div>
-            <div class="opt-row" id="rn-grp-fabric">
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-fabric');rnSetFabric('sheer')">Sheer</button>
-              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-fabric');rnSetFabric('lf')">Light Filtering</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-fabric');rnSetFabric('natural')">Natural</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-fabric');rnSetFabric('rd')">Room Darkening</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-fabric');rnSetFabric('solar')">Solar Screen</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-fabric');rnSetFabric('commercial')">Commercial Solar</button>
+            <div class="rn-fabric-cards" id="rn-grp-fabric">
+              <button class="rn-fabric-card" onclick="selRnFabric(this,'sheer')">
+                <div class="rn-fc-name">Sheer</div>
+                <div class="rn-fc-desc">Maximum view-through · minimal privacy · best for layering with drapery</div>
+              </button>
+              <button class="rn-fabric-card rn-fc-sel" onclick="selRnFabric(this,'lf')">
+                <div class="rn-fc-name">Light Filtering</div>
+                <div class="rn-fc-desc">Diffused light · medium privacy · most popular choice · all systems compatible</div>
+              </button>
+              <button class="rn-fabric-card" onclick="selRnFabric(this,'natural')">
+                <div class="rn-fc-name">Natural</div>
+                <div class="rn-fc-desc">Bamboo, jute, paper blends · organic look · light filtering · max 96″W or 78″W by collection</div>
+              </button>
+              <button class="rn-fabric-card" onclick="selRnFabric(this,'rd')">
+                <div class="rn-fc-name">Room Darkening</div>
+                <div class="rn-fc-desc">High privacy · coated backing · blocks most light — add LightGuard 360™ for true blackout</div>
+              </button>
+              <button class="rn-fabric-card" onclick="selRnFabric(this,'solar')">
+                <div class="rn-fc-name">Solar Screen</div>
+                <div class="rn-fc-desc">UV &amp; glare control · rated by openness % · view-through preserved · ±10% tolerance normal</div>
+              </button>
+              <button class="rn-fabric-card" onclick="selRnFabric(this,'commercial')">
+                <div class="rn-fc-name">Commercial Solar <span style="font-size:9px;font-weight:600;background:var(--espresso);color:var(--gold);padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:middle">NA Series</span></div>
+                <div class="rn-fc-desc">PVC/polyester · commercial rated · max UV protection · 118″ wide available</div>
+              </button>
             </div>
-            <div id="rn-solar-opts" style="display:none;margin-top:10px">
-              <div class="tooltip-note" style="margin-bottom:6px">Openness factor — lower % = less light &amp; more privacy (±10% tolerance is normal):</div>
+            <!-- Solar openness sub-option -->
+            <div id="rn-solar-opts" style="display:none;margin-top:12px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
+              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Solar openness factor</div>
+              <div class="tooltip-note" style="margin-bottom:8px">Lower % = tighter weave, more privacy &amp; glare control. ±10% tolerance is normal.</div>
               <div class="opt-row" id="rn-grp-solar">
                 <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-solar');rnUpdatePrice()">1% — max privacy</button>
                 <button class="opt-btn" onclick="selOpt(this,'rn-grp-solar');rnUpdatePrice()">3% — standard</button>
@@ -386,25 +419,11 @@
                 <button class="opt-btn" onclick="selOpt(this,'rn-grp-solar');rnUpdatePrice()">7–10% — high visibility</button>
               </div>
             </div>
-            <div id="rn-rd-note" class="tooltip-note" style="display:none;margin-top:6px">Room Darkening alone is <strong>not</strong> true blackout — fabric stops most light but side gaps remain. Add LightGuard 360™ in Step 7 for full blackout.</div>
-            <div id="rn-fabric-note" class="tooltip-note" style="margin-top:6px;color:#555"></div>
+            <div id="rn-rd-note" class="tooltip-note" style="display:none;margin-top:8px;color:var(--gold)">⚠ Room Darkening alone still allows edge light gaps. Add <strong>LightGuard 360™</strong> in Step 7 for true blackout.</div>
+            <div id="rn-fabric-note" class="tooltip-note" style="margin-top:6px;color:#666"></div>
           </div>
 
-          <!-- Step 2: Fabric Width -->
-          <div class="step-block">
-            <div class="step-label">Step 2</div>
-            <div class="step-title">Fabric width available</div>
-            <div class="tooltip-note" style="margin-bottom:8px">Your shade width cannot exceed the fabric roll width. Select the widest width that covers your window. Availability varies by collection — confirmed at order.</div>
-            <div class="opt-row" id="rn-grp-fw">
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-fw');rnSetFabricWidth(78)">78″</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-fw');rnSetFabricWidth(94.5)">94.5″</button>
-              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-fw');rnSetFabricWidth(96)">96″</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-fw');rnSetFabricWidth(110)">110″</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-fw');rnSetFabricWidth(118)">118″</button>
-            </div>
-          </div>
-
-          <!-- Step 3: Shade Size -->
+          <!-- Step 3: Shade Size + auto fabric width compatibility -->
           <div class="step-block">
             <div class="step-label">Step 3</div>
             <div class="step-title">Window measurements</div>
@@ -412,15 +431,20 @@
               <div class="form-group">
                 <label>Width (inches)</label>
                 <input type="number" id="rn-width" min="12" max="118" step="0.5" placeholder="e.g. 36" oninput="rnUpdatePrice()">
-                <div class="tooltip-note" id="rn-width-note">Max = fabric width selected above</div>
               </div>
               <div class="form-group">
                 <label>Height (inches)</label>
                 <input type="number" id="rn-height" min="12" max="132" step="0.5" placeholder="e.g. 48" oninput="rnUpdatePrice()">
               </div>
             </div>
-            <div class="tooltip-note" id="rn-size-warning" style="color:#DC2626;display:none;margin-top:-4px;margin-bottom:8px"></div>
-            <div class="step-title" style="font-size:12px;margin-bottom:8px">Quantity</div>
+            <!-- Fabric width compatibility — auto-computed from entered width -->
+            <div id="rn-fw-compat" style="display:none;margin-top:8px;padding:10px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
+              <div style="font-size:11px;font-weight:500;color:#444;margin-bottom:5px">Compatible fabric widths for your shade:</div>
+              <div id="rn-fw-pills"></div>
+              <div id="rn-fw-note" class="tooltip-note" style="margin-top:5px"></div>
+            </div>
+            <div class="tooltip-note" id="rn-size-warning" style="color:#DC2626;display:none;margin-top:6px"></div>
+            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:8px;margin-top:14px">Quantity</div>
             <div class="qty-btns">
               <button class="qty-btn" onclick="rnAdjQty(-1)">&#8722;</button>
               <input class="qty-num" type="number" id="rn-qty" value="1" min="1" max="10" oninput="rnUpdatePrice()">
@@ -606,14 +630,14 @@
               <button class="opt-btn" onclick="selOpt(this,'grp-cellular-lift');updateSizeLimits();showCellularLiftNote('dn')">Day &amp; Night</button>
             </div>
             <div id="tdbu-note" class="tooltip-note" style="display:none;margin-top:4px;margin-bottom:6px">TDBU: shade raises from bottom <em>and</em> lowers from top — privacy with natural light. Max height ~86″ · max 60 sq ft.</div>
-            <div id="dn-note" class="tooltip-note" style="display:none;margin-top:4px;margin-bottom:6px">Day &amp; Night: two shades in one headrail — sheer on top, privacy on bottom. Valid top fabrics: Sheer, Windsong, LF, Designer LF. Valid bottom: LF, RD, Designer, Solus. Breeze, Ashton, and FR fabrics are not available in Day &amp; Night. Top &amp; bottom must use the same cell size.</div>
+            <div id="dn-note" class="tooltip-note" style="display:none;margin-top:4px;margin-bottom:6px">Day &amp; Night: two shades (sheer top + privacy bottom) in one headrail. Valid top: Sheer, Windsong, LF, Designer LF. Valid bottom: LF, RD, Designer, Solus. <strong>Not available in D&amp;N:</strong> Breeze, Ashton, FR/FR Essentials. Top &amp; bottom must match cell size.</div>
             <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:7px;margin-top:10px">Operating system</div>
             <div class="opt-row" id="grp-op-cellular">
               <button class="opt-btn sel" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits()">Cordless</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits()">Cord / SmartRelease</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();autoMotor()">Norman Motorized</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits()">Cord</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();autoMotor()">Motorized</button>
             </div>
-            <div class="tooltip-note" style="margin-top:4px">Cord / SmartRelease supports larger sizes — up to 120″ W × 144″ H. Cordless max varies by cell size (96–108″ W).</div>
+            <div class="tooltip-note" style="margin-top:4px">Cord supports larger sizes — up to 120″ W × 144″ H (SmartRelease upgrade available). Cordless max varies by cell size (96–108″ W).</div>
           </div>
 
           <!-- Zebra / Banded -->
@@ -1281,8 +1305,11 @@ function selectBrand(brand) {
   const motorSel  = document.getElementById('sel-motor-brand');
   const motorNote = document.getElementById('motor-brand-note');
   if (brand === 'norman') {
-    motorSel.innerHTML = '<option value="norman">Norman Motorization</option>';
-    if (motorNote) motorNote.textContent = 'Norman products use Norman\'s proprietary motorization system.';
+    if (currentProduct === 'roller') {
+      motorSel.innerHTML = '<option value="norman">Norman Motorization</option>';
+      if (motorNote) motorNote.textContent = 'Norman shades use Norman\'s integrated motor system.';
+    }
+    // Non-roller Norman products (cellular, zebra, woven) use standard motor brands
   } else {
     motorSel.innerHTML =
       '<option value="lutron">Lutron Serena</option>' +
@@ -1925,6 +1952,16 @@ function rnSetSystem(type) {
   if (note) note.textContent = RN_SYSTEM_NOTES[type] || '';
 }
 
+// ─── selRnFabric ─────────────────────────────────────────────
+// Handles click on fabric card (visual selection + logic)
+function selRnFabric(el, type) {
+  document.querySelectorAll('.rn-fabric-card').forEach(function(c) {
+    c.classList.remove('rn-fc-sel');
+  });
+  el.classList.add('rn-fc-sel');
+  rnSetFabric(type);
+}
+
 // ─── rnSetFabric ─────────────────────────────────────────────
 function rnSetFabric(type) {
   rnFabricType = type;
@@ -1982,8 +2019,11 @@ function rnRunValidation() {
   const lgSel = document.querySelector('#rn-grp-lg .opt-btn.sel');
   const lgType = lgSel ? lgSel.textContent.trim() : 'None';
 
-  if (w && w > rnFabricWidth) {
-    errors.push('Shade width (' + w + '″) exceeds selected fabric width (' + rnFabricWidth + '″). Choose a wider fabric or split into Side-by-Side.');
+  const RN_MAX_FABRIC_W = 118;
+  if (w && w > RN_MAX_FABRIC_W) {
+    errors.push('Shade width (' + w + '″) exceeds maximum available fabric width (118″). Split into Side-by-Side or Coupled configuration.');
+  } else if (w && rnFabricType === 'natural' && w > 96) {
+    errors.push('Natural fabrics are available up to 96″ wide (some collections only 78″). Choose a narrower shade or a different fabric type.');
   }
   if (h && rnFabricType === 'natural' && h > 120) {
     errors.push('Some natural fabrics (e.g. Maui Natural) have a maximum fabric height of 120″.');
@@ -2027,9 +2067,36 @@ function rnUpdatePrice() {
 
   const warn = document.getElementById('rn-size-warning');
 
-  if (w && w > rnFabricWidth && warn) {
+  // Auto-compute compatible fabric widths from entered shade width
+  const RN_ALL_WIDTHS = [78, 94.5, 96, 110, 118];
+  const compatWidths  = w ? RN_ALL_WIDTHS.filter(function(fw){ return fw >= w; }) : [];
+  const autoFabricW   = compatWidths.length ? compatWidths[0] : null;
+  rnFabricWidth       = autoFabricW || 118; // used by validation
+
+  const fwBox   = document.getElementById('rn-fw-compat');
+  const fwPills = document.getElementById('rn-fw-pills');
+  const fwNote  = document.getElementById('rn-fw-note');
+
+  if (w && fwBox && fwPills) {
+    fwBox.style.display = 'block';
+    fwPills.innerHTML = RN_ALL_WIDTHS.map(function(fw) {
+      const ok = fw >= w;
+      return '<span class="rn-fw-pill' + (ok ? '' : ' unavail') + '">' + fw + '″</span>';
+    }).join('');
+    if (compatWidths.length === 0) {
+      fwNote.textContent = '⚠ Shade width exceeds all standard fabric widths (max 118″). Use Side-by-Side or Coupled configuration.';
+      fwNote.style.color = '#DC2626';
+    } else {
+      fwNote.textContent = 'Minimum fabric width needed: ' + compatWidths[0] + '″. Final collection availability confirmed at order.';
+      fwNote.style.color = '#555';
+    }
+  } else if (fwBox) {
+    fwBox.style.display = 'none';
+  }
+
+  if (w && compatWidths.length === 0 && warn) {
     warn.style.display = 'block';
-    warn.textContent = '⚠ Width ' + w + '″ exceeds fabric width ' + rnFabricWidth + '″ — choose a wider fabric or split shade.';
+    warn.textContent = '⚠ Width ' + w + '″ exceeds all standard fabric widths (max 118″). Consider Side-by-Side or Coupled.';
   } else if (warn) {
     warn.style.display = 'none';
   }
