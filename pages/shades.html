@@ -386,7 +386,8 @@
                 <button class="opt-btn" onclick="selOpt(this,'rn-grp-solar');rnUpdatePrice()">7–10% — high visibility</button>
               </div>
             </div>
-            <div id="rn-rd-note" class="tooltip-note" style="display:none;margin-top:6px">Room Darkening alone is <strong>not</strong> true blackout — fabric stops most light but side gaps remain. Add LightGuard 360™ in Step 6 for full blackout.</div>
+            <div id="rn-rd-note" class="tooltip-note" style="display:none;margin-top:6px">Room Darkening alone is <strong>not</strong> true blackout — fabric stops most light but side gaps remain. Add LightGuard 360™ in Step 7 for full blackout.</div>
+            <div id="rn-fabric-note" class="tooltip-note" style="margin-top:6px;color:#555"></div>
           </div>
 
           <!-- Step 2: Fabric Width -->
@@ -1367,6 +1368,13 @@ function configureForProduct(productId) {
   hEl.min = limits.minH; hEl.max = limits.maxH;
   wEl.value = ''; hEl.value = '';
 
+  // Norman roller gets the full dedicated 8-step configurator (rn-wrap)
+  // All other products use the shared steps (shared-steps-wrap)
+  const rnActive = (productId === 'roller' && typeof currentBrand !== 'undefined' && currentBrand === 'norman');
+  document.getElementById('rn-wrap').style.display = rnActive ? 'block' : 'none';
+  document.getElementById('shared-steps-wrap').style.display = rnActive ? 'none' : 'block';
+  if (rnActive) return; // rn-wrap handles everything — skip shared step configuration
+
   // Show/hide operating system selector
   const hasSystem = ['roller','cellular','zebra','woven'].includes(productId);
   document.getElementById('op-system-block').style.display = hasSystem ? 'block' : 'none';
@@ -1880,6 +1888,257 @@ function renderCart() {
 
   document.getElementById('cart-grand-total').textContent = '~$' + grand.toFixed(0);
 }
+
+// ════════════════════════════════════════════════════════════════
+// NORMAN ROLLER (rn-*) — Full 8-step Soluna configurator
+// ════════════════════════════════════════════════════════════════
+
+let rnFabricType   = 'lf';
+let rnFabricWidth  = 96;
+let rnSystemType   = 'standard';
+let rnLiftType     = 'cord';
+const RN_RATE      = 22;   // placeholder $/sqft
+const RN_MOTOR_UP  = 120;  // motorization upcharge
+const RN_MIN       = 85;
+
+const RN_SYSTEM_NOTES = {
+  standard:  'Standard: single shade per bracket set — most straightforward.',
+  dual:      'Dual shade: two fabrics (front + back) in one headrail — sheer + room darkening is the most popular combo. Extra mounting depth required.',
+  coupled2:  'Coupled 2: two panels linked, operated together. Must use same lift system. Center gap applies.',
+  coupled3:  'Coupled 3: three panels linked. Two coupled surcharges apply.',
+  coupled4:  'Coupled 4: four panels linked. Three coupled surcharges apply.',
+  sidebyside:'Side-by-Side: independent shades installed adjacent. Separate operation. Gap rules apply.'
+};
+const RN_FABRIC_NOTES = {
+  sheer:      'Sheer: minimal privacy, maximum view-through. Works with all standard systems.',
+  lf:         'Light Filtering: diffused light, medium privacy. Works with all systems.',
+  natural:    '⚠ Natural fabrics (bamboo, jute, paper blends) may show variation, bowing, fraying, color shift over time — these are normal material characteristics and not defects.',
+  rd:         'Room Darkening: high privacy, coated backing. ⚠ Alone it still allows edge light gaps — add LightGuard 360™ in Step 7 for true blackout.',
+  solar:      'Solar Screen: UV and glare control. Openness factor = % of light allowed through. ⚠ ±10% tolerance is industry standard — not a defect.',
+  commercial: 'Commercial Solar (NA series): PVC/polyester construction rated for high UV environments. Same openness rules as residential solar.'
+};
+
+// ─── rnSetSystem ─────────────────────────────────────────────
+function rnSetSystem(type) {
+  rnSystemType = type;
+  const note = document.getElementById('rn-system-note');
+  if (note) note.textContent = RN_SYSTEM_NOTES[type] || '';
+}
+
+// ─── rnSetFabric ─────────────────────────────────────────────
+function rnSetFabric(type) {
+  rnFabricType = type;
+  document.getElementById('rn-solar-opts').style.display =
+    (type === 'solar' || type === 'commercial') ? 'block' : 'none';
+  const rdNote = document.getElementById('rn-rd-note');
+  if (rdNote) rdNote.style.display = type === 'rd' ? 'block' : 'none';
+  const noteEl = document.getElementById('rn-fabric-note');
+  if (noteEl) noteEl.textContent = RN_FABRIC_NOTES[type] || '';
+  rnRunValidation();
+  rnUpdatePrice();
+}
+
+// ─── rnSetFabricWidth ────────────────────────────────────────
+function rnSetFabricWidth(w) {
+  rnFabricWidth = w;
+  const inp = document.getElementById('rn-width');
+  if (inp) inp.max = w;
+  const note = document.getElementById('rn-width-note');
+  if (note) note.textContent = 'Max shade width: ' + w + '″ (selected fabric roll width)';
+  rnRunValidation();
+  rnUpdatePrice();
+}
+
+// ─── rnSetLift ───────────────────────────────────────────────
+function rnSetLift(type) {
+  rnLiftType = type;
+  const motorWrap = document.getElementById('rn-motor-wrap');
+  if (motorWrap) motorWrap.style.display = type === 'motor' ? 'block' : 'none';
+  const liftNotes = {
+    cordless: 'PrecisionLift™ Cordless: child & pet safe, no exposed chain. Max width varies by fabric weight — not recommended for oversized or very heavy shades.',
+    cord:     'Continuous Cord Loop: handles large widths & heavy fabrics. Child-safe tensioner required. Available in plastic bead or stainless steel chain.',
+    smart:    'SmartRelease™: controlled soft descent. Requires compatible raceway/cassette. Has surcharge.',
+    motor:    'Motorized: required for large shades, hard-to-reach windows, dual & coupled systems. Battery or hardwired options available.'
+  };
+  const note = document.getElementById('rn-lift-note');
+  if (note) note.textContent = liftNotes[type] || '';
+  rnRunValidation();
+  rnUpdatePrice();
+}
+
+// ─── rnSetLG ─────────────────────────────────────────────────
+function rnSetLG(type) {
+  const note = document.getElementById('rn-lg-note');
+  if (note) note.style.display = type === '360' ? 'block' : 'none';
+  rnRunValidation();
+}
+
+// ─── rnRunValidation ─────────────────────────────────────────
+// Implements the validateSolunaShade logic from the Soluna 2026 spec
+function rnRunValidation() {
+  const errors = [], warnings = [];
+  const w   = parseFloat((document.getElementById('rn-width')  || {}).value);
+  const h   = parseFloat((document.getElementById('rn-height') || {}).value);
+  const lgSel = document.querySelector('#rn-grp-lg .opt-btn.sel');
+  const lgType = lgSel ? lgSel.textContent.trim() : 'None';
+
+  if (w && w > rnFabricWidth) {
+    errors.push('Shade width (' + w + '″) exceeds selected fabric width (' + rnFabricWidth + '″). Choose a wider fabric or split into Side-by-Side.');
+  }
+  if (h && rnFabricType === 'natural' && h > 120) {
+    errors.push('Some natural fabrics (e.g. Maui Natural) have a maximum fabric height of 120″.');
+  }
+  if (rnLiftType === 'cordless' && w && w > 72) {
+    warnings.push('Cordless lift may not support widths over ~72″ depending on fabric weight. Consider Cord Loop or Motorized.');
+  }
+  if (lgType === 'LightGuard 360™' && rnFabricType !== 'rd') {
+    errors.push('LightGuard 360™ requires Room Darkening fabric to be effective. Select Room Darkening in Step 2.');
+  }
+  if (rnSystemType === 'dual') {
+    warnings.push('Dual shades require extra mounting depth — confirm depth at order. Price calculated as two individual shades.');
+  }
+  if (['coupled2','coupled3','coupled4'].includes(rnSystemType)) {
+    warnings.push('Coupled shades must use the same lift system. Center gaps and alignment tolerance may be visible. Surcharge applies per linked section.');
+  }
+  if (rnFabricType === 'natural') {
+    warnings.push('Natural fabrics may show variation, bowing, fraying, shrinkage, stretching, or color change over time. These are normal material characteristics — not defects.');
+  }
+  if (rnFabricType === 'rd') {
+    warnings.push('Room Darkening fabrics may show temporary creases or dents near the roller tube, especially after shipping or when left partially raised. Leave fully lowered to resolve.');
+  }
+  if (rnFabricType === 'solar' || rnFabricType === 'commercial') {
+    warnings.push('Solar openness tolerance is approximately ±10%. Actual visibility and glare control will vary by lighting conditions.');
+  }
+
+  const alertEl = document.getElementById('rn-compat-alerts');
+  if (!alertEl) return;
+  if (!errors.length && !warnings.length) { alertEl.innerHTML = ''; return; }
+  alertEl.innerHTML =
+    errors.map(e => '<div style="background:#FEF2F2;border:1px solid #FCA5A5;border-radius:8px;padding:10px 14px;font-size:11px;color:#B91C1C;line-height:1.6;margin-bottom:6px">⚠ ' + e + '</div>').join('') +
+    warnings.map(w => '<div style="background:#FFFBEB;border:1px solid #FCD34D;border-radius:8px;padding:10px 14px;font-size:11px;color:#92400E;line-height:1.6;margin-bottom:6px">ℹ ' + w + '</div>').join('');
+}
+
+// ─── rnUpdatePrice ───────────────────────────────────────────
+function rnUpdatePrice() {
+  const w   = parseFloat((document.getElementById('rn-width')  || {}).value);
+  const h   = parseFloat((document.getElementById('rn-height') || {}).value);
+  const qty = parseInt((document.getElementById('rn-qty')      || {}).value) || 1;
+  const isMotor = rnLiftType === 'motor';
+
+  const warn = document.getElementById('rn-size-warning');
+
+  if (w && w > rnFabricWidth && warn) {
+    warn.style.display = 'block';
+    warn.textContent = '⚠ Width ' + w + '″ exceeds fabric width ' + rnFabricWidth + '″ — choose a wider fabric or split shade.';
+  } else if (warn) {
+    warn.style.display = 'none';
+  }
+
+  document.getElementById('rn-pb-fabric').textContent = {
+    sheer:'Sheer', lf:'Light Filtering', natural:'Natural',
+    rd:'Room Darkening', solar:'Solar Screen', commercial:'Commercial Solar'
+  }[rnFabricType] || rnFabricType;
+  document.getElementById('rn-pb-qty').textContent = qty;
+
+  if (!w || !h) {
+    document.getElementById('rn-pb-dims').textContent = 'Enter width & height';
+    document.getElementById('rn-pb-sqft').textContent = '—';
+    document.getElementById('rn-pb-base').textContent = '—';
+    document.getElementById('rn-pb-total').textContent = '—';
+    if (isMotor) { document.getElementById('rn-pb-motor-row').style.display = 'flex'; document.getElementById('rn-pb-motor').textContent = '+$' + RN_MOTOR_UP + '/shade'; }
+    else { document.getElementById('rn-pb-motor-row').style.display = 'none'; }
+    return;
+  }
+
+  const sqft      = (w / 12) * (h / 12);
+  const perShade  = Math.max(RN_MIN, sqft * RN_RATE);
+  const motorCost = isMotor ? RN_MOTOR_UP * qty : 0;
+  const total     = (perShade * qty) + motorCost;
+
+  document.getElementById('rn-pb-dims').textContent  = w + '″ W × ' + h + '″ H';
+  document.getElementById('rn-pb-sqft').textContent  = sqft.toFixed(2) + ' sqft';
+  document.getElementById('rn-pb-base').textContent  = '$' + RN_RATE + '/sqft → $' + perShade.toFixed(2);
+  document.getElementById('rn-pb-total').textContent = '$' + total.toFixed(2);
+  document.getElementById('rn-pb-min-note').style.display = perShade === RN_MIN ? 'block' : 'none';
+  if (isMotor) {
+    document.getElementById('rn-pb-motor-row').style.display = 'flex';
+    document.getElementById('rn-pb-motor').textContent = '+$' + RN_MOTOR_UP + ' × ' + qty + ' = $' + (RN_MOTOR_UP * qty).toFixed(2);
+  } else {
+    document.getElementById('rn-pb-motor-row').style.display = 'none';
+  }
+  rnRunValidation();
+}
+
+// ─── rnAdjQty ────────────────────────────────────────────────
+function rnAdjQty(delta) {
+  const inp = document.getElementById('rn-qty');
+  let v = parseInt(inp.value) || 1;
+  v = Math.min(10, Math.max(1, v + delta));
+  inp.value = v;
+  rnUpdatePrice();
+}
+
+// ─── rnShowForm ──────────────────────────────────────────────
+function rnShowForm() {
+  const f = document.getElementById('rn-submit-form');
+  f.classList.add('show');
+  f.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── rnSubmitForm ────────────────────────────────────────────
+function rnSubmitForm() {
+  const name  = (document.getElementById('rn-sf-name')  || {}).value.trim();
+  const phone = (document.getElementById('rn-sf-phone') || {}).value.trim();
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+
+  const email   = (document.getElementById('rn-sf-email') || {}).value.trim();
+  const notes   = (document.getElementById('rn-sf-notes') || {}).value.trim();
+  const w       = (document.getElementById('rn-width')    || {}).value;
+  const h       = (document.getElementById('rn-height')   || {}).value;
+  const qty     = (document.getElementById('rn-qty')      || {}).value || 1;
+  const delBtn  = document.querySelector('#grp-del-rn .opt-btn.sel');
+  const delivery = delBtn ? delBtn.textContent.trim() : 'Ship to me';
+
+  const g = id => { const b = document.querySelector('#' + id + ' .opt-btn.sel'); return b ? b.textContent.trim() : '—'; };
+
+  const body =
+    'NORMAN SOLUNA ROLLER SHADE QUOTE REQUEST\n' +
+    '═════════════════════════════════════════\n' +
+    'Name:   ' + name  + '\n' +
+    'Phone:  ' + phone + '\n' +
+    'Email:  ' + (email || '—') + '\n\n' +
+    'Configuration:  ' + g('rn-grp-system') + '\n' +
+    'Fabric type:    ' + g('rn-grp-fabric')  + '\n' +
+    'Fabric width:   ' + rnFabricWidth + '″\n' +
+    'Width:          ' + (w || '—') + '″\n' +
+    'Height:         ' + (h || '—') + '″\n' +
+    'Qty:            ' + qty + '\n' +
+    'Lift system:    ' + g('rn-grp-lift')    + '\n' +
+    'Mount type:     ' + g('rn-grp-mount')   + '\n' +
+    'Headrail:       ' + g('rn-grp-headrail') + '\n' +
+    'LightGuard:     ' + g('rn-grp-lg')      + '\n' +
+    'Hem bar:        ' + g('rn-grp-hem')     + '\n' +
+    'Color Coord 1:  ' + g('rn-grp-cc1')     + '\n' +
+    'Color Coord 2:  ' + g('rn-grp-cc2')     + '\n' +
+    'Chain type:     ' + g('rn-grp-chain')   + '\n' +
+    'Delivery:       ' + delivery            + '\n\n' +
+    'Notes:\n' + (notes || '(none)');
+
+  window.location.href = 'mailto:blindznation@gmail.com' +
+    '?subject=' + encodeURIComponent('Norman Soluna Quote — ' + name) +
+    '&body='    + encodeURIComponent(body);
+
+  document.getElementById('rn-submit-form').classList.remove('show');
+  const s = document.getElementById('rn-success');
+  s.classList.add('show');
+  s.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── showCellularLiftNote (already defined above, referenced here for context)
+// ─── Cellular D&N validation additions ───────────────────────
+// Called from filterCellSizes when D&N is active — extra restrictions from catalog:
+// Excluded from D&N: Woven Breeze, Ashton, FR fabrics, FR Essentials
+// Sheer = top only; Solus = bottom only; LF+RD only in 3/4"S or 1¼"S
 
 function showCartForm() {
   const w = document.getElementById('cart-contact-wrap');
