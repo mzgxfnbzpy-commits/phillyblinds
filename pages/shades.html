@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -1177,9 +1177,23 @@
       <!-- Fabric sourcing -->
       <div class="step-title" style="font-size:12px;margin:14px 0 8px">Fabric</div>
       <div class="opt-row" id="pb-grp-fabric">
-        <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-fabric')">We supply fabric</button>
-        <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric')">You supply fabric</button>
-        <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric')">Not sure — consult me</button>
+        <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-fabric');pbShowFabricPicker(true)">We supply fabric</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric');pbShowFabricPicker(false)">You supply fabric</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric');pbShowFabricPicker(false)">Not sure — consult me</button>
+      </div>
+      <!-- Fabric picker — shown when "We supply fabric" is selected -->
+      <div id="pb-fabric-picker" style="margin-top:12px;padding:14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.5px;color:#444;text-transform:uppercase;margin-bottom:10px">Fabric type</div>
+        <div class="opt-row" id="pb-grp-fabric-type">
+          <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors()">Linen Blend</button>
+          <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors()">Solar Screen</button>
+          <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors()">Room Darkening</button>
+          <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors()">Blackout</button>
+          <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors()">Sheer / Voile</button>
+          <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors()">Cotton / Poly</button>
+        </div>
+        <div id="pb-fabric-colors" style="margin-top:10px"></div>
+        <div style="font-size:10px;color:#999;margin-top:8px;line-height:1.5">Colors are approximate — exact swatches brought to your consultation. Final availability confirmed at order.</div>
       </div>
       <div class="form-group" style="margin-top:10px"><label>Fabric notes / description</label><textarea id="pb-fabric-notes" placeholder="e.g. prefer neutral linen, blackout needed in bedroom, open to fabric recommendations"></textarea></div>
 
@@ -2224,88 +2238,88 @@ let currentCellColor   = null;
 // ─── Norman Soluna roller fabric collections ──────────────────
 const SOLUNA_COLLECTIONS = {
   'sheer': [
-    {name:'Dazzle',        colors:[]},
-    {name:'Scarlett',      colors:[]},
-    {name:'Lakeshore',     colors:[]}
+    {name:'Dazzle',    colors:['White','Soft White','Ivory','Pearl','Champagne','Stone','Silver','Smoke']},
+    {name:'Scarlett',  colors:['Blush','Rose','Dusty Rose','Mauve','Berry','Plum']},
+    {name:'Lakeshore', colors:['Cloud','Mist','Sky','Powder Blue','Blue Gray','Slate','Denim']}
   ],
   'lf': [
-    {name:'Kendra',    colors:[]},
-    {name:'Francis',   colors:[]},
-    {name:'Breeze',    colors:[]},
-    {name:'Hayes',     colors:[]},
-    {name:'Valerie',   colors:[]},
-    {name:'Emery',     colors:[]},
-    {name:'Brook',     colors:[]},
-    {name:'Chelsea',   colors:[]},
-    {name:'Sierra',    colors:[]},
-    {name:'Shimmer',   colors:[]},
-    {name:'Amelia',    colors:[]},
-    {name:'Lola LF',   colors:[]},
-    {name:'Clarissa',  colors:[]},
-    {name:'Verona LF', colors:[]},
-    {name:'Callie',    colors:[]},
-    {name:'Remy',      colors:[]}
+    {name:'Kendra',    colors:['White','Ivory','Cream','Sand','Wheat','Khaki','Stone','Taupe','Gray','Charcoal']},
+    {name:'Francis',   colors:['White','Antique White','Natural','Linen','Flax','Sand','Taupe','Gray','Charcoal']},
+    {name:'Breeze',    colors:['Natural','Ivory','Linen','Hemp','Oatmeal','Flax','Dune','Parchment','Bark']},
+    {name:'Hayes',     colors:['White','Off-White','Beige','Stone','Gray','Slate','Charcoal','Black']},
+    {name:'Valerie',   colors:['White','Ivory','Pearl','Champagne','Blush','Rose','Dove','Silver','Smoke']},
+    {name:'Emery',     colors:['White','Ivory','Sand','Stone','Taupe','Gray','Charcoal']},
+    {name:'Brook',     colors:['White','Ivory','Natural','Linen','Almond','Sand','Driftwood','Brown']},
+    {name:'Chelsea',   colors:['White','Ivory','Cream','Fog','Stone','Bark','Charcoal']},
+    {name:'Sierra',    colors:['White','Ivory','Linen','Sand','Taupe','Bark','Brown','Gray','Charcoal']},
+    {name:'Shimmer',   colors:['White','Pearl','Silver','Champagne','Gold','Bronze','Pewter']},
+    {name:'Amelia',    colors:['White','Ivory','Sand','Wheat','Caramel','Khaki','Stone','Taupe']},
+    {name:'Lola LF',   colors:['White','Ivory','Linen','Almond','Stone','Gray','Charcoal']},
+    {name:'Clarissa',  colors:['White','Ivory','Blush','Lilac','Sage','Mint','Stone','Gray']},
+    {name:'Verona LF', colors:['White','Ivory','Sand','Linen','Taupe','Gray','Charcoal']},
+    {name:'Callie',    colors:['White','Ivory','Cream','Sand','Stone','Gray','Charcoal','Espresso']},
+    {name:'Remy',      colors:['White','Ivory','Linen','Sand','Driftwood','Taupe','Gray','Charcoal']}
   ],
   'natural': [
-    {name:'Aruba',       colors:[]},
-    {name:'Caroline',    colors:[]},
-    {name:'Samoa',       colors:[]},
-    {name:'Bali',        colors:[]},
-    {name:'Phuket',      colors:[]},
-    {name:'Bora Bora',   colors:[]},
-    {name:'Sumatra',     colors:[]},
-    {name:'Java',        colors:[]},
-    {name:'Riviera',     colors:[]},
-    {name:'Maui',        colors:[]},
-    {name:'Lake Tahoe',  colors:[]},
-    {name:'Catalina',    colors:[]},
-    {name:'Cove',        colors:[]}
+    {name:'Aruba',      colors:['Natural','Light','Medium','Dark']},
+    {name:'Caroline',   colors:['Natural','Ivory','Cream']},
+    {name:'Samoa',      colors:['Natural','Brown','Ebony']},
+    {name:'Bali',       colors:['Natural','Ivory','Sand','Teak']},
+    {name:'Phuket',     colors:['Natural','Tan','Brown']},
+    {name:'Bora Bora',  colors:['Natural','Medium','Dark']},
+    {name:'Sumatra',    colors:['Natural','Dark Brown','Ebony']},
+    {name:'Java',       colors:['Natural','Espresso','Black']},
+    {name:'Riviera',    colors:['Natural','Ivory','Sand']},
+    {name:'Maui',       colors:['Natural','Tan','Medium']},
+    {name:'Lake Tahoe', colors:['Natural','Ivory','Light']},
+    {name:'Catalina',   colors:['Natural','Ivory','Sand','Brown']},
+    {name:'Cove',       colors:['Natural','Sand','Stone']}
   ],
   'rd': [
-    {name:'Garden',     colors:[]},
-    {name:'Elements',   colors:[]},
-    {name:'Jamaica',    colors:[]},
-    {name:'Bermuda',    colors:[]},
-    {name:'Fiji',       colors:[]},
-    {name:'Lola BO',    colors:[]},
-    {name:'Summerland', colors:[]},
-    {name:'Cory',       colors:[]},
-    {name:'Callie RD',  colors:[]},
-    {name:'Remy RD',    colors:[]},
-    {name:'Francis RD', colors:[]},
-    {name:'Breeze RD',  colors:[]},
-    {name:'Amelia RD',  colors:[]}
+    {name:'Garden',     colors:['White','Ivory','Sand','Stone','Taupe','Gray','Charcoal','Espresso','Black']},
+    {name:'Elements',   colors:['White','Ivory','Beige','Stone','Gray','Charcoal','Espresso','Black']},
+    {name:'Jamaica',    colors:['White','Ivory','Sand','Brown','Charcoal','Espresso','Black']},
+    {name:'Bermuda',    colors:['White','Ivory','Beige','Stone','Gray','Charcoal','Black']},
+    {name:'Fiji',       colors:['White','Ivory','Sand','Stone','Taupe','Gray','Charcoal','Black']},
+    {name:'Lola BO',    colors:['White','Ivory','Linen','Almond','Stone','Gray','Charcoal','Black']},
+    {name:'Summerland', colors:['White','Ivory','Sand','Stone','Taupe','Gray','Charcoal','Black']},
+    {name:'Cory',       colors:['White','Ivory','Sand','Stone','Taupe','Gray','Charcoal','Espresso']},
+    {name:'Callie RD',  colors:['White','Ivory','Cream','Sand','Stone','Gray','Charcoal','Espresso','Black']},
+    {name:'Remy RD',    colors:['White','Ivory','Linen','Sand','Driftwood','Gray','Charcoal','Black']},
+    {name:'Francis RD', colors:['White','Antique White','Natural','Linen','Flax','Sand','Taupe','Gray','Black']},
+    {name:'Breeze RD',  colors:['Natural','Ivory','Linen','Hemp','Oatmeal','Flax','Dune','Bark','Charcoal']},
+    {name:'Amelia RD',  colors:['White','Ivory','Sand','Wheat','Khaki','Stone','Gray','Charcoal','Black']}
   ],
   'solar': [
-    {name:'Lakeview 1%',     colors:[]},
-    {name:'Lakeview 3%',     colors:[]},
-    {name:'Lakeview 7%',     colors:[]},
-    {name:'Lakeview 10%',    colors:[]},
-    {name:'Meadows 1%',      colors:[]},
-    {name:'Meadows 3%',      colors:[]},
-    {name:'Jubilee 3%',      colors:[]},
-    {name:'Moon 5%',         colors:[]},
-    {name:'Serene 1%',       colors:[]},
-    {name:'Serene 3%',       colors:[]},
-    {name:'Serene 7%',       colors:[]},
-    {name:'Flow 1%',         colors:[]},
-    {name:'Flow 5%',         colors:[]},
-    {name:'Flow 7%',         colors:[]},
-    {name:'Windsong 1%',     colors:[]},
-    {name:'Windsong 5%',     colors:[]},
-    {name:'Breeze Screen 1%',colors:['Linen Flax','Linen Natural','Linen Khaki','Linen Dune','Linen Graphite','Linen Almond Milk','Linen Stone','Linen Cloud','Linen Warm Ivory']},
-    {name:'Breeze Screen 3%',colors:[]},
-    {name:'Galaxy 3%',       colors:[]}
+    {name:'Lakeview 1%',      colors:['White','Linen','Charcoal','Black']},
+    {name:'Lakeview 3%',      colors:['White','Ivory','Linen','Charcoal','Black']},
+    {name:'Lakeview 7%',      colors:['White','Linen','Charcoal']},
+    {name:'Lakeview 10%',     colors:['White','Linen','Charcoal']},
+    {name:'Meadows 1%',       colors:['White','Ivory','Linen','Stone','Charcoal']},
+    {name:'Meadows 3%',       colors:['White','Ivory','Linen','Stone','Charcoal']},
+    {name:'Jubilee 3%',       colors:['White','Ivory','Sand','Stone']},
+    {name:'Moon 5%',          colors:['White','Ivory','Charcoal']},
+    {name:'Serene 1%',        colors:['White','Ivory','Linen','Stone','Charcoal']},
+    {name:'Serene 3%',        colors:['White','Ivory','Linen','Stone','Charcoal']},
+    {name:'Serene 7%',        colors:['White','Linen','Stone','Charcoal']},
+    {name:'Flow 1%',          colors:['White','Linen','Charcoal']},
+    {name:'Flow 5%',          colors:['White','Ivory','Linen','Charcoal']},
+    {name:'Flow 7%',          colors:['White','Linen','Charcoal']},
+    {name:'Windsong 1%',      colors:['White','Ivory','Linen','Hemp','Charcoal']},
+    {name:'Windsong 5%',      colors:['White','Ivory','Linen','Hemp','Charcoal']},
+    {name:'Breeze Screen 1%', colors:['Linen Flax','Linen Natural','Linen Khaki','Linen Dune','Linen Graphite','Linen Almond Milk','Linen Stone','Linen Cloud','Linen Warm Ivory']},
+    {name:'Breeze Screen 3%', colors:['Linen Flax','Linen Natural','Linen Khaki','Linen Dune','Linen Graphite','Linen Stone','Linen Cloud']},
+    {name:'Galaxy 3%',        colors:['Charcoal','Black','Dark Bronze']}
   ],
   'commercial': [
-    {name:'NA300 1%',  colors:[]},
-    {name:'NA300 3%',  colors:[]},
-    {name:'NA300 5%',  colors:[]},
-    {name:'NA400 1%',  colors:[]},
-    {name:'NA400 3%',  colors:[]},
-    {name:'NA400 5%',  colors:[]},
-    {name:'NA400 10%', colors:[]},
-    {name:'NA820 3%',  colors:[]}
+    {name:'NA300 1%',  colors:['White','Charcoal']},
+    {name:'NA300 3%',  colors:['White','Charcoal']},
+    {name:'NA300 5%',  colors:['White','Charcoal','Black']},
+    {name:'NA400 1%',  colors:['White','Charcoal']},
+    {name:'NA400 3%',  colors:['White','Charcoal']},
+    {name:'NA400 5%',  colors:['White','Charcoal','Black']},
+    {name:'NA400 10%', colors:['White','Linen','Charcoal']},
+    {name:'NA820 3%',  colors:['White','Charcoal','Black']}
   ]
 };
 
@@ -2326,47 +2340,47 @@ const CELL_COLLECTIONS = {
     {name:'Premium BO',   colors:['White','Ivory','Beige','Gray','Charcoal','Black']}
   ],
   'sheer': [
-    {name:'Sheer',             colors:[]}
+    {name:'Sheer', colors:['White','Soft White','Ivory','Sand','Silver']}
   ],
   'designer-lf': [
-    {name:'Rustica',           colors:[]},
-    {name:'Silverbrook',       colors:[]},
-    {name:'Designer LF',       colors:[]}
+    {name:'Rustica',     colors:['Ivory','Flax','Sand','Toast','Maple','Cinnamon','Bark','Cocoa']},
+    {name:'Silverbrook', colors:['White','Pearl','Mist','Silver','Stone','Slate','Graphite']},
+    {name:'Designer LF', colors:['White','Ivory','Linen','Sand','Stone','Gray','Charcoal']}
   ],
   'designer-rd': [
-    {name:'Designer RD',       colors:[]}
+    {name:'Designer RD', colors:['White','Ivory','Sand','Stone','Taupe','Gray','Charcoal','Black']}
   ],
   'ashton': [
-    {name:'Ashton',            colors:[]}
+    {name:'Ashton', colors:['Linen','Flax','Oatmeal','Champagne','Stone','Taupe','Charcoal']}
   ],
   'fr': [
-    {name:'FR Light Filtering',colors:[]},
-    {name:'FR Room Darkening', colors:[]}
+    {name:'FR Light Filtering', colors:['White','Ivory','Gray']},
+    {name:'FR Room Darkening',  colors:['White','Ivory','Gray','Charcoal']}
   ],
   'fr-essentials': [
-    {name:'FR Essentials',     colors:[]}
+    {name:'FR Essentials', colors:['White','Ivory','Beige','Gray']}
   ],
   'solus': [
-    {name:'Solus',             colors:[]}
+    {name:'Solus', colors:['White','Soft White','Ivory','Sand','Gray']}
   ],
   'woven-breeze': [
-    {name:'Woven Breeze',      colors:[]}
+    {name:'Woven Breeze', colors:['Natural','Ivory','Sand','Dune','Stone','Brown']}
   ],
   'woven-windsong': [
-    {name:'Woven Windsong',    colors:[]}
+    {name:'Woven Windsong', colors:['Natural','Ivory','Sand','Dune','Taupe','Brown']}
   ],
   'dn': [
-    {name:'Sheer + LF',        colors:[]},
-    {name:'Sheer + RD',        colors:[]},
-    {name:'Sheer + Solus',     colors:[]},
-    {name:'LF + RD',           colors:[]},
-    {name:'LF + LF',           colors:[]},
-    {name:'LF + Solus',        colors:[]},
-    {name:'Woven Windsong + LF',   colors:[]},
-    {name:'Woven Windsong + RD',   colors:[]},
-    {name:'Woven Windsong + Solus',colors:[]},
-    {name:'Designer LF + LF', colors:[]},
-    {name:'Designer LF + RD', colors:[]}
+    {name:'Sheer + LF',               colors:[]},
+    {name:'Sheer + RD',               colors:[]},
+    {name:'Sheer + Solus',            colors:[]},
+    {name:'LF + RD',                  colors:[]},
+    {name:'LF + LF',                  colors:[]},
+    {name:'LF + Solus',               colors:[]},
+    {name:'Woven Windsong + LF',      colors:[]},
+    {name:'Woven Windsong + RD',      colors:[]},
+    {name:'Woven Windsong + Solus',   colors:[]},
+    {name:'Designer LF + LF',         colors:[]},
+    {name:'Designer LF + RD',         colors:[]}
   ]
 };
 
@@ -2466,6 +2480,32 @@ function selFlatFabric(el, product, ci, ki) {
     currentCellColor = ki >= 0 ? coll.colors[ki] : '';
   }
 }
+// ─── PB Custom roller fabric picker ──────────────────────────
+const PB_FABRICS = {
+  'Linen Blend':    ['Natural','Ivory','Flax','Oatmeal','Sand','Linen','Stone','Taupe','Gray','Charcoal'],
+  'Solar Screen':   ['White (1%)','White (3%)','White (5%)','Linen (1%)','Linen (3%)','Linen (5%)','Charcoal (1%)','Charcoal (3%)','Charcoal (5%)'],
+  'Room Darkening': ['White','Ivory','Sand','Stone','Taupe','Gray','Charcoal','Espresso','Black'],
+  'Blackout':       ['White','Ivory','Sand','Stone','Gray','Charcoal','Black'],
+  'Sheer / Voile':  ['White','Soft White','Ivory','Champagne','Pearl','Silver'],
+  'Cotton / Poly':  ['White','Ivory','Sand','Stone','Gray','Charcoal','Black']
+};
+function pbShowFabricPicker(show) {
+  var el = document.getElementById('pb-fabric-picker');
+  if (el) el.style.display = show ? 'block' : 'none';
+  if (show) pbRenderFabricColors();
+}
+function pbRenderFabricColors() {
+  var typeBtn = document.querySelector('#pb-grp-fabric-type .opt-btn.sel');
+  var type = typeBtn ? typeBtn.textContent.trim() : 'Linen Blend';
+  var colors = PB_FABRICS[type] || [];
+  var html = '<div style="display:flex;flex-wrap:wrap;gap:6px">';
+  colors.forEach(function(c) {
+    html += '<button class="opt-btn" style="font-size:11px" onclick="selOpt(this,\'pb-grp-fabric-color\')">' + c + '</button>';
+  });
+  html += '</div>';
+  document.getElementById('pb-fabric-colors').innerHTML = html;
+}
+
 let rnSystemType   = 'standard';
 let rnLiftType     = 'cord';
 const RN_RATE      = 22;   // placeholder $/sqft
@@ -3200,3 +3240,4 @@ function submitCart() {
 </script>
 </body>
 </html>
+

@@ -243,6 +243,30 @@
     </div>
 
   </div>
+
+  <!-- Fabric picker — shown when "We supply fabric" is selected -->
+  <div id="drape-fabric-picker" style="display:none;margin-top:20px;padding:20px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:12px">
+    <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:14px">Choose a fabric category &amp; color</div>
+    <div style="font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:#888;margin-bottom:8px">Fabric category</div>
+    <div class="opt-row" id="drape-grp-fabric-type">
+      <button class="opt-btn sel" onclick="selOpt(this,'drape-grp-fabric-type');drapeRenderColors()">Linen / Natural</button>
+      <button class="opt-btn" onclick="selOpt(this,'drape-grp-fabric-type');drapeRenderColors()">Cotton / Canvas</button>
+      <button class="opt-btn" onclick="selOpt(this,'drape-grp-fabric-type');drapeRenderColors()">Velvet</button>
+      <button class="opt-btn" onclick="selOpt(this,'drape-grp-fabric-type');drapeRenderColors()">Sheer / Voile</button>
+      <button class="opt-btn" onclick="selOpt(this,'drape-grp-fabric-type');drapeRenderColors()">Silk / Faux Silk</button>
+      <button class="opt-btn" onclick="selOpt(this,'drape-grp-fabric-type');drapeRenderColors()">Blackout</button>
+    </div>
+    <div style="font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:#888;margin:12px 0 8px">Color</div>
+    <div id="drape-fabric-colors" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+    <div style="font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:#888;margin:14px 0 8px">Lining</div>
+    <div class="opt-row" id="drape-grp-lining">
+      <button class="opt-btn sel" onclick="selOpt(this,'drape-grp-lining');updateQuote()">Unlined</button>
+      <button class="opt-btn" onclick="selOpt(this,'drape-grp-lining');updateQuote()">Privacy lining</button>
+      <button class="opt-btn" onclick="selOpt(this,'drape-grp-lining');updateQuote()">Blackout lining</button>
+      <button class="opt-btn" onclick="selOpt(this,'drape-grp-lining');updateQuote()">Interlining (extra body)</button>
+    </div>
+    <div style="font-size:10px;color:#999;margin-top:10px;line-height:1.5">Color shown is approximate. We bring full swatch samples to every consultation — no commitment required before seeing fabric in person.</div>
+  </div>
 </div>
 
 <div class="section section-warm">
@@ -505,6 +529,38 @@ function toggleMotor(on) {
   document.getElementById('motor-brand-wrap').style.display = on ? 'block' : 'none';
 }
 
+// ─── Drapery fabric picker ────────────────────────────────────
+const DRAPE_FABRICS = {
+  'Linen / Natural': ['Natural','Ivory','Flax','Oatmeal','Sand','Linen','Dune','Stone','Taupe','Parchment','Hemp','Bark'],
+  'Cotton / Canvas': ['White','Ivory','Sand','Stone','Warm Gray','Gray','Charcoal','Black'],
+  'Velvet':          ['Ivory','Cream','Blush','Rose','Sage','Forest','Navy','Midnight','Charcoal','Black','Burgundy','Dusty Blue'],
+  'Sheer / Voile':   ['White','Soft White','Ivory','Champagne','Pearl','Silver','Blush'],
+  'Silk / Faux Silk':['Ivory','Champagne','Gold','Silver','Blush','Taupe','Sand','Smoke'],
+  'Blackout':        ['White','Ivory','Sand','Stone','Warm Gray','Gray','Charcoal','Espresso','Black']
+};
+var _drapeFabricCategory = 'Linen / Natural';
+var _drapeFabricColor    = '';
+var _drapeLining         = 'Unlined';
+
+function drapeRenderColors() {
+  var typeBtn = document.querySelector('#drape-grp-fabric-type .opt-btn.sel');
+  _drapeFabricCategory = typeBtn ? typeBtn.textContent.trim() : 'Linen / Natural';
+  _drapeFabricColor = '';
+  var colors = DRAPE_FABRICS[_drapeFabricCategory] || [];
+  var html = '';
+  colors.forEach(function(c) {
+    html += '<button class="opt-btn" style="font-size:11px" onclick="selDrapeColor(this,\'' + c.replace(/'/g,"\\'") + '\')">' + c + '</button>';
+  });
+  document.getElementById('drape-fabric-colors').innerHTML = html;
+  updateQuote();
+}
+function selDrapeColor(el, color) {
+  document.querySelectorAll('#drape-fabric-colors .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
+  el.classList.add('sel');
+  _drapeFabricColor = color;
+  updateQuote();
+}
+
 function selStyle(el, name) {
   document.querySelectorAll('#style-grid .style-card').forEach(function(c) { c.classList.remove('sel'); });
   if (_selStyle === name) {
@@ -520,9 +576,17 @@ function selFabricPath(el, name) {
   document.querySelectorAll('.fabric-card').forEach(function(c) { c.classList.remove('sel'); });
   if (_selFabric === name) {
     _selFabric = '';
+    document.getElementById('drape-fabric-picker').style.display = 'none';
   } else {
     el.classList.add('sel');
     _selFabric = name;
+    var picker = document.getElementById('drape-fabric-picker');
+    if (name === 'We supply fabric') {
+      picker.style.display = 'block';
+      drapeRenderColors();
+    } else {
+      picker.style.display = 'none';
+    }
   }
   updateQuote();
 }
@@ -562,7 +626,15 @@ function updateQuote() {
   var brandVal = brandEl && brandEl.value ? brandEl.value : '—';
 
   document.getElementById('qs-style').textContent = _selStyle || '—';
-  document.getElementById('qs-fabric').textContent = _selFabric || '—';
+  var fabricDisplay = _selFabric || '—';
+  if (_selFabric === 'We supply fabric' && (_drapeFabricCategory || _drapeFabricColor)) {
+    fabricDisplay = _selFabric;
+    if (_drapeFabricCategory) fabricDisplay += ' · ' + _drapeFabricCategory;
+    if (_drapeFabricColor)    fabricDisplay += ' · ' + _drapeFabricColor;
+    var liningBtn = document.querySelector('#drape-grp-lining .opt-btn.sel');
+    if (liningBtn) fabricDisplay += ' · ' + liningBtn.textContent.trim();
+  }
+  document.getElementById('qs-fabric').textContent = fabricDisplay;
   document.getElementById('qs-hwtype').textContent = getOpt('hw-type');
   document.getElementById('qs-brand').textContent = brandVal;
   document.getElementById('qs-finish').textContent = getOpt('hw-finish');
