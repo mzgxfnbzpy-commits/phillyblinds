@@ -1635,7 +1635,10 @@ function configureForProduct(productId) {
   const rnActive = (productId === 'roller' && typeof currentBrand !== 'undefined' && currentBrand === 'norman');
   document.getElementById('rn-wrap').style.display = rnActive ? 'block' : 'none';
   document.getElementById('shared-steps-wrap').style.display = rnActive ? 'none' : 'block';
-  if (rnActive) return; // rn-wrap handles everything — skip shared step configuration
+  if (rnActive) {
+    renderFlatFabricGrid('roller'); // populate Step 3a on initial load
+    return;
+  }
 
   // Show/hide operating system selector
   const hasSystem = ['roller','cellular','zebra','woven'].includes(productId);
@@ -2393,7 +2396,7 @@ function renderFlatFabricGrid(product) {
   }
 
   // For cellular D&N: swap to the dual picker instead of flat grid
-  if (product === 'cell' || product === 'cellular') {
+  if (product === 'cell') {
     const dnWrap  = document.getElementById('cell-dn-wrap');
     const summary = document.getElementById('cell-fabric-inline-summary');
     const grid    = document.getElementById('cell-fabric-inline-grid');
@@ -2763,7 +2766,7 @@ function rnBuildConfig() {
     hemBarType:         g('rn-grp-hem-type'),
     operatingSystem:    rnLiftType === 'motor' ? 'Motorized' : rnLiftType === 'cord' ? 'Cord Loop' : 'Cordless',
     motorType:          'Battery / Wired (TBD)',
-    isDualShade:        rnSystemType === 'dual',
+    isDualShade:        rnSystemType === 'dual' || rnSystemType === 'dn',
     tensionDevice:      true,         // always required
     cassetteColor:      null,         // placeholder until cassette color picker added
     usesFabricDefaultColor: !isPremium,
@@ -2944,8 +2947,8 @@ function rnRunValidation() {
   if (lgType === 'LightGuard 360™' && rnFabricType !== 'rd') {
     errors.push('LightGuard 360™ requires Room Darkening fabric to be effective. Select Room Darkening in Step 2.');
   }
-  if (rnSystemType === 'dual') {
-    warnings.push('Dual shades require extra mounting depth — confirm depth at order. Price calculated as two individual shades.');
+  if (rnSystemType === 'dual' || rnSystemType === 'dn') {
+    warnings.push('Dual / Day & Night shades require extra mounting depth — confirm depth at order. Price calculated as two individual shades.');
   }
   if (['coupled2','coupled3','coupled4'].includes(rnSystemType)) {
     warnings.push('Coupled shades must use the same lift system. Center gaps and alignment tolerance may be visible. Surcharge applies per linked section.');
@@ -3110,7 +3113,17 @@ function rnSubmitForm() {
     'Email:          ' + (email || '—') + '\n\n' +
     '── SHADE CONFIGURATION ──────────────────\n' +
     'System:         ' + g('rn-grp-system')   + '\n' +
-    'Fabric type:    ' + g('rn-grp-fabric')   + '\n' +
+    ((rnSystemType === 'dual' || rnSystemType === 'dn') ? (
+      'Blackout pos:   ' + g('rn-grp-bo-pos')  + '\n' +
+      'Day roll type:  ' + g('rn-grp-day-type') + '\n' +
+      'Day roll fabric:' + (currentRollerColl ? ' ' + currentRollerColl + (currentRollerColor ? ' – ' + currentRollerColor : '') : ' —') + '\n' +
+      'Night roll:     Room Darkening\n' +
+      'Night fabric:   (see notes / confirmation)\n'
+    ) : (
+      'Fabric type:    ' + g('rn-grp-fabric')   + '\n' +
+      'Collection:     ' + (currentRollerColl  || '—') + '\n' +
+      'Color:          ' + (currentRollerColor || '—') + '\n'
+    )) +
     'Min fabric W:   ' + rnFabricWidth + '″ (auto from shade width)\n' +
     'Width:          ' + (w || '—') + '″\n' +
     'Height:         ' + (h || '—') + '″\n' +
