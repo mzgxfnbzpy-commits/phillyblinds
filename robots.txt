@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /.claude/
+Disallow: /.vercel/
+Sitemap: https://phillyblinds.com/sitemap.xml
