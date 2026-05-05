@@ -530,6 +530,18 @@ function toggleMotor(on) {
 }
 
 // ─── Drapery fabric picker ────────────────────────────────────
+const DRAPE_COLOR_HEX = {
+  'White':'#FFFFFF','Soft White':'#F8F5F0','Ivory':'#FFFFF0','Cream':'#FFFDD0','Pearl':'#F0E8DC','Champagne':'#F7E7CE','Silver':'#C0C0C0',
+  'Natural':'#C8B890','Linen':'#F0E4D0','Flax':'#DDD0A0','Oatmeal':'#DECFA0','Sand':'#C8B27A','Dune':'#C09060','Stone':'#928070',
+  'Taupe':'#8A7868','Parchment':'#F2E8D0','Hemp':'#A89068','Bark':'#784E28','Warm Gray':'#A09870','Gray':'#888888','Charcoal':'#36444E',
+  'Espresso':'#2A1810','Black':'#1C1C1C','Smoke':'#9C9C9C','Gold':'#D4A828','Blush':'#F2B8B0','Rose':'#E07888',
+  'Sage':'#8EA870','Forest':'#2A6828','Navy':'#182860','Midnight':'#181828','Burgundy':'#780018','Dusty Blue':'#8890B6',
+};
+function drapeDot(name) {
+  var hex = DRAPE_COLOR_HEX[name]; if (!hex) return '';
+  return '<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:' + hex
+    + ';border:1px solid rgba(0,0,0,0.15);margin-right:5px;vertical-align:middle;flex-shrink:0;"></span>';
+}
 const DRAPE_FABRICS = {
   'Linen / Natural': ['Natural','Ivory','Flax','Oatmeal','Sand','Linen','Dune','Stone','Taupe','Parchment','Hemp','Bark'],
   'Cotton / Canvas': ['White','Ivory','Sand','Stone','Warm Gray','Gray','Charcoal','Black'],
@@ -549,7 +561,7 @@ function drapeRenderColors() {
   var colors = DRAPE_FABRICS[_drapeFabricCategory] || [];
   var html = '';
   colors.forEach(function(c) {
-    html += '<button class="opt-btn" style="font-size:11px" onclick="selDrapeColor(this,\'' + c.replace(/'/g,"\\'") + '\')">' + c + '</button>';
+    html += '<button class="opt-btn" style="font-size:11px;display:inline-flex;align-items:center" onclick="selDrapeColor(this,\'' + c.replace(/'/g,"\\'") + '\')">' + drapeDot(c) + c + '</button>';
   });
   document.getElementById('drape-fabric-colors').innerHTML = html;
   updateQuote();

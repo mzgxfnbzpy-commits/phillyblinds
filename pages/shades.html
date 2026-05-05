@@ -383,7 +383,6 @@
               <button class="opt-btn" onclick="selOpt(this,'rn-grp-system');rnSetSystem('coupled3')">Coupled — 3 Shades</button>
               <button class="opt-btn" onclick="selOpt(this,'rn-grp-system');rnSetSystem('coupled4')">Coupled — 4 Shades</button>
               <button class="opt-btn" onclick="selOpt(this,'rn-grp-system');rnSetSystem('sidebyside')">Side-by-Side</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-system');rnSetSystem('dn')">Day &amp; Night</button>
             </div>
             <div id="rn-system-note" class="tooltip-note" style="margin-top:6px">Standard: single shade per bracket set.</div>
           </div>
@@ -2495,6 +2494,39 @@ const CELL_FABRIC_LABELS = {
   'solus':'Solus','woven-breeze':'Woven Breeze','woven-windsong':'Woven Windsong','dn':'Day & Night'
 };
 
+// ─── Color swatch map ────────────────────────────────────────
+const COLOR_HEX = {
+  'White':'#FFFFFF','Soft White':'#F8F5F0','Off-White':'#F3EEE6','Antique White':'#FAEBD7','Snow':'#FFFAFA','Cotton':'#F5F2EC',
+  'Ivory':'#FFFFF0','Cream':'#FFFDD0','Pearl':'#F0E8DC','Champagne':'#F7E7CE','Almond':'#EFDECD',
+  'Natural':'#C8B890','Linen':'#F0E4D0','Flax':'#DDD0A0','Hemp':'#A89068','Oatmeal':'#DECFA0','Parchment':'#F2E8D0',
+  'Sand':'#C8B27A','Wheat':'#F5DEB3','Caramel':'#C68030','Khaki':'#C0A880','Dune':'#C09060',
+  'Teak':'#7A4E2A','Tan':'#D2B48C','Toast':'#A85030','Maple':'#C07830','Cinnamon':'#C86420',
+  'Stone':'#928070','Taupe':'#8A7868','Clay':'#9A6050','Driftwood':'#A07848','Pebble':'#9A8878',
+  'Fog':'#C8C0B6','Mist':'#CED8DE','Beige':'#F0E8CA','Bark':'#784E28','Brown':'#885030',
+  'Dark Brown':'#604020','Ebony':'#3A2818','Espresso':'#2A1810','Cocoa':'#583018',
+  'Dove':'#D4CCBF','Light Gray':'#D0D0D0','Gray':'#888888','Warm Gray':'#A09870',
+  'Ash':'#B0B0A6','Silver':'#C0C0C0','Slate':'#687078','Smoke':'#9C9C9C','Steel':'#7E90A0',
+  'Graphite':'#505050','Pewter':'#909898','Charcoal':'#36444E','Black':'#1C1C1C',
+  'Gold':'#D4A828','Bronze':'#C07A38','Dark Bronze':'#503820',
+  'Linen Flax':'#DECE9A','Linen Natural':'#D0C098','Linen Khaki':'#C0A880','Linen Dune':'#C09060',
+  'Linen Graphite':'#686868','Linen Almond Milk':'#F2E4C6','Linen Stone':'#928070',
+  'Linen Cloud':'#E0E0E0','Linen Warm Ivory':'#FFF2DC',
+  'Light':'#D8C8A6','Medium':'#B09058','Dark':'#6A4020',
+  'Blush':'#F2B8B0','Rose':'#E07888','Dusty Rose':'#D09090','Mauve':'#B88888',
+  'Berry':'#881840','Plum':'#6A0070','Burgundy':'#780018','Lilac':'#C498CC',
+  'Sage':'#8EA870','Mint':'#98D8A8','Forest':'#2A6828',
+  'Sky':'#88CEEA','Powder Blue':'#B0D8EE','Blue Gray':'#6090AE','Denim':'#2860A6',
+  'Navy':'#182860','Midnight':'#181828','Dusty Blue':'#8890B6','Cloud':'#E6EEF2',
+  'White (1%)':'#FAFAFA','White (3%)':'#F5F5F5','White (5%)':'#F0F0F0',
+  'Linen (1%)':'#F4EAD6','Linen (3%)':'#EEDEC6','Linen (5%)':'#E8D4B6',
+  'Charcoal (1%)':'#606060','Charcoal (3%)':'#505050','Charcoal (5%)':'#404040',
+};
+function colorDot(name) {
+  var hex = COLOR_HEX[name]; if (!hex) return '';
+  return '<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:' + hex
+    + ';border:1px solid rgba(0,0,0,0.15);margin-right:5px;vertical-align:middle;flex-shrink:0;"></span>';
+}
+
 // ─── renderFlatFabricGrid ─────────────────────────────────────
 // Flat one-step picker: "Collection – Color" buttons, no intermediate step
 function renderFlatFabricGrid(product) {
@@ -2552,8 +2584,8 @@ function renderFlatFabricGrid(product) {
   colls.forEach(function(coll, ci) {
     if (coll.colors.length) {
       coll.colors.forEach(function(color, ki) {
-        btns += '<button class="opt-btn" style="font-size:11px" onclick="selFlatFabric(this,\'' + product + '\',' + ci + ',' + ki + ')">'
-              + coll.name + ' – ' + color + '</button>';
+        btns += '<button class="opt-btn" style="font-size:11px;display:inline-flex;align-items:center" onclick="selFlatFabric(this,\'' + product + '\',' + ci + ',' + ki + ')">'
+              + colorDot(color) + coll.name + ' – ' + color + '</button>';
       });
     } else {
       btns += '<button class="opt-btn" style="font-size:11px;opacity:0.65" onclick="selFlatFabric(this,\'' + product + '\',' + ci + ',-1)">'
@@ -2630,7 +2662,7 @@ function pbRenderFabricColors() {
   var colors = PB_FABRICS[type] || [];
   var html = '<div style="display:flex;flex-wrap:wrap;gap:6px">';
   colors.forEach(function(c) {
-    html += '<button class="opt-btn" style="font-size:11px" onclick="selOpt(this,\'pb-grp-fabric-color\')">' + c + '</button>';
+    html += '<button class="opt-btn" style="font-size:11px;display:inline-flex;align-items:center" onclick="selOpt(this,\'pb-grp-fabric-color\')">' + colorDot(c) + c + '</button>';
   });
   html += '</div>';
   document.getElementById('pb-fabric-colors').innerHTML = html;
