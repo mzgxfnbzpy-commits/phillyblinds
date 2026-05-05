@@ -14,6 +14,8 @@
 .style-card.sel .style-name { color:var(--espresso) }
 .style-card.sel .style-desc { color:var(--espresso) }
 .style-svg-wrap { background:#F8F4EE; padding:18px; display:flex; align-items:center; justify-content:center }
+.style-img-wrap { height:160px; overflow:hidden; background:#F8F4EE }
+.style-img-wrap img { width:100%; height:100%; object-fit:cover; display:block }
 .style-label-bar { background:#f2ede6; padding:12px 14px; transition:background 0.15s }
 .style-name { font-size:13px; font-weight:500; color:#222; margin-bottom:2px }
 .style-desc { font-size:11px; color:#888; line-height:1.4 }
@@ -72,16 +74,8 @@
   <div class="style-grid">
 
     <div class="style-card" onclick="selStyle(this,'Flat Roman',28)">
-      <div class="style-svg-wrap">
-        <svg width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="3" y="4" width="54" height="5" rx="2.5" fill="#8B6914"/>
-          <rect x="8" y="9" width="44" height="58" rx="1" fill="#F0E6D3" stroke="#C8973F" stroke-width="1"/>
-          <line x1="8" y1="27" x2="52" y2="27" stroke="#C8973F" stroke-width="0.8" opacity="0.5"/>
-          <line x1="8" y1="44" x2="52" y2="44" stroke="#C8973F" stroke-width="0.8" opacity="0.5"/>
-          <line x1="8" y1="61" x2="52" y2="61" stroke="#C8973F" stroke-width="0.8" opacity="0.5"/>
-          <line x1="30" y1="67" x2="30" y2="76" stroke="#8B6914" stroke-width="1.5" stroke-linecap="round"/>
-          <circle cx="30" cy="76" r="2" fill="none" stroke="#8B6914" stroke-width="1.2"/>
-        </svg>
+      <div class="style-img-wrap">
+        <img src="../images/products/roman-flat.jpg" alt="Flat Roman shade" loading="lazy">
       </div>
       <div class="style-label-bar">
         <div class="style-name">Flat Roman</div>
@@ -91,16 +85,8 @@
     </div>
 
     <div class="style-card" onclick="selStyle(this,'Hobbled Roman',32)">
-      <div class="style-svg-wrap">
-        <svg width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="3" y="4" width="54" height="5" rx="2.5" fill="#8B6914"/>
-          <path d="M8 9 Q30 18 52 9 Q52 24 30 28 Q8 24 8 9 Z" fill="#E8D5B7" stroke="#C8973F" stroke-width="0.8"/>
-          <path d="M8 25 Q30 34 52 25 Q52 40 30 44 Q8 40 8 25 Z" fill="#F0E6D3" stroke="#C8973F" stroke-width="0.8"/>
-          <path d="M8 41 Q30 50 52 41 Q52 56 30 60 Q8 56 8 41 Z" fill="#E8D5B7" stroke="#C8973F" stroke-width="0.8"/>
-          <rect x="8" y="57" width="44" height="10" rx="0" fill="#F0E6D3" stroke="#C8973F" stroke-width="0.8"/>
-          <line x1="30" y1="67" x2="30" y2="76" stroke="#8B6914" stroke-width="1.5" stroke-linecap="round"/>
-          <circle cx="30" cy="76" r="2" fill="none" stroke="#8B6914" stroke-width="1.2"/>
-        </svg>
+      <div class="style-img-wrap">
+        <img src="../images/products/roman-hobbled.jpg" alt="Hobbled Roman shade" loading="lazy">
       </div>
       <div class="style-label-bar">
         <div class="style-name">Hobbled Roman</div>
@@ -110,15 +96,8 @@
     </div>
 
     <div class="style-card" onclick="selStyle(this,'Relaxed Roman',30)">
-      <div class="style-svg-wrap">
-        <svg width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="3" y="4" width="54" height="5" rx="2.5" fill="#8B6914"/>
-          <path d="M8 9 L8 60 Q20 72 30 68 Q40 72 52 60 L52 9 Z" fill="#F0E6D3" stroke="#C8973F" stroke-width="1"/>
-          <line x1="8" y1="24" x2="52" y2="24" stroke="#C8973F" stroke-width="0.7" opacity="0.4"/>
-          <line x1="8" y1="39" x2="52" y2="39" stroke="#C8973F" stroke-width="0.7" opacity="0.4"/>
-          <line x1="30" y1="68" x2="30" y2="76" stroke="#8B6914" stroke-width="1.5" stroke-linecap="round"/>
-          <circle cx="30" cy="76" r="2" fill="none" stroke="#8B6914" stroke-width="1.2"/>
-        </svg>
+      <div class="style-img-wrap">
+        <img src="../images/products/roman-relaxed.jpg" alt="Relaxed Roman shade" loading="lazy">
       </div>
       <div class="style-label-bar">
         <div class="style-name">Relaxed Roman</div>

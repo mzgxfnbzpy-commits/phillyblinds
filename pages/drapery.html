@@ -28,6 +28,8 @@
 .style-card.sel .style-label-bar{background:var(--gold)}
 .style-card.sel .style-name{color:var(--espresso)}
 .style-svg-wrap{background:#F8F4EE;padding:18px;display:flex;align-items:center;justify-content:center}
+.style-img-wrap{height:160px;overflow:hidden;background:#F8F4EE}
+.style-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
 .style-label-bar{background:#f2ede6;padding:12px 14px;transition:background 0.15s}
 .style-name{font-size:13px;font-weight:500;color:#222;margin-bottom:2px}
 .style-desc{font-size:11px;color:#888;line-height:1.4}
@@ -98,29 +100,8 @@
   <div class="style-grid" id="style-grid">
 
     <div class="style-card" onclick="selStyle(this,'Pinch Pleat')">
-      <div class="style-svg-wrap">
-        <svg viewBox="0 0 60 80" width="60" height="80" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="6" width="52" height="4" rx="2" fill="#8B6914"/>
-          <line x1="4" y1="8" x2="56" y2="8" stroke="#8B6914" stroke-width="1"/>
-          <g>
-            <line x1="16" y1="10" x2="13" y2="20" stroke="#C8973F" stroke-width="1.5"/>
-            <line x1="16" y1="10" x2="16" y2="20" stroke="#C8973F" stroke-width="1.5"/>
-            <line x1="16" y1="10" x2="19" y2="20" stroke="#C8973F" stroke-width="1.5"/>
-            <line x1="13" y1="20" x2="7" y2="75" stroke="#C8973F" stroke-width="1.5"/>
-            <line x1="19" y1="20" x2="25" y2="75" stroke="#C8973F" stroke-width="1.5"/>
-            <line x1="16" y1="20" x2="16" y2="75" stroke="#F5ECD7" stroke-width="0.8"/>
-          </g>
-          <g>
-            <line x1="37" y1="10" x2="34" y2="20" stroke="#C8973F" stroke-width="1.5"/>
-            <line x1="37" y1="10" x2="37" y2="20" stroke="#C8973F" stroke-width="1.5"/>
-            <line x1="37" y1="10" x2="40" y2="20" stroke="#C8973F" stroke-width="1.5"/>
-            <line x1="34" y1="20" x2="28" y2="75" stroke="#C8973F" stroke-width="1.5"/>
-            <line x1="40" y1="20" x2="46" y2="75" stroke="#C8973F" stroke-width="1.5"/>
-            <line x1="37" y1="20" x2="37" y2="75" stroke="#F5ECD7" stroke-width="0.8"/>
-          </g>
-          <line x1="7" y1="75" x2="25" y2="75" stroke="#8B6914" stroke-width="0.7"/>
-          <line x1="28" y1="75" x2="46" y2="75" stroke="#8B6914" stroke-width="0.7"/>
-        </svg>
+      <div class="style-img-wrap">
+        <img src="../images/products/drapery-pinch.jpg" alt="Pinch Pleat drapery" loading="lazy">
       </div>
       <div class="style-label-bar">
         <div class="style-name">Pinch Pleat</div>
@@ -129,15 +110,8 @@
     </div>
 
     <div class="style-card" onclick="selStyle(this,'Ripple Fold')">
-      <div class="style-svg-wrap">
-        <svg viewBox="0 0 60 80" width="60" height="80" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="6" width="52" height="4" rx="2" fill="#8B6914"/>
-          <path d="M10 12 C14 24, 10 38, 14 50 C18 62, 14 70, 14 76" stroke="#C8973F" stroke-width="1.8" fill="none"/>
-          <path d="M20 12 C24 24, 20 38, 24 50 C28 62, 24 70, 24 76" stroke="#F5ECD7" stroke-width="1.2" fill="none"/>
-          <path d="M30 12 C34 24, 30 38, 34 50 C38 62, 34 70, 34 76" stroke="#C8973F" stroke-width="1.8" fill="none"/>
-          <path d="M40 12 C44 24, 40 38, 44 50 C48 62, 44 70, 44 76" stroke="#F5ECD7" stroke-width="1.2" fill="none"/>
-          <path d="M50 12 C54 24, 50 38, 54 50 C58 62, 54 70, 54 76" stroke="#C8973F" stroke-width="1.8" fill="none"/>
-        </svg>
+      <div class="style-img-wrap">
+        <img src="../images/products/drapery-wave.jpg" alt="Ripple Fold drapery" loading="lazy">
       </div>
       <div class="style-label-bar">
         <div class="style-name">Ripple Fold</div>
@@ -213,13 +187,8 @@
     </div>
 
     <div class="style-card" onclick="selStyle(this,'Flat Panel')">
-      <div class="style-svg-wrap">
-        <svg viewBox="0 0 60 80" width="60" height="80" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="6" width="52" height="4" rx="2" fill="#8B6914"/>
-          <rect x="8" y="10" width="44" height="66" rx="1" fill="rgba(200,151,63,0.12)" stroke="#C8973F" stroke-width="1.4"/>
-          <line x1="22" y1="10" x2="22" y2="76" stroke="#F5ECD7" stroke-width="0.9"/>
-          <line x1="38" y1="10" x2="38" y2="76" stroke="#F5ECD7" stroke-width="0.9"/>
-        </svg>
+      <div class="style-img-wrap">
+        <img src="../images/products/drapery-flat-panel.jpg" alt="Flat Panel drapery" loading="lazy">
       </div>
       <div class="style-label-bar">
         <div class="style-name">Flat Panel</div>
