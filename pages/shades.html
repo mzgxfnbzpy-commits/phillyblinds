@@ -23,6 +23,8 @@
 .product-card:hover{border-color:var(--gold);box-shadow:0 2px 12px rgba(200,151,63,0.12)}
 .product-card.selected{border:2px solid var(--gold);box-shadow:0 2px 16px rgba(200,151,63,0.2)}
 .product-img{height:90px;display:flex;align-items:center;justify-content:center;position:relative}
+.product-img-photo{height:110px;overflow:hidden;position:relative}
+.product-img-photo img{width:100%;height:100%;object-fit:cover;display:block}
 .motor-chip{position:absolute;bottom:6px;right:6px;background:var(--espresso);color:var(--gold);font-size:9px;padding:2px 6px;border-radius:6px;font-weight:500}
 .product-body{padding:10px 12px 12px}
 .product-name{font-size:13px;font-weight:500;margin-bottom:2px;color:#111}
@@ -174,14 +176,9 @@
 
     <!-- Roller Shades -->
     <div class="product-card" id="card-roller" onclick="selectProduct('roller','Roller Shades',true)">
-      <div class="product-img" style="background:#F5ECD7">
-        <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-          <rect x="5" y="4" width="34" height="5" rx="2.5" fill="#C8973F"/>
-          <rect x="7" y="10" width="30" height="23" rx="2" fill="#FBF7F0" stroke="#C8973F" stroke-width="0.8"/>
-          <line x1="22" y1="33" x2="22" y2="41" stroke="#C8973F" stroke-width="1.5" stroke-linecap="round"/>
-          <circle cx="22" cy="41" r="1.5" fill="#C8973F"/>
-        </svg>
-        <div class="motor-chip">+ motorized</div>
+      <div class="product-img-photo">
+        <img src="../images/products/roller-shade.png" alt="Roller Shades" loading="lazy">
+        <div class="motor-chip" style="position:absolute;bottom:6px;right:6px;">+ motorized</div>
       </div>
       <div class="product-body">
         <div class="product-name">Roller Shades</div>
@@ -219,7 +216,7 @@
     </div>
 
     <!-- Zebra Shades -->
-    <div class="product-card" id="card-zebra" onclick="selectProduct('zebra','Zebra Shades',false)">
+    <div class="product-card" id="card-zebra" onclick="selectProduct('zebra','Zebra Shades',true)">
       <div class="product-img" style="background:#F0EDF8">
         <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
           <rect x="5" y="4" width="34" height="5" rx="2.5" fill="#C8973F"/>
@@ -236,31 +233,20 @@
       <div class="product-body">
         <div class="product-name">Zebra Shades</div>
         <div class="product-sub">Dual-fabric banded sheer</div>
-        <span class="badge badge-quote">Custom quote</span>
+        <span class="badge badge-instant">Instant price</span>
       </div>
     </div>
 
     <!-- Woven Wood -->
-    <div class="product-card" id="card-woven" onclick="selectProduct('woven','Woven Wood / Natural Shades',false)">
-      <div class="product-img" style="background:#FAF0E0">
-        <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-          <rect x="5" y="4" width="34" height="5" rx="2.5" fill="#C8973F"/>
-          <rect x="7" y="10" width="30" height="24" rx="2" fill="#FAEBD7"/>
-          <line x1="7" y1="14" x2="37" y2="14" stroke="#8B5E2E" stroke-width="1.2" opacity="0.7"/>
-          <line x1="7" y1="17.5" x2="37" y2="17.5" stroke="#A0713C" stroke-width="0.8" opacity="0.5"/>
-          <line x1="7" y1="21" x2="37" y2="21" stroke="#8B5E2E" stroke-width="1.2" opacity="0.6"/>
-          <line x1="7" y1="24.5" x2="37" y2="24.5" stroke="#C4894E" stroke-width="0.7" opacity="0.4"/>
-          <line x1="7" y1="28" x2="37" y2="28" stroke="#8B5E2E" stroke-width="1.2" opacity="0.7"/>
-          <line x1="7" y1="31.5" x2="37" y2="31.5" stroke="#A0713C" stroke-width="0.8" opacity="0.4"/>
-          <line x1="22" y1="34" x2="22" y2="41" stroke="#C8973F" stroke-width="1.5" stroke-linecap="round"/>
-          <circle cx="22" cy="41" r="1.5" fill="#C8973F"/>
-        </svg>
-        <div class="motor-chip">+ motorized</div>
+    <div class="product-card" id="card-woven" onclick="selectProduct('woven','Woven Wood / Natural Shades',true)">
+      <div class="product-img-photo">
+        <img src="../images/products/woven-wood.jpg" alt="Woven Wood Shades" loading="lazy">
+        <div class="motor-chip" style="position:absolute;bottom:6px;right:6px;">+ motorized</div>
       </div>
       <div class="product-body">
         <div class="product-name">Woven Wood Shades</div>
         <div class="product-sub">Bamboo, rattan &amp; jute</div>
-        <span class="badge badge-quote">Custom quote</span>
+        <span class="badge badge-instant">Instant price</span>
       </div>
     </div>
 
@@ -304,6 +290,29 @@
       <div class="product-body">
         <div class="product-name">Pirouette Shadings</div>
         <div class="product-sub">Hunter Douglas — structured vane</div>
+        <span class="badge badge-quote">Custom quote</span>
+      </div>
+    </div>
+
+    <!-- Norman Faux Wood Blinds -->
+    <div class="product-card" id="card-fwb" onclick="selectProduct('fwb','Norman Faux Wood Blinds',false)">
+      <div class="product-img" style="background:#F5F0E8">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+          <rect x="5" y="4" width="34" height="5" rx="2.5" fill="#C8973F"/>
+          <rect x="7" y="11" width="30" height="4" rx="0.5" fill="#D4B896" stroke="#A87E52" stroke-width="0.5"/>
+          <rect x="7" y="17" width="30" height="4" rx="0.5" fill="#C9A87A" stroke="#A87E52" stroke-width="0.5"/>
+          <rect x="7" y="23" width="30" height="4" rx="0.5" fill="#D4B896" stroke="#A87E52" stroke-width="0.5"/>
+          <rect x="7" y="29" width="30" height="4" rx="0.5" fill="#C9A87A" stroke="#A87E52" stroke-width="0.5"/>
+          <line x1="18" y1="9" x2="18" y2="38" stroke="#A87E52" stroke-width="0.6" opacity="0.5"/>
+          <line x1="26" y1="9" x2="26" y2="38" stroke="#A87E52" stroke-width="0.6" opacity="0.5"/>
+          <line x1="22" y1="33" x2="22" y2="41" stroke="#C8973F" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="22" cy="41" r="1.5" fill="#C8973F"/>
+        </svg>
+        <div class="motor-chip">+ motorized</div>
+      </div>
+      <div class="product-body">
+        <div class="product-name">Norman Faux Wood Blinds</div>
+        <div class="product-sub">Moisture-resistant PVC slat blinds</div>
         <span class="badge badge-quote">Custom quote</span>
       </div>
     </div>
@@ -1326,6 +1335,87 @@
     </div>
   </div><!-- /hd-config -->
 
+  <!-- NORMAN FAUX WOOD BLINDS CONFIG -->
+  <div class="configurator" id="fwb-config">
+    <div class="config-head">
+      <button class="config-back" onclick="clearProduct()">&#8592; Change product</button>
+      <div class="config-title">Norman Faux Wood Blinds</div>
+      <span class="badge badge-quote">Custom quote</span>
+    </div>
+    <div style="background:var(--gold-mid);border:1px solid #E8DCC8;border-radius:10px;padding:14px 18px;margin-bottom:20px">
+      <div style="font-size:12px;font-weight:600;color:#5C3D0A;margin-bottom:4px">Norman eWood Blinds — custom quoted</div>
+      <div style="font-size:12px;color:#5C3D0A;line-height:1.6">Moisture-resistant PVC faux wood slat blinds. Perfect for bathrooms, kitchens, and high-humidity rooms. Available in 2″, 2½″, and 3½″ slats across 30+ wood tones and white/neutral finishes. Norman motorization compatible.</div>
+    </div>
+
+    <div class="step-title" style="font-size:12px;margin-bottom:8px">Slat size</div>
+    <div class="opt-row" id="fwb-grp-slat">
+      <button class="opt-btn sel" onclick="selOpt(this,'fwb-grp-slat')">2&quot; — most popular</button>
+      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-slat')">2&frac12;&quot;</button>
+      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-slat')">3&frac12;&quot;</button>
+    </div>
+
+    <div class="step-title" style="font-size:12px;margin:14px 0 8px">Color family</div>
+    <div class="opt-row" id="fwb-grp-color">
+      <button class="opt-btn sel" onclick="selOpt(this,'fwb-grp-color')">White / Off-White</button>
+      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-color')">Light Wood</button>
+      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-color')">Medium Wood</button>
+      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-color')">Dark Wood</button>
+      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-color')">Gray / Contemporary</button>
+    </div>
+    <div class="tooltip-note" style="margin-top:4px">Exact color confirmed from Norman swatch book at measurement visit.</div>
+
+    <div class="step-title" style="font-size:12px;margin:14px 0 8px">Operating system</div>
+    <div class="opt-row" id="fwb-grp-op">
+      <button class="opt-btn sel" onclick="selOpt(this,'fwb-grp-op')">Standard cord</button>
+      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-op')">Cordless</button>
+      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-op')">SofTilt&trade; (spring wand)</button>
+      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-op')">Motorized — Norman only</button>
+    </div>
+    <div class="tooltip-note" id="fwb-op-note" style="margin-top:4px">Cordless lift is child &amp; pet safe — cord-free operation with a push or pull.</div>
+
+    <div class="step-title" style="font-size:12px;margin:14px 0 8px">Mount type</div>
+    <div class="opt-row" id="fwb-grp-mount">
+      <button class="opt-btn sel" onclick="selOpt(this,'fwb-grp-mount')">Inside mount</button>
+      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-mount')">Outside mount</button>
+    </div>
+
+    <div style="margin-top:14px">
+      <div class="step-title" style="font-size:12px;margin-bottom:8px">Window measurements</div>
+      <div class="dim-row">
+        <div class="form-group"><label>Width (inches)</label><input type="number" id="fwb-width" min="10" max="96" step="0.5" placeholder="e.g. 36"></div>
+        <div class="form-group"><label>Height (inches)</label><input type="number" id="fwb-height" min="12" max="120" step="0.5" placeholder="e.g. 48"></div>
+      </div>
+      <div class="step-title" style="font-size:12px;margin:10px 0 8px">Quantity</div>
+      <div class="qty-btns">
+        <button class="qty-btn" onclick="fwbAdjQty(-1)">&#8722;</button>
+        <input class="qty-num" type="number" id="fwb-qty" value="1" min="1" max="20">
+        <button class="qty-btn" onclick="fwbAdjQty(1)">&#43;</button>
+      </div>
+    </div>
+
+    <hr class="price-divider" style="margin:18px 0">
+    <div class="form-row">
+      <div class="form-group"><label>Your name *</label><input type="text" id="fwb-name" placeholder="Jane Smith"></div>
+      <div class="form-group"><label>Phone *</label><input type="tel" id="fwb-phone" placeholder="(215) 555-0100"></div>
+    </div>
+    <div class="form-group"><label>Email</label><input type="email" id="fwb-email" placeholder="jane@example.com"></div>
+    <div class="form-group"><label>Notes</label><textarea id="fwb-notes" placeholder="e.g. specific color, existing hardware to reuse, special installation requirements"></textarea></div>
+    <div class="delivery-section">
+      <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+      <div class="opt-row" id="grp-del-fwb">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-del-fwb');document.getElementById('del-fwb-s').style.display='block';document.getElementById('del-fwb-p').style.display='none'">Ship to me</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-del-fwb');document.getElementById('del-fwb-s').style.display='none';document.getElementById('del-fwb-p').style.display='block'">I'll pick up</button>
+      </div>
+      <div id="del-fwb-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately.</div></div>
+      <div id="del-fwb-p" class="delivery-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.</div>
+    </div>
+    <button class="btn-gold" onclick="submitFWBForm()" style="width:100%;padding:13px;margin-top:4px">Request faux wood blinds quote &rarr;</button>
+    <div class="success-state" id="fwb-success">
+      <h3>Quote request sent!</h3>
+      <p>We'll follow up within a few hours with Norman color options and pricing. Call <strong>(609) 742-1720</strong> for anything urgent — available 24/7.</p>
+    </div>
+  </div><!-- /fwb-config -->
+
 </div><!-- /configurator-section -->
 
 <!-- QUOTE CART -->
@@ -1507,8 +1597,13 @@ function selectProduct(productId, productName, isInstant) {
       document.getElementById('pb-only-note').style.display = 'block';
     }
 
+  } else if (productId === 'fwb') {
+    document.getElementById('instant-config').classList.remove('open');
+    document.getElementById('hd-config').classList.remove('open');
+    document.getElementById('fwb-config').classList.add('open');
   } else {
     document.getElementById('instant-config').classList.remove('open');
+    document.getElementById('fwb-config').classList.remove('open');
     document.getElementById('hd-config').classList.add('open');
     document.getElementById('hd-product-name').textContent = productName;
     const hdSel = document.getElementById('hd-product-sel');
@@ -1561,6 +1656,9 @@ function selectBrand(brand) {
     configureForProduct(currentProduct);
     updatePrice();
   }
+  if (brand === 'pb') {
+    pbRenderFabricColors();
+  }
 }
 
 // ─── clearProduct ────────────────────────────────────────────
@@ -1570,6 +1668,7 @@ function clearProduct() {
   document.getElementById('configurator-section').style.display = 'none';
   document.getElementById('instant-config').classList.remove('open');
   document.getElementById('hd-config').classList.remove('open');
+  document.getElementById('fwb-config').classList.remove('open');
   // Scroll back to product grid
   document.getElementById('product-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -2480,6 +2579,37 @@ function selFlatFabric(el, product, ci, ki) {
     currentCellColor = ki >= 0 ? coll.colors[ki] : '';
   }
 }
+// ─── Norman Faux Wood Blinds ─────────────────────────────────
+function fwbAdjQty(delta) {
+  var inp = document.getElementById('fwb-qty');
+  var v = parseInt(inp.value) || 1;
+  v = Math.min(20, Math.max(1, v + delta));
+  inp.value = v;
+}
+function submitFWBForm() {
+  var name  = document.getElementById('fwb-name').value.trim();
+  var phone = document.getElementById('fwb-phone').value.trim();
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  var slat  = document.querySelector('#fwb-grp-slat .opt-btn.sel')?.textContent.trim() || '';
+  var color = document.querySelector('#fwb-grp-color .opt-btn.sel')?.textContent.trim() || '';
+  var op    = document.querySelector('#fwb-grp-op .opt-btn.sel')?.textContent.trim() || '';
+  var mount = document.querySelector('#fwb-grp-mount .opt-btn.sel')?.textContent.trim() || '';
+  var w     = document.getElementById('fwb-width').value;
+  var h     = document.getElementById('fwb-height').value;
+  var qty   = document.getElementById('fwb-qty').value;
+  var del   = document.querySelector('#grp-del-fwb .opt-btn.sel')?.textContent.trim() || '';
+  var notes = document.getElementById('fwb-notes').value.trim();
+  var email = document.getElementById('fwb-email').value.trim();
+  var body  = 'Norman Faux Wood Blinds Quote Request\n\n'
+    + 'Name: ' + name + '\nPhone: ' + phone + '\nEmail: ' + (email||'—') + '\n\n'
+    + 'Slat size: ' + slat + '\nColor family: ' + color + '\nOperating system: ' + op
+    + '\nMount: ' + mount + '\nWidth: ' + (w||'—') + '"\nHeight: ' + (h||'—') + '"\nQty: ' + qty
+    + '\nDelivery: ' + del + '\n\nNotes: ' + (notes||'None');
+  window.location.href = 'mailto:blindznation@gmail.com?subject=Norman Faux Wood Blinds Quote — ' + encodeURIComponent(name)
+    + '&body=' + encodeURIComponent(body);
+  document.getElementById('fwb-success').style.display = 'block';
+}
+
 // ─── PB Custom roller fabric picker ──────────────────────────
 const PB_FABRICS = {
   'Linen Blend':    ['Natural','Ivory','Flax','Oatmeal','Sand','Linen','Stone','Taupe','Gray','Charcoal'],
