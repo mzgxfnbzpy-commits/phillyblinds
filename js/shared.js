@@ -2,6 +2,87 @@
 // Philly Blinds — Shared Components
 // ============================================================
 
+function _injectHead(isHome) {
+  const prefix = isHome ? '' : '../';
+
+  // Canonical — derived from og:url already set per-page
+  if (!document.querySelector('link[rel="canonical"]')) {
+    const og = document.querySelector('meta[property="og:url"]');
+    if (og) {
+      const c = document.createElement('link');
+      c.rel = 'canonical'; c.href = og.content;
+      document.head.appendChild(c);
+    }
+  }
+
+  // Theme color (mobile browser chrome)
+  if (!document.querySelector('meta[name="theme-color"]')) {
+    const m = document.createElement('meta');
+    m.name = 'theme-color'; m.content = '#1C1510';
+    document.head.appendChild(m);
+  }
+
+  // Favicon
+  if (!document.querySelector('link[rel="icon"]')) {
+    const l = document.createElement('link');
+    l.rel = 'icon'; l.type = 'image/svg+xml';
+    l.href = prefix + 'favicon.svg';
+    document.head.appendChild(l);
+  }
+
+  // Local Business JSON-LD schema
+  if (!document.querySelector('script[data-pb-schema]')) {
+    const s = document.createElement('script');
+    s.type = 'application/ld+json';
+    s.setAttribute('data-pb-schema', '1');
+    s.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": ["LocalBusiness", "HomeAndConstructionBusiness"],
+      "@id": "https://phillyblinds.com/#business",
+      "name": "Philly Blinds",
+      "alternateName": "Michael J. Healy Installations LLC",
+      "description": "Custom window treatments — roller shades, cellular shades, roman shades, drapery, and plantation shutters. Fabrication and installation serving Philadelphia and surrounding area.",
+      "url": "https://phillyblinds.com",
+      "telephone": "+16097421720",
+      "email": "blindznation@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Huntingdon Valley",
+        "addressRegion": "PA",
+        "postalCode": "19006",
+        "addressCountry": "US"
+      },
+      "geo": {"@type": "GeoCoordinates", "latitude": 40.1162, "longitude": -75.0652},
+      "areaServed": [
+        {"@type": "City", "name": "Philadelphia"},
+        {"@type": "AdministrativeArea", "name": "Philadelphia County, PA"},
+        {"@type": "AdministrativeArea", "name": "Montgomery County, PA"},
+        {"@type": "AdministrativeArea", "name": "Bucks County, PA"},
+        {"@type": "AdministrativeArea", "name": "Delaware County, PA"},
+        {"@type": "AdministrativeArea", "name": "South Jersey, NJ"}
+      ],
+      "priceRange": "$$",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+        "opens": "08:00", "closes": "21:00"
+      },
+      "hasMap": "https://maps.google.com/?q=Huntingdon+Valley+PA+19006",
+      "makesOffer": [
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Custom Roller Shade Fabrication and Installation"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Cellular Honeycomb Shade Installation"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Custom Roman Shade Fabrication and Installation"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Custom Drapery Fabrication and Installation"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Norman Plantation Shutter Installation"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Motorized Window Treatment Installation"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Free In-Home Window Treatment Consultation"}}
+      ],
+      "sameAs": []
+    });
+    document.head.appendChild(s);
+  }
+}
+
 function renderNav(activePage) {
   const pages = [
     { href: '../pages/shades.html', label: 'Shades & blinds' },
@@ -46,6 +127,7 @@ function renderNav(activePage) {
       </div>
     </div>
   `;
+  _injectHead(isHome);
 }
 
 function renderFooter(isHome) {
@@ -65,6 +147,7 @@ function renderFooter(isHome) {
         <a href="${pre}shades.html">Cellular shades</a>
         <a href="${pre}shades.html">Zebra shades</a>
         <a href="${pre}shades.html">Woven wood</a>
+        <a href="${pre}shades.html">Faux wood blinds</a>
         <a href="${pre}shades.html">Silhouette / Pirouette</a>
       </div>
       <div class="footer-col">
@@ -84,9 +167,10 @@ function renderFooter(isHome) {
         <a href="${pre}gallery.html">Our work</a>
         <a href="${pre}consult.html">Book consultation</a>
         <a href="${pre}about.html">About us</a>
+        <a href="${pre}privacy.html">Privacy policy</a>
       </div>
     </div>
-    <div class="footer-disc">Blindznation is an independent business providing professional installation and consulting services. Product names, logos, and trademarks are the property of their respective owners and are used for identification purposes only. Blindznation is not affiliated with, endorsed by, or sponsored by any manufacturer.</div>
+    <div class="footer-disc">Blindznation is an independent business providing professional installation and consulting services. Product names, logos, and trademarks are the property of their respective owners and are used for identification purposes only. Blindznation is not affiliated with, endorsed by, or sponsored by any manufacturer. &nbsp;·&nbsp; <a href="${pre}privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></div>
   `;
 }
 

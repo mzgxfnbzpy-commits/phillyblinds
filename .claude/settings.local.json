@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit -m 'feat: enhance drapery page — motorization option, mini portfolio, motor in quote summary *)",
+      "Bash(git commit -m 'fix: fabric calculator — draw type labels, expanded cut breakdown, nav active state *)",
+      "Bash(git push *)",
+      "Bash(git commit -m 'fix: fabric calculator — proper allowance fields, corrected cut-width formula *)",
+      "WebFetch(domain:wallaceblinds.com)",
+      "Bash(python3 -c ' *)",
+      "WebFetch(domain:www.normanshutters.com)",
+      "WebFetch(domain:creativetreatments.com)",
+      "WebFetch(domain:normanshutters.com)",
+      "WebFetch(domain:www.normanwindowfashions.com)",
+      "WebFetch(domain:www.normanusa.com)",
+      "WebFetch(domain:www.kirsch.com)",
+      "Bash(git commit -m 'feat: add Drapery Hardware tab to product-specs — Select, Paris Texas, Orion, Kirsch *)",
+      "Bash(git commit -m 'feat: Norman Soluna Roller Shades — full product detail page template *)",
+      "Bash(git commit -m 'feat: catalogs download page — 32 PDFs, line-by-line layout, pricing disclaimer *)",
+      "Bash(npm --version)",
+      "Bash(npm install *)",
+      "Bash(node scripts/clean-pdfs.mjs)",
+      "Bash(git commit -m 'chore: remove product-specs from nav — replaced by catalogs page *)",
+      "Bash(node -e ' *)",
+      "Bash(echo \"node_modules/\")",
+      "Bash(git commit -m 'feat: white out pricing on all 32 catalog PDFs — 1258 pages processed *)",
+      "Bash(node scripts/remove-price-pages.mjs)",
+      "Bash(git commit -m 'fix: remove all pricing pages from 15 catalogs — 36 pages removed *)",
+      "Bash(Get-ChildItem \"C:\\\\Users\\\\Blind\\\\OneDrive\\\\Desktop\\\\BUSINESS\\\\Important PB\\\\AI claude\\\\ORIGINAL PDFS MORESTUFF\" -Recurse)",
+      "Bash(Select-Object FullName, Length)",
+      "Bash(Sort-Object FullName)",
+      "Bash(git commit -m 'chore: add 6 hardware brand catalogs — Select, Paris Texas, ONA, Orion, Finial Company *)",
+      "Bash(git commit -m 'feat: add operating system selector + real catalog size limits to shades configurator *2)",
+      "Bash(git commit -m 'feat: brand/company chooser as first step in product configurator *)"
+    ]
+  }
+}
