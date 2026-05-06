@@ -205,9 +205,16 @@
           <div class="field-group">
             <label class="field-label">Fabric bolt width</label>
             <div class="opt-row" id="d-fabricw">
-              <button class="opt-btn sel" onclick="selOpt(this,'d-fabricw');calcDrapery()" data-val="54">54″ standard</button>
-              <button class="opt-btn" onclick="selOpt(this,'d-fabricw');calcDrapery()" data-val="60">60″ wide</button>
-              <button class="opt-btn" onclick="selOpt(this,'d-fabricw');calcDrapery()" data-val="118">118″ sheers</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'d-fabricw');toggleCustomW('d');calcDrapery()" data-val="54">54″ standard</button>
+              <button class="opt-btn" onclick="selOpt(this,'d-fabricw');toggleCustomW('d');calcDrapery()" data-val="60">60″ wide</button>
+              <button class="opt-btn" onclick="selOpt(this,'d-fabricw');toggleCustomW('d');calcDrapery()" data-val="118">118″ sheers</button>
+              <button class="opt-btn" onclick="selOpt(this,'d-fabricw');toggleCustomW('d');calcDrapery()" data-val="custom">Custom</button>
+            </div>
+            <div id="d-fabricw-custom" style="display:none;margin-top:8px">
+              <div class="num-input">
+                <input type="number" id="d-fabricw-val" min="18" max="360" placeholder="Enter fabric width" oninput="calcDrapery()">
+                <span class="num-unit">inches</span>
+              </div>
             </div>
           </div>
 
@@ -333,8 +340,15 @@
           <div class="field-group">
             <label class="field-label">Fabric bolt width</label>
             <div class="opt-row" id="r-fabricw">
-              <button class="opt-btn sel" onclick="selOpt(this,'r-fabricw');calcRoman()" data-val="54">54″ standard</button>
-              <button class="opt-btn" onclick="selOpt(this,'r-fabricw');calcRoman()" data-val="60">60″ wide</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'r-fabricw');toggleCustomW('r');calcRoman()" data-val="54">54″ standard</button>
+              <button class="opt-btn" onclick="selOpt(this,'r-fabricw');toggleCustomW('r');calcRoman()" data-val="60">60″ wide</button>
+              <button class="opt-btn" onclick="selOpt(this,'r-fabricw');toggleCustomW('r');calcRoman()" data-val="custom">Custom</button>
+            </div>
+            <div id="r-fabricw-custom" style="display:none;margin-top:8px">
+              <div class="num-input">
+                <input type="number" id="r-fabricw-val" min="18" max="360" placeholder="Enter fabric width" oninput="calcRoman()">
+                <span class="num-unit">inches</span>
+              </div>
             </div>
           </div>
 
@@ -468,8 +482,15 @@
           <div class="field-group">
             <label class="field-label">Fabric bolt width</label>
             <div class="opt-row" id="c-fabricw">
-              <button class="opt-btn sel" onclick="selOpt(this,'c-fabricw');calcCornice()" data-val="54">54″ standard</button>
-              <button class="opt-btn" onclick="selOpt(this,'c-fabricw');calcCornice()" data-val="60">60″ wide</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'c-fabricw');toggleCustomW('c');calcCornice()" data-val="54">54″ standard</button>
+              <button class="opt-btn" onclick="selOpt(this,'c-fabricw');toggleCustomW('c');calcCornice()" data-val="60">60″ wide</button>
+              <button class="opt-btn" onclick="selOpt(this,'c-fabricw');toggleCustomW('c');calcCornice()" data-val="custom">Custom</button>
+            </div>
+            <div id="c-fabricw-custom" style="display:none;margin-top:8px">
+              <div class="num-input">
+                <input type="number" id="c-fabricw-val" min="18" max="360" placeholder="Enter fabric width" oninput="calcCornice()">
+                <span class="num-unit">inches</span>
+              </div>
             </div>
           </div>
 
@@ -567,6 +588,22 @@ function switchTab(id, btn) {
   btn.classList.add('active');
 }
 
+// ── Fabric width helper (supports Custom option) ──────────────
+function getFabricW(prefix) {
+  const sel = document.querySelector('#' + prefix + '-fabricw .opt-btn.sel');
+  if (!sel) return null;
+  if (sel.getAttribute('data-val') === 'custom') {
+    const val = parseFloat(document.getElementById(prefix + '-fabricw-val').value);
+    return (isNaN(val) || val <= 0) ? null : val;
+  }
+  return parseFloat(sel.getAttribute('data-val'));
+}
+function toggleCustomW(prefix) {
+  const sel = document.querySelector('#' + prefix + '-fabricw .opt-btn.sel');
+  const wrap = document.getElementById(prefix + '-fabricw-custom');
+  if (wrap) wrap.style.display = (sel && sel.getAttribute('data-val') === 'custom') ? 'block' : 'none';
+}
+
 // ── Shared helpers ────────────────────────────────────────────
 function getOptVal(groupId) {
   const s = document.querySelector('#' + groupId + ' .opt-btn.sel');
@@ -595,7 +632,7 @@ function calcDrapery() {
   const length   = v('d-length');
   const fullness = getOptVal('d-fullness');
   const panels   = getOptVal('d-panels');
-  const fabricW  = getOptVal('d-fabricw');
+  const fabricW  = getFabricW('d');
   const repeat   = v('d-repeat') || 0;
   const topHem   = v('d-top')    != null ? v('d-top')    : 8;
   const botHem   = v('d-bot')    != null ? v('d-bot')    : 8;
@@ -664,6 +701,8 @@ function resetDrapery() {
   setDefault('d-fullness','2.0');
   setDefault('d-panels','2');
   setDefault('d-fabricw','54');
+  document.getElementById('d-fabricw-val').value = '';
+  document.getElementById('d-fabricw-custom').style.display = 'none';
   document.getElementById('d-result-body').innerHTML = emptyState();
 }
 
@@ -672,7 +711,7 @@ function calcRoman() {
   const width    = v('r-width');
   const length   = v('r-length');
   const qty      = v('r-qty') || 1;
-  const fabricW  = getOptVal('r-fabricw');
+  const fabricW  = getFabricW('r');
   const repeat   = v('r-repeat') || 0;
   const lining   = getOptStr('r-lining');
   const sideEach = v('r-side') != null ? v('r-side') : 4;
@@ -740,6 +779,8 @@ function resetRoman() {
   document.getElementById('r-bot').value    = '8';
   setDefault('r-fabricw','54');
   setDefault('r-lining','standard');
+  document.getElementById('r-fabricw-val').value = '';
+  document.getElementById('r-fabricw-custom').style.display = 'none';
   document.getElementById('r-result-body').innerHTML = emptyState();
 }
 
@@ -749,7 +790,7 @@ function calcCornice() {
   const ret     = v('c-return') != null ? v('c-return') : 4;
   const height  = v('c-height');
   const qty     = v('c-qty') || 1;
-  const fabricW = getOptVal('c-fabricw');
+  const fabricW = getFabricW('c');
   const repeat  = v('c-repeat') || 0;
   const topWrap = v('c-top')  != null ? v('c-top')  : 4;
   const botWrap = v('c-bot')  != null ? v('c-bot')  : 4;
@@ -808,6 +849,8 @@ function resetCornice() {
   document.getElementById('c-bot').value    = '4';
   document.getElementById('c-side').value   = '4';
   setDefault('c-fabricw','54');
+  document.getElementById('c-fabricw-val').value = '';
+  document.getElementById('c-fabricw-custom').style.display = 'none';
   document.getElementById('c-result-body').innerHTML = emptyState();
 }
 
