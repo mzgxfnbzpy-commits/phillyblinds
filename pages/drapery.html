@@ -108,69 +108,29 @@
   </div>
   <div class="style-grid" id="style-grid">
 
-    <div class="style-card" onclick="selStyle(this,'Pinch Pleat')">
-      <div class="style-img-wrap">
-        <img src="../images/products/drapery-pinch.jpg" alt="Pinch Pleat drapery" loading="lazy">
-      </div>
-      <div class="style-label-bar">
-        <div class="style-name">Pinch Pleat</div>
-        <div class="style-desc">Classic 3-finger pleats, formal &amp; traditional</div>
-      </div>
-    </div>
-
+    <!-- 1. Ripple Fold -->
     <div class="style-card" onclick="selStyle(this,'Ripple Fold')">
       <div class="style-img-wrap">
         <img src="../images/products/drapery-wave.jpg" alt="Ripple Fold drapery" loading="lazy">
       </div>
       <div class="style-label-bar">
         <div class="style-name">Ripple Fold</div>
-        <div class="style-desc">S-curve wave, modern &amp; clean</div>
+        <div class="style-desc">Continuous S-curve wave, modern &amp; clean</div>
       </div>
     </div>
 
-    <div class="style-card" onclick="selStyle(this,'Eyelet / Grommet')">
-      <div class="style-svg-wrap">
-        <svg viewBox="0 0 60 80" width="60" height="80" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="10" width="52" height="3.5" rx="1.5" fill="#8B6914"/>
-          <circle cx="14" cy="11.5" r="4.5" stroke="#8B6914" stroke-width="1.8" fill="#F8F4EE"/>
-          <circle cx="26" cy="11.5" r="4.5" stroke="#8B6914" stroke-width="1.8" fill="#F8F4EE"/>
-          <circle cx="38" cy="11.5" r="4.5" stroke="#8B6914" stroke-width="1.8" fill="#F8F4EE"/>
-          <circle cx="50" cy="11.5" r="4.5" stroke="#8B6914" stroke-width="1.8" fill="#F8F4EE"/>
-          <path d="M8 16 C12 26, 8 34, 14 40 C20 46, 20 54, 14 60 C10 66, 10 72, 12 76" stroke="#C8973F" stroke-width="1.5" fill="none"/>
-          <path d="M20 16 C20 26, 20 34, 20 44 C20 54, 20 64, 20 76" stroke="#F5ECD7" stroke-width="1" fill="none"/>
-          <path d="M32 16 C32 26, 32 34, 32 44 C32 54, 32 64, 32 76" stroke="#C8973F" stroke-width="1.5" fill="none"/>
-          <path d="M44 16 C44 26, 44 34, 44 44 C44 54, 44 64, 44 76" stroke="#F5ECD7" stroke-width="1" fill="none"/>
-          <path d="M52 16 C56 26, 52 34, 58 40 C64 46, 56 54, 50 60 C46 66, 46 72, 50 76" stroke="#C8973F" stroke-width="1.5" fill="none"/>
-        </svg>
+    <!-- 2. Pinch Pleat -->
+    <div class="style-card" onclick="selStyle(this,'Pinch Pleat')">
+      <div class="style-img-wrap">
+        <img src="../images/products/drapery-pinch.jpg" alt="Pinch Pleat drapery" loading="lazy">
       </div>
       <div class="style-label-bar">
-        <div class="style-name">Eyelet / Grommet</div>
-        <div class="style-desc">Metal rings at top, contemporary</div>
+        <div class="style-name">Pinch Pleat</div>
+        <div class="style-desc">Classic finger pleats, formal &amp; traditional</div>
       </div>
     </div>
 
-    <div class="style-card" onclick="selStyle(this,'Tab Top')">
-      <div class="style-svg-wrap">
-        <svg viewBox="0 0 60 80" width="60" height="80" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="8" width="52" height="3.5" rx="1.5" fill="#8B6914"/>
-          <rect x="11" y="6" width="6" height="8" rx="2" stroke="#C8973F" stroke-width="1.5" fill="none"/>
-          <rect x="23" y="6" width="6" height="8" rx="2" stroke="#C8973F" stroke-width="1.5" fill="none"/>
-          <rect x="35" y="6" width="6" height="8" rx="2" stroke="#C8973F" stroke-width="1.5" fill="none"/>
-          <rect x="47" y="6" width="6" height="8" rx="2" stroke="#C8973F" stroke-width="1.5" fill="none"/>
-          <line x1="8" y1="16" x2="8" y2="76" stroke="#C8973F" stroke-width="1.5"/>
-          <line x1="52" y1="16" x2="52" y2="76" stroke="#C8973F" stroke-width="1.5"/>
-          <line x1="19" y1="16" x2="19" y2="76" stroke="#F5ECD7" stroke-width="1"/>
-          <line x1="30" y1="16" x2="30" y2="76" stroke="#F5ECD7" stroke-width="1"/>
-          <line x1="41" y1="16" x2="41" y2="76" stroke="#F5ECD7" stroke-width="1"/>
-          <line x1="8" y1="76" x2="52" y2="76" stroke="#8B6914" stroke-width="0.7"/>
-        </svg>
-      </div>
-      <div class="style-label-bar">
-        <div class="style-name">Tab Top</div>
-        <div class="style-desc">Fabric loops over rod, casual &amp; relaxed</div>
-      </div>
-    </div>
-
+    <!-- 3. Goblet Pleat -->
     <div class="style-card" onclick="selStyle(this,'Goblet Pleat')">
       <div class="style-svg-wrap">
         <svg viewBox="0 0 60 80" width="60" height="80" xmlns="http://www.w3.org/2000/svg">
@@ -195,17 +155,128 @@
       </div>
     </div>
 
-    <div class="style-card" onclick="selStyle(this,'Flat Panel')">
-      <div class="style-img-wrap">
-        <img src="../images/products/drapery-flat-panel.jpg" alt="Flat Panel drapery" loading="lazy">
+    <!-- 4. Sheered Pocket -->
+    <div class="style-card" onclick="selStyle(this,'Sheered Pocket')">
+      <div class="style-svg-wrap">
+        <svg viewBox="0 0 60 80" width="60" height="80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="4" width="52" height="3.5" rx="1.5" fill="#8B6914"/>
+          <path d="M8 7 Q13 13 18 8 Q23 3 28 8 Q33 13 38 8 Q43 3 48 8 Q50 11 52 8 L52 15 Q48 12 44 15 Q40 18 36 15 Q32 12 28 15 Q24 18 20 15 Q16 12 12 15 Q10 18 8 15 Z" fill="#F0E6D3" stroke="#C8973F" stroke-width="0.7"/>
+          <line x1="8" y1="15" x2="8" y2="76" stroke="#C8973F" stroke-width="1.5"/>
+          <line x1="52" y1="15" x2="52" y2="76" stroke="#C8973F" stroke-width="1.5"/>
+          <line x1="22" y1="15" x2="22" y2="76" stroke="#F5ECD7" stroke-width="1"/>
+          <line x1="38" y1="15" x2="38" y2="76" stroke="#F5ECD7" stroke-width="1"/>
+          <line x1="8" y1="76" x2="52" y2="76" stroke="#8B6914" stroke-width="0.7"/>
+        </svg>
       </div>
       <div class="style-label-bar">
-        <div class="style-name">Flat Panel</div>
-        <div class="style-desc">Minimalist flat hanging, clean &amp; modern</div>
+        <div class="style-name">Sheered Pocket</div>
+        <div class="style-desc">Rod slides through gathered pocket, soft &amp; ruffled</div>
+      </div>
+    </div>
+
+    <!-- 5. Tabs -->
+    <div class="style-card" onclick="selStyle(this,'Tabs')">
+      <div class="style-svg-wrap">
+        <svg viewBox="0 0 60 80" width="60" height="80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="8" width="52" height="3.5" rx="1.5" fill="#8B6914"/>
+          <rect x="11" y="6" width="6" height="8" rx="2" stroke="#C8973F" stroke-width="1.5" fill="none"/>
+          <rect x="23" y="6" width="6" height="8" rx="2" stroke="#C8973F" stroke-width="1.5" fill="none"/>
+          <rect x="35" y="6" width="6" height="8" rx="2" stroke="#C8973F" stroke-width="1.5" fill="none"/>
+          <rect x="47" y="6" width="6" height="8" rx="2" stroke="#C8973F" stroke-width="1.5" fill="none"/>
+          <line x1="8" y1="16" x2="8" y2="76" stroke="#C8973F" stroke-width="1.5"/>
+          <line x1="52" y1="16" x2="52" y2="76" stroke="#C8973F" stroke-width="1.5"/>
+          <line x1="19" y1="16" x2="19" y2="76" stroke="#F5ECD7" stroke-width="1"/>
+          <line x1="30" y1="16" x2="30" y2="76" stroke="#F5ECD7" stroke-width="1"/>
+          <line x1="41" y1="16" x2="41" y2="76" stroke="#F5ECD7" stroke-width="1"/>
+          <line x1="8" y1="76" x2="52" y2="76" stroke="#8B6914" stroke-width="0.7"/>
+        </svg>
+      </div>
+      <div class="style-label-bar">
+        <div class="style-name">Tabs</div>
+        <div class="style-desc">Fabric loops over the rod, casual &amp; relaxed</div>
+      </div>
+    </div>
+
+    <!-- 6. Tie Top -->
+    <div class="style-card" onclick="selStyle(this,'Tie Top')">
+      <div class="style-svg-wrap">
+        <svg viewBox="0 0 60 80" width="60" height="80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="6" width="52" height="3" rx="1.5" fill="#8B6914"/>
+          <path d="M14 6 Q11 9 13 12 Q14 10 15 12 Q17 9 14 6 Z" stroke="#C8973F" stroke-width="1.3" fill="rgba(200,151,63,0.2)"/>
+          <path d="M30 6 Q27 9 29 12 Q30 10 31 12 Q33 9 30 6 Z" stroke="#C8973F" stroke-width="1.3" fill="rgba(200,151,63,0.2)"/>
+          <path d="M46 6 Q43 9 45 12 Q46 10 47 12 Q49 9 46 6 Z" stroke="#C8973F" stroke-width="1.3" fill="rgba(200,151,63,0.2)"/>
+          <line x1="8" y1="12" x2="8" y2="76" stroke="#C8973F" stroke-width="1.5"/>
+          <line x1="52" y1="12" x2="52" y2="76" stroke="#C8973F" stroke-width="1.5"/>
+          <line x1="22" y1="12" x2="22" y2="76" stroke="#F5ECD7" stroke-width="1"/>
+          <line x1="38" y1="12" x2="38" y2="76" stroke="#F5ECD7" stroke-width="1"/>
+          <line x1="8" y1="76" x2="52" y2="76" stroke="#8B6914" stroke-width="0.7"/>
+        </svg>
+      </div>
+      <div class="style-label-bar">
+        <div class="style-name">Tie Top</div>
+        <div class="style-desc">Fabric ties knotted over the rod, soft &amp; romantic</div>
+      </div>
+    </div>
+
+    <!-- 7. Grommet -->
+    <div class="style-card" onclick="selStyle(this,'Grommet')">
+      <div class="style-svg-wrap">
+        <svg viewBox="0 0 60 80" width="60" height="80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="10" width="52" height="3.5" rx="1.5" fill="#8B6914"/>
+          <circle cx="14" cy="11.5" r="4.5" stroke="#8B6914" stroke-width="1.8" fill="#F8F4EE"/>
+          <circle cx="26" cy="11.5" r="4.5" stroke="#8B6914" stroke-width="1.8" fill="#F8F4EE"/>
+          <circle cx="38" cy="11.5" r="4.5" stroke="#8B6914" stroke-width="1.8" fill="#F8F4EE"/>
+          <circle cx="50" cy="11.5" r="4.5" stroke="#8B6914" stroke-width="1.8" fill="#F8F4EE"/>
+          <path d="M8 16 C12 26, 8 34, 14 40 C20 46, 20 54, 14 60 C10 66, 10 72, 12 76" stroke="#C8973F" stroke-width="1.5" fill="none"/>
+          <path d="M20 16 C20 26, 20 34, 20 44 C20 54, 20 64, 20 76" stroke="#F5ECD7" stroke-width="1" fill="none"/>
+          <path d="M32 16 C32 26, 32 34, 32 44 C32 54, 32 64, 32 76" stroke="#C8973F" stroke-width="1.5" fill="none"/>
+          <path d="M44 16 C44 26, 44 34, 44 44 C44 54, 44 64, 44 76" stroke="#F5ECD7" stroke-width="1" fill="none"/>
+          <path d="M52 16 C56 26, 52 34, 58 40 C64 46, 56 54, 50 60 C46 66, 46 72, 50 76" stroke="#C8973F" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <div class="style-label-bar">
+        <div class="style-name">Grommet</div>
+        <div class="style-desc">Metal rings at top, contemporary &amp; structured</div>
       </div>
     </div>
 
   </div>
+
+  <!-- Pinch Pleat sub-options — shown when Pinch Pleat is selected -->
+  <div id="pinch-opts" style="display:none;margin-top:16px;padding:16px 18px;background:#fff;border:1px solid #e8e8e4;border-radius:10px">
+    <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:14px">Pinch Pleat details</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div style="font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Number of fingers</div>
+        <div class="opt-row" id="pinch-grp-fingers">
+          <button class="opt-btn sel" onclick="selOpt(this,'pinch-grp-fingers');updateQuote()">1 finger</button>
+          <button class="opt-btn" onclick="selOpt(this,'pinch-grp-fingers');updateQuote()">2 finger</button>
+          <button class="opt-btn" onclick="selOpt(this,'pinch-grp-fingers');updateQuote()">3 finger</button>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Pinch position</div>
+        <div class="opt-row" id="pinch-grp-pos">
+          <button class="opt-btn sel" onclick="selOpt(this,'pinch-grp-pos');updateQuote()">Top</button>
+          <button class="opt-btn" onclick="selOpt(this,'pinch-grp-pos');updateQuote()">Bottom</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ripple Fold sub-options — shown when Ripple Fold is selected -->
+  <div id="ripple-opts" style="display:none;margin-top:16px;padding:16px 18px;background:#fff;border:1px solid #e8e8e4;border-radius:10px">
+    <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:6px">Ripple Fold fullness</div>
+    <div style="font-size:11px;color:#888;margin-bottom:12px">Higher fullness = more fabric, fuller wave. Most tracks specify a fixed ratio — confirm with your hardware brand.</div>
+    <div class="opt-row" id="ripple-grp-fullness">
+      <button class="opt-btn" onclick="selOpt(this,'ripple-grp-fullness');updateQuote()">60%</button>
+      <button class="opt-btn sel" onclick="selOpt(this,'ripple-grp-fullness');updateQuote()">80%</button>
+      <button class="opt-btn" onclick="selOpt(this,'ripple-grp-fullness');updateQuote()">100%</button>
+      <button class="opt-btn" onclick="selOpt(this,'ripple-grp-fullness');updateQuote()">120%</button>
+    </div>
+    <div style="font-size:11px;color:#999;margin-top:8px">80% is the most common default for ripple fold track systems.</div>
+  </div>
+
 </div>
 
 <div class="section section-white">
@@ -590,6 +661,8 @@ function selStyle(el, name) {
     el.classList.add('sel');
     _selStyle = name;
   }
+  document.getElementById('pinch-opts').style.display  = (_selStyle === 'Pinch Pleat')  ? 'block' : 'none';
+  document.getElementById('ripple-opts').style.display = (_selStyle === 'Ripple Fold')  ? 'block' : 'none';
   updateQuote();
 }
 
@@ -646,7 +719,16 @@ function updateQuote() {
   var brandEl = document.getElementById('hw-brand');
   var brandVal = brandEl && brandEl.value ? brandEl.value : '—';
 
-  document.getElementById('qs-style').textContent = _selStyle || '—';
+  var styleDisplay = _selStyle || '—';
+  if (_selStyle === 'Pinch Pleat') {
+    var fingers = getOpt('pinch-grp-fingers');
+    var pos     = getOpt('pinch-grp-pos');
+    if (fingers !== '—') styleDisplay += ' · ' + fingers + ', ' + pos.toLowerCase() + ' pinch';
+  } else if (_selStyle === 'Ripple Fold') {
+    var fullness = getOpt('ripple-grp-fullness');
+    if (fullness !== '—') styleDisplay += ' · ' + fullness + ' fullness';
+  }
+  document.getElementById('qs-style').textContent = styleDisplay;
   var fabricDisplay = _selFabric || '—';
   if (_selFabric === 'We supply fabric' && (_drapeFabricCategory || _drapeFabricColor)) {
     fabricDisplay = _selFabric;
