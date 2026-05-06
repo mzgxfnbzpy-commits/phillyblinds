@@ -163,7 +163,9 @@ function renderFooter(isHome) {
       </div>
       <div class="footer-col">
         <h4>Help</h4>
-        <a href="${pre}measure.html">How to measure</a>
+        <a href="${pre}measure.html">Measure: shades &amp; blinds</a>
+        <a href="${pre}measure-shutters.html">Measure: shutters</a>
+        <a href="${pre}measure-drapes.html">Measure: drapery</a>
         <a href="${pre}gallery.html">Our work</a>
         <a href="${pre}consult.html">Book consultation</a>
         <a href="${pre}about.html">About us</a>

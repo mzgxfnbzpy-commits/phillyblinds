@@ -101,7 +101,8 @@ Every page MUST include:
 | pages/shades.html | All shades & blinds | Per-product configurator; roller has fascia/cassette/chain/endcap options; cellular has lift direction (BU/TDBU) + operating system separate; fabric/color placeholder; all quote forms → mailto; delivery section on every form |
 | pages/roman-shades.html | Custom Roman Shades | 3 styles, fabric paths, instant pricing; renamed to Custom Roman Shades; mailto + delivery |
 | pages/drapery.html | Custom drapery & hardware | 6 pleat styles, hardware selector (type/brand/diameter/finish/finial/rings), motorization → notes only; mailto + delivery |
-| pages/shutters.html | Plantation shutters | 4 Norman shutter lines, louver/frame options; mailto + delivery |
+| pages/shutters.html | Plantation shutters | Norman shutters: Normandy, Woodlore, Woodlore Plus (Brightwood removed); louver/frame options; mailto + delivery |
+| pages/measure-shutters.html | Measure guide (shutters) | 4 tabs: inside mount, outside mount, frame styles &amp; depth, tips. 3W×3H rule explained with SVG diagrams |
 | pages/catalogs.html | Spec catalogs download | 32 PDFs across Norman/Wallace/Woven/Kirsch/hardware brands, pricing whited out |
 | pages/product-specs.html | Product specifications | 9 tabs, 20+ products with full specs |
 | pages/soluna-roller-shades.html | Norman Soluna detail page | Full product deep-dive |
@@ -111,9 +112,7 @@ Every page MUST include:
 ### ❌ STILL NEEDED
 | File | Page | Priority | Notes |
 |------|------|----------|-------|
-| pages/shades.html | Fabric/color picker | 🔴 HIGH — placeholder is live; wire in real swatches once uploaded | Add as a selector step for roller and cellular |
-| pages/measure-shutters.html | Measure guide (shutters) | 🟡 MEDIUM | 3W×3H rules, different from shades |
-| pages/measure-drapes.html | Measure guide (drapes) | 🟡 MEDIUM | Stack-back, return, rod height rules |
+| pages/shades.html | Fabric swatch photos | 🟡 MEDIUM — picker is fully wired with Norman collections + color-dot CSS fallback; upload real swatch photos when available |
 
 ---
 
