@@ -111,7 +111,11 @@ function renderNav(activePage) {
       </div>
     </div>
     <div class="nav-main">
-      <a class="nav-logo" href="${root}">Philly<em>Blinds</em></a>
+      <a class="nav-logo" href="${root}">
+        <svg width="28" height="16" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:7px;flex-shrink:0">
+          <path d="M20 130 C60 140, 120 50, 200 20 C230 8, 255 12, 265 30 C275 48, 260 68, 238 62 C220 58, 215 68, 240 72 C260 76, 270 90, 250 110 C230 130, 200 128, 180 115" stroke="#2DE0C1" stroke-width="22" fill="none" stroke-linecap="round"/>
+        </svg>Philly<em>Blinds</em>
+      </a>
       <div class="nav-links">
         ${pages.map(p => {
           const href = isHome ? p.href.replace('../', '') : p.href;
@@ -135,7 +139,11 @@ function renderFooter(isHome) {
   document.getElementById('site-footer').innerHTML = `
     <div class="footer-grid">
       <div class="footer-col">
-        <div class="footer-logo">Philly<em>Blinds</em></div>
+        <div class="footer-logo">
+          <svg width="22" height="13" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:6px;flex-shrink:0">
+            <path d="M20 130 C60 140, 120 50, 200 20 C230 8, 255 12, 265 30 C275 48, 260 68, 238 62 C220 58, 215 68, 240 72 C260 76, 270 90, 250 110 C230 130, 200 128, 180 115" stroke="#2DE0C1" stroke-width="22" fill="none" stroke-linecap="round"/>
+          </svg>Philly<em>Blinds</em>
+        </div>
         <div class="footer-brand-alt">Blindznation</div>
         <div class="footer-company">Michael J. Healy Installations LLC</div>
         <div class="footer-tagline">Professional window treatment installation across Philadelphia &amp; surrounding areas.</div>

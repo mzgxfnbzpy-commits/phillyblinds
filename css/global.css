@@ -1,6 +1,6 @@
 /* ============================================================
    Philly Blinds — Global Stylesheet
-   Color palette: Espresso #1C1510 | Gold #C8973F | Cream #F5ECD7
+   Color palette: Espresso #1C1510 | Teal #2DE0C1 | Cream #F5ECD7
    ============================================================ */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -9,9 +9,9 @@
   --espresso: #1C1510;
   --espresso-mid: #251E16;
   --espresso-deep: #120E09;
-  --gold: #C8973F;
-  --gold-light: #F5ECD7;
-  --gold-mid: #FBF7F0;
+  --gold: #2DE0C1;
+  --gold-light: #D0FAF4;
+  --gold-mid: #E8FDFB;
   --cream: #F5ECD7;
   --text-dark: #A89880;
   --text-muted: #7A6A58;
@@ -43,7 +43,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 0.5px solid rgba(200,151,63,0.1);
+  border-bottom: 0.5px solid rgba(45,224,193,0.1);
 }
 .nav-company {
   font-size: 9px;
@@ -80,7 +80,7 @@ body {
 
 /* ---- BUTTONS ---- */
 .btn-gold { background: var(--gold); color: var(--espresso); border: none; padding: 12px 22px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block; }
-.btn-ghost-light { background: transparent; color: var(--cream); border: 1px solid rgba(200,151,63,0.4); padding: 11px 20px; border-radius: 8px; font-size: 13px; cursor: pointer; text-decoration: none; display: inline-block; }
+.btn-ghost-light { background: transparent; color: var(--cream); border: 1px solid rgba(45,224,193,0.4); padding: 11px 20px; border-radius: 8px; font-size: 13px; cursor: pointer; text-decoration: none; display: inline-block; }
 .btn-dark { background: var(--espresso); color: var(--cream); border: none; padding: 11px 20px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block; }
 .btn-outline { background: transparent; border: 1px solid rgba(28,21,16,0.3); color: var(--espresso); padding: 10px 18px; border-radius: 8px; font-size: 13px; cursor: pointer; text-decoration: none; display: inline-block; }
 
@@ -100,14 +100,14 @@ body {
 
 /* ---- BADGES ---- */
 .badge { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 9px; border-radius: 20px; }
-.badge-instant { background: var(--gold-light); color: #854F0B; }
+.badge-instant { background: var(--gold-light); color: #0A4A42; }
 .badge-quote { background: #EAF3DE; color: #27500A; }
 .badge-motor { background: var(--espresso); color: var(--gold); font-size: 9px; padding: 2px 6px; border-radius: 6px; }
 
 /* ---- CTA BANNER ---- */
 .cta-banner { background: var(--gold); padding: 36px 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .cta-banner h2 { font-size: 20px; font-weight: 500; color: var(--espresso); margin-bottom: 4px; }
-.cta-banner p { font-size: 13px; color: #5C3D0A; }
+.cta-banner p { font-size: 13px; color: #0D4A42; }
 .cta-banner-btns { display: flex; gap: 8px; flex-wrap: wrap; }
 
 /* ---- FOOTER ---- */
@@ -133,7 +133,7 @@ body {
 .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
 
 .opt-btn { padding: 7px 13px; border: 1px solid #ddd; border-radius: 8px; font-size: 12px; cursor: pointer; background: #fff; color: #333; font-family: var(--font); transition: all 0.1s; }
-.opt-btn.sel { border: 2px solid var(--gold); color: #854F0B; font-weight: 500; background: var(--gold-light); }
+.opt-btn.sel { border: 2px solid var(--gold); color: #0A4A42; font-weight: 500; background: var(--gold-light); }
 .opt-row { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
 
 /* ---- CARDS ---- */
@@ -155,7 +155,7 @@ body {
 /* ---- DELIVERY SECTION ---- */
 .delivery-section { background: #fafaf8; border: 1px solid #e8e8e4; border-radius: 10px; padding: 16px 18px; margin-bottom: 16px; }
 .delivery-note { font-size: 12px; color: #555; line-height: 1.6; margin-top: 10px; }
-.delivery-tariff { margin-top: 8px; font-size: 11px; color: #7A5C0A; background: rgba(200,151,63,0.08); border: 1px solid rgba(200,151,63,0.2); border-radius: 8px; padding: 8px 12px; line-height: 1.6; }
+.delivery-tariff { margin-top: 8px; font-size: 11px; color: #0A4A42; background: rgba(45,224,193,0.08); border: 1px solid rgba(45,224,193,0.2); border-radius: 8px; padding: 8px 12px; line-height: 1.6; }
 
 /* ---- UTILITIES ---- */
 .text-gold { color: var(--gold); }
