@@ -15,9 +15,13 @@
 <title>Philly Blinds — Custom Window Treatments | Philadelphia</title>
 <link rel="stylesheet" href="css/global.css">
 <style>
-.hero{background:var(--espresso);padding:60px 28px 52px;position:relative;overflow:hidden}
-.hero-deco{position:absolute;right:0;top:0;bottom:0;width:220px;background:var(--espresso-mid);opacity:0.5}
-.hero-inner{max-width:520px;position:relative;z-index:1}
+.hero{background:var(--espresso);overflow:hidden}
+.hero-wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 400px;align-items:center;gap:48px;padding:60px 28px 52px}
+.hero-inner{position:relative;z-index:1}
+.hero-mosaic{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:210px 210px;gap:8px;border-radius:16px;overflow:hidden;flex-shrink:0}
+.hero-mosaic img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-mosaic .hero-img-tall{grid-row:1/3}
+@media(max-width:880px){.hero-wrap{grid-template-columns:1fr;padding:44px 28px 40px}.hero-mosaic{display:none}}
 .hero-eyebrow{font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:14px;font-weight:500}
 .hero h1{font-size:38px;font-weight:500;color:var(--cream);line-height:1.2;letter-spacing:-0.8px;margin-bottom:14px}
 .hero h1 em{color:var(--gold);font-style:normal}
@@ -77,19 +81,25 @@
 <nav class="site-nav" id="site-nav"></nav>
 
 <div class="hero">
-  <div class="hero-deco"></div>
-  <div class="hero-inner">
-    <div class="hero-eyebrow">Philadelphia & surrounding areas</div>
-    <h1>Window treatments<br>crafted for<br><em>your</em> home</h1>
-    <p>From roller shades to custom draperies — every product available manual or fully motorized. We design, fabricate, and install.</p>
-    <div class="hero-btns">
-      <a class="btn-gold" href="pages/shades.html">Shop all products</a>
-      <a class="btn-ghost-light" href="pages/consult.html">Book free in-home visit</a>
+  <div class="hero-wrap">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Philadelphia &amp; surrounding areas</div>
+      <h1>Window treatments<br>crafted for<br><em>your</em> home</h1>
+      <p>From roller shades to custom draperies — every product available manual or fully motorized. We design, fabricate, and install.</p>
+      <div class="hero-btns">
+        <a class="btn-gold" href="pages/shades.html">Shop all products</a>
+        <a class="btn-ghost-light" href="pages/consult.html">Book free in-home visit</a>
+      </div>
+      <div class="trust-row">
+        <div class="trust-item"><div class="trust-dot"></div>Motorization on every product</div>
+        <div class="trust-item"><div class="trust-dot"></div>Custom fabrication</div>
+        <div class="trust-item"><div class="trust-dot"></div>Professional installation</div>
+      </div>
     </div>
-    <div class="trust-row">
-      <div class="trust-item"><div class="trust-dot"></div>Motorization available on every product</div>
-      <div class="trust-item"><div class="trust-dot"></div>Custom fabrication</div>
-      <div class="trust-item"><div class="trust-dot"></div>Professional installation</div>
+    <div class="hero-mosaic">
+      <img class="hero-img-tall" src="images/portfolio/IMG_2854.JPEG" alt="Custom drapery installation" loading="eager">
+      <img src="images/portfolio/IMG_0592.JPEG" alt="Roman shade installation" loading="eager">
+      <img src="images/portfolio/IMG_4927.JPEG" alt="Custom drapery" loading="eager">
     </div>
   </div>
 </div>
