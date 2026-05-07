@@ -90,6 +90,7 @@ function renderNav(activePage) {
     { href: '../pages/roman-shades.html', label: 'Roman shades' },
     { href: '../pages/shutters.html', label: 'Shutters' },
     { href: '../pages/gallery.html', label: 'Our work' },
+    { href: '../pages/installation.html', label: 'Installation' },
     { href: '../pages/measure.html', label: 'How to measure' },
     { href: '../pages/about.html', label: 'About' },
     { href: '../pages/fabric-calculator.html', label: 'Fabric calculator' },
@@ -171,6 +172,7 @@ function renderFooter(isHome) {
       </div>
       <div class="footer-col">
         <h4>Help</h4>
+        <a href="${pre}installation.html">Installation services</a>
         <a href="${pre}measure.html">Measure: shades &amp; blinds</a>
         <a href="${pre}measure-shutters.html">Measure: shutters</a>
         <a href="${pre}measure-drapes.html">Measure: drapery</a>
