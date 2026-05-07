@@ -62,21 +62,24 @@ body {
 .nav-main {
   background: var(--espresso);
   padding: 0 28px;
-  height: 56px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 2px solid rgba(45,224,193,0.12);
 }
-.nav-logo { font-size: 20px; font-weight: 500; color: var(--cream); letter-spacing: -0.3px; text-decoration: none; }
+.nav-logo { font-size: 22px; font-weight: 500; color: #fff; letter-spacing: -0.4px; text-decoration: none; display: flex; align-items: center; }
 .nav-logo em { color: var(--gold); font-style: normal; }
-.nav-links { display: flex; gap: 22px; font-size: 12px; }
-.nav-links a { color: var(--text-dark); text-decoration: none; transition: color 0.15s; }
-.nav-links a:hover { color: var(--cream); }
-.nav-links a.active { color: var(--gold); }
+.nav-links { display: flex; gap: 24px; font-size: 13px; }
+.nav-links a { color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.15s; font-weight: 400; }
+.nav-links a:hover { color: #fff; }
+.nav-links a.active { color: var(--gold); font-weight: 500; position: relative; }
+.nav-links a.active::after { content:''; position:absolute; bottom:-21px; left:0; right:0; height:2px; background:var(--gold); border-radius:1px; }
 .nav-right { display: flex; align-items: center; gap: 14px; }
-.nav-phone { font-size: 12px; color: var(--gold); font-weight: 500; text-decoration: none; display: flex; align-items: center; gap: 5px; }
-.badge-24 { background: var(--gold); color: var(--espresso); font-size: 9px; font-weight: 500; padding: 2px 6px; border-radius: 8px; }
-.nav-cta { background: var(--gold); color: var(--espresso); border: none; padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 500; cursor: pointer; text-decoration: none; white-space: nowrap; }
+.nav-phone { font-size: 13px; color: var(--gold); font-weight: 500; text-decoration: none; display: flex; align-items: center; gap: 5px; }
+.badge-24 { background: var(--gold); color: var(--espresso); font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 8px; }
+.nav-cta { background: var(--gold); color: var(--espresso); border: none; padding: 9px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; white-space: nowrap; transition: opacity 0.15s; }
+.nav-cta:hover { opacity: 0.88; }
 
 /* ---- BUTTONS ---- */
 .btn-gold { background: var(--gold); color: var(--espresso); border: none; padding: 12px 22px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block; }
@@ -91,12 +94,12 @@ body {
 .section-white { background: #fff; }
 .section-mid { background: var(--espresso-mid); }
 
-.section-label { font-size: 10px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; font-weight: 500; margin-bottom: 8px; }
-.section-label-muted { font-size: 10px; letter-spacing: 2px; color: var(--text-faint); text-transform: uppercase; font-weight: 500; margin-bottom: 8px; }
-.section-title { font-size: 22px; font-weight: 500; margin-bottom: 6px; letter-spacing: -0.3px; }
-.section-title-light { font-size: 22px; font-weight: 500; color: var(--cream); margin-bottom: 6px; letter-spacing: -0.3px; }
-.section-sub { font-size: 13px; color: #666; margin-bottom: 22px; line-height: 1.6; max-width: 480px; }
-.section-sub-light { font-size: 13px; color: var(--text-dark); margin-bottom: 22px; line-height: 1.6; max-width: 480px; }
+.section-label { font-size: 10px; letter-spacing: 2.5px; color: var(--gold); text-transform: uppercase; font-weight: 600; margin-bottom: 10px; }
+.section-label-muted { font-size: 10px; letter-spacing: 2.5px; color: var(--text-faint); text-transform: uppercase; font-weight: 600; margin-bottom: 10px; }
+.section-title { font-size: 26px; font-weight: 500; margin-bottom: 8px; letter-spacing: -0.5px; color: #111; }
+.section-title-light { font-size: 26px; font-weight: 500; color: #fff; margin-bottom: 8px; letter-spacing: -0.5px; }
+.section-sub { font-size: 14px; color: #666; margin-bottom: 24px; line-height: 1.65; max-width: 500px; }
+.section-sub-light { font-size: 14px; color: var(--text-dark); margin-bottom: 24px; line-height: 1.65; max-width: 500px; }
 
 /* ---- BADGES ---- */
 .badge { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 9px; border-radius: 20px; }
