@@ -134,6 +134,7 @@ function renderNav(activePage) {
     </div>
   `;
   _injectHead(isHome);
+  _initChatbot();
 }
 
 function renderFooter(isHome) {
@@ -196,4 +197,101 @@ function selOpt(el, groupId) {
 function getOpt(groupId) {
   const s = document.querySelector('#' + groupId + ' .opt-btn.sel');
   return s ? s.textContent.trim() : '—';
+}
+
+// ---- CHATBOT ----
+function _initChatbot() {
+  if (document.getElementById('pb-chat')) return;
+
+  const widget = document.createElement('div');
+  widget.id = 'pb-chat';
+  widget.innerHTML = `
+    <button class="pb-chat-bubble" id="pb-chat-bubble" aria-label="Chat with Philly Blinds support">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 2H4C2.9 2 2 2.9 2 4v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+      </svg>
+      <span class="pb-chat-badge" id="pb-chat-badge">1</span>
+    </button>
+    <div class="pb-chat-panel" id="pb-chat-panel" hidden>
+      <div class="pb-chat-header">
+        <div class="pb-chat-header-info">
+          <div class="pb-chat-avatar">PB</div>
+          <div>
+            <div class="pb-chat-name">Philly Blinds Support</div>
+            <div class="pb-chat-status">&#9679; Online now</div>
+          </div>
+        </div>
+        <a href="tel:6097421720" class="pb-chat-human-btn">&#128222; Talk to Justin</a>
+      </div>
+      <div class="pb-chat-messages" id="pb-chat-messages"></div>
+      <div class="pb-chat-footer">
+        <input type="text" id="pb-chat-input" placeholder="Ask about shades, pricing, installation..." autocomplete="off" />
+        <button id="pb-chat-send" aria-label="Send">Send</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(widget);
+
+  const bubble  = document.getElementById('pb-chat-bubble');
+  const panel   = document.getElementById('pb-chat-panel');
+  const badge   = document.getElementById('pb-chat-badge');
+  const msgsEl  = document.getElementById('pb-chat-messages');
+  const input   = document.getElementById('pb-chat-input');
+  const sendBtn = document.getElementById('pb-chat-send');
+  const history = [];
+
+  function addMsg(text, role) {
+    const div = document.createElement('div');
+    div.className = 'pb-msg pb-msg-' + role;
+    div.textContent = text;
+    msgsEl.appendChild(div);
+    msgsEl.scrollTop = msgsEl.scrollHeight;
+    return div;
+  }
+
+  addMsg('Hi! I\'m the Philly Blinds assistant. Ask me about shades, drapery, shutters, motorization, or pricing — or tap Talk to Justin above to reach a real person right away.', 'bot');
+
+  bubble.addEventListener('click', function() {
+    if (panel.hasAttribute('hidden')) {
+      panel.removeAttribute('hidden');
+      badge.style.display = 'none';
+      input.focus();
+    } else {
+      panel.setAttribute('hidden', '');
+    }
+  });
+
+  async function send() {
+    const text = input.value.trim();
+    if (!text || sendBtn.disabled) return;
+    input.value = '';
+    sendBtn.disabled = true;
+
+    addMsg(text, 'user');
+    history.push({ role: 'user', content: text });
+
+    const typing = addMsg('Typing…', 'typing');
+
+    try {
+      const resp = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: history })
+      });
+      const data = await resp.json();
+      typing.remove();
+      const reply = data.content || 'Sorry, something went wrong. Please call (609) 742-1720.';
+      addMsg(reply, 'bot');
+      history.push({ role: 'assistant', content: reply });
+    } catch (e) {
+      typing.remove();
+      addMsg('Sorry, I had a connection issue. Call or text Justin at (609) 742-1720 — available 24/7!', 'bot');
+    }
+
+    sendBtn.disabled = false;
+    input.focus();
+  }
+
+  sendBtn.addEventListener('click', send);
+  input.addEventListener('keydown', function(e) { if (e.key === 'Enter') send(); });
 }
