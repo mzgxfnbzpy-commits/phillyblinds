@@ -50,9 +50,10 @@
 </div>
 
 <div class="tab-bar">
-  <div class="gtab on" onclick="showG('drapes',this)">Custom draperies (60)</div>
-  <div class="gtab" onclick="showG('roman',this)">Roman shades (11)</div>
-  <div class="gtab" onclick="showG('roller',this)">Roller shades (4)</div>
+  <div class="gtab on" onclick="showG('drapes',this)">Custom draperies (64)</div>
+  <div class="gtab" onclick="showG('roman',this)">Roman shades (15)</div>
+  <div class="gtab" onclick="showG('roller',this)">Roller shades (6)</div>
+  <div class="gtab" onclick="showG('specialty',this)">Shutters &amp; specialty</div>
   <div class="gtab" onclick="showG('upholstery',this)">Upholstery (54)</div>
   <div class="gtab" onclick="showG('videos',this)">Videos (14)</div>
 </div>
@@ -66,6 +67,9 @@
   </div>
   <div id="panel-roller" class="panel">
     <div class="pgrid" id="grid-roller"></div>
+  </div>
+  <div id="panel-specialty" class="panel">
+    <div class="pgrid" id="grid-specialty"></div>
   </div>
   <div id="panel-upholstery" class="panel">
     <div class="pgrid" id="grid-upholstery"></div>
@@ -104,9 +108,10 @@
 renderNav('Our work'); renderFooter(false);
 
 const base='../';
-const drapeFiles=['IMG_4927.JPEG','IMG_2861.JPEG','IMG_3018.JPEG','IMG_3023.JPEG','IMG_3032.JPEG','IMG_3034.JPEG','IMG_3367.JPEG','IMG_3575.JPEG','IMG_3578.JPEG','IMG_3615.JPEG','IMG_3616.JPEG','IMG_4767.JPEG','IMG_4791.JPEG','IMG_4792.JPEG','IMG_4920.JPEG','IMG_4922.JPEG','IMG_4924.JPEG','IMG_4925.JPEG','IMG_2716.JPEG','IMG_2723.JPEG','IMG_2726.JPEG','IMG_2732.JPEG','IMG_2733.JPEG','IMG_2747.JPEG','IMG_2754.JPEG','IMG_2806.JPEG','IMG_2850.JPEG','IMG_2851.JPEG','IMG_2853.JPEG','IMG_2854.JPEG','IMG_2684.JPEG','IMG_1959.JPEG','IMG_1962.JPEG','IMG_1965.JPEG','IMG_1966.JPEG','IMG_2014.JPEG','IMG_2016.JPEG','IMG_2017.JPEG','IMG_2019.JPEG','IMG_2020.JPEG','IMG_2022.JPEG','IMG_2681.JPEG','0BD8C37F-98A4-4B7D-9703-B72D4FC1AE31.JPG','1AAF691A-868D-4B47-B05A-79582C62D55C.jpg','05F1958F-2CF3-4A9D-83A3-2D84A050AA54.JPG','5A65FBE6-7AB9-4535-8D62-64482C37378D.jpg','5CA381D9-4644-42EA-8977-14BCEE517279.JPEG','6AB7DA55-1C77-45B6-874D-1C48DC0DE414.JPEG','8A171BD2-2D59-4D91-8055-76B9EEF0D9B3.JPEG','09F3C90B-FC44-42D9-A881-B976E9F35567.JPEG','624C1D52-5E26-40F4-A216-96525F35677A.jpg','844F7124-DA35-4094-974E-9A2B1B795040.JPG','42544ACF-F287-4F3F-810B-B98A92843CBB.JPG','1044365A-6787-4095-90B3-4F82011BBA3C.JPG','64507409-6249-4D66-8BBD-DE1A62796429.JPEG','74313161-6696-4E7C-A596-3CC597861783.JPG','A4EC67A6-44DF-47F3-83D2-B414652EA94F.JPG','B80FD70C-AFA3-4D5A-8003-3E7D6C2EC6B0-1.JPG','C25AC8C2-D5E1-430E-992C-A4732D98E1FA.JPEG','41231734-8063-434D-A4B9-FB33AE52C342.JPG'];
-const romanFiles=['CB132874-2AF3-4EEA-B87F-B1587D04A309.JPG','IMG_0592.JPEG','IMG_0599.JPEG','IMG_0603.JPEG','IMG_0604.JPEG','IMG_0699.JPEG','IMG_0732.JPEG','448E74BE-9249-43A5-94DB-F3092460702C.JPG','506E0E70-EFA5-4132-880C-9B678A67B9FF.JPEG','5048388E-1B01-4F2A-B6CC-9450F9EB3388.JPG','60217592364__67DA8A85-9CCF-42C0-B741-F0F3C33FDB36.JPG'];
-const rollerFiles=['u3916193617_custom_roller_shades_high_end_in_hpuse_motorized__5be2f23c-3f34-47dc-86d1-3cbbbda7fc96_0.png','u3916193617_custom_roller_shades_high_end_in_hpuse_motorized__5be2f23c-3f34-47dc-86d1-3cbbbda7fc96_1.png','u3916193617_custom_roller_shades_high_end_in_hpuse_motorized__5be2f23c-3f34-47dc-86d1-3cbbbda7fc96_2.png','u3916193617_custom_roller_shades_high_end_in_hpuse_motorized__5be2f23c-3f34-47dc-86d1-3cbbbda7fc96_3.png'];
+const drapeFiles=['IMG_4927.JPEG','IMG_2861.JPEG','IMG_3018.JPEG','IMG_3023.JPEG','IMG_3032.JPEG','IMG_3034.JPEG','IMG_3367.JPEG','IMG_3575.JPEG','IMG_3578.JPEG','IMG_3615.JPEG','IMG_3616.JPEG','IMG_4767.JPEG','IMG_4791.JPEG','IMG_4792.JPEG','IMG_4920.JPEG','IMG_4922.JPEG','IMG_4924.JPEG','IMG_4925.JPEG','IMG_2716.JPEG','IMG_2723.JPEG','IMG_2726.JPEG','IMG_2732.JPEG','IMG_2733.JPEG','IMG_2747.JPEG','IMG_2754.JPEG','IMG_2806.JPEG','IMG_2850.JPEG','IMG_2851.JPEG','IMG_2853.JPEG','IMG_2854.JPEG','IMG_2684.JPEG','IMG_1959.JPEG','IMG_1962.JPEG','IMG_1965.JPEG','IMG_1966.JPEG','IMG_2014.JPEG','IMG_2016.JPEG','IMG_2017.JPEG','IMG_2019.JPEG','IMG_2020.JPEG','IMG_2022.JPEG','IMG_2681.JPEG','0BD8C37F-98A4-4B7D-9703-B72D4FC1AE31.JPG','1AAF691A-868D-4B47-B05A-79582C62D55C.jpg','05F1958F-2CF3-4A9D-83A3-2D84A050AA54.JPG','5A65FBE6-7AB9-4535-8D62-64482C37378D.jpg','5CA381D9-4644-42EA-8977-14BCEE517279.JPEG','6AB7DA55-1C77-45B6-874D-1C48DC0DE414.JPEG','8A171BD2-2D59-4D91-8055-76B9EEF0D9B3.JPEG','09F3C90B-FC44-42D9-A881-B976E9F35567.JPEG','624C1D52-5E26-40F4-A216-96525F35677A.jpg','844F7124-DA35-4094-974E-9A2B1B795040.JPG','42544ACF-F287-4F3F-810B-B98A92843CBB.JPG','1044365A-6787-4095-90B3-4F82011BBA3C.JPG','64507409-6249-4D66-8BBD-DE1A62796429.JPEG','74313161-6696-4E7C-A596-3CC597861783.JPG','A4EC67A6-44DF-47F3-83D2-B414652EA94F.JPG','B80FD70C-AFA3-4D5A-8003-3E7D6C2EC6B0-1.JPG','C25AC8C2-D5E1-430E-992C-A4732D98E1FA.JPEG','41231734-8063-434D-A4B9-FB33AE52C342.JPG','PINCH_PLEAT_2PRONG.JPEG','PINCH_PLEAT_TRAVERSE.JPEG'];
+const romanFiles=['CB132874-2AF3-4EEA-B87F-B1587D04A309.JPG','IMG_0592.JPEG','IMG_0599.JPEG','IMG_0603.JPEG','IMG_0604.JPEG','IMG_0699.JPEG','IMG_0732.JPEG','448E74BE-9249-43A5-94DB-F3092460702C.JPG','506E0E70-EFA5-4132-880C-9B678A67B9FF.JPEG','5048388E-1B01-4F2A-B6CC-9450F9EB3388.JPG','60217592364__67DA8A85-9CCF-42C0-B741-F0F3C33FDB36.JPG','ROMAN_FLAT_UNLINED.JPG','ROMAN_TDBU.JPEG','ROMAN_TRIM.JPG','ROMAN_TRIM_GREEK.JPG'];
+const rollerFiles=['u3916193617_custom_roller_shades_high_end_in_hpuse_motorized__5be2f23c-3f34-47dc-86d1-3cbbbda7fc96_0.png','u3916193617_custom_roller_shades_high_end_in_hpuse_motorized__5be2f23c-3f34-47dc-86d1-3cbbbda7fc96_1.png','u3916193617_custom_roller_shades_high_end_in_hpuse_motorized__5be2f23c-3f34-47dc-86d1-3cbbbda7fc96_2.png','u3916193617_custom_roller_shades_high_end_in_hpuse_motorized__5be2f23c-3f34-47dc-86d1-3cbbbda7fc96_3.png','DUAL_ROLLER_SHADES.JPG','ROLLER_METAL_VALANCE.JPEG'];
+const specialtyFiles=['CIRCLE_SHUTTER.JPEG','HOURGLASS_SHEERS.JPEG','CUSTOM_UPHOLSTERY.JPEG','DECORATIVE_ARCH_DRAPES.JPG','VALANCE_SWAGS_JABOTS.JPEG'];
 const videos=[
   {file:'Cellular_shades.MP4',name:'Motorized cellular shades',cat:'Cellular',motor:true,color:'#EAF3DE',stroke:'#3B6D11'},
   {file:'Manual_Roller_Shade.MP4',name:'Motorized roller shade',cat:'Roller',motor:true,color:'#E6F1FB',stroke:'#185FA5'},
@@ -151,6 +156,7 @@ function openPhoto(i, gridId){
     photoLists['grid-drapes']=drapeFiles.map(f=>'../images/portfolio/'+f);
     photoLists['grid-roman']=romanFiles.map(f=>'../images/portfolio/'+f);
     photoLists['grid-roller']=rollerFiles.map(f=>'../images/portfolio/'+f);
+    photoLists['grid-specialty']=specialtyFiles.map(f=>'../images/portfolio/'+f);
     photoLists['grid-upholstery']=upholsteryFiles.map(f=>'../images/upholstery/'+f);
   }
   currentList=photoLists[gridId]; currentIdx=i; currentType='photo';
@@ -202,6 +208,7 @@ const upholsteryFiles=[
 buildPhotoGrid('grid-drapes', drapeFiles, '../images/portfolio/');
 buildPhotoGrid('grid-roman', romanFiles, '../images/portfolio/');
 buildPhotoGrid('grid-roller', rollerFiles, '../images/portfolio/');
+buildPhotoGrid('grid-specialty', specialtyFiles, '../images/portfolio/');
 buildPhotoGrid('grid-upholstery', upholsteryFiles, '../images/upholstery/');
 buildVideoGrid();
 </script>
