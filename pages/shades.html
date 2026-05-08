@@ -1344,7 +1344,8 @@
         <select id="hd-product-sel">
           <option value="silhouette">Silhouette Shadings</option>
           <option value="pirouette">Pirouette Shadings</option>
-          <option value="both">Both — not sure yet</option>
+          <option value="luminette">Luminette Privacy Sheers</option>
+          <option value="both">Multiple / not sure yet</option>
         </select>
       </div>
       <div class="form-group">
@@ -1655,8 +1656,9 @@ function selectProduct(productId, productName, isInstant) {
     document.getElementById('hd-config').classList.add('open');
     document.getElementById('hd-product-name').textContent = productName;
     const hdSel = document.getElementById('hd-product-sel');
-    if (productId === 'silhouette') hdSel.value = 'silhouette';
+    if (productId === 'silhouette')  hdSel.value = 'silhouette';
     else if (productId === 'pirouette') hdSel.value = 'pirouette';
+    else if (productId === 'luminette') hdSel.value = 'luminette';
   }
 
   sec.scrollIntoView({ behavior: 'smooth', block: 'start' });

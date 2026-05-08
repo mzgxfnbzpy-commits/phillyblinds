@@ -90,7 +90,7 @@ function renderNav(activePage) {
     { href: '../pages/roman-shades.html', label: 'Roman shades' },
     { href: '../pages/shutters.html', label: 'Shutters' },
     { href: '../pages/gallery.html', label: 'Our work' },
-    { href: '../pages/upholstery.html', label: 'Wall upholstery' },
+    { href: '../pages/upholstery.html', label: 'Custom upholstery' },
     { href: '../pages/installation.html', label: 'Installation' },
     { href: '../pages/measure.html', label: 'How to measure' },
     { href: '../pages/about.html', label: 'About' },
@@ -159,7 +159,7 @@ function renderFooter(isHome) {
         <a href="${pre}shades.html">Zebra shades</a>
         <a href="${pre}shades.html">Woven wood</a>
         <a href="${pre}shades.html">Faux wood blinds</a>
-        <a href="${pre}shades.html">Silhouette / Pirouette</a>
+        <a href="${pre}shades.html">Silhouette / Pirouette / Luminette</a>
       </div>
       <div class="footer-col">
         <h4>Drapery</h4>
@@ -174,7 +174,7 @@ function renderFooter(isHome) {
       </div>
       <div class="footer-col">
         <h4>Help</h4>
-        <a href="${pre}upholstery.html">Wall upholstery</a>
+        <a href="${pre}upholstery.html">Custom upholstery</a>
         <a href="${pre}installation.html">Installation services</a>
         <a href="${pre}measure.html">Measure: shades &amp; blinds</a>
         <a href="${pre}measure-shutters.html">Measure: shutters</a>
