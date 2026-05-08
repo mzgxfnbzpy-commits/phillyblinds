@@ -212,6 +212,17 @@
           </div>
         </div>
 
+        <div class="product-card" id="card-exterior" onclick="selectProduct('exterior','Exterior Roller Shades',false)">
+          <div class="product-img-photo">
+            <img src="../images/thumbnails/exterior-roller-shade.JPEG" alt="Exterior Roller Shades" loading="lazy" style="object-position:center 20%">
+          </div>
+          <div class="product-body">
+            <div class="product-name">Exterior Roller Shades</div>
+            <div class="product-sub">Deck, patio &amp; porch sun control</div>
+            <span class="badge badge-quote">Custom quote</span>
+          </div>
+        </div>
+
         <div class="product-card" id="card-cellular" onclick="selectProduct('cellular','Cellular / Honeycomb Shades',true)">
           <div class="product-img-photo">
             <img src="../images/thumbnails/CELLULAR SMALL.JPEG" alt="Cellular Shades" loading="eager">
@@ -1661,6 +1672,13 @@ function selectProduct(productId, productName, isInstant) {
       document.getElementById('pb-only-note').style.display = 'block';
     }
 
+  } else if (productId === 'exterior') {
+    document.getElementById('instant-config').classList.remove('open');
+    document.getElementById('fwb-config').classList.remove('open');
+    document.getElementById('hd-config').classList.add('open');
+    document.getElementById('hd-product-name').textContent = 'Exterior Roller Shades';
+    const hdSel = document.getElementById('hd-product-sel');
+    if (hdSel) hdSel.value = 'other';
   } else if (productId === 'fwb') {
     document.getElementById('instant-config').classList.remove('open');
     document.getElementById('hd-config').classList.remove('open');
