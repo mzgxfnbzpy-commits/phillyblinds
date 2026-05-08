@@ -130,7 +130,18 @@ function renderNav(activePage) {
           📞 (609) 742-1720 <span class="badge-24">24/7</span>
         </a>
         <a class="nav-cta" href="${consultHref}">Free consultation</a>
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" onclick="_toggleDrawer()">
+          <span></span><span></span><span></span>
+        </button>
       </div>
+    </div>
+    <div class="nav-drawer" id="nav-drawer">
+      ${pages.map(p => {
+        const href = isHome ? p.href.replace('../', '') : p.href;
+        const active = p.label === activePage ? ' active' : '';
+        return `<a href="${href}" class="${active}">${p.label}</a>`;
+      }).join('')}
+      <a class="nav-drawer-cta" href="${consultHref}">Free consultation</a>
     </div>
   `;
   _injectHead(isHome);
@@ -188,6 +199,26 @@ function renderFooter(isHome) {
     <div class="footer-disc">Blindznation is an independent business providing professional installation and consulting services. Product names, logos, and trademarks are the property of their respective owners and are used for identification purposes only. Blindznation is not affiliated with, endorsed by, or sponsored by any manufacturer. &nbsp;·&nbsp; <a href="${pre}privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></div>
   `;
 }
+
+function _toggleDrawer() {
+  var btn    = document.getElementById('nav-hamburger');
+  var drawer = document.getElementById('nav-drawer');
+  if (!btn || !drawer) return;
+  var open = drawer.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+}
+
+// Close mobile drawer when clicking a link inside it
+document.addEventListener('click', function(e) {
+  var drawer = document.getElementById('nav-drawer');
+  var btn    = document.getElementById('nav-hamburger');
+  if (!drawer || !drawer.classList.contains('open')) return;
+  if (e.target.closest('.nav-drawer a') && !e.target.classList.contains('nav-drawer-cta')) {
+    drawer.classList.remove('open');
+    if (btn) btn.classList.remove('open');
+  }
+});
 
 // Opt button toggle helper
 function selOpt(el, groupId) {
