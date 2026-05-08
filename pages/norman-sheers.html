@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Configure Norman PerfectSheer™ and SmartDrape™ — professional specification tool. Custom quote generation. Serving Philadelphia area.">
+<meta property="og:title" content="Norman PerfectSheer™ &amp; SmartDrape™ Configurator | Philly Blinds">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://phillyblinds.com/pages/norman-sheers.html">
+<meta property="og:site_name" content="Philly Blinds">
+<title>Norman PerfectSheer™ &amp; SmartDrape™ | Philly Blinds</title>
+<link rel="stylesheet" href="../css/global.css">
+<style>
+/* ── HERO ── */
+.page-hero{background:var(--espresso);padding:44px 28px 40px}
+.breadcrumb{font-size:11px;color:var(--text-faint);margin-bottom:14px}
+.breadcrumb a{color:var(--text-muted);text-decoration:none}
+.page-hero h1{font-size:30px;font-weight:500;color:var(--cream);letter-spacing:-0.4px;margin-bottom:8px}
+.page-hero .sub{font-size:14px;color:var(--text-dark);line-height:1.7;max-width:560px;margin-bottom:20px}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap}
+.hero-pill{font-size:11px;padding:4px 12px;border-radius:20px;border:.5px solid var(--border-dark);color:var(--text-faint)}
+.hero-pill-gold{background:rgba(45,224,193,.12);border-color:rgba(45,224,193,.3);color:var(--gold)}
+
+/* ── MAIN LAYOUT ── */
+.config-layout{display:grid;grid-template-columns:1fr 300px;gap:24px;max-width:1100px;margin:0 auto;padding:28px 28px 60px;align-items:start}
+@media(max-width:860px){.config-layout{grid-template-columns:1fr;padding:20px 16px 48px}}
+
+/* ── STEPS ── */
+.step-block{background:#fff;border:1px solid #e8e8e4;border-radius:14px;margin-bottom:16px;overflow:hidden;transition:box-shadow .15s}
+.step-block.active{box-shadow:0 2px 20px rgba(45,224,193,.1);border-color:rgba(45,224,193,.3)}
+.step-head{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;background:#fff}
+.step-num-circle{width:28px;height:28px;border-radius:50%;background:var(--espresso);color:var(--gold);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-block.done .step-num-circle{background:var(--gold);color:var(--espresso)}
+.step-head-title{font-size:14px;font-weight:500;color:#111;flex:1}
+.step-head-val{font-size:12px;color:var(--gold);font-weight:500}
+.step-body{padding:0 20px 20px;display:none}
+.step-block.active .step-body,.step-block.open .step-body{display:block}
+
+/* ── OPTION CARDS ── */
+.opt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:12px}
+.opt-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.opt-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+@media(max-width:500px){.opt-grid-3{grid-template-columns:1fr 1fr}}
+.opt-card{background:#fff;border:1.5px solid #e8e8e4;border-radius:11px;padding:14px 12px;cursor:pointer;transition:all .15s;text-align:center}
+.opt-card:hover{border-color:var(--gold)}
+.opt-card.sel{border:2px solid var(--gold);background:rgba(45,224,193,.06)}
+.opt-card-icon{font-size:22px;margin-bottom:6px}
+.opt-card-title{font-size:13px;font-weight:500;color:#111;margin-bottom:2px}
+.opt-card-desc{font-size:11px;color:#666;line-height:1.4}
+.opt-card.sel .opt-card-title{color:#0A4A42}
+
+/* Large 2-up product cards */
+.product-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}
+@media(max-width:500px){.product-grid{grid-template-columns:1fr}}
+.product-card-big{background:#fff;border:1.5px solid #e8e8e4;border-radius:14px;padding:24px 20px;cursor:pointer;transition:all .15s}
+.product-card-big:hover{border-color:var(--gold);box-shadow:0 2px 16px rgba(45,224,193,.1)}
+.product-card-big.sel{border:2px solid var(--gold);background:rgba(45,224,193,.05)}
+.product-card-big .icon{font-size:32px;margin-bottom:10px}
+.product-card-big h3{font-size:16px;font-weight:500;color:#111;margin-bottom:5px}
+.product-card-big p{font-size:12px;color:#555;line-height:1.6}
+.product-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:6px;background:var(--gold-light);color:#0A4A42;margin-top:8px;font-weight:500}
+
+/* ── FABRIC SWATCHES ── */
+.fabric-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;margin-top:12px}
+.swatch{border:1.5px solid #e8e8e4;border-radius:10px;overflow:hidden;cursor:pointer;transition:all .15s}
+.swatch:hover{border-color:var(--gold);transform:translateY(-1px)}
+.swatch.sel{border:2px solid var(--gold);box-shadow:0 2px 10px rgba(45,224,193,.2)}
+.swatch-color{height:54px;width:100%}
+.swatch-label{padding:5px 6px;background:#fff}
+.swatch-name{font-size:10px;font-weight:500;color:#222;line-height:1.3}
+.swatch-code{font-size:9px;color:#999}
+
+/* SmartDrape collections */
+.collection-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:12px}
+.collection-card{border:1.5px solid #e8e8e4;border-radius:10px;padding:14px 12px;cursor:pointer;text-align:center;transition:all .15s;background:#fff}
+.collection-card:hover{border-color:var(--gold)}
+.collection-card.sel{border:2px solid var(--gold);background:rgba(45,224,193,.05)}
+.collection-card .coll-name{font-size:13px;font-weight:500;color:#111;margin-bottom:3px}
+.collection-card .coll-desc{font-size:11px;color:#777}
+
+/* ── WARNING BOXES ── */
+.warn-box{background:#FFF3CD;border:1px solid #FFC107;border-radius:8px;padding:10px 14px;font-size:12px;color:#7d5a00;margin-top:10px;line-height:1.6;display:flex;gap:8px}
+.warn-box-red{background:#FEE2E2;border-color:#EF4444;color:#7f1d1d}
+.warn-icon{font-size:14px;flex-shrink:0}
+.info-box{background:rgba(45,224,193,.08);border:1px solid rgba(45,224,193,.25);border-radius:8px;padding:10px 14px;font-size:12px;color:#0A4A42;margin-top:10px;line-height:1.6}
+
+/* ── MEASUREMENTS ── */
+.dim-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.dim-field{display:flex;flex-direction:column;gap:4px}
+.dim-label{font-size:12px;font-weight:500;color:#444}
+.dim-input-wrap{display:flex;gap:6px;align-items:center}
+.dim-input{width:70px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px;text-align:center}
+.dim-unit{font-size:12px;color:#666}
+.dim-frac{width:60px;padding:8px 8px;border:1px solid #ddd;border-radius:8px;font-size:13px}
+.size-errors{margin-top:10px}
+.size-error{background:#FEE2E2;border:1px solid #EF4444;border-radius:8px;padding:8px 12px;font-size:12px;color:#7f1d1d;margin-bottom:6px}
+.size-ok{background:#DCFCE7;border:1px solid #86EFAC;border-radius:8px;padding:8px 12px;font-size:12px;color:#14532d;margin-bottom:6px}
+.computed-info{background:var(--gold-mid);border:1px solid #e8e8e4;border-radius:8px;padding:10px 14px;margin-top:10px}
+.computed-row{display:flex;justify-content:space-between;font-size:12px;padding:3px 0}
+.computed-key{color:#666}
+.computed-val{font-weight:500;color:#111}
+
+/* ── ACCESSORIES ── */
+.acc-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:.5px solid #f0f0ee}
+.acc-item:last-child{border-bottom:none}
+.acc-check{flex-shrink:0;margin-top:2px}
+.acc-label{font-size:13px;font-weight:500;color:#111}
+.acc-sub{font-size:11px;color:#666;line-height:1.4;margin-top:2px}
+
+/* ── SPEC PANEL ── */
+.spec-panel{background:var(--espresso);border-radius:14px;padding:20px;position:sticky;top:80px}
+.spec-title{font-size:11px;font-weight:600;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
+.spec-row{display:flex;justify-content:space-between;align-items:flex-start;font-size:12px;padding:6px 0;border-bottom:.5px solid #2A201A;gap:8px}
+.spec-row:last-of-type{border-bottom:none}
+.spec-key{color:#7A6A58;flex-shrink:0}
+.spec-val{color:var(--cream);font-weight:500;text-align:right;word-break:break-word}
+.spec-val.empty{color:#3A2E24;font-style:italic}
+.spec-divider{border:.5px solid #2A201A;margin:10px 0}
+.spec-cta{margin-top:14px}
+
+/* ── DISCLAIMER ACCORDION ── */
+.disclaimer-toggle{background:none;border:none;font-size:12px;color:var(--gold);cursor:pointer;padding:0;font-family:inherit;display:flex;align-items:center;gap:6px;margin-top:16px}
+.disclaimer-body{display:none;margin-top:8px;font-size:11px;color:#555;line-height:1.7}
+.disclaimer-body.open{display:block}
+.disclaimer-item{padding:3px 0;padding-left:14px;position:relative}
+.disclaimer-item::before{content:"·";position:absolute;left:4px;color:#aaa}
+
+/* ── QUOTE FORM ── */
+.quote-section{margin-top:8px}
+
+/* ── CUSTOM QUOTE TRIGGER ── */
+.custom-quote-banner{background:linear-gradient(135deg,var(--espresso) 0%,var(--espresso-mid) 100%);border:1px solid rgba(45,224,193,.25);border-radius:12px;padding:20px;margin-top:12px;text-align:center}
+.custom-quote-banner h3{font-size:16px;font-weight:500;color:var(--cream);margin-bottom:6px}
+.custom-quote-banner p{font-size:12px;color:var(--text-dark);line-height:1.6;margin-bottom:14px}
+
+@media(max-width:480px){.opt-grid-2,.dim-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="site-nav" id="site-nav"></nav>
+
+<div class="page-hero">
+  <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <a href="shades.html">Shades</a> &rsaquo; Norman Sheers</div>
+  <h1>Norman PerfectSheer™ &amp; SmartDrape™</h1>
+  <p class="sub">Professional specification tool for Norman's premium sheer systems. Configure your product, validate compatibility, and generate a custom quote — all in one place.</p>
+  <div class="hero-pills">
+    <span class="hero-pill-gold hero-pill">Norman Authorized</span>
+    <span class="hero-pill">Custom quote only</span>
+    <span class="hero-pill">Live rules engine</span>
+    <span class="hero-pill">Spec-ready output</span>
+  </div>
+</div>
+
+<div class="config-layout">
+
+  <!-- ══ LEFT COLUMN: CONFIGURATOR STEPS ══════════════════ -->
+  <div id="configurator">
+
+    <!-- STEP 1: PRODUCT -->
+    <div class="step-block active open" id="step-1">
+      <div class="step-head">
+        <div class="step-num-circle">1</div>
+        <div class="step-head-title">Select product</div>
+        <div class="step-head-val" id="s1-val"></div>
+      </div>
+      <div class="step-body">
+        <div class="product-grid">
+          <div class="product-card-big" id="pc-ps" onclick="selectProduct('ps')">
+            <div class="icon">🪟</div>
+            <h3>PerfectSheer™</h3>
+            <p>Hybrid sheer shade — alternating sheer + fabric vanes. Open, closed, and privacy positions. Horizontal operation.</p>
+            <span class="product-badge">Cord loop or motorized</span>
+          </div>
+          <div class="product-card-big" id="pc-sd" onclick="selectProduct('sd')">
+            <div class="icon">🏛️</div>
+            <h3>SmartDrape™</h3>
+            <p>Vertical sheer vane system — drapery-style operation. Left/right/center stack configurations. Wide-span capable.</p>
+            <span class="product-badge">Wand tilt or motorized</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: OPACITY -->
+    <div class="step-block" id="step-2">
+      <div class="step-head">
+        <div class="step-num-circle">2</div>
+        <div class="step-head-title">Light control</div>
+        <div class="step-head-val" id="s2-val"></div>
+      </div>
+      <div class="step-body">
+        <div class="opt-grid-2">
+          <div class="opt-card" id="oc-lf" onclick="selectOpacity('lf')">
+            <div class="opt-card-icon">☀️</div>
+            <div class="opt-card-title">Light Filtering</div>
+            <div class="opt-card-desc">Diffuses light beautifully — maintains a view through</div>
+          </div>
+          <div class="opt-card" id="oc-rd" onclick="selectOpacity('rd')">
+            <div class="opt-card-icon">🌙</div>
+            <div class="opt-card-title">Room Darkening</div>
+            <div class="opt-card-desc">Significantly reduces light — not a blackout product</div>
+          </div>
+        </div>
+        <div id="rd-warning" class="warn-box" style="display:none">
+          <span class="warn-icon">⚠️</span>
+          <span><strong>Important:</strong> Room Darkening fabrics reduce light significantly but are <strong>not blackout products</strong>. Some light will pass through around edges and vane openings.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: OPERATION -->
+    <div class="step-block" id="step-3">
+      <div class="step-head">
+        <div class="step-num-circle">3</div>
+        <div class="step-head-title">Operation</div>
+        <div class="step-head-val" id="s3-val"></div>
+      </div>
+      <div class="step-body" id="s3-body">
+        <!-- filled dynamically -->
+      </div>
+    </div>
+
+    <!-- STEP 4: MOUNT -->
+    <div class="step-block" id="step-4">
+      <div class="step-head">
+        <div class="step-num-circle">4</div>
+        <div class="step-head-title">Mount type</div>
+        <div class="step-head-val" id="s4-val"></div>
+      </div>
+      <div class="step-body">
+        <div class="opt-grid-3">
+          <div class="opt-card" id="mc-in" onclick="selectMount('inside')">
+            <div class="opt-card-icon">⬛</div>
+            <div class="opt-card-title">Inside Mount</div>
+            <div class="opt-card-desc">Fits within the window frame</div>
+          </div>
+          <div class="opt-card" id="mc-out" onclick="selectMount('outside')">
+            <div class="opt-card-icon">🔲</div>
+            <div class="opt-card-title">Outside Mount</div>
+            <div class="opt-card-desc">Mounts on the wall above frame</div>
+          </div>
+          <div class="opt-card" id="mc-semi" onclick="selectMount('semi')">
+            <div class="opt-card-icon">◽</div>
+            <div class="opt-card-title">Semi-Inside</div>
+            <div class="opt-card-desc">Partially recessed into the frame</div>
+          </div>
+        </div>
+        <div id="door-toggle-wrap" style="margin-top:14px;display:flex;align-items:center;gap:10px">
+          <input type="checkbox" id="door-check" onchange="toggleDoor()" style="width:16px;height:16px;cursor:pointer">
+          <label for="door-check" style="font-size:13px;color:#444;cursor:pointer">Installed on a door</label>
+        </div>
+        <div id="door-warnings" style="display:none">
+          <div class="warn-box warn-box-red" style="margin-top:8px"><span class="warn-icon">🚪</span><div><strong>Door application:</strong> Magnetic hold-downs are required and will be automatically included. Valances are not recommended. Additional fabric deductions (~1/16" per side) apply. Metal doors may affect motorization compatibility.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5: STACK CONFIG (conditional) -->
+    <div class="step-block" id="step-5" style="display:none">
+      <div class="step-head">
+        <div class="step-num-circle">5</div>
+        <div class="step-head-title">Stack configuration</div>
+        <div class="step-head-val" id="s5-val"></div>
+      </div>
+      <div class="step-body" id="s5-body">
+        <!-- filled dynamically -->
+      </div>
+    </div>
+
+    <!-- STEP 6: MEASUREMENTS -->
+    <div class="step-block" id="step-6">
+      <div class="step-head" onclick="toggleStep('step-6')">
+        <div class="step-num-circle">6</div>
+        <div class="step-head-title">Measurements</div>
+        <div class="step-head-val" id="s6-val"></div>
+      </div>
+      <div class="step-body">
+        <div id="mount-deduction-note" class="info-box" style="display:none"></div>
+        <div class="dim-row">
+          <div class="dim-field">
+            <div class="dim-label">Order Width</div>
+            <div class="dim-input-wrap">
+              <input class="dim-input" type="number" id="inp-w" min="0" max="300" step="0.125" placeholder="e.g. 36" oninput="validateSizes()">
+              <span class="dim-unit">inches</span>
+            </div>
+          </div>
+          <div class="dim-field">
+            <div class="dim-label">Order Height</div>
+            <div class="dim-input-wrap">
+              <input class="dim-input" type="number" id="inp-h" min="0" max="300" step="0.125" placeholder="e.g. 72">
+              <span class="dim-unit">inches</span>
+            </div>
+          </div>
+        </div>
+        <div class="dim-row" style="margin-top:6px">
+          <div class="dim-field">
+            <div class="dim-label">Quantity</div>
+            <div class="dim-input-wrap">
+              <input class="dim-input" type="number" id="inp-qty" min="1" max="50" value="1" oninput="validateSizes()">
+              <span class="dim-unit">shades</span>
+            </div>
+          </div>
+        </div>
+        <div id="size-errors" class="size-errors" style="margin-top:12px"></div>
+        <div id="computed-panel" class="computed-info" style="display:none">
+          <div class="computed-row"><span class="computed-key">Shade width (after deduction)</span><span class="computed-val" id="cp-shadeW">—</span></div>
+          <div class="computed-row" id="cp-cord-row" style="display:none"><span class="computed-key">Default cord length</span><span class="computed-val" id="cp-cord">—</span></div>
+          <div class="computed-row" id="cp-joint-row" style="display:none"><span class="computed-key">SmartJoints required</span><span class="computed-val" id="cp-joints">—</span></div>
+          <div class="computed-row" id="cp-area-row" style="display:none"><span class="computed-key">Area per shade</span><span class="computed-val" id="cp-area">—</span></div>
+          <div class="computed-row" id="cp-ratio-row" style="display:none"><span class="computed-key">H:W ratio</span><span class="computed-val" id="cp-ratio">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 7: FABRIC -->
+    <div class="step-block" id="step-7">
+      <div class="step-head" onclick="toggleStep('step-7')">
+        <div class="step-num-circle">7</div>
+        <div class="step-head-title">Fabric selection</div>
+        <div class="step-head-val" id="s7-val"></div>
+      </div>
+      <div class="step-body" id="s7-body">
+        <!-- filled dynamically -->
+      </div>
+    </div>
+
+    <!-- STEP 8: VALANCE (PerfectSheer only) -->
+    <div class="step-block" id="step-8" style="display:none">
+      <div class="step-head" onclick="toggleStep('step-8')">
+        <div class="step-num-circle">8</div>
+        <div class="step-head-title">Valance / Fascia</div>
+        <div class="step-head-val" id="s8-val"></div>
+      </div>
+      <div class="step-body">
+        <div id="valance-door-warn" class="warn-box warn-box-red" style="display:none">
+          <span class="warn-icon">⚠️</span><span>Valances are <strong>not recommended</strong> for door applications.</span>
+        </div>
+        <div class="opt-grid">
+          <div class="opt-card" onclick="selectValance('none')">
+            <div class="opt-card-icon">✕</div>
+            <div class="opt-card-title">No Valance</div>
+            <div class="opt-card-desc">Clean headrail exposed</div>
+          </div>
+          <div class="opt-card" onclick="selectValance('curved-fascia')">
+            <div class="opt-card-icon">🎨</div>
+            <div class="opt-card-title">Curved Fascia</div>
+            <div class="opt-card-desc">Wrapped in shade fabric. 3.5" or 4.5". Splice-capable.</div>
+          </div>
+          <div class="opt-card" onclick="selectValance('fabric-valance')">
+            <div class="opt-card-icon">🪡</div>
+            <div class="opt-card-title">Fabric Valance</div>
+            <div class="opt-card-desc">Fabric-wrapped, alternate fabric optional. Returns available on OM/semi-inside.</div>
+          </div>
+          <div class="opt-card" onclick="selectValance('modern-wood')">
+            <div class="opt-card-icon">🪵</div>
+            <div class="opt-card-title">Modern Wood</div>
+            <div class="opt-card-desc">4.5" only. 6 paint + 6 stain finishes.</div>
+          </div>
+        </div>
+
+        <!-- FASCIA/FABRIC VALANCE SIZE -->
+        <div id="valance-size-wrap" style="display:none;margin-top:14px">
+          <div style="font-size:12px;font-weight:500;color:#444;margin-bottom:8px">Valance height</div>
+          <div class="opt-row" id="grp-val-size">
+            <button class="opt-btn sel" onclick="selOpt(this,'grp-val-size')">3.5"</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-val-size')">4.5"</button>
+          </div>
+        </div>
+
+        <!-- MODERN WOOD FINISHES -->
+        <div id="wood-finish-wrap" style="display:none;margin-top:14px">
+          <div style="font-size:12px;font-weight:500;color:#444;margin-bottom:8px">Wood finish — Paint</div>
+          <div class="opt-row" id="grp-wood-paint" style="flex-wrap:wrap">
+            <button class="opt-btn" onclick="selOpt(this,'grp-wood-paint')">Pure White</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-wood-paint')">Silk White</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-wood-paint')">Pearl</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-wood-paint')">Crisp Linen</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-wood-paint')">Stone Gray</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-wood-paint')">Clay</button>
+          </div>
+          <div style="font-size:12px;font-weight:500;color:#444;margin:12px 0 8px">Wood finish — Stain</div>
+          <div class="opt-row" id="grp-wood-stain" style="flex-wrap:wrap">
+            <button class="opt-btn" onclick="selOpt(this,'grp-wood-stain')">Weathered Teak</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-wood-stain')">Limed White</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-wood-stain')">Dark Teak</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-wood-stain')">Black Walnut</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-wood-stain')">Wenge</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-wood-stain')">Matte Black</button>
+          </div>
+        </div>
+
+        <!-- SPLICE WARNING -->
+        <div id="valance-splice-warn" class="warn-box" style="display:none;margin-top:12px">
+          <span class="warn-icon">⚠️</span>
+          <span id="valance-splice-text"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 9: ACCESSORIES -->
+    <div class="step-block" id="step-9">
+      <div class="step-head" onclick="toggleStep('step-9')">
+        <div class="step-num-circle">9</div>
+        <div class="step-head-title">Accessories</div>
+        <div class="step-head-val" id="s9-val">Optional</div>
+      </div>
+      <div class="step-body" id="s9-body">
+        <!-- filled dynamically -->
+      </div>
+    </div>
+
+    <!-- STEP 10: QUOTE -->
+    <div class="step-block" id="step-10">
+      <div class="step-head">
+        <div class="step-num-circle">10</div>
+        <div class="step-head-title">Get your custom quote</div>
+      </div>
+      <div class="step-body">
+
+        <div id="custom-quote-triggers" class="custom-quote-banner" style="display:none">
+          <h3>⚡ Custom Specification Required</h3>
+          <p id="cq-reason">This configuration requires a custom specification review before pricing can be provided.</p>
+        </div>
+
+        <div class="quote-section">
+          <div class="form-row" style="margin-top:12px">
+            <div class="form-group"><label>Name *</label><input type="text" id="q-name" placeholder="Jane Smith"></div>
+            <div class="form-group"><label>Phone *</label><input type="tel" id="q-phone" placeholder="(215) 555-0100"></div>
+          </div>
+          <div class="form-group"><label>Email</label><input type="email" id="q-email" placeholder="jane@example.com"></div>
+          <div class="form-group"><label>Installation address</label><input type="text" id="q-address" placeholder="123 Main St, Philadelphia PA"></div>
+          <div class="form-group"><label>Additional notes or questions</label><textarea id="q-notes" style="min-height:70px" placeholder="Timeline, room details, existing hardware, anything else..."></textarea></div>
+
+          <!-- DELIVERY -->
+          <div class="delivery-section" style="margin-top:4px">
+            <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+            <div class="opt-row" id="grp-del-ns">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-del-ns');document.getElementById('del-ns-s').style.display='block';document.getElementById('del-ns-p').style.display='none'">Ship to me</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-del-ns');document.getElementById('del-ns-s').style.display='none';document.getElementById('del-ns-p').style.display='block'">I'll pick up</button>
+            </div>
+            <div id="del-ns-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA. <div class="delivery-tariff">Tariffs and import fees are additional.</div></div>
+            <div id="del-ns-p" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>
+          </div>
+
+          <button class="btn-gold" onclick="submitQuote()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:16px">Submit Specification &amp; Request Quote &rarr;</button>
+        </div>
+
+        <div id="quote-success" style="display:none;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:10px;padding:20px;color:#2e7d32;font-size:14px;line-height:1.7;margin-top:12px">
+          <strong>Specification submitted!</strong><br>Your email app opened with the complete spec pre-filled. Our team will review and follow up within a few hours.<br><br>
+          Urgent? <a href="tel:6097421720" style="color:#2e7d32">(609) 742-1720</a> &middot; 24/7.
+        </div>
+
+        <!-- DISCLAIMERS -->
+        <button class="disclaimer-toggle" onclick="this.nextElementSibling.classList.toggle('open')">
+          <span id="disc-arrow">▶</span> Product disclaimers &amp; care instructions
+        </button>
+        <div class="disclaimer-body" id="disclaimer-body">
+          <div style="font-size:12px;font-weight:500;color:#444;margin-bottom:4px">Expected product characteristics</div>
+          <div class="disclaimer-item">Room Darkening fabrics are not blackout — some light will pass through</div>
+          <div class="disclaimer-item">Minor gaps between vanes are a normal characteristic of this product type</div>
+          <div class="disclaimer-item">Fabric fraying at cut edges is normal and expected</div>
+          <div class="disclaimer-item">Wrinkles and creases are normal, especially initially</div>
+          <div class="disclaimer-item">Slight vane bowing is a normal characteristic</div>
+          <div class="disclaimer-item">Vane alignment tolerance is ±1/4"</div>
+          <div class="disclaimer-item">Fabric seams may not be perfectly straight</div>
+          <div class="disclaimer-item">The hem bar rises slightly when the shade is in the open position</div>
+          <div style="font-size:12px;font-weight:500;color:#444;margin:10px 0 4px">Care &amp; cleaning</div>
+          <div class="disclaimer-item">Light dusting with a soft cloth — OK</div>
+          <div class="disclaimer-item">Air blower / compressed air — OK</div>
+          <div class="disclaimer-item">Steam iron on medium heat — OK</div>
+          <div class="disclaimer-item">Vacuuming — <strong>Not recommended</strong></div>
+          <div class="disclaimer-item">Spot cleaning — <strong>Not recommended</strong></div>
+          <div style="margin-top:8px;font-size:11px;color:#888">Fabric composition: 100% Polyester</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /configurator -->
+
+  <!-- ══ RIGHT COLUMN: SPEC PANEL ═════════════════════════ -->
+  <div>
+    <div class="spec-panel">
+      <div class="spec-title">Live Specification</div>
+      <div class="spec-row"><span class="spec-key">Product</span><span class="spec-val empty" id="sp-product">— select above</span></div>
+      <div class="spec-row"><span class="spec-key">Light control</span><span class="spec-val empty" id="sp-opacity">—</span></div>
+      <div class="spec-row"><span class="spec-key">Operation</span><span class="spec-val empty" id="sp-operation">—</span></div>
+      <div class="spec-row"><span class="spec-key">Mount</span><span class="spec-val empty" id="sp-mount">—</span></div>
+      <div class="spec-row" id="sp-stack-row" style="display:none"><span class="spec-key">Stack</span><span class="spec-val" id="sp-stack">—</span></div>
+      <div class="spec-row"><span class="spec-key">Width × Height</span><span class="spec-val empty" id="sp-dims">—</span></div>
+      <div class="spec-row"><span class="spec-key">Qty</span><span class="spec-val empty" id="sp-qty">—</span></div>
+      <div class="spec-row"><span class="spec-key">Fabric</span><span class="spec-val empty" id="sp-fabric">—</span></div>
+      <div class="spec-row" id="sp-valance-row"><span class="spec-key">Valance</span><span class="spec-val empty" id="sp-valance">—</span></div>
+      <div class="spec-row"><span class="spec-key">Accessories</span><span class="spec-val empty" id="sp-acc">None</span></div>
+      <div class="spec-divider"></div>
+      <div class="spec-row"><span class="spec-key">Pricing</span><span class="spec-val" style="color:var(--gold)">Custom quote</span></div>
+      <div class="spec-row"><span class="spec-key">Lead time</span><span class="spec-val">Confirmed at quote</span></div>
+      <div class="spec-cta">
+        <a href="tel:6097421720" class="btn-gold" style="display:block;text-align:center;padding:11px;font-size:13px">(609) 742-1720 &middot; 24/7</a>
+      </div>
+    </div>
+
+    <!-- Norman brand note -->
+    <div style="background:var(--gold-mid);border:1px solid #e8e8e4;border-radius:12px;padding:16px;margin-top:14px">
+      <div style="font-size:11px;font-weight:600;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-bottom:6px">Norman® Authorized</div>
+      <div style="font-size:12px;color:#555;line-height:1.6">PerfectSheer and SmartDrape are Norman® brand products. All motorization uses Norman's proprietary motor systems only.</div>
+    </div>
+  </div>
+
+</div><!-- /config-layout -->
+
+<div class="cta-banner">
+  <div>
+    <h2>Want expert help specifying your order?</h2>
+    <p>Call or text Justin — we spec these products daily and can walk you through every option.</p>
+  </div>
+  <div class="cta-banner-btns">
+    <a class="btn-dark" href="tel:6097421720">(609) 742-1720 &middot; 24/7</a>
+    <a class="btn-outline" href="consult.html">Book free consultation</a>
+  </div>
+</div>
+
+<footer class="site-footer" id="site-footer"></footer>
+<script src="../js/shared.js"></script>
+<script>
+renderNav('Shades & blinds'); renderFooter(false);
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+var S = {
+  product:    '',   // 'ps' | 'sd'
+  opacity:    '',   // 'lf' | 'rd'
+  operation:  '',   // 'cord' | 'wand' | 'motor'
+  mount:      '',   // 'inside' | 'outside' | 'semi'
+  isDoor:     false,
+  stack:      '',
+  width:      0,
+  height:     0,
+  qty:        1,
+  fabric:     '',
+  fabricCode: '',
+  valance:    '',
+  valanceSize:'3.5"',
+  woodFinish: '',
+  accessories:[],
+  customQuoteReasons: []
+};
+
+// ═══════════════════════════════════════════════════════
+// FABRIC DATA
+// ═══════════════════════════════════════════════════════
+var PS_LF_FABRICS = [
+  {code:'F1191',name:'Nightfall',color:'#1a1a2e'},
+  {code:'F1192',name:'Granite',color:'#808080'},
+  {code:'F1193',name:'Mineral',color:'#6b7280'},
+  {code:'F1178',name:'Snowflake',color:'#f0f0f0'},
+  {code:'F1179',name:'Lily',color:'#f5f0e8'},
+  {code:'F1180',name:'Dunes',color:'#c4a882'},
+  {code:'F1181',name:'Smoke',color:'#9ca3af'},
+  {code:'F1182',name:'Midnight',color:'#0f172a'},
+  {code:'F1183',name:'Cottonwood',color:'#f0ebe0'},
+  {code:'F1184',name:'Cedar',color:'#a0785a'},
+  {code:'F1185',name:'Quarry',color:'#5f6b6b'},
+  {code:'F1186',name:'Soft White',color:'#f5f2ec'},
+  {code:'F1187',name:'Cinnamon',color:'#8b4513'},
+  {code:'F1188',name:'Platinum',color:'#e5e4e2'},
+  {code:'F1189',name:'Magnetic',color:'#4a4a4a'},
+  {code:'F1190',name:'Cast Iron',color:'#383838'},
+  {code:'F1194',name:'Frosty Asphalt',color:'#4b5563'},
+  {code:'F1195',name:'Frosty Gray',color:'#9ca3af'},
+  {code:'F1196',name:'Frosty White',color:'#e8ecf0'},
+  {code:'F1197',name:'Light Gray',color:'#d1d5db'},
+  {code:'F1363',name:'Ivory',color:'#fffff0'},
+  {code:'F1364',name:'Silver',color:'#c0c0c0'}
+];
+var PS_RD_FABRICS = [
+  {code:'F1200',name:'Moon',color:'#f8f5f0'},
+  {code:'F1201',name:'Silk',color:'#faf0e6'},
+  {code:'F1202',name:'Chai Latte',color:'#c4956a'},
+  {code:'F1203',name:'Sky',color:'#87ceeb'},
+  {code:'F1204',name:'Mars',color:'#c1440e'},
+  {code:'F1205',name:'Seaside',color:'#4a9ebe'},
+  {code:'F1206',name:'Palm',color:'#4a7c59'},
+  {code:'F1207',name:'Stone',color:'#8b8680'},
+  {code:'F1208',name:'Heather Gray',color:'#9f8fa4'},
+  {code:'F1209',name:'Ash Gray',color:'#b2bec3'}
+];
+var SD_LF_COLLECTIONS = [
+  {name:'Plain',desc:'Clean solid colors'},
+  {name:'Net',desc:'Subtle net texture'},
+  {name:'Pacific',desc:'Coastal-inspired weave'},
+  {name:'Circle',desc:'Circular pattern weave'},
+  {name:'Coronado',desc:'Textured pattern'},
+  {name:'Teardrop',desc:'Teardrop weave pattern'},
+  {name:'Lakeshore Stripe',desc:'Soft vertical stripe'}
+];
+
+// ═══════════════════════════════════════════════════════
+// STEP MANAGEMENT
+// ═══════════════════════════════════════════════════════
+function activateStep(id) {
+  document.getElementById(id).classList.add('active','open');
+}
+function completeStep(id, valText) {
+  var el = document.getElementById(id);
+  el.classList.add('done');
+  el.classList.remove('active');
+  var valEl = document.getElementById(id.replace('step-','s') + '-val');
+  if (valEl) valEl.textContent = valText;
+}
+function toggleStep(id) {
+  var el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════════════════
+// STEP 1 — PRODUCT
+// ═══════════════════════════════════════════════════════
+function selectProduct(p) {
+  S.product = p;
+  S.stack = ''; S.valance = ''; S.fabric = ''; S.fabricCode = '';
+  document.getElementById('pc-ps').classList.toggle('sel', p === 'ps');
+  document.getElementById('pc-sd').classList.toggle('sel', p === 'sd');
+  completeStep('step-1', p === 'ps' ? 'PerfectSheer™' : 'SmartDrape™');
+  updateSpec('sp-product', p === 'ps' ? 'PerfectSheer™' : 'SmartDrape™');
+
+  // Show/hide step-5 (stack — SmartDrape only) and step-8 (valance — PerfectSheer only)
+  document.getElementById('step-5').style.display = p === 'sd' ? 'block' : 'none';
+  document.getElementById('step-8').style.display = p === 'ps' ? 'block' : 'none';
+
+  // Build operation options
+  buildOperationStep(p);
+  activateStep('step-2');
+}
+
+// ═══════════════════════════════════════════════════════
+// STEP 2 — OPACITY
+// ═══════════════════════════════════════════════════════
+function selectOpacity(o) {
+  S.opacity = o;
+  S.fabric = ''; S.fabricCode = '';
+  document.getElementById('oc-lf').classList.toggle('sel', o === 'lf');
+  document.getElementById('oc-rd').classList.toggle('sel', o === 'rd');
+  document.getElementById('rd-warning').style.display = o === 'rd' ? 'flex' : 'none';
+  completeStep('step-2', o === 'lf' ? 'Light Filtering' : 'Room Darkening');
+  updateSpec('sp-opacity', o === 'lf' ? 'Light Filtering' : 'Room Darkening');
+  buildFabricStep();
+  activateStep('step-3');
+}
+
+// ═══════════════════════════════════════════════════════
+// STEP 3 — OPERATION
+// ═══════════════════════════════════════════════════════
+function buildOperationStep(p) {
+  var body = document.getElementById('s3-body');
+  if (p === 'ps') {
+    body.innerHTML = '<div class="opt-grid-2">' +
+      '<div class="opt-card" id="op-cord" onclick="selectOp(\'cord\')">' +
+        '<div class="opt-card-icon">🔄</div>' +
+        '<div class="opt-card-title">Continuous Cord Loop</div>' +
+        '<div class="opt-card-desc">Standard operation — left or right control. Auto cord length calculated.</div>' +
+      '</div>' +
+      '<div class="opt-card" id="op-motor" onclick="selectOp(\'motor\')">' +
+        '<div class="opt-card-icon">⚡</div>' +
+        '<div class="opt-card-title">Motorized</div>' +
+        '<div class="opt-card-desc">Norman Smart Rechargeable Battery or AC Plug-In. Remote / smart home compatible.</div>' +
+      '</div>' +
+    '</div>' +
+    '<div id="cord-side-wrap" style="display:none;margin-top:14px">' +
+      '<div style="font-size:12px;font-weight:500;color:#444;margin-bottom:8px">Cord control side</div>' +
+      '<div class="opt-row" id="grp-cord-side">' +
+        '<button class="opt-btn sel" onclick="selOpt(this,\'grp-cord-side\')">Left</button>' +
+        '<button class="opt-btn" onclick="selOpt(this,\'grp-cord-side\')">Right</button>' +
+      '</div>' +
+    '</div>' +
+    '<div id="motor-opts-wrap" style="display:none;margin-top:14px">' +
+      '<div style="font-size:12px;font-weight:500;color:#444;margin-bottom:8px">Motor type</div>' +
+      '<div class="opt-row" id="grp-motor-type" style="flex-wrap:wrap">' +
+        '<button class="opt-btn sel" onclick="selOpt(this,\'grp-motor-type\')">Smart Rechargeable Battery</button>' +
+        '<button class="opt-btn" onclick="selOpt(this,\'grp-motor-type\')">AC Adapter Plug-In</button>' +
+        '<button class="opt-btn" onclick="selOpt(this,\'grp-motor-type\')">Other Norman System</button>' +
+      '</div>' +
+      '<div class="info-box" style="margin-top:8px">⚠️ Motorization availability depends on final dimensions. Confirmed at quote stage.</div>' +
+    '</div>';
+  } else {
+    body.innerHTML = '<div class="opt-grid-2">' +
+      '<div class="opt-card" id="op-wand" onclick="selectOp(\'wand\')">' +
+        '<div class="opt-card-icon">🪄</div>' +
+        '<div class="opt-card-title">Wand Tilt</div>' +
+        '<div class="opt-card-desc">Manual wand control. Left, right, or traveling center stack.</div>' +
+      '</div>' +
+      '<div class="opt-card" id="op-motor" onclick="selectOp(\'motor\')">' +
+        '<div class="opt-card-icon">⚡</div>' +
+        '<div class="opt-card-title">Motorized</div>' +
+        '<div class="opt-card-desc">Full range of stack configurations including center opening.</div>' +
+      '</div>' +
+    '</div>';
+  }
+}
+
+function selectOp(op) {
+  S.operation = op;
+  S.stack = '';
+  ['op-cord','op-wand','op-motor'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.classList.remove('sel');
+  });
+  var selEl = document.getElementById('op-' + (op === 'cord' ? 'cord' : op === 'wand' ? 'wand' : 'motor'));
+  if (selEl) selEl.classList.add('sel');
+
+  var cordWrap = document.getElementById('cord-side-wrap');
+  var motorWrap = document.getElementById('motor-opts-wrap');
+  if (cordWrap) cordWrap.style.display = op === 'cord' ? 'block' : 'none';
+  if (motorWrap) motorWrap.style.display = op === 'motor' ? 'block' : 'none';
+
+  var opLabel = op === 'cord' ? 'Continuous Cord Loop' : op === 'wand' ? 'Wand Tilt' : 'Motorized';
+  completeStep('step-3', opLabel);
+  updateSpec('sp-operation', opLabel);
+  buildStackStep();
+  activateStep('step-4');
+}
+
+// ═══════════════════════════════════════════════════════
+// STEP 4 — MOUNT
+// ═══════════════════════════════════════════════════════
+function selectMount(m) {
+  S.mount = m;
+  ['mc-in','mc-out','mc-semi'].forEach(function(id){ document.getElementById(id).classList.remove('sel'); });
+  document.getElementById('mc-' + (m === 'inside' ? 'in' : m === 'outside' ? 'out' : 'semi')).classList.add('sel');
+  var mLabel = m === 'inside' ? 'Inside Mount' : m === 'outside' ? 'Outside Mount' : 'Semi-Inside Mount';
+  completeStep('step-4', mLabel);
+  updateSpec('sp-mount', mLabel);
+
+  var note = document.getElementById('mount-deduction-note');
+  if (m === 'inside') {
+    note.style.display = 'block';
+    note.textContent = 'Inside mount deduction: shade width = order width − 1/8"';
+  } else if (m === 'outside') {
+    note.style.display = 'block';
+    note.textContent = 'Outside mount: shade width = order width (no deduction).';
+  } else {
+    note.style.display = 'none';
+  }
+
+  validateSizes();
+  if (S.product === 'sd') { buildStackStep(); }
+  activateStep(S.product === 'sd' ? 'step-5' : 'step-6');
+}
+
+function toggleDoor() {
+  S.isDoor = document.getElementById('door-check').checked;
+  document.getElementById('door-warnings').style.display = S.isDoor ? 'block' : 'none';
+  document.getElementById('valance-door-warn').style.display = S.isDoor ? 'flex' : 'none';
+  checkCustomQuoteTriggers();
+}
+
+// ═══════════════════════════════════════════════════════
+// STEP 5 — STACK (SmartDrape only)
+// ═══════════════════════════════════════════════════════
+function buildStackStep() {
+  if (S.product !== 'sd') return;
+  var body = document.getElementById('s5-body');
+  var op = S.operation;
+  var options = [];
+  if (op === 'wand' || op === '') {
+    options = [
+      {val:'left-stack',    label:'Left Stack',             desc:'Panel stacks to left side'},
+      {val:'right-stack',   label:'Right Stack',            desc:'Panel stacks to right side'},
+      {val:'center-travel', label:'Traveling Center Stack', desc:'Opens from center to both sides'}
+    ];
+  } else if (op === 'motor') {
+    options = [
+      {val:'left-stack',   label:'Left Stack',       desc:'Panel stacks to left'},
+      {val:'right-stack',  label:'Right Stack',       desc:'Panel stacks to right'},
+      {val:'center-open',  label:'Center Opening',    desc:'Motorized only — two panels part from center'},
+      {val:'center-stack', label:'Center Stack',      desc:'Motorized only — both panels stack center'}
+    ];
+  }
+  body.innerHTML = '<div class="opt-grid">' + options.map(function(o){
+    return '<div class="opt-card" id="stk-' + o.val + '" onclick="selectStack(\'' + o.val + '\')">' +
+      '<div class="opt-card-title">' + o.label + '</div>' +
+      '<div class="opt-card-desc">' + o.desc + '</div>' +
+    '</div>';
+  }).join('') + '</div>' +
+  '<div id="sbs-toggle-wrap" style="margin-top:14px;display:flex;align-items:center;gap:10px">' +
+    '<input type="checkbox" id="sbs-check" onchange="toggleSBS()" style="width:16px;height:16px;cursor:pointer">' +
+    '<label for="sbs-check" style="font-size:13px;color:#444;cursor:pointer">Side-by-side configuration (wand tilt only)</label>' +
+  '</div>' +
+  (op === 'motor' ? '<div class="info-box" style="margin-top:10px">Center Opening and Center Stack are available on motorized operation only.</div>' : '');
+}
+
+function selectStack(v) {
+  S.stack = v;
+  document.querySelectorAll('[id^="stk-"]').forEach(function(el){ el.classList.remove('sel'); });
+  var el = document.getElementById('stk-' + v);
+  if (el) el.classList.add('sel');
+  var labels = {'left-stack':'Left Stack','right-stack':'Right Stack','center-travel':'Traveling Center Stack','center-open':'Center Opening','center-stack':'Center Stack'};
+  completeStep('step-5', labels[v] || v);
+  updateSpec('sp-stack', labels[v] || v);
+  document.getElementById('sp-stack-row').style.display = 'flex';
+  activateStep('step-6');
+}
+
+function toggleSBS() {
+  var checked = document.getElementById('sbs-check') && document.getElementById('sbs-check').checked;
+  if (checked && S.operation === 'motor') {
+    alert('Side-by-side is only available with Wand Tilt operation. Please switch to Wand Tilt or uncheck this option.');
+    document.getElementById('sbs-check').checked = false;
+    return;
+  }
+  validateSizes();
+}
+
+// ═══════════════════════════════════════════════════════
+// STEP 6 — MEASUREMENTS
+// ═══════════════════════════════════════════════════════
+function validateSizes() {
+  var w = parseFloat(document.getElementById('inp-w').value) || 0;
+  var h = parseFloat(document.getElementById('inp-h').value) || 0;
+  var qty = parseInt(document.getElementById('inp-qty').value) || 1;
+  S.width = w; S.height = h; S.qty = qty;
+
+  var errors = [], infos = [];
+  var sbsChecked = document.getElementById('sbs-check') && document.getElementById('sbs-check').checked;
+
+  if (w > 0 && h > 0) {
+    if (S.product === 'ps') {
+      // PerfectSheer limits
+      if (w < 12 || w > 98) errors.push('Width must be 12" – 98" for PerfectSheer.');
+      if (h < 12 || h > 98) errors.push('Height must be 12" – 98" for PerfectSheer.');
+      if (h > w * 4) errors.push('Height cannot exceed 4× the width (1:4 ratio limit). Max height at this width: ' + (w*4).toFixed(3) + '".');
+      var shadeW = S.mount === 'inside' ? w - 0.125 : w;
+      document.getElementById('cp-shadeW').textContent = shadeW.toFixed(3) + '"';
+      var cordLen = calcCordLength(h);
+      document.getElementById('cp-cord').textContent = cordLen + '"';
+      document.getElementById('cp-cord-row').style.display = S.operation === 'cord' ? 'flex' : 'none';
+      document.getElementById('cp-joint-row').style.display = 'none';
+      document.getElementById('cp-area-row').style.display = 'none';
+      var ratio = (h / w).toFixed(2);
+      document.getElementById('cp-ratio').textContent = '1 : ' + (w/h).toFixed(2) + ' (H:W = ' + ratio + ')';
+      document.getElementById('cp-ratio-row').style.display = 'flex';
+    } else {
+      // SmartDrape limits
+      var minW = sbsChecked ? 15.625 : 17.625;
+      var maxW = sbsChecked ? 284.375 : 285.625;
+      if (w < minW) errors.push('Minimum width for SmartDrape' + (sbsChecked ? ' side-by-side' : '') + ': ' + minW + '".');
+      if (w > maxW) errors.push('Maximum width for SmartDrape' + (sbsChecked ? ' side-by-side' : '') + ': ' + maxW + '".');
+      if (h > 144) errors.push('Maximum height for SmartDrape is 144".');
+      var area = (w / 12) * (h / 12);
+      if (area > 237) errors.push('Area ' + area.toFixed(1) + ' sq ft exceeds the 237 sq ft maximum per shade.');
+      var joints = calcSmartJoints(w);
+      document.getElementById('cp-joints').textContent = joints + (joints === 1 ? ' (one SmartJoint™)' : joints > 1 ? ' (two SmartJoints™)' : '');
+      document.getElementById('cp-joint-row').style.display = 'flex';
+      document.getElementById('cp-area').textContent = area.toFixed(1) + ' sq ft';
+      document.getElementById('cp-area-row').style.display = 'flex';
+      document.getElementById('cp-shadeW').textContent = w.toFixed(3) + '"';
+      document.getElementById('cp-cord-row').style.display = 'none';
+      document.getElementById('cp-ratio-row').style.display = 'none';
+    }
+
+    // Valance splice check
+    checkValanceSplice(w);
+
+    document.getElementById('computed-panel').style.display = 'block';
+    updateSpec('sp-dims', w + '" × ' + h + '"');
+    updateSpec('sp-qty', qty);
+
+    if (w > 0 && h > 0 && document.getElementById('s6-val'))
+      document.getElementById('s6-val').textContent = w + '" × ' + h + '"';
+  }
+
+  // Render errors
+  var errEl = document.getElementById('size-errors');
+  errEl.innerHTML = '';
+  errors.forEach(function(e){
+    errEl.innerHTML += '<div class="size-error">⚠️ ' + e + '</div>';
+  });
+  if (errors.length === 0 && w > 0 && h > 0) {
+    errEl.innerHTML = '<div class="size-ok">✓ Dimensions are within specification.</div>';
+  }
+
+  checkCustomQuoteTriggers();
+}
+
+function calcCordLength(h) {
+  if (h <= 20) return 9;
+  if (h <= 30) return 16;
+  if (h <= 42) return 24;
+  if (h <= 55) return 36;
+  if (h <= 69) return 48;
+  if (h <= 95) return 60;
+  return 84;
+}
+
+function calcSmartJoints(w) {
+  if (w <= 97.625)  return 0;
+  if (w <= 189.625) return 1;
+  return 2;
+}
+
+function checkValanceSplice(w) {
+  var warnEl = document.getElementById('valance-splice-warn');
+  var warnTxt = document.getElementById('valance-splice-text');
+  if (!warnEl) return;
+  if (S.valance && S.valance !== 'none' && w > 93) {
+    warnEl.style.display = 'flex';
+    var joints = Math.ceil(w / 93) - 1;
+    warnTxt.innerHTML = 'Valance width exceeds 93" — <strong>splice required</strong>. Joinery options: Connector or Keystone (max 5 keystones). Approx. ' + joints + ' splice(s) needed.';
+  } else {
+    warnEl.style.display = 'none';
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// STEP 7 — FABRIC
+// ═══════════════════════════════════════════════════════
+function buildFabricStep() {
+  var body = document.getElementById('s7-body');
+  if (S.product === 'ps') {
+    var fabrics = S.opacity === 'lf' ? PS_LF_FABRICS : PS_RD_FABRICS;
+    body.innerHTML = '<div style="font-size:12px;color:#666;margin-bottom:4px">Click a swatch to select</div>' +
+      '<div class="fabric-grid">' +
+      fabrics.map(function(f){
+        var isDark = isDarkColor(f.color);
+        return '<div class="swatch" id="sw-' + f.code + '" onclick="selectFabric(\'' + f.code + '\',\'' + f.name + '\')">' +
+          '<div class="swatch-color" style="background:' + f.color + ';border-bottom:1px solid #e8e8e4">' +
+          (isDark ? '<div style="padding:4px 6px;font-size:9px;color:rgba(255,255,255,0.4)">' + f.code + '</div>' : '') + '</div>' +
+          '<div class="swatch-label"><div class="swatch-name">' + f.name + '</div>' +
+          (!isDark ? '<div class="swatch-code">' + f.code + '</div>' : '') + '</div>' +
+        '</div>';
+      }).join('') + '</div>';
+  } else {
+    // SmartDrape — show collections
+    var heading = S.opacity === 'lf' ? 'Light Filtering Collections' : 'Room Darkening';
+    body.innerHTML = '<div style="font-size:12px;color:#666;margin-bottom:8px">' + heading + '</div>';
+    if (S.opacity === 'rd') {
+      body.innerHTML += '<div class="info-box">Room Darkening is available for SmartDrape with a surcharge. Fabric selections confirmed at quote stage.</div>' +
+        '<div class="opt-row" style="margin-top:12px"><button class="opt-btn sel" onclick="selectFabric(\'rd-surcharge\',\'Room Darkening\')">Room Darkening (+ surcharge)</button></div>';
+    } else {
+      body.innerHTML += '<div class="collection-grid">' +
+        SD_LF_COLLECTIONS.map(function(c){
+          return '<div class="collection-card" id="coll-' + c.name.replace(/\s+/g,'-').toLowerCase() + '" onclick="selectFabric(\'' + c.name + '\',\'' + c.name + '\')">' +
+            '<div class="coll-name">' + c.name + '</div>' +
+            '<div class="coll-desc">' + c.desc + '</div>' +
+          '</div>';
+        }).join('') + '</div>' +
+        '<div class="info-box" style="margin-top:12px">Individual color selections within each collection are confirmed during the quote process. We\'ll send you swatches if needed.</div>';
+    }
+  }
+}
+
+function isDarkColor(hex) {
+  var r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  return (0.299*r + 0.587*g + 0.114*b) < 128;
+}
+
+function selectFabric(code, name) {
+  S.fabricCode = code; S.fabric = name;
+  // Deselect all
+  document.querySelectorAll('.swatch,.collection-card').forEach(function(el){ el.classList.remove('sel'); });
+  var el = document.getElementById('sw-' + code) || document.getElementById('coll-' + code.replace(/\s+/g,'-').toLowerCase());
+  if (el) el.classList.add('sel');
+  completeStep('step-7', name + (code && code.startsWith('F') ? ' (' + code + ')' : ''));
+  updateSpec('sp-fabric', name + (code && code.startsWith('F') ? ' · ' + code : ''));
+  buildAccessoryStep();
+  activateStep(S.product === 'ps' ? 'step-8' : 'step-9');
+}
+
+// ═══════════════════════════════════════════════════════
+// STEP 8 — VALANCE
+// ═══════════════════════════════════════════════════════
+function selectValance(v) {
+  S.valance = v;
+  document.querySelectorAll('#step-8 .opt-card').forEach(function(el){ el.classList.remove('sel'); });
+  event.currentTarget.classList.add('sel');
+  var sizeWrap  = document.getElementById('valance-size-wrap');
+  var woodWrap  = document.getElementById('wood-finish-wrap');
+  sizeWrap.style.display  = (v === 'curved-fascia' || v === 'fabric-valance') ? 'block' : 'none';
+  woodWrap.style.display  = v === 'modern-wood' ? 'block' : 'none';
+  checkValanceSplice(S.width);
+  var vLabels = {'none':'No valance','curved-fascia':'Curved Fascia','fabric-valance':'Fabric Valance','modern-wood':'Modern Wood Valance'};
+  completeStep('step-8', vLabels[v]);
+  updateSpec('sp-valance', vLabels[v]);
+  activateStep('step-9');
+}
+
+// ═══════════════════════════════════════════════════════
+// STEP 9 — ACCESSORIES
+// ═══════════════════════════════════════════════════════
+function buildAccessoryStep() {
+  var body = document.getElementById('s9-body');
+  var items = [];
+  if (S.product === 'ps') {
+    items.push({id:'acc-lightguard-basic',   label:'Basic Light Guard',        sub:'Side channels in 6 colors: White, Cottage White, Sahara, Chocolate, Silver, Black Ink.'});
+    items.push({id:'acc-lightguard-wood',    label:'Premium Wood Light Guard', sub:'Wood side channels. Colors: Stone Gray, Clay, Limed White, Dark Teak, Weathered Teak, Wenge, Matte Black.'});
+    if (S.isDoor) {
+      items.push({id:'acc-holddowns',        label:'Magnetic Hold-Downs ✓',    sub:'Required for door applications — automatically included.', required:true});
+    } else {
+      items.push({id:'acc-holddowns',        label:'Magnetic Hold-Downs',      sub:'Optional for non-door applications.'});
+    }
+    items.push({id:'acc-shims',             label:'Shims',                     sub:'Aluminum shims for bracket leveling. Max 3 per bracket. Qty calculated at install.'});
+  } else {
+    items.push({id:'acc-keystones',         label:'Keystones',                 sub:'Decorative track splice covers. Optional for SmartJoint connections.'});
+    items.push({id:'acc-extra-wand',        label:'Additional Wand',           sub:'Extra operation wand — surcharge applies.'});
+    items.push({id:'acc-alt-colors',        label:'Alternating Colors',        sub:'Two-color alternating vane pattern — surcharge applies.'});
+    items.push({id:'acc-shims',             label:'Aluminum Shims',            sub:'For bracket leveling — surcharge applies.'});
+    items.push({id:'acc-long-brackets',     label:'Long L Brackets',           sub:'Extended reach brackets — surcharge applies.'});
+  }
+  body.innerHTML = items.map(function(item){
+    var disabled = item.required ? 'disabled checked' : '';
+    return '<div class="acc-item">' +
+      '<input type="checkbox" class="acc-check" id="' + item.id + '" ' + disabled + ' onchange="updateAccState()" style="width:16px;height:16px;cursor:pointer">' +
+      '<div><div class="acc-label">' + item.label + '</div><div class="acc-sub">' + item.sub + '</div></div>' +
+    '</div>';
+  }).join('');
+
+  // Light guard color selectors (hidden by default)
+  body.innerHTML += '<div id="lg-basic-colors" style="display:none;margin-top:8px;padding-left:28px">' +
+    '<div style="font-size:12px;color:#444;margin-bottom:6px">Basic Light Guard color</div>' +
+    '<div class="opt-row" id="grp-lg-basic" style="flex-wrap:wrap">' +
+    ['White','Cottage White','Sahara','Chocolate','Silver','Black Ink'].map(function(c){ return '<button class="opt-btn" onclick="selOpt(this,\'grp-lg-basic\')">' + c + '</button>'; }).join('') +
+    '</div></div>' +
+    '<div id="lg-wood-colors" style="display:none;margin-top:8px;padding-left:28px">' +
+    '<div style="font-size:12px;color:#444;margin-bottom:6px">Wood Light Guard finish</div>' +
+    '<div class="opt-row" id="grp-lg-wood" style="flex-wrap:wrap">' +
+    ['Stone Gray','Clay','Limed White','Dark Teak','Weathered Teak','Wenge','Matte Black'].map(function(c){ return '<button class="opt-btn" onclick="selOpt(this,\'grp-lg-wood\')">' + c + '</button>'; }).join('') +
+    '</div></div>';
+
+  var lgBasic = document.getElementById('acc-lightguard-basic');
+  var lgWood  = document.getElementById('acc-lightguard-wood');
+  if (lgBasic) lgBasic.addEventListener('change', function(){ document.getElementById('lg-basic-colors').style.display = this.checked ? 'block' : 'none'; updateAccState(); });
+  if (lgWood)  lgWood.addEventListener('change',  function(){ document.getElementById('lg-wood-colors').style.display  = this.checked ? 'block' : 'none'; updateAccState(); });
+}
+
+function updateAccState() {
+  var checked = [];
+  document.querySelectorAll('#s9-body input[type=checkbox]:checked').forEach(function(el){
+    var lbl = el.nextElementSibling && el.nextElementSibling.querySelector('.acc-label');
+    if (lbl) checked.push(lbl.textContent.replace(' ✓',''));
+  });
+  S.accessories = checked;
+  updateSpec('sp-acc', checked.length > 0 ? checked.join(', ') : 'None');
+}
+
+// ═══════════════════════════════════════════════════════
+// CUSTOM QUOTE TRIGGERS
+// ═══════════════════════════════════════════════════════
+function checkCustomQuoteTriggers() {
+  var reasons = [];
+  if (S.isDoor) reasons.push('Door application (specialty deductions + magnetic hold-down review)');
+  if (S.width > 93 && S.valance && S.valance !== 'none') reasons.push('Valance splice required — engineering review needed');
+  if (S.product === 'sd' && S.width > 189.625) reasons.push('Two SmartJoints required — extended track configuration');
+  if (S.operation === 'motor') reasons.push('Motorization compatibility confirmed at quote stage');
+
+  var banner = document.getElementById('custom-quote-triggers');
+  var reason = document.getElementById('cq-reason');
+  if (reasons.length > 0) {
+    banner.style.display = 'block';
+    reason.innerHTML = reasons.map(function(r){ return '• ' + r; }).join('<br>');
+  } else {
+    banner.style.display = 'none';
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// SPEC PANEL HELPERS
+// ═══════════════════════════════════════════════════════
+function updateSpec(id, val) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = val;
+  el.classList.remove('empty');
+}
+
+// ═══════════════════════════════════════════════════════
+// SUBMIT QUOTE
+// ═══════════════════════════════════════════════════════
+function submitQuote() {
+  var name  = document.getElementById('q-name').value.trim();
+  var phone = document.getElementById('q-phone').value.trim();
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  var delivery = getOpt('grp-del-ns');
+  var body = 'NORMAN SHEER SPECIFICATION REQUEST\n\n'
+    + '── CUSTOMER ──\n'
+    + 'Name: ' + name + '\nPhone: ' + phone
+    + '\nEmail: ' + (document.getElementById('q-email').value.trim() || '—')
+    + '\nAddress: ' + (document.getElementById('q-address').value.trim() || '—') + '\n\n'
+    + '── PRODUCT SPECIFICATION ──\n'
+    + 'Product: ' + (S.product === 'ps' ? 'PerfectSheer™' : 'SmartDrape™') + '\n'
+    + 'Light Control: ' + (S.opacity === 'lf' ? 'Light Filtering' : 'Room Darkening') + '\n'
+    + 'Operation: ' + (S.operation === 'cord' ? 'Continuous Cord Loop' : S.operation === 'wand' ? 'Wand Tilt' : 'Motorized') + '\n'
+    + (S.operation === 'cord' ? 'Cord side: ' + getOpt('grp-cord-side') + '\n' : '')
+    + (S.operation === 'motor' && S.product === 'ps' ? 'Motor type: ' + getOpt('grp-motor-type') + '\n' : '')
+    + 'Mount: ' + (S.mount === 'inside' ? 'Inside Mount' : S.mount === 'outside' ? 'Outside Mount' : 'Semi-Inside Mount') + '\n'
+    + (S.isDoor ? 'Door application: YES — magnetic hold-downs required\n' : '')
+    + (S.stack ? 'Stack configuration: ' + S.stack + '\n' : '')
+    + 'Width: ' + (S.width || '—') + '"\n'
+    + 'Height: ' + (S.height || '—') + '"\n'
+    + 'Quantity: ' + S.qty + '\n'
+    + (S.mount === 'inside' ? 'Shade width (deducted): ' + (S.width - 0.125).toFixed(3) + '"\n' : '')
+    + (S.product === 'ps' && S.operation === 'cord' ? 'Default cord length: ' + calcCordLength(S.height) + '"\n' : '')
+    + (S.product === 'sd' ? 'SmartJoints required: ' + calcSmartJoints(S.width) + '\n' : '')
+    + 'Fabric: ' + (S.fabric || '—') + (S.fabricCode && S.fabricCode.startsWith('F') ? ' (' + S.fabricCode + ')' : '') + '\n'
+    + (S.product === 'ps' ? 'Valance: ' + (S.valance || '—') + '\n' : '')
+    + (S.valance === 'modern-wood' ? 'Wood finish (paint): ' + getOpt('grp-wood-paint') + ' / Stain: ' + getOpt('grp-wood-stain') + '\n' : '')
+    + 'Accessories: ' + (S.accessories.length > 0 ? S.accessories.join(', ') : 'None') + '\n'
+    + 'Delivery: ' + delivery + '\n\n'
+    + '── NOTES ──\n'
+    + (document.getElementById('q-notes').value.trim() || 'None');
+
+  window.location.href = 'mailto:blindznation@gmail.com'
+    + '?subject=' + encodeURIComponent('Norman ' + (S.product === 'ps' ? 'PerfectSheer™' : 'SmartDrape™') + ' Spec — ' + name)
+    + '&body=' + encodeURIComponent(body);
+
+  document.getElementById('quote-success').style.display = 'block';
+}
+</script>
+</body>
+</html>
