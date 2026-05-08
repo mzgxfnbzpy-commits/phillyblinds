@@ -133,20 +133,10 @@
         <div class="opt-label-bar"><div class="opt-name">Ripple Fold</div><div class="opt-desc">Continuous S-wave, modern clean look</div></div>
       </div>
       <div class="opt-card" onclick="selectPleat(this,'Pinch Pleat')">
-        <div class="opt-art">
-          <svg viewBox="0 0 120 100" width="80" height="70" xmlns="http://www.w3.org/2000/svg">
-            <line x1="10" y1="10" x2="10" y2="90" stroke="#B0957A" stroke-width="3"/>
-            <line x1="13" y1="10" x2="22" y2="90" stroke="#B0957A" stroke-width="2"/>
-            <line x1="16" y1="10" x2="34" y2="90" stroke="#B0957A" stroke-width="2"/>
-            <line x1="40" y1="10" x2="40" y2="90" stroke="#B0957A" stroke-width="3"/>
-            <line x1="43" y1="10" x2="52" y2="90" stroke="#B0957A" stroke-width="2"/>
-            <line x1="46" y1="10" x2="64" y2="90" stroke="#B0957A" stroke-width="2"/>
-            <line x1="72" y1="10" x2="72" y2="90" stroke="#B0957A" stroke-width="3"/>
-            <line x1="75" y1="10" x2="84" y2="90" stroke="#B0957A" stroke-width="2"/>
-            <line x1="78" y1="10" x2="96" y2="90" stroke="#B0957A" stroke-width="2"/>
-          </svg>
+        <div class="opt-art" style="height:130px">
+          <img src="../images/pleat-styles/pinch-pleat.JPEG" alt="Pinch pleat drapery" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
         </div>
-        <div class="opt-label-bar"><div class="opt-name">Pinch Pleat</div><div class="opt-desc">Classic gathered triple pleat</div></div>
+        <div class="opt-label-bar"><div class="opt-name">Pinch Pleat</div><div class="opt-desc">2-prong or 3-prong, tack top or bottom</div></div>
       </div>
       <div class="opt-card" onclick="selectPleat(this,'Euro Pleat')">
         <div class="opt-art">
@@ -190,6 +180,12 @@
         </div>
         <div class="opt-label-bar"><div class="opt-name">Goblet Pleat</div><div class="opt-desc">Formal chalice-shaped heading</div></div>
       </div>
+      <div class="opt-card" onclick="selectPleat(this,'Barrel Pleat')">
+        <div class="opt-art" style="height:130px">
+          <img src="../images/pleat-styles/barrel-pleat.png" alt="Barrel pleat drapery" style="width:100%;height:100%;object-fit:cover;display:block">
+        </div>
+        <div class="opt-label-bar"><div class="opt-name">Barrel Pleat</div><div class="opt-desc">Rounded cartridge-style, structured look</div></div>
+      </div>
       <div class="opt-card" onclick="selectPleat(this,'Rod Pocket')">
         <div class="opt-art">
           <svg viewBox="0 0 120 100" width="80" height="70" xmlns="http://www.w3.org/2000/svg">
@@ -200,6 +196,44 @@
         <div class="opt-label-bar"><div class="opt-name">Rod Pocket</div><div class="opt-desc">Casual gathered sleeve at top</div></div>
       </div>
     </div>
+
+    <!-- PINCH PLEAT SUB-OPTIONS (shown only when Pinch Pleat selected) -->
+    <div id="pinch-subopts" style="display:none;margin-top:16px;padding:16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:12px">
+      <div style="font-size:12px;font-weight:600;color:#444;margin-bottom:14px">Choose your pinch pleat style</div>
+
+      <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px">Tack Top</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+        <div class="opt-card" id="pp-top-2" onclick="selectPinchDetail(this,'Pinch Pleat — 2-Prong Tack Top')">
+          <div class="opt-art" style="height:110px">
+            <img src="../images/pleat-styles/pinch-pleat.JPEG" alt="2-prong tack top" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
+          </div>
+          <div class="opt-label-bar"><div class="opt-name">2-Prong Tack Top</div><div class="opt-desc">Classic tack at the heading</div></div>
+        </div>
+        <div class="opt-card" id="pp-top-3" onclick="selectPinchDetail(this,'Pinch Pleat — 3-Prong Tack Top')">
+          <div class="opt-art" style="height:110px">
+            <img src="../images/pleat-styles/pinch-3prong-tack-top.png" alt="3-prong tack top" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
+          </div>
+          <div class="opt-label-bar"><div class="opt-name">3-Prong Tack Top</div><div class="opt-desc">Full, rich triple pleat at heading</div></div>
+        </div>
+      </div>
+
+      <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px">Tack Bottom</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div class="opt-card" id="pp-bot-2" onclick="selectPinchDetail(this,'Pinch Pleat — 2-Prong Tack Bottom')">
+          <div class="opt-art" style="height:110px">
+            <img src="../images/pleat-styles/pinch-2prong-tack-bottom.png" alt="2-prong tack bottom" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
+          </div>
+          <div class="opt-label-bar"><div class="opt-name">2-Prong Tack Bottom</div><div class="opt-desc">Tack at the base of the pleat</div></div>
+        </div>
+        <div class="opt-card" id="pp-bot-3" onclick="selectPinchDetail(this,'Pinch Pleat — 3-Prong Tack Bottom')">
+          <div class="opt-art" style="height:110px">
+            <img src="../images/pleat-styles/pinch-3prong-tack-bottom.png" alt="3-prong tack bottom" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
+          </div>
+          <div class="opt-label-bar"><div class="opt-name">3-Prong Tack Bottom</div><div class="opt-desc">Full pleat, tack at base</div></div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <!-- STEP 2: FABRIC -->
@@ -509,6 +543,19 @@ var romanState  = { style:'', fabric:'' };
 
 function selectPleat(el, val) {
   document.querySelectorAll('#pleat-cards .opt-card').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  drapeState.pleat = val;
+  var subopts = document.getElementById('pinch-subopts');
+  if (subopts) {
+    subopts.style.display = val === 'Pinch Pleat' ? 'block' : 'none';
+    if (val !== 'Pinch Pleat') {
+      document.querySelectorAll('#pinch-subopts .opt-card').forEach(c => c.classList.remove('sel'));
+    }
+  }
+}
+
+function selectPinchDetail(el, val) {
+  document.querySelectorAll('#pinch-subopts .opt-card').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
   drapeState.pleat = val;
 }
