@@ -53,7 +53,7 @@
   <div class="gtab on" onclick="showG('drapes',this)">Custom draperies (60)</div>
   <div class="gtab" onclick="showG('roman',this)">Roman shades (11)</div>
   <div class="gtab" onclick="showG('roller',this)">Roller shades (4)</div>
-  <div class="gtab" onclick="showG('upholstery',this)">Wall upholstery (30)</div>
+  <div class="gtab" onclick="showG('upholstery',this)">Upholstery (54)</div>
   <div class="gtab" onclick="showG('videos',this)">Videos (14)</div>
 </div>
 
@@ -185,7 +185,19 @@ function showG(id,el){
   el.classList.add('on');
 }
 
-const upholsteryFiles=['IMG_2161.JPEG','IMG_2162.JPEG','IMG_2163.JPEG','IMG_2164.JPEG','IMG_2165.JPEG','IMG_2165-1.JPEG','IMG_2165-2.JPEG','IMG_2166.JPEG','IMG_2166-1.JPEG','IMG_2166-2.JPEG','IMG_2167.JPEG','IMG_2167-1.JPEG','IMG_2168.JPEG','IMG_2168-1.JPEG','IMG_2169.JPEG','IMG_2169-1.JPEG','IMG_2170.JPEG','IMG_2170-1.JPEG','IMG_2171.JPEG','IMG_2172.JPEG','IMG_2172-1.JPEG','IMG_2173.JPEG','IMG_2173-1.JPEG','IMG_2174.JPEG','IMG_2174-1.JPEG','IMG_2175.JPEG','IMG_2175-1.JPEG','IMG_2176.JPEG','IMG_2176-1.JPEG','IMG_2178.JPEG'];
+const upholsteryFiles=[
+  'IMG_2161.JPEG','IMG_2162.JPEG','IMG_2163.JPEG','IMG_2164.JPEG','IMG_2165.JPEG','IMG_2165-1.JPEG','IMG_2165-2.JPEG',
+  'IMG_2166.JPEG','IMG_2166-1.JPEG','IMG_2166-2.JPEG','IMG_2167.JPEG','IMG_2167-1.JPEG','IMG_2168.JPEG','IMG_2168-1.JPEG',
+  'IMG_2169.JPEG','IMG_2169-1.JPEG','IMG_2170.JPEG','IMG_2170-1.JPEG','IMG_2171.JPEG','IMG_2172.JPEG','IMG_2172-1.JPEG',
+  'IMG_2173.JPEG','IMG_2173-1.JPEG','IMG_2174.JPEG','IMG_2174-1.JPEG','IMG_2175.JPEG','IMG_2175-1.JPEG',
+  'IMG_2176.JPEG','IMG_2176-1.JPEG','IMG_2178.JPEG',
+  'CUSTOM WALL UPHOLSTERY.JPEG','WALL UPHOLSTERY 3.JPG','CUSTOM UPHOLSERY 2.JPEG',
+  'HEADBOARD UPHOLSTERY.JPG','HEADBOARD AND FOOT BOARD UPHOLSTERY.JPEG',
+  'UPHOLSTERY.JPEG','UPHOLSTERY 3.JPEG','UPHOLSTERY 4.JPEG','UPHOLSTERY 5.JPEG','UPHOLSTERY 6.JPEG',
+  'UPHOLSTERY BENCH.JPEG','custom cushion upholstery.JPEG',
+  'IMG_5580.JPEG','IMG_5581.JPEG','IMG_5582.JPEG','IMG_5583.JPEG','IMG_5584.JPEG','IMG_5585.JPEG',
+  'IMG_5586.JPEG','IMG_5587.JPEG','IMG_5588.JPEG','IMG_5589.JPEG','IMG_5590.JPEG','IMG_5591.JPEG'
+];
 
 buildPhotoGrid('grid-drapes', drapeFiles, '../images/portfolio/');
 buildPhotoGrid('grid-roman', romanFiles, '../images/portfolio/');
