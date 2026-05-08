@@ -75,6 +75,6 @@ module.exports = async function handler(req, res) {
     res.status(200).json({ content: text });
   } catch (err) {
     console.error('Philly Blinds chat API error:', err);
-    res.status(500).json({ content: 'DIAG: ' + (err.message || String(err)) });
+    res.status(500).json({ content: 'Sorry, I had a technical issue. Please call **(609) 742-1720** or text Justin directly — available 24/7!' });
   }
 };
