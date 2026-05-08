@@ -301,6 +301,20 @@
       <textarea id="u-notes" style="min-height:100px" placeholder="Room type, ceiling height, number of walls, existing finishes, special conditions (curved walls, built-ins, etc.), timeline, budget range..."></textarea>
     </div>
 
+    <div class="delivery-section">
+      <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+      <div class="opt-row" id="grp-del-uph">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-del-uph');document.getElementById('del-uph-s').style.display='block';document.getElementById('del-uph-p').style.display='none'">Ship to me</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-del-uph');document.getElementById('del-uph-s').style.display='none';document.getElementById('del-uph-p').style.display='block'">I'll pick up</button>
+      </div>
+      <div id="del-uph-s" class="delivery-note">
+        Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.
+        <div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately in your quote.</div>
+      </div>
+      <div id="del-uph-p" class="delivery-note" style="display:none">
+        Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.
+      </div>
+    </div>
     <button class="btn-gold" onclick="submitUpholstery()" style="width:100%;padding:14px;font-size:14px;font-weight:600">Request quote &rarr;</button>
   </div>
 
@@ -444,12 +458,14 @@ function submitUpholstery() {
   var fabric  = document.getElementById('u-fabric').value;
   var notes   = document.getElementById('u-notes').value.trim();
 
+  var delivery = getOpt('grp-del-uph');
   var body = 'WALL UPHOLSTERY QUOTE REQUEST\n\n'
     + 'Name: ' + name + '\nPhone: ' + phone + '\nEmail: ' + (email || '—') + '\n'
     + 'Address: ' + (address || '—') + '\n\n'
     + 'Application type: ' + type + '\n'
     + 'Approximate area: ' + area + '\n'
-    + 'Fabric: ' + fabric + '\n\n'
+    + 'Fabric: ' + fabric + '\n'
+    + 'Delivery preference: ' + delivery + '\n\n'
     + 'Project details:\n' + (notes || 'None provided');
 
   window.location.href = 'mailto:blindznation@gmail.com'

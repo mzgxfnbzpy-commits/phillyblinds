@@ -111,7 +111,7 @@
   <div class="contact-bar-right">
     <a class="cb-phone" href="tel:6097421720">(609) 742-1720</a>
     <span class="cb-badge">24/7</span>
-    <a class="cb-email" href="mailto:justin@blindszNation.com">justin@blindszNation.com</a>
+    <a class="cb-email" href="mailto:blindznation@gmail.com">blindznation@gmail.com</a>
   </div>
 </div>
 
@@ -126,10 +126,10 @@
       <div class="contact-value">(609) 742-1720</div>
       <div class="contact-sub">Available 24/7 &mdash; fastest way to get started</div>
     </a>
-    <a class="contact-card" href="mailto:justin@blindszNation.com">
+    <a class="contact-card" href="mailto:blindznation@gmail.com">
       <div class="contact-icon">✉️</div>
       <div class="contact-label">Email Us</div>
-      <div class="contact-value" style="font-size:13px">justin@blindszNation.com</div>
+      <div class="contact-value" style="font-size:13px">blindznation@gmail.com</div>
       <div class="contact-sub">Include photos &amp; measurements if you have them</div>
     </a>
     <a class="contact-card" href="consult.html">
@@ -273,6 +273,20 @@
       <textarea id="inst-notes" placeholder="Product brand/model if known, number of windows, floor/ceiling height, any tricky access, smart home system, timeline, etc." style="min-height:100px"></textarea>
     </div>
 
+    <div class="delivery-section">
+      <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+      <div class="opt-row" id="grp-del-inst">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-del-inst');document.getElementById('del-inst-s').style.display='block';document.getElementById('del-inst-p').style.display='none'">Ship to me</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-del-inst');document.getElementById('del-inst-s').style.display='none';document.getElementById('del-inst-p').style.display='block'">I'll pick up</button>
+      </div>
+      <div id="del-inst-s" class="delivery-note">
+        Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.
+        <div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately in your quote.</div>
+      </div>
+      <div id="del-inst-p" class="delivery-note" style="display:none">
+        Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.
+      </div>
+    </div>
     <button class="btn-gold" onclick="submitInstall()" style="width:100%;padding:14px;font-size:14px;font-weight:600">Request Installation Quote &rarr;</button>
   </div>
 
@@ -298,7 +312,7 @@
   </div>
   <div class="cta-banner-btns">
     <a class="btn-dark" href="tel:6097421720">(609) 742-1720 &middot; 24/7</a>
-    <a class="btn-outline" href="mailto:justin@blindszNation.com">Email justin@blindszNation.com</a>
+    <a class="btn-outline" href="mailto:blindznation@gmail.com">Email blindznation@gmail.com</a>
   </div>
 </div>
 
@@ -319,14 +333,16 @@ function submitInstall() {
   var motor   = document.getElementById('inst-motor').value;
   var notes   = document.getElementById('inst-notes').value.trim();
 
+  var delivery = getOpt('grp-del-inst');
   var body = 'INSTALLATION QUOTE REQUEST\n\n'
     + 'Name: ' + name + '\nPhone: ' + phone + '\nEmail: ' + (email || '—') + '\n'
     + 'Address: ' + (address || '—') + '\n\n'
     + 'Product type: ' + product + '\nNumber of windows: ' + windows + '\n'
-    + 'Product source: ' + source + '\nMotorization: ' + motor + '\n\n'
+    + 'Product source: ' + source + '\nMotorization: ' + motor + '\n'
+    + 'Delivery preference: ' + delivery + '\n\n'
     + 'Project details:\n' + (notes || 'None provided');
 
-  window.location.href = 'mailto:justin@blindszNation.com'
+  window.location.href = 'mailto:blindznation@gmail.com'
     + '?subject=' + encodeURIComponent('Installation Quote Request — ' + name)
     + '&body=' + encodeURIComponent(body);
 
