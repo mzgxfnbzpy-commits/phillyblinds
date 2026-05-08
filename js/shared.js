@@ -86,8 +86,8 @@ function _injectHead(isHome) {
 function renderNav(activePage) {
   const pages = [
     { href: '../pages/shades.html', label: 'Shades & blinds' },
-    { href: '../pages/drapery.html', label: 'Drapery & hardware' },
-    { href: '../pages/roman-shades.html', label: 'Roman shades' },
+    { href: '../pages/soft-treatments.html', label: 'Soft treatments' },
+    { href: '../pages/hardware.html', label: 'Hardware' },
     { href: '../pages/shutters.html', label: 'Shutters' },
     { href: '../pages/gallery.html', label: 'Our work' },
     { href: '../pages/upholstery.html', label: 'Custom upholstery' },
@@ -173,10 +173,10 @@ function renderFooter(isHome) {
         <a href="${pre}shades.html">Silhouette / Pirouette / Luminette</a>
       </div>
       <div class="footer-col">
-        <h4>Drapery</h4>
-        <a href="${pre}drapery.html">Custom drapery</a>
-        <a href="${pre}drapery.html">Drapery hardware</a>
-        <a href="${pre}roman-shades.html">Roman shades</a>
+        <h4>Soft treatments</h4>
+        <a href="${pre}soft-treatments.html">Custom drapery</a>
+        <a href="${pre}soft-treatments.html">Roman shades</a>
+        <a href="${pre}hardware.html">Drapery hardware</a>
       </div>
       <div class="footer-col">
         <h4>Premium</h4>

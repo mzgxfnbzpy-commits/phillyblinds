@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Custom drapery and roman shades — handcrafted to your exact dimensions. Your fabric or ours. Motorization available. Philadelphia & surrounding area.">
+<meta property="og:title" content="Soft Treatments — Custom Drapery &amp; Roman Shades | Philly Blinds">
+<meta property="og:description" content="Custom drapery and roman shades — handcrafted to your exact dimensions. Your fabric or ours. Motorization available.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://phillyblinds.com/pages/soft-treatments.html">
+<meta property="og:site_name" content="Philly Blinds">
+<meta name="twitter:card" content="summary_large_image">
+<title>Soft Treatments — Custom Drapery &amp; Roman Shades | Philly Blinds</title>
+<link rel="stylesheet" href="../css/global.css">
+<style>
+/* ── HERO ── */
+.page-hero{background:var(--espresso);padding:44px 28px 40px}
+.breadcrumb{font-size:11px;color:var(--text-faint);margin-bottom:14px}
+.breadcrumb a{color:var(--text-muted);text-decoration:none}
+.breadcrumb a:hover{color:var(--cream)}
+.page-hero h1{font-size:32px;font-weight:500;color:var(--cream);letter-spacing:-0.5px;margin-bottom:10px;line-height:1.2}
+.page-hero .sub{font-size:14px;color:var(--text-dark);line-height:1.7;max-width:520px;margin-bottom:22px}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap}
+.hero-pill{font-size:11px;padding:4px 12px;border-radius:20px;border:0.5px solid var(--border-dark);color:var(--text-faint)}
+.hero-pill-gold{background:rgba(45,224,193,.12);border-color:rgba(45,224,193,.3);color:var(--gold)}
+
+/* ── TYPE TABS ── */
+.type-tabs{display:flex;gap:0;background:var(--espresso-mid);border-bottom:1px solid var(--border-dark);padding:0 28px;position:sticky;top:56px;z-index:90}
+.type-tab{padding:15px 28px;font-size:13px;font-weight:500;color:var(--text-muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:color .15s,border-color .15s;font-family:inherit}
+.type-tab:hover{color:var(--cream)}
+.type-tab.on{color:var(--cream);border-bottom-color:var(--gold)}
+.tab-panel{display:none}.tab-panel.on{display:block}
+
+/* ── STEP LAYOUT ── */
+.step-wrap{max-width:900px;margin:0 auto;padding:32px 28px}
+.step{margin-bottom:32px}
+.step-label{font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;font-weight:600;margin-bottom:6px}
+.step-title{font-size:18px;font-weight:500;color:#1a1a1a;margin-bottom:4px;letter-spacing:-0.3px}
+.step-sub{font-size:13px;color:#666;line-height:1.6}
+
+/* ── OPTION CARDS (style, pleat) ── */
+.opt-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;margin-top:16px}
+.opt-card{background:#fff;border:1.5px solid #e8e8e4;border-radius:12px;overflow:hidden;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.opt-card:hover{border-color:var(--gold);box-shadow:0 2px 12px rgba(45,224,193,.12)}
+.opt-card.sel{border:2px solid var(--gold);box-shadow:0 2px 16px rgba(45,224,193,.2)}
+.opt-card.sel .opt-label-bar{background:var(--gold)}
+.opt-card.sel .opt-name,.opt-card.sel .opt-desc{color:var(--espresso)}
+.opt-art{height:130px;overflow:hidden;background:#F8F4EE;display:flex;align-items:center;justify-content:center}
+.opt-art img{width:100%;height:100%;object-fit:cover;display:block}
+.opt-label-bar{background:#f2ede6;padding:11px 13px;transition:background .15s}
+.opt-name{font-size:13px;font-weight:500;color:#222;margin-bottom:1px}
+.opt-desc{font-size:11px;color:#888;line-height:1.4}
+
+/* ── FABRIC PATH CARDS ── */
+.fabric-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:16px}
+.fabric-card{background:#fff;border:1.5px solid #e8e8e4;border-radius:12px;padding:20px;cursor:pointer;transition:border-color .15s}
+.fabric-card:hover{border-color:var(--gold)}
+.fabric-card.sel{border:2px solid var(--gold);background:var(--gold-mid)}
+.fabric-card h3{font-size:13px;font-weight:500;color:#111;margin-bottom:4px}
+.fabric-card p{font-size:12px;color:#666;line-height:1.5}
+
+/* ── DIMS + PRICE BOX ── */
+.configurator{display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start}
+@media(max-width:820px){.configurator{grid-template-columns:1fr}}
+.price-box{background:var(--espresso);border-radius:14px;padding:22px;position:sticky;top:120px}
+.pb-title{font-size:12px;font-weight:500;color:var(--cream);margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px}
+.pb-row{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:.5px solid #2A201A}
+.pb-key{color:#7A6A58}.pb-val{color:var(--cream);font-weight:500}
+.pb-total-row{display:flex;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--gold)}
+.pb-total-label{font-size:14px;font-weight:500;color:var(--cream)}
+.pb-total-val{font-size:20px;font-weight:500;color:var(--gold)}
+.pb-note{font-size:10px;color:#5A4A38;margin-top:8px;line-height:1.6}
+.qty-row{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.qty-btn{width:32px;height:32px;border:1px solid #ddd;border-radius:8px;background:#fff;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center}
+.qty-val{width:44px;text-align:center;border:1px solid #ddd;border-radius:8px;padding:5px;font-size:14px}
+
+/* ── HARDWARE CROSS-SELL ── */
+.hw-crosssell{background:var(--espresso-mid);border:0.5px solid var(--border-dark);border-radius:12px;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:8px}
+.hw-crosssell-text{font-size:13px;color:var(--cream);}
+.hw-crosssell-text strong{color:var(--gold)}
+
+/* ── SUCCESS ── */
+.success-box{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:10px;padding:20px;color:#2e7d32;font-size:14px;line-height:1.7;display:none}
+</style>
+</head>
+<body>
+<nav class="site-nav" id="site-nav"></nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; Soft treatments</div>
+  <h1>Soft Treatments</h1>
+  <p class="sub">Handcrafted drapery panels and roman shades — custom to your exact size, your fabric choice, and your room. We fabricate and install everything ourselves.</p>
+  <div class="hero-pills">
+    <span class="hero-pill-gold hero-pill">Custom fabrication</span>
+    <span class="hero-pill">Your fabric or ours</span>
+    <span class="hero-pill">Motorization available</span>
+    <span class="hero-pill">Free in-home consult</span>
+  </div>
+</div>
+
+<!-- HERO PHOTO STRIP -->
+<div style="display:grid;grid-template-columns:2fr 1fr 1fr;height:220px;gap:3px;overflow:hidden">
+  <img src="../images/portfolio/IMG_1369.JPEG" alt="Custom wave drapery luxury bedroom" style="width:100%;height:100%;object-fit:cover;display:block">
+  <img src="../images/portfolio/IMG_5444.JPEG" alt="Custom drapery installation" style="width:100%;height:100%;object-fit:cover;display:block">
+  <img src="../images/portfolio/IMG_4927.JPEG" alt="Custom drapery detail" style="width:100%;height:100%;object-fit:cover;display:block">
+</div>
+
+<!-- TYPE TABS -->
+<div class="type-tabs" id="type-tabs">
+  <button class="type-tab on" onclick="switchTab('drapes',this)">Custom Drapery</button>
+  <button class="type-tab" onclick="switchTab('roman',this)">Roman Shades</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     TAB: CUSTOM DRAPERY
+════════════════════════════════════════════════════════════ -->
+<div class="tab-panel on" id="tab-drapes">
+<div class="step-wrap">
+
+  <!-- STEP 1: PLEAT STYLE -->
+  <div class="step">
+    <div class="step-label">Step 1</div>
+    <div class="step-title">Choose your pleat style</div>
+    <div class="step-sub">The pleat determines the look and how the panel hangs. Not sure? Book a free consult — we'll bring samples.</div>
+    <div class="opt-cards" id="pleat-cards">
+      <div class="opt-card" onclick="selectPleat(this,'Ripple Fold')">
+        <div class="opt-art">
+          <svg viewBox="0 0 120 100" width="80" height="70" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10,10 Q20,50 10,90 M30,10 Q40,50 30,90 M50,10 Q60,50 50,90 M70,10 Q80,50 70,90 M90,10 Q100,50 90,90 M110,10 Q120,50 110,90" stroke="#B0957A" stroke-width="2.5" fill="none"/>
+          </svg>
+        </div>
+        <div class="opt-label-bar"><div class="opt-name">Ripple Fold</div><div class="opt-desc">Continuous S-wave, modern clean look</div></div>
+      </div>
+      <div class="opt-card" onclick="selectPleat(this,'Pinch Pleat')">
+        <div class="opt-art">
+          <svg viewBox="0 0 120 100" width="80" height="70" xmlns="http://www.w3.org/2000/svg">
+            <line x1="10" y1="10" x2="10" y2="90" stroke="#B0957A" stroke-width="3"/>
+            <line x1="13" y1="10" x2="22" y2="90" stroke="#B0957A" stroke-width="2"/>
+            <line x1="16" y1="10" x2="34" y2="90" stroke="#B0957A" stroke-width="2"/>
+            <line x1="40" y1="10" x2="40" y2="90" stroke="#B0957A" stroke-width="3"/>
+            <line x1="43" y1="10" x2="52" y2="90" stroke="#B0957A" stroke-width="2"/>
+            <line x1="46" y1="10" x2="64" y2="90" stroke="#B0957A" stroke-width="2"/>
+            <line x1="72" y1="10" x2="72" y2="90" stroke="#B0957A" stroke-width="3"/>
+            <line x1="75" y1="10" x2="84" y2="90" stroke="#B0957A" stroke-width="2"/>
+            <line x1="78" y1="10" x2="96" y2="90" stroke="#B0957A" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="opt-label-bar"><div class="opt-name">Pinch Pleat</div><div class="opt-desc">Classic gathered triple pleat</div></div>
+      </div>
+      <div class="opt-card" onclick="selectPleat(this,'Euro Pleat')">
+        <div class="opt-art">
+          <svg viewBox="0 0 120 100" width="80" height="70" xmlns="http://www.w3.org/2000/svg">
+            <line x1="15" y1="10" x2="15" y2="90" stroke="#B0957A" stroke-width="3.5"/>
+            <line x1="19" y1="10" x2="30" y2="90" stroke="#B0957A" stroke-width="2"/>
+            <line x1="46" y1="10" x2="46" y2="90" stroke="#B0957A" stroke-width="3.5"/>
+            <line x1="50" y1="10" x2="61" y2="90" stroke="#B0957A" stroke-width="2"/>
+            <line x1="77" y1="10" x2="77" y2="90" stroke="#B0957A" stroke-width="3.5"/>
+            <line x1="81" y1="10" x2="92" y2="90" stroke="#B0957A" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="opt-label-bar"><div class="opt-name">Euro Pleat</div><div class="opt-desc">Single fold, understated &amp; contemporary</div></div>
+      </div>
+      <div class="opt-card" onclick="selectPleat(this,'Box Pleat')">
+        <div class="opt-art">
+          <svg viewBox="0 0 120 100" width="80" height="70" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="10,10 10,90" stroke="#B0957A" stroke-width="2" fill="none"/>
+            <polyline points="10,20 25,20 25,90" stroke="#B0957A" stroke-width="2" fill="none"/>
+            <polyline points="40,10 40,90" stroke="#B0957A" stroke-width="2" fill="none"/>
+            <polyline points="40,20 55,20 55,90" stroke="#B0957A" stroke-width="2" fill="none"/>
+            <polyline points="70,10 70,90" stroke="#B0957A" stroke-width="2" fill="none"/>
+            <polyline points="70,20 85,20 85,90" stroke="#B0957A" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
+        <div class="opt-label-bar"><div class="opt-name">Box Pleat</div><div class="opt-desc">Structured flat pleat, tailored look</div></div>
+      </div>
+      <div class="opt-card" onclick="selectPleat(this,'Goblet Pleat')">
+        <div class="opt-art">
+          <svg viewBox="0 0 120 100" width="80" height="70" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="25" cy="18" rx="10" ry="8" stroke="#B0957A" stroke-width="2" fill="none"/>
+            <line x1="20" y1="26" x2="15" y2="90" stroke="#B0957A" stroke-width="2"/>
+            <line x1="30" y1="26" x2="35" y2="90" stroke="#B0957A" stroke-width="2"/>
+            <ellipse cx="65" cy="18" rx="10" ry="8" stroke="#B0957A" stroke-width="2" fill="none"/>
+            <line x1="60" y1="26" x2="55" y2="90" stroke="#B0957A" stroke-width="2"/>
+            <line x1="70" y1="26" x2="75" y2="90" stroke="#B0957A" stroke-width="2"/>
+            <ellipse cx="105" cy="18" rx="10" ry="8" stroke="#B0957A" stroke-width="2" fill="none"/>
+            <line x1="100" y1="26" x2="95" y2="90" stroke="#B0957A" stroke-width="2"/>
+            <line x1="110" y1="26" x2="115" y2="90" stroke="#B0957A" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="opt-label-bar"><div class="opt-name">Goblet Pleat</div><div class="opt-desc">Formal chalice-shaped heading</div></div>
+      </div>
+      <div class="opt-card" onclick="selectPleat(this,'Rod Pocket')">
+        <div class="opt-art">
+          <svg viewBox="0 0 120 100" width="80" height="70" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="8" width="110" height="12" rx="6" stroke="#B0957A" stroke-width="2" fill="none"/>
+            <path d="M15,20 Q18,40 12,90 M30,20 Q33,45 27,90 M45,20 Q48,40 42,90 M60,20 Q63,45 57,90 M75,20 Q78,40 72,90 M90,20 Q93,45 87,90 M105,20 Q108,40 102,90" stroke="#B0957A" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+        <div class="opt-label-bar"><div class="opt-name">Rod Pocket</div><div class="opt-desc">Casual gathered sleeve at top</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: FABRIC -->
+  <div class="step">
+    <div class="step-label">Step 2</div>
+    <div class="step-title">Fabric</div>
+    <div class="step-sub">We work with your fabric or help you choose from our selections.</div>
+    <div class="fabric-cards" id="drape-fabric-cards">
+      <div class="fabric-card" onclick="selectFabric('drape',this,'We supply the fabric')">
+        <h3>We supply the fabric</h3>
+        <p>Choose from our fabric library during a free in-home consultation. We'll bring samples to your space.</p>
+      </div>
+      <div class="fabric-card" onclick="selectFabric('drape',this,'Customer supplies fabric')">
+        <h3>I have my own fabric</h3>
+        <p>Ship your fabric to us in Huntingdon Valley, PA. We'll confirm yardage requirements before you order.</p>
+      </div>
+      <div class="fabric-card" onclick="selectFabric('drape',this,'Not sure — needs consultation')">
+        <h3>Not sure yet</h3>
+        <p>Book a free in-home consult. We'll guide you through fabric, lining, and style for your space.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: MOTORIZATION -->
+  <div class="step">
+    <div class="step-label">Step 3</div>
+    <div class="step-title">Motorization <span style="font-size:12px;color:#999;font-weight:400">(optional)</span></div>
+    <div class="step-sub">Motorized drapery traverses on a track system. Specify your preferred motor brand in the notes — compatibility depends on the track.</div>
+    <div class="opt-row" id="grp-drape-motor" style="margin-top:12px">
+      <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-motor')">No motor</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-drape-motor')">Yes — add motorization</button>
+    </div>
+    <div style="font-size:12px;color:#666;margin-top:10px;line-height:1.6">Compatible brands include Somfy, Lutron Sivoia, Rollease Acmeda &amp; others — confirm with us per track brand. Specify your preference in the notes below.</div>
+  </div>
+
+  <!-- STEP 4: LINING -->
+  <div class="step">
+    <div class="step-label">Step 4</div>
+    <div class="step-title">Lining</div>
+    <div class="opt-row" id="grp-drape-lining" style="margin-top:12px">
+      <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-lining')">Unlined</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-drape-lining')">Lined</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-drape-lining')">Blackout lined</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-drape-lining')">Interlining (luxury)</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: QUOTE FORM -->
+  <div class="step">
+    <div class="step-label">Step 5</div>
+    <div class="step-title">Get your custom quote</div>
+    <div class="step-sub">Drapery is always custom quoted — every project is unique. Fill this out and we'll follow up fast.</div>
+
+    <div style="background:#fff;border:1px solid #e8e8e4;border-radius:12px;padding:24px;margin-top:16px" id="drape-form">
+      <div class="form-row">
+        <div class="form-group"><label>Name *</label><input type="text" id="d-name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="d-phone" placeholder="(215) 555-0100"></div>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" id="d-email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Installation address</label><input type="text" id="d-address" placeholder="123 Main St, Philadelphia PA"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Number of panels / windows</label><input type="number" id="d-qty" min="1" value="2" style="max-width:100%"></div>
+        <div class="form-group"><label>Approximate window width</label>
+          <select id="d-width">
+            <option>Not sure yet</option><option>Under 36"</option><option>36"–48"</option><option>48"–72"</option><option>72"–96"</option><option>96"–120"</option><option>120"+</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>Ceiling height / drop length</label>
+        <select id="d-height">
+          <option>Standard (8–9 ft)</option><option>Tall (9–10 ft)</option><option>10–12 ft</option><option>12–14 ft</option><option>14 ft+</option><option>Floor to ceiling</option><option>Custom — I'll specify in notes</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Notes — fabric preference, motor brand, rod type, timeline, or anything else</label>
+        <textarea id="d-notes" style="min-height:90px" placeholder="e.g. Ripple fold on a Rollease track, customer-supplied linen fabric, 3 windows in master bedroom..."></textarea>
+      </div>
+
+      <!-- ALSO NEED HARDWARE? -->
+      <div class="hw-crosssell">
+        <div class="hw-crosssell-text"><strong>Also need a rod or traverse system?</strong><br><span style="font-size:12px;color:var(--text-muted)">We do full hardware supply and installation — decorative rods, rings, traverse tracks and more.</span></div>
+        <a href="hardware.html" class="btn-gold" style="font-size:12px;padding:8px 14px;white-space:nowrap">Browse Hardware &rarr;</a>
+      </div>
+
+      <!-- DELIVERY -->
+      <div class="delivery-section" style="margin-top:16px">
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+        <div class="opt-row" id="grp-del-drape">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-drape');document.getElementById('del-drape-s').style.display='block';document.getElementById('del-drape-p').style.display='none'">Ship to me</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-del-drape');document.getElementById('del-drape-s').style.display='none';document.getElementById('del-drape-p').style.display='block'">I'll pick up</button>
+        </div>
+        <div id="del-drape-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately.</div></div>
+        <div id="del-drape-p" class="delivery-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.</div>
+      </div>
+
+      <button class="btn-gold" onclick="submitDrape()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:16px">Request Drapery Quote &rarr;</button>
+    </div>
+    <div class="success-box" id="drape-success">
+      <strong>Quote request sent!</strong><br>
+      Your email app opened with the details pre-filled. We'll follow up within a few hours.<br><br>
+      Urgent? <a href="tel:6097421720" style="color:#2e7d32">(609) 742-1720</a> &middot; 24/7 call or text.
+    </div>
+  </div>
+
+</div><!-- /drapes step-wrap -->
+</div><!-- /tab-drapes -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     TAB: ROMAN SHADES
+════════════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-roman">
+<div class="step-wrap">
+
+  <!-- STEP 1: STYLE -->
+  <div class="step">
+    <div class="step-label">Step 1</div>
+    <div class="step-title">Choose your style</div>
+    <div class="step-sub">Roman shades fold up into clean horizontal pleats. Each style folds differently when raised.</div>
+    <div class="opt-cards" id="roman-style-cards">
+      <div class="opt-card" onclick="selectRomanStyle(this,'Flat Roman')">
+        <div class="opt-art">
+          <svg viewBox="0 0 100 120" width="70" height="90" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="10" width="80" height="100" fill="none" stroke="#B0957A" stroke-width="2"/>
+            <line x1="10" y1="30" x2="90" y2="30" stroke="#B0957A" stroke-width="1.5"/>
+            <line x1="10" y1="50" x2="90" y2="50" stroke="#B0957A" stroke-width="1.5"/>
+            <line x1="10" y1="70" x2="90" y2="70" stroke="#B0957A" stroke-width="1.5"/>
+            <line x1="10" y1="90" x2="90" y2="90" stroke="#B0957A" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="opt-label-bar"><div class="opt-name">Flat Roman</div><div class="opt-desc">Clean, minimal, no folds when down</div></div>
+      </div>
+      <div class="opt-card" onclick="selectRomanStyle(this,'Hobbled Roman')">
+        <div class="opt-art">
+          <svg viewBox="0 0 100 120" width="70" height="90" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="10" width="80" height="100" fill="none" stroke="#B0957A" stroke-width="2"/>
+            <path d="M10,30 Q50,38 90,30" stroke="#B0957A" stroke-width="1.5" fill="none"/>
+            <path d="M10,50 Q50,58 90,50" stroke="#B0957A" stroke-width="1.5" fill="none"/>
+            <path d="M10,70 Q50,78 90,70" stroke="#B0957A" stroke-width="1.5" fill="none"/>
+            <path d="M10,90 Q50,98 90,90" stroke="#B0957A" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+        <div class="opt-label-bar"><div class="opt-name">Hobbled Roman</div><div class="opt-desc">Cascading soft folds, classic look</div></div>
+      </div>
+      <div class="opt-card" onclick="selectRomanStyle(this,'Relaxed Roman')">
+        <div class="opt-art">
+          <svg viewBox="0 0 100 120" width="70" height="90" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10,10 L10,110 Q50,90 90,110 L90,10 Z" fill="none" stroke="#B0957A" stroke-width="2"/>
+            <path d="M10,40 Q50,22 90,40" stroke="#B0957A" stroke-width="1.5" fill="none"/>
+            <path d="M10,65 Q50,47 90,65" stroke="#B0957A" stroke-width="1.5" fill="none"/>
+            <path d="M10,90 Q50,72 90,90" stroke="#B0957A" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+        <div class="opt-label-bar"><div class="opt-name">Relaxed Roman</div><div class="opt-desc">Casual curved hem, soft &amp; informal</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: FABRIC -->
+  <div class="step">
+    <div class="step-label">Step 2</div>
+    <div class="step-title">Fabric</div>
+    <div class="fabric-cards" id="roman-fabric-cards">
+      <div class="fabric-card" onclick="selectFabric('roman',this,'We supply the fabric')">
+        <h3>We supply the fabric</h3>
+        <p>In-home fabric consultation available — we bring samples to your space.</p>
+      </div>
+      <div class="fabric-card" onclick="selectFabric('roman',this,'Customer supplies fabric')">
+        <h3>I have my own fabric</h3>
+        <p>Ship to us in Huntingdon Valley, PA. We'll confirm yardage before you send.</p>
+      </div>
+      <div class="fabric-card" onclick="selectFabric('roman',this,'Not sure — needs consultation')">
+        <h3>Not sure yet</h3>
+        <p>Book a free consult and we'll guide you through the options in your space.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: LINING -->
+  <div class="step">
+    <div class="step-label">Step 3</div>
+    <div class="step-title">Lining</div>
+    <div class="opt-row" id="grp-roman-lining" style="margin-top:12px">
+      <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-lining')">Unlined</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining')">Lined</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining')">Blackout lined</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: MOTORIZATION -->
+  <div class="step">
+    <div class="step-label">Step 4</div>
+    <div class="step-title">Motorization <span style="font-size:12px;color:#999;font-weight:400">(optional)</span></div>
+    <div class="opt-row" id="grp-roman-motor" style="margin-top:12px">
+      <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-motor')">No motor</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-roman-motor')">Yes — add motorization</button>
+    </div>
+    <div style="font-size:12px;color:#666;margin-top:10px">Compatible brands: Lutron Serena, Somfy, Automate, Rollease Acmeda.</div>
+  </div>
+
+  <!-- STEP 5: DIMENSIONS + PRICE -->
+  <div class="step">
+    <div class="step-label">Step 5</div>
+    <div class="step-title">Size &amp; instant price</div>
+    <div class="step-sub">Enter your window dimensions for an instant estimate. Roman shades are custom quoted — this gives you a starting figure.</div>
+
+    <div class="configurator" style="margin-top:16px">
+      <div>
+        <div class="qty-row">
+          <button class="qty-btn" onclick="adjRomanQty(-1)">−</button>
+          <input class="qty-val" id="rn-qty" type="number" value="1" min="1" max="30" oninput="calcRoman()">
+          <span style="font-size:13px;color:#666">window(s)</span>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Width (inches)</label><input type="number" id="rn-w" placeholder="e.g. 36" oninput="calcRoman()" style="font-size:14px"></div>
+          <div class="form-group"><label>Height (inches)</label><input type="number" id="rn-h" placeholder="e.g. 48" oninput="calcRoman()" style="font-size:14px"></div>
+        </div>
+
+        <!-- QUOTE FORM -->
+        <div id="roman-form" style="margin-top:4px">
+          <div class="form-row">
+            <div class="form-group"><label>Name *</label><input type="text" id="rn-name" placeholder="Jane Smith"></div>
+            <div class="form-group"><label>Phone *</label><input type="tel" id="rn-phone" placeholder="(215) 555-0100"></div>
+          </div>
+          <div class="form-group"><label>Email</label><input type="email" id="rn-email" placeholder="jane@example.com"></div>
+          <div class="form-group"><label>Installation address</label><input type="text" id="rn-address" placeholder="123 Main St, Philadelphia PA"></div>
+          <div class="form-group"><label>Notes</label><textarea id="rn-notes" placeholder="Room, fabric preference, timeline, any other details..." style="min-height:70px"></textarea></div>
+
+          <!-- ALSO NEED HARDWARE? -->
+          <div class="hw-crosssell">
+            <div class="hw-crosssell-text"><strong>Also need a rod or traverse system?</strong><br><span style="font-size:12px;color:var(--text-muted)">Roman shades can be paired with a decorative rod for a layered look.</span></div>
+            <a href="hardware.html" class="btn-gold" style="font-size:12px;padding:8px 14px;white-space:nowrap">Browse Hardware &rarr;</a>
+          </div>
+
+          <!-- DELIVERY -->
+          <div class="delivery-section" style="margin-top:16px">
+            <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+            <div class="opt-row" id="grp-del-roman">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-del-roman');document.getElementById('del-roman-s').style.display='block';document.getElementById('del-roman-p').style.display='none'">Ship to me</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-del-roman');document.getElementById('del-roman-s').style.display='none';document.getElementById('del-roman-p').style.display='block'">I'll pick up</button>
+            </div>
+            <div id="del-roman-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional and itemized separately.</div></div>
+            <div id="del-roman-p" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>
+          </div>
+
+          <button class="btn-gold" onclick="submitRoman()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:16px">Request Roman Shade Quote &rarr;</button>
+        </div>
+        <div class="success-box" id="roman-success">
+          <strong>Quote request sent!</strong><br>Your email app opened with the details. We'll follow up within a few hours.<br><br>
+          Urgent? <a href="tel:6097421720" style="color:#2e7d32">(609) 742-1720</a> &middot; 24/7.
+        </div>
+      </div>
+
+      <!-- PRICE BOX -->
+      <div class="price-box" id="roman-pricebox" style="display:none">
+        <div class="pb-title">Estimate</div>
+        <div class="pb-row"><span class="pb-key">Style</span><span class="pb-val" id="rn-pb-style">—</span></div>
+        <div class="pb-row"><span class="pb-key">Size</span><span class="pb-val" id="rn-pb-dims">—</span></div>
+        <div class="pb-row"><span class="pb-key">Qty</span><span class="pb-val" id="rn-pb-qty">1</span></div>
+        <div class="pb-row"><span class="pb-key">Motorization</span><span class="pb-val" id="rn-pb-motor">No</span></div>
+        <div class="pb-total-row">
+          <span class="pb-total-label">Est. total</span>
+          <span class="pb-total-val" id="rn-pb-total">—</span>
+        </div>
+        <div id="rn-pb-min-note" class="pb-note" style="display:none">&#9432; Minimum applies — small shades carry a $85 per-shade minimum.</div>
+        <div class="pb-note">Final price confirmed after consultation. Fabric, lining &amp; motor cost may vary.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /roman step-wrap -->
+</div><!-- /tab-roman -->
+
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <div>
+    <h2>Not sure which treatment is right?</h2>
+    <p>We'll come to your home, measure every window, and walk you through the options — completely free.</p>
+  </div>
+  <div class="cta-banner-btns">
+    <a class="btn-dark" href="tel:6097421720">(609) 742-1720 &middot; 24/7</a>
+    <a class="btn-outline" href="consult.html">Book free consultation</a>
+  </div>
+</div>
+
+<footer class="site-footer" id="site-footer"></footer>
+<script src="../js/shared.js"></script>
+<script>
+renderNav('Soft treatments'); renderFooter(false);
+
+// ── Tab switcher ──────────────────────────────────────────
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.type-tab').forEach(b => b.classList.remove('on'));
+  document.getElementById('tab-' + id).classList.add('on');
+  btn.classList.add('on');
+}
+
+// ── Selection helpers ────────────────────────────────────
+var drapeState  = { pleat:'', fabric:'' };
+var romanState  = { style:'', fabric:'' };
+
+function selectPleat(el, val) {
+  document.querySelectorAll('#pleat-cards .opt-card').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  drapeState.pleat = val;
+}
+function selectRomanStyle(el, val) {
+  document.querySelectorAll('#roman-style-cards .opt-card').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  romanState.style = val;
+  calcRoman();
+}
+function selectFabric(tab, el, val) {
+  var container = tab === 'drape' ? '#drape-fabric-cards' : '#roman-fabric-cards';
+  document.querySelectorAll(container + ' .fabric-card').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  if (tab === 'drape') drapeState.fabric = val;
+  else romanState.fabric = val;
+}
+
+// ── Roman pricing ─────────────────────────────────────────
+var RN_RATE  = 22;   // $/sqft — update when final pricing confirmed
+var RN_MIN   = 85;
+var RN_MOTOR = 120;
+
+function adjRomanQty(d) {
+  var el = document.getElementById('rn-qty');
+  el.value = Math.max(1, (parseInt(el.value) || 1) + d);
+  calcRoman();
+}
+
+function calcRoman() {
+  var w    = parseFloat(document.getElementById('rn-w').value);
+  var h    = parseFloat(document.getElementById('rn-h').value);
+  var qty  = parseInt(document.getElementById('rn-qty').value) || 1;
+  var box  = document.getElementById('roman-pricebox');
+  if (!w || !h) { box.style.display = 'none'; return; }
+  box.style.display = 'block';
+  var sqft      = (w / 12) * (h / 12);
+  var perShade  = Math.max(RN_MIN, sqft * RN_RATE);
+  var isMotor   = getOpt('grp-roman-motor') === 'Yes — add motorization';
+  var motorCost = isMotor ? RN_MOTOR * qty : 0;
+  var total     = perShade * qty + motorCost;
+  document.getElementById('rn-pb-style').textContent   = romanState.style || '—';
+  document.getElementById('rn-pb-dims').textContent    = w + '″ W × ' + h + '″ H';
+  document.getElementById('rn-pb-qty').textContent     = qty;
+  document.getElementById('rn-pb-motor').textContent   = isMotor ? 'Yes (+$' + (RN_MOTOR * qty) + ')' : 'No';
+  document.getElementById('rn-pb-total').textContent   = '$' + total.toFixed(0);
+  document.getElementById('rn-pb-min-note').style.display = perShade === RN_MIN ? 'block' : 'none';
+}
+
+// ── SUBMIT: DRAPERY ───────────────────────────────────────
+function submitDrape() {
+  var name  = document.getElementById('d-name').value.trim();
+  var phone = document.getElementById('d-phone').value.trim();
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  var pleat    = drapeState.pleat    || getOpt('pleat-cards') || '—';
+  var fabric   = drapeState.fabric   || '—';
+  var motor    = getOpt('grp-drape-motor');
+  var lining   = getOpt('grp-drape-lining');
+  var delivery = getOpt('grp-del-drape');
+  var body = 'DRAPERY QUOTE REQUEST\n\n'
+    + 'Name: ' + name + '\nPhone: ' + phone
+    + '\nEmail: ' + (document.getElementById('d-email').value.trim() || '—')
+    + '\nAddress: ' + (document.getElementById('d-address').value.trim() || '—') + '\n\n'
+    + 'Pleat style: ' + (drapeState.pleat || '—') + '\n'
+    + 'Fabric: ' + fabric + '\n'
+    + 'Lining: ' + lining + '\n'
+    + 'Motorization: ' + motor + '\n'
+    + 'Panels / windows: ' + document.getElementById('d-qty').value
+    + '\nWidth range: ' + document.getElementById('d-width').value
+    + '\nDrop: ' + document.getElementById('d-height').value + '\n'
+    + 'Delivery: ' + delivery + '\n\n'
+    + 'Notes:\n' + (document.getElementById('d-notes').value.trim() || 'None');
+  window.location.href = 'mailto:blindznation@gmail.com'
+    + '?subject=' + encodeURIComponent('Drapery Quote — ' + name)
+    + '&body=' + encodeURIComponent(body);
+  document.getElementById('drape-form').style.display = 'none';
+  document.getElementById('drape-success').style.display = 'block';
+}
+
+// ── SUBMIT: ROMAN SHADES ──────────────────────────────────
+function submitRoman() {
+  var name  = document.getElementById('rn-name').value.trim();
+  var phone = document.getElementById('rn-phone').value.trim();
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  var w       = document.getElementById('rn-w').value;
+  var h       = document.getElementById('rn-h').value;
+  var qty     = document.getElementById('rn-qty').value;
+  var motor   = getOpt('grp-roman-motor');
+  var lining  = getOpt('grp-roman-lining');
+  var delivery= getOpt('grp-del-roman');
+  var body = 'ROMAN SHADE QUOTE REQUEST\n\n'
+    + 'Name: ' + name + '\nPhone: ' + phone
+    + '\nEmail: ' + (document.getElementById('rn-email').value.trim() || '—')
+    + '\nAddress: ' + (document.getElementById('rn-address').value.trim() || '—') + '\n\n'
+    + 'Style: ' + (romanState.style || '—') + '\n'
+    + 'Fabric: ' + (romanState.fabric || '—') + '\n'
+    + 'Lining: ' + lining + '\n'
+    + 'Motorization: ' + motor + '\n'
+    + 'Qty: ' + qty + '\nWidth: ' + (w ? w + '"' : '—') + '  Height: ' + (h ? h + '"' : '—') + '\n'
+    + 'Delivery: ' + delivery + '\n\n'
+    + 'Notes:\n' + (document.getElementById('rn-notes').value.trim() || 'None');
+  window.location.href = 'mailto:blindznation@gmail.com'
+    + '?subject=' + encodeURIComponent('Roman Shade Quote — ' + name)
+    + '&body=' + encodeURIComponent(body);
+  document.getElementById('roman-form').style.display = 'none';
+  document.getElementById('roman-success').style.display = 'block';
+}
+</script>
+</body>
+</html>

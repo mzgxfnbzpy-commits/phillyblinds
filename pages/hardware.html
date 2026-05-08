@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Drapery hardware — decorative rods, rings, traverse systems and more. Brands include Select, Orion, Kirsch, Paris Texas, and The Finial Company. Philadelphia area supply and installation.">
+<meta property="og:title" content="Drapery Hardware — Rods, Tracks &amp; Rings | Philly Blinds">
+<meta property="og:description" content="Decorative and functional drapery hardware — rods, rings, traverse tracks. Custom supply and professional installation.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://phillyblinds.com/pages/hardware.html">
+<meta property="og:site_name" content="Philly Blinds">
+<meta name="twitter:card" content="summary_large_image">
+<title>Drapery Hardware — Rods, Tracks &amp; Rings | Philly Blinds</title>
+<link rel="stylesheet" href="../css/global.css">
+<style>
+.page-hero{background:var(--espresso);padding:44px 28px 40px}
+.breadcrumb{font-size:11px;color:var(--text-faint);margin-bottom:14px}
+.breadcrumb a{color:var(--text-muted);text-decoration:none}
+.breadcrumb a:hover{color:var(--cream)}
+.page-hero h1{font-size:32px;font-weight:500;color:var(--cream);letter-spacing:-0.5px;margin-bottom:10px;line-height:1.2}
+.page-hero .sub{font-size:14px;color:var(--text-dark);line-height:1.7;max-width:520px;margin-bottom:22px}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap}
+.hero-pill{font-size:11px;padding:4px 12px;border-radius:20px;border:0.5px solid var(--border-dark);color:var(--text-faint)}
+.hero-pill-gold{background:rgba(45,224,193,.12);border-color:rgba(45,224,193,.3);color:var(--gold)}
+
+/* ── STEP ── */
+.step-wrap{max-width:900px;margin:0 auto;padding:32px 28px}
+.step{margin-bottom:36px}
+.step-label{font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;font-weight:600;margin-bottom:6px}
+.step-title{font-size:18px;font-weight:500;color:#1a1a1a;margin-bottom:4px;letter-spacing:-0.3px}
+.step-sub{font-size:13px;color:#666;line-height:1.6}
+
+/* ── CHOICE CARDS (big 2-up) ── */
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+@media(max-width:600px){.choice-grid{grid-template-columns:1fr}}
+.choice-card{background:#fff;border:1.5px solid #e8e8e4;border-radius:14px;padding:26px 22px;cursor:pointer;transition:border-color .15s,box-shadow .15s;position:relative}
+.choice-card:hover{border-color:var(--gold);box-shadow:0 2px 16px rgba(45,224,193,.1)}
+.choice-card.sel{border:2px solid var(--gold);box-shadow:0 2px 20px rgba(45,224,193,.18)}
+.choice-icon{font-size:28px;margin-bottom:10px}
+.choice-title{font-size:16px;font-weight:500;color:#111;margin-bottom:5px}
+.choice-desc{font-size:13px;color:#555;line-height:1.6}
+.choice-brands{font-size:11px;color:var(--gold);font-weight:500;margin-top:10px}
+
+/* ── OPTION CARDS (sub-type) ── */
+.opt-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:14px}
+.opt-card{background:#fff;border:1.5px solid #e8e8e4;border-radius:12px;overflow:hidden;cursor:pointer;transition:border-color .15s}
+.opt-card:hover{border-color:var(--gold)}
+.opt-card.sel{border:2px solid var(--gold);box-shadow:0 2px 12px rgba(45,224,193,.15)}
+.opt-card.sel .opt-label-bar{background:var(--gold)}
+.opt-card.sel .opt-name,.opt-card.sel .opt-desc{color:var(--espresso)}
+.opt-art{height:110px;background:#F8F4EE;display:flex;align-items:center;justify-content:center}
+.opt-art img{width:100%;height:100%;object-fit:cover;display:block}
+.opt-label-bar{background:#f2ede6;padding:10px 12px;transition:background .15s}
+.opt-name{font-size:13px;font-weight:500;color:#222;margin-bottom:1px}
+.opt-desc{font-size:11px;color:#888;line-height:1.4}
+
+/* ── BRAND CARDS ── */
+.brand-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:14px}
+.brand-card{background:#fff;border:1.5px solid #e8e8e4;border-radius:12px;padding:18px 16px;cursor:pointer;transition:border-color .15s;text-align:center}
+.brand-card:hover{border-color:var(--gold)}
+.brand-card.sel{border:2px solid var(--gold);background:var(--gold-mid)}
+.brand-name{font-size:14px;font-weight:500;color:#111;margin-bottom:4px}
+.brand-desc{font-size:11px;color:#666;line-height:1.4}
+
+/* ── HIDDEN SECTIONS ── */
+.hw-section{display:none}
+.hw-section.on{display:block}
+
+/* ── DRAPE CROSS-SELL ── */
+.drape-crosssell{background:var(--espresso-mid);border:.5px solid var(--border-dark);border-radius:12px;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:8px}
+.drape-crosssell-text{font-size:13px;color:var(--cream)}
+.drape-crosssell-text strong{color:var(--gold)}
+
+/* ── SUCCESS ── */
+.success-box{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:10px;padding:20px;color:#2e7d32;font-size:14px;line-height:1.7;display:none}
+</style>
+</head>
+<body>
+<nav class="site-nav" id="site-nav"></nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; Hardware</div>
+  <h1>Drapery Hardware</h1>
+  <p class="sub">Rods, rings, traverse systems, and decorative finials — supplied and professionally installed. We carry the top hardware brands and will help you find the right system for your panels and space.</p>
+  <div class="hero-pills">
+    <span class="hero-pill-gold hero-pill">Supply + installation</span>
+    <span class="hero-pill">Decorative &amp; functional</span>
+    <span class="hero-pill">Custom sizing available</span>
+    <span class="hero-pill">Free in-home consult</span>
+  </div>
+</div>
+
+<!-- HERO PHOTO STRIP -->
+<div style="display:grid;grid-template-columns:1fr 1fr 2fr;height:200px;gap:3px;overflow:hidden">
+  <img src="../images/portfolio/IMG_2854.JPEG" alt="Drapery hardware installation" style="width:100%;height:100%;object-fit:cover;display:block">
+  <img src="../images/portfolio/IMG_0592.JPEG" alt="Rod and ring hardware" style="width:100%;height:100%;object-fit:cover;display:block">
+  <img src="../images/portfolio/IMG_1369.JPEG" alt="Custom drapery on track system" style="width:100%;height:100%;object-fit:cover;display:block">
+</div>
+
+<div class="step-wrap">
+
+  <!-- STEP 1: DECORATIVE OR FUNCTIONAL -->
+  <div class="step">
+    <div class="step-label">Step 1</div>
+    <div class="step-title">What type of hardware?</div>
+    <div class="step-sub">Decorative hardware is meant to be seen — beautiful rods, rings, and finials. Functional/non-decorative hardware is engineered for smooth operation and is typically hidden behind a valance or header.</div>
+    <div class="choice-grid">
+      <div class="choice-card" id="card-decorative" onclick="selectHwType('decorative')">
+        <div class="choice-icon">✨</div>
+        <div class="choice-title">Decorative</div>
+        <div class="choice-desc">Rods, rings, and finials that are part of the design. Visible, beautiful, and available in dozens of finishes and styles.</div>
+        <div class="choice-brands">Select · Orion · Kirsch · Paris Texas · The Finial Company</div>
+      </div>
+      <div class="choice-card" id="card-functional" onclick="selectHwType('functional')">
+        <div class="choice-icon">⚙️</div>
+        <div class="choice-title">Non-decorative / Traverse</div>
+        <div class="choice-desc">Engineered traverse tracks and systems built for smooth, reliable operation. Ideal for motorized drapery, large windows, or where the hardware will be hidden.</div>
+        <div class="choice-brands">Kirsch Architrac · Custom traverse systems</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DECORATIVE SECTION -->
+  <div class="hw-section" id="sec-decorative">
+
+    <!-- STEP 2: STYLE TYPE -->
+    <div class="step">
+      <div class="step-label">Step 2</div>
+      <div class="step-title">Choose your style</div>
+      <div class="step-sub">All decorative hardware can be ordered in custom lengths, finishes, and bracket configurations.</div>
+      <div class="opt-cards" id="dec-type-cards">
+
+        <div class="opt-card" onclick="selectDecType(this,'Rods &amp; Rings')">
+          <div class="opt-art">
+            <svg viewBox="0 0 120 80" width="90" height="60" xmlns="http://www.w3.org/2000/svg">
+              <line x1="10" y1="20" x2="110" y2="20" stroke="#B0957A" stroke-width="5" stroke-linecap="round"/>
+              <circle cx="30" cy="20" r="7" stroke="#B0957A" stroke-width="2" fill="none"/>
+              <line x1="30" y1="27" x2="30" y2="60" stroke="#B0957A" stroke-width="1.5"/>
+              <circle cx="55" cy="20" r="7" stroke="#B0957A" stroke-width="2" fill="none"/>
+              <line x1="55" y1="27" x2="55" y2="60" stroke="#B0957A" stroke-width="1.5"/>
+              <circle cx="80" cy="20" r="7" stroke="#B0957A" stroke-width="2" fill="none"/>
+              <line x1="80" y1="27" x2="80" y2="60" stroke="#B0957A" stroke-width="1.5"/>
+              <circle cx="10" cy="20" r="5" fill="#B0957A"/>
+              <circle cx="110" cy="20" r="5" fill="#B0957A"/>
+            </svg>
+          </div>
+          <div class="opt-label-bar"><div class="opt-name">Rods &amp; Rings</div><div class="opt-desc">Classic ring-and-rod, great with pinch or goblet pleat</div></div>
+        </div>
+
+        <div class="opt-card" onclick="selectDecType(this,'Traverse Rod')">
+          <div class="opt-art">
+            <svg viewBox="0 0 120 80" width="90" height="60" xmlns="http://www.w3.org/2000/svg">
+              <rect x="5" y="14" width="110" height="10" rx="5" stroke="#B0957A" stroke-width="2" fill="none"/>
+              <line x1="20" y1="24" x2="20" y2="65" stroke="#B0957A" stroke-width="1.5"/>
+              <line x1="40" y1="24" x2="40" y2="65" stroke="#B0957A" stroke-width="1.5"/>
+              <line x1="60" y1="24" x2="60" y2="65" stroke="#B0957A" stroke-width="1.5"/>
+              <line x1="80" y1="24" x2="80" y2="65" stroke="#B0957A" stroke-width="1.5"/>
+              <line x1="100" y1="24" x2="100" y2="65" stroke="#B0957A" stroke-width="1.5"/>
+              <path d="M55,18 L60,14 L65,18" fill="#B0957A"/>
+            </svg>
+          </div>
+          <div class="opt-label-bar"><div class="opt-name">Traverse Rod</div><div class="opt-desc">Opens and closes on a cord or wand — great for ripple fold</div></div>
+        </div>
+
+        <div class="opt-card" onclick="selectDecType(this,'Specialty / Custom')">
+          <div class="opt-art">
+            <svg viewBox="0 0 120 80" width="90" height="60" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10,30 Q30,10 60,20 Q90,30 110,15" stroke="#B0957A" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <circle cx="10" cy="30" r="6" fill="#B0957A"/>
+              <circle cx="110" cy="15" r="6" fill="#B0957A"/>
+              <line x1="35" y1="17" x2="35" y2="65" stroke="#B0957A" stroke-width="1.5"/>
+              <line x1="65" y1="21" x2="65" y2="65" stroke="#B0957A" stroke-width="1.5"/>
+              <line x1="90" y1="24" x2="90" y2="65" stroke="#B0957A" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="opt-label-bar"><div class="opt-name">Specialty / Custom</div><div class="opt-desc">Bay windows, arches, curved tracks &amp; special applications</div></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- STEP 3: BRAND -->
+    <div class="step" id="dec-brand-step" style="display:none">
+      <div class="step-label">Step 3</div>
+      <div class="step-title">Choose a brand</div>
+      <div class="step-sub">All brands offer a wide range of finishes, diameters, and finial options. We'll help you match to your space.</div>
+      <div class="brand-grid" id="dec-brand-cards">
+        <div class="brand-card" onclick="selectBrand(this,'Select')">
+          <div class="brand-name">Select</div>
+          <div class="brand-desc">Premium decorative rods — huge finish library, all styles</div>
+        </div>
+        <div class="brand-card" onclick="selectBrand(this,'Orion')">
+          <div class="brand-name">Orion</div>
+          <div class="brand-desc">Solid construction, modern and traditional styles</div>
+        </div>
+        <div class="brand-card" onclick="selectBrand(this,'Kirsch')">
+          <div class="brand-name">Kirsch</div>
+          <div class="brand-desc">Classic American brand — decorative rods + traverse systems</div>
+        </div>
+        <div class="brand-card" onclick="selectBrand(this,'Paris Texas')">
+          <div class="brand-name">Paris Texas</div>
+          <div class="brand-desc">Contemporary European styling, slim profiles</div>
+        </div>
+        <div class="brand-card" onclick="selectBrand(this,'The Finial Company')">
+          <div class="brand-name">The Finial Company</div>
+          <div class="brand-desc">Artisan finials and decorative hardware, handcrafted details</div>
+        </div>
+        <div class="brand-card" onclick="selectBrand(this,'Not sure — need advice')">
+          <div class="brand-name">Not sure</div>
+          <div class="brand-desc">We'll recommend the right brand for your space and panels</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /sec-decorative -->
+
+  <!-- FUNCTIONAL SECTION -->
+  <div class="hw-section" id="sec-functional">
+    <div class="step">
+      <div class="step-label">Step 2</div>
+      <div class="step-title">Kirsch Architrac &amp; traverse systems</div>
+      <div class="step-sub">The Kirsch Architrac is the industry standard for reliable, smooth traverse operation — perfect for large windows, motorized panels, and commercial applications. Available in single and double configurations, cut to your exact width.</div>
+      <div style="background:var(--gold-mid);border:1px solid #e8e8e4;border-radius:12px;padding:20px 22px;margin-top:16px">
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Kirsch Architrac features</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 20px">
+          <div style="font-size:12px;color:#444;padding:4px 0;display:flex;gap:8px"><span style="color:var(--gold);font-weight:700">✓</span>Single or double track</div>
+          <div style="font-size:12px;color:#444;padding:4px 0;display:flex;gap:8px"><span style="color:var(--gold);font-weight:700">✓</span>Motorization compatible</div>
+          <div style="font-size:12px;color:#444;padding:4px 0;display:flex;gap:8px"><span style="color:var(--gold);font-weight:700">✓</span>Cut to exact width</div>
+          <div style="font-size:12px;color:#444;padding:4px 0;display:flex;gap:8px"><span style="color:var(--gold);font-weight:700">✓</span>Ceiling or wall mount</div>
+          <div style="font-size:12px;color:#444;padding:4px 0;display:flex;gap:8px"><span style="color:var(--gold);font-weight:700">✓</span>Commercial grade</div>
+          <div style="font-size:12px;color:#444;padding:4px 0;display:flex;gap:8px"><span style="color:var(--gold);font-weight:700">✓</span>Ripple fold carrier system</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP: QUOTE FORM (shared) -->
+  <div class="step hw-section" id="sec-quote">
+    <div class="step-label" id="quote-step-label">Step 4</div>
+    <div class="step-title">Get your quote</div>
+    <div class="step-sub">Hardware is always custom quoted — length, finish, bracket count, and installation all affect price. Fill this out and we'll get back to you fast.</div>
+
+    <div style="background:#fff;border:1px solid #e8e8e4;border-radius:12px;padding:24px;margin-top:16px" id="hw-form">
+      <div class="form-row">
+        <div class="form-group"><label>Name *</label><input type="text" id="hw-name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="hw-phone" placeholder="(215) 555-0100"></div>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" id="hw-email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Installation address</label><input type="text" id="hw-address" placeholder="123 Main St, Philadelphia PA"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Number of windows / rods</label><input type="number" id="hw-qty" min="1" value="1"></div>
+        <div class="form-group"><label>Approximate rod width</label>
+          <select id="hw-width">
+            <option>Not sure yet</option><option>Under 48"</option><option>48"–72"</option><option>72"–96"</option><option>96"–120"</option><option>120"–144"</option><option>144"+</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>Finish preference</label>
+        <select id="hw-finish">
+          <option>Not sure yet — please advise</option>
+          <option>Matte black</option><option>Brushed nickel</option><option>Polished chrome</option>
+          <option>Antique bronze / oil rubbed</option><option>Brushed gold / champagne</option>
+          <option>Satin brass</option><option>Ivory / white</option><option>Custom — specify in notes</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Notes — drapery type, panel weight, motorization plans, anything else</label>
+        <textarea id="hw-notes" style="min-height:80px" placeholder="e.g. Ripple fold panels on Architrac, ceiling mount, 3 windows in living room, considering Somfy motor..."></textarea>
+      </div>
+
+      <!-- ALSO NEED DRAPERY? -->
+      <div class="drape-crosssell">
+        <div class="drape-crosssell-text"><strong>Also need custom drapery panels?</strong><br><span style="font-size:12px;color:var(--text-muted)">We fabricate drapery in-house — we can quote panels and hardware together.</span></div>
+        <a href="soft-treatments.html" class="btn-gold" style="font-size:12px;padding:8px 14px;white-space:nowrap">Custom Drapery &rarr;</a>
+      </div>
+
+      <!-- DELIVERY -->
+      <div class="delivery-section" style="margin-top:16px">
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+        <div class="opt-row" id="grp-del-hw">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-hw');document.getElementById('del-hw-s').style.display='block';document.getElementById('del-hw-p').style.display='none'">Ship to me</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-del-hw');document.getElementById('del-hw-s').style.display='none';document.getElementById('del-hw-p').style.display='block'">I'll pick up</button>
+        </div>
+        <div id="del-hw-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional and itemized separately.</div></div>
+        <div id="del-hw-p" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>
+      </div>
+
+      <button class="btn-gold" onclick="submitHardware()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:16px">Request Hardware Quote &rarr;</button>
+    </div>
+    <div class="success-box" id="hw-success">
+      <strong>Quote request sent!</strong><br>Your email app opened with the details. We'll follow up within a few hours.<br><br>
+      Urgent? <a href="tel:6097421720" style="color:#2e7d32">(609) 742-1720</a> &middot; 24/7.
+    </div>
+  </div>
+
+</div><!-- /step-wrap -->
+
+<div class="cta-banner">
+  <div>
+    <h2>Not sure what you need?</h2>
+    <p>We'll come to your home, look at your windows, and tell you exactly what hardware works — free of charge.</p>
+  </div>
+  <div class="cta-banner-btns">
+    <a class="btn-dark" href="tel:6097421720">(609) 742-1720 &middot; 24/7</a>
+    <a class="btn-outline" href="consult.html">Book free consultation</a>
+  </div>
+</div>
+
+<footer class="site-footer" id="site-footer"></footer>
+<script src="../js/shared.js"></script>
+<script>
+renderNav('Hardware'); renderFooter(false);
+
+var hwState = { type:'', decType:'', brand:'' };
+
+function selectHwType(type) {
+  hwState.type = type;
+  document.getElementById('card-decorative').classList.toggle('sel', type === 'decorative');
+  document.getElementById('card-functional').classList.toggle('sel', type === 'functional');
+  document.getElementById('sec-decorative').classList.toggle('on', type === 'decorative');
+  document.getElementById('sec-functional').classList.toggle('on', type === 'functional');
+  document.getElementById('sec-quote').classList.add('on');
+  document.getElementById('quote-step-label').textContent = type === 'functional' ? 'Step 3' : 'Step 4';
+  document.getElementById('sec-quote').scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+function selectDecType(el, val) {
+  document.querySelectorAll('#dec-type-cards .opt-card').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  hwState.decType = val;
+  document.getElementById('dec-brand-step').style.display = 'block';
+}
+
+function selectBrand(el, val) {
+  document.querySelectorAll('#dec-brand-cards .brand-card').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  hwState.brand = val;
+}
+
+function submitHardware() {
+  var name  = document.getElementById('hw-name').value.trim();
+  var phone = document.getElementById('hw-phone').value.trim();
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  var delivery = getOpt('grp-del-hw');
+  var body = 'HARDWARE QUOTE REQUEST\n\n'
+    + 'Name: ' + name + '\nPhone: ' + phone
+    + '\nEmail: ' + (document.getElementById('hw-email').value.trim() || '—')
+    + '\nAddress: ' + (document.getElementById('hw-address').value.trim() || '—') + '\n\n'
+    + 'Hardware type: ' + (hwState.type === 'decorative' ? 'Decorative' : 'Non-decorative / Traverse') + '\n'
+    + (hwState.decType ? 'Style: ' + hwState.decType + '\n' : '')
+    + (hwState.brand   ? 'Brand preference: ' + hwState.brand + '\n' : '')
+    + 'Qty (windows): ' + document.getElementById('hw-qty').value + '\n'
+    + 'Width: ' + document.getElementById('hw-width').value + '\n'
+    + 'Finish: ' + document.getElementById('hw-finish').value + '\n'
+    + 'Delivery: ' + delivery + '\n\n'
+    + 'Notes:\n' + (document.getElementById('hw-notes').value.trim() || 'None');
+  window.location.href = 'mailto:blindznation@gmail.com'
+    + '?subject=' + encodeURIComponent('Hardware Quote — ' + name)
+    + '&body=' + encodeURIComponent(body);
+  document.getElementById('hw-form').style.display = 'none';
+  document.getElementById('hw-success').style.display = 'block';
+}
+</script>
+</body>
+</html>
