@@ -489,6 +489,11 @@
 <script src="../js/shared.js"></script>
 <script>
 renderNav('Soft treatments'); renderFooter(false);
+// Auto-switch to Roman tab if URL contains ?tab=roman
+if (new URLSearchParams(window.location.search).get('tab') === 'roman') {
+  var romanBtn = document.querySelector('.type-tab:nth-child(2)');
+  if (romanBtn) switchTab('roman', romanBtn);
+}
 
 // ── Tab switcher ──────────────────────────────────────────
 function switchTab(id, btn) {

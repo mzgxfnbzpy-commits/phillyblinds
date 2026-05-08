@@ -99,6 +99,10 @@ Every page MUST include:
 | pages/about.html | About | Family story, team, services, service areas |
 | pages/fabric-calculator.html | Fabric calculator | Drapery, Roman, Cornice |
 | pages/shades.html | All shades & blinds | Per-product configurator; roller has fascia/cassette/chain/endcap options; cellular has lift direction (BU/TDBU) + operating system separate; fabric/color placeholder; all quote forms â†’ mailto; delivery section on every form |
+| pages/soft-treatments.html | **Soft Treatments (NEW)** | Combines drapery + roman shades in 2 tabs; 6 pleat SVGs; 3 roman styles; fabric/lining/motor/delivery; cross-sell hardware; mailto |
+| pages/hardware.html | **Drapery Hardware (NEW)** | Decorative vs non-decorative flow; brand selector (Select/Orion/Kirsch/Paris Texas/Finial Co.); Architrac info; cross-sell drapery; delivery; mailto |
+| pages/norman-sheers.html | **Norman Sheers (NEW)** | 10-step PerfectSheer + SmartDrape configurator; live validation rules; fabric swatches; valance/splice; accessories; door rules; sticky spec panel; custom quote triggers |
+| pages/roman-shades.html | Roman Shades | REDIRECTS to soft-treatments.html?tab=roman |
 | pages/roman-shades.html | Custom Roman Shades | 3 styles, fabric paths, instant pricing; renamed to Custom Roman Shades; mailto + delivery |
 | pages/drapery.html | Custom drapery & hardware | 6 pleat styles, hardware selector (type/brand/diameter/finish/finial/rings), motorization â†’ notes only; mailto + delivery |
 | pages/shutters.html | Plantation shutters | Norman shutters: Normandy, Woodlore, Woodlore Plus (Brightwood removed); louver/frame options; mailto + delivery |
@@ -229,4 +233,5 @@ Update it when completing tasks â€” mark items done.
 *This file is the single source of truth. If you change anything on the project, update this file.*
 *Last agent to work on this: Claude Code â€” May 3, 2026*
 *Last session summary: Header redesign (identity bar, LLC + both brands); motorization rules (Norman=Norman only, Custom=any brand); delivery/pickup section on all quote forms; mailto submit on all forms to blindznation@gmail.com; drapery motor â†’ notes only; roller hardware options (fascia, chain, end caps); cellular lift direction split from operating system; fabric/color placeholder for roller + cellular.*
+
 
