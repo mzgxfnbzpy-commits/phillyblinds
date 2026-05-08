@@ -53,6 +53,7 @@
   <div class="gtab on" onclick="showG('drapes',this)">Custom draperies (60)</div>
   <div class="gtab" onclick="showG('roman',this)">Roman shades (11)</div>
   <div class="gtab" onclick="showG('roller',this)">Roller shades (4)</div>
+  <div class="gtab" onclick="showG('upholstery',this)">Wall upholstery (30)</div>
   <div class="gtab" onclick="showG('videos',this)">Videos (14)</div>
 </div>
 
@@ -65,6 +66,9 @@
   </div>
   <div id="panel-roller" class="panel">
     <div class="pgrid" id="grid-roller"></div>
+  </div>
+  <div id="panel-upholstery" class="panel">
+    <div class="pgrid" id="grid-upholstery"></div>
   </div>
   <div id="panel-videos" class="panel">
     <div class="pgrid" id="grid-videos"></div>
@@ -147,6 +151,7 @@ function openPhoto(i, gridId){
     photoLists['grid-drapes']=drapeFiles.map(f=>'../images/portfolio/'+f);
     photoLists['grid-roman']=romanFiles.map(f=>'../images/portfolio/'+f);
     photoLists['grid-roller']=rollerFiles.map(f=>'../images/portfolio/'+f);
+    photoLists['grid-upholstery']=upholsteryFiles.map(f=>'../images/upholstery/'+f);
   }
   currentList=photoLists[gridId]; currentIdx=i; currentType='photo';
   document.getElementById('lb-img').style.display='block';
@@ -180,9 +185,12 @@ function showG(id,el){
   el.classList.add('on');
 }
 
+const upholsteryFiles=['IMG_2161.JPEG','IMG_2162.JPEG','IMG_2163.JPEG','IMG_2164.JPEG','IMG_2165.JPEG','IMG_2165-1.JPEG','IMG_2165-2.JPEG','IMG_2166.JPEG','IMG_2166-1.JPEG','IMG_2166-2.JPEG','IMG_2167.JPEG','IMG_2167-1.JPEG','IMG_2168.JPEG','IMG_2168-1.JPEG','IMG_2169.JPEG','IMG_2169-1.JPEG','IMG_2170.JPEG','IMG_2170-1.JPEG','IMG_2171.JPEG','IMG_2172.JPEG','IMG_2172-1.JPEG','IMG_2173.JPEG','IMG_2173-1.JPEG','IMG_2174.JPEG','IMG_2174-1.JPEG','IMG_2175.JPEG','IMG_2175-1.JPEG','IMG_2176.JPEG','IMG_2176-1.JPEG','IMG_2178.JPEG'];
+
 buildPhotoGrid('grid-drapes', drapeFiles, '../images/portfolio/');
 buildPhotoGrid('grid-roman', romanFiles, '../images/portfolio/');
 buildPhotoGrid('grid-roller', rollerFiles, '../images/portfolio/');
+buildPhotoGrid('grid-upholstery', upholsteryFiles, '../images/upholstery/');
 buildVideoGrid();
 </script>
 </body>
