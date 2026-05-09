@@ -483,11 +483,25 @@
         </div>
         <div class="opt-label-bar"><div class="opt-name">Arch / Specialty Shape</div><div class="opt-desc">Custom arched, oval, or other shapes — always custom quote</div></div>
       </div>
+      <div class="opt-card" onclick="selectRomanStyle(this,'Vignette®')">
+        <div class="opt-art" style="height:130px">
+          <img src="../images/thumbnails/Vignette® 1.JPEG" alt="Hunter Douglas Vignette Roman Shades" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block">
+        </div>
+        <div class="opt-label-bar"><div class="opt-name">Vignette®</div><div class="opt-desc">Hunter Douglas — always custom quote</div></div>
+      </div>
     </div>
+
+    <!-- VIGNETTE NOTICE (shows when Vignette® selected) -->
+    <div id="vignette-notice" style="display:none;margin-top:14px;background:var(--espresso);border-radius:12px;padding:18px 20px">
+      <div style="font-size:10px;letter-spacing:2px;color:var(--gold);font-weight:600;text-transform:uppercase;margin-bottom:8px">Hunter Douglas Vignette®</div>
+      <div style="font-size:13px;color:var(--cream);margin-bottom:6px;font-weight:500">Modern Roman Shades — always custom quoted</div>
+      <div style="font-size:12px;color:var(--text-dark);line-height:1.7">Vignette® Modern Roman Shades are a Hunter Douglas product and require a custom quote. We'll discuss fabric collections, lift system, and PowerView® motorization options during your consultation.</div>
+    </div>
+
   </div>
 
   <!-- STEP 2: FABRIC -->
-  <div class="step">
+  <div class="step" id="step-roman-2">
     <div class="step-label">Step 2</div>
     <div class="step-title">Fabric</div>
     <div class="fabric-cards" id="roman-fabric-cards">
@@ -507,7 +521,7 @@
   </div>
 
   <!-- STEP 3: LINING -->
-  <div class="step">
+  <div class="step" id="step-roman-3">
     <div class="step-label">Step 3</div>
     <div class="step-title">Lining</div>
     <div class="opt-row" id="grp-roman-lining" style="margin-top:12px">
@@ -518,7 +532,7 @@
   </div>
 
   <!-- STEP 4: MOTORIZATION -->
-  <div class="step">
+  <div class="step" id="step-roman-4">
     <div class="step-label">Step 4</div>
     <div class="step-title">Motorization <span style="font-size:12px;color:#999;font-weight:400">(optional)</span></div>
     <div class="opt-row" id="grp-roman-motor" style="margin-top:12px">
@@ -529,7 +543,7 @@
   </div>
 
   <!-- STEP 5: DIMENSIONS + PRICE -->
-  <div class="step">
+  <div class="step" id="step-roman-5">
     <div class="step-label">Step 5</div>
     <div class="step-title">Size &amp; instant price</div>
     <div class="step-sub">Enter your window dimensions for an instant estimate. Roman shades are custom quoted — this gives you a starting figure.</div>
@@ -658,7 +672,15 @@ function selectRomanStyle(el, val) {
   document.querySelectorAll('#roman-style-cards .opt-card').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
   romanState.style = val;
-  calcRoman();
+  var isVignette = val === 'Vignette®';
+  var notice = document.getElementById('vignette-notice');
+  if (notice) notice.style.display = isVignette ? 'block' : 'none';
+  // Hide/show fabric + lining + motor + configurator steps for Vignette
+  ['step-roman-2','step-roman-3','step-roman-4','step-roman-5'].forEach(function(id){
+    var el2 = document.getElementById(id);
+    if (el2) el2.style.display = isVignette ? 'none' : '';
+  });
+  if (!isVignette) calcRoman();
 }
 function selectFabric(tab, el, val) {
   var container = tab === 'drape' ? '#drape-fabric-cards' : '#roman-fabric-cards';
