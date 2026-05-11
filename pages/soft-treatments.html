@@ -45,8 +45,8 @@
 .opt-card.sel{border:2px solid var(--gold);box-shadow:0 2px 16px rgba(45,224,193,.2)}
 .opt-card.sel .opt-label-bar{background:var(--gold)}
 .opt-card.sel .opt-name,.opt-card.sel .opt-desc{color:var(--espresso)}
-.opt-art{height:130px;overflow:hidden;background:#F8F4EE;display:flex;align-items:center;justify-content:center}
-.opt-art img{width:100%;height:100%;object-fit:cover;display:block}
+.opt-art{height:130px;overflow:hidden;background:#F8F4EE;display:flex;align-items:center;justify-content:center;position:relative}
+.opt-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
 .opt-label-bar{background:#f2ede6;padding:11px 13px;transition:background .15s}
 .opt-name{font-size:13px;font-weight:500;color:#222;margin-bottom:1px}
 .opt-desc{font-size:11px;color:#888;line-height:1.4}
@@ -215,8 +215,8 @@
         <div class="opt-label-bar"><div class="opt-name">Grommet / Eyelet</div><div class="opt-desc">Metal rings slide directly on rod</div></div>
       </div>
       <div class="opt-card" onclick="selectPleat(this,'Barrel Pleat')">
-        <div class="opt-art" style="height:130px">
-          <img src="../images/pleat-styles/barrel-pleat.png" alt="Barrel pleat drapery" style="width:100%;height:100%;object-fit:cover;display:block">
+        <div class="opt-art">
+          <img src="../images/pleat-styles/barrel-pleat.png" alt="Barrel pleat drapery">
         </div>
         <div class="opt-label-bar"><div class="opt-name">Barrel Pleat</div><div class="opt-desc">Rounded cartridge-style, structured look</div></div>
       </div>
@@ -254,8 +254,8 @@
           <div class="opt-label-bar"><div class="opt-name">2-Prong Tack Top</div><div class="opt-desc">Classic 2-prong, tack at heading</div></div>
         </div>
         <div class="opt-card" id="pp-top-3" onclick="selectPinchDetail(this,'Pinch Pleat — 3-Prong Tack Top')">
-          <div class="opt-art" style="height:110px">
-            <img src="../images/pleat-styles/pinch-3prong-tack-top.png" alt="3-prong tack top" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
+          <div class="opt-art">
+            <img src="../images/pleat-styles/pinch-3prong-tack-top.png" alt="3-prong tack top" style="object-position:center top">
           </div>
           <div class="opt-label-bar"><div class="opt-name">3-Prong Tack Top</div><div class="opt-desc">Fuller, richer triple pleat at heading</div></div>
         </div>
@@ -485,7 +485,7 @@
       </div>
       <div class="opt-card" onclick="selectRomanStyle(this,'Vignette®')">
         <div class="opt-art" style="height:130px">
-          <img src="../images/thumbnails/vignette-living-room.JPEG" alt="Hunter Douglas Vignette Roman Shades" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block">
+          <img src="../images/thumbnails/vignette-living-room.JPEG" alt="Hunter Douglas Vignette Roman Shades" style="object-position:center 40%">
         </div>
         <div class="opt-label-bar"><div class="opt-name">Vignette®</div><div class="opt-desc">Hunter Douglas — always custom quote</div></div>
       </div>
