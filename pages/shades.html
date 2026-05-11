@@ -235,14 +235,14 @@
           </div>
         </div>
 
-        <div class="product-card" id="card-fwb" onclick="selectProduct('fwb','Norman Faux Wood Blinds',false)">
+        <div class="product-card" id="card-fwb" onclick="selectBlindsType()">
           <div class="product-img-photo">
-            <img src="../images/thumbnails/faux-blinds-bay-window.JPEG" alt="Faux Wood Blinds" loading="lazy" style="object-position:center 40%">
+            <img src="../images/thumbnails/faux-blinds-bay-window.JPEG" alt="Wood Blinds" loading="lazy" style="object-position:center 40%">
             <div class="motor-chip">+ motorized</div>
           </div>
           <div class="product-body">
-            <div class="product-name">Faux Wood Blinds</div>
-            <div class="product-sub">Moisture-resistant PVC slats</div>
+            <div class="product-name">Wood Blinds</div>
+            <div class="product-sub">Faux wood or real wood — your choice</div>
             <span class="badge badge-quote">Custom quote</span>
           </div>
         </div>
@@ -297,7 +297,7 @@
 
         <div class="product-card" id="card-luminette" onclick="selectProduct('luminette','Luminette Privacy Sheers',false)">
           <div class="product-img-photo">
-            <img src="../images/thumbnails/luminette-install.JPEG" alt="Luminette Privacy Sheers" loading="lazy">
+            <img src="../images/thumbnails/luminette-new.JPEG" alt="Luminette Privacy Sheers" loading="lazy">
             <div class="motor-chip">+ motorized</div>
           </div>
           <div class="product-body">
@@ -1408,6 +1408,35 @@
     </div>
   </div><!-- /hd-config -->
 
+  <!-- BLINDS TYPE SELECTOR (shown first when Wood Blinds card clicked) -->
+  <div class="configurator" id="blinds-type-config">
+    <div class="config-head">
+      <button class="config-back" onclick="clearProduct()">&#8592; Change product</button>
+      <div class="config-title">Wood Blinds</div>
+      <span class="badge badge-quote">Custom quote</span>
+    </div>
+    <div class="step-block">
+      <div class="step-label">Choose type</div>
+      <div class="step-title">Faux wood or real wood?</div>
+      <div class="brand-row" style="margin-top:12px">
+        <button class="brand-btn" onclick="selectBlindsSubtype('fwb')" style="flex:1;min-width:0">
+          <div class="product-img-photo" style="height:140px;border-radius:8px;overflow:hidden;margin-bottom:10px">
+            <img src="../images/thumbnails/faux-blinds-bay-window.JPEG" alt="Faux Wood Blinds" style="width:100%;height:100%;object-fit:cover;object-position:center 40%">
+          </div>
+          <span class="brand-btn-name">Faux Wood Blinds</span>
+          <span class="brand-btn-sub">Moisture-resistant PVC · Norman eWood · great for kitchens &amp; baths</span>
+        </button>
+        <button class="brand-btn" onclick="selectBlindsSubtype('rwb')" style="flex:1;min-width:0">
+          <div class="product-img-photo" style="height:140px;border-radius:8px;overflow:hidden;margin-bottom:10px">
+            <img src="../images/thumbnails/real wood blinds.JPEG" alt="Real Wood Blinds" style="width:100%;height:100%;object-fit:cover;object-position:center 30%">
+          </div>
+          <span class="brand-btn-name">Real Wood Blinds</span>
+          <span class="brand-btn-sub">Genuine hardwood · rich stained finishes · classic look</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- NORMAN FAUX WOOD BLINDS CONFIG -->
   <div class="configurator" id="fwb-config">
     <div class="config-head">
@@ -1488,6 +1517,70 @@
       <p>We'll follow up within a few hours with Norman color options and pricing. Call <strong>(609) 742-1720</strong> for anything urgent — available 24/7.</p>
     </div>
   </div><!-- /fwb-config -->
+
+  <!-- REAL WOOD BLINDS CONFIG -->
+  <div class="configurator" id="rwb-config">
+    <div class="config-head">
+      <button class="config-back" onclick="showBlindsTypeSelector()">&#8592; Back to blinds type</button>
+      <div class="config-title">Real Wood Blinds</div>
+      <span class="badge badge-quote">Custom quote</span>
+    </div>
+    <div style="background:var(--gold-mid);border:1px solid #E8DCC8;border-radius:10px;padding:14px 18px;margin-bottom:20px">
+      <div style="font-size:12px;font-weight:600;color:#0D4A42;margin-bottom:4px">Real Wood Blinds — custom quoted</div>
+      <div style="font-size:12px;color:#0D4A42;line-height:1.6">Genuine hardwood slat blinds in rich stained and painted finishes. Available in 2″ and 2½″ slats. Beautiful natural grain — ideal for living rooms, offices, and traditional interiors.</div>
+    </div>
+    <div class="step-title" style="font-size:12px;margin-bottom:8px">Slat size</div>
+    <div class="opt-row" id="rwb-grp-slat">
+      <button class="opt-btn sel" onclick="selOpt(this,'rwb-grp-slat')">2&Prime; slats</button>
+      <button class="opt-btn" onclick="selOpt(this,'rwb-grp-slat')">2&frac12;&Prime; slats</button>
+    </div>
+    <div class="step-title" style="font-size:12px;margin:14px 0 8px">Wood finish</div>
+    <div class="opt-row" id="rwb-grp-finish">
+      <button class="opt-btn sel" onclick="selOpt(this,'rwb-grp-finish')">Natural / Light</button>
+      <button class="opt-btn" onclick="selOpt(this,'rwb-grp-finish')">Medium stain</button>
+      <button class="opt-btn" onclick="selOpt(this,'rwb-grp-finish')">Dark walnut</button>
+      <button class="opt-btn" onclick="selOpt(this,'rwb-grp-finish')">Painted white</button>
+      <button class="opt-btn" onclick="selOpt(this,'rwb-grp-finish')">Painted off-white</button>
+      <button class="opt-btn" onclick="selOpt(this,'rwb-grp-finish')">Not sure — bring samples</button>
+    </div>
+    <div class="step-title" style="font-size:12px;margin:14px 0 8px">Operating system</div>
+    <div class="opt-row" id="rwb-grp-op">
+      <button class="opt-btn sel" onclick="selOpt(this,'rwb-grp-op')">Cord &amp; tilt wand</button>
+      <button class="opt-btn" onclick="selOpt(this,'rwb-grp-op')">Cordless</button>
+      <button class="opt-btn" onclick="selOpt(this,'rwb-grp-op')">Motorized</button>
+    </div>
+    <div class="step-title" style="font-size:12px;margin:14px 0 8px">Mount type</div>
+    <div class="opt-row" id="rwb-grp-mount">
+      <button class="opt-btn sel" onclick="selOpt(this,'rwb-grp-mount')">Inside mount</button>
+      <button class="opt-btn" onclick="selOpt(this,'rwb-grp-mount')">Outside mount</button>
+    </div>
+    <div class="dim-row" style="margin-top:14px">
+      <div class="form-group"><label>Width (inches)</label><input type="number" id="rwb-width" min="10" max="96" step="0.5" placeholder="e.g. 36"></div>
+      <div class="form-group"><label>Height (inches)</label><input type="number" id="rwb-height" min="12" max="96" step="0.5" placeholder="e.g. 48"></div>
+    </div>
+    <div class="form-group"><label>Quantity</label><input type="number" id="rwb-qty" min="1" max="20" value="1"></div>
+    <hr class="price-divider" style="margin:18px 0">
+    <div class="form-row">
+      <div class="form-group"><label>Your name *</label><input type="text" id="rwb-name" placeholder="Jane Smith"></div>
+      <div class="form-group"><label>Phone *</label><input type="tel" id="rwb-phone" placeholder="(215) 555-0100"></div>
+    </div>
+    <div class="form-group"><label>Email</label><input type="email" id="rwb-email" placeholder="jane@example.com"></div>
+    <div class="form-group"><label>Notes</label><textarea id="rwb-notes" placeholder="e.g. specific finish, existing hardware, special requirements"></textarea></div>
+    <div class="delivery-section">
+      <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+      <div class="opt-row" id="grp-del-rwb">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-del-rwb');document.getElementById('del-rwb-s').style.display='block';document.getElementById('del-rwb-p').style.display='none'">Ship to me</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-del-rwb');document.getElementById('del-rwb-s').style.display='none';document.getElementById('del-rwb-p').style.display='block'">I'll pick up</button>
+      </div>
+      <div id="del-rwb-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately.</div></div>
+      <div id="del-rwb-p" class="delivery-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.</div>
+    </div>
+    <button class="btn-gold" onclick="submitRWBForm()" style="width:100%;padding:13px;margin-top:4px">Request real wood blinds quote &rarr;</button>
+    <div class="success-state" id="rwb-success">
+      <h3>Quote request sent!</h3>
+      <p>We'll follow up within a few hours with finish samples and pricing. Call <strong>(609) 742-1720</strong> for anything urgent — available 24/7.</p>
+    </div>
+  </div><!-- /rwb-config -->
 
 </div><!-- /configurator-section -->
 
@@ -2699,6 +2792,57 @@ function fwbAdjQty(delta) {
   var v = parseInt(inp.value) || 1;
   v = Math.min(20, Math.max(1, v + delta));
   inp.value = v;
+}
+// ─── Wood Blinds type selector ───────────────────────────────
+function selectBlindsType() {
+  document.querySelectorAll('.product-card').forEach(function(c){c.classList.remove('selected');});
+  var card = document.getElementById('card-fwb');
+  if (card) card.classList.add('selected');
+  currentProduct = 'fwb';
+  var sec = document.getElementById('configurator-section');
+  sec.style.display = 'block';
+  document.getElementById('instant-config').classList.remove('open');
+  document.getElementById('hd-config').classList.remove('open');
+  document.getElementById('fwb-config').classList.remove('open');
+  document.getElementById('rwb-config').classList.remove('open');
+  document.getElementById('blinds-type-config').classList.add('open');
+  sec.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function selectBlindsSubtype(type) {
+  document.getElementById('blinds-type-config').classList.remove('open');
+  if (type === 'fwb') {
+    document.getElementById('fwb-config').classList.add('open');
+  } else {
+    document.getElementById('rwb-config').classList.add('open');
+  }
+}
+function showBlindsTypeSelector() {
+  document.getElementById('fwb-config').classList.remove('open');
+  document.getElementById('rwb-config').classList.remove('open');
+  document.getElementById('blinds-type-config').classList.add('open');
+}
+function submitRWBForm() {
+  var name  = document.getElementById('rwb-name').value.trim();
+  var phone = document.getElementById('rwb-phone').value.trim();
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  var slat   = document.querySelector('#rwb-grp-slat .opt-btn.sel')?.textContent.trim() || '';
+  var finish = document.querySelector('#rwb-grp-finish .opt-btn.sel')?.textContent.trim() || '';
+  var op     = document.querySelector('#rwb-grp-op .opt-btn.sel')?.textContent.trim() || '';
+  var mount  = document.querySelector('#rwb-grp-mount .opt-btn.sel')?.textContent.trim() || '';
+  var w      = document.getElementById('rwb-width').value;
+  var h      = document.getElementById('rwb-height').value;
+  var qty    = document.getElementById('rwb-qty').value;
+  var del    = document.querySelector('#grp-del-rwb .opt-btn.sel')?.textContent.trim() || '';
+  var notes  = document.getElementById('rwb-notes').value.trim();
+  var email  = document.getElementById('rwb-email').value.trim();
+  var body = 'Real Wood Blinds Quote Request\n\n'
+    + 'Name: ' + name + '\nPhone: ' + phone + '\nEmail: ' + (email||'—') + '\n\n'
+    + 'Slat size: ' + slat + '\nFinish: ' + finish + '\nOperating system: ' + op
+    + '\nMount: ' + mount + '\nWidth: ' + (w||'—') + '"\nHeight: ' + (h||'—') + '"\nQty: ' + qty
+    + '\nDelivery: ' + del + '\n\nNotes: ' + (notes||'None');
+  window.location.href = 'mailto:blindznation@gmail.com?subject=Real Wood Blinds Quote — ' + encodeURIComponent(name)
+    + '&body=' + encodeURIComponent(body);
+  document.getElementById('rwb-success').style.display = 'block';
 }
 function submitFWBForm() {
   var name  = document.getElementById('fwb-name').value.trim();
