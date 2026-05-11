@@ -48,8 +48,8 @@
 .opt-card.sel{border:2px solid var(--gold);box-shadow:0 2px 12px rgba(45,224,193,.15)}
 .opt-card.sel .opt-label-bar{background:var(--gold)}
 .opt-card.sel .opt-name,.opt-card.sel .opt-desc{color:var(--espresso)}
-.opt-art{height:110px;background:#F8F4EE;display:flex;align-items:center;justify-content:center}
-.opt-art img{width:100%;height:100%;object-fit:cover;display:block}
+.opt-art{height:110px;background:#F8F4EE;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.opt-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
 .opt-label-bar{background:#f2ede6;padding:10px 12px;transition:background .15s}
 .opt-name{font-size:13px;font-weight:500;color:#222;margin-bottom:1px}
 .opt-desc{font-size:11px;color:#888;line-height:1.4}
