@@ -231,7 +231,7 @@ Update it when completing tasks â€” mark items done.
 ---
 
 *This file is the single source of truth. If you change anything on the project, update this file.*
-*Last agent to work on this: Claude Code â€” May 3, 2026*
-*Last session summary: Header redesign (identity bar, LLC + both brands); motorization rules (Norman=Norman only, Custom=any brand); delivery/pickup section on all quote forms; mailto submit on all forms to blindznation@gmail.com; drapery motor â†’ notes only; roller hardware options (fascia, chain, end caps); cellular lift direction split from operating system; fabric/color placeholder for roller + cellular.*
+*Last agent to work on this: Claude Code â€” May 11, 2026*
+*Last session summary: Full site audit â€” 0 broken links, 0 broken images, all 765 portfolio images verified, all nav/footer/meta/phone present on every page. Replaced 6 remaining SVG placeholders in soft-treatments.html with real photos (3-Prong Tack Bottom, Flat Roman, Hobbled Roman, Relaxed Roman, TDBU, Arch/Specialty). All pleat and roman style cards now use real photos. Chatbot needs ANTHROPIC_API_KEY set in Vercel env vars to go live.*
 
 
