@@ -295,6 +295,18 @@
           </div>
         </div>
 
+        <div class="product-card" id="card-vignette" onclick="selectProduct('vignette','Vignette® Modern Roman Shades',false)">
+          <div class="product-img-photo">
+            <img src="../images/thumbnails/vignette-dining-room.JPEG" alt="Hunter Douglas Vignette Roman Shades" loading="lazy" style="object-position:center 30%">
+            <div class="motor-chip">+ motorized</div>
+          </div>
+          <div class="product-body">
+            <div class="product-name">Vignette® Roman Shades</div>
+            <div class="product-sub">Hunter Douglas — modern roman</div>
+            <span class="badge badge-quote">Custom quote</span>
+          </div>
+        </div>
+
         <div class="product-card" id="card-luminette" onclick="selectProduct('luminette','Luminette Privacy Sheers',false)">
           <div class="product-img-photo">
             <img src="../images/thumbnails/luminette-new.JPEG" alt="Luminette Privacy Sheers" loading="lazy">
@@ -1368,6 +1380,7 @@
         <select id="hd-product-sel">
           <option value="silhouette">Silhouette Shadings</option>
           <option value="pirouette">Pirouette Shadings</option>
+          <option value="vignette">Vignette® Modern Roman Shades</option>
           <option value="luminette">Luminette Privacy Sheers</option>
           <option value="both">Multiple / not sure yet</option>
         </select>
@@ -1783,6 +1796,7 @@ function selectProduct(productId, productName, isInstant) {
     if (productId === 'silhouette')  hdSel.value = 'silhouette';
     else if (productId === 'pirouette') hdSel.value = 'pirouette';
     else if (productId === 'luminette') hdSel.value = 'luminette';
+    else if (productId === 'vignette')  hdSel.value = 'vignette';
   }
 
   sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
