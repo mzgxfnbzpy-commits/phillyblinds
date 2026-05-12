@@ -192,11 +192,11 @@
 
   <div class="product-sections" id="select-product">
 
-    <!-- ══ HARD WINDOW TREATMENTS ══════════════════════════════════ -->
+    <!-- ══ SECTION 1: HARD WINDOW TREATMENTS ════════════════════════ -->
     <section class="hard-treatment-section">
       <div class="treatment-section-header">
         <h2>Hard Window Treatments</h2>
-        <p>Shades, blinds &amp; motorized systems — configure &amp; price online</p>
+        <p>Roller shades, cellular shades &amp; blinds — configure &amp; price online</p>
       </div>
       <div class="product-grid" id="product-grid">
 
@@ -209,17 +209,6 @@
             <div class="product-name">Roller Shades</div>
             <div class="product-sub">Solar, light filtering &amp; blackout</div>
             <span class="badge badge-instant">Instant price</span>
-          </div>
-        </div>
-
-        <div class="product-card" id="card-exterior" onclick="selectProduct('exterior','Exterior Roller Shades',false)">
-          <div class="product-img-photo">
-            <img src="../images/thumbnails/exterior-roller-shade.JPEG" alt="Exterior Roller Shades" loading="lazy" style="object-position:center 20%">
-          </div>
-          <div class="product-body">
-            <div class="product-name">Exterior Roller Shades</div>
-            <div class="product-sub">Deck, patio &amp; porch sun control</div>
-            <span class="badge badge-quote">Custom quote</span>
           </div>
         </div>
 
@@ -247,6 +236,28 @@
           </div>
         </div>
 
+        <div class="product-card" id="card-exterior" onclick="selectProduct('exterior','Exterior Roller Shades',false)">
+          <div class="product-img-photo">
+            <img src="../images/thumbnails/exterior-roller-shade.JPEG" alt="Exterior Roller Shades" loading="lazy" style="object-position:center 20%">
+          </div>
+          <div class="product-body">
+            <div class="product-name">Exterior Roller Shades</div>
+            <div class="product-sub">Deck, patio &amp; porch sun control</div>
+            <span class="badge badge-quote">Custom quote</span>
+          </div>
+        </div>
+
+      </div><!-- /product-grid hard -->
+    </section><!-- /hard-treatment-section -->
+
+    <!-- ══ SECTION 2: SPECIALTY SHADES ══════════════════════════════ -->
+    <section class="soft-treatment-section">
+      <div class="treatment-section-header">
+        <h2>Specialty Shades</h2>
+        <p>Zebra, woven wood &amp; Hunter Douglas specialty systems</p>
+      </div>
+      <div class="product-grid">
+
         <div class="product-card" id="card-zebra" onclick="selectProduct('zebra','Zebra Shades',true)">
           <div class="product-img-photo">
             <img src="../images/thumbnails/ZEBRA SHADES.JPEG" alt="Zebra Shades" loading="lazy">
@@ -259,15 +270,15 @@
           </div>
         </div>
 
-        <div class="product-card" id="card-woven" onclick="selectProduct('woven','Woven Wood / Natural Shades',true)">
+        <div class="product-card" id="card-pirouette" onclick="selectProduct('pirouette','Pirouette Shadings',false)">
           <div class="product-img-photo">
-            <img src="../images/thumbnails/WOOVEN WOOD.JPEG" alt="Woven Wood Shades" loading="lazy">
+            <img src="../images/thumbnails/pirouette-install.JPEG" alt="Pirouette Shadings" loading="lazy">
             <div class="motor-chip">+ motorized</div>
           </div>
           <div class="product-body">
-            <div class="product-name">Woven Wood Shades</div>
-            <div class="product-sub">Bamboo, rattan &amp; jute</div>
-            <span class="badge badge-instant">Instant price</span>
+            <div class="product-name">Pirouette Shadings</div>
+            <div class="product-sub">Hunter Douglas — structured vane</div>
+            <span class="badge badge-quote">Custom quote</span>
           </div>
         </div>
 
@@ -279,18 +290,6 @@
           <div class="product-body">
             <div class="product-name">Silhouette Shadings</div>
             <div class="product-sub">Hunter Douglas — soft vane</div>
-            <span class="badge badge-quote">Custom quote</span>
-          </div>
-        </div>
-
-        <div class="product-card" id="card-pirouette" onclick="selectProduct('pirouette','Pirouette Shadings',false)">
-          <div class="product-img-photo">
-            <img src="../images/thumbnails/pirouette-install.JPEG" alt="Pirouette Shadings" loading="lazy">
-            <div class="motor-chip">+ motorized</div>
-          </div>
-          <div class="product-body">
-            <div class="product-name">Pirouette Shadings</div>
-            <div class="product-sub">Hunter Douglas — structured vane</div>
             <span class="badge badge-quote">Custom quote</span>
           </div>
         </div>
@@ -307,6 +306,29 @@
           </div>
         </div>
 
+        <div class="product-card" id="card-woven" onclick="selectProduct('woven','Woven Wood / Natural Shades',true)">
+          <div class="product-img-photo">
+            <img src="../images/thumbnails/WOOVEN WOOD.JPEG" alt="Woven Wood Shades" loading="lazy">
+            <div class="motor-chip">+ motorized</div>
+          </div>
+          <div class="product-body">
+            <div class="product-name">Woven Wood Shades</div>
+            <div class="product-sub">Bamboo, rattan &amp; jute</div>
+            <span class="badge badge-instant">Instant price</span>
+          </div>
+        </div>
+
+      </div><!-- /product-grid specialty -->
+    </section><!-- /specialty shades -->
+
+    <!-- ══ SECTION 3: DRAPERY ALTERNATIVES ══════════════════════════ -->
+    <section class="hard-treatment-section" style="background:#e8f4f2">
+      <div class="treatment-section-header">
+        <h2>Drapery Alternatives</h2>
+        <p>Vertical sheer systems — the elegance of drapery with the function of a shade</p>
+      </div>
+      <div class="product-grid">
+
         <div class="product-card" id="card-luminette" onclick="selectProduct('luminette','Luminette Privacy Sheers',false)">
           <div class="product-img-photo">
             <img src="../images/thumbnails/luminette-new.JPEG" alt="Luminette Privacy Sheers" loading="lazy">
@@ -319,7 +341,6 @@
           </div>
         </div>
 
-        <!-- Norman SmartDrape CTA card -->
         <div class="product-card" id="card-smartdrape" onclick="window.location='norman-sheers.html'">
           <div class="product-img-photo" style="position:relative">
             <img src="../images/thumbnails/smart-drape-beach.png" alt="Norman SmartDrape" loading="lazy" style="object-position:center 20%">
@@ -332,8 +353,8 @@
           </div>
         </div>
 
-      </div><!-- /product-grid hard -->
-    </section><!-- /hard-treatment-section -->
+      </div><!-- /product-grid drapery-alt -->
+    </section><!-- /drapery alternatives -->
 
     <!-- ══ SOFT WINDOW TREATMENTS ═══════════════════════════════════ -->
     <section class="soft-treatment-section">
