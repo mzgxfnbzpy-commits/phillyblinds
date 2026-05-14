@@ -215,10 +215,10 @@
       <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:4px">Fullness</div>
       <div style="font-size:11px;color:#888;margin-bottom:10px;line-height:1.5">How full the panels are when closed. Higher fullness = more fabric = richer look.</div>
       <div class="opt-row" id="grp-drape-fullness">
-        <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('1.5')">1.5×</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('2.0')">2.0×</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('2.5')">2.5×</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('3.0')">3.0×</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('1.5');calcDrapePrice()">1.5×</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('2.0');calcDrapePrice()">2.0×</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('2.5');calcDrapePrice()">2.5×</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('3.0');calcDrapePrice()">3.0×</button>
       </div>
       <div id="drape-fullness-rec" style="display:none;margin-top:8px;font-size:12px;padding:8px 12px;border-radius:7px"></div>
     </div>
@@ -305,10 +305,10 @@
     <div class="step-label">Step 3</div>
     <div class="step-title">Lining</div>
     <div class="opt-row" id="grp-drape-lining" style="margin-top:12px">
-      <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-lining')">Unlined</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-drape-lining')">Lined</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-drape-lining')">Blackout lined</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-drape-lining')">Interlining (luxury)</button>
+      <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-lining');calcDrapePrice()">Unlined</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-drape-lining');calcDrapePrice()">Lined</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-drape-lining');calcDrapePrice()">Blackout lined</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-drape-lining');calcDrapePrice()">Interlining (luxury)</button>
     </div>
   </div>
 
@@ -335,13 +335,104 @@
         <div class="form-row">
           <div class="form-group">
             <label>Width</label>
-            <input type="number" id="d-exact-width" placeholder="84" min="12" max="300">
+            <input type="number" id="d-exact-width" placeholder="84" min="12" max="300" oninput="calcDrapePrice()">
             <div class="dim-unit">inches</div>
           </div>
           <div class="form-group">
             <label>Finished length</label>
-            <input type="number" id="d-exact-length" placeholder="96" min="12" max="240">
+            <input type="number" id="d-exact-length" placeholder="96" min="12" max="240" oninput="calcDrapePrice()">
             <div class="dim-unit">inches</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DRAPERY PRICE ESTIMATE BOX -->
+      <div id="drape-price-box" style="display:none;background:var(--espresso);border-radius:12px;padding:18px 20px;margin-bottom:14px">
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:12px">Fabrication estimate</div>
+        <div id="drape-price-rows"></div>
+        <div style="border-top:1px solid rgba(45,224,193,.3);margin-top:10px;padding-top:10px;display:flex;justify-content:space-between;align-items:baseline">
+          <span style="font-size:14px;font-weight:500;color:var(--cream)">Estimated total</span>
+          <span style="font-size:22px;font-weight:600;color:var(--gold)" id="drape-price-total">—</span>
+        </div>
+        <div style="font-size:10px;color:var(--text-faint);margin-top:8px;line-height:1.5" id="drape-price-note"></div>
+      </div>
+
+      <!-- CORNICE & VALANCE ADD-ONS -->
+      <div style="border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-bottom:14px">
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:10px">Add-ons (optional)</div>
+
+        <!-- Trim on drape panels -->
+        <div style="margin-bottom:12px">
+          <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:8px">Trim on panels <span style="font-weight:400;color:#999">— $15/linear ft</span></div>
+          <div style="font-size:11px;color:#888;margin-bottom:8px">Select which edges get trim. Mix and match.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">
+            <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff">
+              <input type="checkbox" class="drape-trim-check" data-loc="lead" onchange="calcDrapePrice();drapeShowTrimSupply()"> Lead edge only
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff">
+              <input type="checkbox" class="drape-trim-check" data-loc="lead-return" onchange="calcDrapePrice();drapeShowTrimSupply()"> Lead edge + return
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff">
+              <input type="checkbox" class="drape-trim-check" data-loc="top" onchange="calcDrapePrice();drapeShowTrimSupply()"> Top (above)
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff">
+              <input type="checkbox" class="drape-trim-check" data-loc="hem" onchange="calcDrapePrice();drapeShowTrimSupply()"> Hem (bottom)
+            </label>
+          </div>
+          <div class="opt-row" id="grp-drape-trim-supply" style="display:none">
+            <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-trim-supply')">We supply trim</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-drape-trim-supply')">I supply trim</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-drape-trim-supply')">Not sure</button>
+          </div>
+        </div>
+
+        <!-- Cornice -->
+        <div style="margin-bottom:12px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <span style="font-size:12px;font-weight:500;color:#333">Cornice <span style="font-weight:400;color:#999">— $50/linear ft, 4 ft min. (self-welt or trim same price)</span></span>
+            <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#555;cursor:pointer">
+              <input type="checkbox" id="d-cornice-check" onchange="drapeToggleAddon('cornice',this.checked)"> Add
+            </label>
+          </div>
+          <div id="d-cornice-opts" style="display:none;background:#fafaf8;border-radius:8px;padding:12px">
+            <div class="form-row">
+              <div class="form-group">
+                <label style="font-size:12px">Cornice width (inches)</label>
+                <input type="number" id="d-cornice-width" placeholder="84" min="48" max="360" oninput="calcDrapePrice()" style="font-size:14px">
+                <div class="dim-unit">inches (4 ft / 48" min.)</div>
+              </div>
+            </div>
+            <div style="margin-top:10px">
+              <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px">Trim on cornice? <span style="font-weight:400;color:#999">+$15/ft (self-welt or applied trim — same price)</span></div>
+              <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer">
+                <input type="checkbox" id="d-cornice-trim-check" onchange="calcDrapePrice()"> Yes — add trim to cornice
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Valance -->
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <span style="font-size:12px;font-weight:500;color:#333">Valance <span style="font-weight:400;color:#999">— $50/linear ft + fabric (self-welt or trim same price)</span></span>
+            <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#555;cursor:pointer">
+              <input type="checkbox" id="d-valance-check" onchange="drapeToggleAddon('valance',this.checked)"> Add
+            </label>
+          </div>
+          <div id="d-valance-opts" style="display:none;background:#fafaf8;border-radius:8px;padding:12px">
+            <div class="form-row">
+              <div class="form-group">
+                <label style="font-size:12px">Valance width (inches)</label>
+                <input type="number" id="d-valance-width" placeholder="84" min="12" max="360" oninput="calcDrapePrice()" style="font-size:14px">
+                <div class="dim-unit">inches</div>
+              </div>
+            </div>
+            <div style="margin-top:10px">
+              <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px">Trim on valance? <span style="font-weight:400;color:#999">+$15/ft (self-welt or applied trim — same price)</span></div>
+              <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer">
+                <input type="checkbox" id="d-valance-trim-check" onchange="calcDrapePrice()"> Yes — add trim to valance
+              </label>
+            </div>
           </div>
         </div>
       </div>
@@ -909,7 +1000,7 @@ function selectFabric(tab, el, val) {
   var container = tab === 'drape' ? '#drape-fabric-cards' : '#roman-fabric-cards';
   document.querySelectorAll(container + ' .fabric-card').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
-  if (tab === 'drape') drapeState.fabric = val;
+  if (tab === 'drape') { drapeState.fabric = val; calcDrapePrice(); }
   else romanState.fabric = val;
 }
 
@@ -940,6 +1031,142 @@ function calcRoman() {
   document.getElementById('rn-pb-motor').textContent = getOpt('grp-roman-op') || 'Manual';
   document.getElementById('rn-pb-total').textContent = '$' + total.toFixed(0);
   document.getElementById('rn-pb-min-note').style.display = perShade === RN_MIN ? 'block' : 'none';
+}
+
+// ── DRAPERY PRICING CALCULATOR ───────────────────────────────
+var D_RATE_UNLINED = 100;   // per cut/width
+var D_RATE_LINED   = 110;   // per cut/width
+var D_MIN_WIDTHS   = 2;
+var D_FABRIC_WIDTH = 54;    // standard fabric width (inches)
+var D_LEN_SURCHARGE = 15;   // per width per 10" over 100"
+var D_FABRIC_PER_YD = 30;
+var D_LINING_PER_YD = 6;
+var D_CORNICE_PER_FT = 50;
+var D_CORNICE_MIN_FT = 4;
+var D_VALANCE_PER_FT = 50;
+var D_TRIM_PER_FT   = 15;
+
+function calcDrapePrice() {
+  var w = parseFloat(document.getElementById('d-exact-width').value);
+  var h = parseFloat(document.getElementById('d-exact-length').value);
+  var box = document.getElementById('drape-price-box');
+  if (!box) return;
+  if (!w || !h) { box.style.display = 'none'; return; }
+
+  // Fullness factor
+  var isRipple = drapeState.pleat === 'Ripple Fold';
+  var fullness = 2.0;
+  if (!isRipple) {
+    var fBtn = document.querySelector('#grp-drape-fullness .opt-btn.sel');
+    fullness = fBtn ? (parseFloat(fBtn.textContent) || 2.0) : 2.0;
+  } else {
+    var rfBtn = document.querySelector('#grp-ripple-fullness .opt-btn.sel');
+    var rfPct = rfBtn ? parseFloat(rfBtn.textContent) : 80;
+    fullness = 1 + rfPct / 100; // 80% → 1.8×
+  }
+
+  // Widths
+  var numWidths = Math.max(D_MIN_WIDTHS, Math.ceil((w * fullness) / D_FABRIC_WIDTH));
+
+  // Lining
+  var lBtn = document.querySelector('#grp-drape-lining .opt-btn.sel');
+  var lining = lBtn ? lBtn.textContent.trim() : 'Unlined';
+  var isLined = lining !== 'Unlined';
+  var ratePerWidth = isLined ? D_RATE_LINED : D_RATE_UNLINED;
+
+  // Length surcharge (over 100")
+  var lenSurcharge = h > 100 ? Math.ceil((h - 100) / 10) * D_LEN_SURCHARGE : 0;
+  var effectiveRate = ratePerWidth + lenSurcharge;
+  var laborTotal = numWidths * effectiveRate;
+
+  // Fabric & lining (if we supply)
+  var fabricCost = 0; var liningCost = 0; var yardsTotal = 0;
+  if (drapeState.fabric === 'We supply the fabric') {
+    yardsTotal = Math.ceil(((h + 16) / 36) * numWidths * 10) / 10;
+    fabricCost = yardsTotal * D_FABRIC_PER_YD;
+    if (isLined) liningCost = yardsTotal * D_LINING_PER_YD;
+  }
+
+  // Cornice
+  var corniceTotal = 0;
+  var corniceCheck = document.getElementById('d-cornice-check');
+  if (corniceCheck && corniceCheck.checked) {
+    var cw = parseFloat(document.getElementById('d-cornice-width').value) || 0;
+    var cFt = Math.max(D_CORNICE_MIN_FT, cw / 12);
+    corniceTotal = Math.ceil(cFt) * D_CORNICE_PER_FT;
+    // Cornice trim
+    if (document.getElementById('d-cornice-trim-check') && document.getElementById('d-cornice-trim-check').checked) {
+      corniceTotal += Math.ceil(cFt) * D_TRIM_PER_FT;
+    }
+  }
+
+  // Valance
+  var valanceTotal = 0;
+  var valanceCheck = document.getElementById('d-valance-check');
+  if (valanceCheck && valanceCheck.checked) {
+    var vw = parseFloat(document.getElementById('d-valance-width').value) || 0;
+    var vFt = Math.max(1, vw / 12);
+    valanceTotal = Math.ceil(vFt) * D_VALANCE_PER_FT;
+    if (drapeState.fabric === 'We supply the fabric') {
+      var vYards = Math.ceil(vFt * 0.75); // rough valance yardage estimate
+      valanceTotal += vYards * D_FABRIC_PER_YD;
+    }
+    // Valance trim
+    if (document.getElementById('d-valance-trim-check') && document.getElementById('d-valance-trim-check').checked) {
+      valanceTotal += Math.ceil(vFt) * D_TRIM_PER_FT;
+    }
+  }
+
+  // Trim on drapes
+  var trimTotal = 0;
+  var trimChecks = document.querySelectorAll('.drape-trim-check:checked');
+  if (trimChecks.length) {
+    var trimFt = 0;
+    trimChecks.forEach(function(cb) {
+      var loc = cb.getAttribute('data-loc');
+      if (loc === 'lead')       trimFt += (h / 12) * (getOpt('grp-drape-panels') === 'Single panel' ? 1 : 2);
+      if (loc === 'lead-return')trimFt += ((h + 4) / 12) * (getOpt('grp-drape-panels') === 'Single panel' ? 1 : 2);
+      if (loc === 'top')        trimFt += w / 12;
+      if (loc === 'hem')        trimFt += w / 12;
+    });
+    trimTotal = Math.ceil(trimFt) * D_TRIM_PER_FT;
+  }
+
+  var grandTotal = laborTotal + fabricCost + liningCost + corniceTotal + valanceTotal + trimTotal;
+
+  // Render
+  var rows = '';
+  var row = function(lbl, val) {
+    rows += '<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-dark);padding:4px 0;border-bottom:.5px solid var(--border-dark)">' +
+      '<span>' + lbl + '</span><span style="color:var(--cream);font-weight:500">$' + val.toFixed(0) + '</span></div>';
+  };
+  row('Labor — ' + numWidths + ' widths × $' + effectiveRate + (lenSurcharge ? ' (incl. +$' + lenSurcharge + ' length)' : ''), laborTotal);
+  if (fabricCost)  row('Fabric est. (' + yardsTotal + ' yd × $' + D_FABRIC_PER_YD + ')', fabricCost);
+  if (liningCost)  row('Lining est. (' + yardsTotal + ' yd × $' + D_LINING_PER_YD + ')', liningCost);
+  if (trimTotal)   row('Trim', trimTotal);
+  if (corniceTotal)row('Cornice', corniceTotal);
+  if (valanceTotal)row('Valance', valanceTotal);
+
+  document.getElementById('drape-price-rows').innerHTML = rows;
+  document.getElementById('drape-price-total').textContent = '$' + grandTotal.toFixed(0);
+  document.getElementById('drape-price-note').textContent =
+    '$' + ratePerWidth + '/width ' + (isLined ? '(lined)' : '(unlined)') +
+    (lenSurcharge ? ', +$15/width per 10" over 100"' : '') +
+    (fabricCost ? '' : ' · Fabric & lining not included') +
+    ' · 2-width minimum · Final price confirmed at order.';
+  box.style.display = 'block';
+}
+
+function drapeToggleAddon(type, show) {
+  var el = document.getElementById('d-' + type + '-opts');
+  if (el) el.style.display = show ? 'block' : 'none';
+  calcDrapePrice();
+}
+function drapeShowTrimSupply() {
+  var anyChecked = document.querySelectorAll('.drape-trim-check:checked').length > 0;
+  var row = document.getElementById('grp-drape-trim-supply');
+  if (row) row.style.display = anyChecked ? 'flex' : 'none';
+  calcDrapePrice();
 }
 
 function drapeToggleHardware(show) {
@@ -996,6 +1223,21 @@ function submitDrape() {
     + (!isRipple ? 'Return: ' + returnSz + '"  Overlap: ' + overlapSz + '"\n' : '')
     + (isRipple ? 'Ripple fullness: ' + rippleFull + '  Hardware: ' + rippleHw + '  Snaps: ' + rippleSnaps + '\n' +
        'Join type: ' + rippleJoin + '  Return: ' + rippleRet + '"  Overlap: ' + rippleOvlp + '"\n' : '')
+    + (function(){
+        var trimSel = document.querySelectorAll('.drape-trim-check:checked');
+        if (!trimSel.length) return '';
+        var locs = Array.from(trimSel).map(function(c){return c.getAttribute('data-loc');}).join(', ');
+        var ts = getOpt('grp-drape-trim-supply');
+        return 'Trim locations: ' + locs + '  Supply: ' + (ts||'—') + '\n';
+      }())
+    + (document.getElementById('d-cornice-check') && document.getElementById('d-cornice-check').checked ?
+        'Cornice width: ' + (document.getElementById('d-cornice-width').value||'—') + '"' +
+        (document.getElementById('d-cornice-trim-check') && document.getElementById('d-cornice-trim-check').checked ? '  + trim\n' : '\n') : '')
+    + (document.getElementById('d-valance-check') && document.getElementById('d-valance-check').checked ?
+        'Valance width: ' + (document.getElementById('d-valance-width').value||'—') + '"' +
+        (document.getElementById('d-valance-trim-check') && document.getElementById('d-valance-trim-check').checked ? '  + trim\n' : '\n') : '')
+    + (document.getElementById('drape-price-total') && document.getElementById('drape-price-box').style.display !== 'none' ?
+        'Estimate: ' + document.getElementById('drape-price-total').textContent + '\n' : '')
     + 'Hardware: ' + hwNeed + (hwType !== 'N/A' ? ' — ' + hwType : '') + '\n'
     + 'Width range: ' + document.getElementById('d-width').value
     + '\nExact width: ' + (document.getElementById('d-exact-width').value ? document.getElementById('d-exact-width').value + '"' : '—')
