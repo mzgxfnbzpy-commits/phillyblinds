@@ -114,6 +114,7 @@
 <div class="type-tabs" id="type-tabs">
   <button class="type-tab on" onclick="switchTab('drapes',this)">Custom Drapery</button>
   <button class="type-tab" onclick="switchTab('roman',this)">Roman Shades</button>
+  <button class="type-tab" style="color:var(--gold)" onclick="pbShowContact('Specialty Soft Treatments — Cornices, Valances, or Custom Fabrication')">Specialty / Cornices / Valances ✦</button>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════
@@ -741,22 +742,51 @@
             <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-mount-style');romanToggleMountStyle('waterfall')">Waterfall</button>
             <button class="opt-btn" onclick="selOpt(this,'grp-roman-mount-style');romanToggleMountStyle('offback')">Off Back</button>
           </div>
-          <div id="roman-offback-opts" style="display:none;margin-top:12px">
-            <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px;text-transform:uppercase;letter-spacing:.3px">Front valance</div>
-            <div class="form-row" style="margin-bottom:8px">
-              <div class="form-group">
-                <label style="font-size:12px">Valance depth (inches) <span style="font-weight:400;color:#999">default 6"</span></label>
-                <input type="number" id="rn-valance-front" value="6" min="2" max="24" style="font-size:14px">
-              </div>
-            </div>
-            <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px;text-transform:uppercase;letter-spacing:.3px">Back valance</div>
+
+          <!-- WATERFALL sub-options: optional back valance -->
+          <div id="roman-waterfall-opts" style="margin-top:12px;padding:10px 12px;background:#fafaf8;border-radius:8px">
+            <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.3px;margin-bottom:7px">Back valance (optional)</div>
             <div class="opt-row" id="grp-roman-back-valance">
               <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-back-valance');romanToggleBackValance(false)">No back valance</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-roman-back-valance');romanToggleBackValance(true)">Add back valance</button>
             </div>
-            <div id="roman-back-valance-size" style="display:none;margin-top:8px">
-              <label style="font-size:12px">Back valance depth (inches)</label>
-              <input type="number" id="rn-valance-back" value="4" min="2" max="24" style="width:120px;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit;margin-top:4px;display:block">
+            <div id="roman-back-valance-opts" style="display:none;margin-top:10px">
+              <div class="form-row" style="margin-bottom:8px">
+                <div class="form-group">
+                  <label style="font-size:12px">Back valance height <span style="font-weight:400;color:#999">default 6"</span></label>
+                  <div class="opt-row" id="grp-rn-back-val-h" style="margin-top:6px;margin-bottom:6px">
+                    <button class="opt-btn sel" onclick="selOpt(this,'grp-rn-back-val-h');rnToggleBackValCustom(false)">6"</button>
+                    <button class="opt-btn" onclick="selOpt(this,'grp-rn-back-val-h');rnToggleBackValCustom(true)">Custom</button>
+                  </div>
+                  <div id="rn-back-val-custom" style="display:none">
+                    <input type="number" id="rn-valance-back" value="6" min="2" max="24" style="width:100px;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit">
+                    <span style="font-size:12px;color:#888;margin-left:6px">inches</span>
+                  </div>
+                </div>
+              </div>
+              <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:7px">Back valance fabric</div>
+              <div class="opt-row" id="grp-rn-back-val-fabric">
+                <button class="opt-btn sel" onclick="selOpt(this,'grp-rn-back-val-fabric')">Same face fabric</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-rn-back-val-fabric')">Lined</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- OFF BACK sub-options: front valance (auto-shown) -->
+          <div id="roman-offback-opts" style="display:none;margin-top:12px;padding:10px 12px;background:#fafaf8;border-radius:8px">
+            <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.3px;margin-bottom:7px">Front valance <span style="font-weight:400;color:#888;text-transform:none">— covers the mounting board</span></div>
+            <div class="form-row" style="margin-bottom:8px">
+              <div class="form-group">
+                <label style="font-size:12px">Front valance height <span style="font-weight:400;color:#999">default 6"</span></label>
+                <div class="opt-row" id="grp-rn-front-val-h" style="margin-top:6px;margin-bottom:6px">
+                  <button class="opt-btn sel" onclick="selOpt(this,'grp-rn-front-val-h');rnToggleFrontValCustom(false)">6"</button>
+                  <button class="opt-btn" onclick="selOpt(this,'grp-rn-front-val-h');rnToggleFrontValCustom(true)">Custom</button>
+                </div>
+                <div id="rn-front-val-custom" style="display:none">
+                  <input type="number" id="rn-valance-front" value="6" min="2" max="24" style="width:100px;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit">
+                  <span style="font-size:12px;color:#888;margin-left:6px">inches</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1082,6 +1112,11 @@ function calcRoman() {
     trimTotal = Math.ceil(trimFt) * RN_TRIM_PER_FT;
   }
 
+  // Fabric yardage estimate
+  var cutsPerShade = Math.max(1, Math.ceil(w / 54));
+  var yardsPerCut  = Math.ceil((h + 16) / 36 * 4) / 4; // round to nearest 0.25yd
+  var fabricYds    = cutsPerShade * yardsPerCut * qty;
+
   var grandTotal = laborTotal + trimTotal;
   if (box) box.style.display = 'block';
   document.getElementById('rn-pb-style').textContent = (romanState.style || '—') + ' — $' + rate + '/sqft';
@@ -1090,6 +1125,15 @@ function calcRoman() {
   document.getElementById('rn-pb-motor').textContent = getOpt('grp-roman-op') || 'Manual';
   document.getElementById('rn-pb-total').textContent = '$' + grandTotal.toFixed(0);
   document.getElementById('rn-pb-min-note').style.display = perShade === RN_MIN ? 'block' : 'none';
+  // Fabric yardage note
+  var fabNote = document.getElementById('rn-pb-fabric-note');
+  if (!fabNote) {
+    fabNote = document.createElement('div');
+    fabNote.id = 'rn-pb-fabric-note';
+    fabNote.style.cssText = 'margin-top:8px;font-size:11px;background:rgba(45,224,193,.1);border:1px solid rgba(45,224,193,.2);border-radius:7px;padding:7px 10px;color:var(--cream);line-height:1.5';
+    box.appendChild(fabNote);
+  }
+  fabNote.textContent = '🧵 Est. fabric needed: ~' + fabricYds.toFixed(2) + ' yards' + (cutsPerShade > 1 ? ' ('+cutsPerShade+' widths)' : '') + ' — pattern repeats will add more. Confirmed at order.';
 }
 
 // ── DRAPERY PRICING CALCULATOR ───────────────────────────────
@@ -1209,6 +1253,32 @@ function calcDrapePrice() {
 
   document.getElementById('drape-price-rows').innerHTML = rows;
   document.getElementById('drape-price-total').textContent = '$' + grandTotal.toFixed(0);
+  // Fabric yardage note for drapes
+  var dFabNote = document.getElementById('drape-fabric-yds-note');
+  if (!dFabNote) {
+    dFabNote = document.createElement('div');
+    dFabNote.id = 'drape-fabric-yds-note';
+    dFabNote.style.cssText = 'margin-top:8px;font-size:11px;background:rgba(45,224,193,.1);border:1px solid rgba(45,224,193,.2);border-radius:7px;padding:7px 10px;color:var(--cream);line-height:1.5';
+    document.getElementById('drape-price-box').appendChild(dFabNote);
+  }
+  var dYardsPerWidth = Math.ceil((h + 16) / 36 * 4) / 4;
+  var dTotalYards    = Math.ceil(dYardsPerWidth * numWidths * 4) / 4;
+  var cornYds = 0;
+  if (document.getElementById('d-cornice-check') && document.getElementById('d-cornice-check').checked) {
+    var cw2 = parseFloat(document.getElementById('d-cornice-width').value) || 0;
+    cornYds = cw2 ? Math.ceil((cw2/36)*1.2*4)/4 : 0;
+  }
+  var valYds = 0;
+  if (document.getElementById('d-valance-check') && document.getElementById('d-valance-check').checked) {
+    var vw2 = parseFloat(document.getElementById('d-valance-width').value) || 0;
+    valYds = vw2 ? Math.ceil((vw2/36)*1.5*4)/4 : 0;
+  }
+  var totalFabYds = dTotalYards + cornYds + valYds;
+  dFabNote.textContent = '🧵 Est. fabric needed: ~'+totalFabYds.toFixed(2)+' yards (drapes: '+dTotalYards+
+    (cornYds?' · cornice: '+cornYds:'')+
+    (valYds?' · valance: '+valYds:'')+
+    ') — pattern repeats add more. Confirmed at order.';
+
   document.getElementById('drape-price-note').textContent =
     '$' + ratePerWidth + '/width ' + (isInterlining ? '(lined + $15 interlining)' : isLined ? '(lined)' : '(unlined)') +
     (lenSurcharge ? ', +$15/width per 10" over 100"' : '') +
@@ -1243,11 +1313,21 @@ function rnShowTrimSupply() {
   if (el) el.style.display = any ? 'block' : 'none';
 }
 function romanToggleMountStyle(type) {
-  var el = document.getElementById('roman-offback-opts');
-  if (el) el.style.display = type === 'offback' ? 'block' : 'none';
+  var wf = document.getElementById('roman-waterfall-opts');
+  var ob = document.getElementById('roman-offback-opts');
+  if (wf) wf.style.display = type === 'waterfall' ? 'block' : 'none';
+  if (ob) ob.style.display = type === 'offback'    ? 'block' : 'none';
 }
 function romanToggleBackValance(show) {
-  var el = document.getElementById('roman-back-valance-size');
+  var el = document.getElementById('roman-back-valance-opts');
+  if (el) el.style.display = show ? 'block' : 'none';
+}
+function rnToggleBackValCustom(show) {
+  var el = document.getElementById('rn-back-val-custom');
+  if (el) el.style.display = show ? 'block' : 'none';
+}
+function rnToggleFrontValCustom(show) {
+  var el = document.getElementById('rn-front-val-custom');
   if (el) el.style.display = show ? 'block' : 'none';
 }
 

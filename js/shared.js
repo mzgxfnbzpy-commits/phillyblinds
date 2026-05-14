@@ -650,6 +650,83 @@ function _initShippingEstimators() {
   });
 }
 
+// ============================================================
+// CONTACT / CONSULTATION PANEL
+// ============================================================
+function _initContactPanel() {
+  if (document.getElementById('pb-contact-overlay')) return;
+  var s = document.createElement('style');
+  s.textContent =
+    '.pb-co{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:700;align-items:center;justify-content:center;padding:16px}' +
+    '.pb-co.open{display:flex}' +
+    '.pb-cp{background:#fff;border-radius:16px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;padding:28px 24px;position:relative}' +
+    '.pb-cp-close{position:absolute;top:14px;right:14px;background:none;border:none;font-size:24px;cursor:pointer;color:#aaa;line-height:1;font-family:inherit}.pb-cp-close:hover{color:#333}' +
+    '.pb-cp-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);background:var(--espresso);padding:4px 10px;border-radius:20px;margin-bottom:12px}' +
+    '.pb-cp-title{font-size:20px;font-weight:700;color:#1C1510;margin-bottom:6px;line-height:1.2}' +
+    '.pb-cp-note{font-size:13px;color:#666;line-height:1.6;margin-bottom:18px}' +
+    '.pb-cp-phone-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:#1C1510;color:#2DE0C1;text-decoration:none;font-size:22px;font-weight:700;padding:14px;border-radius:10px;margin-bottom:8px;transition:opacity .15s}.pb-cp-phone-btn:hover{opacity:.85}' +
+    '.pb-cp-sub{text-align:center;font-size:11px;color:#888;margin-bottom:10px}' +
+    '.pb-cp-email-link{display:block;text-align:center;font-size:14px;color:#1C1510;font-weight:600;text-decoration:none;margin-bottom:18px}.pb-cp-email-link:hover{text-decoration:underline}' +
+    '.pb-cp-or{text-align:center;font-size:12px;color:#bbb;margin-bottom:14px;display:flex;align-items:center;gap:8px}.pb-cp-or::before,.pb-cp-or::after{content:"";flex:1;height:1px;background:#e8e8e4}';
+  document.head.appendChild(s);
+  var ov = document.createElement('div');
+  ov.id = 'pb-contact-overlay'; ov.className = 'pb-co';
+  ov.addEventListener('click', function(e){ if(e.target===ov) pbCloseContact(); });
+  ov.innerHTML =
+    '<div class="pb-cp">' +
+      '<button class="pb-cp-close" onclick="pbCloseContact()">&#215;</button>' +
+      '<div class="pb-cp-badge">Free &middot; No obligation</div>' +
+      '<div class="pb-cp-title">Free Consultation &amp; Custom Quote</div>' +
+      '<div class="pb-cp-note" id="pb-cp-hint">Tell us what you need &mdash; we\'ll measure, advise, and quote at no charge.</div>' +
+      '<a href="tel:6097421720" class="pb-cp-phone-btn">&#128222; (609) 742-1720</a>' +
+      '<div class="pb-cp-sub">Justin Healy &mdash; call or text 24/7</div>' +
+      '<a href="mailto:justin@phillyblinds.com" class="pb-cp-email-link">justin@phillyblinds.com</a>' +
+      '<div class="pb-cp-or">or send a message</div>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">' +
+        '<div><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Name *</label>' +
+          '<input id="pb-cp-name" type="text" placeholder="Jane Smith" style="width:100%;padding:9px 11px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit"></div>' +
+        '<div><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Phone *</label>' +
+          '<input id="pb-cp-phone-inp" type="tel" placeholder="(215) 555-0100" style="width:100%;padding:9px 11px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit"></div>' +
+      '</div>' +
+      '<div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">What are you interested in?</label>' +
+        '<input id="pb-cp-product" type="text" placeholder="e.g. Pirouette shadings, specialty shutters, oversized shade..." style="width:100%;padding:9px 11px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit"></div>' +
+      '<div style="margin-bottom:14px"><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Notes</label>' +
+        '<textarea id="pb-cp-notes" rows="2" placeholder="Window sizes, room, timeline, questions..." style="width:100%;padding:9px 11px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit;resize:vertical"></textarea></div>' +
+      '<button onclick="pbSubmitContact()" style="width:100%;background:#1C1510;color:#2DE0C1;border:none;border-radius:8px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">Request free consultation &#8594;</button>' +
+      '<div id="pb-cp-sent" style="display:none;text-align:center;padding:16px;background:#EAF3DE;border-radius:10px;margin-top:10px;font-size:13px;color:#27500A">' +
+        '<strong>Request sent!</strong> Justin will be in touch soon.<br>' +
+        'Urgent? <a href="tel:6097421720" style="color:#27500A;font-weight:700">(609) 742-1720</a>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(ov);
+}
+function pbShowContact(productHint) {
+  _initContactPanel();
+  var hint = document.getElementById('pb-cp-hint');
+  var prod = document.getElementById('pb-cp-product');
+  var sent = document.getElementById('pb-cp-sent');
+  if (productHint && hint) hint.textContent = productHint + ' — we\'ll measure, advise, and quote at no charge.';
+  if (productHint && prod)  prod.value = productHint;
+  if (sent) sent.style.display = 'none';
+  document.getElementById('pb-contact-overlay').classList.add('open');
+}
+function pbCloseContact() {
+  var ov = document.getElementById('pb-contact-overlay');
+  if (ov) ov.classList.remove('open');
+}
+function pbSubmitContact() {
+  var name  = (document.getElementById('pb-cp-name')      || {}).value || '';
+  var phone = (document.getElementById('pb-cp-phone-inp') || {}).value || '';
+  if (!name.trim() || !phone.trim()) { alert('Please enter your name and phone number.'); return; }
+  var prod  = (document.getElementById('pb-cp-product') || {}).value || '';
+  var notes = (document.getElementById('pb-cp-notes')   || {}).value || '';
+  var body  = 'CONSULTATION REQUEST\n\nName: '+name+'\nPhone: '+phone+
+    '\n\nInterested in: '+(prod||'—')+'\n\nNotes:\n'+(notes||'None');
+  window.location.href='mailto:justin@phillyblinds.com?subject='+
+    encodeURIComponent('Free Consultation — '+name)+'&body='+encodeURIComponent(body);
+  document.getElementById('pb-cp-sent').style.display='block';
+}
+
 // ---- MEASURE HELP MODAL ----
 function _initMeasureHelp(htmlContent, measurePageUrl) {
   if (document.getElementById('pb-help-btn')) return;
