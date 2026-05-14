@@ -690,8 +690,16 @@ function _initContactPanel() {
       '</div>' +
       '<div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">What are you interested in?</label>' +
         '<input id="pb-cp-product" type="text" placeholder="e.g. Pirouette shadings, specialty shutters, oversized shade..." style="width:100%;padding:9px 11px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit"></div>' +
-      '<div style="margin-bottom:14px"><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Notes</label>' +
+      '<div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Notes</label>' +
         '<textarea id="pb-cp-notes" rows="2" placeholder="Window sizes, room, timeline, questions..." style="width:100%;padding:9px 11px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit;resize:vertical"></textarea></div>' +
+      '<div style="border:1.5px dashed #ddd;border-radius:9px;padding:12px 14px;margin-bottom:14px;background:#fafaf8">' +
+        '<div style="font-size:11px;font-weight:600;color:#444;margin-bottom:6px">&#128206; Attach photos or files <span style="font-weight:400;color:#999">(optional)</span></div>' +
+        '<input type="file" id="pb-cp-files" multiple accept="image/*,.pdf,.heic,.png,.jpg,.jpeg" ' +
+          'style="width:100%;font-size:12px;color:#555;font-family:inherit;cursor:pointer" ' +
+          'onchange="pbCpShowFiles()">' +
+        '<div id="pb-cp-file-names" style="font-size:11px;color:#555;margin-top:5px;line-height:1.7"></div>' +
+        '<div style="font-size:10px;color:#aaa;margin-top:4px">Photos of your windows, room, inspiration — anything that helps.</div>' +
+      '</div>' +
       '<button onclick="pbSubmitContact()" style="width:100%;background:#1C1510;color:#2DE0C1;border:none;border-radius:8px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">Request free consultation &#8594;</button>' +
       '<div id="pb-cp-sent" style="display:none;text-align:center;padding:16px;background:#EAF3DE;border-radius:10px;margin-top:10px;font-size:13px;color:#27500A">' +
         '<strong>Request sent!</strong> Justin will be in touch soon.<br>' +
@@ -714,14 +722,25 @@ function pbCloseContact() {
   var ov = document.getElementById('pb-contact-overlay');
   if (ov) ov.classList.remove('open');
 }
+function pbCpShowFiles() {
+  var inp = document.getElementById('pb-cp-files');
+  var disp = document.getElementById('pb-cp-file-names');
+  if (!inp || !disp) return;
+  var names = Array.from(inp.files).map(function(f){ return '📄 '+f.name; }).join('<br>');
+  disp.innerHTML = names;
+}
 function pbSubmitContact() {
   var name  = (document.getElementById('pb-cp-name')      || {}).value || '';
   var phone = (document.getElementById('pb-cp-phone-inp') || {}).value || '';
   if (!name.trim() || !phone.trim()) { alert('Please enter your name and phone number.'); return; }
   var prod  = (document.getElementById('pb-cp-product') || {}).value || '';
   var notes = (document.getElementById('pb-cp-notes')   || {}).value || '';
+  var filesEl = document.getElementById('pb-cp-files');
+  var fileNames = filesEl && filesEl.files.length ?
+    '\n\nFiles to send: '+Array.from(filesEl.files).map(function(f){return f.name;}).join(', ')+
+    '\n(Please email these to justin@phillyblinds.com)' : '';
   var body  = 'CONSULTATION REQUEST\n\nName: '+name+'\nPhone: '+phone+
-    '\n\nInterested in: '+(prod||'—')+'\n\nNotes:\n'+(notes||'None');
+    '\n\nInterested in: '+(prod||'—')+'\n\nNotes:\n'+(notes||'None')+fileNames;
   window.location.href='mailto:justin@phillyblinds.com?subject='+
     encodeURIComponent('Free Consultation — '+name)+'&body='+encodeURIComponent(body);
   document.getElementById('pb-cp-sent').style.display='block';

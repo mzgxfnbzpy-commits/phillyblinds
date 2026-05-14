@@ -114,7 +114,8 @@
 <div class="type-tabs" id="type-tabs">
   <button class="type-tab on" onclick="switchTab('drapes',this)">Custom Drapery</button>
   <button class="type-tab" onclick="switchTab('roman',this)">Roman Shades</button>
-  <button class="type-tab" onclick="switchTab('cornval',this)">Cornices &amp; Valances</button>
+  <button class="type-tab" onclick="switchTab('cornices',this)">Cornices</button>
+  <button class="type-tab" onclick="switchTab('valances',this)">Valances</button>
   <button class="type-tab" style="color:var(--gold)" onclick="pbShowContact('Specialty Soft Treatments — Custom Fabrication')">Specialty ✦</button>
 </div>
 
@@ -571,7 +572,7 @@
         </div>
         <div class="opt-label-bar"><div class="opt-name">Arch / Specialty Shape</div><div class="opt-desc">Custom arched, oval, or other shapes — always custom quote</div></div>
       </div>
-      <div class="opt-card" onclick="selectRomanStyle(this,'Vignette®')">
+      <div class="opt-card" onclick="pbShowContact('Hunter Douglas Vignette® Roman Shades — free consultation &amp; custom quote')"  style="cursor:pointer">
         <div class="opt-art" style="height:130px">
           <img src="../images/thumbnails/vignette-dining-room.JPEG" alt="Hunter Douglas Vignette Roman Shades" style="object-position:center 30%">
         </div>
@@ -868,7 +869,7 @@
 <!-- ══════════════════════════════════════════════════════════
      TAB: CORNICES & VALANCES
 ════════════════════════════════════════════════════════════ -->
-<div class="tab-panel" id="tab-cornval">
+<div class="tab-panel" id="tab-cornices">
 <div class="step-wrap">
 
   <!-- ── CORNICE ── -->
@@ -945,7 +946,11 @@
     <div class="success-box" id="corn-success"><strong>Quote sent!</strong> We'll follow up soon. Urgent? <a href="tel:6097421720" style="color:#2e7d32">(609) 742-1720</a></div>
   </div>
 
-  <!-- ── VALANCE ── -->
+</div><!-- /cornices step-wrap -->
+</div><!-- /tab-cornices -->
+
+<div class="tab-panel" id="tab-valances">
+<div class="step-wrap">
   <div style="font-size:22px;font-weight:600;color:var(--espresso);letter-spacing:-0.4px;margin-bottom:4px">Valances</div>
   <div style="font-size:13px;color:#666;margin-bottom:24px">Fabric soft top treatment. $50/linear ft + fabric.</div>
   <div style="background:#fff;border:1px solid #e8e8e4;border-radius:14px;padding:24px;margin-bottom:32px">
@@ -1019,8 +1024,8 @@
     <div class="success-box" id="val-cv-success"><strong>Quote sent!</strong> We'll follow up soon. Urgent? <a href="tel:6097421720" style="color:#2e7d32">(609) 742-1720</a></div>
   </div>
 
-</div><!-- /step-wrap -->
-</div><!-- /tab-cornval -->
+</div><!-- /valances step-wrap -->
+</div><!-- /tab-valances -->
 
 
 
