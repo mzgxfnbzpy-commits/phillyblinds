@@ -459,3 +459,12 @@ body {
 .pmm-sub{margin-top:12px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px}
 .pmm-sub-label{font-size:11px;font-weight:600;color:#555;margin-bottom:7px;text-transform:uppercase;letter-spacing:.3px}
 .pmm-note{font-size:11px;color:#888;margin-top:6px;line-height:1.5}
+
+/* ── DIMENSION INPUTS — prominent width/height callout ── */
+.dim-box{background:#fff;border:2px solid var(--gold);border-radius:12px;padding:18px 20px;margin-bottom:18px}
+.dim-box-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--gold);margin-bottom:12px}
+.dim-box .form-row{gap:16px}
+.dim-box .form-group label{font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:6px}
+.dim-box .form-group input{font-size:22px;font-weight:600;color:#1a1a1a;height:54px;border:2px solid #e8e8e4;border-radius:8px;text-align:center;letter-spacing:-0.5px}
+.dim-box .form-group input:focus{border-color:var(--gold);outline:none}
+.dim-box .dim-unit{font-size:11px;color:#999;text-align:center;margin-top:4px}
