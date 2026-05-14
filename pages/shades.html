@@ -1256,13 +1256,46 @@
         <div class="form-row">
           <div class="form-group">
             <label>Width</label>
-            <input type="number" id="pb-width" min="12" max="144" step="0.5" placeholder="36">
+            <input type="number" id="pb-width" min="12" max="240" step="0.5" placeholder="36" oninput="pbCalcPrice()">
             <div class="dim-unit">inches</div>
           </div>
           <div class="form-group">
             <label>Height</label>
-            <input type="number" id="pb-height" min="12" max="132" step="0.5" placeholder="72">
+            <input type="number" id="pb-height" min="12" max="144" step="0.5" placeholder="72" oninput="pbCalcPrice()">
             <div class="dim-unit">inches</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;display:flex;align-items:center;gap:10px">
+          <span style="font-size:12px;font-weight:500;color:#333">Quantity</span>
+          <div class="qty-btns">
+            <button class="qty-btn" onclick="var n=document.getElementById('pb-qty-inp');n.value=Math.max(1,parseInt(n.value)-1);pbCalcPrice()">−</button>
+            <input class="qty-num" id="pb-qty-inp" type="number" value="1" min="1" max="50" oninput="pbCalcPrice()">
+            <button class="qty-btn" onclick="var n=document.getElementById('pb-qty-inp');n.value=parseInt(n.value)+1;pbCalcPrice()">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRICE BOX (Solar Screen only) -->
+      <div id="pb-price-box" style="display:none;background:var(--espresso);border-radius:12px;padding:18px 20px;margin-top:14px">
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:12px">Instant price estimate</div>
+        <div id="pb-price-rows"></div>
+        <div style="border-top:1px solid rgba(45,224,193,.3);margin-top:10px;padding-top:10px;display:flex;justify-content:space-between;align-items:baseline">
+          <span style="font-size:14px;font-weight:500;color:var(--cream)">Estimated total</span>
+          <span style="font-size:22px;font-weight:600;color:var(--gold)" id="pb-price-total">—</span>
+        </div>
+        <div style="font-size:10px;color:var(--text-faint);margin-top:8px;line-height:1.5" id="pb-price-note"></div>
+      </div>
+
+      <!-- Wood Valance add-on -->
+      <div id="pb-valance-wrap" style="display:none;margin-top:10px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:9px">
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:#333;cursor:pointer;margin-bottom:8px">
+          <input type="checkbox" id="pb-add-valance" onchange="pbCalcPrice()"> Add wood valance
+          <span style="font-weight:400;color:#888">— priced by width</span>
+        </label>
+        <div id="pb-valance-opts" style="display:none">
+          <div class="form-group">
+            <label style="font-size:12px">Valance width (inches)</label>
+            <input type="number" id="pb-valance-width" placeholder="same as shade" min="24" max="144" oninput="pbCalcPrice()" style="font-size:14px;max-width:160px">
           </div>
         </div>
       </div>
@@ -1319,8 +1352,8 @@
       <div id="pb-fabric-picker" style="margin-top:12px;padding:14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
         <div style="font-size:11px;font-weight:600;letter-spacing:0.5px;color:#444;text-transform:uppercase;margin-bottom:10px">Fabric type</div>
         <div class="opt-row" id="pb-grp-fabric-type">
-          <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors();pbToggleSolarOpts(false)">Blackout</button>
-          <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors();pbToggleSolarOpts(true)">Solar Screen</button>
+          <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors();pbToggleSolarOpts(false);pbCalcPrice()">Blackout</button>
+          <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors();pbToggleSolarOpts(true);pbCalcPrice()">Solar Screen</button>
         </div>
         <!-- Solar openness sub-option -->
         <div id="pb-solar-opts" style="display:none;margin-top:10px;padding:10px 12px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
@@ -3152,6 +3185,101 @@ function submitFWBForm() {
 }
 
 // ─── PB Custom roller fabric picker ──────────────────────────
+// ── CUSTOM ROLLER SHADE PRICING TABLE (Cordless Solar Screen) ──
+const PB_WIDTHS  = [24,30,36,42,48,54,60,66,72,78,84,90,96,108,120];
+const PB_HEIGHTS = [36,48,60,72,84,96,108,120,132,144];
+const PB_SOLAR   = {
+  36:  [240,258,278,296,314,331,362,382,406,450,474,507,533,577,628],
+  48:  [259,282,302,325,350,372,412,439,468,519,545,587,614,671,723],
+  60:  [281,302,326,357,390,421,467,497,535,586,618,666,692,745,795],
+  72:  [297,325,359,397,430,468,522,558,595,650,677,721,749,809,870],
+  84:  [318,354,394,434,474,513,573,614,645,697,745,776,809,874,941],
+  96:  [336,383,428,471,518,563,618,656,690,745,797,831,870,941,1015],
+  108: [361,411,461,511,558,600,659,697,737,795,850,890,932,1007,1088],
+  120: [387,440,495,546,597,635,697,739,780,844,903,949,990,1078,1160],
+  132: [408,470,526,582,627,670,737,780,826,894,956,1002,1049,1141,1235],
+  144: [434,498,561,609,659,703,777,823,872,940,1010,1061,1111,1206,1309]
+};
+const PB_VALANCE_W = [24,30,36,42,48,54,60,66,72,78,84,90,96,108,120,132,144];
+const PB_VALANCE_P = [117,122,133,139,150,161,171,188,204,216,232,249,265,293,326,349,375];
+
+function _pbRoundUp(val, arr) {
+  for (var i=0;i<arr.length;i++) if (val<=arr[i]) return arr[i];
+  return null; // oversized
+}
+function _pbLookup(w,h) {
+  var rw = _pbRoundUp(w,PB_WIDTHS);
+  var rh = _pbRoundUp(h,PB_HEIGHTS);
+  if (!rw||!rh) return null;
+  var row = PB_SOLAR[rh]; if (!row) return null;
+  return { price: row[PB_WIDTHS.indexOf(rw)], rw:rw, rh:rh, oversized: rw>90 };
+}
+function _pbValanceLookup(w) {
+  var rw = _pbRoundUp(w, PB_VALANCE_W);
+  if (!rw) return null;
+  return PB_VALANCE_P[PB_VALANCE_W.indexOf(rw)];
+}
+
+function pbCalcPrice() {
+  var w   = parseFloat(document.getElementById('pb-width').value);
+  var h   = parseFloat(document.getElementById('pb-height').value);
+  var box = document.getElementById('pb-price-box');
+  var vWrap = document.getElementById('pb-valance-wrap');
+  if (!box) return;
+
+  var fabBtn = document.querySelector('#pb-grp-fabric-type .opt-btn.sel');
+  var fabType = fabBtn ? fabBtn.textContent.trim() : '';
+  var isSolar = fabType === 'Solar Screen';
+
+  // Show valance add-on option only for solar screen with valid width
+  if (vWrap) vWrap.style.display = (isSolar && w) ? 'block' : 'none';
+  var valOpts = document.getElementById('pb-valance-opts');
+  var addVal  = document.getElementById('pb-add-valance');
+  if (valOpts && addVal) valOpts.style.display = addVal.checked ? 'block' : 'none';
+
+  if (!isSolar || !w || !h) { box.style.display='none'; return; }
+
+  var qty = parseInt(document.getElementById('pb-qty-inp').value) || 1;
+  var result = _pbLookup(w,h);
+  var rows='';
+  var pRow = function(lbl,val,light) {
+    rows+='<div style="display:flex;justify-content:space-between;font-size:12px;color:'+(light?'var(--text-faint)':'var(--text-dark)')+';padding:4px 0;border-bottom:.5px solid var(--border-dark)"><span>'+lbl+'</span><span style="color:var(--cream);font-weight:500">$'+val.toFixed(0)+'</span></div>';
+  };
+
+  if (!result) {
+    box.innerHTML='<div style="font-size:12px;color:var(--gold)">⚠ Width or height exceeds standard sizes — custom quote required. Submit the form and Justin will price this for you.</div>';
+    box.style.display='block'; return;
+  }
+
+  var shadeTotal = result.price * qty;
+  var isOversized = result.oversized;
+  var freight = isOversized ? (80 + Math.max(0,qty-1)*50) : (25 + Math.max(0,qty-1)*11);
+
+  // Wood valance
+  var valTotal = 0;
+  if (addVal && addVal.checked) {
+    var vwEl = document.getElementById('pb-valance-width');
+    var vw = parseFloat((vwEl && vwEl.value) ? vwEl.value : w);
+    var vp = _pbValanceLookup(vw);
+    valTotal = vp ? vp * qty : 0;
+    if (vp) pRow('Wood valance ('+(vw)+'→'+_pbRoundUp(vw,PB_VALANCE_W)+'") × '+qty, valTotal);
+    else rows+='<div style="font-size:11px;color:var(--gold);padding:4px 0">Valance width out of range — quote required.</div>';
+  }
+
+  var grandTotal = shadeTotal + freight + valTotal;
+
+  pRow('Solar Screen ('+w+'→'+result.rw+'" × '+h+'→'+result.rh+'") × '+qty, shadeTotal);
+  pRow((isOversized?'Oversized freight (over 90")':'Standard freight')+' — '+qty+' shade'+(qty>1?'s':''), freight, true);
+
+  document.getElementById('pb-price-rows').innerHTML = rows;
+  document.getElementById('pb-price-total').textContent = '$'+grandTotal.toFixed(0);
+  var note = 'Dimensions rounded up to next standard size. ' +
+    (isOversized ? 'Oversized: $80 first + $50 each additional. ' : '$25 first shade + $11 each additional. ') +
+    'Prices are retail — fabric & installation costs may vary. Final confirmed at order.';
+  document.getElementById('pb-price-note').textContent = note;
+  box.style.display='block';
+}
+
 const PB_FABRICS = {
   'Blackout':      ['White','Black','Cream','Off-White','Gray','Charcoal'],
   'Solar Screen':  ['White','Black','Cream','Off-White','Gray','Charcoal']
