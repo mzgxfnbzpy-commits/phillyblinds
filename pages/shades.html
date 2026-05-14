@@ -1242,8 +1242,16 @@
         <div style="font-size:12px;color:#0D4A42;line-height:1.6">We custom fabricate and install roller shades in-house. Choose motorized or manual operation. Bring your own fabric or choose from our library — pricing quoted after we review your specs.</div>
       </div>
 
+      <!-- Shade Configuration -->
+      <div class="step-title" style="font-size:12px;margin:0 0 8px">Shade configuration</div>
+      <div class="opt-row" id="pb-grp-config">
+        <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-config');document.getElementById('pb-dual-note').style.display='none'">Standard (single shade)</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-config');document.getElementById('pb-dual-note').style.display='block'">Dual shade</button>
+      </div>
+      <div id="pb-dual-note" class="tooltip-note" style="display:none;margin-top:6px;color:var(--gold)">Dual shade: two shade rolls in one headrail — typically a sheer for daytime and a blackout for night. Describe both fabrics in the notes field below.</div>
+
       <!-- Size -->
-      <div class="dim-box">
+      <div class="dim-box" style="margin-top:18px">
         <div class="dim-box-label">Enter your window size</div>
         <div class="form-row">
           <div class="form-group">
@@ -1266,13 +1274,12 @@
         <button class="opt-btn" onclick="selOpt(this,'pb-grp-mount')">Outside mount</button>
       </div>
 
-      <!-- Fascia (Fabric Wrapped or Metal only for custom fab) -->
-      <div class="step-title" style="font-size:12px;margin:14px 0 8px">Fascia type</div>
+      <!-- Fascia — Metal only for generic custom fab -->
+      <div class="step-title" style="font-size:12px;margin:14px 0 8px">Fascia</div>
       <div class="opt-row" id="pb-grp-fascia">
-        <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-fascia')">Fabric Wrapped fascia</button>
-        <button class="opt-btn" onclick="selOpt(this,'pb-grp-fascia')">Metal fascia</button>
+        <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-fascia')">Metal fascia</button>
       </div>
-      <div class="tooltip-note" style="margin-top:4px">Fabric Wrapped: fabric covers the headrail for a seamless look. Metal: aluminum fascia in White, Cottage White, Black, or Anodized Silver — confirmed at order.</div>
+      <div class="tooltip-note" style="margin-top:4px">Aluminum fascia — color (White, Cottage White, Black, or Anodized Silver) confirmed at order.</div>
 
       <!-- End caps -->
       <div class="step-title" style="font-size:12px;margin:14px 0 8px">End caps</div>
@@ -2556,6 +2563,7 @@ function submitPBForm() {
     'Name:           ' + name  + '\n' +
     'Phone:          ' + phone + '\n' +
     'Email:          ' + (email || '—') + '\n\n' +
+    'Configuration:  ' + gPB('pb-grp-config') + '\n' +
     'Width:          ' + (w || '—') + '″\n' +
     'Height:         ' + (h || '—') + '″\n' +
     'Mount type:     ' + gPB('pb-grp-mount')     + '\n' +
