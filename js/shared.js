@@ -150,6 +150,7 @@ function renderNav(activePage) {
 
 function renderFooter(isHome) {
   const pre = isHome ? 'pages/' : '../pages/';
+  // Shipping estimators are injected after footer renders (deferred so all form HTML is in DOM)
   document.getElementById('site-footer').innerHTML = `
     <div class="footer-grid">
       <div class="footer-col">
@@ -200,6 +201,7 @@ function renderFooter(isHome) {
     </div>
     <div class="footer-disc">Blindznation is an independent business providing professional installation and consulting services. Product names, logos, and trademarks are the property of their respective owners and are used for identification purposes only. Blindznation is not affiliated with, endorsed by, or sponsored by any manufacturer. &nbsp;·&nbsp; <a href="${pre}privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></div>
   `;
+  setTimeout(_initShippingEstimators, 0);
 }
 
 function _toggleDrawer() {
@@ -230,6 +232,57 @@ function selOpt(el, groupId) {
 function getOpt(groupId) {
   const s = document.querySelector('#' + groupId + ' .opt-btn.sel');
   return s ? s.textContent.trim() : '—';
+}
+
+// ---- SHIPPING ESTIMATOR ----
+function _calcShipping(zip) {
+  var p = parseInt(String(zip).replace(/\D/g,'').padStart(5,'0').substring(0,3));
+  if (isNaN(p)) return null;
+  var zone = 6;
+  if      ((p>=70&&p<=89)||(p>=190&&p<=199))                              zone=1; // PA, NJ, DE
+  else if ((p>=10&&p<=69)||(p>=200&&p<=269)||(p>=430&&p<=458)||(p>=400&&p<=427)) zone=2; // NY, NE, MD, VA, OH
+  else if ((p>=270&&p<=349)||(p>=460&&p<=499)||(p>=600&&p<=629))          zone=3; // SE, Midwest near
+  else if ((p>=350&&p<=399)||(p>=500&&p<=599)||(p>=630&&p<=679))          zone=4; // South, Midwest
+  else if ((p>=700&&p<=849))                                               zone=5; // TX, Mountain
+  // else zone = 6 — West Coast / HI / AK
+  var rates = {
+    1:{low:14,high:28,region:'PA / NJ / DE'},
+    2:{low:22,high:40,region:'NY / New England / MD / OH'},
+    3:{low:32,high:52,region:'Southeast / Midwest'},
+    4:{low:42,high:65,region:'South / Midwest'},
+    5:{low:55,high:80,region:'Mountain West / TX'},
+    6:{low:68,high:98,region:'West Coast / HI / AK'}
+  };
+  return rates[zone] || rates[6];
+}
+
+function _initShippingEstimators() {
+  document.querySelectorAll('[id$="-s"].delivery-note').forEach(function(el) {
+    if (el.querySelector('.pb-ship-est')) return;
+    var wrap = document.createElement('div');
+    wrap.className = 'pb-ship-est';
+    wrap.style.cssText = 'margin-top:10px;padding:12px 14px;background:#f5f5f3;border-radius:8px;border:1px solid #e0e0dc';
+    wrap.innerHTML =
+      '<div style="font-size:11px;font-weight:600;color:#444;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">&#128230; Estimate shipping</div>' +
+      '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">' +
+        '<input type="text" class="pb-zip-input" inputmode="numeric" maxlength="5" placeholder="Your ZIP code" ' +
+          'style="width:130px;padding:8px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;font-family:inherit;background:#fff">' +
+        '<span class="pb-zip-result" style="font-size:13px;color:#555;min-width:140px"></span>' +
+      '</div>' +
+      '<div style="font-size:10px;color:#aaa;margin-top:6px;line-height:1.5">UPS / FedEx Ground estimate from Huntingdon Valley PA 19006 &nbsp;&middot;&nbsp; Actual rate confirmed at order</div>';
+    el.appendChild(wrap);
+    var input = wrap.querySelector('.pb-zip-input');
+    var result = wrap.querySelector('.pb-zip-result');
+    input.addEventListener('input', function() {
+      var zip = this.value.replace(/\D/g,'');
+      if (zip.length === 5) {
+        var est = _calcShipping(zip);
+        if (est) result.innerHTML = '<strong style="color:#1C1510">~$'+est.low+' – $'+est.high+'</strong> <span style="font-size:11px;color:#888">('+est.region+')</span>';
+      } else {
+        result.textContent = '';
+      }
+    });
+  });
 }
 
 // ---- MEASURE HELP MODAL ----
