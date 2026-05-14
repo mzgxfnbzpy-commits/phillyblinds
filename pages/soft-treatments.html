@@ -270,11 +270,45 @@
         <div class="form-group"><label>Exact width (inches)</label><input type="number" id="d-exact-width" placeholder="e.g. 84" min="12" max="300" style="font-size:14px"></div>
         <div class="form-group"><label>Finished length (inches)</label><input type="number" id="d-exact-length" placeholder="e.g. 96" min="12" max="240" style="font-size:14px"></div>
       </div>
-      <div class="form-group"><label>Ceiling height / drop length</label>
-        <select id="d-height">
-          <option>Standard (8–9 ft)</option><option>Tall (9–10 ft)</option><option>10–12 ft</option><option>12–14 ft</option><option>14 ft+</option><option>Floor to ceiling</option><option>Custom — I'll specify in notes</option>
-        </select>
+      <!-- Panel configuration -->
+      <div style="border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-bottom:14px">
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Panel configuration</div>
+        <div class="opt-row" id="grp-drape-panels">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-panels');drapeToggleSingle(false)">Pair</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-drape-panels');drapeToggleSingle(true)">Single panel</button>
+        </div>
+        <div id="drape-single-opts" style="display:none;margin-top:10px">
+          <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px">Panel position</div>
+          <div class="opt-row" id="grp-drape-side">
+            <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-side')">Left</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-drape-side')">Right</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-drape-side')">Center</button>
+          </div>
+        </div>
       </div>
+
+      <!-- Returns & Overlaps -->
+      <div class="form-row">
+        <div class="form-group">
+          <label>Return size (inches) <span style="font-weight:400;color:#999">default 4"</span></label>
+          <input type="number" id="d-return" value="4" min="1" max="24" style="font-size:14px">
+        </div>
+        <div class="form-group">
+          <label>Overlap size (inches) <span style="font-weight:400;color:#999">default 4"</span></label>
+          <input type="number" id="d-overlap" value="4" min="0" max="12" style="font-size:14px">
+        </div>
+      </div>
+
+      <!-- Control side -->
+      <div style="margin-bottom:14px">
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Control side</div>
+        <div class="opt-row" id="grp-drape-control">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-control')">Left</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-drape-control')">Right</button>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:4px">Which side the draw cord, wand, or motor control is on when facing the window.</div>
+      </div>
+
       <div class="form-group"><label>Notes — fabric preference, rod type, timeline, or anything else</label>
         <textarea id="d-notes" style="min-height:90px" placeholder="e.g. Ripple fold panels, customer-supplied linen fabric, 3 windows in master bedroom..."></textarea>
       </div>
@@ -496,6 +530,16 @@
       </div>
       <div style="font-size:11px;color:var(--text-dark);margin-top:8px;line-height:1.5">Single channel: one remote controls all shades together. Multi channel: control each shade independently.</div>
     </div>
+
+    <!-- Control side — applies to both manual chain and motorized -->
+    <div style="margin-top:14px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
+      <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Control side</div>
+      <div class="opt-row" id="grp-roman-control">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-control')">Left</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-control')">Right</button>
+      </div>
+      <div style="font-size:11px;color:#888;margin-top:4px">Which side the chain, cord, or motor control is on when facing the window.</div>
+    </div>
   </div>
 
   <!-- STEP 5: DIMENSIONS + PRICE -->
@@ -514,6 +558,39 @@
         <div class="form-row">
           <div class="form-group"><label>Width (inches)</label><input type="number" id="rn-w" placeholder="e.g. 36" oninput="calcRoman()" style="font-size:14px"></div>
           <div class="form-group"><label>Finished length (inches)</label><input type="number" id="rn-h" placeholder="e.g. 48" oninput="calcRoman()" style="font-size:14px"></div>
+        </div>
+
+        <!-- Return size -->
+        <div style="margin-bottom:14px">
+          <label style="font-size:12px;font-weight:600;color:#333;display:block;margin-bottom:6px">Return size (inches) <span style="font-weight:400;color:#999">default 4"</span></label>
+          <input type="number" id="rn-return" value="4" min="1" max="12" style="width:120px;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit">
+        </div>
+
+        <!-- Mounting style: Waterfall / Off Back -->
+        <div style="border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-bottom:14px">
+          <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Mounting style</div>
+          <div class="opt-row" id="grp-roman-mount-style">
+            <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-mount-style');romanToggleMountStyle('waterfall')">Waterfall</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-roman-mount-style');romanToggleMountStyle('offback')">Off Back</button>
+          </div>
+          <div id="roman-offback-opts" style="display:none;margin-top:12px">
+            <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px;text-transform:uppercase;letter-spacing:.3px">Front valance</div>
+            <div class="form-row" style="margin-bottom:8px">
+              <div class="form-group">
+                <label style="font-size:12px">Valance depth (inches) <span style="font-weight:400;color:#999">default 6"</span></label>
+                <input type="number" id="rn-valance-front" value="6" min="2" max="24" style="font-size:14px">
+              </div>
+            </div>
+            <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px;text-transform:uppercase;letter-spacing:.3px">Back valance</div>
+            <div class="opt-row" id="grp-roman-back-valance">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-back-valance');romanToggleBackValance(false)">No back valance</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-roman-back-valance');romanToggleBackValance(true)">Add back valance</button>
+            </div>
+            <div id="roman-back-valance-size" style="display:none;margin-top:8px">
+              <label style="font-size:12px">Back valance depth (inches)</label>
+              <input type="number" id="rn-valance-back" value="4" min="2" max="24" style="width:120px;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit;margin-top:4px;display:block">
+            </div>
+          </div>
         </div>
 
         <!-- QUOTE FORM -->
@@ -760,18 +837,35 @@ function drapeToggleHardware(show) {
   var el = document.getElementById('drape-hardware-opts');
   if (el) el.style.display = show ? 'block' : 'none';
 }
+function drapeToggleSingle(show) {
+  var el = document.getElementById('drape-single-opts');
+  if (el) el.style.display = show ? 'block' : 'none';
+}
+function romanToggleMountStyle(type) {
+  var el = document.getElementById('roman-offback-opts');
+  if (el) el.style.display = type === 'offback' ? 'block' : 'none';
+}
+function romanToggleBackValance(show) {
+  var el = document.getElementById('roman-back-valance-size');
+  if (el) el.style.display = show ? 'block' : 'none';
+}
 
 // ── SUBMIT: DRAPERY ───────────────────────────────────────
 function submitDrape() {
   var name  = document.getElementById('d-name').value.trim();
   var phone = document.getElementById('d-phone').value.trim();
   if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
-  var pleat    = drapeState.pleat    || getOpt('pleat-cards') || '—';
-  var fabric   = drapeState.fabric   || '—';
-  var lining   = getOpt('grp-drape-lining');
-  var hwNeed   = getOpt('grp-drape-hardware');
-  var hwType   = hwNeed === 'I need hardware' ? getOpt('grp-drape-hw-type') : 'N/A';
-  var delivery = getOpt('grp-del-drape');
+  var pleat      = drapeState.pleat  || getOpt('pleat-cards') || '—';
+  var fabric     = drapeState.fabric || '—';
+  var lining     = getOpt('grp-drape-lining');
+  var panels     = getOpt('grp-drape-panels');
+  var panelSide  = panels === 'Single panel' ? getOpt('grp-drape-side') : '—';
+  var returnSz   = document.getElementById('d-return').value || '4';
+  var overlapSz  = document.getElementById('d-overlap').value || '4';
+  var controlSide= getOpt('grp-drape-control');
+  var hwNeed     = getOpt('grp-drape-hardware');
+  var hwType     = hwNeed === 'I need hardware' ? getOpt('grp-drape-hw-type') : 'N/A';
+  var delivery   = getOpt('grp-del-drape');
   var body = 'DRAPERY QUOTE REQUEST\n\n'
     + 'Name: ' + name + '\nPhone: ' + phone
     + '\nEmail: ' + (document.getElementById('d-email').value.trim() || '—')
@@ -779,12 +873,13 @@ function submitDrape() {
     + 'Pleat style: ' + (drapeState.pleat || '—') + '\n'
     + 'Fabric: ' + fabric + '\n'
     + 'Lining: ' + lining + '\n'
+    + 'Panels: ' + panels + (panelSide !== '—' ? ' — ' + panelSide : '') + '\n'
+    + 'Return: ' + returnSz + '"  Overlap: ' + overlapSz + '"  Control side: ' + controlSide + '\n'
     + 'Hardware: ' + hwNeed + (hwType !== 'N/A' ? ' — ' + hwType : '') + '\n'
-    + 'Panels / windows: ' + document.getElementById('d-qty').value
+    + 'Panel count: ' + document.getElementById('d-qty').value
     + '\nWidth range: ' + document.getElementById('d-width').value
     + '\nExact width: ' + (document.getElementById('d-exact-width').value ? document.getElementById('d-exact-width').value + '"' : '—')
-    + '\nFinished length: ' + (document.getElementById('d-exact-length').value ? document.getElementById('d-exact-length').value + '"' : '—')
-    + '\nDrop: ' + document.getElementById('d-height').value + '\n'
+    + '\nFinished length: ' + (document.getElementById('d-exact-length').value ? document.getElementById('d-exact-length').value + '"' : '—') + '\n'
     + 'Delivery: ' + delivery + '\n\n'
     + 'Notes:\n' + (document.getElementById('d-notes').value.trim() || 'None');
   window.location.href = 'mailto:justin@phillyblinds.com'
@@ -821,14 +916,20 @@ function submitRoman() {
   var w        = document.getElementById('rn-w').value;
   var h        = document.getElementById('rn-h').value;
   var qty      = document.getElementById('rn-qty').value;
-  var tdbu     = getOpt('grp-roman-tdbu');
-  var op       = getOpt('grp-roman-op');
-  var isMotor  = op === 'Motorized';
-  var liftType = !isMotor ? getOpt('grp-roman-lift') : '—';
-  var remotes  = isMotor ? getOpt('grp-roman-remotes') : '—';
-  var channel  = isMotor ? getOpt('grp-roman-channel') : '—';
-  var lining   = getOpt('grp-roman-lining');
-  var delivery = getOpt('grp-del-roman');
+  var tdbu        = getOpt('grp-roman-tdbu');
+  var op          = getOpt('grp-roman-op');
+  var isMotor     = op === 'Motorized';
+  var liftType    = !isMotor ? getOpt('grp-roman-lift') : '—';
+  var remotes     = isMotor ? getOpt('grp-roman-remotes') : '—';
+  var channel     = isMotor ? getOpt('grp-roman-channel') : '—';
+  var controlSide = getOpt('grp-roman-control');
+  var lining      = getOpt('grp-roman-lining');
+  var returnSz    = (document.getElementById('rn-return') || {}).value || '4';
+  var mountStyle  = getOpt('grp-roman-mount-style') || 'Waterfall';
+  var frontVal    = mountStyle === 'Off Back' ? ((document.getElementById('rn-valance-front') || {}).value || '6') : '—';
+  var backVal     = mountStyle === 'Off Back' ? getOpt('grp-roman-back-valance') : '—';
+  var backValSz   = backVal === 'Add back valance' ? ((document.getElementById('rn-valance-back') || {}).value || '4') : '—';
+  var delivery    = getOpt('grp-del-roman');
   var body = 'ROMAN SHADE QUOTE REQUEST\n\n'
     + 'Name: ' + name + '\nPhone: ' + phone
     + '\nEmail: ' + (document.getElementById('rn-email').value.trim() || '—')
@@ -841,6 +942,10 @@ function submitRoman() {
     + (isMotor
         ? 'Remotes: ' + remotes + '\nChannel: ' + channel + '\n'
         : 'Lift type: ' + liftType + '\n')
+    + 'Control side: ' + controlSide + '\n'
+    + 'Return: ' + returnSz + '"\n'
+    + 'Mounting: ' + mountStyle
+    + (mountStyle === 'Off Back' ? ' | Front valance: ' + frontVal + '" | Back valance: ' + (backVal === 'Add back valance' ? backValSz + '"' : 'No') : '') + '\n'
     + 'Qty: ' + qty
     + '\nWidth: ' + (w ? w + '"' : '—')
     + '  Finished length: ' + (h ? h + '"' : '—') + '\n'

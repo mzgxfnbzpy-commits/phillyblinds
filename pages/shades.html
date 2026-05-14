@@ -1291,6 +1291,14 @@
         <div style="font-size:11px;color:var(--text-dark);line-height:1.6">App &amp; voice control compatible. Battery or hardwired — confirmed at measurement visit.</div>
       </div>
 
+      <!-- Control side -->
+      <div class="step-title" style="font-size:12px;margin:14px 0 8px">Control side</div>
+      <div class="opt-row" id="pb-grp-control">
+        <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-control')">Left</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-control')">Right</button>
+      </div>
+      <div class="tooltip-note" style="margin-top:4px">Which side the chain, cord, or motor control is on when facing the window.</div>
+
       <!-- Fabric sourcing -->
       <div class="step-title" style="font-size:12px;margin:14px 0 8px">Fabric</div>
       <div class="opt-row" id="pb-grp-fabric">
@@ -2419,6 +2427,7 @@ function submitPBForm() {
     'Height:         ' + (h || '—') + '″\n' +
     'Mount type:     ' + gPB('pb-grp-mount')     + '\n' +
     'Operation:      ' + gPB('pb-grp-operation') + '\n' +
+    'Control side:   ' + gPB('pb-grp-control') + '\n' +
     'Fascia type:    ' + gPB('pb-grp-fascia') + '\n' +
     'End caps:       ' + gPB('pb-grp-endcap') + '\n' +
     'Fabric type:    ' + gPB('pb-grp-fabric-type') + '\n' +
