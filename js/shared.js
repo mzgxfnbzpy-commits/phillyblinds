@@ -126,6 +126,9 @@ function renderNav(activePage) {
         }).join('')}
       </div>
       <div class="nav-right">
+        <button class="nav-cart-btn" onclick="pbOpenCart()" aria-label="Open cart">
+          🛒 Cart<span class="nav-cart-count" id="pb-nav-cart-count" style="display:none">0</span>
+        </button>
         <a class="nav-phone" href="tel:6097421720">
           📞 (609) 742-1720 <span class="badge-24">24/7</span>
         </a>
@@ -145,6 +148,8 @@ function renderNav(activePage) {
     </div>
   `;
   _injectHead(isHome);
+  _initCart();
+  _initMotorModal();
   _initChatbot();
 }
 
@@ -232,6 +237,309 @@ function selOpt(el, groupId) {
 function getOpt(groupId) {
   const s = document.querySelector('#' + groupId + ' .opt-btn.sel');
   return s ? s.textContent.trim() : '—';
+}
+
+// ============================================================
+// GLOBAL CART ENGINE
+// ============================================================
+var _PB_CART_KEY = 'pb_cart_v1';
+
+function pbGetCart() {
+  try { return JSON.parse(localStorage.getItem(_PB_CART_KEY) || '[]'); } catch(e) { return []; }
+}
+function _pbSaveCart(cart) {
+  try { localStorage.setItem(_PB_CART_KEY, JSON.stringify(cart)); } catch(e) {}
+  _updateCartBadge();
+}
+function pbAddToCart(item) {
+  item.cartId = Date.now() + '-' + Math.floor(Math.random()*9999);
+  var cart = pbGetCart();
+  cart.push(item);
+  _pbSaveCart(cart);
+  _pbCartToast(item.product || 'Item');
+}
+function pbRemoveCartItem(cartId) {
+  _pbSaveCart(pbGetCart().filter(function(i){ return i.cartId !== cartId; }));
+  _renderCartBody();
+}
+function pbClearCart() { _pbSaveCart([]); _renderCartBody(); }
+
+function _updateCartBadge() {
+  var n = pbGetCart().length;
+  var b = document.getElementById('pb-nav-cart-count');
+  if (b) { b.textContent = n; b.style.display = n ? 'flex' : 'none'; }
+}
+function _pbCartToast(name) {
+  var t = document.getElementById('pb-cart-toast');
+  if (!t) return;
+  t.textContent = '✓ ' + name + ' added to cart';
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2600);
+}
+
+// ── Cart drawer ──────────────────────────────────────────────
+function pbOpenCart() {
+  document.getElementById('pb-cart-overlay').classList.add('open');
+  document.getElementById('pb-cart-drawer').classList.add('open');
+  _renderCartBody();
+}
+function pbCloseCart() {
+  document.getElementById('pb-cart-overlay').classList.remove('open');
+  document.getElementById('pb-cart-drawer').classList.remove('open');
+}
+function _renderCartBody() {
+  var cart = pbGetCart();
+  var body = document.getElementById('pb-cart-body');
+  if (!body) return;
+  _updateCartBadge();
+  var foot = document.getElementById('pb-cart-foot');
+  if (!cart.length) {
+    body.innerHTML = '<div class="pb-cart-empty"><div class="pb-cart-empty-icon">🛍️</div>Your cart is empty.<br><span style="font-size:12px">Configure a product and click Add to Cart.</span></div>';
+    if (foot) foot.style.display = 'none';
+    return;
+  }
+  if (foot) foot.style.display = 'block';
+  body.innerHTML = cart.map(function(item, idx) {
+    var motorHtml = '';
+    if (item.motorized && item.motorOptions) {
+      var mo = item.motorOptions;
+      var lines = ['Power: ' + mo.power];
+      if (mo.power === 'Rechargeable' && mo.chargers) lines.push('Chargers: ' + mo.chargers);
+      if (mo.power === 'Hardwire') {
+        lines.push('Wiring: ' + mo.wiring);
+        if (mo.cord) lines.push('Cord: ' + mo.cord);
+      }
+      if (mo.remote === 'Yes') lines.push('Remote: ' + mo.channel + ' × ' + mo.remotes);
+      else lines.push('Remote: No');
+      motorHtml = '<div class="pb-ci-motor">⚡ ' + lines.join(' · ') + '</div>';
+    }
+    return '<div class="pb-ci">' +
+      '<button class="pb-ci-remove" onclick="pbRemoveCartItem(\'' + item.cartId + '\')" aria-label="Remove">×</button>' +
+      '<div class="pb-ci-name">' + (item.product || 'Item') + (item.qty > 1 ? ' ×' + item.qty : '') + '</div>' +
+      (item.specs ? '<div class="pb-ci-specs">' + item.specs + '</div>' : '') +
+      motorHtml +
+      '</div>';
+  }).join('');
+}
+
+// ── Quote submit from cart ───────────────────────────────────
+function pbSubmitCartQuote() {
+  var name  = (document.getElementById('pb-cq-name')  || {}).value || '';
+  var phone = (document.getElementById('pb-cq-phone') || {}).value || '';
+  var email = (document.getElementById('pb-cq-email') || {}).value || '';
+  if (!name.trim() || !phone.trim()) { alert('Please enter your name and phone number.'); return; }
+  var cart = pbGetCart();
+  var lines = cart.map(function(item, i) {
+    var s = (i+1) + '. ' + (item.product || 'Item');
+    if (item.qty > 1) s += ' ×' + item.qty;
+    if (item.specs) s += '\n   ' + item.specs;
+    if (item.motorized && item.motorOptions) {
+      var mo = item.motorOptions;
+      s += '\n   Motorized: Power=' + mo.power;
+      if (mo.chargers) s += ', Chargers=' + mo.chargers;
+      if (mo.wiring)   s += ', Wiring=' + mo.wiring;
+      if (mo.cord)     s += ', Cord=' + mo.cord;
+      if (mo.remote === 'Yes') s += ', Remote=' + mo.channel + ' ×' + mo.remotes;
+      else s += ', Remote=No';
+    }
+    return s;
+  }).join('\n\n');
+  var body = 'CART QUOTE REQUEST\n' +
+    '==================================\n' +
+    'Name:  ' + name + '\nPhone: ' + phone + '\nEmail: ' + (email || '—') + '\n\n' +
+    'ITEMS:\n\n' + lines + '\n\n' +
+    'Notes:\n' + ((document.getElementById('pb-cq-notes') || {}).value || 'None');
+  window.location.href = 'mailto:justin@phillyblinds.com' +
+    '?subject=' + encodeURIComponent('Quote Request — ' + name) +
+    '&body=' + encodeURIComponent(body);
+  document.getElementById('pb-cart-quote-form').classList.remove('open');
+  document.getElementById('pb-cart-quote-sent').style.display = 'block';
+}
+
+// ── Inject cart DOM ─────────────────────────────────────────
+function _initCart() {
+  if (document.getElementById('pb-cart-overlay')) return;
+
+  // Toast
+  var toast = document.createElement('div');
+  toast.id = 'pb-cart-toast'; toast.className = 'pb-cart-toast';
+  document.body.appendChild(toast);
+
+  // Overlay
+  var overlay = document.createElement('div');
+  overlay.id = 'pb-cart-overlay'; overlay.className = 'pb-cart-overlay';
+  overlay.addEventListener('click', pbCloseCart);
+  document.body.appendChild(overlay);
+
+  // Drawer
+  var drawer = document.createElement('div');
+  drawer.id = 'pb-cart-drawer'; drawer.className = 'pb-cart-drawer';
+  drawer.innerHTML =
+    '<div class="pb-cart-drawer-head">' +
+      '<div><div class="pb-cart-drawer-title">Your cart</div></div>' +
+      '<button class="pb-cart-close" onclick="pbCloseCart()">×</button>' +
+    '</div>' +
+    '<div class="pb-cart-body" id="pb-cart-body"></div>' +
+    '<div id="pb-cart-foot" style="padding:16px;border-top:1px solid #e8e8e4;display:none">' +
+      '<button class="btn-gold" style="width:100%;padding:12px;font-size:14px;margin-bottom:10px" ' +
+        'onclick="document.getElementById(\'pb-cart-quote-form\').classList.toggle(\'open\')">Request quote for all items →</button>' +
+      '<div class="pb-cart-quote-form" id="pb-cart-quote-form">' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">' +
+          '<div><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Name *</label>' +
+            '<input id="pb-cq-name" type="text" placeholder="Jane Smith" style="width:100%;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit"></div>' +
+          '<div><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Phone *</label>' +
+            '<input id="pb-cq-phone" type="tel" placeholder="(215) 555-0100" style="width:100%;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit"></div>' +
+        '</div>' +
+        '<div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Email</label>' +
+          '<input id="pb-cq-email" type="email" placeholder="jane@example.com" style="width:100%;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit"></div>' +
+        '<div style="margin-bottom:12px"><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Notes</label>' +
+          '<textarea id="pb-cq-notes" placeholder="Room names, timeline, questions..." rows="2" style="width:100%;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit;resize:vertical"></textarea></div>' +
+        '<button class="btn-gold" onclick="pbSubmitCartQuote()" style="width:100%;padding:12px;font-size:14px">Send quote →</button>' +
+      '</div>' +
+      '<div id="pb-cart-quote-sent" style="display:none;text-align:center;padding:16px;background:#EAF3DE;border-radius:10px;font-size:13px;color:#27500A">' +
+        '<strong>Quote sent!</strong><br>Justin will follow up shortly.<br>' +
+        '<a href="tel:6097421720" style="color:#27500A;font-weight:600">(609) 742-1720</a>' +
+      '</div>' +
+      '<button onclick="pbClearCart()" style="display:block;width:100%;margin-top:8px;background:none;border:none;font-size:11px;color:#ccc;cursor:pointer;font-family:inherit">Clear cart</button>' +
+    '</div>';
+  document.body.appendChild(drawer);
+
+  _updateCartBadge();
+}
+
+// ============================================================
+// MOTOR OPTIONS MODAL
+// ============================================================
+var _pmmCallback = null;
+
+function pbAddToCartWithMotor(item, isMotorized) {
+  if (!isMotorized) { pbAddToCart(item); return; }
+  _pmmCallback = function(opts) {
+    item.motorized = true;
+    item.motorOptions = opts;
+    pbAddToCart(item);
+  };
+  var ov = document.getElementById('pb-motor-overlay');
+  if (ov) {
+    // reset
+    ov.querySelectorAll('.pmm-opt').forEach(function(b){ b.classList.remove('sel'); });
+    ['pmm-rechargeable-opts','pmm-hardwire-opts','pmm-cord-opts','pmm-remote-detail'].forEach(function(id){
+      var el = document.getElementById(id); if(el) el.style.display='none';
+    });
+    ov.classList.add('open');
+  }
+}
+
+function _pmmSel(btn, grpId) {
+  document.querySelectorAll('#' + grpId + ' .pmm-opt').forEach(function(b){ b.classList.remove('sel'); });
+  btn.classList.add('sel');
+}
+function _pmmGet(grpId) {
+  var s = document.querySelector('#' + grpId + ' .pmm-opt.sel');
+  return s ? s.textContent.trim() : '';
+}
+function _pmmPower(type) {
+  document.getElementById('pmm-rechargeable-opts').style.display = type==='rechargeable' ? 'block':'none';
+  document.getElementById('pmm-hardwire-opts').style.display     = type==='hardwire'     ? 'block':'none';
+}
+function _pmmWiring(type) {
+  document.getElementById('pmm-cord-opts').style.display = type==='plugin' ? 'block':'none';
+}
+function _pmmRemote(val) {
+  document.getElementById('pmm-remote-detail').style.display = val==='yes' ? 'block':'none';
+}
+function _pmmConfirm() {
+  var power = _pmmGet('pmm-grp-power');
+  if (!power) { alert('Please select a power type.'); return; }
+  var remote = _pmmGet('pmm-grp-remote');
+  if (!remote) { alert('Please choose whether you need a remote.'); return; }
+  var opts = { power: power };
+  if (power === 'Rechargeable') opts.chargers = _pmmGet('pmm-grp-chargers') || '1';
+  if (power === 'Hardwire') {
+    opts.wiring = _pmmGet('pmm-grp-wiring');
+    if (opts.wiring === 'Line voltage (plug-in)') opts.cord = _pmmGet('pmm-grp-cord') || '6 ft';
+  }
+  opts.remote = remote === 'Yes' ? 'Yes' : 'No';
+  if (remote === 'Yes') {
+    opts.channel = _pmmGet('pmm-grp-channel') || 'Single channel';
+    opts.remotes = _pmmGet('pmm-grp-remotes') || '1';
+  }
+  document.getElementById('pb-motor-overlay').classList.remove('open');
+  if (_pmmCallback) { _pmmCallback(opts); _pmmCallback = null; }
+}
+
+function _initMotorModal() {
+  if (document.getElementById('pb-motor-overlay')) return;
+  var ov = document.createElement('div');
+  ov.id = 'pb-motor-overlay'; ov.className = 'pb-motor-overlay';
+  ov.addEventListener('click', function(e){ if(e.target===ov) ov.classList.remove('open'); });
+  ov.innerHTML =
+    '<div class="pb-motor-modal">' +
+      '<div class="pb-motor-modal-head">⚡ Motorization options</div>' +
+      '<div class="pb-motor-modal-sub">Tell us how you want this shade powered and controlled.</div>' +
+
+      // Power type
+      '<div class="pmm-section"><div class="pmm-label">Power type</div>' +
+        '<div class="pmm-row" id="pmm-grp-power">' +
+          '<button class="pmm-opt" onclick="_pmmSel(this,\'pmm-grp-power\');_pmmPower(\'rechargeable\')">Rechargeable</button>' +
+          '<button class="pmm-opt" onclick="_pmmSel(this,\'pmm-grp-power\');_pmmPower(\'hardwire\')">Hardwire</button>' +
+        '</div></div>' +
+
+      // Rechargeable sub
+      '<div id="pmm-rechargeable-opts" style="display:none" class="pmm-sub">' +
+        '<div class="pmm-sub-label">Number of chargers</div>' +
+        '<div class="pmm-row" id="pmm-grp-chargers">' +
+          '<button class="pmm-opt sel" onclick="_pmmSel(this,\'pmm-grp-chargers\')">1</button>' +
+          '<button class="pmm-opt" onclick="_pmmSel(this,\'pmm-grp-chargers\')">2</button>' +
+          '<button class="pmm-opt" onclick="_pmmSel(this,\'pmm-grp-chargers\')">3</button>' +
+          '<button class="pmm-opt" onclick="_pmmSel(this,\'pmm-grp-chargers\')">4+</button>' +
+        '</div></div>' +
+
+      // Hardwire sub
+      '<div id="pmm-hardwire-opts" style="display:none" class="pmm-sub">' +
+        '<div class="pmm-sub-label">Wiring type</div>' +
+        '<div class="pmm-row" id="pmm-grp-wiring">' +
+          '<button class="pmm-opt" onclick="_pmmSel(this,\'pmm-grp-wiring\');_pmmWiring(\'lowv\')">Low voltage</button>' +
+          '<button class="pmm-opt" onclick="_pmmSel(this,\'pmm-grp-wiring\');_pmmWiring(\'plugin\')">Line voltage (plug-in)</button>' +
+        '</div>' +
+        '<div id="pmm-cord-opts" style="display:none;margin-top:12px">' +
+          '<div class="pmm-sub-label">Cord length</div>' +
+          '<div class="pmm-row" id="pmm-grp-cord">' +
+            '<button class="pmm-opt sel" onclick="_pmmSel(this,\'pmm-grp-cord\')">6 ft</button>' +
+            '<button class="pmm-opt" onclick="_pmmSel(this,\'pmm-grp-cord\')">10 ft</button>' +
+          '</div></div></div>' +
+
+      // Remote
+      '<div class="pmm-section"><div class="pmm-label">Do you want a remote?</div>' +
+        '<div class="pmm-row" id="pmm-grp-remote">' +
+          '<button class="pmm-opt" onclick="_pmmSel(this,\'pmm-grp-remote\');_pmmRemote(\'yes\')">Yes</button>' +
+          '<button class="pmm-opt" onclick="_pmmSel(this,\'pmm-grp-remote\');_pmmRemote(\'no\')">No</button>' +
+        '</div></div>' +
+
+      // Remote detail
+      '<div id="pmm-remote-detail" style="display:none" class="pmm-sub">' +
+        '<div class="pmm-sub-label">Channel type</div>' +
+        '<div class="pmm-row" id="pmm-grp-channel">' +
+          '<button class="pmm-opt sel" onclick="_pmmSel(this,\'pmm-grp-channel\')">Single channel</button>' +
+          '<button class="pmm-opt" onclick="_pmmSel(this,\'pmm-grp-channel\')">Multi channel</button>' +
+        '</div>' +
+        '<div class="pmm-note" style="margin-bottom:8px">Single: one remote for all shades together. Multi: control each shade independently.</div>' +
+        '<div class="pmm-sub-label" style="margin-top:8px">Number of remotes</div>' +
+        '<div class="pmm-row" id="pmm-grp-remotes">' +
+          '<button class="pmm-opt sel" onclick="_pmmSel(this,\'pmm-grp-remotes\')">1</button>' +
+          '<button class="pmm-opt" onclick="_pmmSel(this,\'pmm-grp-remotes\')">2</button>' +
+          '<button class="pmm-opt" onclick="_pmmSel(this,\'pmm-grp-remotes\')">3</button>' +
+          '<button class="pmm-opt" onclick="_pmmSel(this,\'pmm-grp-remotes\')">4+</button>' +
+        '</div></div>' +
+
+      // Confirm
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px">' +
+        '<button onclick="document.getElementById(\'pb-motor-overlay\').classList.remove(\'open\')" ' +
+          'style="padding:11px;border:1.5px solid #e8e8e4;border-radius:8px;background:#fff;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">Cancel</button>' +
+        '<button onclick="_pmmConfirm()" class="btn-gold" style="padding:11px;font-size:14px">Add to cart →</button>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(ov);
 }
 
 // ---- SHIPPING ESTIMATOR ----
