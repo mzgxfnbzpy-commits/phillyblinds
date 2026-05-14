@@ -239,36 +239,13 @@ body {
   /* Footer */
   .footer-col a { font-size: 13px; margin-bottom: 8px; }
 
-  /* Toasts: float above sticky bar */
-  .pb-cart-toast { bottom: 72px; }
-  .add-toast { bottom: 76px; right: 12px; }
-
-  /* Chatbot: above sticky bar */
+  /* Chatbot bubble + help button above sticky bar (!important beats later base styles) */
   #pb-chat { bottom: 80px !important; right: 16px !important; }
-  .pb-chat-panel {
-    width: calc(100vw - 24px);
-    right: -8px;
-    max-height: 65vh;
-  }
-
-  /* Measure help "?" button: above chatbot */
   #pb-help-btn { bottom: 148px !important; }
 
-  /* Motor modal: slide up from bottom */
-  .pb-motor-overlay { padding: 0; align-items: flex-end; }
-  .pb-motor-modal {
-    border-radius: 20px 20px 0 0;
-    max-height: 88vh;
-    max-width: 100%;
-    padding: 20px 16px;
-  }
-
-  /* Lightbox: slide up from bottom */
+  /* Lightbox: slide up from bottom (base defined above this block — override works) */
   .lb-wrap { padding: 0; align-items: flex-end; }
   .lb-box { border-radius: 16px 16px 0 0; width: 100%; max-width: 100%; }
-
-  /* Cart drawer: full width */
-  .pb-cart-drawer { max-width: 100%; }
 
   /* Space for sticky mobile CTA bar */
   body { padding-bottom: 64px; }
@@ -468,3 +445,27 @@ body {
 .dim-box .form-group input{font-size:22px;font-weight:600;color:#1a1a1a;height:54px;border:2px solid #e8e8e4;border-radius:8px;text-align:center;letter-spacing:-0.5px}
 .dim-box .form-group input:focus{border-color:var(--gold);outline:none}
 .dim-box .dim-unit{font-size:11px;color:#999;text-align:center;margin-top:4px}
+
+/* ============================================================
+   MOBILE OVERRIDES — must live after all base component styles
+   to win the CSS cascade without needing !important
+   ============================================================ */
+@media (max-width: 600px) {
+  /* Cart toast: float above sticky bar */
+  .pb-cart-toast { bottom: 72px; }
+  /* shades.html add-toast (inline style on page; needs !important to beat it) */
+  .add-toast { bottom: 76px !important; right: 12px !important; }
+
+  /* Chatbot panel: narrower + height-capped */
+  .pb-chat-panel { width: calc(100vw - 24px); right: -8px; max-height: 65vh; }
+
+  /* Cart drawer: full width */
+  .pb-cart-drawer { max-width: 100%; }
+
+  /* Motor modal: slide up from bottom */
+  .pb-motor-overlay { padding: 0; align-items: flex-end; }
+  .pb-motor-modal { border-radius: 20px 20px 0 0; max-height: 88vh; max-width: 100%; padding: 20px 16px; }
+
+  /* Motor option buttons: larger tap targets */
+  .pmm-opt { padding: 12px 16px; min-height: 44px; font-size: 14px; }
+}
