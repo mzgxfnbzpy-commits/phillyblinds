@@ -15,8 +15,8 @@
 <title>Plantation Shutters — Philly Blinds</title>
 <link rel="stylesheet" href="../css/global.css">
 <style>
-.page-hero{background:var(--espresso);padding:48px 28px 44px;position:relative;overflow:hidden}
-.hero-deco{position:absolute;right:0;top:0;bottom:0;width:180px;background:var(--espresso-mid);opacity:0.5}
+.page-hero{background:linear-gradient(to right,rgba(28,21,16,.96) 40%,rgba(28,21,16,.65) 70%,rgba(28,21,16,.40) 100%),url('../images/thumbnails/FULL SIZE 4 DOOR SHUTTERS.JPEG') right center/cover no-repeat;padding:48px 28px 44px;position:relative;overflow:hidden;min-height:320px}
+.hero-deco{display:none}
 .hero-inner{max-width:560px;position:relative;z-index:1}
 .breadcrumb{font-size:11px;color:var(--text-faint);margin-bottom:16px}
 .breadcrumb a{color:var(--text-muted);text-decoration:none}
@@ -105,7 +105,10 @@
       <span class="badge badge-quote">Custom quote</span>
       <span style="font-size:12px;color:var(--text-muted)">&middot; professional installation included</span>
     </div>
-    <div class="hero-phone"><a href="tel:6097421720">(609) 742-1720</a> &middot; 24/7</div>
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <a href="tel:6097421720" style="display:inline-flex;align-items:center;gap:7px;background:var(--gold);color:var(--espresso);font-size:13px;font-weight:700;padding:10px 18px;border-radius:8px;text-decoration:none">&#128222; Call Justin — (609) 742-1720</a>
+      <span style="font-size:11px;color:var(--text-faint)">24/7 call or text</span>
+    </div>
   </div>
 </div>
 <div style="display:grid;grid-template-columns:1fr 1fr 2fr;height:200px;gap:3px;overflow:hidden">
@@ -437,12 +440,70 @@
   </div>
 </div>
 
+<!-- QUICK QUOTE FORM -->
+<div class="section section-warm" style="padding-top:40px;padding-bottom:40px">
+  <div style="max-width:600px;margin:0 auto">
+    <div class="section-label">Get a quote</div>
+    <div class="section-title" style="margin-bottom:6px">Request a shutter quote</div>
+    <div class="section-sub" style="margin-bottom:24px">Every shutter is custom — tell Justin about your project and he'll get back to you with pricing. Or call: <a href="tel:6097421720" style="color:var(--gold);text-decoration:none;font-weight:500">(609) 742-1720</a></div>
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="shutter-quote-form" onsubmit="handleShutterQuote(event)">
+      <div class="form-row">
+        <div class="form-group"><label>Your name *</label><input type="text" name="name" placeholder="Jane Smith" required></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" name="phone" placeholder="(215) 555-0100" required></div>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" name="email" placeholder="jane@example.com"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Number of windows</label><input type="number" name="window_count" min="1" placeholder="3"></div>
+        <div class="form-group"><label>Timeline</label><input type="text" name="timeline" placeholder="e.g. within 2 weeks"></div>
+      </div>
+      <div class="form-group"><label>Notes</label><textarea name="notes" placeholder="Room names, window sizes if you have them, any special requirements..." rows="3"></textarea></div>
+      <div style="background:#FBF7F0;border:1px solid #e8e8e4;border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:#888">
+        <strong style="color:#555">Secure checkout coming soon</strong> — shutters are ordered by phone/email after a free measurement visit.<br>
+        Call Justin: <a href="tel:6097421720" style="color:var(--gold);font-weight:500;text-decoration:none">(609) 742-1720</a> &mdash; 24/7
+      </div>
+      <button type="submit" class="btn-gold" style="width:100%;padding:13px;font-size:14px">Send quote request &rarr;</button>
+    </form>
+    <div id="shutter-quote-success" style="display:none;background:#EAF3DE;border-radius:12px;padding:24px;text-align:center;margin-top:8px">
+      <div style="font-size:18px;margin-bottom:8px">&#10003; Quote request sent!</div>
+      <p style="font-size:13px;color:#3B6D11;margin-bottom:12px">Justin will be in touch within a few hours. Urgent?</p>
+      <a href="tel:6097421720" style="display:inline-block;background:var(--espresso);color:var(--gold);font-size:15px;font-weight:700;padding:11px 22px;border-radius:8px;text-decoration:none">(609) 742-1720</a>
+    </div>
+  </div>
+</div>
+
 <footer class="site-footer" id="site-footer"></footer>
 
 <script src="../js/shared.js"></script>
 <script>
 renderNav('Shutters');
 renderFooter(false);
+_initMeasureHelp(`
+  <div class="pb-help-heading">How to measure for plantation shutters</div>
+  <div class="pb-help-sub">Every shutter is custom — precise measurement is critical</div>
+  <div class="pb-help-section">
+    <h4>Inside mount (most common)</h4>
+    <ol>
+      <li>Measure width at <strong>top, middle, and bottom</strong> of opening — note all three.</li>
+      <li>Measure height at <strong>left, center, and right</strong> — note all three.</li>
+      <li>Note the <strong>window depth</strong> (from front of frame to glass) — shutters need min. 2.5&Prime; for 2.5&Prime; louvers.</li>
+    </ol>
+    <div class="pb-help-tip">For multi-panel windows, measure each section separately.</div>
+  </div>
+  <div class="pb-help-section">
+    <h4>Outside mount</h4>
+    <ul>
+      <li>Add 1–2 inches to each side of the frame for overlap and light control.</li>
+      <li>Add 1–2 inches above and below the frame.</li>
+    </ul>
+  </div>
+  <div class="pb-help-section">
+    <h4>The 3W × 3H rule</h4>
+    <ul>
+      <li>Always take <strong>3 width</strong> and <strong>3 height</strong> measurements — windows are rarely square.</li>
+      <li>We fabricate to the most restrictive dimension to ensure fit.</li>
+    </ul>
+  </div>
+`, '../pages/measure-shutters.html');
 
 function handleSpecialShape(el) {
   const note = document.getElementById('special-shape-note');
@@ -509,13 +570,33 @@ function submitShutterForm() {
     'Delivery: ' + delivery + '\n\n' +
     'Notes:\n' + (notes || '(none)');
 
-  window.location.href = 'mailto:blindznation@gmail.com' +
+  window.location.href = 'mailto:justin@phillyblinds.com' +
     '?subject=' + encodeURIComponent('Shutter Quote — ' + name) +
     '&body='    + encodeURIComponent(body);
 
   document.getElementById('shutter-form-inner').style.display = 'none';
   document.getElementById('shutter-success').style.display = 'block';
   document.getElementById('shutter-success').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+async function handleShutterQuote(e) {
+  e.preventDefault();
+  const form = document.getElementById('shutter-quote-form');
+  const btn = form.querySelector('button[type="submit"]');
+  btn.disabled = true; btn.textContent = 'Sending…';
+  try {
+    const resp = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+    if (resp.ok) {
+      form.style.display = 'none';
+      document.getElementById('shutter-quote-success').style.display = 'block';
+    } else {
+      btn.disabled = false; btn.textContent = 'Send quote request →';
+      alert('Something went wrong. Please call (609) 742-1720 or email justin@phillyblinds.com');
+    }
+  } catch(err) {
+    btn.disabled = false; btn.textContent = 'Send quote request →';
+    alert('Connection error. Please call Justin at (609) 742-1720 — available 24/7.');
+  }
 }
 </script>
 </body>

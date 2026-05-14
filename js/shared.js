@@ -44,7 +44,7 @@ function _injectHead(isHome) {
       "description": "Custom window treatments — roller shades, cellular shades, roman shades, drapery, and plantation shutters. Fabrication and installation serving Philadelphia and surrounding area.",
       "url": "https://phillyblinds.com",
       "telephone": "+16097421720",
-      "email": "blindznation@gmail.com",
+      "email": "justin@phillyblinds.com",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Huntingdon Valley",
@@ -161,7 +161,9 @@ function renderFooter(isHome) {
         <div class="footer-brand-alt">Blindznation</div>
         <div class="footer-company">Michael J. Healy Installations LLC</div>
         <div class="footer-tagline">Professional window treatment installation across Philadelphia &amp; surrounding areas.</div>
-        <div class="footer-phone">(609) 742-1720</div>
+        <a href="tel:6097421720" style="display:block;font-size:15px;font-weight:600;color:var(--gold);text-decoration:none;margin-bottom:2px">(609) 742-1720</a>
+        <div style="font-size:11px;color:var(--text-faint);margin-bottom:6px">Justin Healy &mdash; call or text 24/7</div>
+        <a href="mailto:justin@phillyblinds.com" style="font-size:12px;color:var(--text-muted);text-decoration:none">justin@phillyblinds.com</a>
       </div>
       <div class="footer-col">
         <h4>Shades</h4>
@@ -228,6 +230,64 @@ function selOpt(el, groupId) {
 function getOpt(groupId) {
   const s = document.querySelector('#' + groupId + ' .opt-btn.sel');
   return s ? s.textContent.trim() : '—';
+}
+
+// ---- MEASURE HELP MODAL ----
+function _initMeasureHelp(htmlContent, measurePageUrl) {
+  if (document.getElementById('pb-help-btn')) return;
+  measurePageUrl = measurePageUrl || '../pages/measure.html';
+
+  const style = document.createElement('style');
+  style.textContent = `
+    #pb-help-btn{position:fixed;bottom:90px;right:20px;z-index:400;width:44px;height:44px;border-radius:50%;background:var(--espresso);border:2px solid var(--gold);color:var(--gold);font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(0,0,0,0.3);transition:transform 0.15s}
+    #pb-help-btn:hover{transform:scale(1.1)}
+    #pb-help-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:410;align-items:flex-end;justify-content:center}
+    #pb-help-overlay.open{display:flex}
+    @media(min-width:600px){#pb-help-overlay{align-items:center}}
+    #pb-help-modal{background:#fff;width:100%;max-width:520px;border-radius:16px 16px 0 0;max-height:82vh;overflow-y:auto;padding:24px;position:relative}
+    @media(min-width:600px){#pb-help-modal{border-radius:16px;max-height:80vh}}
+    #pb-help-close{position:absolute;top:14px;right:14px;background:none;border:none;font-size:22px;cursor:pointer;color:#999;line-height:1}
+    #pb-help-close:hover{color:#333}
+    .pb-help-heading{font-size:17px;font-weight:600;color:var(--espresso);margin-bottom:4px}
+    .pb-help-sub{font-size:12px;color:#888;margin-bottom:20px}
+    .pb-help-section{margin-bottom:18px}
+    .pb-help-section h4{font-size:13px;font-weight:600;color:var(--espresso);margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #f0f0ec}
+    .pb-help-section ol,.pb-help-section ul{padding-left:18px;font-size:13px;color:#444;line-height:1.8}
+    .pb-help-tip{background:#FBF7F0;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 13px;font-size:12px;color:#555;line-height:1.6;margin-top:10px}
+    .pb-help-full-link{display:block;text-align:center;margin-top:16px;font-size:13px;color:var(--gold);text-decoration:none;font-weight:500}
+    .pb-help-full-link:hover{text-decoration:underline}
+    .pb-help-call{display:flex;align-items:center;gap:10px;background:var(--espresso);border-radius:10px;padding:14px 16px;margin-top:16px}
+    .pb-help-call a{color:var(--gold);font-weight:700;text-decoration:none;font-size:14px}
+    .pb-help-call span{font-size:12px;color:#9A8570}
+  `;
+  document.head.appendChild(style);
+
+  const btn = document.createElement('button');
+  btn.id = 'pb-help-btn';
+  btn.setAttribute('aria-label', 'Measuring help');
+  btn.innerHTML = '?';
+  document.body.appendChild(btn);
+
+  const overlay = document.createElement('div');
+  overlay.id = 'pb-help-overlay';
+  overlay.innerHTML = `
+    <div id="pb-help-modal" role="dialog" aria-modal="true" aria-label="Measuring guide">
+      <button id="pb-help-close" aria-label="Close help">&times;</button>
+      ${htmlContent}
+      <a class="pb-help-full-link" href="${measurePageUrl}">View full measuring guide &rarr;</a>
+      <div class="pb-help-call">
+        <div>
+          <a href="tel:6097421720">&#128222; (609) 742-1720</a>
+          <div><span>Call or text Justin — he'll walk you through it, 24/7</span></div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  btn.addEventListener('click', () => overlay.classList.add('open'));
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
+  document.getElementById('pb-help-close').addEventListener('click', () => overlay.classList.remove('open'));
 }
 
 // ---- CHATBOT ----

@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="../css/global.css">
 <style>
 /* ── HERO ── */
-.page-hero{background:var(--espresso);padding:44px 28px 40px}
+.page-hero{background:linear-gradient(to right,rgba(28,21,16,.96) 40%,rgba(28,21,16,.65) 70%,rgba(28,21,16,.40) 100%),url('../images/thumbnails/CUSTOM DRAPES.JPEG') right center/cover no-repeat;padding:44px 28px 40px;min-height:320px;position:relative;overflow:hidden}
 .breadcrumb{font-size:11px;color:var(--text-faint);margin-bottom:14px}
 .breadcrumb a{color:var(--text-muted);text-decoration:none}
 .breadcrumb a:hover{color:var(--cream)}
@@ -45,8 +45,8 @@
 .opt-card.sel{border:2px solid var(--gold);box-shadow:0 2px 16px rgba(45,224,193,.2)}
 .opt-card.sel .opt-label-bar{background:var(--gold)}
 .opt-card.sel .opt-name,.opt-card.sel .opt-desc{color:var(--espresso)}
-.opt-art{height:130px;overflow:hidden;background:#F8F4EE;display:flex;align-items:center;justify-content:center;position:relative}
-.opt-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.opt-art{height:160px;overflow:hidden;background:#F8F4EE;display:flex;align-items:center;justify-content:center;position:relative}
+.opt-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 15%;display:block}
 .opt-label-bar{background:#f2ede6;padding:11px 13px;transition:background .15s}
 .opt-name{font-size:13px;font-weight:500;color:#222;margin-bottom:1px}
 .opt-desc{font-size:11px;color:#888;line-height:1.4}
@@ -97,6 +97,10 @@
     <span class="hero-pill">Motorization available</span>
     <span class="hero-pill">Free in-home consult</span>
   </div>
+  <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+    <a href="tel:6097421720" style="display:inline-flex;align-items:center;gap:7px;background:var(--gold);color:var(--espresso);font-size:13px;font-weight:700;padding:10px 18px;border-radius:8px;text-decoration:none">&#128222; Call Justin — (609) 742-1720</a>
+    <span style="font-size:11px;color:var(--text-faint)">24/7 call or text</span>
+  </div>
 </div>
 
 <!-- HERO PHOTO STRIP -->
@@ -126,31 +130,31 @@
     <div class="opt-cards" id="pleat-cards">
       <div class="opt-card" onclick="selectPleat(this,'Ripple Fold')">
         <div class="opt-art">
-          <img src="../images/pleat-styles/ripplefold.png" alt="Ripple fold drapery" style="object-position:center top">
+          <img src="../images/pleat-styles/ripplefold.png" alt="Ripple fold drapery">
         </div>
         <div class="opt-label-bar"><div class="opt-name">Ripple Fold</div><div class="opt-desc">Continuous S-wave, modern clean look</div></div>
       </div>
       <div class="opt-card" onclick="selectPleat(this,'Pinch Pleat')">
         <div class="opt-art">
-          <img src="../images/pleat-styles/pinch-pleat.png" alt="Pinch pleat drapery" style="object-position:center top">
+          <img src="../images/pleat-styles/pinch-pleat.png" alt="Pinch pleat drapery">
         </div>
         <div class="opt-label-bar"><div class="opt-name">Pinch Pleat</div><div class="opt-desc">2-prong or 3-prong, tack top or bottom</div></div>
       </div>
       <div class="opt-card" onclick="selectPleat(this,'Box Pleat')">
         <div class="opt-art">
-          <img src="../images/pleat-styles/box-pleat.png" alt="Box pleat drapery" style="object-position:center top">
+          <img src="../images/pleat-styles/box-pleat.png" alt="Box pleat drapery">
         </div>
         <div class="opt-label-bar"><div class="opt-name">Box Pleat</div><div class="opt-desc">Structured flat pleat, tailored look</div></div>
       </div>
       <div class="opt-card" onclick="selectPleat(this,'Goblet Pleat')">
         <div class="opt-art">
-          <img src="../images/pleat-styles/goblet-pleat.png" alt="Goblet pleat drapery" style="object-position:center top">
+          <img src="../images/pleat-styles/goblet-pleat.png" alt="Goblet pleat drapery">
         </div>
         <div class="opt-label-bar"><div class="opt-name">Goblet Pleat</div><div class="opt-desc">Formal chalice-shaped heading</div></div>
       </div>
       <div class="opt-card" onclick="selectPleat(this,'Grommet / Eyelet')">
         <div class="opt-art">
-          <img src="../images/pleat-styles/grommet-eyelet.png" alt="Grommet eyelet drapery" style="object-position:center 20%">
+          <img src="../images/pleat-styles/grommet-eyelet.png" alt="Grommet eyelet drapery">
         </div>
         <div class="opt-label-bar"><div class="opt-name">Grommet / Eyelet</div><div class="opt-desc">Metal rings slide directly on rod</div></div>
       </div>
@@ -162,7 +166,7 @@
       </div>
       <div class="opt-card" onclick="selectPleat(this,'Rod Pocket / Sheered Pocket')">
         <div class="opt-art">
-          <img src="../images/pleat-styles/rod-pocket.jpg" alt="Rod pocket sheered pocket drapery" style="object-position:center top">
+          <img src="../images/pleat-styles/rod-pocket.jpg" alt="Rod pocket sheered pocket drapery">
         </div>
         <div class="opt-label-bar"><div class="opt-name">Rod Pocket / Sheered Pocket</div><div class="opt-desc">Casual gathered sleeve at top</div></div>
       </div>
@@ -176,13 +180,13 @@
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
         <div class="opt-card" id="pp-top-2" onclick="selectPinchDetail(this,'Pinch Pleat — 2-Prong Tack Top')">
           <div class="opt-art">
-            <img src="../images/pleat-styles/pinch-2prong-tack-top.png" alt="2-prong tack top" style="object-position:center top">
+            <img src="../images/pleat-styles/pinch-2prong-tack-top.png" alt="2-prong tack top">
           </div>
           <div class="opt-label-bar"><div class="opt-name">2-Prong Tack Top</div><div class="opt-desc">Classic 2-prong, tack at heading</div></div>
         </div>
         <div class="opt-card" id="pp-top-3" onclick="selectPinchDetail(this,'Pinch Pleat — 3-Prong Tack Top')">
           <div class="opt-art">
-            <img src="../images/pleat-styles/pinch-3prong-tack-top.png" alt="3-prong tack top" style="object-position:center top">
+            <img src="../images/pleat-styles/pinch-3prong-tack-top.png" alt="3-prong tack top">
           </div>
           <div class="opt-label-bar"><div class="opt-name">3-Prong Tack Top</div><div class="opt-desc">Fuller, richer triple pleat at heading</div></div>
         </div>
@@ -192,13 +196,13 @@
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
         <div class="opt-card" id="pp-bot-2" onclick="selectPinchDetail(this,'Pinch Pleat — 2-Prong Tack Bottom')">
           <div class="opt-art">
-            <img src="../images/pleat-styles/pinch-2prong-tack-bottom.png" alt="2-prong tack bottom" style="object-position:center top">
+            <img src="../images/pleat-styles/pinch-2prong-tack-bottom.png" alt="2-prong tack bottom">
           </div>
           <div class="opt-label-bar"><div class="opt-name">2-Prong Tack Bottom</div><div class="opt-desc">2-prong, tack at base of pleat</div></div>
         </div>
         <div class="opt-card" id="pp-bot-3" onclick="selectPinchDetail(this,'Pinch Pleat — 3-Prong Tack Bottom')">
           <div class="opt-art">
-            <img src="../images/pleat-styles/pinch-3prong-tack-bottom.png" alt="3-prong tack bottom pinch pleat drapery" style="object-position:center top">
+            <img src="../images/pleat-styles/pinch-3prong-tack-bottom.png" alt="3-prong tack bottom pinch pleat drapery">
           </div>
           <div class="opt-label-bar"><div class="opt-name">3-Prong Tack Bottom</div><div class="opt-desc">Full triple pleat, tack at base</div></div>
         </div>
@@ -327,31 +331,31 @@
     <div class="opt-cards" id="roman-style-cards">
       <div class="opt-card" onclick="selectRomanStyle(this,'Flat Roman')">
         <div class="opt-art">
-          <img src="../images/thumbnails/flat roman shade unlined.JPG" alt="Flat Roman shade" style="object-position:center top">
+          <img src="../images/thumbnails/flat roman shade unlined.JPG" alt="Flat Roman shade">
         </div>
         <div class="opt-label-bar"><div class="opt-name">Flat Roman</div><div class="opt-desc">Clean, minimal, no folds when down</div></div>
       </div>
       <div class="opt-card" onclick="selectRomanStyle(this,'Hobbled Roman')">
         <div class="opt-art">
-          <img src="../images/thumbnails/BEST SMILE ROMAN.JPEG" alt="Hobbled Roman shade cascading folds" style="object-position:center top">
+          <img src="../images/thumbnails/BEST SMILE ROMAN.JPEG" alt="Hobbled Roman shade cascading folds">
         </div>
         <div class="opt-label-bar"><div class="opt-name">Hobbled Roman</div><div class="opt-desc">Cascading soft folds, classic look</div></div>
       </div>
       <div class="opt-card" onclick="selectRomanStyle(this,'Relaxed Roman')">
         <div class="opt-art">
-          <img src="../images/thumbnails/RELAXED ROMAN 2.jpeg" alt="Relaxed Roman shade casual curved hem" style="object-position:center top">
+          <img src="../images/thumbnails/RELAXED ROMAN 2.jpeg" alt="Relaxed Roman shade casual curved hem">
         </div>
         <div class="opt-label-bar"><div class="opt-name">Relaxed Roman</div><div class="opt-desc">Casual curved hem, soft &amp; informal</div></div>
       </div>
       <div class="opt-card" onclick="selectRomanStyle(this,'Top-Down Bottom-Up (TDBU)')">
         <div class="opt-art">
-          <img src="../images/thumbnails/TDBU flat roman shade.JPEG" alt="Top-down bottom-up Roman shade" style="object-position:center top">
+          <img src="../images/thumbnails/TDBU flat roman shade.JPEG" alt="Top-down bottom-up Roman shade">
         </div>
         <div class="opt-label-bar"><div class="opt-name">Top-Down / Bottom-Up</div><div class="opt-desc">Opens from top OR bottom — privacy + light</div></div>
       </div>
       <div class="opt-card" onclick="selectRomanStyle(this,'Arch / Specialty Shape')">
         <div class="opt-art">
-          <img src="../images/thumbnails/CUSTOM ARCH TOP DRAPES.JPEG" alt="Arch and specialty shape custom window treatments" style="object-position:center top">
+          <img src="../images/thumbnails/CUSTOM ARCH TOP DRAPES.JPEG" alt="Arch and specialty shape custom window treatments">
         </div>
         <div class="opt-label-bar"><div class="opt-name">Arch / Specialty Shape</div><div class="opt-desc">Custom arched, oval, or other shapes — always custom quote</div></div>
       </div>
@@ -500,10 +504,79 @@
   </div>
 </div>
 
+<!-- QUICK QUOTE FORM -->
+<div class="section section-warm" style="padding-top:40px;padding-bottom:40px">
+  <div style="max-width:600px;margin:0 auto">
+    <div class="section-label">Get a quote</div>
+    <div class="section-title" style="margin-bottom:6px">Request a drapery or roman shade quote</div>
+    <div class="section-sub" style="margin-bottom:24px">All soft treatments are custom — no two alike. Tell Justin what you need and he'll follow up with pricing. Or call: <a href="tel:6097421720" style="color:var(--gold);text-decoration:none;font-weight:500">(609) 742-1720</a></div>
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="soft-quote-form" onsubmit="handleSoftQuote(event)">
+      <div class="form-row">
+        <div class="form-group"><label>Your name *</label><input type="text" name="name" placeholder="Jane Smith" required></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" name="phone" placeholder="(215) 555-0100" required></div>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" name="email" placeholder="jane@example.com"></div>
+      <div class="form-group">
+        <label>What are you looking for?</label>
+        <select name="product" style="width:100%;padding:10px 12px;border:1px solid #e8e8e4;border-radius:8px;font-size:13px;font-family:var(--font);background:#fff;color:#333">
+          <option value="">Select...</option>
+          <option>Custom drapery panels</option>
+          <option>Roman shades</option>
+          <option>Both drapery and roman shades</option>
+          <option>Not sure — need a consultation</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Number of windows</label><input type="number" name="window_count" min="1" placeholder="3"></div>
+        <div class="form-group"><label>Timeline</label><input type="text" name="timeline" placeholder="e.g. within 2 weeks"></div>
+      </div>
+      <div class="form-group"><label>Notes</label><textarea name="notes" placeholder="Fabric preferences, room description, motorization interest..." rows="3"></textarea></div>
+      <div style="background:#FBF7F0;border:1px solid #e8e8e4;border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:#888">
+        <strong style="color:#555">Secure checkout coming soon</strong> — soft treatments are ordered after a free in-home consult and fabric selection.<br>
+        Call Justin: <a href="tel:6097421720" style="color:var(--gold);font-weight:500;text-decoration:none">(609) 742-1720</a> &mdash; 24/7
+      </div>
+      <button type="submit" class="btn-gold" style="width:100%;padding:13px;font-size:14px">Send quote request &rarr;</button>
+    </form>
+    <div id="soft-quote-success" style="display:none;background:#EAF3DE;border-radius:12px;padding:24px;text-align:center;margin-top:8px">
+      <div style="font-size:18px;margin-bottom:8px">&#10003; Quote request sent!</div>
+      <p style="font-size:13px;color:#3B6D11;margin-bottom:12px">Justin will follow up within a few hours.</p>
+      <a href="tel:6097421720" style="display:inline-block;background:var(--espresso);color:var(--gold);font-size:15px;font-weight:700;padding:11px 22px;border-radius:8px;text-decoration:none">(609) 742-1720</a>
+    </div>
+  </div>
+</div>
+
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script>
 renderNav('Soft treatments'); renderFooter(false);
+_initMeasureHelp(`
+  <div class="pb-help-heading">Drapery &amp; roman shade measuring</div>
+  <div class="pb-help-sub">Rod placement and panel sizing tips</div>
+  <div class="pb-help-section">
+    <h4>Rod placement</h4>
+    <ul>
+      <li>Mount rod <strong>4–8 inches above</strong> the window frame (higher = taller room feel).</li>
+      <li>Extend rod <strong>6–12 inches past</strong> each side of the frame so panels stack clear of glass.</li>
+      <li>Standard clearance between rod and ceiling: at least 2 inches.</li>
+    </ul>
+  </div>
+  <div class="pb-help-section">
+    <h4>Panel width</h4>
+    <ul>
+      <li>Each panel should be <strong>1.5× to 2.5×</strong> the width of the opening it covers (for fullness).</li>
+      <li>For a pair of panels covering one window: measure total rod width, divide by 2 per panel, then multiply by fullness factor.</li>
+    </ul>
+    <div class="pb-help-tip">Not sure? We measure for free during your in-home consult.</div>
+  </div>
+  <div class="pb-help-section">
+    <h4>Panel length</h4>
+    <ul>
+      <li><strong>Puddle:</strong> floor + 3–6 inches (romantic/formal)</li>
+      <li><strong>Brush:</strong> floor + 0.5 inch</li>
+      <li><strong>Float:</strong> floor – 0.5 inch (easiest to clean)</li>
+    </ul>
+  </div>
+`, '../pages/measure-drapes.html');
 // Auto-switch to Roman tab if URL contains ?tab=roman
 if (new URLSearchParams(window.location.search).get('tab') === 'roman') {
   var romanBtn = document.querySelector('.type-tab:nth-child(2)');
@@ -616,7 +689,7 @@ function submitDrape() {
     + '\nDrop: ' + document.getElementById('d-height').value + '\n'
     + 'Delivery: ' + delivery + '\n\n'
     + 'Notes:\n' + (document.getElementById('d-notes').value.trim() || 'None');
-  window.location.href = 'mailto:blindznation@gmail.com'
+  window.location.href = 'mailto:justin@phillyblinds.com'
     + '?subject=' + encodeURIComponent('Drapery Quote — ' + name)
     + '&body=' + encodeURIComponent(body);
   document.getElementById('drape-form').style.display = 'none';
@@ -645,11 +718,31 @@ function submitRoman() {
     + 'Qty: ' + qty + '\nWidth: ' + (w ? w + '"' : '—') + '  Height: ' + (h ? h + '"' : '—') + '\n'
     + 'Delivery: ' + delivery + '\n\n'
     + 'Notes:\n' + (document.getElementById('rn-notes').value.trim() || 'None');
-  window.location.href = 'mailto:blindznation@gmail.com'
+  window.location.href = 'mailto:justin@phillyblinds.com'
     + '?subject=' + encodeURIComponent('Roman Shade Quote — ' + name)
     + '&body=' + encodeURIComponent(body);
   document.getElementById('roman-form').style.display = 'none';
   document.getElementById('roman-success').style.display = 'block';
+}
+
+async function handleSoftQuote(e) {
+  e.preventDefault();
+  const form = document.getElementById('soft-quote-form');
+  const btn = form.querySelector('button[type="submit"]');
+  btn.disabled = true; btn.textContent = 'Sending…';
+  try {
+    const resp = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+    if (resp.ok) {
+      form.style.display = 'none';
+      document.getElementById('soft-quote-success').style.display = 'block';
+    } else {
+      btn.disabled = false; btn.textContent = 'Send quote request →';
+      alert('Something went wrong. Please call (609) 742-1720 or email justin@phillyblinds.com');
+    }
+  } catch(err) {
+    btn.disabled = false; btn.textContent = 'Send quote request →';
+    alert('Connection error. Please call Justin at (609) 742-1720 — available 24/7.');
+  }
 }
 </script>
 </body>
