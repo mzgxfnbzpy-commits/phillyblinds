@@ -18,7 +18,7 @@ PRODUCTS & PRICING:
 - Cellular Honeycomb Shades → INSTANT online pricing; single/double/triple cell; BU or top-down/bottom-up lift options
 - Zebra Shades → INSTANT online pricing
 - Woven Wood Shades → INSTANT online pricing
-- Custom Roman Shades → INSTANT online pricing; flat, hobbled, or relaxed style
+- Custom Roman Shades → INSTANT online pricing; flat, permanently pleated, or relaxed style
 - Faux Wood Blinds → INSTANT online pricing
 - Norman Plantation Shutters → CUSTOM QUOTE ONLY; Normandy, Woodlore, Woodlore Plus lines
 - Custom Drapery → CUSTOM QUOTE ONLY; 6 pleat styles; hardware brands: Kirsch, Paris Texas, Orion, Forest, Select
