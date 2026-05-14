@@ -325,13 +325,10 @@
       </div>
       <div class="form-group"><label>Email</label><input type="email" id="d-email" placeholder="jane@example.com"></div>
       <div class="form-group"><label>Installation address</label><input type="text" id="d-address" placeholder="123 Main St, Philadelphia PA"></div>
-      <div class="form-row">
-        <div class="form-group"><label>Number of panels / windows</label><input type="number" id="d-qty" min="1" value="2" style="max-width:100%"></div>
-        <div class="form-group"><label>Approximate window width</label>
-          <select id="d-width">
-            <option>Not sure yet</option><option>Under 36"</option><option>36"–48"</option><option>48"–72"</option><option>72"–96"</option><option>96"–120"</option><option>120"+</option>
-          </select>
-        </div>
+      <div class="form-group"><label>Approximate window width</label>
+        <select id="d-width">
+          <option>Not sure yet</option><option>Under 36"</option><option>36"–48"</option><option>48"–72"</option><option>72"–96"</option><option>96"–120"</option><option>120"+</option>
+        </select>
       </div>
       <div class="dim-box">
         <div class="dim-box-label">Enter your exact measurements</div>
@@ -1000,8 +997,7 @@ function submitDrape() {
     + (isRipple ? 'Ripple fullness: ' + rippleFull + '  Hardware: ' + rippleHw + '  Snaps: ' + rippleSnaps + '\n' +
        'Join type: ' + rippleJoin + '  Return: ' + rippleRet + '"  Overlap: ' + rippleOvlp + '"\n' : '')
     + 'Hardware: ' + hwNeed + (hwType !== 'N/A' ? ' — ' + hwType : '') + '\n'
-    + 'Panel count: ' + document.getElementById('d-qty').value
-    + '\nWidth range: ' + document.getElementById('d-width').value
+    + 'Width range: ' + document.getElementById('d-width').value
     + '\nExact width: ' + (document.getElementById('d-exact-width').value ? document.getElementById('d-exact-width').value + '"' : '—')
     + '\nFinished length: ' + (document.getElementById('d-exact-length').value ? document.getElementById('d-exact-length').value + '"' : '—') + '\n'
     + 'Delivery: ' + delivery + '\n\n'
