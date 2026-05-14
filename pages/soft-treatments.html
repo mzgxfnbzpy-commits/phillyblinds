@@ -217,8 +217,9 @@
       <div class="opt-row" id="grp-drape-fullness">
         <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('1.5');calcDrapePrice()">1.5×</button>
         <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('2.0');calcDrapePrice()">2.0×</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('2.5');calcDrapePrice()">2.5×</button>
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('2.5');calcDrapePrice()">2.5×</button>
         <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('3.0');calcDrapePrice()">3.0×</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('3.5');calcDrapePrice()">3.5×</button>
       </div>
       <div id="drape-fullness-rec" style="display:none;margin-top:8px;font-size:12px;padding:8px 12px;border-radius:7px"></div>
     </div>
@@ -972,12 +973,13 @@ function drapeFullnessHint(val) {
   var rec = document.getElementById('drape-fullness-rec');
   if (!rec) return;
   rec.style.display = 'block';
-  if (parseFloat(val) <= 2.0) {
+  var f = parseFloat(val);
+  if (f <= 2.0) {
     rec.style.cssText = 'display:block;margin-top:8px;font-size:12px;padding:8px 12px;border-radius:7px;background:#EAF3DE;color:#27500A';
-    rec.textContent = '✓ We recommend 2-prong pleating for ' + val + '× fullness.';
+    rec.textContent = '✓ We recommend 2-prong tack top for ' + val + '× fullness.';
   } else {
     rec.style.cssText = 'display:block;margin-top:8px;font-size:12px;padding:8px 12px;border-radius:7px;background:#FBF7F0;color:#7A4F00';
-    rec.textContent = '✓ We suggest 3-prong pleating for ' + val + '× fullness — richer, fuller look.';
+    rec.textContent = '✓ We recommend 3-prong tack top for ' + val + '× fullness — rich, full look.';
   }
 }
 
@@ -1128,8 +1130,9 @@ function calcDrapePrice() {
   // Lining
   var lBtn = document.querySelector('#grp-drape-lining .opt-btn.sel');
   var lining = lBtn ? lBtn.textContent.trim() : 'Unlined';
-  var isLined = lining !== 'Unlined';
-  var ratePerWidth = isLined ? D_RATE_LINED : D_RATE_UNLINED;
+  var isLined      = lining !== 'Unlined';
+  var isInterlining = lining === 'Interlining (luxury)';
+  var ratePerWidth = (isLined ? D_RATE_LINED : D_RATE_UNLINED) + (isInterlining ? 15 : 0);
 
   // Length surcharge (over 100")
   var lenSurcharge = h > 100 ? Math.ceil((h - 100) / 10) * D_LEN_SURCHARGE : 0;
@@ -1207,7 +1210,7 @@ function calcDrapePrice() {
   document.getElementById('drape-price-rows').innerHTML = rows;
   document.getElementById('drape-price-total').textContent = '$' + grandTotal.toFixed(0);
   document.getElementById('drape-price-note').textContent =
-    '$' + ratePerWidth + '/width ' + (isLined ? '(lined)' : '(unlined)') +
+    '$' + ratePerWidth + '/width ' + (isInterlining ? '(lined + $15 interlining)' : isLined ? '(lined)' : '(unlined)') +
     (lenSurcharge ? ', +$15/width per 10" over 100"' : '') +
     (fabricCost ? '' : ' · Fabric & lining not included') +
     ' · 2-width minimum · Final price confirmed at order.';
