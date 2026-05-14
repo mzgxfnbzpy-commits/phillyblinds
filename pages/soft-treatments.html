@@ -266,6 +266,10 @@
           </select>
         </div>
       </div>
+      <div class="form-row">
+        <div class="form-group"><label>Exact width (inches)</label><input type="number" id="d-exact-width" placeholder="e.g. 84" min="12" max="300" style="font-size:14px"></div>
+        <div class="form-group"><label>Finished length (inches)</label><input type="number" id="d-exact-length" placeholder="e.g. 96" min="12" max="240" style="font-size:14px"></div>
+      </div>
       <div class="form-group"><label>Ceiling height / drop length</label>
         <select id="d-height">
           <option>Standard (8–9 ft)</option><option>Tall (9–10 ft)</option><option>10–12 ft</option><option>12–14 ft</option><option>14 ft+</option><option>Floor to ceiling</option><option>Custom — I'll specify in notes</option>
@@ -352,11 +356,11 @@
         </div>
         <div class="opt-label-bar"><div class="opt-name">Relaxed Roman</div><div class="opt-desc">Casual curved hem, soft &amp; informal</div></div>
       </div>
-      <div class="opt-card" onclick="selectRomanStyle(this,'Top-Down Bottom-Up (TDBU)')">
-        <div class="opt-art">
-          <img src="../images/thumbnails/TDBU flat roman shade.JPEG" alt="Top-down bottom-up Roman shade">
+      <div class="opt-card" onclick="selectRomanStyle(this,'Roman Valance')">
+        <div class="opt-art" style="background:#F0EDE8;display:flex;align-items:center;justify-content:center">
+          <span style="font-size:32px">🪟</span>
         </div>
-        <div class="opt-label-bar"><div class="opt-name">Top-Down / Bottom-Up</div><div class="opt-desc">Opens from top OR bottom — privacy + light</div></div>
+        <div class="opt-label-bar"><div class="opt-name">Roman Valance</div><div class="opt-desc">Decorative top treatment — custom fold sizing</div></div>
       </div>
       <div class="opt-card" onclick="selectRomanStyle(this,'Arch / Specialty Shape')">
         <div class="opt-art">
@@ -372,11 +376,46 @@
       </div>
     </div>
 
-    <!-- VIGNETTE NOTICE (shows when Vignette® selected) -->
+    <!-- TDBU toggle — only for Flat / Permanently Pleated Roman -->
+    <div id="roman-tdbu-wrap" style="display:none;margin-top:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
+      <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Top-Down / Bottom-Up operation?</div>
+      <div class="opt-row" id="grp-roman-tdbu">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-tdbu')">Standard</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-tdbu')">Yes — add TDBU</button>
+      </div>
+      <div style="font-size:11px;color:#888;margin-top:6px;line-height:1.5">TDBU lets the shade open from the top or bottom — privacy with natural light.</div>
+    </div>
+
+    <!-- VIGNETTE NOTICE -->
     <div id="vignette-notice" style="display:none;margin-top:14px;background:var(--espresso);border-radius:12px;padding:18px 20px">
       <div style="font-size:10px;letter-spacing:2px;color:var(--gold);font-weight:600;text-transform:uppercase;margin-bottom:8px">Hunter Douglas Vignette®</div>
       <div style="font-size:13px;color:var(--cream);margin-bottom:6px;font-weight:500">Modern Roman Shades — always custom quoted</div>
-      <div style="font-size:12px;color:var(--text-dark);line-height:1.7">Vignette® Modern Roman Shades are a Hunter Douglas product and require a custom quote. We'll discuss fabric collections, lift system, and PowerView® motorization options during your consultation.</div>
+      <div style="font-size:12px;color:var(--text-dark);line-height:1.7">Vignette® Modern Roman Shades are a Hunter Douglas product and require a custom quote. We'll discuss fabric collections, lift system, and PowerView® motorization during your consultation.</div>
+    </div>
+
+    <!-- VALANCE CONFIG (shows when Roman Valance selected) -->
+    <div id="valance-config" style="display:none;margin-top:18px;background:#fff;border:1px solid #e8e8e4;border-radius:12px;padding:22px">
+      <div style="font-size:14px;font-weight:600;color:#1a1a1a;margin-bottom:4px">Roman Valance</div>
+      <div style="font-size:12px;color:#888;margin-bottom:18px">Custom decorative top treatment — tell us your specs and we'll quote it.</div>
+      <div class="form-row">
+        <div class="form-group"><label>Width (inches) *</label><input type="number" id="val-w" placeholder="e.g. 72" min="12" max="240" style="font-size:14px"></div>
+        <div class="form-group"><label>Height / drop (inches) *</label><input type="number" id="val-h" placeholder="e.g. 18" min="4" max="60" style="font-size:14px"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Number of folds</label><input type="number" id="val-folds" placeholder="e.g. 3" min="1" max="20" style="font-size:14px"></div>
+        <div class="form-group"><label>Fold section size (inches)</label><input type="number" id="val-fold-size" placeholder="e.g. 4" min="1" max="24" style="font-size:14px"></div>
+      </div>
+      <div style="background:#FBF7F0;border-radius:8px;padding:10px 13px;font-size:11px;color:#888;margin-bottom:16px">Fold section dimensions will be confirmed and refined during your consultation.</div>
+      <div class="form-row">
+        <div class="form-group"><label>Your name *</label><input type="text" id="val-name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="val-phone" placeholder="(215) 555-0100"></div>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" id="val-email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Notes</label><textarea id="val-notes" placeholder="Fabric preference, room details, timeline..." style="min-height:60px"></textarea></div>
+      <button class="btn-gold" onclick="submitValance()" style="width:100%;padding:13px;font-size:14px;margin-top:4px">Request Valance Quote &rarr;</button>
+      <div id="valance-success" style="display:none;background:#EAF3DE;border-radius:10px;padding:18px;text-align:center;margin-top:10px">
+        <strong>Quote request sent!</strong><br><span style="font-size:13px;color:#3B6D11">We'll follow up with pricing. Urgent? <a href="tel:6097421720" style="color:#3B6D11">(609) 742-1720</a></span>
+      </div>
     </div>
 
   </div>
@@ -412,15 +451,41 @@
     </div>
   </div>
 
-  <!-- STEP 4: MOTORIZATION -->
+  <!-- STEP 4: OPERATION -->
   <div class="step" id="step-roman-4">
     <div class="step-label">Step 4</div>
-    <div class="step-title">Motorization <span style="font-size:12px;color:#999;font-weight:400">(optional)</span></div>
-    <div class="opt-row" id="grp-roman-motor" style="margin-top:12px">
-      <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-motor')">No motor</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-roman-motor')">Yes — add motorization</button>
+    <div class="step-title">Operation</div>
+    <div class="opt-row" id="grp-roman-op" style="margin-top:12px">
+      <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-op');romanToggleOp('manual')">Manual</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-roman-op');romanToggleOp('motorized')">Motorized</button>
     </div>
-    <div style="font-size:12px;color:#666;margin-top:10px">Compatible brands: Lutron Serena, Somfy, Automate, Rollease Acmeda.</div>
+
+    <!-- Manual sub-options -->
+    <div id="roman-manual-opts" style="margin-top:12px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
+      <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:8px">Lift type</div>
+      <div class="opt-row" id="grp-roman-lift">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-lift')">Cordless</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-lift')">Chain</button>
+      </div>
+    </div>
+
+    <!-- Motorized sub-options -->
+    <div id="roman-motor-opts" style="display:none;margin-top:12px;padding:14px 16px;background:var(--espresso-mid);border-radius:8px">
+      <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Motorization details</div>
+      <div style="font-size:12px;font-weight:500;color:var(--cream);margin-bottom:7px">Number of remotes</div>
+      <div class="opt-row" id="grp-roman-remotes">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-remotes')">1</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-remotes')">2</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-remotes')">3</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-remotes')">4+</button>
+      </div>
+      <div style="font-size:12px;font-weight:500;color:var(--cream);margin-bottom:7px;margin-top:12px">Channel type</div>
+      <div class="opt-row" id="grp-roman-channel">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-channel')">Single channel</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-channel')">Multi channel</button>
+      </div>
+      <div style="font-size:11px;color:var(--text-dark);margin-top:8px;line-height:1.5">Single channel: one remote controls all shades together. Multi channel: control each shade independently.</div>
+    </div>
   </div>
 
   <!-- STEP 5: DIMENSIONS + PRICE -->
@@ -438,7 +503,7 @@
         </div>
         <div class="form-row">
           <div class="form-group"><label>Width (inches)</label><input type="number" id="rn-w" placeholder="e.g. 36" oninput="calcRoman()" style="font-size:14px"></div>
-          <div class="form-group"><label>Height (inches)</label><input type="number" id="rn-h" placeholder="e.g. 48" oninput="calcRoman()" style="font-size:14px"></div>
+          <div class="form-group"><label>Finished length (inches)</label><input type="number" id="rn-h" placeholder="e.g. 48" oninput="calcRoman()" style="font-size:14px"></div>
         </div>
 
         <!-- QUOTE FORM -->
@@ -622,15 +687,27 @@ function selectRomanStyle(el, val) {
   document.querySelectorAll('#roman-style-cards .opt-card').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
   romanState.style = val;
+
   var isVignette = val === 'Vignette®';
-  var notice = document.getElementById('vignette-notice');
-  if (notice) notice.style.display = isVignette ? 'block' : 'none';
-  // Hide/show fabric + lining + motor + configurator steps for Vignette
+  var isValance  = val === 'Roman Valance';
+  var hideSteps  = isVignette || isValance;
+  var tdbuStyles = ['Flat Roman', 'Permanently Pleated Roman'];
+
+  document.getElementById('vignette-notice').style.display = isVignette ? 'block' : 'none';
+  document.getElementById('valance-config').style.display  = isValance  ? 'block' : 'none';
+  document.getElementById('roman-tdbu-wrap').style.display = tdbuStyles.indexOf(val) !== -1 ? 'block' : 'none';
+
   ['step-roman-2','step-roman-3','step-roman-4','step-roman-5'].forEach(function(id){
-    var el2 = document.getElementById(id);
-    if (el2) el2.style.display = isVignette ? 'none' : '';
+    var s = document.getElementById(id);
+    if (s) s.style.display = hideSteps ? 'none' : '';
   });
-  if (!isVignette) calcRoman();
+
+  if (!hideSteps) calcRoman();
+}
+
+function romanToggleOp(type) {
+  document.getElementById('roman-manual-opts').style.display = type === 'manual'    ? 'block' : 'none';
+  document.getElementById('roman-motor-opts').style.display  = type === 'motorized' ? 'block' : 'none';
 }
 function selectFabric(tab, el, val) {
   var container = tab === 'drape' ? '#drape-fabric-cards' : '#roman-fabric-cards';
@@ -660,14 +737,12 @@ function calcRoman() {
   box.style.display = 'block';
   var sqft      = (w / 12) * (h / 12);
   var perShade  = Math.max(RN_MIN, sqft * RN_RATE);
-  var isMotor   = getOpt('grp-roman-motor') === 'Yes — add motorization';
-  var motorCost = isMotor ? RN_MOTOR * qty : 0;
-  var total     = perShade * qty + motorCost;
-  document.getElementById('rn-pb-style').textContent   = romanState.style || '—';
-  document.getElementById('rn-pb-dims').textContent    = w + '″ W × ' + h + '″ H';
-  document.getElementById('rn-pb-qty').textContent     = qty;
-  document.getElementById('rn-pb-motor').textContent   = isMotor ? 'Yes (+$' + (RN_MOTOR * qty) + ')' : 'No';
-  document.getElementById('rn-pb-total').textContent   = '$' + total.toFixed(0);
+  var total = perShade * qty;
+  document.getElementById('rn-pb-style').textContent = romanState.style || '—';
+  document.getElementById('rn-pb-dims').textContent  = w + '″ W × ' + h + '″ finished length';
+  document.getElementById('rn-pb-qty').textContent   = qty;
+  document.getElementById('rn-pb-motor').textContent = getOpt('grp-roman-op') || 'Manual';
+  document.getElementById('rn-pb-total').textContent = '$' + total.toFixed(0);
   document.getElementById('rn-pb-min-note').style.display = perShade === RN_MIN ? 'block' : 'none';
 }
 
@@ -697,6 +772,8 @@ function submitDrape() {
     + 'Hardware: ' + hwNeed + (hwType !== 'N/A' ? ' — ' + hwType : '') + '\n'
     + 'Panels / windows: ' + document.getElementById('d-qty').value
     + '\nWidth range: ' + document.getElementById('d-width').value
+    + '\nExact width: ' + (document.getElementById('d-exact-width').value ? document.getElementById('d-exact-width').value + '"' : '—')
+    + '\nFinished length: ' + (document.getElementById('d-exact-length').value ? document.getElementById('d-exact-length').value + '"' : '—')
     + '\nDrop: ' + document.getElementById('d-height').value + '\n'
     + 'Delivery: ' + delivery + '\n\n'
     + 'Notes:\n' + (document.getElementById('d-notes').value.trim() || 'None');
@@ -707,26 +784,56 @@ function submitDrape() {
   document.getElementById('drape-success').style.display = 'block';
 }
 
+// ── SUBMIT: ROMAN VALANCE ─────────────────────────────────
+function submitValance() {
+  var name  = document.getElementById('val-name').value.trim();
+  var phone = document.getElementById('val-phone').value.trim();
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  var body = 'ROMAN VALANCE QUOTE REQUEST\n\n'
+    + 'Name: ' + name + '\nPhone: ' + phone
+    + '\nEmail: ' + (document.getElementById('val-email').value.trim() || '—') + '\n\n'
+    + 'Width: ' + (document.getElementById('val-w').value || '—') + '"\n'
+    + 'Height / drop: ' + (document.getElementById('val-h').value || '—') + '"\n'
+    + 'Number of folds: ' + (document.getElementById('val-folds').value || '—') + '\n'
+    + 'Fold section size: ' + (document.getElementById('val-fold-size').value || '—') + '"\n\n'
+    + 'Notes:\n' + (document.getElementById('val-notes').value.trim() || 'None');
+  window.location.href = 'mailto:justin@phillyblinds.com'
+    + '?subject=' + encodeURIComponent('Roman Valance Quote — ' + name)
+    + '&body=' + encodeURIComponent(body);
+  document.getElementById('valance-success').style.display = 'block';
+}
+
 // ── SUBMIT: ROMAN SHADES ──────────────────────────────────
 function submitRoman() {
   var name  = document.getElementById('rn-name').value.trim();
   var phone = document.getElementById('rn-phone').value.trim();
   if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
-  var w       = document.getElementById('rn-w').value;
-  var h       = document.getElementById('rn-h').value;
-  var qty     = document.getElementById('rn-qty').value;
-  var motor   = getOpt('grp-roman-motor');
-  var lining  = getOpt('grp-roman-lining');
-  var delivery= getOpt('grp-del-roman');
+  var w        = document.getElementById('rn-w').value;
+  var h        = document.getElementById('rn-h').value;
+  var qty      = document.getElementById('rn-qty').value;
+  var tdbu     = getOpt('grp-roman-tdbu');
+  var op       = getOpt('grp-roman-op');
+  var isMotor  = op === 'Motorized';
+  var liftType = !isMotor ? getOpt('grp-roman-lift') : '—';
+  var remotes  = isMotor ? getOpt('grp-roman-remotes') : '—';
+  var channel  = isMotor ? getOpt('grp-roman-channel') : '—';
+  var lining   = getOpt('grp-roman-lining');
+  var delivery = getOpt('grp-del-roman');
   var body = 'ROMAN SHADE QUOTE REQUEST\n\n'
     + 'Name: ' + name + '\nPhone: ' + phone
     + '\nEmail: ' + (document.getElementById('rn-email').value.trim() || '—')
     + '\nAddress: ' + (document.getElementById('rn-address').value.trim() || '—') + '\n\n'
     + 'Style: ' + (romanState.style || '—') + '\n'
+    + 'TDBU: ' + tdbu + '\n'
     + 'Fabric: ' + (romanState.fabric || '—') + '\n'
     + 'Lining: ' + lining + '\n'
-    + 'Motorization: ' + motor + '\n'
-    + 'Qty: ' + qty + '\nWidth: ' + (w ? w + '"' : '—') + '  Height: ' + (h ? h + '"' : '—') + '\n'
+    + 'Operation: ' + op + '\n'
+    + (isMotor
+        ? 'Remotes: ' + remotes + '\nChannel: ' + channel + '\n'
+        : 'Lift type: ' + liftType + '\n')
+    + 'Qty: ' + qty
+    + '\nWidth: ' + (w ? w + '"' : '—')
+    + '  Finished length: ' + (h ? h + '"' : '—') + '\n'
     + 'Delivery: ' + delivery + '\n\n'
     + 'Notes:\n' + (document.getElementById('rn-notes').value.trim() || 'None');
   window.location.href = 'mailto:justin@phillyblinds.com'
