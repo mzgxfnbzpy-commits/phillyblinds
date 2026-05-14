@@ -645,9 +645,9 @@
     <div class="step-label">Step 3</div>
     <div class="step-title">Lining</div>
     <div class="opt-row" id="grp-roman-lining" style="margin-top:12px">
-      <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-lining')">Unlined</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining')">Lined</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining')">Blackout lined</button>
+      <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-lining');calcRoman()">Unlined</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining');calcRoman()">Lined</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining');calcRoman()">Blackout lined</button>
     </div>
   </div>
 
@@ -769,6 +769,30 @@
           <div class="form-group"><label>Email</label><input type="email" id="rn-email" placeholder="jane@example.com"></div>
           <div class="form-group"><label>Installation address</label><input type="text" id="rn-address" placeholder="123 Main St, Philadelphia PA"></div>
           <div class="form-group"><label>Notes</label><textarea id="rn-notes" placeholder="Room, fabric preference, timeline, any other details..." style="min-height:70px"></textarea></div>
+
+          <!-- TRIM ADD-ON -->
+          <div style="border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-bottom:14px">
+            <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Trim <span style="font-weight:400;color:#999">— $15/linear ft (self-welt or applied trim — same price)</span></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">
+              <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff">
+                <input type="checkbox" class="rn-trim-check" data-loc="sides" onchange="calcRoman();rnShowTrimSupply()"> Both sides
+              </label>
+              <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff">
+                <input type="checkbox" class="rn-trim-check" data-loc="top" onchange="calcRoman();rnShowTrimSupply()"> Top
+              </label>
+              <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff">
+                <input type="checkbox" class="rn-trim-check" data-loc="bottom" onchange="calcRoman();rnShowTrimSupply()"> Bottom (hem)
+              </label>
+            </div>
+            <div id="grp-rn-trim-supply" style="display:none">
+              <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px">Trim supply</div>
+              <div class="opt-row" id="grp-roman-trim-supply">
+                <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-trim-supply')">We supply trim</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-roman-trim-supply')">I supply trim</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-roman-trim-supply')">Not sure</button>
+              </div>
+            </div>
+          </div>
 
           <!-- ALSO NEED HARDWARE? -->
           <div class="hw-crosssell">
@@ -989,7 +1013,7 @@ function selectRomanStyle(el, val) {
     if (s) s.style.display = hideSteps ? 'none' : '';
   });
 
-  if (!hideSteps) calcRoman();
+  if (!hideSteps) { calcRoman(); }
 }
 
 function romanToggleOp(type) {
@@ -1005,9 +1029,24 @@ function selectFabric(tab, el, val) {
 }
 
 // ── Roman pricing ─────────────────────────────────────────
-var RN_RATE  = 22;   // $/sqft — update when final pricing confirmed
-var RN_MIN   = 85;
-var RN_MOTOR = 120;
+var RN_MIN       = 85;
+var RN_TRIM_PER_FT = 15;
+
+var RN_RATES = {
+  'Flat Roman':               { unlined: 35, lined: 38 },
+  'Permanently Pleated Roman':{ unlined: 35, lined: 38 },
+  'Relaxed Roman':            { unlined: 40, lined: 40 },
+  'Roman Valance':            { unlined: 35, lined: 38 }
+};
+
+function rnGetRate() {
+  var style   = romanState.style || 'Flat Roman';
+  var lBtn    = document.querySelector('#grp-roman-lining .opt-btn.sel');
+  var lining  = lBtn ? lBtn.textContent.trim() : 'Unlined';
+  var isLined = lining !== 'Unlined';
+  var rates   = RN_RATES[style] || { unlined: 35, lined: 38 };
+  return isLined ? rates.lined : rates.unlined;
+}
 
 function adjRomanQty(d) {
   var el = document.getElementById('rn-qty');
@@ -1016,20 +1055,38 @@ function adjRomanQty(d) {
 }
 
 function calcRoman() {
-  var w    = parseFloat(document.getElementById('rn-w').value);
-  var h    = parseFloat(document.getElementById('rn-h').value);
-  var qty  = parseInt(document.getElementById('rn-qty').value) || 1;
-  var box  = document.getElementById('roman-pricebox');
-  if (!w || !h) { box.style.display = 'none'; return; }
-  box.style.display = 'block';
-  var sqft      = (w / 12) * (h / 12);
-  var perShade  = Math.max(RN_MIN, sqft * RN_RATE);
-  var total = perShade * qty;
-  document.getElementById('rn-pb-style').textContent = romanState.style || '—';
-  document.getElementById('rn-pb-dims').textContent  = w + '″ W × ' + h + '″ finished length';
+  var w   = parseFloat(document.getElementById('rn-w').value);
+  var h   = parseFloat(document.getElementById('rn-h').value);
+  var qty = parseInt(document.getElementById('rn-qty').value) || 1;
+  var box = document.getElementById('roman-pricebox');
+  if (!w || !h) { if(box) box.style.display = 'none'; return; }
+
+  var rate     = rnGetRate();
+  var sqft     = (w / 12) * (h / 12);
+  var perShade = Math.max(RN_MIN, sqft * rate);
+  var laborTotal = perShade * qty;
+
+  // Trim
+  var trimTotal = 0;
+  var trimChecks = document.querySelectorAll('.rn-trim-check:checked');
+  if (trimChecks.length) {
+    var trimFt = 0;
+    trimChecks.forEach(function(cb) {
+      var loc = cb.getAttribute('data-loc');
+      if (loc === 'sides')  trimFt += (h / 12) * 2 * qty;  // both sides
+      if (loc === 'top')    trimFt += (w / 12) * qty;
+      if (loc === 'bottom') trimFt += (w / 12) * qty;
+    });
+    trimTotal = Math.ceil(trimFt) * RN_TRIM_PER_FT;
+  }
+
+  var grandTotal = laborTotal + trimTotal;
+  if (box) box.style.display = 'block';
+  document.getElementById('rn-pb-style').textContent = (romanState.style || '—') + ' — $' + rate + '/sqft';
+  document.getElementById('rn-pb-dims').textContent  = w + '″ W × ' + h + '″ H';
   document.getElementById('rn-pb-qty').textContent   = qty;
   document.getElementById('rn-pb-motor').textContent = getOpt('grp-roman-op') || 'Manual';
-  document.getElementById('rn-pb-total').textContent = '$' + total.toFixed(0);
+  document.getElementById('rn-pb-total').textContent = '$' + grandTotal.toFixed(0);
   document.getElementById('rn-pb-min-note').style.display = perShade === RN_MIN ? 'block' : 'none';
 }
 
@@ -1177,6 +1234,11 @@ function drapeToggleSingle(show) {
   var el = document.getElementById('drape-single-opts');
   if (el) el.style.display = show ? 'block' : 'none';
 }
+function rnShowTrimSupply() {
+  var any = document.querySelectorAll('.rn-trim-check:checked').length > 0;
+  var el = document.getElementById('grp-rn-trim-supply');
+  if (el) el.style.display = any ? 'block' : 'none';
+}
 function romanToggleMountStyle(type) {
   var el = document.getElementById('roman-offback-opts');
   if (el) el.style.display = type === 'offback' ? 'block' : 'none';
@@ -1314,6 +1376,17 @@ function submitRoman() {
     + '  Finished length: ' + (h ? h + '"' : '—') + '\n'
     + 'Delivery: ' + delivery + '\n\n'
     + 'Notes:\n' + (document.getElementById('rn-notes').value.trim() || 'None')
+    + (function(){
+        var trimSel = document.querySelectorAll('.rn-trim-check:checked');
+        if (!trimSel.length) return '';
+        var locs = Array.from(trimSel).map(function(c){return c.getAttribute('data-loc');}).join(', ');
+        return '\nTrim: ' + locs + '  Supply: ' + (getOpt('grp-roman-trim-supply')||'—');
+      }())
+    + (function(){
+        var el = document.getElementById('rn-pb-total');
+        var box = document.getElementById('roman-pricebox');
+        return (el && box && box.style.display !== 'none') ? '\nEstimate: ' + el.textContent : '';
+      }())
     + (function(){ var fu = document.querySelector('#roman-form .pb-fu-wrap input[type="file"]'); var n = fu && fu.files.length ? '\n\nFiles to send: ' + Array.from(fu.files).map(function(f){return f.name;}).join(', ') + '\n(Customer will email these to justin@phillyblinds.com)' : ''; return n; }());
   window.location.href = 'mailto:justin@phillyblinds.com'
     + '?subject=' + encodeURIComponent('Roman Shade Quote — ' + name)
