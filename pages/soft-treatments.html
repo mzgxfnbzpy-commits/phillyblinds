@@ -210,6 +210,73 @@
 
     </div>
 
+    <!-- STANDARD FULLNESS (Pinch, Box, Goblet, Barrel — not Ripple/Grommet/Rod Pocket) -->
+    <div id="drape-fullness-std" style="display:none;margin-top:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
+      <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:4px">Fullness</div>
+      <div style="font-size:11px;color:#888;margin-bottom:10px;line-height:1.5">How full the panels are when closed. Higher fullness = more fabric = richer look.</div>
+      <div class="opt-row" id="grp-drape-fullness">
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('1.5')">1.5×</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('2.0')">2.0×</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('2.5')">2.5×</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('3.0')">3.0×</button>
+      </div>
+      <div id="drape-fullness-rec" style="display:none;margin-top:8px;font-size:12px;padding:8px 12px;border-radius:7px"></div>
+    </div>
+
+    <!-- RIPPLE FOLD OPTIONS (shown only when Ripple Fold selected) -->
+    <div id="drape-ripple-opts" style="display:none;margin-top:14px;padding:16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:12px">
+      <div style="font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:14px">Ripple fold options</div>
+
+      <div style="margin-bottom:14px">
+        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px">Fullness %</div>
+        <div class="opt-row" id="grp-ripple-fullness">
+          <button class="opt-btn" onclick="selOpt(this,'grp-ripple-fullness')">60%</button>
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-ripple-fullness')">80%</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-ripple-fullness')">100%</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-ripple-fullness')">120%</button>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:5px">80% is standard. Higher % = more wave depth.</div>
+      </div>
+
+      <div style="margin-bottom:14px">
+        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px">Hardware brand</div>
+        <div class="opt-row" id="grp-ripple-hw">
+          <button class="opt-btn" onclick="selOpt(this,'grp-ripple-hw');drapeRippleHwHint('graber')">Graber</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-ripple-hw');drapeRippleHwHint('kirsch')">Kirsch</button>
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-ripple-hw');drapeRippleHwHint('idk')">I don't know</button>
+        </div>
+        <div id="ripple-hw-note" style="font-size:11px;color:var(--gold);margin-top:6px">No problem — we'll use standard Kirsch hardware.</div>
+      </div>
+
+      <div style="margin-bottom:14px">
+        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px">Do you need us to supply the snaps?</div>
+        <div class="opt-row" id="grp-ripple-snaps">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-ripple-snaps')">Yes — supply snaps</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-ripple-snaps')">No — I have snaps</button>
+        </div>
+      </div>
+
+      <div style="margin-bottom:14px">
+        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px">Panel join type</div>
+        <div class="opt-row" id="grp-ripple-join">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-ripple-join')">Buttmaster</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-ripple-join')">Overlap</button>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:5px">Buttmaster: panels meet edge to edge. Overlap: panels cross at center seam.</div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label style="font-size:12px">Return size (inches) <span style="font-weight:400;color:#999">default 4"</span></label>
+          <input type="number" id="ripple-return" value="4" min="1" max="24" style="font-size:14px">
+        </div>
+        <div class="form-group">
+          <label style="font-size:12px">Overlap size (inches) <span style="font-weight:400;color:#999">default 4"</span></label>
+          <input type="number" id="ripple-overlap" value="4" min="0" max="12" style="font-size:14px">
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <!-- STEP 2: FABRIC -->
@@ -764,17 +831,50 @@ function switchTab(id, btn) {
 var drapeState  = { pleat:'', fabric:'' };
 var romanState  = { style:'', fabric:'' };
 
+var _RIPPLE_STYLES    = ['Ripple Fold'];
+var _NO_FULLNESS      = ['Grommet / Eyelet', 'Rod Pocket / Sheered Pocket'];
+
 function selectPleat(el, val) {
   document.querySelectorAll('#pleat-cards .opt-card').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
   drapeState.pleat = val;
+
   var subopts = document.getElementById('pinch-subopts');
   if (subopts) {
     subopts.style.display = val === 'Pinch Pleat' ? 'block' : 'none';
-    if (val !== 'Pinch Pleat') {
-      document.querySelectorAll('#pinch-subopts .opt-card').forEach(c => c.classList.remove('sel'));
-    }
+    if (val !== 'Pinch Pleat') document.querySelectorAll('#pinch-subopts .opt-card').forEach(c => c.classList.remove('sel'));
   }
+
+  var isRipple  = _RIPPLE_STYLES.indexOf(val) !== -1;
+  var noFull    = _NO_FULLNESS.indexOf(val) !== -1;
+  var stdFull   = document.getElementById('drape-fullness-std');
+  var rippleOpts= document.getElementById('drape-ripple-opts');
+  var fullRec   = document.getElementById('drape-fullness-rec');
+
+  if (stdFull)    stdFull.style.display    = (!isRipple && !noFull) ? 'block' : 'none';
+  if (rippleOpts) rippleOpts.style.display = isRipple ? 'block' : 'none';
+  if (fullRec && isRipple) { fullRec.style.display = 'none'; }
+}
+
+function drapeFullnessHint(val) {
+  var rec = document.getElementById('drape-fullness-rec');
+  if (!rec) return;
+  rec.style.display = 'block';
+  if (parseFloat(val) <= 2.0) {
+    rec.style.cssText = 'display:block;margin-top:8px;font-size:12px;padding:8px 12px;border-radius:7px;background:#EAF3DE;color:#27500A';
+    rec.textContent = '✓ We recommend 2-prong pleating for ' + val + '× fullness.';
+  } else {
+    rec.style.cssText = 'display:block;margin-top:8px;font-size:12px;padding:8px 12px;border-radius:7px;background:#FBF7F0;color:#7A4F00';
+    rec.textContent = '✓ We suggest 3-prong pleating for ' + val + '× fullness — richer, fuller look.';
+  }
+}
+
+function drapeRippleHwHint(hw) {
+  var note = document.getElementById('ripple-hw-note');
+  if (!note) return;
+  var msgs = { graber: 'Graber ripple fold system selected.', kirsch: 'Kirsch ripple fold system selected.', idk: "No problem — we'll use standard Kirsch hardware." };
+  note.textContent = msgs[hw] || '';
+  note.style.color = hw === 'idk' ? 'var(--gold)' : '#555';
 }
 
 function selectPinchDetail(el, val) {
@@ -874,6 +974,16 @@ function submitDrape() {
   var panelSide  = panels === 'Single panel' ? getOpt('grp-drape-side') : '—';
   var returnSz   = document.getElementById('d-return').value || '4';
   var overlapSz  = document.getElementById('d-overlap').value || '4';
+  // Fullness (standard pleat styles)
+  var fullness   = getOpt('grp-drape-fullness') || '—';
+  // Ripple fold specific
+  var isRipple   = pleat === 'Ripple Fold';
+  var rippleFull = isRipple ? getOpt('grp-ripple-fullness') : '—';
+  var rippleHw   = isRipple ? getOpt('grp-ripple-hw') : '—';
+  var rippleSnaps= isRipple ? getOpt('grp-ripple-snaps') : '—';
+  var rippleJoin = isRipple ? getOpt('grp-ripple-join') : '—';
+  var rippleRet  = isRipple ? (document.getElementById('ripple-return').value || '4') : '—';
+  var rippleOvlp = isRipple ? (document.getElementById('ripple-overlap').value || '4') : '—';
   var hwNeed     = getOpt('grp-drape-hardware');
   var hwType     = hwNeed === 'I need hardware' ? getOpt('grp-drape-hw-type') : 'N/A';
   var delivery   = getOpt('grp-del-drape');
@@ -885,7 +995,10 @@ function submitDrape() {
     + 'Fabric: ' + fabric + '\n'
     + 'Lining: ' + lining + '\n'
     + 'Panels: ' + panels + (panelSide !== '—' ? ' — ' + panelSide : '') + '\n'
-    + 'Return: ' + returnSz + '"  Overlap: ' + overlapSz + '"\n'
+    + (!isRipple && fullness !== '—' ? 'Fullness: ' + fullness + '\n' : '')
+    + (!isRipple ? 'Return: ' + returnSz + '"  Overlap: ' + overlapSz + '"\n' : '')
+    + (isRipple ? 'Ripple fullness: ' + rippleFull + '  Hardware: ' + rippleHw + '  Snaps: ' + rippleSnaps + '\n' +
+       'Join type: ' + rippleJoin + '  Return: ' + rippleRet + '"  Overlap: ' + rippleOvlp + '"\n' : '')
     + 'Hardware: ' + hwNeed + (hwType !== 'N/A' ? ' — ' + hwType : '') + '\n'
     + 'Panel count: ' + document.getElementById('d-qty').value
     + '\nWidth range: ' + document.getElementById('d-width').value

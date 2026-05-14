@@ -1947,23 +1947,7 @@ function selectBrand(brand) {
     document.getElementById('config-product-name').textContent = 'Norman ' + pname;
   }
 
-  // Swap motor dropdown: Norman products use Norman Motorization only
-  const motorSel  = document.getElementById('sel-motor-brand');
-  const motorNote = document.getElementById('motor-brand-note');
-  if (brand === 'norman') {
-    if (currentProduct === 'roller') {
-      motorSel.innerHTML = '<option value="norman">Norman Motorization</option>';
-      if (motorNote) motorNote.textContent = 'Norman shades use Norman\'s integrated motor system.';
-    }
-    // Non-roller Norman products (cellular, zebra, woven) use standard motor brands
-  } else {
-    motorSel.innerHTML =
-      '<option value="lutron">Lutron Serena</option>' +
-      '<option value="somfy">Somfy</option>' +
-      '<option value="automate">Automate</option>' +
-      '<option value="rollease">Rollease Acmeda</option>';
-    if (motorNote) motorNote.textContent = 'Choose your preferred motor brand — we\'ll confirm compatibility at order.';
-  }
+  // Motor brand selector removed — no brand choice for Norman products
 
   if (brand === 'norman' && currentProduct) {
     configureForProduct(currentProduct);
