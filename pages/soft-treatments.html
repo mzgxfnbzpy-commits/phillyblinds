@@ -114,7 +114,8 @@
 <div class="type-tabs" id="type-tabs">
   <button class="type-tab on" onclick="switchTab('drapes',this)">Custom Drapery</button>
   <button class="type-tab" onclick="switchTab('roman',this)">Roman Shades</button>
-  <button class="type-tab" style="color:var(--gold)" onclick="pbShowContact('Specialty Soft Treatments — Cornices, Valances, or Custom Fabrication')">Specialty / Cornices / Valances ✦</button>
+  <button class="type-tab" onclick="switchTab('cornval',this)">Cornices &amp; Valances</button>
+  <button class="type-tab" style="color:var(--gold)" onclick="pbShowContact('Specialty Soft Treatments — Custom Fabrication')">Specialty ✦</button>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════
@@ -864,6 +865,164 @@
 </div><!-- /roman step-wrap -->
 </div><!-- /tab-roman -->
 
+<!-- ══════════════════════════════════════════════════════════
+     TAB: CORNICES & VALANCES
+════════════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-cornval">
+<div class="step-wrap">
+
+  <!-- ── CORNICE ── -->
+  <div style="font-size:22px;font-weight:600;color:var(--espresso);letter-spacing:-0.4px;margin-bottom:4px">Cornices</div>
+  <div style="font-size:13px;color:#666;margin-bottom:24px">Fabric-wrapped wood box valance. $50/linear ft · 4 ft minimum.</div>
+  <div style="background:#fff;border:1px solid #e8e8e4;border-radius:14px;padding:24px;margin-bottom:36px">
+    <div class="dim-box" style="margin-bottom:18px">
+      <div class="dim-box-label">Cornice dimensions</div>
+      <div class="form-row">
+        <div class="form-group"><label>Width</label><input type="number" id="cv-corn-w" min="12" max="300" placeholder="72" oninput="calcCornice()"><div class="dim-unit">inches (48" / 4 ft min.)</div></div>
+        <div class="form-group"><label>Height</label><input type="number" id="cv-corn-h" min="4" max="36" value="8" oninput="calcCornice()"><div class="dim-unit">inches</div></div>
+      </div>
+      <div style="margin-top:12px"><label style="font-size:12px;font-weight:600;color:#333;display:block;margin-bottom:5px">Return size <span style="font-weight:400;color:#999">default 4"</span></label>
+        <input type="number" id="cv-corn-return" value="4" min="1" max="18" oninput="calcCornice()" style="width:100px;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit">
+        <span style="font-size:12px;color:#888;margin-left:8px">inches</span></div>
+    </div>
+    <div style="margin-bottom:14px">
+      <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Finishing</div>
+      <div class="opt-row" id="grp-corn-trim">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-corn-trim');cornToggleTrim(false);calcCornice()">Self welt (same fabric)</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-corn-trim');cornToggleTrim(true);calcCornice()">Applied trim (+$15/ft)</button>
+      </div>
+      <div id="corn-trim-opts" style="display:none;margin-top:10px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
+        <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:7px">Which edges?</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff"><input type="checkbox" class="corn-trim-edge" data-loc="top" onchange="calcCornice()"> Top</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff"><input type="checkbox" class="corn-trim-edge" data-loc="bottom" onchange="calcCornice()"> Bottom</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff"><input type="checkbox" class="corn-trim-edge" data-loc="sides" onchange="calcCornice()"> Both sides</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff"><input type="checkbox" class="corn-trim-edge" data-loc="returns" onchange="calcCornice()"> Returns</label>
+        </div>
+        <div class="opt-row" id="grp-corn-trim-supply">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-corn-trim-supply')">We supply trim</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-corn-trim-supply')">I supply trim</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-corn-trim-supply')">Not sure</button>
+        </div>
+      </div>
+    </div>
+    <div style="margin-bottom:14px">
+      <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Fabric</div>
+      <div class="opt-row" id="grp-corn-fabric">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-corn-fabric');calcCornice()">We supply fabric</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-corn-fabric');calcCornice()">I supply fabric</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-corn-fabric');calcCornice()">Not sure</button>
+      </div>
+    </div>
+    <div id="corn-price-box" style="display:none;background:var(--espresso);border-radius:12px;padding:16px 18px;margin-bottom:16px">
+      <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Estimate</div>
+      <div id="corn-price-rows"></div>
+      <div style="border-top:1px solid rgba(45,224,193,.3);margin-top:10px;padding-top:10px;display:flex;justify-content:space-between;align-items:baseline">
+        <span style="font-size:13px;color:var(--cream)">Estimated total</span>
+        <span style="font-size:20px;font-weight:600;color:var(--gold)" id="corn-price-total">—</span>
+      </div>
+      <div id="corn-fabric-note" style="font-size:11px;background:rgba(45,224,193,.1);border:1px solid rgba(45,224,193,.2);border-radius:7px;padding:6px 9px;color:var(--cream);margin-top:8px;line-height:1.5"></div>
+      <div style="font-size:10px;color:var(--text-faint);margin-top:6px">$50/ft · 4 ft min · trim $15/ft · fabric est. $30/yd · Final confirmed at order.</div>
+    </div>
+    <div id="corn-form">
+      <div class="form-row">
+        <div class="form-group"><label>Name *</label><input type="text" id="cn-name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="cn-phone" placeholder="(215) 555-0100"></div>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" id="cn-email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Notes</label><textarea id="cn-notes" placeholder="Room, fabric preference, timeline..." style="min-height:60px"></textarea></div>
+      <div class="delivery-section">
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+        <div class="opt-row" id="grp-del-corn">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-corn');document.getElementById('del-corn-s').style.display='block';document.getElementById('del-corn-p').style.display='none'">Ship to me</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-del-corn');document.getElementById('del-corn-s').style.display='none';document.getElementById('del-corn-p').style.display='block'">I'll pick up</button>
+        </div>
+        <div id="del-corn-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional.</div></div>
+        <div id="del-corn-p" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>
+      </div>
+      <button class="btn-gold" onclick="submitCornice()" style="width:100%;padding:13px;font-size:14px;font-weight:600;margin-top:16px">Request cornice quote &rarr;</button>
+    </div>
+    <div class="success-box" id="corn-success"><strong>Quote sent!</strong> We'll follow up soon. Urgent? <a href="tel:6097421720" style="color:#2e7d32">(609) 742-1720</a></div>
+  </div>
+
+  <!-- ── VALANCE ── -->
+  <div style="font-size:22px;font-weight:600;color:var(--espresso);letter-spacing:-0.4px;margin-bottom:4px">Valances</div>
+  <div style="font-size:13px;color:#666;margin-bottom:24px">Fabric soft top treatment. $50/linear ft + fabric.</div>
+  <div style="background:#fff;border:1px solid #e8e8e4;border-radius:14px;padding:24px;margin-bottom:32px">
+    <div class="dim-box" style="margin-bottom:18px">
+      <div class="dim-box-label">Valance dimensions</div>
+      <div class="form-row">
+        <div class="form-group"><label>Width</label><input type="number" id="cv-val-w" min="12" max="300" placeholder="72" oninput="calcValance()"><div class="dim-unit">inches</div></div>
+        <div class="form-group"><label>Height / drop</label><input type="number" id="cv-val-h" min="4" max="60" value="14" oninput="calcValance()"><div class="dim-unit">inches</div></div>
+      </div>
+      <div style="margin-top:12px"><label style="font-size:12px;font-weight:600;color:#333;display:block;margin-bottom:5px">Return size <span style="font-weight:400;color:#999">default 4"</span></label>
+        <input type="number" id="cv-val-return" value="4" min="1" max="18" oninput="calcValance()" style="width:100px;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit">
+        <span style="font-size:12px;color:#888;margin-left:8px">inches</span></div>
+    </div>
+    <div style="margin-bottom:14px">
+      <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Finishing</div>
+      <div class="opt-row" id="grp-val-trim">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-val-trim');valToggleTrim(false);calcValance()">Self welt (same fabric)</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-val-trim');valToggleTrim(true);calcValance()">Applied trim (+$15/ft)</button>
+      </div>
+      <div id="val-trim-opts" style="display:none;margin-top:10px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
+        <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:7px">Which edges?</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff"><input type="checkbox" class="val-trim-edge" data-loc="top" onchange="calcValance()"> Top</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff"><input type="checkbox" class="val-trim-edge" data-loc="bottom" onchange="calcValance()"> Bottom</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff"><input type="checkbox" class="val-trim-edge" data-loc="sides" onchange="calcValance()"> Both sides</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff"><input type="checkbox" class="val-trim-edge" data-loc="returns" onchange="calcValance()"> Returns</label>
+        </div>
+        <div class="opt-row" id="grp-val-trim-supply">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-val-trim-supply')">We supply trim</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-val-trim-supply')">I supply trim</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-val-trim-supply')">Not sure</button>
+        </div>
+      </div>
+    </div>
+    <div style="margin-bottom:14px">
+      <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Fabric</div>
+      <div class="opt-row" id="grp-val-fabric">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-val-fabric');calcValance()">We supply fabric</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-val-fabric');calcValance()">I supply fabric</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-val-fabric');calcValance()">Not sure</button>
+      </div>
+    </div>
+    <div id="val-price-box" style="display:none;background:var(--espresso);border-radius:12px;padding:16px 18px;margin-bottom:16px">
+      <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Estimate</div>
+      <div id="val-price-rows"></div>
+      <div style="border-top:1px solid rgba(45,224,193,.3);margin-top:10px;padding-top:10px;display:flex;justify-content:space-between;align-items:baseline">
+        <span style="font-size:13px;color:var(--cream)">Estimated total</span>
+        <span style="font-size:20px;font-weight:600;color:var(--gold)" id="val-price-total">—</span>
+      </div>
+      <div id="val-fabric-note" style="font-size:11px;background:rgba(45,224,193,.1);border:1px solid rgba(45,224,193,.2);border-radius:7px;padding:6px 9px;color:var(--cream);margin-top:8px;line-height:1.5"></div>
+      <div style="font-size:10px;color:var(--text-faint);margin-top:6px">$50/ft + fabric est. $30/yd · trim $15/ft · Final confirmed at order.</div>
+    </div>
+    <div id="val-form">
+      <div class="form-row">
+        <div class="form-group"><label>Name *</label><input type="text" id="vn-name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="vn-phone" placeholder="(215) 555-0100"></div>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" id="vn-email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Notes</label><textarea id="vn-notes" placeholder="Room, style preference, timeline..." style="min-height:60px"></textarea></div>
+      <div class="delivery-section">
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+        <div class="opt-row" id="grp-del-val">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-val');document.getElementById('del-val-s').style.display='block';document.getElementById('del-val-p').style.display='none'">Ship to me</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-del-val');document.getElementById('del-val-s').style.display='none';document.getElementById('del-val-p').style.display='block'">I'll pick up</button>
+        </div>
+        <div id="del-val-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional.</div></div>
+        <div id="del-val-p" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>
+      </div>
+      <button class="btn-gold" onclick="submitValanceCv()" style="width:100%;padding:13px;font-size:14px;font-weight:600;margin-top:16px">Request valance quote &rarr;</button>
+    </div>
+    <div class="success-box" id="val-cv-success"><strong>Quote sent!</strong> We'll follow up soon. Urgent? <a href="tel:6097421720" style="color:#2e7d32">(609) 742-1720</a></div>
+  </div>
+
+</div><!-- /step-wrap -->
+</div><!-- /tab-cornval -->
+
+
 
 <!-- CTA BANNER -->
 <div class="cta-banner">
@@ -1301,6 +1460,124 @@ function drapeToggleSingle(show) {
   var el = document.getElementById('drape-single-opts');
   if (el) el.style.display = show ? 'block' : 'none';
 }
+// ── CORNICE & VALANCE PRICING ─────────────────────────────
+var CV_PER_FT     = 50;
+var CV_MIN_FT     = 4;
+var CV_TRIM_PER_FT= 15;
+var CV_FABRIC_YD  = 30;
+
+function cornToggleTrim(show) {
+  var el = document.getElementById('corn-trim-opts');
+  if (el) el.style.display = show ? 'block' : 'none';
+}
+function valToggleTrim(show) {
+  var el = document.getElementById('val-trim-opts');
+  if (el) el.style.display = show ? 'block' : 'none';
+}
+
+function _cvTrimFt(edgeClass, w, h, ret) {
+  var ft = 0;
+  document.querySelectorAll('.' + edgeClass + ':checked').forEach(function(cb) {
+    var loc = cb.getAttribute('data-loc');
+    if (loc === 'top')     ft += w / 12;
+    if (loc === 'bottom')  ft += w / 12;
+    if (loc === 'sides')   ft += (h / 12) * 2;
+    if (loc === 'returns') ft += (ret / 12) * 2;
+  });
+  return ft;
+}
+
+function _cvPriceBox(boxId, rowsId, totalId, noteId, w, h, ret, trimClass, trimGrp, fabricGrp, isCorn) {
+  var box = document.getElementById(boxId);
+  if (!box) return;
+  if (!w) { box.style.display = 'none'; return; }
+  var ft      = Math.max(CV_MIN_FT, (w + ret * 2) / 12);
+  var labor   = Math.ceil(ft) * CV_PER_FT;
+  var hasTrim = document.querySelector('#' + trimGrp + ' .opt-btn.sel') &&
+                document.querySelector('#' + trimGrp + ' .opt-btn.sel').textContent.indexOf('trim') !== -1;
+  var trimFt  = hasTrim ? _cvTrimFt(trimClass, w, h, ret) : 0;
+  var trimCost= Math.ceil(trimFt) * CV_TRIM_PER_FT;
+  var fabricSup = document.querySelector('#' + fabricGrp + ' .opt-btn.sel');
+  var weSupply  = fabricSup && fabricSup.textContent.trim() === 'We supply fabric';
+  var fabricCost = 0; var fabricYds = 0;
+  if (weSupply) {
+    // Cornice: wrap width + 2 returns + 2 depths (est 12" depth)
+    // Valance: width + 2 returns + 1.5x fullness
+    var perimInches = isCorn ? (w + ret*2 + 24) : (w + ret*2);
+    fabricYds = Math.ceil((perimInches * (h + 12)) / 1296 * 4) / 4;
+    fabricYds = Math.max(fabricYds, 1);
+    fabricCost = fabricYds * CV_FABRIC_YD;
+  }
+  var total = labor + trimCost + fabricCost;
+  var rows = '';
+  var row = function(lbl, val) {
+    rows += '<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-dark);padding:3px 0;border-bottom:.5px solid var(--border-dark)"><span>' + lbl + '</span><span style="color:var(--cream);font-weight:500">$' + val.toFixed(0) + '</span></div>';
+  };
+  row(Math.ceil(ft) + ' ft × $' + CV_PER_FT + '/ft' + (isCorn ? ' (4 ft min)' : ''), labor);
+  if (trimCost) row('Trim (' + Math.ceil(trimFt) + ' ft × $' + CV_TRIM_PER_FT + ')', trimCost);
+  if (fabricCost) row('Fabric est. (' + fabricYds + ' yd × $' + CV_FABRIC_YD + ')', fabricCost);
+  document.getElementById(rowsId).innerHTML = rows;
+  document.getElementById(totalId).textContent = '$' + total.toFixed(0);
+  var noteEl = document.getElementById(noteId);
+  if (noteEl) noteEl.textContent = weSupply ? '🧵 Est. fabric: ~' + fabricYds + ' yards — pattern repeats add more. Confirmed at order.' : '';
+  box.style.display = 'block';
+}
+
+function calcCornice() {
+  var w   = parseFloat(document.getElementById('cv-corn-w').value) || 0;
+  var h   = parseFloat(document.getElementById('cv-corn-h').value) || 8;
+  var ret = parseFloat(document.getElementById('cv-corn-return').value) || 4;
+  _cvPriceBox('corn-price-box','corn-price-rows','corn-price-total','corn-fabric-note', w, h, ret, 'corn-trim-edge','grp-corn-trim','grp-corn-fabric', true);
+}
+function calcValance() {
+  var w   = parseFloat(document.getElementById('cv-val-w').value) || 0;
+  var h   = parseFloat(document.getElementById('cv-val-h').value) || 14;
+  var ret = parseFloat(document.getElementById('cv-val-return').value) || 4;
+  _cvPriceBox('val-price-box','val-price-rows','val-price-total','val-fabric-note', w, h, ret, 'val-trim-edge','grp-val-trim','grp-val-fabric', false);
+}
+
+function submitCornice() {
+  var name  = document.getElementById('cn-name').value.trim();
+  var phone = document.getElementById('cn-phone').value.trim();
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  var w = document.getElementById('cv-corn-w').value || '—';
+  var h = document.getElementById('cv-corn-h').value || '—';
+  var ret = document.getElementById('cv-corn-return').value || '4';
+  var fin = getOpt('grp-corn-trim');
+  var fab = getOpt('grp-corn-fabric');
+  var est = document.getElementById('corn-price-total').textContent;
+  var body = 'CORNICE QUOTE REQUEST\n\nName: ' + name + '\nPhone: ' + phone +
+    '\nEmail: ' + (document.getElementById('cn-email').value.trim() || '—') + '\n\n' +
+    'Width: ' + w + '"  Height: ' + h + '"  Return: ' + ret + '"\n' +
+    'Finishing: ' + fin + '\nFabric: ' + fab + '\nEstimate: ' + est + '\n\n' +
+    'Notes:\n' + (document.getElementById('cn-notes').value.trim() || 'None');
+  window.location.href = 'mailto:justin@phillyblinds.com?subject=' +
+    encodeURIComponent('Cornice Quote — ' + name) + '&body=' + encodeURIComponent(body);
+  document.getElementById('corn-form').style.display = 'none';
+  document.getElementById('corn-success').style.display = 'block';
+}
+
+function submitValanceCv() {
+  var name  = document.getElementById('vn-name').value.trim();
+  var phone = document.getElementById('vn-phone').value.trim();
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  var w = document.getElementById('cv-val-w').value || '—';
+  var h = document.getElementById('cv-val-h').value || '—';
+  var ret = document.getElementById('cv-val-return').value || '4';
+  var fin = getOpt('grp-val-trim');
+  var fab = getOpt('grp-val-fabric');
+  var est = document.getElementById('val-price-total').textContent;
+  var body = 'VALANCE QUOTE REQUEST\n\nName: ' + name + '\nPhone: ' + phone +
+    '\nEmail: ' + (document.getElementById('vn-email').value.trim() || '—') + '\n\n' +
+    'Width: ' + w + '"  Height: ' + h + '"  Return: ' + ret + '"\n' +
+    'Finishing: ' + fin + '\nFabric: ' + fab + '\nEstimate: ' + est + '\n\n' +
+    'Notes:\n' + (document.getElementById('vn-notes').value.trim() || 'None');
+  window.location.href = 'mailto:justin@phillyblinds.com?subject=' +
+    encodeURIComponent('Valance Quote — ' + name) + '&body=' + encodeURIComponent(body);
+  document.getElementById('val-form').style.display = 'none';
+  document.getElementById('val-cv-success').style.display = 'block';
+}
+
 function rnShowTrimSupply() {
   var any = document.querySelectorAll('.rn-trim-check:checked').length > 0;
   var el = document.getElementById('grp-rn-trim-supply');
