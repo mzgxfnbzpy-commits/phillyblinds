@@ -299,16 +299,6 @@
         </div>
       </div>
 
-      <!-- Control side -->
-      <div style="margin-bottom:14px">
-        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Control side</div>
-        <div class="opt-row" id="grp-drape-control">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-control')">Left</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-drape-control')">Right</button>
-        </div>
-        <div style="font-size:11px;color:#888;margin-top:4px">Which side the draw cord, wand, or motor control is on when facing the window.</div>
-      </div>
-
       <div class="form-group"><label>Notes — fabric preference, rod type, timeline, or anything else</label>
         <textarea id="d-notes" style="min-height:90px" placeholder="e.g. Ripple fold panels, customer-supplied linen fabric, 3 windows in master bedroom..."></textarea>
       </div>
@@ -862,7 +852,6 @@ function submitDrape() {
   var panelSide  = panels === 'Single panel' ? getOpt('grp-drape-side') : '—';
   var returnSz   = document.getElementById('d-return').value || '4';
   var overlapSz  = document.getElementById('d-overlap').value || '4';
-  var controlSide= getOpt('grp-drape-control');
   var hwNeed     = getOpt('grp-drape-hardware');
   var hwType     = hwNeed === 'I need hardware' ? getOpt('grp-drape-hw-type') : 'N/A';
   var delivery   = getOpt('grp-del-drape');
@@ -874,7 +863,7 @@ function submitDrape() {
     + 'Fabric: ' + fabric + '\n'
     + 'Lining: ' + lining + '\n'
     + 'Panels: ' + panels + (panelSide !== '—' ? ' — ' + panelSide : '') + '\n'
-    + 'Return: ' + returnSz + '"  Overlap: ' + overlapSz + '"  Control side: ' + controlSide + '\n'
+    + 'Return: ' + returnSz + '"  Overlap: ' + overlapSz + '"\n'
     + 'Hardware: ' + hwNeed + (hwType !== 'N/A' ? ' — ' + hwType : '') + '\n'
     + 'Panel count: ' + document.getElementById('d-qty').value
     + '\nWidth range: ' + document.getElementById('d-width').value
