@@ -1272,12 +1272,18 @@
       </div>
       <div class="tooltip-note" style="margin-top:4px">Fabric Wrapped: fabric covers the headrail for a seamless look. Metal: aluminum fascia in White, Cottage White, Black, or Anodized Silver — confirmed at order.</div>
 
+      <!-- End caps -->
+      <div class="step-title" style="font-size:12px;margin:14px 0 8px">End caps</div>
+      <div class="opt-row" id="pb-grp-endcap">
+        <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-endcap')">Standard</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-endcap')">Designer</button>
+      </div>
+
       <!-- Operation — Motorized / Manual / No Preference -->
       <div class="step-title" style="font-size:12px;margin:14px 0 8px">Operation</div>
       <div class="opt-row" id="pb-grp-operation">
         <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-operation');pbToggleMotor(true)">Motorized</button>
         <button class="opt-btn" onclick="selOpt(this,'pb-grp-operation');pbToggleMotor(false)">Manual</button>
-        <button class="opt-btn" onclick="selOpt(this,'pb-grp-operation');pbToggleMotor(false)">No Preference</button>
       </div>
       <div id="pb-motor-system-wrap" style="margin-top:10px;padding:12px 14px;background:var(--espresso-mid);border-radius:8px">
         <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px">Motor system</div>
@@ -2413,10 +2419,11 @@ function submitPBForm() {
     'Height:         ' + (h || '—') + '″\n' +
     'Mount type:     ' + gPB('pb-grp-mount')     + '\n' +
     'Operation:      ' + gPB('pb-grp-operation') + '\n' +
+    'Fascia type:    ' + gPB('pb-grp-fascia') + '\n' +
+    'End caps:       ' + gPB('pb-grp-endcap') + '\n' +
     'Fabric type:    ' + gPB('pb-grp-fabric-type') + '\n' +
     'Solar openness: ' + gPB('pb-grp-solar')     + '\n' +
     'Color:          ' + gPB('pb-grp-fabric-color') + '\n' +
-    'Fascia type:    ' + gPB('pb-grp-fascia')    + '\n' +
     'Fabric source:  ' + gPB('pb-grp-fabric')    + '\n' +
     'Delivery:       ' + delivery                + '\n\n' +
     'Fabric notes:\n' + (notes || '(none)');
