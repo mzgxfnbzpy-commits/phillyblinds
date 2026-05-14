@@ -144,6 +144,7 @@ function renderNav(activePage) {
         const active = p.label === activePage ? ' active' : '';
         return `<a href="${href}" class="${active}">${p.label}</a>`;
       }).join('')}
+      <a class="nav-drawer-phone-link" href="tel:6097421720">&#128222;&nbsp;&nbsp;(609) 742-1720 &mdash; call or text 24/7</a>
       <a class="nav-drawer-cta" href="${consultHref}">Free consultation</a>
     </div>
   `;
@@ -151,6 +152,7 @@ function renderNav(activePage) {
   _initCart();
   _initMotorModal();
   _initChatbot();
+  _initMobileBar(consultHref);
 }
 
 function renderFooter(isHome) {
@@ -704,6 +706,18 @@ function _initMeasureHelp(htmlContent, measurePageUrl) {
   btn.addEventListener('click', () => overlay.classList.add('open'));
   overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
   document.getElementById('pb-help-close').addEventListener('click', () => overlay.classList.remove('open'));
+}
+
+// ---- MOBILE STICKY CALL BAR ----
+function _initMobileBar(consultHref) {
+  if (document.getElementById('pb-mobile-bar')) return;
+  var bar = document.createElement('div');
+  bar.id = 'pb-mobile-bar';
+  bar.className = 'pb-mobile-bar';
+  bar.innerHTML =
+    '<a href="tel:6097421720" class="pb-mb-call" aria-label="Call (609) 742-1720">&#128222; Call Justin</a>' +
+    '<a href="' + consultHref + '" class="pb-mb-book" aria-label="Book free consultation">Book free visit</a>';
+  document.body.appendChild(bar);
 }
 
 // ---- CHATBOT ----

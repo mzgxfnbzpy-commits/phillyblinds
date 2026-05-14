@@ -205,13 +205,73 @@ body {
 }
 
 @media (max-width: 600px) {
+  /* Nav: hide desktop-only items, keep cart + hamburger */
   .nav-identity { display: none; }
   .nav-main { padding: 0 16px; }
   .nav-links { display: none; }
+  .nav-phone { display: none; }
+  .nav-cta { display: none; }
   .nav-hamburger { display: flex; }
+
+  /* Layout */
   .section { padding: 32px 16px; }
+  .section-title, .section-title-light { font-size: 22px; }
+
+  /* Forms — 16px+ prevents iOS Safari from auto-zooming */
+  .form-group input,
+  .form-group select,
+  .form-group textarea { font-size: 16px; padding: 11px 12px; }
   .form-row, .form-row-3 { grid-template-columns: 1fr; }
+
+  /* Tap targets — comfortable 44px minimum */
+  .opt-btn { padding: 11px 15px; font-size: 14px; min-height: 44px; }
+  .btn-gold, .btn-ghost-light, .btn-dark, .btn-outline { padding: 14px 22px; font-size: 14px; }
+
+  /* CTA banner */
   .cta-banner { flex-direction: column; text-align: center; }
+  .cta-banner-btns { flex-direction: column; width: 100%; }
+  .cta-banner-btns a,
+  .cta-banner-btns button { text-align: center; display: block; width: 100%; }
+
+  /* Call strip */
+  .call-strip { flex-direction: column; align-items: flex-start; gap: 6px; }
+
+  /* Footer */
+  .footer-col a { font-size: 13px; margin-bottom: 8px; }
+
+  /* Toasts: float above sticky bar */
+  .pb-cart-toast { bottom: 72px; }
+  .add-toast { bottom: 76px; right: 12px; }
+
+  /* Chatbot: above sticky bar */
+  #pb-chat { bottom: 80px !important; right: 16px !important; }
+  .pb-chat-panel {
+    width: calc(100vw - 24px);
+    right: -8px;
+    max-height: 65vh;
+  }
+
+  /* Measure help "?" button: above chatbot */
+  #pb-help-btn { bottom: 148px !important; }
+
+  /* Motor modal: slide up from bottom */
+  .pb-motor-overlay { padding: 0; align-items: flex-end; }
+  .pb-motor-modal {
+    border-radius: 20px 20px 0 0;
+    max-height: 88vh;
+    max-width: 100%;
+    padding: 20px 16px;
+  }
+
+  /* Lightbox: slide up from bottom */
+  .lb-wrap { padding: 0; align-items: flex-end; }
+  .lb-box { border-radius: 16px 16px 0 0; width: 100%; max-width: 100%; }
+
+  /* Cart drawer: full width */
+  .pb-cart-drawer { max-width: 100%; }
+
+  /* Space for sticky mobile CTA bar */
+  body { padding-bottom: 64px; }
 }
 
 /* ---- CHATBOT WIDGET ---- */
@@ -305,6 +365,47 @@ body {
 
 @media (max-width: 400px) {
   .pb-chat-panel { width: calc(100vw - 32px); right: -8px; }
+}
+
+/* ---- PHONE LINK IN MOBILE DRAWER ---- */
+.nav-drawer-phone-link {
+  display: block;
+  padding: 13px 20px;
+  color: var(--gold) !important;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  border-bottom: 0.5px solid rgba(255,255,255,0.08);
+  background: rgba(45,224,193,0.04);
+}
+
+/* ---- MOBILE STICKY CALL BAR ---- */
+.pb-mobile-bar { display: none; }
+
+@media (max-width: 600px) {
+  .pb-mobile-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    z-index: 300;
+    border-top: 1.5px solid rgba(45,224,193,0.18);
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.28);
+  }
+  .pb-mb-call {
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px; font-size: 14px; font-weight: 600; text-decoration: none;
+    background: var(--espresso); color: var(--gold);
+    border-right: 1px solid rgba(45,224,193,0.15);
+    font-family: var(--font);
+  }
+  .pb-mb-book {
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px; font-size: 14px; font-weight: 700; text-decoration: none;
+    background: var(--gold); color: var(--espresso);
+    font-family: var(--font);
+  }
 }
 
 /* ============================================================
