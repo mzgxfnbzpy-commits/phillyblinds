@@ -690,6 +690,12 @@ function _initContactPanel() {
       '</div>' +
       '<div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">What are you interested in?</label>' +
         '<input id="pb-cp-product" type="text" placeholder="e.g. Pirouette shadings, specialty shutters, oversized shade..." style="width:100%;padding:9px 11px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit"></div>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">' +
+        '<div><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Approx. width (inches)</label>' +
+          '<input id="pb-cp-width" type="number" placeholder="e.g. 48" style="width:100%;padding:9px 11px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit"></div>' +
+        '<div><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Approx. height (inches)</label>' +
+          '<input id="pb-cp-height" type="number" placeholder="e.g. 72" style="width:100%;padding:9px 11px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit"></div>' +
+      '</div>' +
       '<div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Notes</label>' +
         '<textarea id="pb-cp-notes" rows="2" placeholder="Window sizes, room, timeline, questions..." style="width:100%;padding:9px 11px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit;resize:vertical"></textarea></div>' +
       '<div style="border:1.5px dashed #ddd;border-radius:9px;padding:12px 14px;margin-bottom:14px;background:#fafaf8">' +
@@ -739,8 +745,11 @@ function pbSubmitContact() {
   var fileNames = filesEl && filesEl.files.length ?
     '\n\nFiles to send: '+Array.from(filesEl.files).map(function(f){return f.name;}).join(', ')+
     '\n(Please email these to justin@phillyblinds.com)' : '';
+  var w = (document.getElementById('pb-cp-width')  || {}).value || '';
+  var h = (document.getElementById('pb-cp-height') || {}).value || '';
+  var dims = (w || h) ? '\nApprox. size: '+(w?w+'"W ':'')+' '+(h?h+'"H':'') : '';
   var body  = 'CONSULTATION REQUEST\n\nName: '+name+'\nPhone: '+phone+
-    '\n\nInterested in: '+(prod||'—')+'\n\nNotes:\n'+(notes||'None')+fileNames;
+    '\n\nInterested in: '+(prod||'—')+dims+'\n\nNotes:\n'+(notes||'None')+fileNames;
   window.location.href='mailto:justin@phillyblinds.com?subject='+
     encodeURIComponent('Free Consultation — '+name)+'&body='+encodeURIComponent(body);
   document.getElementById('pb-cp-sent').style.display='block';

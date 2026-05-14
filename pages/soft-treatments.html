@@ -114,8 +114,7 @@
 <div class="type-tabs" id="type-tabs">
   <button class="type-tab on" onclick="switchTab('drapes',this)">Custom Drapery</button>
   <button class="type-tab" onclick="switchTab('roman',this)">Roman Shades</button>
-  <button class="type-tab" onclick="switchTab('cornices',this)">Cornices</button>
-  <button class="type-tab" onclick="switchTab('valances',this)">Valances</button>
+  <button class="type-tab" onclick="switchTab('cornval',this)">Cornices &amp; Valances</button>
   <button class="type-tab" style="color:var(--gold)" onclick="pbShowContact('Specialty Soft Treatments — Custom Fabrication')">Specialty ✦</button>
 </div>
 
@@ -572,6 +571,12 @@
         </div>
         <div class="opt-label-bar"><div class="opt-name">Arch / Specialty Shape</div><div class="opt-desc">Custom arched, oval, or other shapes — always custom quote</div></div>
       </div>
+      <div class="opt-card" onclick="pbShowContact('Norman Roman Shades — premium branded Roman shades, custom quote')" style="cursor:pointer">
+        <div class="opt-art" style="background:var(--espresso);display:flex;align-items:center;justify-content:center">
+          <span style="font-size:13px;font-weight:700;color:var(--gold);letter-spacing:1px">NORMAN</span>
+        </div>
+        <div class="opt-label-bar"><div class="opt-name">Norman Roman Shades</div><div class="opt-desc">Premium branded — custom quote</div></div>
+      </div>
       <div class="opt-card" onclick="pbShowContact('Hunter Douglas Vignette® Roman Shades — free consultation &amp; custom quote')"  style="cursor:pointer">
         <div class="opt-art" style="height:130px">
           <img src="../images/thumbnails/vignette-dining-room.JPEG" alt="Hunter Douglas Vignette Roman Shades" style="object-position:center 30%">
@@ -869,12 +874,16 @@
 <!-- ══════════════════════════════════════════════════════════
      TAB: CORNICES & VALANCES
 ════════════════════════════════════════════════════════════ -->
-<div class="tab-panel" id="tab-cornices">
+<div class="tab-panel" id="tab-cornval">
 <div class="step-wrap">
 
-  <!-- ── CORNICE ── -->
-  <div style="font-size:22px;font-weight:600;color:var(--espresso);letter-spacing:-0.4px;margin-bottom:4px">Cornices</div>
-  <div style="font-size:13px;color:#666;margin-bottom:24px">Fabric-wrapped wood box valance. $50/linear ft · 4 ft minimum.</div>
+  <!-- Type selector -->
+  <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">What are you making?</div>
+  <div class="opt-row" id="grp-cv-type" style="margin-bottom:20px">
+    <button class="opt-btn sel" onclick="selOpt(this,'grp-cv-type');cvSetType('cornice')">Cornice</button>
+    <button class="opt-btn" onclick="selOpt(this,'grp-cv-type');cvSetType('valance')">Valance</button>
+  </div>
+  <div id="cv-type-note" style="font-size:13px;color:#666;margin-bottom:20px;margin-top:-10px">Fabric-wrapped wood box valance. $50/linear ft · 4 ft minimum.</div>
   <div style="background:#fff;border:1px solid #e8e8e4;border-radius:14px;padding:24px;margin-bottom:36px">
     <div class="dim-box" style="margin-bottom:18px">
       <div class="dim-box-label">Cornice dimensions</div>
@@ -886,11 +895,29 @@
         <input type="number" id="cv-corn-return" value="4" min="1" max="18" oninput="calcCornice()" style="width:100px;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit">
         <span style="font-size:12px;color:#888;margin-left:8px">inches</span></div>
     </div>
+
+    <!-- Fabric direction -->
+    <div style="margin-bottom:14px">
+      <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:4px">Fabric direction</div>
+      <div style="font-size:11px;color:#888;margin-bottom:8px;line-height:1.5">Run vertically: standard cut, pattern runs up-down. Railroad: fabric turned 90° — pattern runs horizontally (great for stripes and horizontal designs).</div>
+      <div class="opt-row" id="grp-corn-direction">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-corn-direction');calcCornice()">Run vertically (standard)</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-corn-direction');calcCornice()">Railroad (horizontal)</button>
+      </div>
+    </div>
+
     <div style="margin-bottom:14px">
       <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Finishing</div>
-      <div class="opt-row" id="grp-corn-trim">
-        <button class="opt-btn sel" onclick="selOpt(this,'grp-corn-trim');cornToggleTrim(false);calcCornice()">Self welt (same fabric)</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-corn-trim');cornToggleTrim(true);calcCornice()">Applied trim (+$15/ft)</button>
+      <!-- Cornice: self welt or trim (both options) -->
+      <div id="cv-cornice-finish">
+        <div class="opt-row" id="grp-corn-trim">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-corn-trim');cornToggleTrim(false);calcCornice()">Self welt (same fabric)</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-corn-trim');cornToggleTrim(true);calcCornice()">Applied trim (+$15/ft)</button>
+        </div>
+      </div>
+      <!-- Valance: trim only (always open the trim edge picker) -->
+      <div id="cv-valance-finish" style="display:none">
+        <div style="font-size:12px;color:#555;margin-bottom:8px">Applied trim &mdash; <span style="color:var(--gold);font-weight:600">+$15/linear ft</span></div>
       </div>
       <div id="corn-trim-opts" style="display:none;margin-top:10px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
         <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:7px">Which edges?</div>
@@ -908,13 +935,21 @@
       </div>
     </div>
     <div style="margin-bottom:14px">
-      <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Fabric</div>
+      <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Who supplies the fabric?</div>
       <div class="opt-row" id="grp-corn-fabric">
         <button class="opt-btn sel" onclick="selOpt(this,'grp-corn-fabric');calcCornice()">We supply fabric</button>
         <button class="opt-btn" onclick="selOpt(this,'grp-corn-fabric');calcCornice()">I supply fabric</button>
         <button class="opt-btn" onclick="selOpt(this,'grp-corn-fabric');calcCornice()">Not sure</button>
       </div>
     </div>
+
+    <!-- Fabric yardage estimate — standalone display -->
+    <div id="corn-yardage-display" style="display:none;margin-bottom:14px;padding:14px 16px;background:#FBF7F0;border:1.5px solid var(--gold);border-radius:10px">
+      <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;color:var(--gold);margin-bottom:6px">&#129514; Estimated fabric needed</div>
+      <div id="corn-yardage-text" style="font-size:18px;font-weight:700;color:#1C1510;margin-bottom:4px"></div>
+      <div id="corn-yardage-sub" style="font-size:11px;color:#666;line-height:1.5"></div>
+    </div>
+
     <div id="corn-price-box" style="display:none;background:var(--espresso);border-radius:12px;padding:16px 18px;margin-bottom:16px">
       <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Estimate</div>
       <div id="corn-price-rows"></div>
@@ -946,12 +981,12 @@
     <div class="success-box" id="corn-success"><strong>Quote sent!</strong> We'll follow up soon. Urgent? <a href="tel:6097421720" style="color:#2e7d32">(609) 742-1720</a></div>
   </div>
 
-</div><!-- /cornices step-wrap -->
-</div><!-- /tab-cornices -->
+</div><!-- /cornval step-wrap -->
+</div><!-- /tab-cornval -->
 
-<div class="tab-panel" id="tab-valances">
-<div class="step-wrap">
-  <div style="font-size:22px;font-weight:600;color:var(--espresso);letter-spacing:-0.4px;margin-bottom:4px">Valances</div>
+<div style="display:none" id="tab-valances-removed"><!-- valance merged into tab-cornval --></div>
+<div style="display:none" id="__valance_placeholder">
+  <div style="font-size:22px">Valances</div>
   <div style="font-size:13px;color:#666;margin-bottom:24px">Fabric soft top treatment. $50/linear ft + fabric.</div>
   <div style="background:#fff;border:1px solid #e8e8e4;border-radius:14px;padding:24px;margin-bottom:32px">
     <div class="dim-box" style="margin-bottom:18px">
@@ -1471,6 +1506,24 @@ var CV_MIN_FT     = 4;
 var CV_TRIM_PER_FT= 15;
 var CV_FABRIC_YD  = 30;
 
+function cvSetType(type) {
+  var isCorn = type === 'cornice';
+  var note = document.getElementById('cv-type-note');
+  if (note) note.textContent = isCorn
+    ? 'Fabric-wrapped wood box valance. $50/linear ft · 4 ft minimum.'
+    : 'Fabric soft top treatment. $50/linear ft + fabric.';
+  var dirRow  = document.getElementById('cv-direction-row');
+  if (dirRow) dirRow.style.display = isCorn ? 'block' : 'none';
+  var cornFin = document.getElementById('cv-cornice-finish');
+  var valFin  = document.getElementById('cv-valance-finish');
+  var trimOpts= document.getElementById('corn-trim-opts');
+  if (cornFin) cornFin.style.display = isCorn ? 'block' : 'none';
+  if (valFin)  valFin.style.display  = isCorn ? 'none'  : 'block';
+  // For valance, always show trim edges; for cornice, respect the toggle
+  if (!isCorn && trimOpts) trimOpts.style.display = 'block';
+  if (isCorn  && trimOpts) { trimOpts.style.display = 'none'; }
+  calcCornice();
+}
 function cornToggleTrim(show) {
   var el = document.getElementById('corn-trim-opts');
   if (el) el.style.display = show ? 'block' : 'none';
