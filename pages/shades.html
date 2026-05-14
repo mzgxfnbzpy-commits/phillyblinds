@@ -1462,6 +1462,154 @@
     </div>
   </div><!-- /hd-config -->
 
+  <!-- EXTERIOR ROLLER SHADE CONFIGURATOR -->
+  <div class="configurator" id="exterior-config">
+    <div class="config-head">
+      <button class="config-back" onclick="clearProduct()">&#8592; Change product</button>
+      <div class="config-title">Exterior Roller Shades</div>
+      <span class="badge badge-quote">Custom quote</span>
+    </div>
+
+    <!-- Dimensions -->
+    <div class="dim-box" style="margin-bottom:18px">
+      <div class="dim-box-label">Window size</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Width</label>
+          <input type="number" id="ext-width" min="12" max="240" step="0.5" placeholder="60">
+          <div class="dim-unit">inches</div>
+        </div>
+        <div class="form-group">
+          <label>Height</label>
+          <input type="number" id="ext-height" min="12" max="180" step="0.5" placeholder="84">
+          <div class="dim-unit">inches</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mount -->
+    <div class="step-block">
+      <div class="step-title" style="font-size:13px;margin-bottom:8px">Mount type</div>
+      <div class="opt-row" id="ext-grp-mount">
+        <button class="opt-btn sel" onclick="selOpt(this,'ext-grp-mount')">Inside mount</button>
+        <button class="opt-btn" onclick="selOpt(this,'ext-grp-mount')">Outside mount</button>
+      </div>
+    </div>
+
+    <!-- Solar openness -->
+    <div class="step-block">
+      <div class="step-title" style="font-size:13px;margin-bottom:4px">Solar screen openness</div>
+      <div class="tooltip-note" style="margin-bottom:8px">Exterior shades are solar screen only. Lower % = more privacy &amp; heat block.</div>
+      <div class="opt-row" id="ext-grp-openness">
+        <button class="opt-btn sel" onclick="selOpt(this,'ext-grp-openness')">3%</button>
+        <button class="opt-btn" onclick="selOpt(this,'ext-grp-openness')">5%</button>
+        <button class="opt-btn" onclick="selOpt(this,'ext-grp-openness')">10%</button>
+      </div>
+    </div>
+
+    <!-- Color -->
+    <div class="step-block">
+      <div class="step-title" style="font-size:13px;margin-bottom:8px">Color</div>
+      <div class="opt-row" id="ext-grp-color">
+        <button class="opt-btn sel" onclick="selOpt(this,'ext-grp-color')">White</button>
+        <button class="opt-btn" onclick="selOpt(this,'ext-grp-color')">Black</button>
+        <button class="opt-btn" onclick="selOpt(this,'ext-grp-color')">Cream</button>
+        <button class="opt-btn" onclick="selOpt(this,'ext-grp-color')">Off-White</button>
+        <button class="opt-btn" onclick="selOpt(this,'ext-grp-color')">Gray</button>
+        <button class="opt-btn" onclick="selOpt(this,'ext-grp-color')">Charcoal</button>
+      </div>
+    </div>
+
+    <!-- Fascia -->
+    <div class="step-block">
+      <div class="step-title" style="font-size:13px;margin-bottom:8px">Fascia type</div>
+      <div class="opt-row" id="ext-grp-fascia">
+        <button class="opt-btn sel" onclick="selOpt(this,'ext-grp-fascia')">Open Roll</button>
+        <button class="opt-btn" onclick="selOpt(this,'ext-grp-fascia')">Fabric Wrapped</button>
+        <button class="opt-btn" onclick="selOpt(this,'ext-grp-fascia')">Metal fascia</button>
+        <button class="opt-btn" onclick="selOpt(this,'ext-grp-fascia')">Cassette</button>
+      </div>
+    </div>
+
+    <!-- End caps -->
+    <div class="step-block">
+      <div class="step-title" style="font-size:13px;margin-bottom:8px">End caps</div>
+      <div class="opt-row" id="ext-grp-endcap">
+        <button class="opt-btn sel" onclick="selOpt(this,'ext-grp-endcap')">Standard</button>
+        <button class="opt-btn" onclick="selOpt(this,'ext-grp-endcap')">Designer</button>
+      </div>
+    </div>
+
+    <!-- Operation -->
+    <div class="step-block">
+      <div class="step-title" style="font-size:13px;margin-bottom:8px">Operation</div>
+      <div class="opt-row" id="ext-grp-op">
+        <button class="opt-btn sel" onclick="selOpt(this,'ext-grp-op');extToggleMotor(false)">Manual — handcrank</button>
+        <button class="opt-btn" onclick="selOpt(this,'ext-grp-op');extToggleMotor(true)">Motorized</button>
+      </div>
+      <div id="ext-motor-note" style="display:none;margin-top:10px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:6px">Motor preference (optional)</div>
+        <input type="text" id="ext-motor-req" placeholder="e.g. Somfy, Rollease Acmeda — or leave blank and we'll recommend one" style="width:100%;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit">
+        <div style="font-size:11px;color:#888;margin-top:5px">No obligation — just a preference. We confirm motor compatibility at your measurement visit.</div>
+      </div>
+    </div>
+
+    <!-- Control side -->
+    <div class="step-block">
+      <div class="step-title" style="font-size:13px;margin-bottom:8px">Control side</div>
+      <div class="opt-row" id="ext-grp-control">
+        <button class="opt-btn sel" onclick="selOpt(this,'ext-grp-control')">Left</button>
+        <button class="opt-btn" onclick="selOpt(this,'ext-grp-control')">Right</button>
+      </div>
+    </div>
+
+    <!-- Fabric sourcing -->
+    <div class="step-block">
+      <div class="step-title" style="font-size:13px;margin-bottom:8px">Fabric</div>
+      <div class="opt-row" id="ext-grp-fabric">
+        <button class="opt-btn sel" onclick="selOpt(this,'ext-grp-fabric')">We supply fabric</button>
+        <button class="opt-btn" onclick="selOpt(this,'ext-grp-fabric')">I supply fabric</button>
+        <button class="opt-btn" onclick="selOpt(this,'ext-grp-fabric')">Not sure</button>
+      </div>
+    </div>
+
+    <!-- Quantity -->
+    <div class="step-block">
+      <div class="step-title" style="font-size:13px;margin-bottom:8px">How many shades?</div>
+      <div class="qty-btns" style="margin-bottom:4px">
+        <button class="qty-btn" onclick="var n=document.getElementById('ext-qty');n.value=Math.max(1,parseInt(n.value)-1)">−</button>
+        <input class="qty-num" id="ext-qty" type="number" value="1" min="1" max="50">
+        <button class="qty-btn" onclick="var n=document.getElementById('ext-qty');n.value=parseInt(n.value)+1">+</button>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <hr class="price-divider" style="margin:18px 0">
+    <div class="form-row">
+      <div class="form-group"><label>Your name *</label><input type="text" id="ext-name" placeholder="Jane Smith"></div>
+      <div class="form-group"><label>Phone *</label><input type="tel" id="ext-phone" placeholder="(215) 555-0100"></div>
+    </div>
+    <div class="form-group"><label>Email</label><input type="email" id="ext-email" placeholder="jane@example.com"></div>
+    <div class="form-group"><label>Notes</label><textarea id="ext-notes" placeholder="Deck, patio, porch, pergola — any special mounting requirements..."></textarea></div>
+
+    <!-- Delivery -->
+    <div class="delivery-section">
+      <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+      <div class="opt-row" id="grp-del-ext">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-del-ext');document.getElementById('del-ext-s').style.display='block';document.getElementById('del-ext-p').style.display='none'">Ship to me</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-del-ext');document.getElementById('del-ext-s').style.display='none';document.getElementById('del-ext-p').style.display='block'">I'll pick up</button>
+      </div>
+      <div id="del-ext-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional.</div></div>
+      <div id="del-ext-p" class="delivery-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Address provided after order confirmation.</div>
+    </div>
+
+    <button class="btn-gold" onclick="submitExteriorForm()" style="width:100%;padding:13px;margin-top:4px">Request exterior shade quote &rarr;</button>
+    <div class="success-state" id="ext-success">
+      <h3>Quote request sent!</h3>
+      <p>We'll follow up with pricing and details. For anything urgent call <strong>(609) 742-1720</strong> &mdash; 24/7.</p>
+    </div>
+  </div><!-- /exterior-config -->
+
   <!-- BLINDS TYPE SELECTOR (shown first when Wood Blinds card clicked) -->
   <div class="configurator" id="blinds-type-config">
     <div class="config-head">
@@ -1894,10 +2042,8 @@ function selectProduct(productId, productName, isInstant) {
   } else if (productId === 'exterior') {
     document.getElementById('instant-config').classList.remove('open');
     document.getElementById('fwb-config').classList.remove('open');
-    document.getElementById('hd-config').classList.add('open');
-    document.getElementById('hd-product-name').textContent = 'Exterior Roller Shades';
-    const hdSel = document.getElementById('hd-product-sel');
-    if (hdSel) hdSel.value = 'other';
+    document.getElementById('hd-config').classList.remove('open');
+    document.getElementById('exterior-config').classList.add('open');
   } else if (productId === 'fwb') {
     document.getElementById('instant-config').classList.remove('open');
     document.getElementById('hd-config').classList.remove('open');
@@ -1966,6 +2112,7 @@ function clearProduct() {
   document.getElementById('instant-config').classList.remove('open');
   document.getElementById('hd-config').classList.remove('open');
   document.getElementById('fwb-config').classList.remove('open');
+  document.getElementById('exterior-config').classList.remove('open');
   // Scroll back to product grid
   document.getElementById('product-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -3726,6 +3873,43 @@ function showCartForm() {
   const w = document.getElementById('cart-contact-wrap');
   w.style.display = 'block';
   w.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── Exterior Roller Shade ───────────────────────────────────
+function extToggleMotor(show) {
+  var el = document.getElementById('ext-motor-note');
+  if (el) el.style.display = show ? 'block' : 'none';
+}
+function submitExteriorForm() {
+  var name  = (document.getElementById('ext-name') || {}).value || '';
+  var phone = (document.getElementById('ext-phone') || {}).value || '';
+  if (!name.trim() || !phone.trim()) { alert('Please enter your name and phone number.'); return; }
+  var gExt = function(id) { var b = document.querySelector('#' + id + ' .opt-btn.sel'); return b ? b.textContent.trim() : '—'; };
+  var w       = document.getElementById('ext-width').value;
+  var h       = document.getElementById('ext-height').value;
+  var qty     = document.getElementById('ext-qty').value;
+  var motorReq= document.getElementById('ext-motor-req').value.trim();
+  var delivery= gExt('grp-del-ext');
+  var body = 'EXTERIOR ROLLER SHADE QUOTE\n' +
+    '=====================================\n' +
+    'Name:  ' + name + '\nPhone: ' + phone +
+    '\nEmail: ' + (document.getElementById('ext-email').value.trim() || '—') + '\n\n' +
+    'Width: ' + (w || '—') + '"  Height: ' + (h || '—') + '"  Qty: ' + qty + '\n' +
+    'Mount: '      + gExt('ext-grp-mount')    + '\n' +
+    'Openness: '   + gExt('ext-grp-openness') + '\n' +
+    'Color: '      + gExt('ext-grp-color')    + '\n' +
+    'Fascia: '     + gExt('ext-grp-fascia')   + '\n' +
+    'End caps: '   + gExt('ext-grp-endcap')   + '\n' +
+    'Operation: '  + gExt('ext-grp-op')       + '\n' +
+    (motorReq ? 'Motor preference: ' + motorReq + '\n' : '') +
+    'Control side: '+ gExt('ext-grp-control') + '\n' +
+    'Fabric: '     + gExt('ext-grp-fabric')   + '\n' +
+    'Delivery: '   + delivery                 + '\n\n' +
+    'Notes:\n' + (document.getElementById('ext-notes').value.trim() || 'None');
+  window.location.href = 'mailto:justin@phillyblinds.com' +
+    '?subject=' + encodeURIComponent('Exterior Roller Shade Quote — ' + name) +
+    '&body=' + encodeURIComponent(body);
+  document.getElementById('ext-success').classList.add('show');
 }
 
 async function handleQuickQuote(e) {
