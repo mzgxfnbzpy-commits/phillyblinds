@@ -1307,12 +1307,14 @@
         <button class="opt-btn" onclick="selOpt(this,'pb-grp-mount')">Outside mount</button>
       </div>
 
-      <!-- Fascia — Metal only for generic custom fab -->
-      <div class="step-title" style="font-size:12px;margin:14px 0 8px">Fascia</div>
+      <!-- Fascia / Open Roll -->
+      <div class="step-title" style="font-size:12px;margin:14px 0 8px">Headrail / fascia</div>
       <div class="opt-row" id="pb-grp-fascia">
-        <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-fascia')">Metal fascia</button>
+        <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-fascia')">Open Roll</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-fascia')">Fabric Wrapped fascia</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-fascia')">Metal fascia</button>
       </div>
-      <div class="tooltip-note" style="margin-top:4px">Aluminum fascia — color (White, Cottage White, Black, or Anodized Silver) confirmed at order.</div>
+      <div class="tooltip-note" style="margin-top:4px">Open Roll: exposed tube, clean minimal profile. Fabric Wrapped: fabric-covered headrail for a seamless look. Metal: aluminum fascia — color confirmed at order.</div>
 
       <!-- End caps -->
       <div class="step-title" style="font-size:12px;margin:14px 0 8px">End caps</div>
@@ -3227,20 +3229,26 @@ function pbCalcPrice() {
   var vWrap = document.getElementById('pb-valance-wrap');
   if (!box) return;
 
-  var fabBtn = document.querySelector('#pb-grp-fabric-type .opt-btn.sel');
+  var fabBtn  = document.querySelector('#pb-grp-fabric-type .opt-btn.sel');
   var fabType = fabBtn ? fabBtn.textContent.trim() : '';
-  var isSolar = fabType === 'Solar Screen';
+  var isSolar   = fabType === 'Solar Screen';
+  var isBlackout = fabType === 'Blackout';
+  var hasPricing = isSolar || isBlackout;
 
-  // Show valance add-on option only for solar screen with valid width
-  if (vWrap) vWrap.style.display = (isSolar && w) ? 'block' : 'none';
+  // Show valance add-on when width known
+  if (vWrap) vWrap.style.display = (hasPricing && w) ? 'block' : 'none';
   var valOpts = document.getElementById('pb-valance-opts');
   var addVal  = document.getElementById('pb-add-valance');
   if (valOpts && addVal) valOpts.style.display = addVal.checked ? 'block' : 'none';
 
-  if (!isSolar || !w || !h) { box.style.display='none'; return; }
+  if (!hasPricing || !w || !h) { box.style.display='none'; return; }
 
   var qty = parseInt(document.getElementById('pb-qty-inp').value) || 1;
-  var result = _pbLookup(w,h);
+  var baseResult = _pbLookup(w,h);
+  // Apply 20% upcharge for Blackout
+  var result = baseResult ? Object.assign({}, baseResult, {
+    price: isBlackout ? Math.round(baseResult.price * 1.20) : baseResult.price
+  }) : null;
   var rows='';
   var pRow = function(lbl,val,light) {
     rows+='<div style="display:flex;justify-content:space-between;font-size:12px;color:'+(light?'var(--text-faint)':'var(--text-dark)')+';padding:4px 0;border-bottom:.5px solid var(--border-dark)"><span>'+lbl+'</span><span style="color:var(--cream);font-weight:500">$'+val.toFixed(0)+'</span></div>';
@@ -3268,14 +3276,15 @@ function pbCalcPrice() {
 
   var grandTotal = shadeTotal + freight + valTotal;
 
-  pRow('Solar Screen ('+w+'→'+result.rw+'" × '+h+'→'+result.rh+'") × '+qty, shadeTotal);
+  pRow((isBlackout?'Blackout (+20%)':'Solar Screen')+' ('+w+'→'+result.rw+'" × '+h+'→'+result.rh+'") × '+qty, shadeTotal);
   pRow((isOversized?'Oversized freight (over 90")':'Standard freight')+' — '+qty+' shade'+(qty>1?'s':''), freight, true);
 
   document.getElementById('pb-price-rows').innerHTML = rows;
   document.getElementById('pb-price-total').textContent = '$'+grandTotal.toFixed(0);
   var note = 'Dimensions rounded up to next standard size. ' +
-    (isOversized ? 'Oversized: $80 first + $50 each additional. ' : '$25 first shade + $11 each additional. ') +
-    'Prices are retail — fabric & installation costs may vary. Final confirmed at order.';
+    (isBlackout ? 'Blackout includes +20% upcharge. ' : '') +
+    (isOversized ? 'Oversized freight: $80 first + $50 each additional. ' : 'Freight: $25 first + $11 each additional. ') +
+    'Retail prices — installation quoted separately. Final confirmed at order.';
   document.getElementById('pb-price-note').textContent = note;
   box.style.display='block';
 }
