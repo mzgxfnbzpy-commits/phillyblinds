@@ -117,6 +117,15 @@
   <img src="../images/portfolio/IMG_1347.JPEG" alt="Custom window treatment installation" style="width:100%;height:100%;object-fit:cover;display:block">
 </div>
 
+<!-- SECTION 2: STANDARD OR SPECIALTY SELECTOR -->
+<div style="background:var(--espresso-mid);border-bottom:1px solid var(--border-dark);padding:0 28px">
+  <div style="max-width:900px;margin:0 auto;display:flex;gap:0">
+    <button id="sht-btn-standard" onclick="shutterType('standard')" style="padding:15px 28px;font-size:13px;font-weight:500;background:none;border:none;border-bottom:3px solid var(--gold);color:var(--cream);cursor:pointer;font-family:inherit;white-space:nowrap">Standard Shutters</button>
+    <button id="sht-btn-specialty" onclick="shutterType('specialty')" style="padding:15px 28px;font-size:13px;font-weight:500;background:none;border:none;border-bottom:3px solid transparent;color:var(--text-muted);cursor:pointer;font-family:inherit;white-space:nowrap">Specialty / Arch / Oversized ✦</button>
+  </div>
+</div>
+
+<div id="sht-standard-content">
 <!-- SECTION 2: CUSTOM QUOTE NOTICE -->
 <div class="section section-warm">
   <div class="quote-notice">
@@ -143,6 +152,8 @@
     </div>
   </div>
 </div>
+
+</div><!-- /sht-standard-content -->
 
 <!-- SPECIALTY SHUTTER CARD -->
 <div class="section section-warm" style="padding-top:32px;padding-bottom:32px">
@@ -500,6 +511,39 @@
 <script>
 renderNav('Shutters');
 renderFooter(false);
+
+// Specialty card section is always visible; standard content toggled
+var _shtSpecialtyCard = document.querySelector('#sht-standard-content + div');
+
+function shutterType(type) {
+  var stdContent  = document.getElementById('sht-standard-content');
+  var specCard    = document.querySelector('.section.section-warm[style*="padding-top:32px"]');
+  var btnStd      = document.getElementById('sht-btn-standard');
+  var btnSpec     = document.getElementById('sht-btn-specialty');
+  var goldBorder  = '3px solid var(--gold)';
+  var noBorder    = '3px solid transparent';
+  var cream       = 'var(--cream)';
+  var muted       = 'var(--text-muted)';
+
+  if (type === 'standard') {
+    if (stdContent)  stdContent.style.display = 'block';
+    if (specCard)    specCard.style.display    = 'none';
+    btnStd.style.borderBottom = goldBorder; btnStd.style.color = cream;
+    btnSpec.style.borderBottom = noBorder;  btnSpec.style.color = muted;
+  } else {
+    if (stdContent)  stdContent.style.display = 'none';
+    if (specCard)    specCard.style.display    = 'block';
+    btnStd.style.borderBottom = noBorder;   btnStd.style.color = muted;
+    btnSpec.style.borderBottom = goldBorder; btnSpec.style.color = cream;
+    pbShowContact('Specialty Shutters — Arch, Oval, Circle, or Oversized');
+  }
+}
+
+// Hide specialty card by default (show standard first)
+(function(){
+  var specCard = document.querySelector('.section.section-warm[style*="padding-top:32px"]');
+  if (specCard) specCard.style.display = 'none';
+})();
 _initMeasureHelp(`
   <div class="pb-help-heading">How to measure for plantation shutters</div>
   <div class="pb-help-sub">Every shutter is custom — precise measurement is critical</div>
