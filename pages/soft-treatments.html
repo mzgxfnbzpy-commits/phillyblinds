@@ -870,7 +870,8 @@ function submitDrape() {
     + '\nExact width: ' + (document.getElementById('d-exact-width').value ? document.getElementById('d-exact-width').value + '"' : '—')
     + '\nFinished length: ' + (document.getElementById('d-exact-length').value ? document.getElementById('d-exact-length').value + '"' : '—') + '\n'
     + 'Delivery: ' + delivery + '\n\n'
-    + 'Notes:\n' + (document.getElementById('d-notes').value.trim() || 'None');
+    + 'Notes:\n' + (document.getElementById('d-notes').value.trim() || 'None')
+    + (function(){ var fu = document.querySelector('#drape-form .pb-fu-wrap input[type="file"]'); var n = fu && fu.files.length ? '\n\nFiles to send: ' + Array.from(fu.files).map(function(f){return f.name;}).join(', ') + '\n(Customer will email these to justin@phillyblinds.com)' : ''; return n; }());
   window.location.href = 'mailto:justin@phillyblinds.com'
     + '?subject=' + encodeURIComponent('Drapery Quote — ' + name)
     + '&body=' + encodeURIComponent(body);
@@ -939,7 +940,8 @@ function submitRoman() {
     + '\nWidth: ' + (w ? w + '"' : '—')
     + '  Finished length: ' + (h ? h + '"' : '—') + '\n'
     + 'Delivery: ' + delivery + '\n\n'
-    + 'Notes:\n' + (document.getElementById('rn-notes').value.trim() || 'None');
+    + 'Notes:\n' + (document.getElementById('rn-notes').value.trim() || 'None')
+    + (function(){ var fu = document.querySelector('#roman-form .pb-fu-wrap input[type="file"]'); var n = fu && fu.files.length ? '\n\nFiles to send: ' + Array.from(fu.files).map(function(f){return f.name;}).join(', ') + '\n(Customer will email these to justin@phillyblinds.com)' : ''; return n; }());
   window.location.href = 'mailto:justin@phillyblinds.com'
     + '?subject=' + encodeURIComponent('Roman Shade Quote — ' + name)
     + '&body=' + encodeURIComponent(body);

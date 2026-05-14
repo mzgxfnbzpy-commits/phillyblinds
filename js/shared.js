@@ -206,7 +206,7 @@ function renderFooter(isHome) {
     </div>
     <div class="footer-disc">Blindznation is an independent business providing professional installation and consulting services. Product names, logos, and trademarks are the property of their respective owners and are used for identification purposes only. Blindznation is not affiliated with, endorsed by, or sponsored by any manufacturer. &nbsp;·&nbsp; <a href="${pre}privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></div>
   `;
-  setTimeout(_initShippingEstimators, 0);
+  setTimeout(function(){ _initShippingEstimators(); _initFileUploads(); }, 0);
 }
 
 function _toggleDrawer() {
@@ -540,6 +540,61 @@ function _initMotorModal() {
       '</div>' +
     '</div>';
   document.body.appendChild(ov);
+}
+
+// ---- FILE UPLOAD — auto-injects into every quote form ----
+function pbGetFileNames(inputId) {
+  var el = document.getElementById(inputId);
+  if (!el || !el.files || !el.files.length) return '';
+  return Array.from(el.files).map(function(f){ return f.name; }).join(', ');
+}
+function pbShowFileNames(input, displayId) {
+  var el = document.getElementById(displayId);
+  if (!el) return;
+  var names = Array.from(input.files).map(function(f){ return '📄 ' + f.name; }).join('<br>');
+  el.innerHTML = names;
+}
+function _initFileUploads() {
+  // Inject into forms that have a delivery section (all main quote forms)
+  document.querySelectorAll('.delivery-section').forEach(function(del) {
+    var parent = del.parentElement;
+    if (!parent || parent.querySelector('.pb-fu-wrap')) return;
+    var btn = parent.querySelector('.btn-gold');
+    if (!btn) return;
+    var id = 'fu-' + Math.random().toString(36).slice(2, 8);
+    var wrap = document.createElement('div');
+    wrap.className = 'pb-fu-wrap';
+    wrap.style.cssText = 'border:1.5px dashed #ddd;border-radius:10px;padding:14px 16px;margin-bottom:14px;background:#fafaf8';
+    wrap.innerHTML =
+      '<div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">&#128206; Attach photos or files <span style="font-weight:400;color:#999">(optional)</span></div>' +
+      '<input type="file" id="' + id + '" multiple accept="image/*,.pdf,.heic,.png,.jpg,.jpeg" ' +
+        'style="width:100%;font-size:12px;color:#555;font-family:inherit;cursor:pointer;padding:4px 0" ' +
+        'onchange="pbShowFileNames(this,\'' + id + '-names\')">' +
+      '<div id="' + id + '-names" style="font-size:11px;color:#555;margin-top:6px;line-height:1.8"></div>' +
+      '<div style="font-size:11px;color:#aaa;margin-top:5px;line-height:1.5">Window photos, room photos, measurements, inspiration — anything that helps. ' +
+        'After submitting, email files directly to <a href="mailto:justin@phillyblinds.com" style="color:inherit">justin@phillyblinds.com</a> if needed.</div>';
+    btn.before(wrap);
+    btn.setAttribute('data-fu-id', id);
+  });
+
+  // Also inject into Formspree quick-quote forms (no delivery section)
+  document.querySelectorAll('form[id$="-quote-form"],form[id$="-form"]').forEach(function(form) {
+    if (form.querySelector('.pb-fu-wrap')) return;
+    var btn = form.querySelector('button[type="submit"]');
+    if (!btn) return;
+    var id = 'fu-' + Math.random().toString(36).slice(2, 8);
+    var wrap = document.createElement('div');
+    wrap.className = 'pb-fu-wrap';
+    wrap.style.cssText = 'border:1.5px dashed #ddd;border-radius:10px;padding:14px 16px;margin-bottom:14px;background:#fafaf8';
+    wrap.innerHTML =
+      '<div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">&#128206; Attach photos or files <span style="font-weight:400;color:#999">(optional)</span></div>' +
+      '<input type="file" name="attachments" id="' + id + '" multiple accept="image/*,.pdf,.heic,.png,.jpg,.jpeg" ' +
+        'style="width:100%;font-size:12px;color:#555;font-family:inherit;cursor:pointer;padding:4px 0" ' +
+        'onchange="pbShowFileNames(this,\'' + id + '-names\')">' +
+      '<div id="' + id + '-names" style="font-size:11px;color:#555;margin-top:6px;line-height:1.8"></div>' +
+      '<div style="font-size:11px;color:#aaa;margin-top:5px;line-height:1.5">Window photos, room photos, measurements, inspiration — anything that helps.</div>';
+    btn.before(wrap);
+  });
 }
 
 // ---- SHIPPING ESTIMATOR ----
