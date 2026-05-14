@@ -233,21 +233,9 @@
     </div>
   </div>
 
-  <!-- STEP 3: MOTORIZATION -->
+  <!-- STEP 3: LINING -->
   <div class="step">
     <div class="step-label">Step 3</div>
-    <div class="step-title">Motorization <span style="font-size:12px;color:#999;font-weight:400">(optional)</span></div>
-    <div class="step-sub">Motorized drapery traverses on a track system. Specify your preferred motor brand in the notes — compatibility depends on the track.</div>
-    <div class="opt-row" id="grp-drape-motor" style="margin-top:12px">
-      <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-motor')">No motor</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-drape-motor')">Yes — add motorization</button>
-    </div>
-    <div style="font-size:12px;color:#666;margin-top:10px;line-height:1.6">Compatible brands include Somfy, Lutron Sivoia, Rollease Acmeda &amp; others — confirm with us per track brand. Specify your preference in the notes below.</div>
-  </div>
-
-  <!-- STEP 4: LINING -->
-  <div class="step">
-    <div class="step-label">Step 4</div>
     <div class="step-title">Lining</div>
     <div class="opt-row" id="grp-drape-lining" style="margin-top:12px">
       <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-lining')">Unlined</button>
@@ -257,9 +245,9 @@
     </div>
   </div>
 
-  <!-- STEP 5: QUOTE FORM -->
+  <!-- STEP 4: QUOTE FORM -->
   <div class="step">
-    <div class="step-label">Step 5</div>
+    <div class="step-label">Step 4</div>
     <div class="step-title">Get your custom quote</div>
     <div class="step-sub">Drapery is always custom quoted — every project is unique. Fill this out and we'll follow up fast.</div>
 
@@ -283,14 +271,31 @@
           <option>Standard (8–9 ft)</option><option>Tall (9–10 ft)</option><option>10–12 ft</option><option>12–14 ft</option><option>14 ft+</option><option>Floor to ceiling</option><option>Custom — I'll specify in notes</option>
         </select>
       </div>
-      <div class="form-group"><label>Notes — fabric preference, motor brand, rod type, timeline, or anything else</label>
-        <textarea id="d-notes" style="min-height:90px" placeholder="e.g. Ripple fold on a Rollease track, customer-supplied linen fabric, 3 windows in master bedroom..."></textarea>
+      <div class="form-group"><label>Notes — fabric preference, rod type, timeline, or anything else</label>
+        <textarea id="d-notes" style="min-height:90px" placeholder="e.g. Ripple fold panels, customer-supplied linen fabric, 3 windows in master bedroom..."></textarea>
       </div>
 
-      <!-- ALSO NEED HARDWARE? -->
-      <div class="hw-crosssell">
-        <div class="hw-crosssell-text"><strong>Also need a rod or traverse system?</strong><br><span style="font-size:12px;color:var(--text-muted)">We do full hardware supply and installation — decorative rods, rings, traverse tracks and more.</span></div>
-        <a href="hardware.html" class="btn-gold" style="font-size:12px;padding:8px 14px;white-space:nowrap">Browse Hardware &rarr;</a>
+      <!-- HARDWARE QUESTION -->
+      <div style="border:1px solid #e8e8e4;border-radius:10px;padding:16px 18px;margin-bottom:16px">
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:10px">Do you have your hardware (rod / track)?</div>
+        <div class="opt-row" id="grp-drape-hardware">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-hardware');drapeToggleHardware(false)">I have my own hardware</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-drape-hardware');drapeToggleHardware(true)">I need hardware</button>
+        </div>
+        <!-- Hardware sub-options — shown when "I need hardware" -->
+        <div id="drape-hardware-opts" style="display:none;margin-top:14px">
+          <div style="font-size:12px;font-weight:500;color:#444;margin-bottom:8px">What type of hardware are you looking for?</div>
+          <div class="opt-row" id="grp-drape-hw-type">
+            <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-hw-type')">Decorative rod &amp; rings</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-drape-hw-type')">Traverse / ripple fold track</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-drape-hw-type')">Motorized track</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-drape-hw-type')">Not sure — advise me</button>
+          </div>
+          <div style="margin-top:12px;background:var(--gold-mid);border:1px solid #e0d8c8;border-radius:8px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+            <div style="font-size:12px;color:#555;line-height:1.5">We supply and install decorative rods, traverse tracks, ripple fold systems, and motorized tracks — all brands.</div>
+            <a href="hardware.html" style="font-size:12px;font-weight:600;color:var(--espresso);background:var(--gold);padding:8px 14px;border-radius:8px;text-decoration:none;white-space:nowrap">Browse Hardware &rarr;</a>
+          </div>
+        </div>
       </div>
 
       <!-- DELIVERY -->
@@ -666,6 +671,11 @@ function calcRoman() {
   document.getElementById('rn-pb-min-note').style.display = perShade === RN_MIN ? 'block' : 'none';
 }
 
+function drapeToggleHardware(show) {
+  var el = document.getElementById('drape-hardware-opts');
+  if (el) el.style.display = show ? 'block' : 'none';
+}
+
 // ── SUBMIT: DRAPERY ───────────────────────────────────────
 function submitDrape() {
   var name  = document.getElementById('d-name').value.trim();
@@ -673,8 +683,9 @@ function submitDrape() {
   if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
   var pleat    = drapeState.pleat    || getOpt('pleat-cards') || '—';
   var fabric   = drapeState.fabric   || '—';
-  var motor    = getOpt('grp-drape-motor');
   var lining   = getOpt('grp-drape-lining');
+  var hwNeed   = getOpt('grp-drape-hardware');
+  var hwType   = hwNeed === 'I need hardware' ? getOpt('grp-drape-hw-type') : 'N/A';
   var delivery = getOpt('grp-del-drape');
   var body = 'DRAPERY QUOTE REQUEST\n\n'
     + 'Name: ' + name + '\nPhone: ' + phone
@@ -683,7 +694,7 @@ function submitDrape() {
     + 'Pleat style: ' + (drapeState.pleat || '—') + '\n'
     + 'Fabric: ' + fabric + '\n'
     + 'Lining: ' + lining + '\n'
-    + 'Motorization: ' + motor + '\n'
+    + 'Hardware: ' + hwNeed + (hwType !== 'N/A' ? ' — ' + hwType : '') + '\n'
     + 'Panels / windows: ' + document.getElementById('d-qty').value
     + '\nWidth range: ' + document.getElementById('d-width').value
     + '\nDrop: ' + document.getElementById('d-height').value + '\n'
