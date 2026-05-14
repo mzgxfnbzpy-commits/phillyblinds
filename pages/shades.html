@@ -456,8 +456,8 @@
           <span class="brand-btn-sub">Premium manufacturer · full options</span>
         </button>
         <button class="brand-btn" id="btn-brand-pb" onclick="selectBrand('pb')">
-          <span class="brand-btn-name">Philly Blinds Custom</span>
-          <span class="brand-btn-sub">Our in-house fabrication · roller shades</span>
+          <span class="brand-btn-name">Custom Roller Shades</span>
+          <span class="brand-btn-sub">Our in-house fabrication · any fabric</span>
         </button>
         <button class="brand-btn" id="btn-brand-other" onclick="selectBrand('other')">
           <span class="brand-btn-name">Other / Not sure</span>
@@ -465,7 +465,7 @@
         </button>
       </div>
       <div id="pb-only-note" class="tooltip-note" style="display:none;margin-top:6px;color:#888">
-        Philly Blinds Custom fabrication is available for <strong>roller shades only</strong>. Choose Norman or Other for this product type.
+        Custom Roller Shade fabrication is available for <strong>roller shades only</strong>. Choose Norman or Other for this product type.
       </div>
     </div>
 
@@ -1248,8 +1248,8 @@
     <div id="brand-pb-content" style="display:none">
       <!-- Intro -->
       <div style="background:var(--gold-mid);border:1px solid #E8DCC8;border-radius:10px;padding:14px 18px;margin-bottom:20px">
-        <div style="font-size:12px;font-weight:600;color:#0D4A42;margin-bottom:4px">Philly Blinds Custom — Motorized Roller Shades</div>
-        <div style="font-size:12px;color:#0D4A42;line-height:1.6">We custom fabricate and install motorized roller shades in-house. All units are motorized with your choice of control brand. Bring your own fabric or choose from our library — pricing quoted after we review your specs.</div>
+        <div style="font-size:12px;font-weight:600;color:#0D4A42;margin-bottom:4px">Custom Roller Shades — In-House Fabrication</div>
+        <div style="font-size:12px;color:#0D4A42;line-height:1.6">We custom fabricate and install roller shades in-house. Choose motorized or manual operation. Bring your own fabric or choose from our library — pricing quoted after we review your specs.</div>
       </div>
 
       <!-- Size -->
@@ -1266,11 +1266,10 @@
         <button class="opt-btn" onclick="selOpt(this,'pb-grp-mount')">Ceiling mount</button>
       </div>
 
-      <!-- Light control -->
+      <!-- Light control (simplified — fabric type drives this) -->
       <div class="step-title" style="font-size:12px;margin:14px 0 8px">Light control goal</div>
       <div class="opt-row" id="pb-grp-light">
         <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-light')">Light filtering</button>
-        <button class="opt-btn" onclick="selOpt(this,'pb-grp-light')">Room darkening</button>
         <button class="opt-btn" onclick="selOpt(this,'pb-grp-light')">Blackout</button>
         <button class="opt-btn" onclick="selOpt(this,'pb-grp-light')">Solar screen</button>
       </div>
@@ -1283,18 +1282,17 @@
       </div>
       <div class="tooltip-note" style="margin-top:4px">Fabric Wrapped: fabric covers the headrail for a seamless look. Metal: aluminum fascia in White, Cottage White, Black, or Anodized Silver — confirmed at order.</div>
 
-      <!-- Motorization — always on, choose brand -->
-      <div style="margin-top:14px;padding:12px 14px;background:var(--espresso-mid);border-radius:8px">
-        <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Motorization — included on all units</div>
-        <div style="font-size:12px;font-weight:500;color:var(--cream);margin-bottom:6px">Motor brand preference</div>
-        <div class="opt-row" id="pb-grp-motor">
-          <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-motor')">Lutron Serena</button>
-          <button class="opt-btn" onclick="selOpt(this,'pb-grp-motor')">Somfy</button>
-          <button class="opt-btn" onclick="selOpt(this,'pb-grp-motor')">Automate</button>
-          <button class="opt-btn" onclick="selOpt(this,'pb-grp-motor')">Rollease Acmeda</button>
-          <button class="opt-btn" onclick="selOpt(this,'pb-grp-motor')">No preference</button>
-        </div>
-        <div style="font-size:11px;color:var(--text-dark);margin-top:6px;line-height:1.6">All motors are app &amp; voice control compatible. Battery or hardwired — confirmed at measurement visit. Safety tensioner always included for cord loop systems.</div>
+      <!-- Operation — Motorized / Manual / No Preference -->
+      <div class="step-title" style="font-size:12px;margin:14px 0 8px">Operation</div>
+      <div class="opt-row" id="pb-grp-operation">
+        <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-operation');pbToggleMotor(true)">Motorized</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-operation');pbToggleMotor(false)">Manual</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-operation');pbToggleMotor(false)">No Preference</button>
+      </div>
+      <div id="pb-motor-system-wrap" style="margin-top:10px;padding:12px 14px;background:var(--espresso-mid);border-radius:8px">
+        <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px">Motor system</div>
+        <div style="font-size:13px;color:var(--cream);font-weight:500;margin-bottom:4px">Rollease Acmeda</div>
+        <div style="font-size:11px;color:var(--text-dark);line-height:1.6">App &amp; voice control compatible. Battery or hardwired — confirmed at measurement visit.</div>
       </div>
 
       <!-- Fabric sourcing -->
@@ -1308,12 +1306,19 @@
       <div id="pb-fabric-picker" style="margin-top:12px;padding:14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
         <div style="font-size:11px;font-weight:600;letter-spacing:0.5px;color:#444;text-transform:uppercase;margin-bottom:10px">Fabric type</div>
         <div class="opt-row" id="pb-grp-fabric-type">
-          <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors()">Linen Blend</button>
-          <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors()">Solar Screen</button>
-          <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors()">Room Darkening</button>
-          <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors()">Blackout</button>
-          <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors()">Sheer / Voile</button>
-          <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors()">Cotton / Poly</button>
+          <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors();pbToggleSolarOpts(false)">Blackout</button>
+          <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors();pbToggleSolarOpts(true)">Solar Screen</button>
+        </div>
+        <!-- Solar openness sub-option -->
+        <div id="pb-solar-opts" style="display:none;margin-top:10px;padding:10px 12px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
+          <div style="font-size:11px;font-weight:600;color:#444;margin-bottom:6px">Openness factor</div>
+          <div class="opt-row" id="pb-grp-solar">
+            <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-solar')">1%</button>
+            <button class="opt-btn" onclick="selOpt(this,'pb-grp-solar')">3%</button>
+            <button class="opt-btn" onclick="selOpt(this,'pb-grp-solar')">5%</button>
+            <button class="opt-btn" onclick="selOpt(this,'pb-grp-solar')">10%</button>
+          </div>
+          <div style="font-size:11px;color:#888;margin-top:5px;line-height:1.5">1% = max privacy, 10% = most view-through. ±10% tolerance is industry standard.</div>
         </div>
         <div id="pb-fabric-colors" style="margin-top:10px"></div>
         <div style="font-size:10px;color:#999;margin-top:8px;line-height:1.5">Colors are approximate — exact swatches brought to your consultation. Final availability confirmed at order.</div>
@@ -1929,7 +1934,7 @@ function selectBrand(brand) {
 
   // Update config title
   if (brand === 'pb') {
-    document.getElementById('config-product-name').textContent = 'Custom Roller Shade';
+    document.getElementById('config-product-name').textContent = 'Custom Roller Shades';
   } else if (brand === 'norman' && currentProduct) {
     const card = document.getElementById('card-' + currentProduct);
     const pname = card ? card.querySelector('.product-name').textContent : 'Shade';
@@ -2409,19 +2414,21 @@ function submitPBForm() {
   const gPB   = function(id) { const b = document.querySelector('#' + id + ' .opt-btn.sel'); return b ? b.textContent.trim() : '—'; };
   const notes = (document.getElementById('pb-fabric-notes') || {}).value || '';
   const body =
-    'PHILLY BLINDS CUSTOM — MOTORIZED ROLLER SHADE REQUEST\n' +
-    '═══════════════════════════════════════════════════════\n' +
+    'CUSTOM ROLLER SHADE REQUEST\n' +
+    '══════════════════════════════════════════\n' +
     'Name:           ' + name  + '\n' +
     'Phone:          ' + phone + '\n' +
     'Email:          ' + (email || '—') + '\n\n' +
     'Width:          ' + (w || '—') + '″\n' +
     'Height:         ' + (h || '—') + '″\n' +
-    'Mount type:     ' + gPB('pb-grp-mount')  + '\n' +
-    'Light control:  ' + gPB('pb-grp-light')  + '\n' +
-    'Fascia type:    ' + gPB('pb-grp-fascia') + '\n' +
-    'Motor brand:    ' + gPB('pb-grp-motor')  + '\n' +
-    'Fabric source:  ' + gPB('pb-grp-fabric') + '\n' +
-    'Delivery:       ' + delivery             + '\n\n' +
+    'Mount type:     ' + gPB('pb-grp-mount')     + '\n' +
+    'Operation:      ' + gPB('pb-grp-operation') + '\n' +
+    'Fabric type:    ' + gPB('pb-grp-fabric-type') + '\n' +
+    'Solar openness: ' + gPB('pb-grp-solar')     + '\n' +
+    'Color:          ' + gPB('pb-grp-fabric-color') + '\n' +
+    'Fascia type:    ' + gPB('pb-grp-fascia')    + '\n' +
+    'Fabric source:  ' + gPB('pb-grp-fabric')    + '\n' +
+    'Delivery:       ' + delivery                + '\n\n' +
     'Fabric notes:\n' + (notes || '(none)');
   window.location.href = 'mailto:justin@phillyblinds.com' +
     '?subject=' + encodeURIComponent('Custom Roller Shade Request — ' + name) +
@@ -2998,13 +3005,17 @@ function submitFWBForm() {
 
 // ─── PB Custom roller fabric picker ──────────────────────────
 const PB_FABRICS = {
-  'Linen Blend':    ['Natural','Ivory','Flax','Oatmeal','Sand','Linen','Stone','Taupe','Gray','Charcoal'],
-  'Solar Screen':   ['White (1%)','White (3%)','White (5%)','Linen (1%)','Linen (3%)','Linen (5%)','Charcoal (1%)','Charcoal (3%)','Charcoal (5%)'],
-  'Room Darkening': ['White','Ivory','Sand','Stone','Taupe','Gray','Charcoal','Espresso','Black'],
-  'Blackout':       ['White','Ivory','Sand','Stone','Gray','Charcoal','Black'],
-  'Sheer / Voile':  ['White','Soft White','Ivory','Champagne','Pearl','Silver'],
-  'Cotton / Poly':  ['White','Ivory','Sand','Stone','Gray','Charcoal','Black']
+  'Blackout':      ['White','Black','Cream','Off-White','Gray','Charcoal'],
+  'Solar Screen':  ['White','Black','Cream','Off-White','Gray','Charcoal']
 };
+function pbToggleMotor(show) {
+  var el = document.getElementById('pb-motor-system-wrap');
+  if (el) el.style.display = show ? 'block' : 'none';
+}
+function pbToggleSolarOpts(show) {
+  var el = document.getElementById('pb-solar-opts');
+  if (el) el.style.display = show ? 'block' : 'none';
+}
 function pbShowFabricPicker(show) {
   var el = document.getElementById('pb-fabric-picker');
   if (el) el.style.display = show ? 'block' : 'none';
