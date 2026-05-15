@@ -29,6 +29,15 @@
 .opt-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
 .opt-grid-4{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
 @media(min-width:600px){.opt-grid-4{grid-template-columns:repeat(2,1fr)}}
+.fabric-section{margin-bottom:14px}
+.fabric-section-head{font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:#666;margin:12px 0 6px;padding-bottom:4px;border-bottom:1px solid #f0ece4}
+.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:7px}
+.color-card{border:1.5px solid #e8e8e4;border-radius:9px;overflow:hidden;cursor:pointer;transition:all .15s}
+.color-card:hover{border-color:var(--gold);transform:translateY(-1px)}
+.color-card.sel{border:2px solid var(--gold);box-shadow:0 2px 10px rgba(200,151,63,.2)}
+.color-swatch{height:40px;width:100%}
+.color-label{padding:5px 6px;background:#fff}
+.color-name{font-size:10px;font-weight:600;color:#222;line-height:1.3}
 .opt-card{background:#fff;border:1.5px solid #e8e8e4;border-radius:10px;padding:13px 11px;cursor:pointer;text-align:center;transition:all .15s}
 .opt-card:hover{border-color:var(--gold)}
 .opt-card.sel{border:2px solid var(--gold);background:rgba(200,151,63,.06)}
@@ -117,42 +126,264 @@
 <div class="config-layout">
 <div><!-- left column -->
 
-  <!-- STEP 1: PRICE GROUP / COLLECTION -->
+  <!-- STEP 1: FABRIC & COLOR -->
   <div class="step-block active" id="step1">
     <div class="step-head" onclick="toggleStep('step1')">
       <div class="step-num">1</div>
-      <div class="step-head-title">Fabric Collection</div>
+      <div class="step-head-title">Fabric &amp; Color</div>
       <div class="step-head-val" id="s1val">—</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-4">
-        <div class="opt-card" onclick="pickGroup(this,1,'Group 1 — Classic')">
-          <div class="opt-card-title">Group 1 — Classic</div>
-          <div class="opt-card-desc">Pure White, Silk White, Pearl, Sea Mist, Metropolitan<br>Traditional curved vanes</div>
-          <div class="opt-card-price">Starting $204</div>
-        </div>
-        <div class="opt-card" onclick="pickGroup(this,2,'Group 2 — S-Curved &amp; Sandblasted')">
-          <div class="opt-card-title">Group 2 — S-Curved &amp; Sandblasted</div>
-          <div class="opt-card-desc">S-Curved vanes &middot; elegant drapery-like look<br>Designer White, Bright White, Crisp Linen, Taupe Gray</div>
-          <div class="opt-card-price">Starting $244</div>
-        </div>
-        <div class="opt-card" onclick="pickGroup(this,3,'Group 3 — Flaxen, Adobe &amp; Shantung')">
-          <div class="opt-card-title">Group 3 — Flaxen, Adobe &amp; Shantung</div>
-          <div class="opt-card-desc">Textured weaves &middot; Mustard Green, Honey Wheat, Latte, Taupe, Shark Fin, Cement &amp; more</div>
-          <div class="opt-card-price">Starting $272</div>
-        </div>
-        <div class="opt-card" onclick="pickGroup(this,4,'Group 4 — Linen, Grasscloth, Willow &amp; Faux Wood')">
-          <div class="opt-card-title">Group 4 — Linen, Willow &amp; Faux Wood</div>
-          <div class="opt-card-desc">Natural look &middot; Wheat, Chic Gray, Dusty Blue, Merlot, Birch, Burnished Clay, Oak, Driftwood &amp; more</div>
-          <div class="opt-card-price">Starting $319</div>
+
+      <div class="fabric-section">
+        <div class="fabric-section-head">Classic — Traditional Curved Vane</div>
+        <div class="color-grid">
+          <div class="color-card" data-group="1" data-vane="Traditional Curved" onclick="pickFabric(this,'Classic','Pure White',1)">
+            <div class="color-swatch" style="background:#F8F8F6"></div>
+            <div class="color-label"><div class="color-name">Pure White</div></div>
+          </div>
+          <div class="color-card" data-group="1" data-vane="Traditional Curved" onclick="pickFabric(this,'Classic','Silk White',1)">
+            <div class="color-swatch" style="background:#F2F0EC"></div>
+            <div class="color-label"><div class="color-name">Silk White</div></div>
+          </div>
+          <div class="color-card" data-group="1" data-vane="Traditional Curved" onclick="pickFabric(this,'Classic','Pearl',1)">
+            <div class="color-swatch" style="background:#E4DED4"></div>
+            <div class="color-label"><div class="color-name">Pearl</div></div>
+          </div>
+          <div class="color-card" data-group="1" data-vane="Traditional Curved" onclick="pickFabric(this,'Classic','Sea Mist',1)">
+            <div class="color-swatch" style="background:#C8D4D0"></div>
+            <div class="color-label"><div class="color-name">Sea Mist</div></div>
+          </div>
+          <div class="color-card" data-group="1" data-vane="Traditional Curved" onclick="pickFabric(this,'Classic','Metropolitan',1)">
+            <div class="color-swatch" style="background:#A0A8B0"></div>
+            <div class="color-label"><div class="color-name">Metropolitan</div></div>
+          </div>
         </div>
       </div>
-      <div class="computed-box" id="group-info" style="display:none;margin-top:10px">
-        <div class="cv-row"><span class="cv-key" id="gi-name"></span></div>
-        <div class="cv-row"><span class="cv-key">Control</span><span class="cv-val">Wand tilt &middot; reversible left/right</span></div>
-        <div class="cv-row"><span class="cv-key">Vane shape</span><span class="cv-val" id="gi-vane"></span></div>
+
+      <div class="fabric-section">
+        <div class="fabric-section-head">S-Curved — Drapery-Like Vane (tighter closure)</div>
+        <div class="color-grid">
+          <div class="color-card" data-group="2" data-vane="S-Curved" onclick="pickFabric(this,'S-Curved','Pure White',2)">
+            <div class="color-swatch" style="background:#F8F8F6"></div>
+            <div class="color-label"><div class="color-name">Pure White</div></div>
+          </div>
+          <div class="color-card" data-group="2" data-vane="S-Curved" onclick="pickFabric(this,'S-Curved','Silk White',2)">
+            <div class="color-swatch" style="background:#F2F0EC"></div>
+            <div class="color-label"><div class="color-name">Silk White</div></div>
+          </div>
+          <div class="color-card" data-group="2" data-vane="S-Curved" onclick="pickFabric(this,'S-Curved','Pearl',2)">
+            <div class="color-swatch" style="background:#E4DED4"></div>
+            <div class="color-label"><div class="color-name">Pearl</div></div>
+          </div>
+          <div class="color-card" data-group="2" data-vane="S-Curved" onclick="pickFabric(this,'S-Curved','Sea Mist',2)">
+            <div class="color-swatch" style="background:#C8D4D0"></div>
+            <div class="color-label"><div class="color-name">Sea Mist</div></div>
+          </div>
+          <div class="color-card" data-group="2" data-vane="S-Curved" onclick="pickFabric(this,'S-Curved','Metropolitan',2)">
+            <div class="color-swatch" style="background:#A0A8B0"></div>
+            <div class="color-label"><div class="color-name">Metropolitan</div></div>
+          </div>
+        </div>
       </div>
-      <div class="step-note">Exact color/fabric confirmed at your consultation. Physical swatches available on request. Group 2 S-Curved vanes offer a tighter closure and elegant drapery-like appearance.</div>
+
+      <div class="fabric-section">
+        <div class="fabric-section-head">Sandblasted — Textured Look</div>
+        <div class="color-grid">
+          <div class="color-card" data-group="2" data-vane="Traditional Curved" onclick="pickFabric(this,'Sandblasted','Designer White',2)">
+            <div class="color-swatch" style="background:#F4F4F0"></div>
+            <div class="color-label"><div class="color-name">Designer White</div></div>
+          </div>
+          <div class="color-card" data-group="2" data-vane="Traditional Curved" onclick="pickFabric(this,'Sandblasted','Bright White',2)">
+            <div class="color-swatch" style="background:#FAFAF8"></div>
+            <div class="color-label"><div class="color-name">Bright White</div></div>
+          </div>
+          <div class="color-card" data-group="2" data-vane="Traditional Curved" onclick="pickFabric(this,'Sandblasted','Crisp Linen',2)">
+            <div class="color-swatch" style="background:#EAE0CC"></div>
+            <div class="color-label"><div class="color-name">Crisp Linen</div></div>
+          </div>
+          <div class="color-card" data-group="2" data-vane="Traditional Curved" onclick="pickFabric(this,'Sandblasted','Taupe Gray',2)">
+            <div class="color-swatch" style="background:#B0A898"></div>
+            <div class="color-label"><div class="color-name">Taupe Gray</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fabric-section">
+        <div class="fabric-section-head">Flaxen — Woven Texture</div>
+        <div class="color-grid">
+          <div class="color-card" data-group="3" data-vane="Traditional Curved" onclick="pickFabric(this,'Flaxen','Mustard Green',3)">
+            <div class="color-swatch" style="background:#9A9830"></div>
+            <div class="color-label"><div class="color-name">Mustard Green</div></div>
+          </div>
+          <div class="color-card" data-group="3" data-vane="Traditional Curved" onclick="pickFabric(this,'Flaxen','Honey Wheat',3)">
+            <div class="color-swatch" style="background:#D8B86A"></div>
+            <div class="color-label"><div class="color-name">Honey Wheat</div></div>
+          </div>
+          <div class="color-card" data-group="3" data-vane="Traditional Curved" onclick="pickFabric(this,'Flaxen','Platinum',3)">
+            <div class="color-swatch" style="background:#909898"></div>
+            <div class="color-label"><div class="color-name">Platinum</div></div>
+          </div>
+          <div class="color-card" data-group="3" data-vane="Traditional Curved" onclick="pickFabric(this,'Flaxen','Magnetic Gray',3)">
+            <div class="color-swatch" style="background:#7A8088"></div>
+            <div class="color-label"><div class="color-name">Magnetic Gray</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fabric-section">
+        <div class="fabric-section-head">Adobe</div>
+        <div class="color-grid">
+          <div class="color-card" data-group="3" data-vane="Traditional Curved" onclick="pickFabric(this,'Adobe','Pure White',3)">
+            <div class="color-swatch" style="background:#F8F8F6"></div>
+            <div class="color-label"><div class="color-name">Pure White</div></div>
+          </div>
+          <div class="color-card" data-group="3" data-vane="Traditional Curved" onclick="pickFabric(this,'Adobe','Bright White',3)">
+            <div class="color-swatch" style="background:#FAFAF8"></div>
+            <div class="color-label"><div class="color-name">Bright White</div></div>
+          </div>
+          <div class="color-card" data-group="3" data-vane="Traditional Curved" onclick="pickFabric(this,'Adobe','Latte',3)">
+            <div class="color-swatch" style="background:#C8B090"></div>
+            <div class="color-label"><div class="color-name">Latte</div></div>
+          </div>
+          <div class="color-card" data-group="3" data-vane="Traditional Curved" onclick="pickFabric(this,'Adobe','Taupe',3)">
+            <div class="color-swatch" style="background:#AE9E88"></div>
+            <div class="color-label"><div class="color-name">Taupe</div></div>
+          </div>
+          <div class="color-card" data-group="3" data-vane="Traditional Curved" onclick="pickFabric(this,'Adobe','Shark Fin',3)">
+            <div class="color-swatch" style="background:#8A8E92"></div>
+            <div class="color-label"><div class="color-name">Shark Fin</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fabric-section">
+        <div class="fabric-section-head">Shantung — Silk-Like Weave</div>
+        <div class="color-grid">
+          <div class="color-card" data-group="3" data-vane="Traditional Curved" onclick="pickFabric(this,'Shantung','Pure White',3)">
+            <div class="color-swatch" style="background:#F8F8F6"></div>
+            <div class="color-label"><div class="color-name">Pure White</div></div>
+          </div>
+          <div class="color-card" data-group="3" data-vane="Traditional Curved" onclick="pickFabric(this,'Shantung','Bright White',3)">
+            <div class="color-swatch" style="background:#FAFAF8"></div>
+            <div class="color-label"><div class="color-name">Bright White</div></div>
+          </div>
+          <div class="color-card" data-group="3" data-vane="Traditional Curved" onclick="pickFabric(this,'Shantung','Latte',3)">
+            <div class="color-swatch" style="background:#C8B090"></div>
+            <div class="color-label"><div class="color-name">Latte</div></div>
+          </div>
+          <div class="color-card" data-group="3" data-vane="Traditional Curved" onclick="pickFabric(this,'Shantung','Metropolitan',3)">
+            <div class="color-swatch" style="background:#A0A8B0"></div>
+            <div class="color-label"><div class="color-name">Metropolitan</div></div>
+          </div>
+          <div class="color-card" data-group="3" data-vane="Traditional Curved" onclick="pickFabric(this,'Shantung','Cement',3)">
+            <div class="color-swatch" style="background:#9898A0"></div>
+            <div class="color-label"><div class="color-name">Cement</div></div>
+          </div>
+          <div class="color-card" data-group="3" data-vane="Traditional Curved" onclick="pickFabric(this,'Shantung','Lilac',3)">
+            <div class="color-swatch" style="background:#C8B8D8"></div>
+            <div class="color-label"><div class="color-name">Lilac</div></div>
+          </div>
+          <div class="color-card" data-group="3" data-vane="Traditional Curved" onclick="pickFabric(this,'Shantung','Laurel Pink',3)">
+            <div class="color-swatch" style="background:#DDB8B0"></div>
+            <div class="color-label"><div class="color-name">Laurel Pink</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fabric-section">
+        <div class="fabric-section-head">Linen</div>
+        <div class="color-grid">
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Linen','Pure White',4)">
+            <div class="color-swatch" style="background:#F8F8F6"></div>
+            <div class="color-label"><div class="color-name">Pure White</div></div>
+          </div>
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Linen','Wheat',4)">
+            <div class="color-swatch" style="background:#D4C098"></div>
+            <div class="color-label"><div class="color-name">Wheat</div></div>
+          </div>
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Linen','Chic Gray',4)">
+            <div class="color-swatch" style="background:#A8A8A0"></div>
+            <div class="color-label"><div class="color-name">Chic Gray</div></div>
+          </div>
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Linen','Metropolitan',4)">
+            <div class="color-swatch" style="background:#A0A8B0"></div>
+            <div class="color-label"><div class="color-name">Metropolitan</div></div>
+          </div>
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Linen','Dusty Blue',4)">
+            <div class="color-swatch" style="background:#8898B8"></div>
+            <div class="color-label"><div class="color-name">Dusty Blue</div></div>
+          </div>
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Linen','Merlot',4)">
+            <div class="color-swatch" style="background:#8A2840"></div>
+            <div class="color-label"><div class="color-name">Merlot</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fabric-section">
+        <div class="fabric-section-head">Grasscloth — Woven Natural</div>
+        <div class="color-grid">
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Grasscloth','Botanical Garden',4)">
+            <div class="color-swatch" style="background:#9AAA84"></div>
+            <div class="color-label"><div class="color-name">Botanical Garden</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fabric-section">
+        <div class="fabric-section-head">Willow</div>
+        <div class="color-grid">
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Willow','Mist',4)">
+            <div class="color-swatch" style="background:#D8DDE0"></div>
+            <div class="color-label"><div class="color-name">Mist</div></div>
+          </div>
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Willow','Birch',4)">
+            <div class="color-swatch" style="background:#C8B898"></div>
+            <div class="color-label"><div class="color-name">Birch</div></div>
+          </div>
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Willow','Burnished Clay',4)">
+            <div class="color-swatch" style="background:#B07050"></div>
+            <div class="color-label"><div class="color-name">Burnished Clay</div></div>
+          </div>
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Willow','Cloud',4)">
+            <div class="color-swatch" style="background:#C8CDD0"></div>
+            <div class="color-label"><div class="color-name">Cloud</div></div>
+          </div>
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Willow','Natural Gray',4)">
+            <div class="color-swatch" style="background:#A8A8A0"></div>
+            <div class="color-label"><div class="color-name">Natural Gray</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fabric-section">
+        <div class="fabric-section-head">Faux Wood</div>
+        <div class="color-grid">
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Faux Wood','Limed White',4)">
+            <div class="color-swatch" style="background:#EAE0D0"></div>
+            <div class="color-label"><div class="color-name">Limed White</div></div>
+          </div>
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Faux Wood','Silver Birch',4)">
+            <div class="color-swatch" style="background:#B0B8B8"></div>
+            <div class="color-label"><div class="color-name">Silver Birch</div></div>
+          </div>
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Faux Wood','Chestnut',4)">
+            <div class="color-swatch" style="background:#886040"></div>
+            <div class="color-label"><div class="color-name">Chestnut</div></div>
+          </div>
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Faux Wood','Oak',4)">
+            <div class="color-swatch" style="background:#B08850"></div>
+            <div class="color-label"><div class="color-name">Oak</div></div>
+          </div>
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Faux Wood','Driftwood',4)">
+            <div class="color-swatch" style="background:#9A9080"></div>
+            <div class="color-label"><div class="color-name">Driftwood</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-note" style="margin-top:10px">Colors shown are digital approximations — real swatches available at your consultation. S-Curved vanes offer a tighter closure with an elegant drapery-like appearance. All other collections use traditional curved vanes.</div>
     </div>
   </div>
 
@@ -338,7 +569,8 @@
     <div class="qp-pending" id="qp-pending">Complete the steps on the left to see your live price estimate.</div>
     <div id="qp-detail" style="display:none">
       <div class="qrow"><span class="qrow-label">Product</span><span class="qrow-val">Synchrony™ Vertical Blind</span></div>
-      <div class="qrow"><span class="qrow-label">Collection</span><span class="qrow-val" id="qr-group">—</span></div>
+      <div class="qrow"><span class="qrow-label">Fabric</span><span class="qrow-val" id="qr-group">—</span></div>
+      <div class="qrow"><span class="qrow-label">Vane style</span><span class="qrow-val" id="qr-vane">—</span></div>
       <div class="qrow"><span class="qrow-label">Mount</span><span class="qrow-val" id="qr-mount">—</span></div>
       <div class="qrow"><span class="qrow-label">Dimensions</span><span class="qrow-val" id="qr-dims">—</span></div>
       <div class="qrow"><span class="qrow-label">Qty</span><span class="qrow-val" id="qr-qty">—</span></div>
@@ -369,7 +601,7 @@ const MATRICES={
   4:{48:[319,394,480,549,633,692,781,888],60:[338,423,514,580,664,730,829,938],72:[359,441,543,614,696,764,866,988],84:[374,463,573,649,736,800,911,1037],96:[394,486,598,679,776,842,958,1089],108:[406,510,629,710,811,888,1001,1141]}
 };
 
-let state={group:null,mount:null,w:0,h:0,shim:false,shimQty:1,qty:1,del:null};
+let state={group:null,collection:null,colorName:null,vane:null,mount:null,w:0,h:0,shim:false,shimQty:1,qty:1,del:null};
 
 function toggleStep(id){
   const b=document.getElementById(id);
@@ -378,19 +610,20 @@ function toggleStep(id){
 }
 function markDone(id){document.getElementById(id).classList.add('done');}
 
-function pickGroup(el,g,label){
-  document.querySelectorAll('#step1 .opt-card').forEach(c=>c.classList.remove('sel'));
+function pickFabric(el,collection,colorName,group){
+  document.querySelectorAll('#step1 .color-card').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
-  state.group=g;
-  const shortLabels={1:'Classic',2:'S-Curved / Sandblasted',3:'Flaxen / Adobe / Shantung',4:'Linen / Grasscloth / Willow / Faux Wood'};
-  document.getElementById('s1val').textContent='Group '+g+' — '+shortLabels[g];
+  state.group=group;
+  state.collection=collection;
+  state.colorName=colorName;
+  state.vane=el.dataset.vane||'Traditional Curved';
+  document.getElementById('s1val').textContent=collection+' — '+colorName;
   markDone('step1');
-  const gi=document.getElementById('group-info');
-  gi.style.display='block';
-  document.getElementById('gi-name').textContent='Group '+g+' collections';
-  document.getElementById('gi-vane').textContent=g===2?'S-Curved (drapery-like, tighter closure)':'Traditional Curved';
   calcPrice();
 }
+
+// Legacy alias in case anything still references pickGroup
+function pickGroup(el,g,label){}
 function pickMount(el,key,label){
   document.querySelectorAll('#step2 .opt-card').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
@@ -477,7 +710,7 @@ function updateQuote(){
   const qty=parseInt(document.getElementById('qty').value)||1;
   state.qty=qty;
   document.getElementById('s5val').textContent=qty+' blind'+(qty>1?'s':'');
-  const ready=state.group&&state.mount&&state.w&&state.h;
+  const ready=state.group&&state.colorName&&state.mount&&state.w&&state.h;
   if(!ready){document.getElementById('qp-pending').style.display='block';document.getElementById('qp-detail').style.display='none';return;}
   if(state.w<18||state.w>100||state.h<36||state.h>108){document.getElementById('qp-pending').style.display='block';document.getElementById('qp-pending').textContent='Fix the size error above.';document.getElementById('qp-detail').style.display='none';return;}
   const wCol=W_COLS.find(c=>c>=state.w);
@@ -495,8 +728,8 @@ function updateQuote(){
 
   document.getElementById('qp-pending').style.display='none';
   document.getElementById('qp-detail').style.display='block';
-  const grpLabels={1:'Group 1 — Classic',2:'Group 2 — S-Curved/Sandblasted',3:'Group 3 — Flaxen/Adobe/Shantung',4:'Group 4 — Linen/Grasscloth/Willow/Faux Wood'};
-  document.getElementById('qr-group').textContent=grpLabels[state.group];
+  document.getElementById('qr-group').textContent=(state.collection||'—')+' — '+(state.colorName||'—');
+  document.getElementById('qr-vane').textContent=state.vane||'—';
   document.getElementById('qr-mount').textContent=state.mount==='inside'?'Inside Mount':'Outside Mount';
   document.getElementById('qr-dims').textContent=state.w+'″ × '+state.h+'″';
   document.getElementById('qr-qty').textContent=qty+(qty>1?' blinds':' blind');
@@ -514,11 +747,12 @@ function submitQuote(){
   if(!name||!phone){err.style.display='block';return;}
   err.style.display='none';
   const qty=parseInt(document.getElementById('qty').value)||1;
-  const grpLabels={1:'Group 1 — Classic',2:'Group 2 — S-Curved/Sandblasted',3:'Group 3 — Flaxen/Adobe/Shantung',4:'Group 4 — Linen/Grasscloth/Willow/Faux Wood'};
   const lines=[
     'SYNCHRONY™ VERTICAL BLINDS QUOTE REQUEST',
     '','Product: Norman Synchrony™ Vertical Blinds',
-    'Fabric collection: '+(grpLabels[state.group]||'—'),
+    'Collection: '+(state.collection||'—'),
+    'Color: '+(state.colorName||'—'),
+    'Vane style: '+(state.vane||'—'),
     'Mount: '+(state.mount==='inside'?'Inside Mount':'Outside Mount'),
     'Width: '+state.w+'″',
     'Height: '+state.h+'″',

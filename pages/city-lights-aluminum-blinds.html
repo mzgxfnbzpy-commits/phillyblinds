@@ -36,6 +36,16 @@
 .opt-card.sel .opt-card-title{color:#7A4F00}
 .opt-card-desc{font-size:11px;color:#666;line-height:1.45}
 .opt-card-badge{font-size:9px;color:#B45309;background:#FEF3C7;padding:1px 5px;border-radius:3px;display:inline-block;margin-top:4px;font-weight:600}
+.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:7px;margin-top:10px}
+.color-card{border:1.5px solid #e8e8e4;border-radius:9px;overflow:hidden;cursor:pointer;transition:all .15s}
+.color-card:hover{border-color:var(--gold);transform:translateY(-1px)}
+.color-card.sel{border:2px solid var(--gold);box-shadow:0 2px 10px rgba(200,151,63,.2)}
+.color-card.unavail{opacity:.25;pointer-events:none;cursor:not-allowed}
+.color-swatch{height:40px;width:100%}
+.color-label{padding:5px 6px;background:#fff}
+.color-name{font-size:10px;font-weight:600;color:#222;line-height:1.3}
+.color-code{font-size:9px;color:#999}
+.color-badge{font-size:8px;color:#B45309;background:#FEF3C7;padding:1px 4px;border-radius:3px;display:inline-block;margin-top:2px;font-weight:600}
 .dim-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
 .dim-label{font-size:12px;font-weight:500;color:#444;margin-bottom:5px}
 .dim-inputs{display:flex;gap:6px;align-items:center}
@@ -147,34 +157,159 @@
     </div>
   </div>
 
-  <!-- STEP 2: FINISH CATEGORY -->
+  <!-- STEP 2: COLOR -->
   <div class="step-block" id="step2">
     <div class="step-head" onclick="toggleStep('step2')">
       <div class="step-num">2</div>
-      <div class="step-head-title">Color &amp; Finish Category</div>
+      <div class="step-head-title">Color</div>
       <div class="step-head-val" id="s2val">—</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-2">
-        <div class="opt-card" onclick="pickFinish(this,'standard','Standard Colors')">
-          <div class="opt-card-title">Standard Colors</div>
-          <div class="opt-card-desc">Whites, neutrals, earth tones, classic metallics — 20+ options</div>
+      <div id="color-compat-warn" class="msg-box msg-err" style="display:none"></div>
+      <div class="color-grid" id="color-grid">
+        <!-- All 3 sizes — no surcharge -->
+        <div class="color-card" data-avail="all" data-surcharge="0" onclick="pickColor(this,'7024','Pure White',0)">
+          <div class="color-swatch" style="background:#F7F7F5"></div>
+          <div class="color-label"><div class="color-name">Pure White</div><div class="color-code">7024</div></div>
         </div>
-        <div class="opt-card" onclick="pickFinish(this,'special','Metallic / Matte / Perforated')">
-          <div class="opt-card-title">Metallic / Matte / Perforated</div>
-          <div class="opt-card-desc">Brushed aluminum, silver, bronze, midnight, porcelain &amp; more</div>
-          <div class="opt-card-badge">+10%</div>
+        <div class="color-card" data-avail="all" data-surcharge="0" onclick="pickColor(this,'7026','Bright White',0)">
+          <div class="color-swatch" style="background:#FAFAFA"></div>
+          <div class="color-label"><div class="color-name">Bright White</div><div class="color-code">7026</div></div>
+        </div>
+        <div class="color-card" data-avail="all" data-surcharge="0" onclick="pickColor(this,'7021','Antique Lace',0)">
+          <div class="color-swatch" style="background:#EDE0C8"></div>
+          <div class="color-label"><div class="color-name">Antique Lace</div><div class="color-code">7021</div></div>
+        </div>
+        <div class="color-card" data-avail="all" data-surcharge="0" onclick="pickColor(this,'7022','Beige',0)">
+          <div class="color-swatch" style="background:#D8C8A4"></div>
+          <div class="color-label"><div class="color-name">Beige</div><div class="color-code">7022</div></div>
+        </div>
+        <div class="color-card" data-avail="all" data-surcharge="0" onclick="pickColor(this,'7023','Vanilla',0)">
+          <div class="color-swatch" style="background:#F0E4C0"></div>
+          <div class="color-label"><div class="color-name">Vanilla</div><div class="color-code">7023</div></div>
+        </div>
+        <div class="color-card" data-avail="all" data-surcharge="0" onclick="pickColor(this,'7507','Bisque',0)">
+          <div class="color-swatch" style="background:#E0C898"></div>
+          <div class="color-label"><div class="color-name">Bisque</div><div class="color-code">7507</div></div>
+        </div>
+        <div class="color-card" data-avail="all" data-surcharge="0" onclick="pickColor(this,'7511','Sugar Maple',0)">
+          <div class="color-swatch" style="background:#C07840"></div>
+          <div class="color-label"><div class="color-name">Sugar Maple</div><div class="color-code">7511</div></div>
+        </div>
+        <div class="color-card" data-avail="all" data-surcharge="0" onclick="pickColor(this,'7201','Black',0)">
+          <div class="color-swatch" style="background:#1C1C1C"></div>
+          <div class="color-label"><div class="color-name">Black</div><div class="color-code">7201</div></div>
+        </div>
+        <!-- All 3 sizes — metallic +10% -->
+        <div class="color-card" data-avail="all" data-surcharge="10" onclick="pickColor(this,'7102','Brushed Aluminum',10)">
+          <div class="color-swatch" style="background:#A4AEB8"></div>
+          <div class="color-label"><div class="color-name">Brushed Aluminum</div><div class="color-code">7102</div><div class="color-badge">+10% Metallic</div></div>
+        </div>
+        <div class="color-card" data-avail="all" data-surcharge="10" onclick="pickColor(this,'7103','Silver Moon',10)">
+          <div class="color-swatch" style="background:#B0B8C4"></div>
+          <div class="color-label"><div class="color-name">Silver Moon</div><div class="color-code">7103</div><div class="color-badge">+10% Metallic</div></div>
+        </div>
+        <div class="color-card" data-avail="all" data-surcharge="10" onclick="pickColor(this,'7105','Platinum',10)">
+          <div class="color-swatch" style="background:#6C7480"></div>
+          <div class="color-label"><div class="color-name">Platinum</div><div class="color-code">7105</div><div class="color-badge">+10% Metallic</div></div>
+        </div>
+        <div class="color-card" data-avail="all" data-surcharge="10" onclick="pickColor(this,'7402','Bronze',10)">
+          <div class="color-swatch" style="background:#6A4830"></div>
+          <div class="color-label"><div class="color-name">Bronze</div><div class="color-code">7402</div><div class="color-badge">+10% Metallic</div></div>
+        </div>
+        <!-- ½" and 1" only — no surcharge -->
+        <div class="color-card" data-avail="half-one" data-surcharge="0" onclick="pickColor(this,'7309','Strawberry Cream',0)">
+          <div class="color-swatch" style="background:#E4B4A0"></div>
+          <div class="color-label"><div class="color-name">Strawberry Cream</div><div class="color-code">7309</div></div>
+        </div>
+        <div class="color-card" data-avail="half-one" data-surcharge="0" onclick="pickColor(this,'7510','Harvest Gold',0)">
+          <div class="color-swatch" style="background:#CCA040"></div>
+          <div class="color-label"><div class="color-name">Harvest Gold</div><div class="color-code">7510</div></div>
+        </div>
+        <div class="color-card" data-avail="half-one" data-surcharge="0" onclick="pickColor(this,'7604','Deep Ivy',0)">
+          <div class="color-swatch" style="background:#284826"></div>
+          <div class="color-label"><div class="color-name">Deep Ivy</div><div class="color-code">7604</div></div>
+        </div>
+        <div class="color-card" data-avail="half-one" data-surcharge="0" onclick="pickColor(this,'7712','Royal Blue',0)">
+          <div class="color-swatch" style="background:#1A2A58"></div>
+          <div class="color-label"><div class="color-name">Royal Blue</div><div class="color-code">7712</div></div>
+        </div>
+        <div class="color-card" data-avail="half-one" data-surcharge="0" onclick="pickColor(this,'7713','Sky',0)">
+          <div class="color-swatch" style="background:#5888B0"></div>
+          <div class="color-label"><div class="color-name">Sky</div><div class="color-code">7713</div></div>
+        </div>
+        <!-- ½" and 1" only — metallic/perforated +10% -->
+        <div class="color-card" data-avail="half-one" data-surcharge="10" onclick="pickColor(this,'7109','Metallic Bronze',10)">
+          <div class="color-swatch" style="background:#806050"></div>
+          <div class="color-label"><div class="color-name">Metallic Bronze</div><div class="color-code">7109</div><div class="color-badge">+10% Metallic</div></div>
+        </div>
+        <div class="color-card" data-avail="half-one" data-surcharge="10" onclick="pickColor(this,'7027','Pure White Perforated',10)">
+          <div class="color-swatch" style="background:#F0F0EE;background-image:radial-gradient(circle,#ccc 1px,transparent 1px);background-size:5px 5px"></div>
+          <div class="color-label"><div class="color-name">Pure White Perforated</div><div class="color-code">7027</div><div class="color-badge">+10% Perforated</div></div>
+        </div>
+        <div class="color-card" data-avail="half-one" data-surcharge="10" onclick="pickColor(this,'7111','Silver Perforated',10)">
+          <div class="color-swatch" style="background:#BCC4CC;background-image:radial-gradient(circle,#8899aa 1px,transparent 1px);background-size:5px 5px"></div>
+          <div class="color-label"><div class="color-name">Silver Perforated</div><div class="color-code">7111</div><div class="color-badge">+10% Perforated</div></div>
+        </div>
+        <!-- 1" and 2" — no surcharge -->
+        <div class="color-card" data-avail="one-two" data-surcharge="0" onclick="pickColor(this,'7030','White Snow',0)">
+          <div class="color-swatch" style="background:#F4F4F2"></div>
+          <div class="color-label"><div class="color-name">White Snow</div><div class="color-code">7030</div></div>
+        </div>
+        <!-- 1" only — no surcharge -->
+        <div class="color-card" data-avail="one" data-surcharge="0" onclick="pickColor(this,'7112','Moonshine',0)">
+          <div class="color-swatch" style="background:#ACB4BC"></div>
+          <div class="color-label"><div class="color-name">Moonshine</div><div class="color-code">7112</div></div>
+        </div>
+        <div class="color-card" data-avail="one" data-surcharge="0" onclick="pickColor(this,'7113','Iconic Gray',0)">
+          <div class="color-swatch" style="background:#8A9098"></div>
+          <div class="color-label"><div class="color-name">Iconic Gray</div><div class="color-code">7113</div></div>
+        </div>
+        <div class="color-card" data-avail="one" data-surcharge="0" onclick="pickColor(this,'7114','Warm Taupe',0)">
+          <div class="color-swatch" style="background:#A09070"></div>
+          <div class="color-label"><div class="color-name">Warm Taupe</div><div class="color-code">7114</div></div>
+        </div>
+        <div class="color-card" data-avail="one" data-surcharge="0" onclick="pickColor(this,'7115','Gray Cashmere',0)">
+          <div class="color-swatch" style="background:#B8BEC4"></div>
+          <div class="color-label"><div class="color-name">Gray Cashmere</div><div class="color-code">7115</div></div>
+        </div>
+        <div class="color-card" data-avail="one" data-surcharge="0" onclick="pickColor(this,'7206','Peppercorn',0)">
+          <div class="color-swatch" style="background:#5A5660"></div>
+          <div class="color-label"><div class="color-name">Peppercorn</div><div class="color-code">7206</div></div>
+        </div>
+        <!-- 1" only — matte/metallic +10% -->
+        <div class="color-card" data-avail="one" data-surcharge="10" onclick="pickColor(this,'7031','Porcelain',10)">
+          <div class="color-swatch" style="background:#E8E6E0"></div>
+          <div class="color-label"><div class="color-name">Porcelain</div><div class="color-code">7031</div><div class="color-badge">+10% Matte</div></div>
+        </div>
+        <div class="color-card" data-avail="one" data-surcharge="10" onclick="pickColor(this,'7205','Midnight',10)">
+          <div class="color-swatch" style="background:#2C2C34"></div>
+          <div class="color-label"><div class="color-name">Midnight</div><div class="color-code">7205</div><div class="color-badge">+10% Matte</div></div>
+        </div>
+        <div class="color-card" data-avail="one" data-surcharge="10" onclick="pickColor(this,'7403','Metallic Dark Copper',10)">
+          <div class="color-swatch" style="background:#8A4828"></div>
+          <div class="color-label"><div class="color-name">Metallic Dark Copper</div><div class="color-code">7403</div><div class="color-badge">+10% Metallic</div></div>
+        </div>
+        <!-- 1" only — textured +20% -->
+        <div class="color-card" data-avail="one" data-surcharge="20" onclick="pickColor(this,'7029','Champagne',20)">
+          <div class="color-swatch" style="background:#D4C08A"></div>
+          <div class="color-label"><div class="color-name">Champagne</div><div class="color-code">7029</div><div class="color-badge">+20% Textured</div></div>
+        </div>
+        <!-- 2" only — no surcharge -->
+        <div class="color-card" data-avail="two" data-surcharge="0" onclick="pickColor(this,'7020','Ivory',0)">
+          <div class="color-swatch" style="background:#EEE4CC"></div>
+          <div class="color-label"><div class="color-name">Ivory</div><div class="color-code">7020</div></div>
+        </div>
+        <div class="color-card" data-avail="two" data-surcharge="0" onclick="pickColor(this,'7203','Dark Earth',0)">
+          <div class="color-swatch" style="background:#5C3A24"></div>
+          <div class="color-label"><div class="color-name">Dark Earth</div><div class="color-code">7203</div></div>
+        </div>
+        <div class="color-card" data-avail="two" data-surcharge="0" onclick="pickColor(this,'7204','Tarmac',0)">
+          <div class="color-swatch" style="background:#4A4848"></div>
+          <div class="color-label"><div class="color-name">Tarmac</div><div class="color-code">7204</div></div>
         </div>
       </div>
-      <div class="computed-box" style="margin-top:14px">
-        <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px">Sample colors by category</div>
-        <div class="cv-row"><span class="cv-key">Standard (no surcharge)</span><span class="cv-val">Pure White, Beige, Vanilla, Black, Bisque, Sugar Maple, Harvest Gold, Royal Blue, Sky, Dark Earth…</span></div>
-        <div class="cv-row"><span class="cv-key">Metallic +10%</span><span class="cv-val">Brushed Aluminum, Silver Moon, Platinum, Bronze, Metallic Bronze, Metallic Dark Copper</span></div>
-        <div class="cv-row"><span class="cv-key">Matte +10%</span><span class="cv-val">Midnight (1&Prime; only), Porcelain (1&Prime; only)</span></div>
-        <div class="cv-row"><span class="cv-key">Perforated +10%</span><span class="cv-val">Pure White Perforated, Silver Perforated (½&Prime; &amp; 1&Prime; only)</span></div>
-        <div class="cv-row"><span class="cv-key">Textured +20%</span><span class="cv-val">Champagne (1&Prime; only) — select Metallic/Special above</span></div>
-      </div>
-      <div class="step-note">Exact color confirmed at your consultation. We can provide physical swatches before ordering.</div>
+      <div class="step-note" style="margin-top:10px">Colors shown are digital approximations — real swatches available at your consultation. Colors marked <strong>+10%</strong> or <strong>+20%</strong> carry a finish surcharge. Dimmed colors are not available for your selected slat size.</div>
     </div>
   </div>
 
@@ -396,14 +531,14 @@
     <div id="qp-detail" style="display:none">
       <div class="qrow"><span class="qrow-label">Product</span><span class="qrow-val">Citylights™ Aluminum Blind</span></div>
       <div class="qrow"><span class="qrow-label">Slat size</span><span class="qrow-val" id="qr-slat">—</span></div>
-      <div class="qrow"><span class="qrow-label">Finish</span><span class="qrow-val" id="qr-finish">—</span></div>
+      <div class="qrow"><span class="qrow-label">Color</span><span class="qrow-val" id="qr-finish">—</span></div>
       <div class="qrow"><span class="qrow-label">Mount</span><span class="qrow-val" id="qr-mount">—</span></div>
       <div class="qrow"><span class="qrow-label">Dimensions</span><span class="qrow-val" id="qr-dims">—</span></div>
       <div class="qrow"><span class="qrow-label">Qty</span><span class="qrow-val" id="qr-qty">—</span></div>
       <div class="qdiv"></div>
       <div class="qrow"><span class="qrow-label">Base (1&Prime; bracket price)</span><span class="qrow-val" id="qr-base">—</span></div>
       <div class="qrow qrow-surcharge" id="qr-slat-row" style="display:none"><span class="qrow-label">Slat surcharge</span><span class="qrow-val" id="qr-slat-s">—</span></div>
-      <div class="qrow qrow-surcharge" id="qr-finish-row" style="display:none"><span class="qrow-label">Finish surcharge (+10%)</span><span class="qrow-val" id="qr-finish-s">—</span></div>
+      <div class="qrow qrow-surcharge" id="qr-finish-row" style="display:none"><span class="qrow-label">Color finish surcharge</span><span class="qrow-val" id="qr-finish-s">—</span></div>
       <div class="qrow qrow-surcharge" id="qr-privacy-row" style="display:none"><span class="qrow-label">Privacy slats (+10%)</span><span class="qrow-val" id="qr-privacy-s">—</span></div>
       <div class="qrow qrow-surcharge" id="qr-sm-row" style="display:none"><span class="qrow-label">Side mount</span><span class="qrow-val" id="qr-sm-s">—</span></div>
       <div class="qrow qrow-surcharge" id="qr-shim-row" style="display:none"><span class="qrow-label">Shim(s)</span><span class="qrow-val" id="qr-shim-s">—</span></div>
@@ -438,7 +573,7 @@ const MATRIX = {
 };
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
-let state = {slat:null,finish:null,mount:null,w:0,h:0,privacy:false,sidemount:false,shim:false,shimQty:1,qty:1,del:null};
+let state = {slat:null,colorCode:null,colorName:null,colorSurcharge:0,mount:null,w:0,h:0,privacy:false,sidemount:false,shim:false,shimQty:1,qty:1,del:null};
 
 // ── STEP HELPERS ──────────────────────────────────────────────────────────────
 function toggleStep(id){
@@ -448,28 +583,53 @@ function toggleStep(id){
 }
 function markDone(id){document.getElementById(id).classList.add('done');}
 
+function filterColorsBySlat(slatKey){
+  const warn=document.getElementById('color-compat-warn');
+  let cleared=false;
+  document.querySelectorAll('#color-grid .color-card').forEach(card=>{
+    const avail=card.dataset.avail;
+    let ok=false;
+    if(slatKey==='half') ok=(avail==='all'||avail==='half-one');
+    else if(slatKey==='one') ok=(avail==='all'||avail==='half-one'||avail==='one'||avail==='one-two');
+    else if(slatKey==='two') ok=(avail==='all'||avail==='one-two'||avail==='two');
+    card.classList.toggle('unavail',!ok);
+    if(!ok && card.classList.contains('sel')){
+      card.classList.remove('sel');
+      state.colorCode=null;state.colorName=null;state.colorSurcharge=0;
+      document.getElementById('s2val').textContent='—';
+      document.getElementById('step2').classList.remove('done');
+      cleared=true;
+    }
+  });
+  if(cleared){
+    warn.style.display='block';
+    const slatNames={half:'½″ Micro',one:'1″ Standard',two:'2″ SmartPrivacy®'};
+    warn.textContent='Your previously selected color is not available in '+slatNames[slatKey]+' slats. Please choose a new color from the options below (dimmed colors are unavailable for this slat size).';
+  } else {
+    warn.style.display='none';
+  }
+}
+
 function pickSlat(el,key,label){
   document.querySelectorAll('#step1 .opt-card').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   state.slat=key;
   document.getElementById('s1val').textContent=label;
   markDone('step1');
-  // update visibility of privacy (not for ½"), sidemount (2" only)
   document.getElementById('privacy-wrap').style.display=(key==='half')?'none':'block';
   document.getElementById('sidemount-wrap').style.display=(key==='two')?'block':'none';
-  // update size limits note
   const n=document.getElementById('size-limits-note');
-  if(key==='half'||key==='one') n.textContent='Max width 78″, max height 96″, max area 50 sq ft. Inside or outside mount.';
-  else n.textContent='Max width 96″, max height 96″, max area 48 sq ft. Side mount available (IB only).';
-  // clear size if now out of range
-  updateSizeLimitsNote();
+  if(key==='half'||key==='one') n.textContent='Max width 78″ · max height 96″ · max area 50 sq ft.';
+  else n.textContent='Max width 96″ · max height 96″ · max area 48 sq ft. Side mount available (IB only).';
+  filterColorsBySlat(key);
   calcPrice();
 }
-function pickFinish(el,key,label){
-  document.querySelectorAll('#step2 .opt-card').forEach(c=>c.classList.remove('sel'));
+function pickColor(el,code,name,surcharge){
+  document.querySelectorAll('#color-grid .color-card').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
-  state.finish=key;
-  document.getElementById('s2val').textContent=label;
+  state.colorCode=code;state.colorName=name;state.colorSurcharge=surcharge;
+  document.getElementById('s2val').textContent=name+(surcharge?' (+'+surcharge+'%)':'');
+  document.getElementById('color-compat-warn').style.display='none';
   markDone('step2');
   calcPrice();
 }
@@ -590,7 +750,7 @@ function updateQuote(){
   state.qty=qty;
   document.getElementById('s6val').textContent=qty+' blind'+(qty>1?'s':'');
 
-  const ready=state.slat&&state.finish&&state.mount&&state.w&&state.h;
+  const ready=state.slat&&state.colorCode&&state.mount&&state.w&&state.h;
   if(!ready){document.getElementById('qp-pending').style.display='block';document.getElementById('qp-detail').style.display='none';return;}
 
   // recompute
@@ -610,12 +770,12 @@ function updateQuote(){
   const basePrice=MATRIX[hRow][W_COLS.indexOf(wCol)];
   if(!basePrice){document.getElementById('qp-pending').style.display='block';document.getElementById('qp-detail').style.display='none';return;}
 
-  // slat multiplier
+  // slat multiplier + color finish surcharge + optional privacy
   const slatMult={half:1.10,one:1.00,two:1.20}[state.slat];
-  const finMult=state.finish==='special'?1.10:1.00;
+  const colorMult=1+(state.colorSurcharge/100);
   const privMult=state.privacy?1.10:1.00;
 
-  let pricePerBlind=basePrice*slatMult*finMult*privMult;
+  let pricePerBlind=basePrice*slatMult*colorMult*privMult;
   let shimTotal=state.shim?(state.shimQty*7):0;
   let sideTotal=state.sidemount?25:0;
   let subtotal=pricePerBlind*qty+shimTotal+sideTotal;
@@ -634,7 +794,7 @@ function updateQuote(){
 
   const slatLabels={half:'½″ Micro Slats',one:'1″ Standard Slats',two:'2″ SmartPrivacy®'};
   document.getElementById('qr-slat').textContent=slatLabels[state.slat];
-  document.getElementById('qr-finish').textContent=state.finish==='special'?'Metallic / Special (+10%)':'Standard';
+  document.getElementById('qr-finish').textContent=state.colorName+(state.colorSurcharge?' (+'+state.colorSurcharge+'%)':'');
   document.getElementById('qr-mount').textContent=state.mount==='inside'?'Inside Mount':'Outside Mount';
   document.getElementById('qr-dims').textContent=state.w+'″ × '+state.h+'″';
   document.getElementById('qr-qty').textContent=qty+(qty>1?' blinds':' blind');
@@ -642,7 +802,7 @@ function updateQuote(){
 
   const showRow=(id,show,val)=>{document.getElementById(id).style.display=show?'flex':'none';if(val)document.getElementById(id.replace('-row','-s')).textContent=val;};
   showRow('qr-slat-row',state.slat!=='one',state.slat==='half'?'+10% (½″ micro)':'+20% (2″ SmartPrivacy)');
-  showRow('qr-finish-row',state.finish==='special','+10%');
+  showRow('qr-finish-row',state.colorSurcharge>0,'+'+state.colorSurcharge+'%');
   showRow('qr-privacy-row',state.privacy,'+10%');
   showRow('qr-sm-row',state.sidemount,'+$25');
   showRow('qr-shim-row',state.shim,'$'+(state.shimQty*7));
@@ -664,7 +824,7 @@ function submitQuote(){
     'CITYLIGHTS™ ALUMINUM BLINDS QUOTE REQUEST',
     '','Product: Norman Citylights™ Aluminum Blinds',
     'Slat size: '+(slatLabels[state.slat]||'—'),
-    'Finish category: '+(state.finish==='special'?'Metallic/Special +10%':'Standard'),
+    'Color: '+(state.colorName||'—')+' ('+state.colorCode+')'+(state.colorSurcharge?' +'+state.colorSurcharge+'%':''),
     'Mount: '+(state.mount==='inside'?'Inside Mount':'Outside Mount'),
     'Width: '+state.w+'″',
     'Height: '+state.h+'″',
