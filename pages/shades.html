@@ -2640,6 +2640,7 @@ function submitPBForm() {
     'Fabric source:  ' + gPB('pb-grp-fabric')    + '\n' +
     'Delivery:       ' + delivery                + '\n\n' +
     'Fabric notes:\n' + (notes || '(none)') +
+    pbInstallLine(document.getElementById('brand-pb-content')) +
     (function(){ var fu = document.querySelector('#brand-pb-content .pb-fu-wrap input[type="file"]'); return fu && fu.files.length ? '\n\nFiles to send: ' + Array.from(fu.files).map(function(f){return f.name;}).join(', ') + '\n(Customer will email these to justin@phillyblinds.com)' : ''; }());
   window.location.href = 'mailto:justin@phillyblinds.com' +
     '?subject=' + encodeURIComponent('Custom Roller Shade Request — ' + name) +

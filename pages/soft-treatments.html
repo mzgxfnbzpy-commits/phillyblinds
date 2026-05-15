@@ -1607,7 +1607,8 @@ function submitCornice() {
   var body = 'CORNICE QUOTE REQUEST\n\nName: ' + name + '\nPhone: ' + phone +
     '\nEmail: ' + (document.getElementById('cn-email').value.trim() || '—') + '\n\n' +
     'Width: ' + w + '"  Height: ' + h + '"  Return: ' + ret + '"\n' +
-    'Finishing: ' + fin + '\nFabric: ' + fab + '\nEstimate: ' + est + '\n\n' +
+    'Finishing: ' + fin + '\nFabric: ' + fab + '\nEstimate: ' + est + '\n' +
+    pbInstallLine(document.getElementById('corn-form')) + '\n\n' +
     'Notes:\n' + (document.getElementById('cn-notes').value.trim() || 'None');
   window.location.href = 'mailto:justin@phillyblinds.com?subject=' +
     encodeURIComponent('Cornice Quote — ' + name) + '&body=' + encodeURIComponent(body);
@@ -1716,7 +1717,8 @@ function submitDrape() {
     + 'Width range: ' + document.getElementById('d-width').value
     + '\nExact width: ' + (document.getElementById('d-exact-width').value ? document.getElementById('d-exact-width').value + '"' : '—')
     + '\nFinished length: ' + (document.getElementById('d-exact-length').value ? document.getElementById('d-exact-length').value + '"' : '—') + '\n'
-    + 'Delivery: ' + delivery + '\n\n'
+    + 'Delivery: ' + delivery + '\n'
+    + pbInstallLine(document.getElementById('drape-form')) + '\n\n'
     + 'Notes:\n' + (document.getElementById('d-notes').value.trim() || 'None')
     + (function(){ var fu = document.querySelector('#drape-form .pb-fu-wrap input[type="file"]'); var n = fu && fu.files.length ? '\n\nFiles to send: ' + Array.from(fu.files).map(function(f){return f.name;}).join(', ') + '\n(Customer will email these to justin@phillyblinds.com)' : ''; return n; }());
   window.location.href = 'mailto:justin@phillyblinds.com'
@@ -1786,7 +1788,8 @@ function submitRoman() {
     + 'Qty: ' + qty
     + '\nWidth: ' + (w ? w + '"' : '—')
     + '  Finished length: ' + (h ? h + '"' : '—') + '\n'
-    + 'Delivery: ' + delivery + '\n\n'
+    + 'Delivery: ' + delivery + '\n'
+    + pbInstallLine(document.getElementById('roman-form')) + '\n\n'
     + 'Notes:\n' + (document.getElementById('rn-notes').value.trim() || 'None')
     + (function(){
         var trimSel = document.querySelectorAll('.rn-trim-check:checked');

@@ -208,7 +208,7 @@ function renderFooter(isHome) {
     </div>
     <div class="footer-disc">Blindznation is an independent business providing professional installation and consulting services. Product names, logos, and trademarks are the property of their respective owners and are used for identification purposes only. Blindznation is not affiliated with, endorsed by, or sponsored by any manufacturer. &nbsp;·&nbsp; <a href="${pre}privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></div>
   `;
-  setTimeout(function(){ _initShippingEstimators(); _initFileUploads(); }, 0);
+  setTimeout(function(){ _initShippingEstimators(); _initFileUploads(); _initInstallationAddons(); }, 0);
 }
 
 function _toggleDrawer() {
@@ -542,6 +542,51 @@ function _initMotorModal() {
       '</div>' +
     '</div>';
   document.body.appendChild(ov);
+}
+
+// ---- INSTALLATION ADD-ON — auto-injects into every quote form ----
+function _initInstallationAddons() {
+  document.querySelectorAll('.delivery-section').forEach(function(del) {
+    var parent = del.parentElement;
+    if (!parent || parent.querySelector('.pb-install-wrap')) return;
+    var btn = parent.querySelector('.btn-gold');
+    if (!btn) return;
+
+    var id = 'inst-' + Math.random().toString(36).slice(2, 7);
+    var wrap = document.createElement('div');
+    wrap.className = 'pb-install-wrap';
+    wrap.style.cssText = 'border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-bottom:14px;background:#fafal8';
+    wrap.innerHTML =
+      '<label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer">' +
+        '<input type="checkbox" id="' + id + '" class="pb-install-check" ' +
+          'style="margin-top:2px;flex-shrink:0;width:16px;height:16px;cursor:pointer" ' +
+          'onchange="pbToggleInstall(this)">' +
+        '<div>' +
+          '<div style="font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:2px">Add professional installation</div>' +
+          '<div style="font-size:12px;color:#666;line-height:1.5">Installation is priced separately based on your location and product. Submit your quote — Justin will follow up with installation pricing via email.</div>' +
+        '</div>' +
+      '</label>' +
+      '<div id="' + id + '-detail" style="display:none;margin-top:12px;padding:12px 14px;background:var(--espresso);border-radius:8px">' +
+        '<div style="font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">We\'ll follow up with installation pricing</div>' +
+        '<div style="font-size:13px;color:var(--cream);margin-bottom:6px">Serving Philadelphia, South Jersey &amp; surrounding areas.</div>' +
+        '<a href="tel:6097421720" style="display:inline-flex;align-items:center;gap:7px;background:var(--gold);color:var(--espresso);font-size:13px;font-weight:700;padding:9px 16px;border-radius:7px;text-decoration:none;margin-bottom:6px">&#128222; (609) 742-1720</a>' +
+        '<div style="font-size:12px;color:var(--text-dark);margin-top:4px">Or email: <a href="mailto:justin@phillyblinds.com" style="color:var(--gold);text-decoration:none">justin@phillyblinds.com</a></div>' +
+      '</div>';
+    btn.before(wrap);
+    btn.setAttribute('data-install-id', id);
+  });
+}
+function pbInstallLine(parentEl) {
+  var cb = (parentEl || document).querySelector('.pb-install-check:checked');
+  return cb ? '\nInstallation: REQUESTED — Justin will follow up with pricing.' : '\nInstallation: Not requested';
+}
+function pbToggleInstall(cb) {
+  var detail = document.getElementById(cb.id + '-detail');
+  if (detail) detail.style.display = cb.checked ? 'block' : 'none';
+}
+function pbInstallRequested(parentEl) {
+  var cb = (parentEl || document).querySelector('.pb-install-check:checked');
+  return !!cb;
 }
 
 // ---- FILE UPLOAD — auto-injects into every quote form ----

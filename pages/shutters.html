@@ -634,7 +634,8 @@ function submitShutterForm() {
     'Color:        ' + g('shutter-color')    + '\n' +
     'Windows:      ' + (document.getElementById('win-count') ? document.getElementById('win-count').value : '—') + '\n' +
     'Window type:  ' + (document.getElementById('win-type')  ? document.getElementById('win-type').value  : '—') + '\n\n' +
-    'Delivery: ' + delivery + '\n\n' +
+    'Delivery: ' + delivery + '\n' +
+    pbInstallLine(document.getElementById('shutter-form-inner')) + '\n\n' +
     'Notes:\n' + (notes || '(none)');
 
   window.location.href = 'mailto:justin@phillyblinds.com' +
