@@ -958,7 +958,7 @@
         <span style="font-size:20px;font-weight:600;color:var(--gold)" id="corn-price-total">—</span>
       </div>
       <div id="corn-fabric-note" style="font-size:11px;background:rgba(45,224,193,.1);border:1px solid rgba(45,224,193,.2);border-radius:7px;padding:6px 9px;color:var(--cream);margin-top:8px;line-height:1.5"></div>
-      <div style="font-size:10px;color:var(--text-faint);margin-top:6px">$50/ft · 4 ft min · trim $15/ft · fabric est. $30/yd · Final confirmed at order.</div>
+      <div style="font-size:10px;color:var(--text-faint);margin-top:6px">$50/linear ft incl. ends · round up · 4 ft/$250 min · trim +$15/ft · fabric est. $30/yd · Final confirmed at order.</div>
     </div>
     <div id="corn-form">
       <div class="form-row">
@@ -1149,11 +1149,17 @@ _initMeasureHelp(`
     </ul>
   </div>
 `, '../pages/measure-drapes.html');
-// Auto-switch to Roman tab if URL contains ?tab=roman
-if (new URLSearchParams(window.location.search).get('tab') === 'roman') {
-  var romanBtn = document.querySelector('.type-tab:nth-child(2)');
-  if (romanBtn) switchTab('roman', romanBtn);
-}
+// Auto-switch tabs based on URL ?tab= param
+(function() {
+  var tab = new URLSearchParams(window.location.search).get('tab');
+  if (!tab) return;
+  var map = { roman: 2, cornval: 3 };
+  var idx = map[tab];
+  if (idx) {
+    var btn = document.querySelector('.type-tab:nth-child(' + idx + ')');
+    if (btn) switchTab(tab, btn);
+  }
+})();
 
 // ── Tab switcher ──────────────────────────────────────────
 function switchTab(id, btn) {
@@ -1502,7 +1508,8 @@ function drapeToggleSingle(show) {
 }
 // ── CORNICE & VALANCE PRICING ─────────────────────────────
 var CV_PER_FT     = 50;
-var CV_MIN_FT     = 4;
+var CV_MIN_FT     = 4;   // 4 ft minimum size
+var CV_MIN_PRICE  = 250; // $250 minimum charge
 var CV_TRIM_PER_FT= 15;
 var CV_FABRIC_YD  = 30;
 
@@ -1549,8 +1556,10 @@ function _cvPriceBox(boxId, rowsId, totalId, noteId, w, h, ret, trimClass, trimG
   var box = document.getElementById(boxId);
   if (!box) return;
   if (!w) { box.style.display = 'none'; return; }
-  var ft      = Math.max(CV_MIN_FT, (w + ret * 2) / 12);
-  var labor   = Math.ceil(ft) * CV_PER_FT;
+  // Total linear footage includes width + both end returns, always round UP to full foot
+  var rawFt   = (w + ret * 2) / 12;
+  var ft      = Math.max(CV_MIN_FT, Math.ceil(rawFt));
+  var labor   = Math.max(CV_MIN_PRICE, ft * CV_PER_FT);
   var hasTrim = document.querySelector('#' + trimGrp + ' .opt-btn.sel') &&
                 document.querySelector('#' + trimGrp + ' .opt-btn.sel').textContent.indexOf('trim') !== -1;
   var trimFt  = hasTrim ? _cvTrimFt(trimClass, w, h, ret) : 0;
@@ -1571,7 +1580,7 @@ function _cvPriceBox(boxId, rowsId, totalId, noteId, w, h, ret, trimClass, trimG
   var row = function(lbl, val) {
     rows += '<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-dark);padding:3px 0;border-bottom:.5px solid var(--border-dark)"><span>' + lbl + '</span><span style="color:var(--cream);font-weight:500">$' + val.toFixed(0) + '</span></div>';
   };
-  row(Math.ceil(ft) + ' ft × $' + CV_PER_FT + '/ft' + (isCorn ? ' (4 ft min)' : ''), labor);
+  row(ft + ' ft × $' + CV_PER_FT + '/ft (incl. ends' + (labor === CV_MIN_PRICE ? ' · $250 min)' : ')'), labor);
   if (trimCost) row('Trim (' + Math.ceil(trimFt) + ' ft × $' + CV_TRIM_PER_FT + ')', trimCost);
   if (fabricCost) row('Fabric est. (' + fabricYds + ' yd × $' + CV_FABRIC_YD + ')', fabricCost);
   document.getElementById(rowsId).innerHTML = rows;

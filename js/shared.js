@@ -59,7 +59,10 @@ function _injectHead(isHome) {
         {"@type": "AdministrativeArea", "name": "Montgomery County, PA"},
         {"@type": "AdministrativeArea", "name": "Bucks County, PA"},
         {"@type": "AdministrativeArea", "name": "Delaware County, PA"},
-        {"@type": "AdministrativeArea", "name": "South Jersey, NJ"}
+        {"@type": "AdministrativeArea", "name": "South Jersey, NJ"},
+        {"@type": "City", "name": "Salt Lake City"},
+        {"@type": "AdministrativeArea", "name": "Salt Lake County, UT"},
+        {"@type": "State", "name": "Out of state — available nationwide"}
       ],
       "priceRange": "$$",
       "openingHoursSpecification": {
@@ -168,7 +171,7 @@ function renderFooter(isHome) {
         </div>
         <div class="footer-brand-alt">Blindznation</div>
         <div class="footer-company">Michael J. Healy Installations LLC</div>
-        <div class="footer-tagline">Professional window treatment installation across Philadelphia &amp; surrounding areas.</div>
+        <div class="footer-tagline">Serving Philadelphia, South Jersey, Salt Lake City &amp; surrounding areas. Out-of-state available — product ships nationwide.</div>
         <a href="tel:6097421720" style="display:block;font-size:15px;font-weight:600;color:var(--gold);text-decoration:none;margin-bottom:2px">(609) 742-1720</a>
         <div style="font-size:11px;color:var(--text-faint);margin-bottom:6px">Justin Healy &mdash; call or text 24/7</div>
         <a href="mailto:justin@phillyblinds.com" style="font-size:12px;color:var(--text-muted);text-decoration:none">justin@phillyblinds.com</a>
@@ -568,7 +571,7 @@ function _initInstallationAddons() {
       '</label>' +
       '<div id="' + id + '-detail" style="display:none;margin-top:12px;padding:12px 14px;background:var(--espresso);border-radius:8px">' +
         '<div style="font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">We\'ll follow up with installation pricing</div>' +
-        '<div style="font-size:13px;color:var(--cream);margin-bottom:6px">Serving Philadelphia, South Jersey &amp; surrounding areas.</div>' +
+        '<div style="font-size:13px;color:var(--cream);margin-bottom:6px">Philadelphia, South Jersey, Salt Lake City &amp; surrounding areas. Out-of-state installation available at reasonable rates.</div>' +
         '<a href="tel:6097421720" style="display:inline-flex;align-items:center;gap:7px;background:var(--gold);color:var(--espresso);font-size:13px;font-weight:700;padding:9px 16px;border-radius:7px;text-decoration:none;margin-bottom:6px">&#128222; (609) 742-1720</a>' +
         '<div style="font-size:12px;color:var(--text-dark);margin-top:4px">Or email: <a href="mailto:justin@phillyblinds.com" style="color:var(--gold);text-decoration:none">justin@phillyblinds.com</a></div>' +
       '</div>';
