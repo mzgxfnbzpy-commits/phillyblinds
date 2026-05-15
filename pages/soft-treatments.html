@@ -205,6 +205,73 @@
 
     </div>
 
+    <!-- ROD POCKET SUB-OPTIONS (shown only when Rod Pocket / Sheered Pocket selected) -->
+    <div id="rodpocket-subopts" style="display:none;margin-top:14px;padding:16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:12px">
+      <div style="font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:14px">Rod pocket details</div>
+
+      <!-- Casing size -->
+      <div style="margin-bottom:14px">
+        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Casing (pocket) size</div>
+        <div style="font-size:11px;color:#888;margin-bottom:8px">The sleeve the rod slides through. Should match your rod diameter + clearance.</div>
+        <div class="opt-row" id="grp-rp-casing">
+          <button class="opt-btn" onclick="selOpt(this,'grp-rp-casing')">1"</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-rp-casing')">1.5"</button>
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-rp-casing')">2"</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-rp-casing')">2.5"</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-rp-casing')">3"</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-rp-casing')">4"</button>
+        </div>
+      </div>
+
+      <!-- Header size -->
+      <div style="margin-bottom:14px">
+        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Header size (flare above casing)</div>
+        <div style="font-size:11px;color:#888;margin-bottom:8px">The ruffle that fans above the rod. Leave at 0 for no header.</div>
+        <div class="opt-row" id="grp-rp-header">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-rp-header')">No header</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-rp-header')">1"</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-rp-header')">1.5"</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-rp-header')">2"</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-rp-header')">3"</button>
+        </div>
+      </div>
+
+      <!-- Placement -->
+      <div style="margin-bottom:14px">
+        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Casing &amp; header placement</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px" id="grp-rp-placement">
+          <label style="display:flex;align-items:flex-start;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff">
+            <input type="radio" name="rp-placement" value="header-casing-top-bottom" style="margin-top:2px;flex-shrink:0"> Header + casing top &amp; bottom
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff">
+            <input type="radio" name="rp-placement" value="header-casing-top" style="margin-top:2px;flex-shrink:0" checked> Header + casing top only
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff">
+            <input type="radio" name="rp-placement" value="casing-top-bottom" style="margin-top:2px;flex-shrink:0"> Casing top &amp; bottom (no header)
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff">
+            <input type="radio" name="rp-placement" value="casing-top" style="margin-top:2px;flex-shrink:0"> Casing top only (no header)
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff">
+            <input type="radio" name="rp-placement" value="casing-bottom" style="margin-top:2px;flex-shrink:0"> Casing bottom only (no header)
+          </label>
+        </div>
+      </div>
+
+      <!-- Fullness -->
+      <div>
+        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Fullness <span style="font-weight:400;color:var(--gold);text-transform:none">— 2.0× recommended</span></div>
+        <div style="font-size:11px;color:#888;margin-bottom:8px">Flat = 1:1, no gather. 2.0× = fabric is twice the window width — classic rod pocket look.</div>
+        <div class="opt-row" id="grp-rp-fullness">
+          <button class="opt-btn" onclick="selOpt(this,'grp-rp-fullness');calcDrapePrice()">Flat (1×)</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-rp-fullness');calcDrapePrice()">1.5×</button>
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-rp-fullness');calcDrapePrice()" style="border-color:var(--gold)">2.0× <span style="font-size:9px;background:var(--gold);color:var(--espresso);padding:1px 5px;border-radius:4px;margin-left:3px;font-weight:700">REC</span></button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-rp-fullness');calcDrapePrice()">2.5×</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-rp-fullness');calcDrapePrice()">3.0×</button>
+        </div>
+      </div>
+    </div>
+
     <!-- STANDARD FULLNESS (Pinch, Box, Goblet, Barrel — not Ripple/Grommet/Rod Pocket) -->
     <div id="drape-fullness-std" style="display:none;margin-top:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
       <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:4px">Fullness</div>
@@ -1224,7 +1291,7 @@ var drapeState  = { pleat:'', fabric:'' };
 var romanState  = { style:'', fabric:'' };
 
 var _RIPPLE_STYLES    = ['Ripple Fold'];
-var _NO_FULLNESS      = ['Grommet / Eyelet', 'Rod Pocket / Sheered Pocket'];
+var _NO_FULLNESS      = ['Grommet / Eyelet']; // Rod Pocket has its own fullness section
 
 function selectPleat(el, val) {
   document.querySelectorAll('#pleat-cards .opt-card').forEach(c => c.classList.remove('sel'));
@@ -1237,15 +1304,20 @@ function selectPleat(el, val) {
     if (val !== 'Pinch Pleat') document.querySelectorAll('#pinch-subopts .opt-card').forEach(c => c.classList.remove('sel'));
   }
 
+  var rpOpts = document.getElementById('rodpocket-subopts');
+  if (rpOpts) rpOpts.style.display = val === 'Rod Pocket / Sheered Pocket' ? 'block' : 'none';
+
   var isRipple  = _RIPPLE_STYLES.indexOf(val) !== -1;
+  var isRodPocket = val === 'Rod Pocket / Sheered Pocket';
   var noFull    = _NO_FULLNESS.indexOf(val) !== -1;
   var stdFull   = document.getElementById('drape-fullness-std');
   var rippleOpts= document.getElementById('drape-ripple-opts');
   var fullRec   = document.getElementById('drape-fullness-rec');
 
-  if (stdFull)    stdFull.style.display    = (!isRipple && !noFull) ? 'block' : 'none';
+  // Hide standard fullness for ripple, grommet, and rod pocket (rod pocket has its own)
+  if (stdFull)    stdFull.style.display    = (!isRipple && !noFull && !isRodPocket) ? 'block' : 'none';
   if (rippleOpts) rippleOpts.style.display = isRipple ? 'block' : 'none';
-  if (fullRec && isRipple) { fullRec.style.display = 'none'; }
+  if (fullRec && (isRipple || isRodPocket)) { fullRec.style.display = 'none'; }
 }
 
 function drapeFullnessHint(val) {
@@ -1449,15 +1521,20 @@ function calcDrapePrice() {
   if (!w || !h) { box.style.display = 'none'; return; }
 
   // Fullness factor
-  var isRipple = drapeState.pleat === 'Ripple Fold';
+  var isRipple   = drapeState.pleat === 'Ripple Fold';
+  var isRodPocket = drapeState.pleat === 'Rod Pocket / Sheered Pocket';
   var fullness = 2.0;
-  if (!isRipple) {
-    var fBtn = document.querySelector('#grp-drape-fullness .opt-btn.sel');
-    fullness = fBtn ? (parseFloat(fBtn.textContent) || 2.0) : 2.0;
-  } else {
+  if (isRipple) {
     var rfBtn = document.querySelector('#grp-ripple-fullness .opt-btn.sel');
     var rfPct = rfBtn ? parseFloat(rfBtn.textContent) : 80;
-    fullness = 1 + rfPct / 100; // 80% → 1.8×
+    fullness = 1 + rfPct / 100;
+  } else if (isRodPocket) {
+    var rpBtn = document.querySelector('#grp-rp-fullness .opt-btn.sel');
+    var rpTxt = rpBtn ? rpBtn.textContent.trim() : '2.0';
+    fullness = rpTxt === 'Flat (1×)' ? 1.0 : (parseFloat(rpTxt) || 2.0);
+  } else {
+    var fBtn = document.querySelector('#grp-drape-fullness .opt-btn.sel');
+    fullness = fBtn ? (parseFloat(fBtn.textContent) || 2.0) : 2.0;
   }
 
   // Widths
@@ -1831,7 +1908,14 @@ function submitDrape() {
     + (fabric === 'We supply the fabric' ? 'Color: ' + (getOpt('grp-drape-color')||'—') + '  Liner: ' + (getOpt('grp-drape-liner')||'No liner') + '\n' : '')
     + 'Lining: ' + lining + '\n'
     + 'Panels: ' + panels + (panelSide !== '—' ? ' — ' + panelSide : '') + '\n'
-    + (!isRipple && fullness !== '—' ? 'Fullness: ' + fullness + '\n' : '')
+    + (!isRipple && pleat !== 'Rod Pocket / Sheered Pocket' && fullness !== '—' ? 'Fullness: ' + fullness + '\n' : '')
+    + (pleat === 'Rod Pocket / Sheered Pocket' ? (function(){
+        var casing = getOpt('grp-rp-casing') || '—';
+        var header = getOpt('grp-rp-header') || 'No header';
+        var placement = (document.querySelector('input[name="rp-placement"]:checked') || {}).value || '—';
+        var rpFull = (function(){ var b=document.querySelector('#grp-rp-fullness .opt-btn.sel'); return b?b.textContent.trim():'2.0×'; })();
+        return 'Casing: ' + casing + '  Header: ' + header + '  Placement: ' + placement + '  Fullness: ' + rpFull + '\n';
+      }()) : '')
     + (!isRipple ? 'Return: ' + returnSz + '"  Overlap: ' + overlapSz + '"\n' : '')
     + (isRipple ? 'Ripple fullness: ' + rippleFull + '  Hardware: ' + rippleHw + '  Snaps: ' + rippleSnaps + '\n' +
        'Join type: ' + rippleJoin + '  Return: ' + rippleRet + '"  Overlap: ' + rippleOvlp + '"\n' : '')
