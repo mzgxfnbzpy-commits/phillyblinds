@@ -1339,17 +1339,17 @@
         <div style="font-size:10px;color:var(--text-faint);margin-top:8px;line-height:1.5" id="pb-price-note"></div>
       </div>
 
-      <!-- Valance add-on -->
-      <div id="pb-valance-wrap" style="display:none;margin-top:10px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:9px">
+      <!-- Metal Fascia add-on (surcharge on top of base shade price) -->
+      <div id="pb-fascia-wrap" style="display:none;margin-top:10px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:9px">
         <label style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:#333;cursor:pointer;margin-bottom:4px">
-          <input type="checkbox" id="pb-add-valance" onchange="pbCalcPrice()"> Add valance
+          <input type="checkbox" id="pb-add-fascia" onchange="pbCalcPrice()"> Add metal fascia
           <span style="font-weight:400;color:#888">— priced by width</span>
         </label>
-        <div style="font-size:11px;color:#888;margin-bottom:8px">Available in metal and basic colors only.</div>
-        <div id="pb-valance-opts" style="display:none">
+        <div style="font-size:11px;color:#888;margin-bottom:8px">Metal fascia only. Priced as surcharge added to base shade price. Max width 144″ — over 144″ requires custom quote.</div>
+        <div id="pb-fascia-opts" style="display:none">
           <div class="form-group">
-            <label style="font-size:12px">Valance width (inches)</label>
-            <input type="number" id="pb-valance-width" placeholder="same as shade" min="24" max="144" oninput="pbCalcPrice()" style="font-size:14px;max-width:160px">
+            <label style="font-size:12px">Fascia width (inches)</label>
+            <input type="number" id="pb-fascia-width" placeholder="same as shade" min="24" max="144" oninput="pbCalcPrice()" style="font-size:14px;max-width:160px">
           </div>
         </div>
       </div>
@@ -3838,8 +3838,8 @@ const PB_SOLAR   = {
   132: [408,470,526,582,627,670,737,780,826,894,956,1002,1049,1141,1235],
   144: [434,498,561,609,659,703,777,823,872,940,1010,1061,1111,1206,1309]
 };
-const PB_VALANCE_W = [24,30,36,42,48,54,60,66,72,78,84,90,96,108,120,132,144];
-const PB_VALANCE_P = [117,122,133,139,150,161,171,188,204,216,232,249,265,293,326,349,375];
+const PB_FASCIA_W = [24,30,36,42,48,54,60,66,72,78,84,90,96,108,120,132,144];
+const PB_FASCIA_P = [117,122,133,139,150,161,171,188,204,216,232,249,265,293,326,349,375];
 
 function _pbRoundUp(val, arr) {
   for (var i=0;i<arr.length;i++) if (val<=arr[i]) return arr[i];
@@ -3852,17 +3852,17 @@ function _pbLookup(w,h) {
   var row = PB_SOLAR[rh]; if (!row) return null;
   return { price: row[PB_WIDTHS.indexOf(rw)], rw:rw, rh:rh, oversized: rw>90 };
 }
-function _pbValanceLookup(w) {
-  var rw = _pbRoundUp(w, PB_VALANCE_W);
+function _pbFasciaLookup(w) {
+  var rw = _pbRoundUp(w, PB_FASCIA_W);
   if (!rw) return null;
-  return PB_VALANCE_P[PB_VALANCE_W.indexOf(rw)];
+  return PB_FASCIA_P[PB_FASCIA_W.indexOf(rw)];
 }
 
 function pbCalcPrice() {
   var w   = parseFloat(document.getElementById('pb-width').value);
   var h   = parseFloat(document.getElementById('pb-height').value);
   var box = document.getElementById('pb-price-box');
-  var vWrap = document.getElementById('pb-valance-wrap');
+  var vWrap = document.getElementById('pb-fascia-wrap');
   if (!box) return;
 
   var fabBtn  = document.querySelector('#pb-grp-fabric-type .opt-btn.sel');
@@ -3873,8 +3873,8 @@ function pbCalcPrice() {
 
   // Show valance add-on when width known
   if (vWrap) vWrap.style.display = (hasPricing && w) ? 'block' : 'none';
-  var valOpts = document.getElementById('pb-valance-opts');
-  var addVal  = document.getElementById('pb-add-valance');
+  var valOpts = document.getElementById('pb-fascia-opts');
+  var addVal  = document.getElementById('pb-add-fascia');
   if (valOpts && addVal) valOpts.style.display = addVal.checked ? 'block' : 'none';
 
   if (!hasPricing || !w || !h) { box.style.display='none'; return; }
@@ -3899,16 +3899,16 @@ function pbCalcPrice() {
   var isOversized = result.oversized;
   var freight = isOversized ? (80 + Math.max(0,qty-1)*50) : (25 + Math.max(0,qty-1)*11);
 
-  // Valance
+  // Metal Fascia
   var valTotal = 0;
   var valRows = '';
   if (addVal && addVal.checked) {
-    var vwEl = document.getElementById('pb-valance-width');
+    var vwEl = document.getElementById('pb-fascia-width');
     var vw = parseFloat((vwEl && vwEl.value) ? vwEl.value : w);
-    var vp = _pbValanceLookup(vw);
+    var vp = _pbFasciaLookup(vw);
     valTotal = vp ? vp * qty : 0;
-    if (vp) valRows = '<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-dark);padding:4px 0;border-bottom:.5px solid var(--border-dark)"><span>Valance ('+(vw)+'→'+_pbRoundUp(vw,PB_VALANCE_W)+'") × '+qty+'</span><span style="color:var(--cream);font-weight:500">$'+valTotal.toFixed(0)+'</span></div>';
-    else valRows = '<div style="font-size:11px;color:var(--gold);padding:4px 0">Valance width out of range — quote required.</div>';
+    if (vp) valRows = '<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-dark);padding:4px 0;border-bottom:.5px solid var(--border-dark)"><span>Metal fascia ('+(vw)+'→'+_pbRoundUp(vw,PB_FASCIA_W)+'") × '+qty+'</span><span style="color:var(--cream);font-weight:500">$'+valTotal.toFixed(0)+'</span></div>';
+    else valRows = '<div style="font-size:11px;color:var(--gold);padding:4px 0">Fascia width exceeds 144″ — quote required.</div>';
   }
 
   var grandTotal = shadeTotal + freight + valTotal;
@@ -4089,7 +4089,7 @@ const RN_PG3_SOLAR = {
   144:[571,666,763,862,957,1055,1155,1264,1375,1544,1670,1806,1954,2216,2498]
 };
 
-// Valance / Fascia surcharges by width (17 cols: 24–144")
+// Metal Fascia / Fascia surcharges by width (17 cols: 24–144")
 const RN_VALANCE_W = [24,30,36,42,48,54,60,66,72,78,84,90,96,108,120,132,144];
 const RN_SURCHARGE_FASCIA_WOOD  = [117,122,133,139,150,161,171,188,204,216,232,249,265,293,326,349,375];
 const RN_SURCHARGE_FABRIC_SMALL = [133,139,155,161,171,183,199,216,232,249,271,288,304,342,375,403,431];
@@ -5008,7 +5008,7 @@ function psCalc() {
   var isRD = rdBtn && rdBtn.textContent.indexOf('Room darkening') >= 0;
   if (isRD) { var rdAdd = Math.round(base*0.20); total+=rdAdd; lines.push('Room darkening (+20%): +$'+rdAdd.toLocaleString()); }
 
-  // Valance surcharge
+  // Metal Fascia surcharge
   var valBtn = document.querySelector('#grp-ps-valance .opt-btn.sel');
   var valText = valBtn ? valBtn.textContent.trim() : '';
   var vi = psGetIdx(PS_WIDTHS, w); if (vi<0) vi=PS_WIDTHS.length-1;
