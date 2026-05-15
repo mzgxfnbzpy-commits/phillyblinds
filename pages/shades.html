@@ -231,12 +231,11 @@
         <div class="product-card" id="card-fwb" onclick="selectBlindsType()">
           <div class="product-img-photo">
             <img src="../images/thumbnails/faux-blinds.png" alt="Wood Blinds" loading="lazy" style="object-position:center 30%">
-            <div class="motor-chip">+ motorized</div>
           </div>
           <div class="product-body">
             <div class="product-name">Wood Blinds</div>
             <div class="product-sub">Faux wood or real wood — your choice</div>
-            <span class="badge badge-quote">Custom quote</span>
+            <span class="badge badge-instant">Instant price</span>
           </div>
         </div>
 
@@ -1682,7 +1681,7 @@
             <img src="../images/thumbnails/faux-blinds.png" alt="Faux Wood Blinds" style="width:100%;height:100%;object-fit:cover;object-position:center 30%">
           </div>
           <span class="brand-btn-name">Faux Wood Blinds</span>
-          <span class="brand-btn-sub">Moisture-resistant PVC · Norman eWood · great for kitchens &amp; baths</span>
+          <span class="brand-btn-sub">Norman SmartPrivacy® · 16 colors · instant pricing</span>
         </button>
         <button class="brand-btn" onclick="selectBlindsSubtype('rwb')" style="flex:1;min-width:0">
           <div class="product-img-photo" style="height:140px;border-radius:8px;overflow:hidden;margin-bottom:10px">
@@ -3229,7 +3228,7 @@ function selectBlindsType() {
 function selectBlindsSubtype(type) {
   document.getElementById('blinds-type-config').classList.remove('open');
   if (type === 'fwb') {
-    document.getElementById('fwb-config').classList.add('open');
+    window.location.href = 'faux-wood-blinds.html';
   } else {
     document.getElementById('rwb-config').classList.add('open');
   }

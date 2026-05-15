@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Configure and price Norman SmartPrivacy® Cordless Faux Wood Blinds online. 16 colors, instant pricing, all options. Serving Philadelphia area.">
+<meta property="og:title" content="Norman SmartPrivacy® Faux Wood Blinds | Philly Blinds">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://phillyblinds.com/pages/faux-wood-blinds.html">
+<meta property="og:site_name" content="Philly Blinds">
+<title>Norman SmartPrivacy® Faux Wood Blinds — Philly Blinds</title>
+<link rel="stylesheet" href="../css/global.css">
+<style>
+.page-hero{background:linear-gradient(to right,rgba(28,21,16,.96) 40%,rgba(28,21,16,.65) 70%,rgba(28,21,16,.3) 100%),url('../images/thumbnails/faux-blinds-bay-window.JPEG') right center/cover no-repeat;padding:48px 28px 44px;min-height:280px}
+.breadcrumb{font-size:11px;color:var(--text-faint);margin-bottom:14px}
+.breadcrumb a{color:var(--text-muted);text-decoration:none}
+.page-hero h1{font-size:30px;font-weight:500;color:var(--cream);letter-spacing:-0.4px;margin-bottom:8px}
+.page-hero .sub{font-size:14px;color:var(--text-dark);line-height:1.7;max-width:520px;margin-bottom:18px}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap}
+.hero-pill{font-size:11px;padding:4px 12px;border-radius:20px;border:.5px solid var(--border-dark);color:var(--text-faint)}
+.hero-pill-gold{background:rgba(200,151,63,.12);border-color:rgba(200,151,63,.3);color:var(--gold)}
+
+.config-layout{display:grid;grid-template-columns:1fr 300px;gap:24px;max-width:1100px;margin:0 auto;padding:28px 28px 60px;align-items:start}
+@media(max-width:860px){.config-layout{grid-template-columns:1fr;padding:20px 16px 48px}}
+
+.step-block{background:#fff;border:1px solid #e8e8e4;border-radius:14px;margin-bottom:14px;overflow:hidden}
+.step-block.active{box-shadow:0 2px 20px rgba(200,151,63,.1);border-color:rgba(200,151,63,.3)}
+.step-head{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;user-select:none}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--espresso);color:var(--gold);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-block.done .step-num{background:var(--gold);color:var(--espresso)}
+.step-head-title{font-size:14px;font-weight:500;color:#111;flex:1}
+.step-head-val{font-size:12px;color:var(--gold);font-weight:500;max-width:160px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.step-body{padding:4px 20px 20px;display:none}
+.step-block.active .step-body,.step-block.open .step-body{display:block}
+
+.opt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-top:10px}
+.opt-card{background:#fff;border:1.5px solid #e8e8e4;border-radius:10px;padding:12px 10px;cursor:pointer;text-align:center;transition:all .15s}
+.opt-card:hover{border-color:var(--gold)}
+.opt-card.sel{border:2px solid var(--gold);background:rgba(200,151,63,.06)}
+.opt-card-title{font-size:13px;font-weight:500;color:#111;margin-bottom:2px}
+.opt-card-desc{font-size:11px;color:#666;line-height:1.4}
+.opt-card.sel .opt-card-title{color:#7A4F00}
+
+.opt-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.opt-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+@media(max-width:500px){.opt-grid-3{grid-template-columns:1fr 1fr}}
+
+/* Color swatches */
+.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;margin-top:10px}
+.color-card{border:1.5px solid #e8e8e4;border-radius:10px;overflow:hidden;cursor:pointer;transition:all .15s}
+.color-card:hover{border-color:var(--gold);transform:translateY(-1px)}
+.color-card.sel{border:2px solid var(--gold);box-shadow:0 2px 10px rgba(200,151,63,.2)}
+.color-swatch{height:48px;width:100%}
+.color-label{padding:5px 7px;background:#fff}
+.color-name{font-size:10px;font-weight:600;color:#222;line-height:1.3}
+.color-code{font-size:9px;color:#999}
+.color-finish{font-size:9px;color:#777}
+.color-printed{font-size:8px;color:#B45309;font-weight:600;background:#FEF3C7;padding:1px 4px;border-radius:3px;display:inline-block;margin-top:2px}
+
+/* Dimensions */
+.dim-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+.dim-label{font-size:12px;font-weight:500;color:#444;margin-bottom:4px}
+.dim-inputs{display:flex;gap:6px;align-items:center}
+.dim-whole{width:58px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px;text-align:center}
+.dim-frac{padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff}
+.dim-unit{font-size:12px;color:#666}
+
+.size-msg{border-radius:8px;padding:8px 12px;font-size:12px;margin-top:8px;line-height:1.5;display:none}
+.size-err{background:#FEE2E2;border:1px solid #EF4444;color:#7f1d1d;display:block}
+.size-ok{background:#DCFCE7;border:1px solid #86EFAC;color:#14532d;display:block}
+.size-info{background:rgba(200,151,63,.08);border:1px solid rgba(200,151,63,.25);color:#7A4F00;display:block}
+
+.computed-box{background:#F9F7F4;border:1px solid #e8e4dc;border-radius:8px;padding:10px 14px;margin-top:10px}
+.computed-row{display:flex;justify-content:space-between;font-size:12px;padding:2px 0}
+.computed-key{color:#666}
+.computed-val{font-weight:500;color:#111}
+
+/* Add-ons */
+.addon-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border:1px solid #e8e8e4;border-radius:8px;margin-top:8px;cursor:pointer;transition:all .15s}
+.addon-row:hover{border-color:var(--gold)}
+.addon-row.sel{border:2px solid var(--gold);background:rgba(200,151,63,.05)}
+.addon-left{display:flex;align-items:center;gap:10px}
+.addon-check{width:18px;height:18px;border:2px solid #ccc;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;flex-shrink:0;transition:all .15s}
+.addon-row.sel .addon-check{background:var(--gold);border-color:var(--gold)}
+.addon-name{font-size:13px;font-weight:500;color:#111}
+.addon-desc{font-size:11px;color:#666;margin-top:1px}
+.addon-price{font-size:12px;font-weight:600;color:var(--gold)}
+
+.qty-row{display:flex;align-items:center;gap:10px;margin-top:10px}
+.qty-btn{width:34px;height:34px;border:1px solid #ddd;border-radius:8px;background:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.qty-btn:hover{border-color:var(--gold);color:var(--gold)}
+.qty-num{width:50px;padding:6px;border:1px solid #ddd;border-radius:8px;font-size:14px;text-align:center}
+.qty-label{font-size:12px;color:#666}
+
+/* Wand dropdown */
+.wand-note{font-size:11px;color:#888;margin-top:6px;line-height:1.5}
+
+/* Quote panel */
+.quote-panel{background:var(--espresso);border-radius:14px;padding:22px;position:sticky;top:70px}
+.quote-panel-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:16px}
+.qrow{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;margin-bottom:8px;gap:8px}
+.qrow-label{color:var(--text-muted)}
+.qrow-val{color:var(--cream);font-weight:500;text-align:right}
+.qrow-val.surcharge{color:#FCA044}
+.qdivider{border:none;border-top:.5px solid var(--border-dark);margin:12px 0}
+.qtotal-row{display:flex;justify-content:space-between;font-size:15px;font-weight:600}
+.qtotal-label{color:var(--cream)}
+.qtotal-val{color:var(--gold)}
+.qfreight-note{font-size:10px;color:var(--text-dark);margin-top:6px;line-height:1.5}
+.qpending{font-size:12px;color:var(--text-muted);text-align:center;padding:16px 0;font-style:italic}
+.q-printed-badge{font-size:10px;background:rgba(251,191,36,.15);color:#FCA044;padding:2px 6px;border-radius:4px;margin-left:4px}
+
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:12px;font-weight:500;color:#444;margin-bottom:4px}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:9px 12px;border:1px solid #ddd;border-radius:8px;font-size:13px;font-family:inherit;box-sizing:border-box}
+.form-group textarea{resize:vertical;min-height:80px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:500px){.form-row{grid-template-columns:1fr}}
+
+.delivery-section{background:#F9F7F4;border:1px solid #e8e4dc;border-radius:10px;padding:14px 16px;margin-bottom:14px}
+.delivery-toggle{display:flex;gap:8px;margin:8px 0 10px}
+.del-btn{flex:1;padding:8px;border:1.5px solid #ddd;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;background:#fff;transition:all .15s}
+.del-btn.sel{border-color:var(--gold);color:var(--gold);background:rgba(200,151,63,.05)}
+.delivery-note{font-size:11px;color:#555;line-height:1.6}
+.delivery-tariff{font-size:10px;color:#888;margin-top:4px;font-style:italic}
+
+.warn-box{background:#FFF3CD;border:1px solid #FFC107;border-radius:8px;padding:10px 14px;font-size:12px;color:#7d5a00;margin-top:8px;line-height:1.6}
+.info-box{background:rgba(200,151,63,.08);border:1px solid rgba(200,151,63,.25);border-radius:8px;padding:10px 14px;font-size:12px;color:#7A4F00;margin-top:8px;line-height:1.6}
+.step-note{font-size:11px;color:#888;line-height:1.6;margin-top:6px}
+
+.submit-btn{width:100%;padding:14px;background:var(--gold);color:#1C1510;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .15s;margin-top:4px}
+.submit-btn:hover{opacity:.9}
+.success-box{background:#EEFBE8;border:1px solid #86EFAC;border-radius:12px;padding:22px;text-align:center;display:none}
+.success-box h3{font-size:15px;font-weight:600;color:#14532d;margin-bottom:6px}
+.success-box p{font-size:13px;color:#166534;line-height:1.6}
+
+/* Shim qty control */
+.shim-qty-row{display:flex;align-items:center;gap:8px;margin-top:8px;padding:8px 14px;background:#f9f9f7;border:1px solid #e8e8e4;border-radius:8px}
+.shim-qty-btn{width:28px;height:28px;border:1px solid #ddd;border-radius:6px;background:#fff;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.shim-qty-btn:hover{border-color:var(--gold)}
+.shim-qty-num{width:36px;text-align:center;border:1px solid #ddd;border-radius:6px;font-size:13px;padding:4px}
+
+/* Valance return cards */
+.return-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+@media(max-width:480px){.return-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<script src="../js/shared.js"></script>
+<script>renderNav('Shades &amp; Blinds');</script>
+
+<div class="page-hero">
+  <div class="hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <a href="shades.html">Shades &amp; Blinds</a> &rsaquo; Norman SmartPrivacy® Faux Wood Blinds</div>
+    <h1>Norman SmartPrivacy®<br>Faux Wood Blinds</h1>
+    <p>Cordless faux wood blinds with an industry-leading privacy closure. Configure your exact specs and get an instant price — no guessing.</p>
+    <div class="hero-pills">
+      <span class="hero-pill hero-pill-gold">Instant pricing</span>
+      <span class="hero-pill">Cordless · Child safe</span>
+      <span class="hero-pill">2&Prime; &amp; 2&frac12;&Prime; slats</span>
+      <span class="hero-pill">16 colors</span>
+      <span class="hero-pill">Best for Kids certified</span>
+    </div>
+  </div>
+</div>
+
+<div class="config-layout">
+  <div class="config-left">
+
+    <!-- STEP 1: SLAT SIZE -->
+    <div class="step-block active" id="step1">
+      <div class="step-head" onclick="toggleStep('step1')">
+        <div class="step-num">1</div>
+        <div class="step-head-title">Slat Size</div>
+        <div class="step-head-val" id="s1val">—</div>
+      </div>
+      <div class="step-body">
+        <div class="opt-grid-2">
+          <div class="opt-card sel" data-val="2in" onclick="pickSlat(this,'2&Prime; Slat')">
+            <div class="opt-card-title">2&Prime; Slat</div>
+            <div class="opt-card-desc">Most popular · classic proportion</div>
+          </div>
+          <div class="opt-card" data-val="2.5in" onclick="pickSlat(this,'2&frac12;&Prime; Slat')">
+            <div class="opt-card-title">2&frac12;&Prime; Slat</div>
+            <div class="opt-card-desc">Wider look · fewer slats visible</div>
+          </div>
+        </div>
+        <div class="step-note">Same price for both slat sizes.</div>
+      </div>
+    </div>
+
+    <!-- STEP 2: COLOR & FINISH -->
+    <div class="step-block" id="step2">
+      <div class="step-head" onclick="toggleStep('step2')">
+        <div class="step-num">2</div>
+        <div class="step-head-title">Color &amp; Finish</div>
+        <div class="step-head-val" id="s2val">—</div>
+      </div>
+      <div class="step-body">
+        <div class="color-grid" id="color-grid">
+          <!-- Solid colors -->
+          <div class="color-card" data-code="P001" data-finish="Smooth" data-printed="false" onclick="pickColor(this,'Pure White — Smooth','P001','Smooth',false)">
+            <div class="color-swatch" style="background:#F7F7F7;border-bottom:1px solid #eee"></div>
+            <div class="color-label">
+              <div class="color-name">Pure White</div>
+              <div class="color-code">P001</div>
+              <div class="color-finish">Smooth</div>
+            </div>
+          </div>
+          <div class="color-card" data-code="P001" data-finish="Embossed" data-printed="false" onclick="pickColor(this,'Pure White — Embossed','P001','Embossed',false)">
+            <div class="color-swatch" style="background:#F0F0EE;border-bottom:1px solid #eee"></div>
+            <div class="color-label">
+              <div class="color-name">Pure White</div>
+              <div class="color-code">P001</div>
+              <div class="color-finish">Embossed</div>
+            </div>
+          </div>
+          <div class="color-card" data-code="E008" data-finish="Smooth" data-printed="false" onclick="pickColor(this,'Designer White — Smooth','E008','Smooth',false)">
+            <div class="color-swatch" style="background:#F4EFE9;border-bottom:1px solid #eee"></div>
+            <div class="color-label">
+              <div class="color-name">Designer White</div>
+              <div class="color-code">E008</div>
+              <div class="color-finish">Smooth</div>
+            </div>
+          </div>
+          <div class="color-card" data-code="E008" data-finish="Embossed" data-printed="false" onclick="pickColor(this,'Designer White — Embossed','E008','Embossed',false)">
+            <div class="color-swatch" style="background:#EDE8E2;border-bottom:1px solid #eee"></div>
+            <div class="color-label">
+              <div class="color-name">Designer White</div>
+              <div class="color-code">E008</div>
+              <div class="color-finish">Embossed</div>
+            </div>
+          </div>
+          <div class="color-card" data-code="P003" data-finish="Smooth" data-printed="false" onclick="pickColor(this,'Silk White — Smooth','P003','Smooth',false)">
+            <div class="color-swatch" style="background:#EDE9E3;border-bottom:1px solid #eee"></div>
+            <div class="color-label">
+              <div class="color-name">Silk White</div>
+              <div class="color-code">P003</div>
+              <div class="color-finish">Smooth</div>
+            </div>
+          </div>
+          <div class="color-card" data-code="P003" data-finish="Embossed" data-printed="false" onclick="pickColor(this,'Silk White — Embossed','P003','Embossed',false)">
+            <div class="color-swatch" style="background:#E6E1D9;border-bottom:1px solid #eee"></div>
+            <div class="color-label">
+              <div class="color-name">Silk White</div>
+              <div class="color-code">P003</div>
+              <div class="color-finish">Embossed</div>
+            </div>
+          </div>
+          <div class="color-card" data-code="P004" data-finish="Smooth" data-printed="false" onclick="pickColor(this,'Bright White — Smooth','P004','Smooth',false)">
+            <div class="color-swatch" style="background:#FAFAFA;border-bottom:1px solid #eee"></div>
+            <div class="color-label">
+              <div class="color-name">Bright White</div>
+              <div class="color-code">P004</div>
+              <div class="color-finish">Smooth</div>
+            </div>
+          </div>
+          <div class="color-card" data-code="P004" data-finish="Embossed" data-printed="false" onclick="pickColor(this,'Bright White — Embossed','P004','Embossed',false)">
+            <div class="color-swatch" style="background:#F2F2F0;border-bottom:1px solid #eee"></div>
+            <div class="color-label">
+              <div class="color-name">Bright White</div>
+              <div class="color-code">P004</div>
+              <div class="color-finish">Embossed</div>
+            </div>
+          </div>
+          <div class="color-card" data-code="P006" data-finish="Smooth" data-printed="false" onclick="pickColor(this,'Pearl — Smooth','P006','Smooth',false)">
+            <div class="color-swatch" style="background:#E8E0D0;border-bottom:1px solid #eee"></div>
+            <div class="color-label">
+              <div class="color-name">Pearl</div>
+              <div class="color-code">P006</div>
+              <div class="color-finish">Smooth</div>
+            </div>
+          </div>
+          <div class="color-card" data-code="P006" data-finish="Embossed" data-printed="false" onclick="pickColor(this,'Pearl — Embossed','P006','Embossed',false)">
+            <div class="color-swatch" style="background:#DDD6C6;border-bottom:1px solid #eee"></div>
+            <div class="color-label">
+              <div class="color-name">Pearl</div>
+              <div class="color-code">P006</div>
+              <div class="color-finish">Embossed</div>
+            </div>
+          </div>
+          <div class="color-card" data-code="P075" data-finish="Smooth" data-printed="false" onclick="pickColor(this,'Storm Gray — Smooth','P075','Smooth',false)">
+            <div class="color-swatch" style="background:#9BA3A8;border-bottom:1px solid #ccc"></div>
+            <div class="color-label">
+              <div class="color-name">Storm Gray</div>
+              <div class="color-code">P075</div>
+              <div class="color-finish">Smooth</div>
+            </div>
+          </div>
+          <div class="color-card" data-code="P075" data-finish="Embossed" data-printed="false" onclick="pickColor(this,'Storm Gray — Embossed','P075','Embossed',false)">
+            <div class="color-swatch" style="background:#8E969C;border-bottom:1px solid #ccc"></div>
+            <div class="color-label">
+              <div class="color-name">Storm Gray</div>
+              <div class="color-code">P075</div>
+              <div class="color-finish">Embossed</div>
+            </div>
+          </div>
+          <!-- Printed colors (+20%) -->
+          <div class="color-card" data-code="6957" data-finish="Embossed" data-printed="true" onclick="pickColor(this,'Mist — Embossed','6957','Embossed',true)">
+            <div class="color-swatch" style="background:#C5CBD0;border-bottom:1px solid #bbb"></div>
+            <div class="color-label">
+              <div class="color-name">Mist</div>
+              <div class="color-code">6957</div>
+              <div class="color-finish">Printed Embossed</div>
+              <span class="color-printed">+20%</span>
+            </div>
+          </div>
+          <div class="color-card" data-code="P230" data-finish="Embossed" data-printed="true" onclick="pickColor(this,'Old Teak — Embossed','P230','Embossed',true)">
+            <div class="color-swatch" style="background:#8B6840;border-bottom:1px solid #7a5c38"></div>
+            <div class="color-label">
+              <div class="color-name">Old Teak</div>
+              <div class="color-code">P230</div>
+              <div class="color-finish">Printed Embossed</div>
+              <span class="color-printed">+20%</span>
+            </div>
+          </div>
+          <div class="color-card" data-code="6959" data-finish="Embossed" data-printed="true" onclick="pickColor(this,'Granite — Embossed','6959','Embossed',true)">
+            <div class="color-swatch" style="background:#6B6B6B;border-bottom:1px solid #5a5a5a"></div>
+            <div class="color-label">
+              <div class="color-name">Granite</div>
+              <div class="color-code">6959</div>
+              <div class="color-finish">Printed Embossed</div>
+              <span class="color-printed">+20%</span>
+            </div>
+          </div>
+          <div class="color-card" data-code="P226" data-finish="Embossed" data-printed="true" onclick="pickColor(this,'Chestnut — Embossed','P226','Embossed',true)">
+            <div class="color-swatch" style="background:#7A4A2A;border-bottom:1px solid #6a3e22"></div>
+            <div class="color-label">
+              <div class="color-name">Chestnut</div>
+              <div class="color-code">P226</div>
+              <div class="color-finish">Printed Embossed</div>
+              <span class="color-printed">+20%</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-note" style="margin-top:8px">Colors marked <strong>+20%</strong> are printed finishes with a 20% surcharge. Valance color always matches slat color.</div>
+      </div>
+    </div>
+
+    <!-- STEP 3: MOUNT TYPE -->
+    <div class="step-block" id="step3">
+      <div class="step-head" onclick="toggleStep('step3')">
+        <div class="step-num">3</div>
+        <div class="step-head-title">Mount Type</div>
+        <div class="step-head-val" id="s3val">—</div>
+      </div>
+      <div class="step-body">
+        <div class="opt-grid-3">
+          <div class="opt-card" data-val="inside" onclick="pickMount(this,'Inside Mount','inside')">
+            <div class="opt-card-title">Inside Mount</div>
+            <div class="opt-card-desc">Fits inside frame · clean look<br><br>Mfr deducts 3/8&Prime; from width automatically</div>
+          </div>
+          <div class="opt-card" data-val="outside" onclick="pickMount(this,'Outside Mount','outside')">
+            <div class="opt-card-title">Outside Mount</div>
+            <div class="opt-card-desc">Mounts above/outside frame · better light block<br><br>Add ~3&Prime; to width &amp; height for full coverage</div>
+          </div>
+          <div class="opt-card" data-val="side" onclick="pickMount(this,'Side Mount','side')">
+            <div class="opt-card-title">Side Mount</div>
+            <div class="opt-card-desc">Mounts on the side wall · inside mount rules apply<br><br>Max width 37&Prime;</div>
+          </div>
+        </div>
+        <div class="info-box" id="mount-note" style="display:none"></div>
+      </div>
+    </div>
+
+    <!-- STEP 4: DIMENSIONS -->
+    <div class="step-block" id="step4">
+      <div class="step-head" onclick="toggleStep('step4')">
+        <div class="step-num">4</div>
+        <div class="step-head-title">Dimensions</div>
+        <div class="step-head-val" id="s4val">—</div>
+      </div>
+      <div class="step-body">
+        <div class="dim-row">
+          <div>
+            <div class="dim-label">Width (inches)</div>
+            <div class="dim-inputs">
+              <input class="dim-whole" type="number" id="w-whole" min="16" max="72" placeholder="36" oninput="calcSize()">
+              <select class="dim-frac" id="w-frac" onchange="calcSize()">
+                <option value="0">0</option>
+                <option value="0.125">1/8</option>
+                <option value="0.25">1/4</option>
+                <option value="0.375">3/8</option>
+                <option value="0.5">1/2</option>
+                <option value="0.625">5/8</option>
+                <option value="0.75">3/4</option>
+                <option value="0.875">7/8</option>
+              </select>
+              <span class="dim-unit">&Prime;</span>
+            </div>
+          </div>
+          <div>
+            <div class="dim-label">Height (inches)</div>
+            <div class="dim-inputs">
+              <input class="dim-whole" type="number" id="h-whole" min="24" max="96" placeholder="48" oninput="calcSize()">
+              <select class="dim-frac" id="h-frac" onchange="calcSize()">
+                <option value="0">0</option>
+                <option value="0.125">1/8</option>
+                <option value="0.25">1/4</option>
+                <option value="0.375">3/8</option>
+                <option value="0.5">1/2</option>
+                <option value="0.625">5/8</option>
+                <option value="0.75">3/4</option>
+                <option value="0.875">7/8</option>
+              </select>
+              <span class="dim-unit">&Prime;</span>
+            </div>
+          </div>
+        </div>
+        <div id="size-msgs"></div>
+        <div class="computed-box" id="computed-box" style="display:none">
+          <div class="computed-row"><span class="computed-key">Your size</span><span class="computed-val" id="cv-size">—</span></div>
+          <div class="computed-row"><span class="computed-key">Prices at</span><span class="computed-val" id="cv-pricesize">—</span></div>
+          <div class="computed-row"><span class="computed-key">Area</span><span class="computed-val" id="cv-area">—</span></div>
+        </div>
+        <div class="step-note" style="margin-top:8px">Enter your <strong>frame opening</strong> for inside mount, or your desired <strong>finished blind size</strong> for outside mount. Tolerances: width ±1/8&Prime;, height +0 to +2 3/4&Prime;.</div>
+      </div>
+    </div>
+
+    <!-- STEP 5: VALANCE -->
+    <div class="step-block" id="step5">
+      <div class="step-head" onclick="toggleStep('step5')">
+        <div class="step-num">5</div>
+        <div class="step-head-title">Valance</div>
+        <div class="step-head-val" id="s5val">—</div>
+      </div>
+      <div class="step-body">
+        <div class="opt-grid-3">
+          <div class="opt-card" data-val="none" onclick="pickValance(this,'No Valance','none')">
+            <div class="opt-card-title">No Valance</div>
+            <div class="opt-card-desc">Clean headrail with built-in light block</div>
+          </div>
+          <div class="opt-card" data-val="modern" onclick="pickValance(this,'Modern Curved 2&frac12;&Prime;','modern')">
+            <div class="opt-card-title">Modern Curved</div>
+            <div class="opt-card-desc">2&frac12;&Prime; · soft curved profile · contemporary</div>
+          </div>
+          <div class="opt-card" data-val="crown" onclick="pickValance(this,'Designer Crown 3&frac14;&Prime;','crown')">
+            <div class="opt-card-title">Designer Crown</div>
+            <div class="opt-card-desc">3&frac14;&Prime; · traditional crown profile · classic</div>
+          </div>
+        </div>
+
+        <!-- Valance returns — shown when a valance is selected -->
+        <div id="return-section" style="display:none;margin-top:16px">
+          <div style="font-size:12px;font-weight:500;color:#444;margin-bottom:4px">Valance Returns</div>
+          <div class="return-grid">
+            <div class="opt-card" data-val="left" onclick="pickReturn(this,'Left only')">
+              <div class="opt-card-title">Left Only</div>
+              <div class="opt-card-desc">Return on left side</div>
+            </div>
+            <div class="opt-card" data-val="right" onclick="pickReturn(this,'Right only')">
+              <div class="opt-card-title">Right Only</div>
+              <div class="opt-card-desc">Return on right side</div>
+            </div>
+            <div class="opt-card" data-val="both" onclick="pickReturn(this,'Left &amp; Right')">
+              <div class="opt-card-title">Left &amp; Right</div>
+              <div class="opt-card-desc">Returns on both sides</div>
+            </div>
+          </div>
+          <div class="step-note">Custom return depth: min 1/2&Prime;, max 5&Prime;. Standard size included.</div>
+        </div>
+        <div class="step-note" style="margin-top:6px">Valance color always matches slat color. Valance surcharge added to price.</div>
+      </div>
+    </div>
+
+    <!-- STEP 6: ADD-ONS -->
+    <div class="step-block" id="step6">
+      <div class="step-head" onclick="toggleStep('step6')">
+        <div class="step-num">6</div>
+        <div class="step-head-title">Add-Ons &amp; Wand</div>
+        <div class="step-head-val" id="s6val">—</div>
+      </div>
+      <div class="step-body">
+
+        <!-- Hold Down Brackets -->
+        <div style="font-size:12px;font-weight:500;color:#444;margin-bottom:6px">Hold Down Brackets</div>
+        <div id="hdb-auto-note" class="info-box" style="display:none">Hold down brackets are <strong>included</strong> for blinds 30&Prime; wide or less.</div>
+        <div id="hdb-optional-row" class="addon-row" style="display:none" onclick="toggleAddon(this,'hdb')">
+          <div class="addon-left">
+            <div class="addon-check" id="hdb-check">&#10003;</div>
+            <div>
+              <div class="addon-name">Hold Down Brackets</div>
+              <div class="addon-desc">Keeps bottom rail secure · single or double hole style</div>
+            </div>
+          </div>
+          <div class="addon-price">Included</div>
+        </div>
+        <div id="hdb-prompt" class="step-note" style="margin-top:4px">Enter dimensions in Step 4 to see bracket options.</div>
+
+        <!-- Shims — outside mount only -->
+        <div style="font-size:12px;font-weight:500;color:#444;margin:14px 0 6px">Shims <span style="font-weight:400;color:#999">(outside mount only)</span></div>
+        <div id="shim-outside-section" style="display:none">
+          <div style="font-size:12px;color:#555;line-height:1.6;margin-bottom:6px">Use shims to extend the bracket projection off the wall. Each shim adds 3/8&Prime;; two stacked = 11/16&Prime;.</div>
+          <div class="shim-qty-row">
+            <span style="font-size:12px;color:#444;flex:1">Shims needed</span>
+            <button class="shim-qty-btn" onclick="adjShims(-1)">&#8722;</button>
+            <input class="shim-qty-num" type="number" id="shim-qty" value="0" min="0" max="2" readonly>
+            <button class="shim-qty-btn" onclick="adjShims(1)">&#43;</button>
+            <span style="font-size:11px;color:var(--gold);font-weight:600;min-width:50px;text-align:right" id="shim-price-label">$0</span>
+          </div>
+          <div class="step-note">Max 2 shims. $7 each.</div>
+        </div>
+        <div id="shim-na-note" class="step-note" style="display:block">Shims only available with outside mount. Select mount type in Step 3.</div>
+
+        <!-- Wand Drop -->
+        <div style="font-size:12px;font-weight:500;color:#444;margin:14px 0 6px">Wand Drop Length</div>
+        <div id="wand-default-note" class="info-box" style="display:none"></div>
+        <div style="margin-top:8px">
+          <select id="wand-select" style="width:100%;padding:9px 12px;border:1px solid #ddd;border-radius:8px;font-size:13px;font-family:inherit" onchange="pickWand()">
+            <option value="default">Default (based on blind height — no charge)</option>
+            <option value="11.75">11 3/4&Prime;</option>
+            <option value="17.75">17 3/4&Prime;</option>
+            <option value="24">24&Prime;</option>
+            <option value="29.75">29 3/4&Prime;</option>
+            <option value="38.25">38 1/4&Prime;</option>
+            <option value="47.25">47 1/4&Prime; — 2-piece wand</option>
+            <option value="60">60&Prime; — 2-piece wand</option>
+          </select>
+        </div>
+        <div class="step-note" id="wand-note">Standard wand location is left. Wand placement may vary slightly between blinds and is not considered a defect.</div>
+      </div>
+    </div>
+
+    <!-- STEP 7: QUANTITY -->
+    <div class="step-block" id="step7">
+      <div class="step-head" onclick="toggleStep('step7')">
+        <div class="step-num">7</div>
+        <div class="step-head-title">Quantity</div>
+        <div class="step-head-val" id="s7val">1 blind</div>
+      </div>
+      <div class="step-body">
+        <div class="qty-row">
+          <button class="qty-btn" onclick="adjQty(-1)">&#8722;</button>
+          <input class="qty-num" type="number" id="qty-input" value="1" min="1" max="50" oninput="updateQty()">
+          <button class="qty-btn" onclick="adjQty(1)">&#43;</button>
+          <span class="qty-label">blind(s) of this size &amp; color</span>
+        </div>
+        <div class="step-note" style="margin-top:8px">Need different sizes? Submit a separate order for each size. Freight applies per order, not per blind.</div>
+      </div>
+    </div>
+
+    <!-- STEP 8: YOUR INFO + DELIVERY + SUBMIT -->
+    <div class="step-block" id="step8">
+      <div class="step-head" onclick="toggleStep('step8')">
+        <div class="step-num">8</div>
+        <div class="step-head-title">Your Info &amp; Submit</div>
+        <div class="step-head-val" id="s8val"></div>
+      </div>
+      <div class="step-body">
+        <div class="form-row">
+          <div class="form-group"><label>Your name *</label><input type="text" id="f-name" placeholder="Jane Smith"></div>
+          <div class="form-group"><label>Phone *</label><input type="tel" id="f-phone" placeholder="(215) 555-0100"></div>
+        </div>
+        <div class="form-group"><label>Email *</label><input type="email" id="f-email" placeholder="jane@example.com"></div>
+        <div class="form-group"><label>Notes <span style="font-weight:400;color:#999">(optional)</span></label><textarea id="f-notes" placeholder="Special requirements, existing hardware, installation notes…"></textarea></div>
+
+        <div class="delivery-section">
+          <div style="font-size:13px;font-weight:500;color:#333;margin-bottom:8px">Delivery or pickup?</div>
+          <div class="delivery-toggle">
+            <button class="del-btn sel" id="del-ship" onclick="pickDel('ship')">Ship to me</button>
+            <button class="del-btn" id="del-pickup" onclick="pickDel('pickup')">I'll pick up</button>
+          </div>
+          <div class="delivery-note" id="del-ship-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA. Shipping estimate included in your quote.
+            <div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately.</div>
+          </div>
+          <div class="delivery-note" id="del-pickup-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address disclosed after order confirmation.</div>
+        </div>
+
+        <div id="form-error" class="warn-box" style="display:none"></div>
+        <button class="submit-btn" onclick="submitForm()">Send quote request &rarr;</button>
+        <div class="success-box" id="success-box">
+          <h3>Quote request sent!</h3>
+          <p>We'll follow up within a few hours to confirm your order details and collect payment. Call <strong>(609) 742-1720</strong> 24/7 for anything urgent.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /config-left -->
+
+  <!-- STICKY PRICE PANEL -->
+  <div class="quote-panel" id="quote-panel">
+    <div class="quote-panel-title">Price Summary</div>
+    <div id="qpending" class="qpending">Complete the steps to see your price</div>
+    <div id="qdetail" style="display:none">
+      <div class="qrow"><span class="qrow-label">Base price</span><span class="qrow-val" id="q-base">—</span></div>
+      <div class="qrow" id="q-printed-row" style="display:none"><span class="qrow-label">Printed color <span class="q-printed-badge">+20%</span></span><span class="qrow-val surcharge" id="q-printed">—</span></div>
+      <div class="qrow" id="q-valance-row" style="display:none"><span class="qrow-label">Valance</span><span class="qrow-val" id="q-valance">—</span></div>
+      <div class="qrow" id="q-shim-row" style="display:none"><span class="qrow-label">Shims</span><span class="qrow-val" id="q-shim">—</span></div>
+      <div class="qrow" id="q-side-row" style="display:none"><span class="qrow-label">Side mount bracket</span><span class="qrow-val" id="q-side">—</span></div>
+      <div class="qrow"><span class="qrow-label">Quantity</span><span class="qrow-val" id="q-qty">—</span></div>
+      <hr class="qdivider">
+      <div class="qrow"><span class="qrow-label">Subtotal</span><span class="qrow-val" id="q-sub">—</span></div>
+      <div class="qrow" id="q-freight-row"><span class="qrow-label">Freight</span><span class="qrow-val" id="q-freight">—</span></div>
+      <hr class="qdivider">
+      <div class="qtotal-row"><span class="qtotal-label">Total</span><span class="qtotal-val" id="q-total">—</span></div>
+      <div class="qfreight-note" id="q-freight-note"></div>
+    </div>
+  </div>
+
+</div><!-- /config-layout -->
+
+<script src="../js/shared.js"></script>
+<script>renderFooter(false);</script>
+
+<script>
+// ── PRICING DATA ──────────────────────────────────────────────────────────────
+const PRICE_W = [24,28,32,36,42,48,54,60,66,72];
+const PRICE_H = [30,36,42,48,54,60,66,73,78,84,90,96];
+const MATRIX = {
+  30: [134,146,156,176,186,201,218,255,272,291],
+  36: [140,153,163,185,199,213,238,272,289,321],
+  42: [152,163,179,196,212,233,257,290,314,342],
+  48: [161,176,186,209,227,249,274,309,336,367],
+  54: [176,194,203,229,250,274,299,342,367,399],
+  60: [186,200,217,246,266,288,319,365,389,424],
+  66: [196,211,229,258,279,307,337,387,414,460],
+  73: [208,226,244,278,299,328,361,414,445,483],
+  78: [213,235,257,284,312,342,376,435,467,513],
+  84: [226,246,269,304,328,361,401,456,494,546],
+  90: [235,257,279,319,342,376,416,476,513,566],
+  96: [244,270,291,329,361,401,443,501,542,596]
+};
+const VALANCE_PRICE = {24:28,28:28,32:34,36:40,42:51,48:56,54:61,60:73,66:78,72:84};
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+const S = {
+  slat: '2in', color: null, isPrinted: false, mount: null,
+  w: 0, h: 0, wValid: false,
+  valance: null, valReturn: null,
+  hdb: false, shims: 0, wand: 'default', delivery: 'ship', qty: 1
+};
+
+function $id(id){ return document.getElementById(id); }
+function fmt(n){ return '$' + n.toFixed(0); }
+
+// ── STEP TOGGLE ───────────────────────────────────────────────────────────────
+function toggleStep(id){
+  const b = document.getElementById(id);
+  b.classList.toggle('open');
+  b.classList.toggle('active');
+}
+function openStep(id){
+  const b = document.getElementById(id);
+  b.classList.add('open','active');
+}
+
+// ── STEP 1: SLAT ─────────────────────────────────────────────────────────────
+function pickSlat(el, label){
+  document.querySelectorAll('#step1 .opt-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  S.slat = el.dataset.val;
+  $id('s1val').textContent = label;
+  markDone('step1');
+  calcPrice();
+}
+
+// ── STEP 2: COLOR ─────────────────────────────────────────────────────────────
+function pickColor(el, label, code, finish, printed){
+  document.querySelectorAll('#color-grid .color-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  S.color = label; S.isPrinted = printed;
+  $id('s2val').textContent = label;
+  markDone('step2');
+  calcPrice();
+}
+
+// ── STEP 3: MOUNT ─────────────────────────────────────────────────────────────
+function pickMount(el, label, val){
+  document.querySelectorAll('#step3 .opt-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  S.mount = val;
+  $id('s3val').textContent = label;
+  const note = $id('mount-note');
+  if(val==='inside'){
+    note.textContent = 'Inside mount: manufacturer deducts 3/8″ from your ordered width. Enter your actual frame opening width.';
+    note.style.display='block';
+  } else if(val==='outside'){
+    note.textContent = 'Outside mount: no deduction. For best light control and privacy, add approximately 3″ to both width and height.';
+    note.style.display='block';
+  } else {
+    note.textContent = 'Side mount: inside mount rules apply. Maximum width is 37″. For widths over 37″, top mount brackets are required alongside side mount brackets.';
+    note.style.display='block';
+  }
+  // Show/hide shims
+  if(val==='outside'){
+    $id('shim-outside-section').style.display='block';
+    $id('shim-na-note').style.display='none';
+  } else {
+    $id('shim-outside-section').style.display='none';
+    $id('shim-na-note').style.display='block';
+    S.shims=0; $id('shim-qty').value=0; $id('shim-price-label').textContent='$0';
+  }
+  // Side mount bracket surcharge
+  markDone('step3');
+  calcSize();
+  calcPrice();
+}
+
+// ── STEP 4: DIMENSIONS ────────────────────────────────────────────────────────
+function calcSize(){
+  const ww = parseFloat($id('w-whole').value)||0;
+  const wf = parseFloat($id('w-frac').value)||0;
+  const hw = parseFloat($id('h-whole').value)||0;
+  const hf = parseFloat($id('h-frac').value)||0;
+  const w = ww + wf;
+  const h = hw + hf;
+  S.w = w; S.h = h; S.wValid = false;
+
+  const msgs = $id('size-msgs');
+  const box = $id('computed-box');
+  msgs.innerHTML = '';
+
+  if(!w && !h){ box.style.display='none'; $id('s4val').textContent='—'; calcPrice(); return; }
+
+  const errors = [];
+  const maxW = S.mount==='side' ? 37 : 72;
+  if(w > 0 && w < 16.5) errors.push('Minimum width is 16½″ (net blind width).');
+  if(w > maxW) errors.push('Maximum width is ' + maxW + '″' + (S.mount==='side' ? ' for side mount.' : ' for this product.'));
+  if(h > 0 && h < 24) errors.push('Minimum height is 24″.');
+  if(h > 96) errors.push('Maximum height is 96″.');
+  const area = (w * h) / 144;
+  if(w > 0 && h > 0 && area > 48) errors.push('Maximum area is 48 sq ft. This size is ' + area.toFixed(1) + ' sq ft — reduce width or height.');
+
+  if(errors.length){
+    errors.forEach(e => {
+      const d = document.createElement('div');
+      d.className='size-msg size-err'; d.textContent=e; msgs.appendChild(d);
+    });
+    box.style.display='none'; $id('s4val').textContent='—'; calcPrice(); return;
+  }
+
+  // Find price columns
+  const pW = PRICE_W.find(v=>v>=w);
+  const pH = PRICE_H.find(v=>v>=h);
+  if(!pW || !pH){
+    const d=document.createElement('div'); d.className='size-msg size-err';
+    d.textContent='Size outside pricing range. Contact us for a quote.'; msgs.appendChild(d);
+    box.style.display='none'; $id('s4val').textContent='—'; calcPrice(); return;
+  }
+
+  // Update computed box
+  box.style.display='block';
+  $id('cv-size').textContent = w + '″ W × ' + h + '″ H';
+  $id('cv-pricesize').textContent = pW + '″ W × ' + pH + '″ H';
+  $id('cv-area').textContent = area.toFixed(2) + ' sq ft';
+  $id('s4val').textContent = w + '″ × ' + h + '″';
+
+  // Hold down brackets
+  const hdbAuto = $id('hdb-auto-note');
+  const hdbOpt = $id('hdb-optional-row');
+  const hdbPrompt = $id('hdb-prompt');
+  hdbPrompt.style.display='none';
+  if(w <= 30){
+    hdbAuto.style.display='block'; hdbOpt.style.display='none'; S.hdb=true;
+  } else {
+    hdbAuto.style.display='none'; hdbOpt.style.display='block';
+  }
+
+  // Wand default note
+  let defWand = '17¾″';
+  if(h > 72) defWand = '38¼″';
+  else if(h > 48) defWand = '29¾″';
+  else if(h > 36) defWand = '24″';
+  const wdn = $id('wand-default-note');
+  wdn.textContent = 'Default wand drop for this height: ' + defWand + '. Select a custom length below only if needed.';
+  wdn.style.display = 'block';
+
+  S.wValid = true;
+  markDone('step4');
+  calcPrice();
+}
+
+// ── STEP 5: VALANCE ───────────────────────────────────────────────────────────
+function pickValance(el, label, val){
+  document.querySelectorAll('#step5 .opt-grid-3 .opt-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  S.valance = val; S.valReturn = null;
+  $id('return-section').style.display = (val==='none') ? 'none' : 'block';
+  if(val==='none'){
+    $id('s5val').textContent = 'No Valance'; S.valReturn='n/a';
+  } else {
+    $id('s5val').textContent = label + ' (return: —)';
+  }
+  // Clear return selection
+  document.querySelectorAll('#return-section .opt-card').forEach(c=>c.classList.remove('sel'));
+  markDone('step5');
+  calcPrice();
+}
+
+function pickReturn(el, label){
+  document.querySelectorAll('#return-section .opt-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  S.valReturn = label;
+  const valLabel = S.valance==='modern' ? 'Modern Curved 2½″' : 'Designer Crown 3¼″';
+  $id('s5val').textContent = valLabel + ' · ' + label;
+  calcPrice();
+}
+
+// ── STEP 6: ADD-ONS ───────────────────────────────────────────────────────────
+function toggleAddon(el, key){
+  el.classList.toggle('sel');
+  S[key] = el.classList.contains('sel');
+  calcPrice();
+}
+
+function adjShims(d){
+  const cur = parseInt($id('shim-qty').value)||0;
+  const nv = Math.max(0,Math.min(2, cur+d));
+  $id('shim-qty').value = nv;
+  S.shims = nv;
+  $id('shim-price-label').textContent = '$' + (nv*7);
+  calcPrice();
+}
+
+function pickWand(){
+  S.wand = $id('wand-select').value;
+  calcPrice();
+}
+
+// ── STEP 7: QTY ───────────────────────────────────────────────────────────────
+function adjQty(d){
+  const cur = parseInt($id('qty-input').value)||1;
+  const nv = Math.max(1, Math.min(50, cur+d));
+  $id('qty-input').value = nv;
+  S.qty = nv;
+  $id('s7val').textContent = nv + (nv===1?' blind':' blinds');
+  calcPrice();
+}
+function updateQty(){
+  S.qty = Math.max(1,parseInt($id('qty-input').value)||1);
+  $id('s7val').textContent = S.qty + (S.qty===1?' blind':' blinds');
+  calcPrice();
+}
+
+// ── DELIVERY ──────────────────────────────────────────────────────────────────
+function pickDel(v){
+  S.delivery = v;
+  $id('del-ship').classList.toggle('sel', v==='ship');
+  $id('del-pickup').classList.toggle('sel', v==='pickup');
+  $id('del-ship-note').style.display = v==='ship'?'block':'none';
+  $id('del-pickup-note').style.display = v==='pickup'?'block':'none';
+}
+
+// ── PRICE CALC ────────────────────────────────────────────────────────────────
+function calcPrice(){
+  if(!S.wValid || !S.color || !S.mount || !S.valance){
+    $id('qpending').style.display='block';
+    $id('qdetail').style.display='none';
+    return;
+  }
+
+  const pW = PRICE_W.find(v=>v>=S.w);
+  const pH = PRICE_H.find(v=>v>=S.h);
+  if(!pW||!pH){ $id('qpending').style.display='block'; $id('qdetail').style.display='none'; return; }
+
+  const wi = PRICE_W.indexOf(pW);
+  let base = MATRIX[pH][wi];
+
+  // Printed color surcharge
+  let printedAdd = 0;
+  if(S.isPrinted) printedAdd = Math.round(base * 0.20);
+  let unitPrice = base + printedAdd;
+
+  // Valance
+  let valAdd = 0;
+  if(S.valance !== 'none'){
+    valAdd = VALANCE_PRICE[pW] || 0;
+    // If actual blind width > max table key (72), add $18/extra ft — won't happen here since max is 72
+  }
+  unitPrice += valAdd;
+
+  // Shims
+  const shimAdd = S.shims * 7;
+  unitPrice += shimAdd;
+
+  // Side mount bracket
+  let sideAdd = 0;
+  if(S.mount === 'side'){ sideAdd = 23; unitPrice += sideAdd; }
+
+  // Quantity
+  const subtotal = unitPrice * S.qty;
+
+  // Freight
+  const freight = 25 + (S.qty > 1 ? (S.qty - 1) * 11 : 0);
+  const total = subtotal + freight;
+
+  // Render
+  $id('qpending').style.display='none';
+  $id('qdetail').style.display='block';
+
+  $id('q-base').textContent = fmt(base);
+  if(S.isPrinted){
+    $id('q-printed-row').style.display='flex';
+    $id('q-printed').textContent = '+' + fmt(printedAdd);
+  } else {
+    $id('q-printed-row').style.display='none';
+  }
+  if(S.valance !== 'none'){
+    $id('q-valance-row').style.display='flex';
+    $id('q-valance').textContent = '+' + fmt(valAdd);
+  } else {
+    $id('q-valance-row').style.display='none';
+  }
+  if(S.shims > 0){
+    $id('q-shim-row').style.display='flex';
+    $id('q-shim').textContent = '+' + fmt(shimAdd) + ' (' + S.shims + 'x)';
+  } else {
+    $id('q-shim-row').style.display='none';
+  }
+  if(S.mount === 'side'){
+    $id('q-side-row').style.display='flex';
+    $id('q-side').textContent = '+' + fmt(sideAdd);
+  } else {
+    $id('q-side-row').style.display='none';
+  }
+  $id('q-qty').textContent = '× ' + S.qty;
+  $id('q-sub').textContent = fmt(subtotal);
+  $id('q-freight').textContent = fmt(freight);
+  $id('q-total').textContent = fmt(total);
+  $id('q-freight-note').textContent = '$25 first blind + $11 each additional. Pickup available — select in Step 8.';
+}
+
+// ── MARK DONE ─────────────────────────────────────────────────────────────────
+function markDone(id){
+  document.getElementById(id).classList.add('done');
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+function submitForm(){
+  const name = $id('f-name').value.trim();
+  const phone = $id('f-phone').value.trim();
+  const email = $id('f-email').value.trim();
+  const errEl = $id('form-error');
+  errEl.style.display='none';
+
+  if(!name){ errEl.textContent='Please enter your name.'; errEl.style.display='block'; return; }
+  if(!phone && !email){ errEl.textContent='Please enter a phone number or email.'; errEl.style.display='block'; return; }
+  if(!S.color){ errEl.textContent='Please select a color in Step 2.'; errEl.style.display='block'; return; }
+  if(!S.mount){ errEl.textContent='Please select a mount type in Step 3.'; errEl.style.display='block'; return; }
+  if(!S.wValid){ errEl.textContent='Please enter valid dimensions in Step 4.'; errEl.style.display='block'; return; }
+  if(!S.valance){ errEl.textContent='Please select a valance option in Step 5.'; errEl.style.display='block'; return; }
+  if(S.valance !== 'none' && !S.valReturn){ errEl.textContent='Please select valance returns in Step 5.'; errEl.style.display='block'; return; }
+
+  // Build price summary
+  const pW = PRICE_W.find(v=>v>=S.w);
+  const pH = PRICE_H.find(v=>v>=S.h);
+  const wi = PRICE_W.indexOf(pW);
+  const base = MATRIX[pH][wi];
+  const printedAdd = S.isPrinted ? Math.round(base*0.20) : 0;
+  let unitPrice = base + printedAdd;
+  const valAdd = S.valance!=='none' ? (VALANCE_PRICE[pW]||0) : 0;
+  unitPrice += valAdd;
+  const shimAdd = S.shims*7; unitPrice += shimAdd;
+  const sideAdd = S.mount==='side' ? 23 : 0; unitPrice += sideAdd;
+  const subtotal = unitPrice * S.qty;
+  const freight = 25 + (S.qty>1?(S.qty-1)*11:0);
+  const total = subtotal + freight;
+
+  const wand = $id('wand-select').options[$id('wand-select').selectedIndex].text;
+  const valLabel = S.valance==='none'?'No Valance':(S.valance==='modern'?'Modern Curved 2½"':'Designer Crown 3¼"');
+  const returnLabel = S.valance==='none'?'N/A':(S.valReturn||'Not selected');
+
+  const body = [
+    'NORMAN SMARTPRIVACY® FAUX WOOD BLINDS QUOTE REQUEST',
+    '======================================================',
+    '',
+    'CUSTOMER',
+    'Name: ' + name,
+    'Phone: ' + (phone||'—'),
+    'Email: ' + (email||'—'),
+    'Delivery: ' + (S.delivery==='ship'?'Ship to me (UPS/FedEx)':'Customer pickup'),
+    '',
+    'PRODUCT SPECS',
+    'Slat Size: ' + (S.slat==='2in'?'2"':'2½"'),
+    'Color: ' + (S.color||'—'),
+    'Printed surcharge: ' + (S.isPrinted?'Yes (+20%)':'No'),
+    'Mount Type: ' + (S.mount==='inside'?'Inside Mount':S.mount==='outside'?'Outside Mount':'Side Mount'),
+    'Width: ' + S.w + '"',
+    'Height: ' + S.h + '"',
+    'Area: ' + (S.w*S.h/144).toFixed(2) + ' sq ft',
+    'Prices at: ' + pW + '" W x ' + pH + '" H',
+    'Valance: ' + valLabel,
+    'Valance Returns: ' + returnLabel,
+    'Hold Down Brackets: ' + (S.hdb||S.w<=30?'Yes (auto-included ≤30" or selected)':'Not selected'),
+    'Shims: ' + S.shims + (S.shims>0?' ($'+(S.shims*7)+')'  : ''),
+    'Wand Drop: ' + wand,
+    'Quantity: ' + S.qty,
+    '',
+    'PRICING',
+    'Base price (per blind): $' + base,
+    'Printed surcharge: ' + (S.isPrinted?'+$'+printedAdd:'—'),
+    'Valance: ' + (valAdd?'+$'+valAdd:'—'),
+    'Shims: ' + (shimAdd?'+$'+shimAdd:'—'),
+    'Side mount bracket: ' + (sideAdd?'+$'+sideAdd:'—'),
+    'Unit price: $' + unitPrice,
+    'Quantity: x' + S.qty,
+    'Subtotal: $' + subtotal,
+    'Freight: $' + freight,
+    'TOTAL: $' + total,
+    '',
+    'NOTES',
+    ($id('f-notes').value||'None')
+  ].join('\n');
+
+  const subject = 'Norman SmartPrivacy Faux Wood Blinds Quote — ' + name;
+  window.location.href = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
+  $id('success-box').style.display = 'block';
+  $id('form-error').style.display = 'none';
+}
+
+// Init: pre-select slat 1 so panel shows
+document.addEventListener('DOMContentLoaded', function(){
+  $id('s7val').textContent = '1 blind';
+});
+</script>
+</body>
+</html>

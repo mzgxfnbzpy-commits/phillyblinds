@@ -98,7 +98,8 @@ Every page MUST include:
 | pages/measure.html | Measure guide (shades) | 5 tabs, SVG diagrams |
 | pages/about.html | About | Family story, team, services, service areas |
 | pages/fabric-calculator.html | Fabric calculator | Drapery, Roman, Cornice |
-| pages/shades.html | All shades & blinds | Per-product configurator; roller has fascia/cassette/chain/endcap options; cellular has lift direction (BU/TDBU) + operating system separate; fabric/color placeholder; all quote forms â†’ mailto; delivery section on every form |
+| pages/shades.html | All shades & blinds | Per-product configurator; roller has fascia/cassette/chain/endcap options; cellular has lift direction (BU/TDBU) + operating system separate; fabric/color placeholder; all quote forms â†’ mailto; delivery section on every form. Wood Blinds card links to faux-wood-blinds.html |
+| pages/faux-wood-blinds.html | **Norman SmartPrivacy® Faux Wood Blinds (NEW)** | Full standalone configurator. 8 steps. 16 colors (12 solid, 4 printed +20%). 2" and 2.5" slats. Live pricing from matrix (width cols 24â€"72, height rows 30â€"96). Valance surcharge. Hold down brackets auto â‰¤30". Shims outside mount only $7 ea. Wand drop selector. Freight $25 + $11 ea. mailto quote with full spec. |
 | pages/soft-treatments.html | **Soft Treatments (NEW)** | Combines drapery + roman shades in 2 tabs; 6 pleat SVGs; 3 roman styles; fabric/lining/motor/delivery; cross-sell hardware; mailto |
 | pages/hardware.html | **Drapery Hardware (NEW)** | Decorative vs non-decorative flow; brand selector (Select/Orion/Kirsch/Paris Texas/Finial Co.); Architrac info; cross-sell drapery; delivery; mailto |
 | pages/norman-sheers.html | **Norman Sheers (NEW)** | 10-step PerfectSheer + SmartDrape configurator; live validation rules; fabric swatches; valance/splice; accessories; door rules; sticky spec panel; custom quote triggers |
