@@ -1069,14 +1069,6 @@
               <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('lf')">Light Filtering</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('rd')">Room Darkening</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('sheer')">Sheer</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('designer-lf')">Designer Light Filtering</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('designer-rd')">Designer Room Darkening</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('ashton')">Designer Ashton</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('fr')">Flame Resistant LF / RD</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('fr-essentials')">FR Essentials</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('solus')">Solus</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('woven-breeze')">Woven Breeze</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('woven-windsong')">Woven Windsong</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('dn')">Day &amp; Night</button>
             </div>
             <div class="tooltip-note" id="fabric-cell-note">Light Filtering is available in all 6 cell sizes.</div>
@@ -1097,8 +1089,6 @@
                   <div class="opt-row" id="grp-cell-dn-top">
                     <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-dn-top');cellDnRender('top','sheer')">Sheer</button>
                     <button class="opt-btn" onclick="selOpt(this,'grp-cell-dn-top');cellDnRender('top','lf')">Light Filtering</button>
-                    <button class="opt-btn" onclick="selOpt(this,'grp-cell-dn-top');cellDnRender('top','woven-windsong')">Woven Windsong</button>
-                    <button class="opt-btn" onclick="selOpt(this,'grp-cell-dn-top');cellDnRender('top','designer-lf')">Designer LF</button>
                   </div>
                   <div id="cell-dn-top-grid" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px"></div>
                 </div>
@@ -1108,7 +1098,6 @@
                   <div class="opt-row" id="grp-cell-dn-bottom">
                     <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-dn-bottom');cellDnRender('bottom','rd')">Room Darkening</button>
                     <button class="opt-btn" onclick="selOpt(this,'grp-cell-dn-bottom');cellDnRender('bottom','lf')">Light Filtering</button>
-                    <button class="opt-btn" onclick="selOpt(this,'grp-cell-dn-bottom');cellDnRender('bottom','solus')">Solus</button>
                   </div>
                   <div id="cell-dn-bottom-grid" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px"></div>
                 </div>
@@ -2377,32 +2366,16 @@ function toggleLightGuardNote(on) {
 // Fabric → cell size compatibility from Norman Portrait catalog
 const CELL_COMPAT = {
   // indices: 0=3/8S · 1=9/16S · 2=1/2D · 3=3/4S · 4=3/4D · 5=1¼S
-  'lf':            [0,1,2,3,4,5],  // Light Filtering — all 6 sizes
-  'rd':            [0,1,2,3,4,5],  // Room Darkening — all 6 sizes
-  'sheer':         [0,  3,5],      // 3/8S, 3/4S, 1¼S (9/16S in D&N only)
-  'designer-lf':   [0,  3,5],      // 3/8S, 3/4S, 1¼S
-  'designer-rd':   [    3,5],      // 3/4S, 1¼S only
-  'ashton':        [    3,5],      // 3/4S, 1¼S only
-  'fr':            [0,  3  ],      // 3/8S, 3/4S only
-  'fr-essentials': [0,  3  ],      // 3/8S, 3/4S only
-  'solus':         [    3,5],      // 3/4S, 1¼S only
-  'woven-breeze':  [    3,5],      // 3/4S, 1¼S only
-  'woven-windsong':[    3,5],      // 3/4S, 1¼S only
-  'dn':            [  1,3,5],      // Day & Night: 9/16S, 3/4S, 1¼S
+  'lf':   [0,1,2,3,4,5],  // Light Filtering — all 6 sizes
+  'rd':   [0,1,2,3,4,5],  // Room Darkening — all 6 sizes
+  'sheer':[0,  3,  5],    // 3/8S, 3/4S, 1¼S (9/16S in D&N only; not 1/2D or 3/4D)
+  'dn':   [  1,3,  5],    // Day & Night: 9/16S, 3/4S, 1¼S
 };
 const FABRIC_NOTES = {
-  'lf':            'Light Filtering is available in all 6 cell sizes.',
-  'rd':            'Room Darkening is available in all 6 cell sizes.',
-  'sheer':         'Sheer is available in 3⁄8″S, 3⁄4″S, and 1 1⁄4″S only. (9⁄16″S is allowed only in Day &amp; Night mode.)',
-  'designer-lf':   'Designer Light Filtering is available in 3⁄8″S, 3⁄4″S, and 1 1⁄4″S. Note: Rustica and Silverbrook colorways are not available in 3⁄8″S.',
-  'designer-rd':   'Designer Room Darkening is limited to 3⁄4″S and 1 1⁄4″S only.',
-  'ashton':        'Designer Ashton uses bonded colored yarns — texture and batch variation are normal. Limited to 3⁄4″S and 1 1⁄4″S only.',
-  'fr':            'Flame Resistant LF / RD: available in 3⁄8″S and 3⁄4″S only. No double cell.',
-  'fr-essentials': 'FR Essentials: available in 3⁄8″S and 3⁄4″S only. No double cell.',
-  'solus':         'Solus is available in 3⁄4″S and 1 1⁄4″S only.',
-  'woven-breeze':  'Woven Breeze: available in 3⁄4″S and 1 1⁄4″S only. Delicate fibers — trim any fraying with fabric scissors.',
-  'woven-windsong':'Woven Windsong: available in 3⁄4″S and 1 1⁄4″S only. Delicate fibers — trim any fraying with fabric scissors.',
-  'dn':            'Day &amp; Night uses two fabrics (top + bottom) on one shade. Available in 9⁄16″S, 3⁄4″S, and 1 1⁄4″S. Select a fabric pairing below.',
+  'lf':   'Light Filtering: all 49 active colors available in all 6 cell sizes (some specialty colors limited to select sizes — confirmed at quote).',
+  'rd':   'Room Darkening: available in all 6 cell sizes.',
+  'sheer':'Sheer is available in 3⁄8″S, 3⁄4″S, and 1 1⁄4″S only. 9⁄16″S is available in Day &amp; Night mode only.',
+  'dn':   'Day &amp; Night uses two fabrics (top + bottom) in one shade. Available in 9⁄16″S, 3⁄4″S, and 1 1⁄4″S. Select a fabric pairing below.',
 };
 
 function filterCellSizes(fabric) {
@@ -2424,17 +2397,11 @@ function filterCellSizes(fabric) {
   const noteEl = document.getElementById('fabric-cell-note');
   if (noteEl) {
     noteEl.innerHTML = FABRIC_NOTES[fabric] || '';
-    // D&N live warning — append extra note if Day & Night is active
+    // D&N note — sheer is top-only in D&N mode
     const liftBtn = document.querySelector('#grp-cellular-lift .opt-btn.sel');
     if (liftBtn && liftBtn.textContent.trim() === 'Day & Night') {
-      const dnExcluded = ['woven-breeze','ashton','fr','fr-essentials'];
-      const dnTopOnly  = ['sheer','woven-windsong'];
-      if (dnExcluded.includes(fabric)) {
-        noteEl.innerHTML += ' <strong style="color:#DC2626">⚠ Not available in Day &amp; Night mode.</strong>';
-      } else if (dnTopOnly.includes(fabric)) {
+      if (fabric === 'sheer') {
         noteEl.innerHTML += ' <span style="color:var(--gold)">In Day &amp; Night: top shade only.</span>';
-      } else if (fabric === 'solus') {
-        noteEl.innerHTML += ' <span style="color:var(--gold)">In Day &amp; Night: bottom shade only.</span>';
       }
     }
   }
@@ -2943,64 +2910,134 @@ const SOLUNA_COLLECTIONS = {
   ]
 };
 
-// ─── Norman Portrait cellular collections by fabric type ──────
+// ─── Norman Portrait Cellular — real fabric data (2025-2026) ──
+// Source: Norman HC Color Coordination spreadsheet, updated 2026-03-06
+// Discontinued: C7018K Soft Stone LF (3/6/2026), Rustica designer (2/1/2026)
+// Colors stored as {n: name, c: code}
 const CELL_COLLECTIONS = {
+  'sheer': [
+    {name:'Sheer', colors:[
+      {n:'Cloud White',    c:'C5004'},
+      {n:'Seapearl',       c:'C5001'},
+      {n:'Cloudy Chiffon', c:'C5002'},
+      {n:'Jersey Cream',   c:'C5501'},
+      {n:'Nightfall',      c:'C5201'}
+    ]}
+  ],
   'lf': [
-    {name:'Essential',  colors:['White','Soft White','Ivory','Almond','Sand','Khaki','Light Gray','Stone','Slate','Charcoal']},
-    {name:'Classic',    colors:['Snow','Cream','Linen','Dune','Taupe','Clay','Ash','Graphite']},
-    {name:'SoftWeave',  colors:['Cotton','Linen','Flax','Oatmeal','Driftwood','Mist','Pebble','Steel']},
-    {name:'Insulate',   colors:['White','Soft White','Ivory','Sand','Khaki','Stone','Gray','Slate']},
-    {name:'Premium',    colors:['White','Ivory','Linen','Sand','Driftwood','Gray','Charcoal']}
+    {name:'Whites & Creams', colors:[
+      {n:'Brilliant White', c:'C7015K'},
+      {n:'Cotton Cloud',    c:'C7016K'},
+      {n:'Gardenia',        c:'C7017K'},
+      {n:'White Cream',     c:'C7515K'},
+      {n:'Daisy',           c:'C7133K'},
+      {n:'Provence Cream',  c:'C7417K'},
+      {n:'Yellow Bliss',    c:'C7510K'},
+      {n:'Morning Blush',   c:'C7303K'},
+      {n:'White Rain',      c:'C7703K'}
+    ]},
+    {name:'Naturals & Warm Tones', colors:[
+      {n:'Natural Tan',    c:'C7423K'},
+      {n:'Pale Oak',       c:'C7424K'},
+      {n:'New Camel',      c:'C7516K'},
+      {n:'Wheat',          c:'C7427K'},
+      {n:'Pashmina',       c:'C7408K'},
+      {n:'Autumn Gold',    c:'C7506K'},
+      {n:'Cabin',          c:'C7433K'},
+      {n:'River Rock',     c:'C7507K'},
+      {n:'Reflections',    c:'C7145K'},
+      {n:'Annapolis Gray', c:'C7105K'},
+      {n:'Morning Mist',   c:'C7121K'},
+      {n:'Whipped Mocha',  c:'C7425K'},
+      {n:'Rue Bourbon',    c:'C7426K'},
+      {n:'Coffee Beans',   c:'C7434K'}
+    ]},
+    {name:'Silvers & Grays', colors:[
+      {n:'Seal Gray',      c:'C7139K'},
+      {n:'Silver Satin',   c:'C7134K'},
+      {n:'French Silver',  c:'C7135K'},
+      {n:'Classic Silver', c:'C7136K'},
+      {n:'Power Gray',     c:'C7137K'},
+      {n:'Iron Mountain',  c:'C7138K'},
+      {n:'Orion Gray',     c:'C7140K'},
+      {n:'Silver Dusk',    c:'C7143K'},
+      {n:'Space Gray',     c:'C7208K'},
+      {n:'Dew',            c:'C7142K'}
+    ]},
+    {name:'Blues', colors:[
+      {n:'Florida Keys',  c:'C7617K'},
+      {n:'Bella Blue',    c:'C7715K'},
+      {n:'Ocean Air',     c:'C7705K'},
+      {n:'Seaside Blue',  c:'C7704K'},
+      {n:'Blue Flower',   c:'C7706K'},
+      {n:'Lakeside',      c:'C7702K'},
+      {n:'Smokey Blue',   c:'C7709K'},
+      {n:'Spring Sky',    c:'C7107K'},
+      {n:'Catalina Blue', c:'C7603K'}
+    ]},
+    {name:'Greens & Accents', colors:[
+      {n:'Fernwood',         c:'C7604K'},
+      {n:'Meadows',          c:'C7612K'},
+      {n:'Mulberry',         c:'C7802K'},
+      {n:'Eggplant',         c:'C7104K'},
+      {n:'Pacific Cove',     c:'C7305K'},
+      {n:'Roasted Pumpkin',  c:'C7306K'},
+      {n:'Black Olive',      c:'C7201K'}
+    ]}
   ],
   'rd': [
-    {name:'Essential BO', colors:['White','Soft White','Ivory','Beige','Gray','Charcoal','Black']},
-    {name:'Classic BO',   colors:['Snow','Cream','Linen','Taupe','Ash','Graphite','Black']},
-    {name:'SoftWeave BO', colors:['Cotton','Linen','Flax','Oatmeal','Driftwood','Pebble','Charcoal']},
-    {name:'Insulate BO',  colors:['White','Soft White','Ivory','Beige','Gray','Charcoal','Black']},
-    {name:'Premium BO',   colors:['White','Ivory','Beige','Gray','Charcoal','Black']}
-  ],
-  'sheer': [
-    {name:'Sheer', colors:['White','Soft White','Ivory','Sand','Silver']}
-  ],
-  'designer-lf': [
-    {name:'Rustica',     colors:['Ivory','Flax','Sand','Toast','Maple','Cinnamon','Bark','Cocoa']},
-    {name:'Silverbrook', colors:['White','Pearl','Mist','Silver','Stone','Slate','Graphite']},
-    {name:'Designer LF', colors:['White','Ivory','Linen','Sand','Stone','Gray','Charcoal']}
-  ],
-  'designer-rd': [
-    {name:'Designer RD', colors:['White','Ivory','Sand','Stone','Taupe','Gray','Charcoal','Black']}
-  ],
-  'ashton': [
-    {name:'Ashton', colors:['Linen','Flax','Oatmeal','Champagne','Stone','Taupe','Charcoal']}
-  ],
-  'fr': [
-    {name:'FR Light Filtering', colors:['White','Ivory','Gray']},
-    {name:'FR Room Darkening',  colors:['White','Ivory','Gray','Charcoal']}
-  ],
-  'fr-essentials': [
-    {name:'FR Essentials', colors:['White','Ivory','Beige','Gray']}
-  ],
-  'solus': [
-    {name:'Solus', colors:['White','Soft White','Ivory','Sand','Gray']}
-  ],
-  'woven-breeze': [
-    {name:'Woven Breeze', colors:['Natural','Ivory','Sand','Dune','Stone','Brown']}
-  ],
-  'woven-windsong': [
-    {name:'Woven Windsong', colors:['Natural','Ivory','Sand','Dune','Taupe','Brown']}
+    {name:'Whites & Creams', colors:[
+      {n:'Brilliant White RD', c:'C4008T'},
+      {n:'Cotton Cloud RD',    c:'C4009T'},
+      {n:'Gardenia RD',        c:'C4010T'},
+      {n:'White Cream RD',     c:'C4517T'},
+      {n:'Daisy RD',           c:'C4121T'},
+      {n:'Provence Cream RD',  c:'C4431T'},
+      {n:'Yellow Bliss RD',    c:'C4519T'},
+      {n:'Soft Stone RD',      c:'C4011T'}
+    ]},
+    {name:'Naturals & Warm Tones', colors:[
+      {n:'Natural Tan RD',    c:'C4420T'},
+      {n:'Pale Oak RD',       c:'C4421T'},
+      {n:'New Camel RD',      c:'C4518T'},
+      {n:'Wheat RD',          c:'C4427T'},
+      {n:'Pashmina RD',       c:'C4433T'},
+      {n:'Autumn Gold RD',    c:'C4520T'},
+      {n:'Cabin RD',          c:'C4430T'},
+      {n:'River Rock RD',     c:'C4521T'},
+      {n:'Reflections RD',    c:'C4135T'},
+      {n:'Annapolis Gray RD', c:'C4102T'},
+      {n:'Morning Mist RD',   c:'C4133T'},
+      {n:'Whipped Mocha RD',  c:'C4422T'},
+      {n:'Rue Bourbon RD',    c:'C4423T'},
+      {n:'Coffee Beans RD',   c:'C4432B'}
+    ]},
+    {name:'Silvers & Grays', colors:[
+      {n:'Seal Gray RD',      c:'C4129T'},
+      {n:'Silver Satin RD',   c:'C4122T'},
+      {n:'French Silver RD',  c:'C4123T'},
+      {n:'Classic Silver RD', c:'C4124T'},
+      {n:'Power Gray RD',     c:'C4125T'},
+      {n:'Iron Mountain RD',  c:'C4126T'},
+      {n:'Orion Gray RD',     c:'C4127T'},
+      {n:'Silver Dusk RD',    c:'C4130T'},
+      {n:'Space Gray RD',     c:'C4205T'},
+      {n:'Dew RD',            c:'C4131T'}
+    ]},
+    {name:'Blues', colors:[
+      {n:'Florida Keys RD', c:'C4609T'},
+      {n:'Bella Blue RD',   c:'C4708T'},
+      {n:'Ocean Air RD',    c:'C4709T'},
+      {n:'Black Olive RD',  c:'C4201B'}
+    ]}
   ],
   'dn': [
-    {name:'Sheer + LF',               colors:[]},
-    {name:'Sheer + RD',               colors:[]},
-    {name:'Sheer + Solus',            colors:[]},
-    {name:'LF + RD',                  colors:[]},
-    {name:'LF + LF',                  colors:[]},
-    {name:'LF + Solus',               colors:[]},
-    {name:'Woven Windsong + LF',      colors:[]},
-    {name:'Woven Windsong + RD',      colors:[]},
-    {name:'Woven Windsong + Solus',   colors:[]},
-    {name:'Designer LF + LF',         colors:[]},
-    {name:'Designer LF + RD',         colors:[]}
+    {name:'Sheer + Room Darkening', colors:[]},
+    {name:'Sheer + Light Filtering', colors:[]},
+    {name:'Light Filtering + Room Darkening', colors:[]},
+    {name:'Light Filtering + Light Filtering', colors:[]},
+    {name:'Woven Windsong + Light Filtering', colors:[]},
+    {name:'Woven Windsong + Room Darkening', colors:[]}
   ]
 };
 
@@ -3010,10 +3047,7 @@ const RN_FABRIC_LABELS = {
   'rd':'Room Darkening','solar':'Solar Screen','commercial':'Commercial Solar'
 };
 const CELL_FABRIC_LABELS = {
-  'lf':'Light Filtering','rd':'Room Darkening','sheer':'Sheer',
-  'designer-lf':'Designer Light Filtering','designer-rd':'Designer Room Darkening',
-  'ashton':'Designer Ashton','fr':'Flame Resistant LF/RD','fr-essentials':'FR Essentials',
-  'solus':'Solus','woven-breeze':'Woven Breeze','woven-windsong':'Woven Windsong','dn':'Day & Night'
+  'lf':'Light Filtering','rd':'Room Darkening','sheer':'Sheer','dn':'Day & Night'
 };
 
 // ─── Color swatch map ────────────────────────────────────────
@@ -3042,6 +3076,28 @@ const COLOR_HEX = {
   'White (1%)':'#FAFAFA','White (3%)':'#F5F5F5','White (5%)':'#F0F0F0',
   'Linen (1%)':'#F4EAD6','Linen (3%)':'#EEDEC6','Linen (5%)':'#E8D4B6',
   'Charcoal (1%)':'#606060','Charcoal (3%)':'#505050','Charcoal (5%)':'#404040',
+  // ─── Norman Portrait Cellular 2025-2026 colors ───────────────
+  'Cloud White':'#F8F6F2','Seapearl':'#EDE8E0','Cloudy Chiffon':'#E8E0D4','Jersey Cream':'#EFE4CC','Nightfall':'#1A1A28',
+  'Brilliant White':'#FAFAFA','Cotton Cloud':'#EFF0EE','Gardenia':'#F2EDE4','White Cream':'#FAF5E8','Daisy':'#FAF6D8',
+  'Wheat':'#E0C88A','Seal Gray':'#9CA3AF','Silver Satin':'#C8CAC8','French Silver':'#BCBEC0','Classic Silver':'#B8BAB8',
+  'Power Gray':'#8C8E90','Iron Mountain':'#707270','Orion Gray':'#686A6C','Natural Tan':'#C8A87A','Pale Oak':'#D4B888',
+  'Whipped Mocha':'#A87850','Rue Bourbon':'#703018','Dew':'#DDE8DC','Space Gray':'#6A7278','Silver Dusk':'#A8B0B8',
+  'New Camel':'#C8A060','Florida Keys':'#3A98A8','Bella Blue':'#5880B8','Yellow Bliss':'#F2DE78','Autumn Gold':'#C87E30',
+  'Cabin':'#7A5030','Provence Cream':'#EAD8A8','Reflections':'#C8A870','River Rock':'#9A7860','Coffee Beans':'#3E2818',
+  'Pashmina':'#C0A090','Morning Mist':'#C8C8C0','Annapolis Gray':'#988870','Black Olive':'#282E24','Ocean Air':'#8CC0D0',
+  'Seaside Blue':'#4888A8','Blue Flower':'#6890C0','Lakeside':'#486888','Smokey Blue':'#6070A0','Spring Sky':'#80A8C0',
+  'White Rain':'#D0E0EC','Catalina Blue':'#364E80','Fernwood':'#687858','Meadows':'#849860','Mulberry':'#702038',
+  'Eggplant':'#48284E','Morning Blush':'#E8B0B8','Pacific Cove':'#B87038','Roasted Pumpkin':'#B84E20',
+  // RD versions (slightly darker/deeper)
+  'Brilliant White RD':'#F5F5F5','Cotton Cloud RD':'#E8EAE8','Gardenia RD':'#EDE8E0','White Cream RD':'#F5F0E0',
+  'Daisy RD':'#F5F0D0','Soft Stone RD':'#D8C8A8','Wheat RD':'#D8BE80','Seal Gray RD':'#909698','Silver Satin RD':'#C0C2C0',
+  'French Silver RD':'#B4B6B8','Classic Silver RD':'#B0B2B0','Power Gray RD':'#848688','Iron Mountain RD':'#686A6C',
+  'Orion Gray RD':'#606264','Natural Tan RD':'#C0A070','Pale Oak RD':'#CCB080',
+  'Whipped Mocha RD':'#A07040','Rue Bourbon RD':'#682810','Dew RD':'#D5E0D4','Space Gray RD':'#626A70',
+  'Silver Dusk RD':'#A0A8B0','New Camel RD':'#C09858','Florida Keys RD':'#328898','Bella Blue RD':'#5078B0',
+  'Yellow Bliss RD':'#ECD870','Autumn Gold RD':'#C07828','Cabin RD':'#724828','Provence Cream RD':'#E2D0A0',
+  'Reflections RD':'#C0A068','River Rock RD':'#927060','Coffee Beans RD':'#382010','Pashmina RD':'#B89888',
+  'Morning Mist RD':'#C0C0B8','Annapolis Gray RD':'#908070','Black Olive RD':'#20261C','Ocean Air RD':'#84B8C8',
 };
 function colorDot(name) {
   var hex = COLOR_HEX[name]; if (!hex) return '';
@@ -3099,23 +3155,35 @@ function renderFlatFabricGrid(product) {
   // Summary line — all collection names
   const shown = colls.slice(0, 6).map(function(c){ return c.name; }).join(', ');
   const extra = colls.length > 6 ? ' +' + (colls.length - 6) + ' more' : '';
-  summaryEl.textContent = typeLabel + ' collections: ' + shown + extra;
+  summaryEl.textContent = typeLabel + ': ' + shown + extra;
 
-  // Flat buttons: "Collection – Color" for mapped colors; plain "Collection" for unmapped
-  let btns = '';
+  // Flat buttons — supports both plain string colors (roller) and {n,c} objects (cellular)
+  let html = '';
   colls.forEach(function(coll, ci) {
     if (coll.colors.length) {
+      if (coll.name) {
+        html += '<div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#888;margin:10px 0 5px">' + coll.name + '</div>';
+      }
+      html += '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:4px">';
       coll.colors.forEach(function(color, ki) {
-        btns += '<button class="opt-btn" style="font-size:11px;display:inline-flex;align-items:center" onclick="selFlatFabric(this,\'' + product + '\',' + ci + ',' + ki + ')">'
-              + colorDot(color) + coll.name + ' – ' + color + '</button>';
+        const isObj  = color && typeof color === 'object';
+        const cName  = isObj ? color.n : color;
+        const cCode  = isObj ? color.c : '';
+        const dot    = colorDot(cName);
+        const codeTxt = cCode ? ' <span style="font-size:9px;color:#aaa;margin-left:2px">' + cCode + '</span>' : '';
+        html += '<button class="opt-btn" style="font-size:11px;display:inline-flex;align-items:center;gap:0" onclick="selFlatFabric(this,\'' + product + '\',' + ci + ',' + ki + ')">'
+              + dot + cName + codeTxt + '</button>';
       });
+      html += '</div>';
     } else {
-      btns += '<button class="opt-btn" style="font-size:11px;opacity:0.65" onclick="selFlatFabric(this,\'' + product + '\',' + ci + ',-1)">'
+      html += '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:4px">';
+      html += '<button class="opt-btn" style="font-size:11px;opacity:0.65" onclick="selFlatFabric(this,\'' + product + '\',' + ci + ',-1)">'
             + coll.name + '</button>';
+      html += '</div>';
     }
   });
 
-  gridEl.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:6px">' + btns + '</div>';
+  gridEl.innerHTML = html;
 }
 
 function selFlatFabric(el, product, ci, ki) {
@@ -3130,7 +3198,13 @@ function selFlatFabric(el, product, ci, ki) {
     currentRollerColor = ki >= 0 ? coll.colors[ki] : '';
   } else {
     currentCellColl  = coll.name;
-    currentCellColor = ki >= 0 ? coll.colors[ki] : '';
+    const raw = ki >= 0 ? coll.colors[ki] : '';
+    // Support both plain string colors (roller) and {n,c} objects (cellular)
+    if (raw && typeof raw === 'object') {
+      currentCellColor = raw.n + (raw.c ? ' (' + raw.c + ')' : '');
+    } else {
+      currentCellColor = raw;
+    }
   }
 }
 // ─── Norman Faux Wood Blinds ─────────────────────────────────
@@ -3451,19 +3525,27 @@ function cellDnRender(position, fabType) {
     return;
   }
 
-  let btns = '';
+  let html = '';
   colls.forEach(function(coll, ci) {
     if (coll.colors.length) {
+      if (coll.name) html += '<div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#888;margin:8px 0 4px">' + coll.name + '</div>';
+      html += '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:2px">';
       coll.colors.forEach(function(color, ki) {
-        btns += '<button class="opt-btn" style="font-size:11px" onclick="selCellDnFabric(this,\'' + position + '\',' + ci + ',' + ki + ',\'' + fabType + '\')">'
-              + coll.name + ' – ' + color + '</button>';
+        const isObj = color && typeof color === 'object';
+        const cName = isObj ? color.n : color;
+        const cCode = isObj ? color.c : '';
+        const dot   = colorDot(cName);
+        const codeTxt = cCode ? ' <span style="font-size:9px;color:#aaa">' + cCode + '</span>' : '';
+        html += '<button class="opt-btn" style="font-size:11px;display:inline-flex;align-items:center" onclick="selCellDnFabric(this,\'' + position + '\',' + ci + ',' + ki + ',\'' + fabType + '\')">'
+              + dot + cName + codeTxt + '</button>';
       });
+      html += '</div>';
     } else {
-      btns += '<button class="opt-btn" style="font-size:11px;opacity:0.65" onclick="selCellDnFabric(this,\'' + position + '\',' + ci + ',-1,\'' + fabType + '\')">'
-            + coll.name + '</button>';
+      html += '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:2px"><button class="opt-btn" style="font-size:11px;opacity:0.65" onclick="selCellDnFabric(this,\'' + position + '\',' + ci + ',-1,\'' + fabType + '\')">'
+            + coll.name + '</button></div>';
     }
   });
-  gridEl.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:6px">' + btns + '</div>';
+  gridEl.innerHTML = html;
 }
 
 function selCellDnFabric(el, position, ci, ki, fabType) {
