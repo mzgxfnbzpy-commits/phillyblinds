@@ -190,65 +190,76 @@
     </div>
     <div class="step-body">
       <div class="color-grid">
-        <div class="color-card" onclick="pickColor(this,'Pure White &mdash; Smooth','P001',false)">
+        <!-- data-slat: "both" | "2in" | "2.5in" controls visibility after slat selection -->
+        <div class="color-card" data-slat="both" onclick="pickColor(this,'Pure White &mdash; Smooth','P001',false)">
           <div class="color-swatch" style="background:#F7F7F7;border-bottom:1px solid #eee"></div>
           <div class="color-label"><div class="color-name">Pure White</div><div class="color-code">P001</div><div class="color-finish">Smooth</div></div>
         </div>
-        <div class="color-card" onclick="pickColor(this,'Pure White &mdash; Embossed','P001',false)">
+        <div class="color-card" data-slat="both" onclick="pickColor(this,'Pure White &mdash; Embossed','P001',false)">
           <div class="color-swatch" style="background:#F0F0EE;border-bottom:1px solid #eee"></div>
           <div class="color-label"><div class="color-name">Pure White</div><div class="color-code">P001</div><div class="color-finish">Embossed</div></div>
         </div>
-        <div class="color-card" onclick="pickColor(this,'Designer White &mdash; Smooth','E008',false)">
+        <div class="color-card" data-slat="both" onclick="pickColor(this,'Designer White &mdash; Smooth','E008',false)">
           <div class="color-swatch" style="background:#F4EFE9;border-bottom:1px solid #eee"></div>
           <div class="color-label"><div class="color-name">Designer White</div><div class="color-code">E008</div><div class="color-finish">Smooth</div></div>
         </div>
-        <div class="color-card" onclick="pickColor(this,'Designer White &mdash; Embossed','E008',false)">
+        <div class="color-card" data-slat="both" onclick="pickColor(this,'Designer White &mdash; Embossed','E008',false)">
           <div class="color-swatch" style="background:#EDE8E2;border-bottom:1px solid #eee"></div>
           <div class="color-label"><div class="color-name">Designer White</div><div class="color-code">E008</div><div class="color-finish">Embossed</div></div>
         </div>
-        <div class="color-card" onclick="pickColor(this,'Silk White &mdash; Smooth','P003',false)">
+        <div class="color-card" data-slat="both" onclick="pickColor(this,'Silk White &mdash; Smooth','P003',false)">
           <div class="color-swatch" style="background:#EDE9E3;border-bottom:1px solid #eee"></div>
           <div class="color-label"><div class="color-name">Silk White</div><div class="color-code">P003</div><div class="color-finish">Smooth</div></div>
         </div>
-        <div class="color-card" onclick="pickColor(this,'Silk White &mdash; Embossed','P003',false)">
+        <div class="color-card" data-slat="both" onclick="pickColor(this,'Silk White &mdash; Embossed','P003',false)">
           <div class="color-swatch" style="background:#E6E1D9;border-bottom:1px solid #eee"></div>
           <div class="color-label"><div class="color-name">Silk White</div><div class="color-code">P003</div><div class="color-finish">Embossed</div></div>
         </div>
-        <div class="color-card" onclick="pickColor(this,'Pearl &mdash; Smooth','P006',false)">
+        <div class="color-card" data-slat="both" onclick="pickColor(this,'Bright White &mdash; Smooth','P004',false)">
+          <div class="color-swatch" style="background:#F2F2F2;border-bottom:1px solid #eee"></div>
+          <div class="color-label"><div class="color-name">Bright White</div><div class="color-code">P004</div><div class="color-finish">Smooth</div></div>
+        </div>
+        <div class="color-card" data-slat="both" onclick="pickColor(this,'Bright White &mdash; Embossed','P004',false)">
+          <div class="color-swatch" style="background:#EAEAEA;border-bottom:1px solid #eee"></div>
+          <div class="color-label"><div class="color-name">Bright White</div><div class="color-code">P004</div><div class="color-finish">Embossed</div></div>
+        </div>
+        <div class="color-card" data-slat="both" onclick="pickColor(this,'Pearl &mdash; Smooth','P006',false)">
           <div class="color-swatch" style="background:#E8E0D0;border-bottom:1px solid #eee"></div>
           <div class="color-label"><div class="color-name">Pearl</div><div class="color-code">P006</div><div class="color-finish">Smooth</div></div>
         </div>
-        <div class="color-card" onclick="pickColor(this,'Pearl &mdash; Embossed','P006',false)">
+        <div class="color-card" data-slat="both" onclick="pickColor(this,'Pearl &mdash; Embossed','P006',false)">
           <div class="color-swatch" style="background:#DDD6C6;border-bottom:1px solid #eee"></div>
           <div class="color-label"><div class="color-name">Pearl</div><div class="color-code">P006</div><div class="color-finish">Embossed</div></div>
         </div>
-        <div class="color-card" onclick="pickColor(this,'Storm Gray &mdash; Smooth','P075',false)">
+        <!-- Storm Gray: Smooth = 2" slat only · Embossed = 2½" slat only -->
+        <div class="color-card" data-slat="2in" onclick="pickColor(this,'Storm Gray &mdash; Smooth','P075',false)">
           <div class="color-swatch" style="background:#9BA3A8;border-bottom:1px solid #bbb"></div>
-          <div class="color-label"><div class="color-name">Storm Gray</div><div class="color-code">P075</div><div class="color-finish">Smooth</div></div>
+          <div class="color-label"><div class="color-name">Storm Gray</div><div class="color-code">P075</div><div class="color-finish">Smooth &mdash; 2″ only</div></div>
         </div>
-        <div class="color-card" onclick="pickColor(this,'Storm Gray &mdash; Embossed','P075',false)">
+        <div class="color-card" data-slat="2.5in" onclick="pickColor(this,'Storm Gray &mdash; Embossed','P075',false)">
           <div class="color-swatch" style="background:#8E969C;border-bottom:1px solid #aaa"></div>
-          <div class="color-label"><div class="color-name">Storm Gray</div><div class="color-code">P075</div><div class="color-finish">Embossed</div></div>
+          <div class="color-label"><div class="color-name">Storm Gray</div><div class="color-code">P075</div><div class="color-finish">Embossed &mdash; 2½″ only</div></div>
         </div>
-        <!-- Printed colors — +20% surcharge -->
-        <div class="color-card" onclick="pickColor(this,'Mist &mdash; Embossed','6957',true)">
+        <!-- Printed colors — +20% surcharge · 2" slat only -->
+        <div class="color-card" data-slat="2in" onclick="pickColor(this,'Mist &mdash; Embossed','6957',true)">
           <div class="color-swatch" style="background:#C5CBD0;border-bottom:1px solid #bbb"></div>
-          <div class="color-label"><div class="color-name">Mist</div><div class="color-code">6957</div><div class="color-finish">Printed Embossed</div><span class="color-printed-badge">+20%</span></div>
+          <div class="color-label"><div class="color-name">Mist</div><div class="color-code">6957</div><div class="color-finish">Printed Embossed &mdash; 2″ only</div><span class="color-printed-badge">+20%</span></div>
         </div>
-        <div class="color-card" onclick="pickColor(this,'Old Teak &mdash; Embossed','P230',true)">
+        <div class="color-card" data-slat="2in" onclick="pickColor(this,'Old Teak &mdash; Embossed','P230',true)">
           <div class="color-swatch" style="background:#8B6840;border-bottom:1px solid #7a5c38"></div>
-          <div class="color-label"><div class="color-name">Old Teak</div><div class="color-code">P230</div><div class="color-finish">Printed Embossed</div><span class="color-printed-badge">+20%</span></div>
+          <div class="color-label"><div class="color-name">Old Teak</div><div class="color-code">P230</div><div class="color-finish">Printed Embossed &mdash; 2″ only</div><span class="color-printed-badge">+20%</span></div>
         </div>
-        <div class="color-card" onclick="pickColor(this,'Granite &mdash; Embossed','6959',true)">
+        <div class="color-card" data-slat="2in" onclick="pickColor(this,'Granite &mdash; Embossed','6959',true)">
           <div class="color-swatch" style="background:#6B6B6B;border-bottom:1px solid #5a5a5a"></div>
-          <div class="color-label"><div class="color-name">Granite</div><div class="color-code">6959</div><div class="color-finish">Printed Embossed</div><span class="color-printed-badge">+20%</span></div>
+          <div class="color-label"><div class="color-name">Granite</div><div class="color-code">6959</div><div class="color-finish">Printed Embossed &mdash; 2″ only</div><span class="color-printed-badge">+20%</span></div>
         </div>
-        <div class="color-card" onclick="pickColor(this,'Chestnut &mdash; Embossed','P226',true)">
+        <div class="color-card" data-slat="2in" onclick="pickColor(this,'Chestnut &mdash; Embossed','P226',true)">
           <div class="color-swatch" style="background:#7A4A2A;border-bottom:1px solid #6a3e22"></div>
-          <div class="color-label"><div class="color-name">Chestnut</div><div class="color-code">P226</div><div class="color-finish">Printed Embossed</div><span class="color-printed-badge">+20%</span></div>
+          <div class="color-label"><div class="color-name">Chestnut</div><div class="color-code">P226</div><div class="color-finish">Printed Embossed &mdash; 2″ only</div><span class="color-printed-badge">+20%</span></div>
         </div>
       </div>
-      <div class="step-note">Colors marked <strong>+20%</strong> are printed finishes with a 20% surcharge. Colors may vary from digital images — request a physical swatch at your consultation. Valance color always matches slat color.</div>
+      <div id="color-slat-note" class="step-note" style="display:none"></div>
+      <div class="step-note">Colors marked <strong>+20%</strong> are printed finishes with a 20% surcharge. Storm Gray and printed colors have slat-size restrictions — select your slat size first to see what's available. Colors may vary from digital images — request a physical swatch at your consultation. Valance color always matches slat color.</div>
     </div>
   </div>
 
@@ -505,6 +516,7 @@
     <div class="qrow" id="q-valance-row" style="display:none"><span class="qrow-label">Valance</span><span class="qrow-val" id="q-valance">—</span></div>
     <div class="qrow" id="q-side-row" style="display:none"><span class="qrow-label">Side mount bracket</span><span class="qrow-val" id="q-side">—</span></div>
     <div class="qrow" id="q-shim-row" style="display:none"><span class="qrow-label">Shims</span><span class="qrow-val" id="q-shim">—</span></div>
+    <div class="qrow" id="q-overage-row" style="display:none"><span class="qrow-label">Area overage<span class="qbadge">+$18/sqft</span></span><span class="qrow-val qrow-surcharge" id="q-overage">—</span></div>
     <div class="qrow"><span class="qrow-label">Quantity</span><span class="qrow-val" id="q-qty">—</span></div>
     <div class="qdiv"></div>
     <div class="qrow"><span class="qrow-label">Subtotal</span><span class="qrow-val" id="q-sub">—</span></div>
@@ -563,7 +575,24 @@ function pickSlat(el,label){
   el.classList.add('sel');
   S.slat=label.includes('2½')?'2.5in':'2in';
   $('s1val').innerHTML=label+' (selected)';
-  markDone('step1'); calcPrice();
+  markDone('step1');
+  // Filter color cards by slat size
+  document.querySelectorAll('#step2 .color-card').forEach(function(card) {
+    const ds = card.getAttribute('data-slat');
+    const ok = !ds || ds === 'both' || ds === S.slat;
+    card.style.display = ok ? '' : 'none';
+    if (!ok && card.classList.contains('sel')) {
+      card.classList.remove('sel'); S.color=null; S.isPrinted=false; $('s2val').textContent='—';
+    }
+  });
+  const note = $('color-slat-note');
+  if (note) {
+    note.textContent = S.slat==='2in'
+      ? '2″ slat: Storm Gray Smooth and all printed colors available. Storm Gray Embossed not available in 2″.'
+      : '2½″ slat: Storm Gray Embossed available. Storm Gray Smooth and printed colors (Mist, Old Teak, Granite, Chestnut) not available in 2½″.';
+    note.style.display='block';
+  }
+  calcPrice();
 }
 
 // ── STEP 2 ────────────────────────────────────────────────────────────────────
@@ -623,7 +652,6 @@ function calcSize(){
   if(h>0&&h<16)   errs.push('Minimum height is 16″.');
   if(h>96)        errs.push('Maximum height is 96″.');
   const area=(w*h)/144;
-  if(w>0&&h>0&&area>48) errs.push('Area is '+area.toFixed(1)+' sq ft — maximum is 48 sq ft. Reduce width or height.');
 
   if(errs.length){
     errs.forEach(e=>{const d=document.createElement('div');d.className='msg-box msg-err';d.textContent=e;msgs.appendChild(d);});
@@ -649,6 +677,11 @@ function calcSize(){
   if(w>=90){
     const d=document.createElement('div');d.className='msg-box msg-warn';
     d.textContent='Width 90″ or over: oversized freight applies ($80 first blind, $50 each additional).';msgs.appendChild(d);
+  }
+  if(w>0&&h>0&&area>48){
+    const extra=Math.ceil(area-48);
+    const d=document.createElement('div');d.className='msg-box msg-warn';
+    d.textContent='Area '+area.toFixed(2)+' sq ft exceeds 48 sq ft — overage surcharge of +$18 per additional sq ft ('+extra+' sq ft = +$'+(extra*18)+') added to price.';msgs.appendChild(d);
   }
 
   cbox.style.display='block';
@@ -764,8 +797,12 @@ function calcPrice(){
   const valAdd = (S.valance&&S.valance!=='none') ? (VALANCE_PRICE[pW]||0) : 0;
   const sideAdd = S.sideMt ? 23 : 0;
   const shimAdd = S.shims*7;
+  // Area overage: +$18 per sq ft over 48 sq ft (based on actual ordered size)
+  const actualArea = (S.w*S.h)/144;
+  const overageSqft = actualArea>48 ? Math.ceil(actualArea-48) : 0;
+  const overageAdd = overageSqft*18;
 
-  const unit = base + printedAdd + valAdd + sideAdd + shimAdd;
+  const unit = base + printedAdd + valAdd + sideAdd + shimAdd + overageAdd;
   const subtotal = unit * S.qty;
 
   const isOversized = S.w >= 90;
@@ -789,6 +826,9 @@ function calcPrice(){
 
   $('q-shim-row').style.display = S.shims>0 ? 'flex' : 'none';
   if(S.shims>0) $('q-shim').textContent='+'+fmt(shimAdd)+' ('+S.shims+'×)';
+
+  const overageRow=$('q-overage-row');
+  if(overageRow){ overageRow.style.display=overageSqft>0?'flex':'none'; if(overageSqft>0) $('q-overage').textContent='+'+fmt(overageAdd)+' ('+overageSqft+' sq ft × $18)'; }
 
   $('q-qty').textContent='× '+S.qty;
   $('q-sub').textContent=fmt(subtotal);
