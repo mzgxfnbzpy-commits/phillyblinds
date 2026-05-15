@@ -707,8 +707,7 @@
             <div id="rn-cassette-opts" style="display:none;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px;margin-bottom:12px">
               <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Cassette type</div>
               <div class="opt-row" id="rn-grp-cassette">
-                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-cassette')">Slim cassette</button>
-                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cassette')">Full cassette</button>
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-cassette')">Full cassette</button>
               </div>
               <div class="tooltip-note" style="margin-top:5px">Full cassette encloses the tube completely — required for LightGuard 360™ and room-darkening / blackout systems. Larger sizes may need an upgraded tube diameter.</div>
             </div>
@@ -2819,90 +2818,237 @@ let currentRollerColor = null;
 let currentCellColor   = null;
 
 // ─── Norman Soluna roller fabric collections ──────────────────
+// Source: Norman Soluna Program Reference Guide, February 2026
+// Colors: {n: name, c: fabric code}. Lakeview 1% removed (not in 2026 guide).
+// ⚠ Linen = linen content, color variation normal. Maui Natural max height 120".
 const SOLUNA_COLLECTIONS = {
   'sheer': [
-    {name:'Dazzle',    colors:['White','Soft White','Ivory','Pearl','Champagne','Stone','Silver','Smoke']},
-    {name:'Scarlett',  colors:['Blush','Rose','Dusty Rose','Mauve','Berry','Plum']},
-    {name:'Lakeshore', colors:['Cloud','Mist','Sky','Powder Blue','Blue Gray','Slate','Denim']}
+    {name:'Sheer', colors:[{n:'Linen Weave',c:'F0908'}]},
+    {name:'Dazzle', colors:[
+      {n:'Soft White',c:'F1538'},{n:'Eggshell',c:'F1539'},{n:'Pewter Green',c:'F1540'},
+      {n:'Charcoal',c:'F1541'},{n:'Ink',c:'F1542'}
+    ]},
+    {name:'Scarlett ⚠ Linen', colors:[
+      {n:'Cottage Linen',c:'F1599'},{n:'Seashell',c:'F1600'},{n:'Crema',c:'F1601'},{n:'Stone',c:'F1602'}
+    ]},
+    {name:'Lakeshore', colors:[{n:'Natural Gray',c:'F1642'}]}
   ],
   'lf': [
-    {name:'Kendra',    colors:['White','Ivory','Cream','Sand','Wheat','Khaki','Stone','Taupe','Gray','Charcoal']},
-    {name:'Francis',   colors:['White','Antique White','Natural','Linen','Flax','Sand','Taupe','Gray','Charcoal']},
-    {name:'Breeze',    colors:['Natural','Ivory','Linen','Hemp','Oatmeal','Flax','Dune','Parchment','Bark']},
-    {name:'Hayes',     colors:['White','Off-White','Beige','Stone','Gray','Slate','Charcoal','Black']},
-    {name:'Valerie',   colors:['White','Ivory','Pearl','Champagne','Blush','Rose','Dove','Silver','Smoke']},
-    {name:'Emery',     colors:['White','Ivory','Sand','Stone','Taupe','Gray','Charcoal']},
-    {name:'Brook',     colors:['White','Ivory','Natural','Linen','Almond','Sand','Driftwood','Brown']},
-    {name:'Chelsea',   colors:['White','Ivory','Cream','Fog','Stone','Bark','Charcoal']},
-    {name:'Sierra',    colors:['White','Ivory','Linen','Sand','Taupe','Bark','Brown','Gray','Charcoal']},
-    {name:'Shimmer',   colors:['White','Pearl','Silver','Champagne','Gold','Bronze','Pewter']},
-    {name:'Amelia',    colors:['White','Ivory','Sand','Wheat','Caramel','Khaki','Stone','Taupe']},
-    {name:'Lola LF',   colors:['White','Ivory','Linen','Almond','Stone','Gray','Charcoal']},
-    {name:'Clarissa',  colors:['White','Ivory','Blush','Lilac','Sage','Mint','Stone','Gray']},
-    {name:'Verona LF', colors:['White','Ivory','Sand','Linen','Taupe','Gray','Charcoal']},
-    {name:'Callie',    colors:['White','Ivory','Cream','Sand','Stone','Gray','Charcoal','Espresso']},
-    {name:'Remy',      colors:['White','Ivory','Linen','Sand','Driftwood','Taupe','Gray','Charcoal']}
+    {name:'Kendra', colors:[{n:'LF Foliage',c:'F0890'}]},
+    {name:'Francis', colors:[
+      {n:'Pearl',c:'F0876'},{n:'Barley',c:'F0877'},{n:'Sandstone',c:'F0878'},{n:'Toast',c:'F0879'},
+      {n:'Espresso',c:'F0882'},{n:'Brownie',c:'F0883'},{n:'Oatmeal',c:'F0884'},{n:'Doe',c:'F0885'},
+      {n:'Shale',c:'F0886'},{n:'Black',c:'F0888'},{n:'Denim',c:'F0889'}
+    ]},
+    {name:'Breeze ⚠ Linen', colors:[
+      {n:'Linen Flax',c:'F0891'},{n:'Linen Natural',c:'F0893'},{n:'Linen Khaki',c:'F0894'},
+      {n:'Linen Dune',c:'F0895'},{n:'Linen Graphite',c:'F0896'},{n:'Linen Almond Milk',c:'F0927'},
+      {n:'Linen Stone',c:'F1778'},{n:'Linen Cloud',c:'F1847'},{n:'Linen Warm Ivory',c:'F1851'}
+    ]},
+    {name:'Hayes', colors:[
+      {n:'Maple',c:'F0747'},{n:'Hickory',c:'F0748'},{n:'Birch',c:'F0749'},{n:'Mahogany',c:'F0751'}
+    ]},
+    {name:'Valerie', colors:[
+      {n:'Moonscape',c:'F0738'},{n:'Cove',c:'F0739'},{n:'Dolphin',c:'F0740'},
+      {n:'Pomegranate',c:'F0741'},{n:'Sapphire',c:'F0742'},{n:'Silhouette',c:'F0743'}
+    ]},
+    {name:'Emery', colors:[
+      {n:'Daylight',c:'F0752'},{n:'Creamy',c:'F0753'},{n:'Khaki',c:'F0754'},
+      {n:'Chiffon',c:'F1560'},{n:'Maize',c:'F1561'}
+    ]},
+    {name:'Brook', colors:[
+      {n:'Pewter',c:'F1120'},{n:'Egret',c:'F1121'},{n:'Smoke',c:'F1122'},
+      {n:'Beige',c:'F1123'},{n:'Latte',c:'F1157'}
+    ]},
+    {name:'Chelsea', colors:[
+      {n:'Snow',c:'F1445'},{n:'Cream',c:'F1446'},{n:'Natural',c:'F1447'},
+      {n:'Stone',c:'F1448'},{n:'Caviar',c:'F1449'}
+    ]},
+    {name:'Sierra', colors:[
+      {n:'Snow',c:'F1450'},{n:'Cream',c:'F1451'},{n:'Natural',c:'F1452'},
+      {n:'Stone',c:'F1453'},{n:'Caviar',c:'F1454'},{n:'Canvas',c:'F1966'},{n:'Graphite',c:'F1967'}
+    ]},
+    {name:'Shimmer', colors:[
+      {n:'Goldmine',c:'F1436'},{n:'Starry Night',c:'F1437'},{n:'Pewter',c:'F1439'},{n:'Midnight',c:'F1440'}
+    ]},
+    {name:'Amelia', colors:[
+      {n:'Mist Gray',c:'F1484'},{n:'Heather Gray',c:'F1485'},
+      {n:'Heather Charcoal',c:'F1486'},{n:'Heather Smoke',c:'F1487'}
+    ]},
+    {name:'Lola LF', colors:[
+      {n:'Porcelain',c:'F1551'},{n:'Almond',c:'F1552'},{n:'Light Khaki',c:'F1553'},
+      {n:'Wheat',c:'F1554'},{n:'Platinum',c:'F1555'},{n:'Cement',c:'F1556'},
+      {n:'Pewter',c:'F1557'},{n:'Iron',c:'F1558'},{n:'Indigo',c:'F1559'}
+    ]},
+    {name:'Clarissa', colors:[
+      {n:'Wheat',c:'F0870'},{n:'Platinum',c:'F0871'},{n:'Tobacco Brown',c:'F0872'},
+      {n:'Sable Brown',c:'F0873'},{n:'Burlap',c:'F0874'},{n:'Porcelain',c:'F0928'},
+      {n:'Powder',c:'F1532'},{n:'Steel',c:'F1533'},{n:'Silver Satin',c:'F1534'},
+      {n:'Golden Straw',c:'F1535'},{n:'Coffee Bean',c:'F1536'},{n:'Coal',c:'F1550'}
+    ]},
+    {name:'Verona LF', colors:[{n:'Pearl Cotton',c:'F1641'}]},
+    {name:'Callie', colors:[
+      {n:'Pure White',c:'F1734'},{n:'Vanilla Cream',c:'F1735'},{n:'Natural Tan',c:'F1736'},
+      {n:'Silver Ash',c:'F1737'},{n:'Pebble Gray',c:'F1738'},{n:'Black Iron',c:'F1739'},
+      {n:'Cloudy Gray',c:'F2028'},{n:'Gray',c:'F2030'},{n:'Rich Truffle',c:'F2032'}
+    ]},
+    {name:'Remy', colors:[
+      {n:'White Dove',c:'F1746'},{n:'Seashell Gray',c:'F1747'},{n:'Dune',c:'F1748'},
+      {n:'Hickory Bark',c:'F1749'},{n:'Creamy Mocha',c:'F1750'},{n:'Natural Slate',c:'F1751'}
+    ]}
   ],
   'natural': [
-    {name:'Aruba',      colors:['Natural','Light','Medium','Dark']},
-    {name:'Caroline',   colors:['Natural','Ivory','Cream']},
-    {name:'Samoa',      colors:['Natural','Brown','Ebony']},
-    {name:'Bali',       colors:['Natural','Ivory','Sand','Teak']},
-    {name:'Phuket',     colors:['Natural','Tan','Brown']},
-    {name:'Bora Bora',  colors:['Natural','Medium','Dark']},
-    {name:'Sumatra',    colors:['Natural','Dark Brown','Ebony']},
-    {name:'Java',       colors:['Natural','Espresso','Black']},
-    {name:'Riviera',    colors:['Natural','Ivory','Sand']},
-    {name:'Maui',       colors:['Natural','Tan','Medium']},
-    {name:'Lake Tahoe', colors:['Natural','Ivory','Light']},
-    {name:'Catalina',   colors:['Natural','Ivory','Sand','Brown']},
-    {name:'Cove',       colors:['Natural','Sand','Stone']}
+    {name:'Aruba', colors:[
+      {n:'Sparkle Ivory',c:'F0860'},{n:'Sparkle Khaki',c:'F0861'},{n:'Sparkle Espresso',c:'F0862'}
+    ]},
+    {name:'Caroline', colors:[{n:'White Sand',c:'F0867'}]},
+    {name:'Samoa', colors:[
+      {n:'Daylight',c:'F0863'},{n:'Sand',c:'F0864'},{n:'Cumin',c:'F0865'},{n:'Old Teak',c:'F0866'}
+    ]},
+    {name:'Bali', colors:[
+      {n:'Black Walnut',c:'F0668'},{n:'Sand',c:'F1668'},{n:'Flax',c:'F1669'},
+      {n:'Latte',c:'F1926'},{n:'Stone Gray',c:'F1927'},{n:'Desert Beige',c:'F2023'},
+      {n:'Warm Mocha',c:'F2024'},{n:'Soft Sandstone',c:'F2025'},{n:'Gentle Ash',c:'F2026'},{n:'Gray',c:'F2027'}
+    ]},
+    {name:'Phuket', colors:[
+      {n:'Snow White',c:'F0656'},{n:'Honey',c:'F0657'},{n:'Black Olive',c:'F0659'},
+      {n:'Grey Fog',c:'F0660'},{n:'Dust',c:'F0661'},{n:'Dough',c:'F0868'},{n:'Mocha',c:'F1670'}
+    ]},
+    {name:'Bora Bora', colors:[
+      {n:'Seashell White',c:'F0662'},{n:'Straw',c:'F0663'},{n:'Cinnamon',c:'F0869'}
+    ]},
+    {name:'Sumatra', colors:[{n:'Fog',c:'F0854'}]},
+    {name:'Java', colors:[
+      {n:'Raffia',c:'F0856'},{n:'Haystack',c:'F0857'},{n:'Natural',c:'F0858'},
+      {n:'Sage',c:'F0859'},{n:'Toasted Brown',c:'F1562'}
+    ]},
+    {name:'Riviera', colors:[
+      {n:'Frost',c:'F1290'},{n:'Sugar Cane',c:'F1291'},{n:'Honey',c:'F1292'},
+      {n:'Metal',c:'F1293'},{n:'Silver Fox',c:'F1713'}
+    ]},
+    {name:'Maui Natural ⚠ Max 120″H', colors:[
+      {n:'Vanilla Stripe',c:'F1543'},{n:'Natural Stripe',c:'F1544'},{n:'Slate Stripe',c:'F1545'},
+      {n:'Ink/Natural',c:'F1548'},{n:'Coffee/Natural',c:'F1549'}
+    ]},
+    {name:'Lake Tahoe', colors:[{n:'Stone',c:'F1577'}]},
+    {name:'Catalina', colors:[{n:'Sea Salt',c:'F1605'},{n:'Oatmeal',c:'F1712'}]},
+    {name:'Cove', colors:[{n:'Jet Black',c:'F1714'}]}
   ],
   'rd': [
-    {name:'Garden',     colors:['White','Ivory','Sand','Stone','Taupe','Gray','Charcoal','Espresso','Black']},
-    {name:'Elements',   colors:['White','Ivory','Beige','Stone','Gray','Charcoal','Espresso','Black']},
-    {name:'Jamaica',    colors:['White','Ivory','Sand','Brown','Charcoal','Espresso','Black']},
-    {name:'Bermuda',    colors:['White','Ivory','Beige','Stone','Gray','Charcoal','Black']},
-    {name:'Fiji',       colors:['White','Ivory','Sand','Stone','Taupe','Gray','Charcoal','Black']},
-    {name:'Lola BO',    colors:['White','Ivory','Linen','Almond','Stone','Gray','Charcoal','Black']},
-    {name:'Summerland', colors:['White','Ivory','Sand','Stone','Taupe','Gray','Charcoal','Black']},
-    {name:'Cory',       colors:['White','Ivory','Sand','Stone','Taupe','Gray','Charcoal','Espresso']},
-    {name:'Callie RD',  colors:['White','Ivory','Cream','Sand','Stone','Gray','Charcoal','Espresso','Black']},
-    {name:'Remy RD',    colors:['White','Ivory','Linen','Sand','Driftwood','Gray','Charcoal','Black']},
-    {name:'Francis RD', colors:['White','Antique White','Natural','Linen','Flax','Sand','Taupe','Gray','Black']},
-    {name:'Breeze RD',  colors:['Natural','Ivory','Linen','Hemp','Oatmeal','Flax','Dune','Bark','Charcoal']},
-    {name:'Amelia RD',  colors:['White','Ivory','Sand','Wheat','Khaki','Stone','Gray','Charcoal','Black']}
+    {name:'Garden', colors:[
+      {n:'RD Foliage',c:'F0853'},{n:'Winter White',c:'F1514'},{n:'Ecru',c:'F1515'},
+      {n:'Cinnamon',c:'F1516'},{n:'Forest',c:'F1517'},{n:'Midnight',c:'F1518'}
+    ]},
+    {name:'Elements White Backing', colors:[
+      {n:'White',c:'F1108'},{n:'Stone Gray',c:'F1109'},{n:'Broken White',c:'F1110'},
+      {n:'Cloudy Gray',c:'F1111'},{n:'Gray',c:'F1112'},{n:'Anthracite Gray',c:'F1113'}
+    ]},
+    {name:'Elements', colors:[
+      {n:'Stone Gray',c:'F2109'},{n:'Broken White',c:'F2110'},{n:'Cloudy Gray',c:'F2111'},
+      {n:'Gray',c:'F2112'},{n:'Anthracite Gray',c:'F2113'},{n:'Weathered White',c:'F2114'},
+      {n:'Soft Sandstone',c:'F2115'},{n:'Gentle Ash',c:'F2116'},{n:'Soothing Gray',c:'F2117'},
+      {n:'Graphite',c:'F2118'},{n:'Desert Beige',c:'F2119'},{n:'Warm Mocha',c:'F2120'},
+      {n:'Rich Truffle',c:'F2121'},{n:'Alabaster',c:'F2043'},{n:'Canvas',c:'F2044'},{n:'New Khaki',c:'F2045'}
+    ]},
+    {name:'Jamaica', colors:[
+      {n:'Latte',c:'F0827'},{n:'Crystal',c:'F0828'},{n:'Biscuit',c:'F0829'}
+    ]},
+    {name:'Bermuda', colors:[
+      {n:'Mushroom',c:'F0831'},{n:'Cocoa',c:'F0832'},{n:'Charcoal',c:'F0834'}
+    ]},
+    {name:'Fiji', colors:[
+      {n:'Pure White',c:'F0822'},{n:'Cream/Ash',c:'F0823'},{n:'Flax/Brown',c:'F0824'},
+      {n:'Chocolate/Cream',c:'F0825'},{n:'Charcoal/Brown',c:'F0826'}
+    ]},
+    {name:'Lola BO', colors:[
+      {n:'Porcelain',c:'F1455'},{n:'Almond',c:'F1456'},{n:'Light Khaki',c:'F1457'},
+      {n:'Wheat',c:'F1458'},{n:'Platinum',c:'F1459'},{n:'Cement',c:'F1460'},
+      {n:'Pewter',c:'F1461'},{n:'Iron',c:'F1462'},{n:'Indigo',c:'F1463'}
+    ]},
+    {name:'Summerland ⚠ Linen', colors:[
+      {n:'Pearl',c:'F1510'},{n:'Maize',c:'F1511'},{n:'Sterling',c:'F1512'}
+    ]},
+    {name:'Cory', colors:[{n:'White',c:'F1479'},{n:'Ivory',c:'F1480'},{n:'Sand',c:'F1481'}]},
+    {name:'Callie RD', colors:[
+      {n:'Pure White',c:'F1740'},{n:'Vanilla Cream',c:'F1741'},{n:'Natural Tan',c:'F1742'},
+      {n:'Silver Ash',c:'F1743'},{n:'Pebble Gray',c:'F1744'},{n:'Black Iron',c:'F1745'},
+      {n:'Cloudy Gray',c:'F2033'},{n:'Gray',c:'F2035'},{n:'Rich Truffle',c:'F2037'}
+    ]},
+    {name:'Remy RD', colors:[
+      {n:'White Dove',c:'F1752'},{n:'Seashell Gray',c:'F1753'},{n:'Dune',c:'F1754'},
+      {n:'Hickory Bark',c:'F1755'},{n:'Creamy Mocha',c:'F1756'},{n:'Natural Slate',c:'F1757'}
+    ]},
+    {name:'Francis RD', colors:[
+      {n:'Pearl',c:'F1762'},{n:'Sandstone',c:'F1763'},{n:'Oatmeal',c:'F1764'},
+      {n:'Doe',c:'F1765'},{n:'Black',c:'F1766'},{n:'Denim',c:'F1767'}
+    ]},
+    {name:'Breeze RD ⚠ Linen', colors:[
+      {n:'Linen Flax',c:'F1768'},{n:'Linen Natural',c:'F1769'},{n:'Linen Khaki',c:'F1770'},
+      {n:'Linen Dune',c:'F1771'},{n:'Linen Graphite',c:'F1772'},{n:'Linen Almond Milk',c:'F1773'},
+      {n:'Linen Stone',c:'F1779'},{n:'Linen Cloud',c:'F1848'},{n:'Linen Warm Ivory',c:'F1852'}
+    ]},
+    {name:'Amelia RD', colors:[
+      {n:'Mist Gray',c:'F1774'},{n:'Heather Gray',c:'F1775'},
+      {n:'Heather Charcoal',c:'F1776'},{n:'Heather Smoke',c:'F1777'}
+    ]}
   ],
   'solar': [
-    {name:'Lakeview 1%',      colors:['White','Linen','Charcoal','Black']},
-    {name:'Lakeview 3%',      colors:['White','Ivory','Linen','Charcoal','Black']},
-    {name:'Lakeview 7%',      colors:['White','Linen','Charcoal']},
-    {name:'Lakeview 10%',     colors:['White','Linen','Charcoal']},
-    {name:'Meadows 1%',       colors:['White','Ivory','Linen','Stone','Charcoal']},
-    {name:'Meadows 3%',       colors:['White','Ivory','Linen','Stone','Charcoal']},
-    {name:'Jubilee 3%',       colors:['White','Ivory','Sand','Stone']},
-    {name:'Moon 5%',          colors:['White','Ivory','Charcoal']},
-    {name:'Serene 1%',        colors:['White','Ivory','Linen','Stone','Charcoal']},
-    {name:'Serene 3%',        colors:['White','Ivory','Linen','Stone','Charcoal']},
-    {name:'Serene 7%',        colors:['White','Linen','Stone','Charcoal']},
-    {name:'Flow 1%',          colors:['White','Linen','Charcoal']},
-    {name:'Flow 5%',          colors:['White','Ivory','Linen','Charcoal']},
-    {name:'Flow 7%',          colors:['White','Linen','Charcoal']},
-    {name:'Windsong 1%',      colors:['White','Ivory','Linen','Hemp','Charcoal']},
-    {name:'Windsong 5%',      colors:['White','Ivory','Linen','Hemp','Charcoal']},
-    {name:'Breeze Screen 1%', colors:['Linen Flax','Linen Natural','Linen Khaki','Linen Dune','Linen Graphite','Linen Almond Milk','Linen Stone','Linen Cloud','Linen Warm Ivory']},
-    {name:'Breeze Screen 3%', colors:['Linen Flax','Linen Natural','Linen Khaki','Linen Dune','Linen Graphite','Linen Stone','Linen Cloud']},
-    {name:'Galaxy 3%',        colors:['Charcoal','Black','Dark Bronze']}
+    {name:'Lakeview 3%', colors:[{n:'Light Taupe',c:'F1270'},{n:'Sand Drift',c:'F1271'}]},
+    {name:'Lakeview 7%', colors:[{n:'Flax',c:'F1266'},{n:'Yellow Stone',c:'F1267'}]},
+    {name:'Lakeview 10%', colors:[{n:'Frost Gray',c:'F1268'},{n:'Java',c:'F1269'}]},
+    {name:'Meadows 1%', colors:[{n:'Travertine',c:'F1274'},{n:'Mushroom',c:'F1275'},{n:'Sun Buff',c:'F1276'}]},
+    {name:'Meadows 3%', colors:[{n:'Rustic Brown',c:'F1272'},{n:'Earth Brown',c:'F1273'}]},
+    {name:'Jubilee 3%', colors:[
+      {n:'Sweet Cream',c:'F1277'},{n:'Steel Blue/Beige',c:'F1278'},{n:'Chestnut',c:'F1279'},
+      {n:'Egg Shell',c:'F1280'},{n:'Coal',c:'F1281'}
+    ]},
+    {name:'Moon 5%', colors:[
+      {n:'Chalk',c:'F1519'},{n:'Pearl Linen',c:'F1520'},{n:'Pearl',c:'F1521'},{n:'Pearl Pewter',c:'F1522'},
+      {n:'Charcoal Chestnut',c:'F1523'},{n:'Charcoal Gray',c:'F1524'},{n:'Raven Black',c:'F1525'}
+    ]},
+    {name:'Serene 1%', colors:[{n:'Snow White',c:'F1158'},{n:'Silver',c:'F1150'},{n:'Umber',c:'F1149'},{n:'Steel',c:'F1151'}]},
+    {name:'Serene 3%', colors:[{n:'Snow White',c:'F1232'},{n:'Silver',c:'F1233'},{n:'Umber',c:'F1234'},{n:'Steel',c:'F1235'}]},
+    {name:'Serene 7%', colors:[{n:'Snow White',c:'F1240'},{n:'Silver',c:'F1241'},{n:'Umber',c:'F1242'},{n:'Steel',c:'F1243'}]},
+    {name:'Flow 1%', colors:[{n:'Polar White',c:'F1244'},{n:'Wheat',c:'F1245'},{n:'Quarry Stone',c:'F1246'},{n:'Ink',c:'F1247'}]},
+    {name:'Flow 5%', colors:[{n:'Polar White',c:'F1159'},{n:'Wheat',c:'F1152'},{n:'Quarry Stone',c:'F1154'},{n:'Ink',c:'F1153'}]},
+    {name:'Flow 7%', colors:[{n:'Polar White',c:'F1248'},{n:'Wheat',c:'F1249'},{n:'Quarry Stone',c:'F1250'},{n:'Ink',c:'F1251'}]},
+    {name:'Windsong 1%', colors:[{n:'Soft White',c:'F1252'},{n:'Canvas',c:'F1253'},{n:'Graphite',c:'F1254'},{n:'Raven Black',c:'F1255'}]},
+    {name:'Windsong 5%', colors:[
+      {n:'Soft White',c:'F1260'},{n:'Canvas',c:'F1261'},{n:'Nickel',c:'F1262'},
+      {n:'Graphite',c:'F1263'},{n:'Eclipse',c:'F1264'},{n:'Raven Black',c:'F1265'}
+    ]},
+    {name:'Breeze Screen 1% ⚠ Linen', colors:[
+      {n:'Linen Flax',c:'F1780'},{n:'Linen Khaki',c:'F1782'},{n:'Linen Dune',c:'F1783'},
+      {n:'Linen Graphite',c:'F1784'},{n:'Linen Almond Milk',c:'F1785'},{n:'Linen Stone',c:'F1786'},
+      {n:'Linen Cloud',c:'F1846'},{n:'Linen Warm Ivory',c:'F1850'}
+    ]},
+    {name:'Breeze Screen 3% ⚠ Linen', colors:[
+      {n:'Linen Flax',c:'F1787'},{n:'Linen Khaki',c:'F1789'},{n:'Linen Dune',c:'F1790'},
+      {n:'Linen Graphite',c:'F1791'},{n:'Linen Almond Milk',c:'F1792'},{n:'Linen Stone',c:'F1793'},
+      {n:'Linen Cloud',c:'F1845'},{n:'Linen Warm Ivory',c:'F1849'}
+    ]},
+    {name:'Galaxy 3%', colors:[{n:'Soft White',c:'F1728'},{n:'Ash',c:'F1731'},{n:'Black',c:'F1727'}]}
   ],
   'commercial': [
-    {name:'NA300 1%',  colors:['White','Charcoal']},
-    {name:'NA300 3%',  colors:['White','Charcoal']},
-    {name:'NA300 5%',  colors:['White','Charcoal','Black']},
-    {name:'NA400 1%',  colors:['White','Charcoal']},
-    {name:'NA400 3%',  colors:['White','Charcoal']},
-    {name:'NA400 5%',  colors:['White','Charcoal','Black']},
-    {name:'NA400 10%', colors:['White','Linen','Charcoal']},
-    {name:'NA820 3%',  colors:['White','Charcoal','Black']}
+    {name:'NA300 1%', colors:[
+      {n:'Pearl',c:'F0355'},{n:'Pearl/Linen',c:'F0356'},{n:'Pearl/Pewter',c:'F0357'},
+      {n:'Charcoal/Chestnut',c:'F0358'},{n:'Charcoal/Gray',c:'F0359'},{n:'Charcoal',c:'F1872'}
+    ]},
+    {name:'NA400 1%', colors:[
+      {n:'Charcoal/Chestnut',c:'F0379'},{n:'Charcoal',c:'F0378'},{n:'Chalk',c:'F1875'},{n:'Chalk/Beige',c:'F1876'}
+    ]},
+    {name:'NA300 3%', colors:[
+      {n:'Pearl',c:'F0360'},{n:'Pearl/Linen',c:'F0361'},{n:'Pearl/Pewter',c:'F0362'},
+      {n:'Charcoal/Chestnut',c:'F0363'},{n:'Charcoal/Gray',c:'F0364'},{n:'Charcoal',c:'F1873'}
+    ]},
+    {name:'NA400 3%', colors:[{n:'Chalk',c:'F0381'},{n:'Chalk/Beige',c:'F0382'},{n:'Charcoal',c:'F0384'}]},
+    {name:'NA820 3%', colors:[{n:'Oyster/Pewter',c:'F0407'}]},
+    {name:'NA300 5%', colors:[
+      {n:'Pearl',c:'F0365'},{n:'Pearl/Linen',c:'F0366'},{n:'Pearl/Pewter',c:'F0367'},
+      {n:'Charcoal/Chestnut',c:'F0368'},{n:'Charcoal/Gray',c:'F0369'},{n:'Charcoal',c:'F1874'}
+    ]},
+    {name:'NA400 5%', colors:[{n:'Chalk/Beige',c:'F0388'},{n:'Charcoal',c:'F0390'}]},
+    {name:'NA400 10%', colors:[{n:'Charcoal',c:'F0396'}]}
   ]
 };
 
