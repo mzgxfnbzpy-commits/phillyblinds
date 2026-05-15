@@ -677,11 +677,11 @@
             <div class="step-title">Lift system</div>
             <div class="opt-row" id="rn-grp-lift">
               <button class="opt-btn" onclick="selOpt(this,'rn-grp-lift');rnSetLift('cordless')">PrecisionLift™ Cordless</button>
-              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-lift');rnSetLift('cord')">Chain Loop</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-lift');rnSetLift('cord')">Continuous Cord Loop</button>
               <button class="opt-btn" onclick="selOpt(this,'rn-grp-lift');rnSetLift('smart')">SmartRelease™</button>
               <button class="opt-btn" onclick="selOpt(this,'rn-grp-lift');rnSetLift('motor')">Motorized</button>
             </div>
-            <div id="rn-lift-note" class="tooltip-note" style="margin-top:5px">Chain Loop handles large widths &amp; heavy fabrics — child-safe tensioner required. Cordless max width varies by fabric weight. SmartRelease adds controlled descent.</div>
+            <div id="rn-lift-note" class="tooltip-note" style="margin-top:5px">Continuous Cord Loop handles large widths &amp; heavy fabrics — child-safe tensioner required. Cordless max width varies by fabric weight. SmartRelease adds controlled descent.</div>
             <div id="rn-motor-wrap" style="display:none;margin-top:8px">
               <div class="tooltip-note" style="color:var(--gold)">&#9889; Motorization added — we'll confirm battery or hardwired options at measurement visit.</div>
             </div>
@@ -828,7 +828,7 @@
             <div id="rn-standard-hw" style="display:none">
               <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#666;margin-bottom:6px">Standard Hardware — Fascia / Cassette / LightGuard systems</div>
 
-              <!-- Control mechanism (shown only when Chain Loop lift selected) -->
+              <!-- Control mechanism (shown only when Continuous Cord Loop lift selected) -->
               <div id="rn-control-section" style="display:none">
                 <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Control</div>
                 <div id="rn-control-note" class="tooltip-note" style="margin-bottom:10px">Metal chain — standard control for continuous chain loop system.</div>
@@ -956,11 +956,12 @@
               <button class="opt-btn" onclick="selOpt(this,'grp-cellular-lift');updateSizeLimits();showCellularLiftNote('tdbu')">Top Down / Bottom Up</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-cellular-lift');updateSizeLimits();showCellularLiftNote('dn')">Day &amp; Night</button>
             </div>
-            <div id="tdbu-note" class="tooltip-note" style="display:none;margin-top:4px;margin-bottom:6px">TDBU: shade raises from bottom <em>and</em> lowers from top — privacy with natural light. Max height ~86″ · max 60 sq ft.</div>
-            <div id="dn-note" class="tooltip-note" style="display:none;margin-top:4px;margin-bottom:6px">Day &amp; Night: two shades (sheer top + privacy bottom) in one headrail. Valid top: Sheer, Windsong, LF, Designer LF. Valid bottom: LF, RD, Designer, Solus. <strong>Not available in D&amp;N:</strong> Breeze, Ashton, FR/FR Essentials. Top &amp; bottom must match cell size.</div>
+            <div id="tdbu-note" class="tooltip-note" style="display:none;margin-top:4px;margin-bottom:6px">TDBU: shade raises from bottom <em>and</em> lowers from top — privacy with natural light. Max height 96″ · max 60 sq ft. (FR 3/8″S fabric: max height 86″.)</div>
+            <div id="dn-note" class="tooltip-note" style="display:none;margin-top:4px;margin-bottom:6px">Day &amp; Night: two shades in one headrail. Valid top: Sheer, Windsong, LF, Designer LF. Valid bottom: LF, RD, Designer, Solus. <strong>Not available in D&amp;N:</strong> Woven Breeze, Ashton, FR/FR Essentials. Top &amp; bottom must use the same cell size.</div>
             <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:7px;margin-top:10px">Operating system</div>
             <div class="opt-row" id="grp-op-cellular">
               <button class="opt-btn sel" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();cellularOpChange('cordless')">Cordless</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();cellularOpChange('cord')">Chain Loop</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();cellularOpChange('motor')">Motorized</button>
             </div>
             <div id="cellular-op-note" class="tooltip-note" style="margin-top:6px"></div>
@@ -1049,14 +1050,14 @@
             </div>
           </div>
 
-          <!-- CELLULAR: Sheer · LF · Blackout (no "Room Darkening" — blackout cell IS room-darkening) -->
+          <!-- CELLULAR: Sheer · LF · Room Darkening -->
           <div id="light-cellular" style="display:none">
             <div class="opt-row" id="grp-light-cellular">
               <button class="opt-btn sel" onclick="selOpt(this,'grp-light-cellular');updatePrice()">Sheer</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-light-cellular');updatePrice()">Light Filtering</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-light-cellular');updatePrice()">Blackout</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light-cellular');updatePrice()">Room Darkening</button>
             </div>
-            <div class="tooltip-note" style="margin-top:4px">Cellular shades use cell construction for insulation — blackout cells provide full room-darkening performance.</div>
+            <div class="tooltip-note" style="margin-top:4px">Cellular shades use honeycomb cell construction for insulation and privacy. Room Darkening cells block most light — ideal for bedrooms and media rooms.</div>
           </div>
 
           <!-- ZEBRA: Translucent · Room Darkening only — no blackout in this style -->
@@ -1101,7 +1102,7 @@
               <!-- Day & Night dual picker (shown only when D&N fabric type selected) -->
               <div id="cell-dn-wrap" style="display:none">
                 <div class="tooltip-note" style="margin-bottom:10px;color:var(--gold)">
-                  ⚠ Day &amp; Night cellular: top and bottom fabrics must use the same cell size. Available in 9⁄16″S, 3⁄4″S, or 1 1⁄4″S only.
+                  ⚠ Day &amp; Night cellular: two shades in one headrail — top (day) and bottom (night). Top &amp; bottom use the same cell size. Available in 3⁄8″S, 9⁄16″S, 3⁄4″S, and 1 1⁄4″S. (1⁄2″D and 3⁄4″D bottom shades pair with the nearest single-cell Sheer top.)
                 </div>
                 <!-- Top fabric -->
                 <div style="margin-bottom:14px">
@@ -2068,7 +2069,7 @@ const SYSTEM_LIMITS = {
   },
   cellular: {
     'Cordless':  { maxW: 108, maxH: 120, note: 'Cordless max 108″W × 120″H — child & pet safe' },
-    'Chain Loop': { maxW: 120, maxH: 144, note: 'Chain Loop max 120″W × 144″H — best for larger windows' },
+    'Continuous Cord Loop': { maxW: 120, maxH: 144, note: 'Continuous Cord Loop max 120″W × 144″H — best for larger windows' },
     'Motorized': { maxW: 120, maxH: 144, note: 'Motorized max 120″W × 144″H — app, remote & voice control' },
   },
   zebra: {
@@ -2259,7 +2260,7 @@ function cellularOpChange(type) {
     note.textContent = 'Selected operation: Motorized — choose motor brand and type in the section below.';
   } else {
     // Cord Loop
-    note.textContent = 'Chain Loop supports larger sizes (up to 120″ W × 144″ H). SmartRelease upgrade available.';
+    note.textContent = 'Chain Loop: larger sizes (up to 120″ W × 144″ H). Available in Bottom Up, Top Down/Bottom Up, and Day & Night. SmartRelease™ upgrade available.';
   }
 }
 
@@ -2392,16 +2393,17 @@ function toggleLightGuardNote(on) {
 // Fabric → cell size compatibility from Norman Portrait catalog
 const CELL_COMPAT = {
   // indices: 0=3/8S · 1=9/16S · 2=1/2D · 3=3/4S · 4=3/4D · 5=1¼S
+  // Source: Norman Portrait Honeycomb catalog Option Reference Chart
   'lf':   [0,1,2,3,4,5],  // Light Filtering — all 6 sizes
-  'rd':   [0,1,2,3,4,5],  // Room Darkening — all 6 sizes
-  'sheer':[0,  3,  5],    // 3/8S, 3/4S, 1¼S (9/16S in D&N only; not 1/2D or 3/4D)
-  'dn':   [  1,3,  5],    // Day & Night: 9/16S, 3/4S, 1¼S
+  'rd':   [    2,3,4,5],  // Room Darkening — 1/2"D, 3/4"S, 3/4"D, 1¼"S only (NOT 3/8"S or 9/16"S)
+  'sheer':[0],             // Sheer — 3/8"S only as single shade (9/16"S top in D&N only)
+  'dn':   [0,1,2,3,4,5],  // Day & Night — all sizes; pairing rules apply for double-cell bottom
 };
 const FABRIC_NOTES = {
-  'lf':   'Light Filtering: all 49 active colors available in all 6 cell sizes (some specialty colors limited to select sizes — confirmed at quote).',
-  'rd':   'Room Darkening: available in all 6 cell sizes.',
-  'sheer':'Sheer is available in 3⁄8″S, 3⁄4″S, and 1 1⁄4″S only. 9⁄16″S is available in Day &amp; Night mode only.',
-  'dn':   'Day &amp; Night uses two fabrics (top + bottom) in one shade. Available in 9⁄16″S, 3⁄4″S, and 1 1⁄4″S. Select a fabric pairing below.',
+  'lf':   'Light Filtering: available in all 6 cell sizes.',
+  'rd':   'Room Darkening: available in 1⁄2″D, 3⁄4″S, 3⁄4″D, and 1 1⁄4″S only. Not available in 3⁄8″S or 9⁄16″S.',
+  'sheer':'Sheer is available in 3⁄8″S only as a single shade. 9⁄16″S Sheer is available as the top (day) shade in Day &amp; Night mode.',
+  'dn':   'Day &amp; Night: two shades in one headrail — all 6 cell sizes available. Top &amp; bottom use the same cell size. 1⁄2″D or 3⁄4″D bottom pairs with nearest single-cell Sheer top.',
 };
 
 function filterCellSizes(fabric) {
@@ -2881,15 +2883,16 @@ const SOLUNA_COLLECTIONS = {
     ]},
     {name:'Valerie', colors:[
       {n:'Moonscape',c:'F0738'},{n:'Cove',c:'F0739'},{n:'Dolphin',c:'F0740'},
-      {n:'Pomegranate',c:'F0741'},{n:'Sapphire',c:'F0742'},{n:'Silhouette',c:'F0743'}
+      {n:'Pomegranate',c:'F0741'},{n:'Sapphire',c:'F0742'},{n:'Silhouette',c:'F0743'},
+      {n:'Daylight',c:'F0752'}
     ]},
     {name:'Emery', colors:[
-      {n:'Daylight',c:'F0752'},{n:'Creamy',c:'F0753'},{n:'Khaki',c:'F0754'},
+      {n:'Creamy',c:'F0753'},{n:'Khaki',c:'F0754'},
       {n:'Chiffon',c:'F1560'},{n:'Maize',c:'F1561'}
     ]},
     {name:'Brook', colors:[
-      {n:'Pewter',c:'F1120'},{n:'Egret',c:'F1121'},{n:'Smoke',c:'F1122'},
-      {n:'Beige',c:'F1123'},{n:'Latte',c:'F1157'}
+      {n:'Egret',c:'F1121'},{n:'Smoke',c:'F1122'},
+      {n:'Beige',c:'F1123'},{n:'Latte',c:'F1124'}
     ]},
     {name:'Chelsea', colors:[
       {n:'Snow',c:'F1445'},{n:'Cream',c:'F1446'},{n:'Natural',c:'F1447'},
@@ -3021,6 +3024,7 @@ const SOLUNA_COLLECTIONS = {
     ]}
   ],
   'solar': [
+    // Lakeview 1% — listed in Price Group 3 on spec but color codes not confirmed; add when codes available
     {name:'Lakeview 3%', colors:[{n:'Light Taupe',c:'F1270'},{n:'Sand Drift',c:'F1271'}]},
     {name:'Lakeview 7%', colors:[{n:'Flax',c:'F1266'},{n:'Yellow Stone',c:'F1267'}]},
     {name:'Lakeview 10%', colors:[{n:'Frost Gray',c:'F1268'},{n:'Java',c:'F1269'}]},
@@ -3770,7 +3774,7 @@ function rnSetLift(type) {
 
   const liftNotes = {
     cordless: 'PrecisionLift™ Cordless: child & pet safe, no exposed chain. Max width varies by fabric weight — not recommended for oversized or very heavy shades.',
-    cord:     'Chain Loop: handles large widths & heavy fabrics. Child-safe tensioner required. Choose chain or cord control below.',
+    cord:     'Continuous Cord Loop: handles large widths & heavy fabrics. Child-safe tensioner required. Choose chain or cord control below.',
     smart:    'SmartRelease™: controlled soft descent. Requires compatible raceway/cassette. Has surcharge.',
     motor:    'Motorized: required for large shades, hard-to-reach windows, dual & coupled systems. Battery or hardwired options available.'
   };
@@ -3881,7 +3885,7 @@ function validateSolunaColorConfig(config) {
   if (config.fasciaShape === "Flat")                                              errors.push("Flat fascia is not a valid Soluna option.");
   if (config.fasciaShape === "Curved" && config.fasciaMaterial === "Metal")       errors.push("Curved fascia must be fabric wrapped — curved metal is not allowed.");
   if (config.fasciaMaterial === "Metal" && config.fasciaShape !== "Square")       errors.push("Metal fascia is only available as square fascia.");
-  if (config.operatingSystem === "Chain Loop" && config.tensionDevice === false)   errors.push("Safety tension device is required for chain loop — cannot be removed.");
+  if (config.operatingSystem === "Continuous Cord Loop" && config.tensionDevice === false)   errors.push("Safety tension device is required for continuous cord loop — cannot be removed.");
   if (config.systemType === "LightGuard 360" && config.usesFabricDefaultColor)   errors.push("LightGuard 360 requires manual housing color selection — fabric defaults do not apply.");
   if (config.systemType === "Cassette" && !config.cassetteColor)                 errors.push("Cassette color must be selected.");
   return { valid: errors.length === 0, errors };
@@ -3901,7 +3905,7 @@ function rnBuildConfig() {
     fasciaShape:        g('rn-grp-fascia-shape'),
     fasciaMaterial:     g('rn-grp-fascia-mat'),
     hemBarType:         g('rn-grp-hem-type'),
-    operatingSystem:    rnLiftType === 'motor' ? 'Motorized' : rnLiftType === 'cord' ? 'Chain Loop' : 'Cordless',
+    operatingSystem:    rnLiftType === 'motor' ? 'Motorized' : rnLiftType === 'cord' ? 'Continuous Cord Loop' : 'Cordless',
     motorType:          'Battery / Wired (TBD)',
     isDualShade:        rnSystemType === 'dual' || rnSystemType === 'dn',
     tensionDevice:      true,         // always required
@@ -4036,7 +4040,7 @@ function rnSetControl(type) {
   const note = document.getElementById('rn-control-note');
   if (note) {
     note.textContent = type === 'cord'
-      ? 'Cord loop (clutch): pairs with Chain Loop lift system. Color options are more limited than metal chain.'
+      ? 'Cord loop (clutch): pairs with Continuous Cord Loop lift system. Color options are more limited than metal chain.'
       : 'Metal chain: standard for most systems. Wide color selection. Plastic bead or stainless steel available.';
   }
 }
@@ -4079,7 +4083,7 @@ function rnRunValidation() {
     errors.push('Some natural fabrics (e.g. Maui Natural) have a maximum fabric height of 120″.');
   }
   if (rnLiftType === 'cordless' && w && w > 72) {
-    warnings.push('Cordless lift may not support widths over ~72″ depending on fabric weight. Consider Chain Loop or Motorized.');
+    warnings.push('Cordless lift may not support widths over ~72″ depending on fabric weight. Consider Continuous Cord Loop or Motorized.');
   }
   if (lgType === 'LightGuard 360™' && rnFabricType !== 'rd') {
     errors.push('LightGuard 360™ requires Room Darkening fabric to be effective. Select Room Darkening in Step 2.');
