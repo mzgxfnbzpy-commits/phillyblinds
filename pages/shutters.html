@@ -188,22 +188,22 @@
       <div class="config-section">
         <div class="config-step-heading">Material / Construction</div>
         <div class="opt-row" id="shutter-material">
-          <button class="opt-btn" onclick="selOpt(this,'shutter-material');updateShutterQuote()">Real Wood — Normandy&reg;</button>
-          <button class="opt-btn sel" onclick="selOpt(this,'shutter-material');updateShutterQuote()">Composite — Woodlore&reg;</button>
-          <button class="opt-btn" onclick="selOpt(this,'shutter-material');updateShutterQuote()">Hybrid — Woodlore&reg; Plus</button>
+          <button class="opt-btn" onclick="selOpt(this,'shutter-material');updateMaterialColors();updateShutterQuote()">Real Wood — Normandy&reg;</button>
+          <button class="opt-btn sel" onclick="selOpt(this,'shutter-material');updateMaterialColors();updateShutterQuote()">Composite — Woodlore&reg;</button>
+          <button class="opt-btn" onclick="selOpt(this,'shutter-material');updateMaterialColors();updateShutterQuote()">Hybrid — Woodlore&reg; Plus</button>
         </div>
         <div class="mat-cards" style="margin-top:10px">
           <div class="mat-card" style="border-left:3px solid #2DE0C1">
             <div class="mat-card-name">Real Wood — Normandy&reg;</div>
-            <div class="mat-card-desc">Premium Phoenixwood / Paulownia hardwood. Natural grain, warmth, and a true luxury feel. Available stained or painted. Best for low-humidity living spaces.</div>
+            <div class="mat-card-desc">Solid hardwood (painted) or Phoenix wood (stained). 24 paint colors, 18 stain colors, 6 OSMO oil-wax finishes. Mortise &amp; tenon joinery. Lifetime limited warranty. Max panel height 132&Prime;.</div>
           </div>
           <div class="mat-card" style="border-left:3px solid #8090A0">
             <div class="mat-card-name">Composite — Woodlore&reg;</div>
-            <div class="mat-card-desc">Engineered MDF core with a durable polypropylene coating. Moisture-resistant and warp-resistant — ideal for bathrooms, kitchens, and high-humidity rooms. Painted finishes only.</div>
+            <div class="mat-card-desc">Wood composite core with polypropylene coating — resists cupping, warping, and moisture. 6 solid paint colors. Reinforced engineered stiles. Lifetime limited warranty. Max panel height 120&Prime;.</div>
           </div>
           <div class="mat-card" style="border-left:3px solid #7A6A58">
             <div class="mat-card-name">Hybrid — Woodlore&reg; Plus</div>
-            <div class="mat-card-desc">The best of both worlds. Composite frame with lightweight ABS louvers for superior moisture resistance and durability. The ultimate solution for bathrooms, kitchens, and humid climates.</div>
+            <div class="mat-card-desc">Composite frame with ABS co-polymer louvers for maximum dimensional stability. 24 paint colors (3 with surcharge). Optional waterproof version with ABS frame &amp; stainless hinges. Max panel height 120&Prime;.</div>
           </div>
         </div>
         <div class="config-note" style="margin-top:8px">Not sure which material is right for your home? We'll recommend the best option at your free in-home consultation based on room conditions, budget, and style preferences.</div>
@@ -212,12 +212,14 @@
       <!-- STEP B: Louver size -->
       <div class="config-section">
         <div class="config-step-heading">Louver size</div>
-        <div class="opt-row" id="louver-size">
-          <button class="opt-btn" onclick="selOpt(this,'louver-size');updateShutterQuote()">2.5&quot;</button>
-          <button class="opt-btn" onclick="selOpt(this,'louver-size');updateShutterQuote()">3.5&quot;</button>
-          <button class="opt-btn" onclick="selOpt(this,'louver-size');updateShutterQuote()">4.5&quot;</button>
+        <div class="opt-row" id="louver-size" style="flex-wrap:wrap">
+          <button class="opt-btn" onclick="selOpt(this,'louver-size');updateShutterQuote()">1⅞&Prime; Elliptical</button>
+          <button class="opt-btn" onclick="selOpt(this,'louver-size');updateShutterQuote()">2½&Prime;</button>
+          <button class="opt-btn" onclick="selOpt(this,'louver-size');updateShutterQuote()">3&Prime;</button>
+          <button class="opt-btn" onclick="selOpt(this,'louver-size');updateShutterQuote()">3½&Prime;</button>
+          <button class="opt-btn" onclick="selOpt(this,'louver-size');updateShutterQuote()">4½&Prime;</button>
         </div>
-        <div class="config-note">Larger louvers provide more view-through and a more contemporary look. 3.5&quot; is the most popular.</div>
+        <div class="config-note">Larger louvers = bigger view-through and more contemporary look. 3½&Prime; is the most popular. 1⅞&Prime; elliptical is the slimmest option. Max single-panel width varies by louver size — confirmed at your measurement visit.</div>
       </div>
 
       <!-- STEP C: Panel configuration -->
@@ -278,16 +280,148 @@
         </div>
       </div>
 
-      <!-- STEP F: Color / finish -->
-      <div class="config-section">
+      <!-- STEP F: Color / finish — dynamic per material -->
+      <div class="config-section" id="color-section">
         <div class="config-step-heading">Color / finish</div>
-        <div class="opt-row" id="shutter-color">
-          <button class="opt-btn" onclick="selOpt(this,'shutter-color');handleCustomColor(this);updateShutterQuote()">Bright White</button>
-          <button class="opt-btn" onclick="selOpt(this,'shutter-color');handleCustomColor(this);updateShutterQuote()">Antique White</button>
-          <button class="opt-btn" onclick="selOpt(this,'shutter-color');handleCustomColor(this);updateShutterQuote()">Linen</button>
-          <button class="opt-btn" onclick="selOpt(this,'shutter-color');handleCustomColor(this);updateShutterQuote()">Custom color</button>
+
+        <!-- Normandy: finish type selector (paint / stain / OSMO) -->
+        <div id="nd-finish-type" style="display:none;margin-bottom:12px">
+          <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:6px">Finish type</div>
+          <div class="opt-row" id="nd-finish-grp">
+            <button class="opt-btn sel" onclick="selOpt(this,'nd-finish-grp');updateNdColors();updateShutterQuote()">Paint</button>
+            <button class="opt-btn" onclick="selOpt(this,'nd-finish-grp');updateNdColors();updateShutterQuote()">Stain</button>
+            <button class="opt-btn" onclick="selOpt(this,'nd-finish-grp');updateNdColors();updateShutterQuote()">OSMO <span style="font-size:10px;color:#FCA044;font-weight:600">+surcharge</span></button>
+          </div>
+          <div class="config-note" style="margin-top:4px">Paint = solid colors on hardwood. Stain = natural grain shows through. OSMO = premium oil-wax finish — all OSMO colors carry a surcharge.</div>
         </div>
-        <div id="custom-color-note" style="display:none" class="custom-color-note">Describe your color in the notes field below, or provide a paint chip reference when we visit.</div>
+
+        <!-- Woodlore Plus: waterproof option -->
+        <div id="wlp-waterproof" style="display:none;margin-bottom:12px">
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 14px;border:1px solid #e8e8e4;border-radius:8px;background:#fff;font-size:13px">
+            <input type="checkbox" id="wlp-waterproof-cb" onchange="updateShutterQuote()" style="width:16px;height:16px;cursor:pointer">
+            <span><strong>Waterproof option</strong> — ABS frame, stile &amp; louvers. Stainless steel hinges. Ideal for bathrooms &amp; moisture-prone areas.</span>
+          </label>
+        </div>
+
+        <!-- WOODLORE colors — 6 solid paint colors -->
+        <div id="colors-woodlore" style="display:none">
+          <div style="font-size:11px;color:#888;margin-bottom:6px">6 solid paint colors</div>
+          <div class="opt-row" id="shutter-color-wl" style="flex-wrap:wrap">
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wl');updateShutterQuote()">Pure White (001)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wl');updateShutterQuote()">Extra White (002)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wl');updateShutterQuote()">Silk White (003)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wl');updateShutterQuote()">Pearl (006)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wl');updateShutterQuote()">Sea Mist (032)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wl');updateShutterQuote()">Decorator's White (063)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wl');handleCustomColor(this);updateShutterQuote()">Custom color</button>
+          </div>
+        </div>
+
+        <!-- WOODLORE PLUS colors — 24 paint colors (3 with surcharge) -->
+        <div id="colors-woodlore-plus" style="display:none">
+          <div style="font-size:11px;color:#888;margin-bottom:6px">24 solid paint colors &mdash; colors marked <strong style="color:#FCA044">+surcharge</strong> carry an additional cost</div>
+          <div class="opt-row" id="shutter-color-wlp" style="flex-wrap:wrap">
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">Pure White (001)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">Extra White (002)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">Silk White (003)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">Bright White (004)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">Pearl (006)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">Ivory Lace (007)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">Creamy (009)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">Crisp Linen (012)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">Bisque (013)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">String (019)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">Sea Mist (032)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">Ice (046)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">Clay (053)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">Decorator's White (063)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">Winchester White (066)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">Aura White (076)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">Taupe Gray (080)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">TS White (090)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">True White (600)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">Chiffon (601)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()">Natural Linen (603)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()" style="color:#FCA044">Gray Black (017) +surcharge</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()" style="color:#FCA044">Classic Black (836) +surcharge</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');updateShutterQuote()" style="color:#FCA044">Chateau Brown (609) +surcharge</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-wlp');handleCustomColor(this);updateShutterQuote()">Custom color</button>
+          </div>
+        </div>
+
+        <!-- NORMANDY PAINT — 24 colors (4 with surcharge) -->
+        <div id="colors-nd-paint" style="display:none">
+          <div style="font-size:11px;color:#888;margin-bottom:6px">24 paint colors &mdash; <span style="color:#FCA044">+surcharge</span> colors carry an additional cost</div>
+          <div class="opt-row" id="shutter-color-ndp" style="flex-wrap:wrap">
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">Pure White (001)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">Extra White (002)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">Silk White (003)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">Bright White (004)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">Pearl (006)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">Ivory Lace (007)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">Creamy (009)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">Crisp Linen (012)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">Bisque (013)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">String (019)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">Sea Mist (032)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">Ice (046)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">Clay (053)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">Decorator's White (063)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">Winchester White (066)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">Aura White (076)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">Taupe Gray (080)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">TS White (090)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">True White (600)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">Chiffon (601)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()">Natural Linen (603)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()" style="color:#FCA044">Gray Black (017) +surcharge</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()" style="color:#FCA044">Matte Black (246) +surcharge</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()" style="color:#FCA044">Classic Black (836) +surcharge</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');updateShutterQuote()" style="color:#FCA044">Chateau Brown (609) +surcharge</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndp');handleCustomColor(this);updateShutterQuote()">Custom color</button>
+          </div>
+        </div>
+
+        <!-- NORMANDY STAIN — 18 colors (1 with surcharge) -->
+        <div id="colors-nd-stain" style="display:none">
+          <div style="font-size:11px;color:#888;margin-bottom:6px">18 stain colors — natural wood grain visible. <span style="color:#FCA044">Matte Black</span> carries a surcharge.</div>
+          <div class="opt-row" id="shutter-color-nds" style="flex-wrap:wrap">
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-nds');updateShutterQuote()">Rustic Gray (108)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-nds');updateShutterQuote()">Limed White (110)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-nds');updateShutterQuote()">Natural (200)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-nds');updateShutterQuote()">Golden Oak (202)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-nds');updateShutterQuote()">Goldenrod (205)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-nds');updateShutterQuote()">Black Walnut (221)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-nds');updateShutterQuote()">Red Oak (227)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-nds');updateShutterQuote()">Rich Walnut (229)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-nds');updateShutterQuote()">Old Teak (230)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-nds');updateShutterQuote()">Wenge (237)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-nds');updateShutterQuote()">Auburn (242)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-nds');updateShutterQuote()" style="color:#FCA044">Matte Black (246) +surcharge</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-nds');updateShutterQuote()">Pretzel (248)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-nds');updateShutterQuote()">Sumatra (250)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-nds');updateShutterQuote()">Toffee (252)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-nds');updateShutterQuote()">Driftwood (254)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-nds');updateShutterQuote()">Silver Gray (255)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-nds');updateShutterQuote()">French Oak (862)</button>
+          </div>
+        </div>
+
+        <!-- NORMANDY OSMO — 6 colors (all surcharge) -->
+        <div id="colors-nd-osmo" style="display:none">
+          <div style="font-size:11px;color:#888;margin-bottom:6px">6 OSMO oil-wax finish colors — <strong style="color:#FCA044">all OSMO colors carry a surcharge</strong></div>
+          <div class="opt-row" id="shutter-color-ndo" style="flex-wrap:wrap">
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndo');updateShutterQuote()" style="color:#FCA044">White Matte (1003)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndo');updateShutterQuote()" style="color:#FCA044">Silk Gray (1109)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndo');updateShutterQuote()" style="color:#FCA044">Granite Gray (1111)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndo');updateShutterQuote()" style="color:#FCA044">Black (1203)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndo');updateShutterQuote()" style="color:#FCA044">Ebony (1204)</button>
+            <button class="opt-btn" onclick="selOpt(this,'shutter-color-ndo');updateShutterQuote()" style="color:#FCA044">Teak (1502)</button>
+          </div>
+        </div>
+
+        <div id="custom-color-note" style="display:none" class="custom-color-note">Describe your color in the notes field below, or provide a paint chip at your measurement visit.</div>
+        <div class="config-note" style="margin-top:6px">Color accuracy varies on screen — physical swatches available at your in-home visit.</div>
       </div>
 
       <!-- STEP G: Window details -->
@@ -364,6 +498,14 @@
         <div class="quote-row">
           <span class="quote-row-label">Tilt rod</span>
           <span class="quote-row-val" id="qs-tilt">&mdash;</span>
+        </div>
+        <div class="quote-row" id="qs-waterproof-row" style="display:none">
+          <span class="quote-row-label">Waterproof option</span>
+          <span class="quote-row-val" id="qs-waterproof">Yes</span>
+        </div>
+        <div class="quote-row" id="qs-finish-row" style="display:none">
+          <span class="quote-row-label">Finish type</span>
+          <span class="quote-row-val" id="qs-finish">&mdash;</span>
         </div>
         <div class="quote-row">
           <span class="quote-row-label">Color</span>
@@ -506,6 +648,8 @@
 <script>
 renderNav('Shutters');
 renderFooter(false);
+// Initialize color section for default material (Woodlore)
+document.addEventListener('DOMContentLoaded', function(){ updateMaterialColors(); });
 
 // Specialty card section is always visible; standard content toggled
 var _shtSpecialtyCard = document.querySelector('#sht-standard-content + div');
@@ -581,17 +725,66 @@ function handleTiltRod(el) {
 
 function handleCustomColor(el) {
   const note = document.getElementById('custom-color-note');
-  note.style.display = el.textContent.trim() === 'Custom color' ? 'block' : 'none';
+  note.style.display = el.textContent.trim().startsWith('Custom') ? 'block' : 'none';
+}
+
+// Show/hide color panels based on selected material
+function updateMaterialColors() {
+  const matBtn = document.querySelector('#shutter-material .opt-btn.sel');
+  const mat = matBtn ? matBtn.textContent.trim() : '';
+  const isWL  = mat.includes('Woodlore') && !mat.includes('Plus');
+  const isWLP = mat.includes('Plus');
+  const isND  = mat.includes('Normandy') || mat.includes('Wood');
+  document.getElementById('colors-woodlore').style.display      = isWL  ? 'block' : 'none';
+  document.getElementById('colors-woodlore-plus').style.display = isWLP ? 'block' : 'none';
+  document.getElementById('nd-finish-type').style.display       = isND  ? 'block' : 'none';
+  document.getElementById('wlp-waterproof').style.display       = isWLP ? 'block' : 'none';
+  if (isND) updateNdColors(); else { ['colors-nd-paint','colors-nd-stain','colors-nd-osmo'].forEach(id=>{ document.getElementById(id).style.display='none'; }); }
+}
+
+// Show correct Normandy color set based on finish type
+function updateNdColors() {
+  const ftBtn = document.querySelector('#nd-finish-grp .opt-btn.sel');
+  const ft = ftBtn ? ftBtn.textContent.trim() : 'Paint';
+  const isPaint = ft.startsWith('Paint');
+  const isStain = ft.startsWith('Stain');
+  const isOsmo  = ft.startsWith('OSMO');
+  document.getElementById('colors-nd-paint').style.display = isPaint ? 'block' : 'none';
+  document.getElementById('colors-nd-stain').style.display = isStain ? 'block' : 'none';
+  document.getElementById('colors-nd-osmo').style.display  = isOsmo  ? 'block' : 'none';
+}
+
+// Get currently selected color across all color groups
+function getSelectedColor() {
+  const groups = ['shutter-color-wl','shutter-color-wlp','shutter-color-ndp','shutter-color-nds','shutter-color-ndo'];
+  for (const id of groups) {
+    const sel = document.querySelector('#' + id + ' .opt-btn.sel');
+    if (sel) return sel.textContent.trim();
+  }
+  return '—';
 }
 
 function updateShutterQuote() {
   const g = (id) => { const s = document.querySelector('#' + id + ' .opt-btn.sel'); return s ? s.textContent.trim() : '—'; };
-  document.getElementById('qs-material').textContent = g('shutter-material');
-  document.getElementById('qs-louver').textContent = g('louver-size');
-  document.getElementById('qs-panel').textContent = g('panel-config');
-  document.getElementById('qs-frame').textContent = g('frame-style');
-  document.getElementById('qs-tilt').textContent = g('tilt-rod');
-  document.getElementById('qs-color').textContent = g('shutter-color');
+  const matBtn = document.querySelector('#shutter-material .opt-btn.sel');
+  const mat = matBtn ? matBtn.textContent.trim() : '—';
+  document.getElementById('qs-material').textContent = mat;
+  document.getElementById('qs-louver').textContent   = g('louver-size');
+  document.getElementById('qs-panel').textContent    = g('panel-config');
+  document.getElementById('qs-frame').textContent    = g('frame-style');
+  document.getElementById('qs-tilt').textContent     = g('tilt-rod');
+  document.getElementById('qs-color').textContent    = getSelectedColor();
+  // Waterproof (WLP only)
+  const wpRow = document.getElementById('qs-waterproof-row');
+  const wpCb  = document.getElementById('wlp-waterproof-cb');
+  const isWLP = mat.includes('Plus');
+  wpRow.style.display = (isWLP && wpCb && wpCb.checked) ? 'flex' : 'none';
+  // Normandy finish type
+  const isND = mat.includes('Normandy') || mat.includes('Wood — Normandy') || mat.startsWith('Real Wood');
+  const ftRow = document.getElementById('qs-finish-row');
+  const ftBtn = document.querySelector('#nd-finish-grp .opt-btn.sel');
+  ftRow.style.display = isND ? 'flex' : 'none';
+  if (isND && ftBtn) document.getElementById('qs-finish').textContent = ftBtn.textContent.replace('+surcharge','').trim();
   const wc = document.getElementById('win-count');
   const wt = document.getElementById('win-type');
   document.getElementById('qs-windows').textContent = wc ? wc.value : '—';
@@ -615,18 +808,28 @@ function submitShutterForm() {
   const delivery = delBtn ? delBtn.textContent.trim() : 'Ship to me';
   const g = (id) => { const s = document.querySelector('#' + id + ' .opt-btn.sel'); return s ? s.textContent.trim() : '—'; };
 
+  const matBtn = document.querySelector('#shutter-material .opt-btn.sel');
+  const mat    = matBtn ? matBtn.textContent.trim() : '—';
+  const isWLP  = mat.includes('Plus');
+  const isND   = mat.includes('Normandy') || mat.startsWith('Real Wood');
+  const wpCb   = document.getElementById('wlp-waterproof-cb');
+  const waterproof = (isWLP && wpCb && wpCb.checked) ? 'Yes' : '';
+  const ftBtn  = document.querySelector('#nd-finish-grp .opt-btn.sel');
+  const finishType = isND ? (ftBtn ? ftBtn.textContent.replace('+surcharge','').trim() : 'Paint') : '';
   const body =
     'SHUTTER QUOTE REQUEST\n' +
     '─────────────────────\n' +
     'Name:  ' + name  + '\n' +
     'Phone: ' + phone + '\n' +
     'Email: ' + (email || '—') + '\n\n' +
-    'Material:     ' + g('shutter-material') + '\n' +
-    'Louver size:  ' + g('louver-size')      + '\n' +
-    'Panel config: ' + g('panel-config')     + '\n' +
-    'Frame style:  ' + g('frame-style')      + '\n' +
-    'Tilt rod:     ' + g('tilt-rod')         + '\n' +
-    'Color:        ' + g('shutter-color')    + '\n' +
+    'Material:     ' + mat + '\n' +
+    (waterproof ? 'Waterproof:   Yes\n' : '') +
+    (finishType ? 'Finish type:  ' + finishType + '\n' : '') +
+    'Louver size:  ' + g('louver-size') + '\n' +
+    'Panel config: ' + g('panel-config') + '\n' +
+    'Frame style:  ' + g('frame-style') + '\n' +
+    'Tilt rod:     ' + g('tilt-rod') + '\n' +
+    'Color:        ' + getSelectedColor() + '\n' +
     'Windows:      ' + (document.getElementById('win-count') ? document.getElementById('win-count').value : '—') + '\n' +
     'Window type:  ' + (document.getElementById('win-type')  ? document.getElementById('win-type').value  : '—') + '\n\n' +
     'Delivery: ' + delivery + '\n' +
