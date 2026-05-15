@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Configure and price SmartPrivacy Faux Wood Blinds online. Cordless, child-safe, 14 colors, instant pricing. Serving Philadelphia area.">
+<meta name="description" content="Configure and price Norman SmartPrivacy Faux Wood Blinds online. Cordless, child-safe, 16 colors, instant pricing. Serving Philadelphia area.">
 <meta property="og:title" content="SmartPrivacy Faux Wood Blinds | Philly Blinds">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://phillyblinds.com/pages/faux-wood-blinds.html">
@@ -151,7 +151,7 @@
       <span class="hero-pill">Cordless &amp; child safe</span>
       <span class="hero-pill">SmartPrivacy® closure</span>
       <span class="hero-pill">2&Prime; &amp; 2&frac12;&Prime; slats</span>
-      <span class="hero-pill">14 colors</span>
+      <span class="hero-pill">16 colors</span>
     </div>
   </div>
 </div>
@@ -919,9 +919,16 @@ function submitForm(){
   errEl.style.display='none';
 }
 
-// Init
+// Init — apply default 2" slat color filter on page load
 document.addEventListener('DOMContentLoaded',()=>{
   S.slat='2in'; markDone('step1'); $('s7val').textContent='1 blind';
+  // Hide colors not available for 2" slat (Storm Gray Embossed = 2.5in only)
+  document.querySelectorAll('#step2 .color-card').forEach(function(card){
+    var ds=card.getAttribute('data-slat');
+    card.style.display=(!ds||ds==='both'||ds==='2in')?'':'none';
+  });
+  var note=$('color-slat-note');
+  if(note){note.textContent='2″ slat: Storm Gray Smooth and all printed colors available. Storm Gray Embossed is only available in 2½″.';note.style.display='block';}
 });
 </script>
 </body>
