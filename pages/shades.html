@@ -1339,12 +1339,13 @@
         <div style="font-size:10px;color:var(--text-faint);margin-top:8px;line-height:1.5" id="pb-price-note"></div>
       </div>
 
-      <!-- Wood Valance add-on -->
+      <!-- Valance add-on -->
       <div id="pb-valance-wrap" style="display:none;margin-top:10px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:9px">
-        <label style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:#333;cursor:pointer;margin-bottom:8px">
-          <input type="checkbox" id="pb-add-valance" onchange="pbCalcPrice()"> Add wood valance
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:#333;cursor:pointer;margin-bottom:4px">
+          <input type="checkbox" id="pb-add-valance" onchange="pbCalcPrice()"> Add valance
           <span style="font-weight:400;color:#888">— priced by width</span>
         </label>
+        <div style="font-size:11px;color:#888;margin-bottom:8px">Available in metal and basic colors only.</div>
         <div id="pb-valance-opts" style="display:none">
           <div class="form-group">
             <label style="font-size:12px">Valance width (inches)</label>
@@ -3758,20 +3759,23 @@ function pbCalcPrice() {
   var isOversized = result.oversized;
   var freight = isOversized ? (80 + Math.max(0,qty-1)*50) : (25 + Math.max(0,qty-1)*11);
 
-  // Wood valance
+  // Valance
   var valTotal = 0;
+  var valRows = '';
   if (addVal && addVal.checked) {
     var vwEl = document.getElementById('pb-valance-width');
     var vw = parseFloat((vwEl && vwEl.value) ? vwEl.value : w);
     var vp = _pbValanceLookup(vw);
     valTotal = vp ? vp * qty : 0;
-    if (vp) pRow('Wood valance ('+(vw)+'→'+_pbRoundUp(vw,PB_VALANCE_W)+'") × '+qty, valTotal);
-    else rows+='<div style="font-size:11px;color:var(--gold);padding:4px 0">Valance width out of range — quote required.</div>';
+    if (vp) valRows = '<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-dark);padding:4px 0;border-bottom:.5px solid var(--border-dark)"><span>Valance ('+(vw)+'→'+_pbRoundUp(vw,PB_VALANCE_W)+'") × '+qty+'</span><span style="color:var(--cream);font-weight:500">$'+valTotal.toFixed(0)+'</span></div>';
+    else valRows = '<div style="font-size:11px;color:var(--gold);padding:4px 0">Valance width out of range — quote required.</div>';
   }
 
   var grandTotal = shadeTotal + freight + valTotal;
 
+  // Display: shade first, then valance, then freight
   pRow((isBlackout?'Blackout (+20%)':'Solar Screen')+' ('+w+'→'+result.rw+'" × '+h+'→'+result.rh+'") × '+qty, shadeTotal);
+  rows += valRows;
   pRow((isOversized?'Oversized freight (over 90")':'Standard freight')+' — '+qty+' shade'+(qty>1?'s':''), freight, true);
 
   document.getElementById('pb-price-rows').innerHTML = rows;
