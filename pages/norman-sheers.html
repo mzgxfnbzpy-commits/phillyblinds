@@ -554,17 +554,17 @@ var PS_LF_FABRICS = [
   {code:'F1192',name:'Granite',color:'#808080'},
   {code:'F1193',name:'Mineral',color:'#6b7280'},
   {code:'F1178',name:'Snowflake',color:'#f0f0f0'},
-  {code:'F1179',name:'Lily',color:'#f5f0e8'},
+  {code:'F1179',name:'Lily Cream',color:'#f5f0e8'},
   {code:'F1180',name:'Dunes',color:'#c4a882'},
   {code:'F1181',name:'Smoke',color:'#9ca3af'},
   {code:'F1182',name:'Midnight',color:'#0f172a'},
   {code:'F1183',name:'Cottonwood',color:'#f0ebe0'},
-  {code:'F1184',name:'Cedar',color:'#a0785a'},
+  {code:'F1184',name:'Cedar Cream',color:'#a0785a'},
   {code:'F1185',name:'Quarry',color:'#5f6b6b'},
   {code:'F1186',name:'Soft White',color:'#f5f2ec'},
   {code:'F1187',name:'Cinnamon',color:'#8b4513'},
   {code:'F1188',name:'Platinum',color:'#e5e4e2'},
-  {code:'F1189',name:'Magnetic',color:'#4a4a4a'},
+  {code:'F1189',name:'Magnetic Gray',color:'#4a4a4a'},
   {code:'F1190',name:'Cast Iron',color:'#383838'},
   {code:'F1194',name:'Frosty Asphalt',color:'#4b5563'},
   {code:'F1195',name:'Frosty Gray',color:'#9ca3af'},
@@ -578,7 +578,7 @@ var PS_RD_FABRICS = [
   {code:'F1201',name:'Silk',color:'#faf0e6'},
   {code:'F1202',name:'Chai Latte',color:'#c4956a'},
   {code:'F1203',name:'Sky',color:'#87ceeb'},
-  {code:'F1204',name:'Mars',color:'#c1440e'},
+  {code:'F1204',name:'Mars Black',color:'#c1440e'},
   {code:'F1205',name:'Seaside',color:'#4a9ebe'},
   {code:'F1206',name:'Palm',color:'#4a7c59'},
   {code:'F1207',name:'Stone',color:'#8b8680'},
@@ -845,6 +845,7 @@ function validateSizes() {
       var maxW = sbsChecked ? 284.375 : 285.625;
       if (w < minW) errors.push('Minimum width for SmartDrape' + (sbsChecked ? ' side-by-side' : '') + ': ' + minW + '".');
       if (w > maxW) errors.push('Maximum width for SmartDrape' + (sbsChecked ? ' side-by-side' : '') + ': ' + maxW + '".');
+      if (h < 24)  errors.push('Minimum height for SmartDrape is 24".');
       if (h > 144) errors.push('Maximum height for SmartDrape is 144".');
       var area = (w / 12) * (h / 12);
       if (area > 237) errors.push('Area ' + area.toFixed(1) + ' sq ft exceeds the 237 sq ft maximum per shade.');
