@@ -105,9 +105,9 @@
 
 <!-- TYPE TABS -->
 <div class="type-tabs" id="type-tabs">
-  <button class="type-tab on" onclick="switchTab('drapes',this)">Custom Drapery</button>
-  <button class="type-tab" onclick="switchTab('roman',this)">Roman Shades</button>
-  <button class="type-tab" onclick="switchTab('cornval',this)">Cornices &amp; Valances</button>
+  <button class="type-tab on" onclick="switchTab('drapes',this)">Custom Drapery <span style="font-size:9px;background:var(--gold);color:var(--espresso);padding:1px 6px;border-radius:8px;font-weight:700;margin-left:4px;vertical-align:middle">INSTANT PRICE</span></button>
+  <button class="type-tab" onclick="switchTab('roman',this)">Roman Shades <span style="font-size:9px;background:var(--gold);color:var(--espresso);padding:1px 6px;border-radius:8px;font-weight:700;margin-left:4px;vertical-align:middle">INSTANT PRICE</span></button>
+  <button class="type-tab" onclick="switchTab('cornval',this)">Cornices &amp; Valances <span style="font-size:9px;background:var(--gold);color:var(--espresso);padding:1px 6px;border-radius:8px;font-weight:700;margin-left:4px;vertical-align:middle">INSTANT PRICE</span></button>
   <button class="type-tab" style="color:var(--gold)" onclick="pbShowContact('Specialty Soft Treatments — Custom Fabrication')">Specialty ✦</button>
 </div>
 
@@ -400,8 +400,12 @@
   <!-- STEP 4: QUOTE FORM -->
   <div class="step">
     <div class="step-label">Step 4</div>
-    <div class="step-title">Get your custom quote</div>
-    <div class="step-sub">Drapery is always custom quoted — every project is unique. Fill this out and we'll follow up fast.</div>
+    <div class="step-title">Review price &amp; request order</div>
+    <div class="step-sub">Enter your dimensions above to get an instant price estimate. Fill out the form and we'll confirm everything before fabrication.</div>
+    <div style="display:flex;align-items:flex-start;gap:10px;background:#fef9ec;border:1px solid #f0d070;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#7a5c00;line-height:1.5">
+      <span style="font-size:15px;flex-shrink:0">&#9888;</span>
+      <span><strong>Specialty shapes &amp; designs</strong> — arched windows, bay windows, goblet / barrel pleat, or heavily trimmed panels require a custom quote. Use the <strong>Specialty ✦</strong> tab above or call <a href="tel:6097421720" style="color:#7a5c00;font-weight:600">(609) 742-1720</a> and we'll price it out together.</span>
+    </div>
 
     <div style="background:#fff;border:1px solid #e8e8e4;border-radius:12px;padding:24px;margin-top:16px" id="drape-form">
       <div class="form-row">
@@ -1095,7 +1099,11 @@
         <div id="del-corn-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional.</div></div>
         <div id="del-corn-p" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>
       </div>
-      <button class="btn-gold" onclick="submitCornice()" style="width:100%;padding:13px;font-size:14px;font-weight:600;margin-top:16px">Request cornice quote &rarr;</button>
+      <div style="display:flex;align-items:flex-start;gap:10px;background:#fef9ec;border:1px solid #f0d070;border-radius:8px;padding:10px 14px;margin-top:14px;margin-bottom:12px;font-size:12px;color:#7a5c00;line-height:1.5">
+        <span style="font-size:15px;flex-shrink:0">&#9888;</span>
+        <span><strong>Specialty shapes</strong> — angled cornices, rounded returns, or heavily carved / decorative valances require a custom quote. Call <a href="tel:6097421720" style="color:#7a5c00;font-weight:600">(609) 742-1720</a> or use the <strong>Specialty ✦</strong> tab above.</span>
+      </div>
+      <button class="btn-gold" onclick="submitCornice()" style="width:100%;padding:13px;font-size:14px;font-weight:600;margin-top:4px">Request cornice &amp; valance quote &rarr;</button>
     </div>
     <div class="success-box" id="corn-success"><strong>Quote sent!</strong> We'll follow up soon. Urgent? <a href="tel:6097421720" style="color:#2e7d32">(609) 742-1720</a></div>
   </div>
