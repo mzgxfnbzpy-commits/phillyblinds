@@ -807,12 +807,8 @@
 
               <!-- Control mechanism (shown only when Cord Loop lift selected) -->
               <div id="rn-control-section" style="display:none">
-                <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Control — cord or chain?</div>
-                <div class="opt-row" id="rn-grp-control">
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-control');rnSetControl('chain')">Metal chain</button>
-                  <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-control');rnSetControl('cord')">Cord loop (clutch)</button>
-                </div>
-                <div id="rn-control-note" class="tooltip-note" style="margin-top:4px;margin-bottom:14px">Metal chain: standard bead chain. Cord loop (clutch): fabric cord on a loop.</div>
+                <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Control</div>
+                <div id="rn-control-note" class="tooltip-note" style="margin-bottom:10px">Metal chain — standard control for continuous cord loop system.</div>
               </div>
 
               <!-- Chain colors -->
@@ -942,7 +938,6 @@
             <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:7px;margin-top:10px">Operating system</div>
             <div class="opt-row" id="grp-op-cellular">
               <button class="opt-btn sel" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();cellularOpChange('cordless')">Cordless</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();cellularOpChange('cord')">Cord Loop</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();cellularOpChange('motor')">Motorized</button>
             </div>
             <div id="cellular-op-note" class="tooltip-note" style="margin-top:6px"></div>
@@ -3607,9 +3602,8 @@ function rnSetLift(type) {
     if (chainWrap) chainWrap.style.display = 'none';
     if (cordWrap)  cordWrap.style.display  = 'none';
   } else {
-    // Default to cord loop (clutch) when cord loop lift selected
-    var cordBtn = document.querySelector('#rn-grp-control .opt-btn:nth-child(2)');
-    if (cordBtn) { selOpt(cordBtn, 'rn-grp-control'); rnSetControl('cord'); }
+    // Show chain color picker for cord loop lift (metal chain is the control)
+    if (chainWrap) chainWrap.style.display = 'block';
   }
 
   const liftNotes = {
