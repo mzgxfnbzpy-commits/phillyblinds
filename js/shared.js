@@ -728,7 +728,7 @@ function _initContactPanel() {
       '<div class="pb-cp-note" id="pb-cp-hint">Tell us what you need &mdash; we\'ll measure, advise, and quote at no charge.</div>' +
       '<a href="tel:6097421720" class="pb-cp-phone-btn">&#128222; (609) 742-1720</a>' +
       '<div class="pb-cp-sub">Justin Healy &mdash; call or text 24/7</div>' +
-      '<a href="mailto:justin@phillyblinds.com" class="pb-cp-email-link">justin@phillyblinds.com</a>' +
+      '<a href="mailto:justin@phillyblinds.com" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#f5f5f3;border:1.5px solid #e8e8e4;color:#1C1510;text-decoration:none;font-size:14px;font-weight:600;padding:12px;border-radius:9px;margin-bottom:16px;transition:background .15s" onmouseover="this.style.background=\'#ebe8e4\'" onmouseout="this.style.background=\'#f5f5f3\'">&#9993;&#65039; justin@phillyblinds.com</a>' +
       '<div class="pb-cp-or">or send a message</div>' +
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">' +
         '<div><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Name *</label>' +
