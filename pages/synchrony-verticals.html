@@ -328,29 +328,23 @@
             <div class="color-swatch" style="background:#9AAA84"></div>
             <div class="color-label"><div class="color-name">Botanical Garden</div></div>
           </div>
-        </div>
-      </div>
-
-      <div class="fabric-section">
-        <div class="fabric-section-head">Willow</div>
-        <div class="color-grid">
-          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Willow','Mist',4)">
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Grasscloth','Willow Mist',4)">
             <div class="color-swatch" style="background:#D8DDE0"></div>
-            <div class="color-label"><div class="color-name">Mist</div></div>
+            <div class="color-label"><div class="color-name">Willow Mist</div></div>
           </div>
-          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Willow','Birch',4)">
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Grasscloth','Birch',4)">
             <div class="color-swatch" style="background:#C8B898"></div>
             <div class="color-label"><div class="color-name">Birch</div></div>
           </div>
-          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Willow','Burnished Clay',4)">
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Grasscloth','Burnished Clay',4)">
             <div class="color-swatch" style="background:#B07050"></div>
             <div class="color-label"><div class="color-name">Burnished Clay</div></div>
           </div>
-          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Willow','Cloud',4)">
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Grasscloth','Cloud',4)">
             <div class="color-swatch" style="background:#C8CDD0"></div>
             <div class="color-label"><div class="color-name">Cloud</div></div>
           </div>
-          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Willow','Natural Gray',4)">
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Grasscloth','Natural Gray',4)">
             <div class="color-swatch" style="background:#A8A8A0"></div>
             <div class="color-label"><div class="color-name">Natural Gray</div></div>
           </div>
@@ -471,7 +465,8 @@
       <div class="step-head-val" id="s4val">None selected</div>
     </div>
     <div class="step-body">
-      <div class="sub-label">Shim (outside mount — optional)</div>
+      <div class="sub-label">Shim <span style="font-weight:400;color:#999">(outside mount only — optional)</span></div>
+      <div id="shim-na-note" class="step-note" style="display:none;margin-bottom:6px">Shims are only available with outside mount.</div>
       <div class="addon-row" id="shim-addon" onclick="toggleShim(this)">
         <div class="addon-left">
           <div class="addon-check" id="shim-check">✓</div>
@@ -631,8 +626,20 @@ function pickMount(el,key,label){
   document.getElementById('s2val').textContent=label;
   markDone('step2');
   const note=document.getElementById('mount-note');
-  if(key==='inside'){note.style.display='block';note.textContent='Inside mount: measure exact frame opening width & height. Min mounting depth 3¾″ (2 13/16″ for semi-flush).';}
-  else{note.style.display='block';note.textContent='Outside mount: measure the area you want covered. Recommend adding ~1½″ per side for light block. No deductions applied.';}
+  if(key==='inside'){note.style.display='block';note.textContent='Inside mount: measure exact frame opening width & height. Mfr deducts 3/8″ W and 3/16″ H. Min depth 3¾″ (2 13/16″ semi-flush).';}
+  else{note.style.display='block';note.textContent='Outside mount: no deductions. Recommend adding ~1½″ each side for light block.';}
+  // Shims: outside mount only per Norman spec
+  const shimAddon=document.getElementById('shim-addon');
+  const shimNa=document.getElementById('shim-na-note');
+  if(key==='inside'){
+    if(shimAddon){shimAddon.style.opacity='0.35';shimAddon.style.pointerEvents='none';shimAddon.classList.remove('sel');}
+    if(shimNa)shimNa.style.display='block';
+    state.shim=false;document.getElementById('shim-qty-wrap').style.display='none';
+    document.getElementById('shim-check').style.color='transparent';
+  } else {
+    if(shimAddon){shimAddon.style.opacity='';shimAddon.style.pointerEvents='';}
+    if(shimNa)shimNa.style.display='none';
+  }
   calcPrice();
 }
 
