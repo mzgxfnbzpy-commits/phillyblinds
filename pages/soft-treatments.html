@@ -912,6 +912,19 @@
      TAB: CORNICES & VALANCES
 ════════════════════════════════════════════════════════════ -->
 <div class="tab-panel" id="tab-cornval">
+
+  <!-- Hero photo — switches between cornice and valance -->
+  <div style="height:280px;overflow:hidden;position:relative;margin-bottom:0">
+    <img id="cv-hero-img" src="../images/thumbnails/specialty-soft-treatments.JPG" alt="Custom cornice" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;transition:opacity .3s">
+    <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(28,21,16,.85) 0%,rgba(28,21,16,.3) 60%,transparent 100%);display:flex;align-items:flex-end;padding:24px 28px">
+      <div>
+        <div id="cv-hero-label" style="font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--gold);margin-bottom:6px">Custom fabrication</div>
+        <div id="cv-hero-title" style="font-size:26px;font-weight:600;color:var(--cream);letter-spacing:-0.4px">Cornices</div>
+        <div id="cv-hero-sub" style="font-size:13px;color:var(--text-dark);margin-top:4px">Fabric-wrapped wood box valances. $50/linear ft · 4 ft min.</div>
+      </div>
+    </div>
+  </div>
+
 <div class="step-wrap">
 
   <!-- Type selector -->
@@ -1613,6 +1626,25 @@ function cvSetType(type) {
   var note = document.getElementById('cv-type-note');
   if (note) note.textContent = isCorn
     ? 'Fabric-wrapped wood box valance. $50/linear ft · 4 ft minimum.'
+    : 'Fabric soft top treatment. $50/linear ft + fabric.';
+
+  // Swap hero photo + labels
+  var img   = document.getElementById('cv-hero-img');
+  var title = document.getElementById('cv-hero-title');
+  var sub   = document.getElementById('cv-hero-sub');
+  if (img) {
+    img.style.opacity = '0';
+    setTimeout(function() {
+      img.src = isCorn
+        ? '../images/thumbnails/specialty-soft-treatments.JPG'
+        : '../images/thumbnails/specialty-valance.JPEG';
+      img.style.objectPosition = isCorn ? 'center 40%' : 'center 30%';
+      img.style.opacity = '1';
+    }, 150);
+  }
+  if (title) title.textContent = isCorn ? 'Cornices' : 'Valances';
+  if (sub)   sub.textContent   = isCorn
+    ? 'Fabric-wrapped wood box valances. $50/linear ft · 4 ft min.'
     : 'Fabric soft top treatment. $50/linear ft + fabric.';
   var dirRow  = document.getElementById('cv-direction-row');
   if (dirRow) dirRow.style.display = isCorn ? 'block' : 'none';
