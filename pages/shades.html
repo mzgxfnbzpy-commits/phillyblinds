@@ -333,6 +333,19 @@
           </div>
         </div>
 
+        <div class="product-card" id="card-perfectsheer" onclick="selectProduct('perfectsheer','Norman PerfectSheer™ Shades',false)">
+          <div class="product-img-photo" style="position:relative">
+            <img src="../images/thumbnails/SILOUETTE.JPEG" alt="Norman PerfectSheer Shades" loading="lazy" style="object-position:center 25%">
+            <div style="position:absolute;bottom:8px;left:8px;background:var(--espresso);color:var(--gold);font-size:9px;padding:3px 7px;border-radius:6px;font-weight:600;letter-spacing:0.5px">NORMAN®</div>
+            <div class="motor-chip">+ motorized</div>
+          </div>
+          <div class="product-body">
+            <div class="product-name">PerfectSheer™ Shades</div>
+            <div class="product-sub">Norman — sheer vane, 32 colors</div>
+            <span class="badge badge-instant">Instant price</span>
+          </div>
+        </div>
+
         <div class="product-card" id="card-vignette" onclick="pbShowContact('Hunter Douglas Vignette® Roman Shades — free consultation &amp; custom quote')">
           <div class="product-img-photo">
             <img src="../images/thumbnails/vignette-dining-room.JPEG" alt="Hunter Douglas Vignette Roman Shades" loading="lazy" style="object-position:center 30%">
@@ -961,7 +974,7 @@
             <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:7px;margin-top:10px">Operating system</div>
             <div class="opt-row" id="grp-op-cellular">
               <button class="opt-btn sel" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();cellularOpChange('cordless')">Cordless</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();cellularOpChange('cord')">Chain Loop</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();cellularOpChange('cord')">Cord Loop</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();cellularOpChange('motor')">Motorized</button>
             </div>
             <div id="cellular-op-note" class="tooltip-note" style="margin-top:6px"></div>
@@ -1207,9 +1220,9 @@
           <div class="motor-sub" id="motor-sub">
             <div style="font-size:12px;font-weight:500;color:#555;margin-bottom:8px">Select Norman motorization system:</div>
             <div class="opt-row" id="grp-motor-type" style="flex-wrap:wrap;gap:6px">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-motor-type');document.getElementById('pb-motor-row').style.display='flex';document.getElementById('pb-motor').textContent='+$482'">Norman Smart — $482<br><span style="font-size:10px;font-weight:400;color:#888">App, voice, remote &middot; rechargeable or hardwired</span></button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-motor-type');document.getElementById('pb-motor-row').style.display='flex';document.getElementById('pb-motor').textContent='+$166'">AutoWand — $166<br><span style="font-size:10px;font-weight:400;color:#888">Wand-controlled &middot; no remote needed &middot; rechargeable</span></button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-motor-type');document.getElementById('pb-motor-row').style.display='flex';document.getElementById('pb-motor').textContent='+$682'">Automate Home — $682<br><span style="font-size:10px;font-weight:400;color:#888">15-ch remote, wall switch &middot; rechargeable or low-voltage DC</span></button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-motor-type');cellMotorUpcharge=482;updatePrice()">Norman Smart — $482<br><span style="font-size:10px;font-weight:400;color:#888">App, voice, remote &middot; rechargeable or hardwired</span></button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-motor-type');cellMotorUpcharge=166;updatePrice()">AutoWand — $166<br><span style="font-size:10px;font-weight:400;color:#888">Wand-controlled &middot; no remote needed &middot; rechargeable</span></button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-motor-type');cellMotorUpcharge=682;updatePrice()">Automate Home — $682<br><span style="font-size:10px;font-weight:400;color:#888">15-ch remote, wall switch &middot; rechargeable or low-voltage DC</span></button>
             </div>
             <div class="tooltip-note" style="color:var(--gold);margin-top:8px">&#9889; Norman Cellular shades use Norman-brand motorization only. Motor surcharge is per shade. Power source (battery/hardwired) confirmed at your measurement visit.</div>
           </div>
@@ -1490,7 +1503,7 @@
       <div class="hd-info-text">Silhouette, Pirouette, Vignette® and Luminette® are precision Hunter Douglas systems. Every job is custom measured and quoted. Call or text Justin anytime — or fill out the form below and we'll follow up within a few hours.</div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;margin-bottom:4px">
         <a href="tel:6097421720" style="display:inline-flex;align-items:center;gap:7px;background:var(--gold);color:var(--espresso);font-size:14px;font-weight:700;padding:11px 18px;border-radius:8px;text-decoration:none">&#128222; (609) 742-1720</a>
-        <a href="mailto:justin@phillyblinds.com" style="display:inline-flex;align-items:center;font-size:13px;color:var(--gold);padding:11px 0;text-decoration:none;font-weight:500">justin@phillyblinds.com</a>
+        <a href="mailto:blindznation@gmail.com" style="display:inline-flex;align-items:center;font-size:13px;color:var(--gold);padding:11px 0;text-decoration:none;font-weight:500">blindznation@gmail.com</a>
       </div>
     </div>
     <div class="form-group">
@@ -1741,8 +1754,7 @@
     <div class="opt-row" id="fwb-grp-slat">
       <button class="opt-btn sel" onclick="selOpt(this,'fwb-grp-slat')">2&quot; — most popular</button>
       <button class="opt-btn" onclick="selOpt(this,'fwb-grp-slat')">2&frac12;&quot;</button>
-      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-slat')">3&frac12;&quot;</button>
-    </div>
+      </div>
 
     <div class="step-title" style="font-size:12px;margin:14px 0 8px">Color family</div>
     <div class="opt-row" id="fwb-grp-color">
@@ -1869,6 +1881,210 @@
       <p>We'll follow up within a few hours with finish samples and pricing. Call <strong>(609) 742-1720</strong> for anything urgent — available 24/7.</p>
     </div>
   </div><!-- /rwb-config -->
+
+  <!-- ══ NORMAN PERFECTSHEER™ CONFIGURATOR ══════════════════════════ -->
+  <div class="configurator" id="perfectsheer-config">
+    <div class="config-head">
+      <button class="config-back" onclick="clearProduct()">&#8592; Change product</button>
+      <div class="config-title">Norman PerfectSheer™ Shades</div>
+      <span class="badge badge-instant">Instant price</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;padding:10px 14px;background:var(--espresso);border-radius:8px">
+      <span style="font-size:10px;font-weight:600;color:var(--gold);letter-spacing:1px">NORMAN®</span>
+      <span style="font-size:11px;color:rgba(255,255,255,0.6)">Made in USA &middot; Lifetime Warranty &middot; Norman Motorization only</span>
+    </div>
+    <p style="font-size:13px;color:#555;margin-bottom:20px;line-height:1.6">Soft horizontal vanes that tilt open and closed like blinds while riding on sheer fabric — diffusing light beautifully. 100% polyester, 32 fabric colors in light filtering or room darkening.</p>
+
+    <!-- STEP 1: DIMENSIONS -->
+    <div class="step-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Step 1 — Dimensions</div>
+    <div class="dim-box">
+      <div class="dim-box-label">Enter your window size</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Width</label>
+          <input type="number" id="ps-width" min="12" max="110" placeholder="48" oninput="psCalc()">
+          <div class="dim-unit">inches &bull; min 12&Prime;, max 110&Prime;</div>
+        </div>
+        <div class="form-group">
+          <label>Height</label>
+          <input type="number" id="ps-height" min="12" max="120" placeholder="60" oninput="psCalc()">
+          <div class="dim-unit">inches &bull; min 12&Prime;, max 120&Prime;</div>
+        </div>
+      </div>
+    </div>
+    <div class="tooltip-note" style="margin-top:-10px;margin-bottom:18px">Measure to the nearest &#188;&Prime;. For inside mount, give us the exact opening &mdash; we take the deduction.</div>
+
+    <!-- STEP 2: MOUNT TYPE -->
+    <div class="step-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Step 2 — Mount type</div>
+    <div class="opt-row" id="grp-ps-mount">
+      <button class="opt-btn sel" onclick="selOpt(this,'grp-ps-mount');psCalc()">Inside mount</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-ps-mount');psCalc()">Outside mount</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-ps-mount');psCalc()">Semi-inside mount</button>
+    </div>
+
+    <!-- STEP 3: OPACITY -->
+    <div class="step-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Step 3 — Light control</div>
+    <div class="opt-row" id="grp-ps-opacity">
+      <button class="opt-btn sel" onclick="selOpt(this,'grp-ps-opacity');psUpdateColors('lf');psCalc()">Light filtering &mdash; 22 colors</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-ps-opacity');psUpdateColors('rd');psCalc()">Room darkening &mdash; 10 colors <span style="font-size:10px;opacity:.7">+20%</span></button>
+    </div>
+    <div class="tooltip-note" style="margin-bottom:16px">Room darkening provides more privacy when closed but is not a true blackout.</div>
+
+    <!-- STEP 4: FABRIC COLOR -->
+    <div class="step-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Step 4 — Fabric color</div>
+    <div class="form-group">
+      <select id="ps-color" onchange="psCalc()" style="font-size:14px">
+        <optgroup label="Light Filtering (22 colors)">
+          <option value="Snowflake">Snowflake (F1178) — bright white</option>
+          <option value="Soft White">Soft White (F1186) — clean white</option>
+          <option value="Frosty White">Frosty White (F1196) — sheer white</option>
+          <option value="Lily Cream">Lily Cream (F1179) — warm cream</option>
+          <option value="Cedar Cream">Cedar Cream (F1184) — warm beige</option>
+          <option value="Ivory">Ivory (F1363) — warm ivory</option>
+          <option value="Cottonwood">Cottonwood (F1183) — blush neutral</option>
+          <option value="Dunes">Dunes (F1180) — soft blush</option>
+          <option value="Cinnamon">Cinnamon (F1187) — warm pink-tan</option>
+          <option value="Smoke">Smoke (F1181) — warm gray</option>
+          <option value="Light Gray">Light Gray (F1197) — soft gray</option>
+          <option value="Quarry">Quarry (F1185) — cool silver</option>
+          <option value="Frosty Gray">Frosty Gray (F1195) — sheer gray</option>
+          <option value="Mineral">Mineral (F1193) — silver gray</option>
+          <option value="Silver">Silver (F1364) — metallic silver</option>
+          <option value="Platinum">Platinum (F1188) — light silver</option>
+          <option value="Magnetic Gray">Magnetic Gray (F1189) — warm gray</option>
+          <option value="Granite">Granite (F1192) — medium gray</option>
+          <option value="Midnight">Midnight (F1182) — charcoal black</option>
+          <option value="Cast Iron">Cast Iron (F1190) — dark gray</option>
+          <option value="Frosty Asphalt">Frosty Asphalt (F1194) — sheer dark</option>
+          <option value="Nightfall">Nightfall (F1191) — deep charcoal</option>
+        </optgroup>
+        <optgroup label="Room Darkening (10 colors — +20%)" id="ps-rd-group" style="display:none">
+          <option value="Moon">Moon (F1200) — white</option>
+          <option value="Silk">Silk (F1201) — warm white</option>
+          <option value="Chai Latte">Chai Latte (F1202) — blush cream</option>
+          <option value="Sky">Sky (F1203) — cool gray</option>
+          <option value="Seaside">Seaside (F1205) — coastal neutral</option>
+          <option value="Palm">Palm (F1206) — warm tan</option>
+          <option value="Stone">Stone (F1207) — cool silver</option>
+          <option value="Heather Gray">Heather Gray (F1208) — warm gray</option>
+          <option value="Ash Gray">Ash Gray (F1209) — deep gray</option>
+          <option value="Mars Black">Mars Black (F1204) — black</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <!-- STEP 5: LIFT SYSTEM -->
+    <div class="step-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Step 5 — Operation</div>
+    <div class="opt-row" id="grp-ps-lift">
+      <button class="opt-btn sel" onclick="selOpt(this,'grp-ps-lift');document.getElementById('ps-motor-note').style.display='none';psCalc()">Continuous cord loop</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-ps-lift');document.getElementById('ps-motor-note').style.display='block';psCalc()">Norman motorization</button>
+    </div>
+    <div id="ps-motor-note" class="tooltip-note" style="display:none;margin-bottom:8px">&#9889; Norman Smart Rechargeable Battery or AC Adapter Plug-in — motorization surcharge will be added to your quote. Minimum width varies by motor.</div>
+
+    <!-- STEP 6: CORD SIDE -->
+    <div class="step-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Step 6 — Cord side</div>
+    <div class="opt-row" id="grp-ps-cord">
+      <button class="opt-btn sel" onclick="selOpt(this,'grp-ps-cord')">Right (default)</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-ps-cord')">Left</button>
+    </div>
+
+    <!-- STEP 7: VALANCE -->
+    <div class="step-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Step 7 — Valance / headrail cover</div>
+    <div class="opt-row" id="grp-ps-valance">
+      <button class="opt-btn sel" onclick="selOpt(this,'grp-ps-valance');psCalc()">Curved fascia (free)</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-ps-valance');psCalc()">Fabric valance 3&#189;&Prime;</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-ps-valance');psCalc()">Fabric valance 4&#189;&Prime;</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-ps-valance');psCalc()">Wood valance 4&#189;&Prime;</button>
+    </div>
+    <div class="tooltip-note" style="margin-bottom:16px">Curved fascia with matching fabric is included at no charge. Fabric valance adds a flat front panel; wood valance is painted or stained hardwood.</div>
+
+    <!-- STEP 8: ADD-ONS -->
+    <div class="step-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Step 8 — Accessories</div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px">
+      <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer">
+        <input type="checkbox" id="ps-lightguard-basic" onchange="document.getElementById('ps-lightguard-premium').checked=false;psCalc()" style="width:16px;height:16px">
+        Basic light guard &mdash; <span style="color:#555">blocks side light gaps (+$45)</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer">
+        <input type="checkbox" id="ps-lightguard-premium" onchange="document.getElementById('ps-lightguard-basic').checked=false;psCalc()" style="width:16px;height:16px">
+        Premium wood light guard &mdash; <span style="color:#555">hardwood channels, 7 colors (+$117)</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer">
+        <input type="checkbox" id="ps-holddown" onchange="psCalc()" style="width:16px;height:16px">
+        Magnetic hold-down &mdash; <span style="color:#555">for door applications (+$28)</span>
+      </label>
+      <div style="display:flex;align-items:center;gap:10px;font-size:13px">
+        <span>Shims</span>
+        <select id="ps-shims" onchange="psCalc()" style="font-size:13px;padding:4px 8px;border:1px solid #ddd;border-radius:6px">
+          <option value="0">None</option>
+          <option value="1">1 shim (+$7)</option>
+          <option value="2">2 shims (+$14)</option>
+          <option value="3">3 shims (+$21)</option>
+        </select>
+        <span style="color:#888;font-size:11px">for uneven mounts</span>
+      </div>
+    </div>
+
+    <!-- PRICE DISPLAY -->
+    <div id="ps-price-box" style="display:none;background:var(--espresso);border-radius:12px;padding:18px 20px;margin-bottom:20px">
+      <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:6px">Estimated retail price</div>
+      <div style="font-size:32px;font-weight:600;color:#fff;letter-spacing:-0.5px" id="ps-price-num">—</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:4px">Per shade &bull; includes shipping estimate &bull; MSRP retail pricing from Norman Feb 2026 price book</div>
+      <div id="ps-price-breakdown" style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.65);line-height:1.8"></div>
+    </div>
+    <div id="ps-price-note" style="display:none;background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:12px 14px;font-size:12px;color:#856404;margin-bottom:20px"></div>
+
+    <!-- QUOTE FORM -->
+    <div style="font-size:13px;font-weight:600;color:#111;margin-bottom:14px">Complete your order request</div>
+    <div class="form-group">
+      <label>Your name *</label>
+      <input type="text" id="ps-name" placeholder="Jane Smith">
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Phone *</label><input type="tel" id="ps-phone" placeholder="(215) 555-0100"></div>
+      <div class="form-group"><label>Email</label><input type="email" id="ps-email" placeholder="jane@example.com"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Number of shades</label>
+        <select id="ps-qty">
+          <option value="1">1 shade</option>
+          <option value="2">2 shades</option>
+          <option value="3">3 shades</option>
+          <option value="4">4 shades</option>
+          <option value="5">5 shades</option>
+          <option value="6+">6 or more</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Room / window location</label>
+        <input type="text" id="ps-location" placeholder="e.g. Living room — east window">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Notes / questions</label>
+      <textarea id="ps-notes" placeholder="e.g. three windows side by side, open to common valance, prefer right cord side"></textarea>
+    </div>
+    <div class="delivery-section">
+      <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+      <div class="opt-row" id="grp-del-ps">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-del-ps');document.getElementById('del-ps-s').style.display='block';document.getElementById('del-ps-p').style.display='none'">Ship to me</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-del-ps');document.getElementById('del-ps-s').style.display='none';document.getElementById('del-ps-p').style.display='block'">I'll pick up</button>
+      </div>
+      <div id="del-ps-s" class="delivery-note">
+        Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA. Freight: $25 first shade + $11 each additional (90&Prime;+ width: $80 min + $50 each).
+        <div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately in your quote.</div>
+      </div>
+      <div id="del-ps-p" class="delivery-note" style="display:none">
+        Pickup available in <strong>Huntingdon Valley, PA 19006</strong>. Address provided after order confirmation.
+      </div>
+    </div>
+    <button class="btn-gold" onclick="submitPSForm()" style="width:100%;padding:13px;margin-top:4px">Send quote request &rarr;</button>
+    <div class="success-state" id="ps-success" style="display:none">
+      <h3>&#10003; Quote request sent!</h3>
+      <p>We'll follow up within a few hours to confirm dimensions and finalize pricing. For anything urgent call <strong>(609) 742-1720</strong> &mdash; 24/7.</p>
+    </div>
+  </div><!-- /perfectsheer-config -->
 
 </div><!-- /configurator-section -->
 
@@ -2069,7 +2285,7 @@ const SYSTEM_LIMITS = {
   },
   cellular: {
     'Cordless':  { maxW: 108, maxH: 120, note: 'Cordless max 108″W × 120″H — child & pet safe' },
-    'Continuous Cord Loop': { maxW: 120, maxH: 144, note: 'Continuous Cord Loop max 120″W × 144″H — best for larger windows' },
+    'Cord Loop': { maxW: 120, maxH: 144, note: 'Cord Loop max 120″W × 144″H · 80 sq ft area limit — best for larger windows' },
     'Motorized': { maxW: 120, maxH: 144, note: 'Motorized max 120″W × 144″H — app, remote & voice control' },
   },
   zebra: {
@@ -2091,6 +2307,7 @@ const MIN_ORDER = 85;
 let currentProduct = null;
 let currentBrand   = null;
 let motorOn = false;
+let cellMotorUpcharge = 482;  // tracks selected Norman cellular motor cost
 
 // ─── selectProduct ───────────────────────────────────────────
 function selectProduct(productId, productName, isInstant) {
@@ -2125,6 +2342,9 @@ function selectProduct(productId, productName, isInstant) {
       document.getElementById('pb-only-note').style.display = 'block';
     }
 
+  } else if (productId === 'perfectsheer') {
+    ['instant-config','fwb-config','hd-config','exterior-config'].forEach(id => document.getElementById(id).classList.remove('open'));
+    document.getElementById('perfectsheer-config').classList.add('open');
   } else if (productId === 'exterior') {
     document.getElementById('instant-config').classList.remove('open');
     document.getElementById('fwb-config').classList.remove('open');
@@ -2199,6 +2419,7 @@ function clearProduct() {
   document.getElementById('hd-config').classList.remove('open');
   document.getElementById('fwb-config').classList.remove('open');
   document.getElementById('exterior-config').classList.remove('open');
+  document.getElementById('perfectsheer-config').classList.remove('open');
   // Scroll back to product grid
   document.getElementById('product-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -2259,8 +2480,9 @@ function cellularOpChange(type) {
     autoMotor();
     note.textContent = 'Selected operation: Motorized — choose motor brand and type in the section below.';
   } else {
-    // Cord Loop
-    note.textContent = 'Chain Loop: larger sizes (up to 120″ W × 144″ H). Available in Bottom Up, Top Down/Bottom Up, and Day & Night. SmartRelease™ upgrade available.';
+    // Cord Loop — manual chain, not motorized
+    if (motorOn) toggleMotor(false);
+    note.textContent = 'Cord Loop: handles larger windows up to 120″ W × 144″ H (80 sq ft max area). Available in Bottom Up, TDBU, and Day & Night. SmartRelease™ upgrade available.';
   }
 }
 
@@ -2518,20 +2740,22 @@ function updatePrice() {
     document.getElementById('pb-base').textContent = '—';
     document.getElementById('pb-total').textContent = '—';
     document.getElementById('pb-min-note').style.display = 'none';
-    if (motorOn) document.getElementById('pb-motor').textContent = '+$' + MOTOR_UPCHARGE + ' / shade';
+    const mUp = (currentProduct === 'cellular') ? cellMotorUpcharge : MOTOR_UPCHARGE;
+    if (motorOn) document.getElementById('pb-motor').textContent = '+$' + mUp + ' / shade';
     return;
   }
 
   const sqft = (w / 12) * (h / 12);
   const basePerShade = Math.max(MIN_ORDER, sqft * rate);
-  const motorCost = motorOn ? MOTOR_UPCHARGE * qty : 0;
+  const activeMotorUp = (currentProduct === 'cellular') ? cellMotorUpcharge : MOTOR_UPCHARGE;
+  const motorCost = motorOn ? activeMotorUp * qty : 0;
   const total = (basePerShade * qty) + motorCost;
 
   document.getElementById('pb-dims').textContent = w + '" W × ' + h + '" H';
   document.getElementById('pb-sqft').textContent = sqft.toFixed(2) + ' sqft';
   document.getElementById('pb-base').textContent = '$' + rate + '/sqft → $' + basePerShade.toFixed(2);
   if (motorOn) {
-    document.getElementById('pb-motor').textContent = '+$' + MOTOR_UPCHARGE + ' × ' + qty + ' = $' + (MOTOR_UPCHARGE * qty).toFixed(2);
+    document.getElementById('pb-motor').textContent = '+$' + activeMotorUp + ' × ' + qty + ' = $' + (activeMotorUp * qty).toFixed(2);
   }
   document.getElementById('pb-total').textContent = '$' + total.toFixed(2);
 
@@ -2560,7 +2784,12 @@ function submitShadeForm() {
   const w = document.getElementById('inp-width').value;
   const h = document.getElementById('inp-height').value;
   const qty = document.getElementById('inp-qty').value;
-  const motorBrand = motorOn ? (document.getElementById('sel-motor-brand') || {}).value || 'Yes' : 'No';
+  const motorTypeSel = document.querySelector('#grp-motor-type .opt-btn.sel');
+  const motorBrand = motorOn
+    ? (currentProduct === 'cellular' && motorTypeSel
+        ? motorTypeSel.textContent.split('\n')[0].trim()
+        : (document.getElementById('sel-motor-brand') || {}).value || 'Yes')
+    : 'No';
 
   // Roller hardware extras
   const isRoller   = currentProduct === 'roller';
@@ -2593,7 +2822,7 @@ function submitShadeForm() {
     'Delivery: ' + delivery + '\n\n' +
     'Notes:\n' + (notes || '(none)');
 
-  window.location.href = 'mailto:justin@phillyblinds.com' +
+  window.location.href = 'mailto:blindznation@gmail.com' +
     '?subject=' + encodeURIComponent('Shade Quote — ' + name) +
     '&body='    + encodeURIComponent(body);
 
@@ -2636,8 +2865,8 @@ function submitPBForm() {
     'Delivery:       ' + delivery                + '\n\n' +
     'Fabric notes:\n' + (notes || '(none)') +
     pbInstallLine(document.getElementById('brand-pb-content')) +
-    (function(){ var fu = document.querySelector('#brand-pb-content .pb-fu-wrap input[type="file"]'); return fu && fu.files.length ? '\n\nFiles to send: ' + Array.from(fu.files).map(function(f){return f.name;}).join(', ') + '\n(Customer will email these to justin@phillyblinds.com)' : ''; }());
-  window.location.href = 'mailto:justin@phillyblinds.com' +
+    (function(){ var fu = document.querySelector('#brand-pb-content .pb-fu-wrap input[type="file"]'); return fu && fu.files.length ? '\n\nFiles to send: ' + Array.from(fu.files).map(function(f){return f.name;}).join(', ') + '\n(Customer will email these to blindznation@gmail.com)' : ''; }());
+  window.location.href = 'mailto:blindznation@gmail.com' +
     '?subject=' + encodeURIComponent('Custom Roller Shade Request — ' + name) +
     '&body='    + encodeURIComponent(body);
   document.getElementById('pb-success').classList.add('show');
@@ -2669,7 +2898,7 @@ function submitOtherForm() {
     'Height:  ' + (h || '—') + '"\n\n' +
     'Delivery: ' + delivery + '\n\n' +
     'Notes:\n' + (notes || '(none)');
-  window.location.href = 'mailto:justin@phillyblinds.com' +
+  window.location.href = 'mailto:blindznation@gmail.com' +
     '?subject=' + encodeURIComponent('Custom Shade Quote — ' + name) +
     '&body='    + encodeURIComponent(body);
   document.getElementById('oth-success').classList.add('show');
@@ -2697,7 +2926,7 @@ function submitQuoteForm() {
     'Windows: ' + wincount + '\n\n' +
     'Delivery: ' + delivery + '\n\n' +
     'Notes:\n' + (notes || '(none)');
-  window.location.href = 'mailto:justin@phillyblinds.com' +
+  window.location.href = 'mailto:blindznation@gmail.com' +
     '?subject=' + encodeURIComponent('Hunter Douglas Quote — ' + name) +
     '&body='    + encodeURIComponent(body);
   const s = document.getElementById('hd-success');
@@ -3424,7 +3653,7 @@ function submitRWBForm() {
     + 'Slat size: ' + slat + '\nFinish: ' + finish + '\nOperating system: ' + op
     + '\nMount: ' + mount + '\nWidth: ' + (w||'—') + '"\nHeight: ' + (h||'—') + '"\nQty: ' + qty
     + '\nDelivery: ' + del + '\n\nNotes: ' + (notes||'None');
-  window.location.href = 'mailto:justin@phillyblinds.com?subject=Real Wood Blinds Quote — ' + encodeURIComponent(name)
+  window.location.href = 'mailto:blindznation@gmail.com?subject=Real Wood Blinds Quote — ' + encodeURIComponent(name)
     + '&body=' + encodeURIComponent(body);
   document.getElementById('rwb-success').style.display = 'block';
 }
@@ -3447,7 +3676,7 @@ function submitFWBForm() {
     + 'Slat size: ' + slat + '\nColor family: ' + color + '\nOperating system: ' + op
     + '\nMount: ' + mount + '\nWidth: ' + (w||'—') + '"\nHeight: ' + (h||'—') + '"\nQty: ' + qty
     + '\nDelivery: ' + del + '\n\nNotes: ' + (notes||'None');
-  window.location.href = 'mailto:justin@phillyblinds.com?subject=Norman Faux Wood Blinds Quote — ' + encodeURIComponent(name)
+  window.location.href = 'mailto:blindznation@gmail.com?subject=Norman Faux Wood Blinds Quote — ' + encodeURIComponent(name)
     + '&body=' + encodeURIComponent(body);
   document.getElementById('fwb-success').style.display = 'block';
 }
@@ -4292,7 +4521,7 @@ function rnSubmitForm() {
     'Delivery:       ' + delivery             + '\n\n' +
     'Notes:\n' + (notes || '(none)');
 
-  window.location.href = 'mailto:justin@phillyblinds.com' +
+  window.location.href = 'mailto:blindznation@gmail.com' +
     '?subject=' + encodeURIComponent('Norman Soluna Quote — ' + name) +
     '&body='    + encodeURIComponent(body);
 
@@ -4340,7 +4569,7 @@ function submitExteriorForm() {
     'Fabric: '     + gExt('ext-grp-fabric')   + '\n' +
     'Delivery: '   + delivery                 + '\n\n' +
     'Notes:\n' + (document.getElementById('ext-notes').value.trim() || 'None');
-  window.location.href = 'mailto:justin@phillyblinds.com' +
+  window.location.href = 'mailto:blindznation@gmail.com' +
     '?subject=' + encodeURIComponent('Exterior Roller Shade Quote — ' + name) +
     '&body=' + encodeURIComponent(body);
   document.getElementById('ext-success').classList.add('show');
@@ -4360,7 +4589,7 @@ async function handleQuickQuote(e) {
     } else {
       btn.disabled = false;
       btn.textContent = 'Send quote request →';
-      alert('Something went wrong. Please call (609) 742-1720 or email justin@phillyblinds.com');
+      alert('Something went wrong. Please call (609) 742-1720 or email blindznation@gmail.com');
     }
   } catch(err) {
     btn.disabled = false;
@@ -4389,7 +4618,7 @@ function submitCart() {
     '\n\nITEMS:\n\n' + lines +
     (notes ? '\n\nNOTES:\n' + notes : '');
 
-  window.location.href = 'mailto:justin@phillyblinds.com' +
+  window.location.href = 'mailto:blindznation@gmail.com' +
     '?subject=' + encodeURIComponent('Shade Quote Request — ' + name) +
     '&body='    + encodeURIComponent(body);
 
