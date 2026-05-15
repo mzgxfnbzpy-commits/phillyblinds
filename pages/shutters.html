@@ -226,10 +226,10 @@
       <div class="config-section">
         <div class="config-step-heading">Panel configuration</div>
         <div class="opt-row" id="panel-config">
-          <button class="opt-btn" onclick="selOpt(this,'panel-config');handleSpecialShape(this);updateShutterQuote()">Full height</button>
-          <button class="opt-btn" onclick="selOpt(this,'panel-config');handleSpecialShape(this);updateShutterQuote()">Caf&eacute; style</button>
-          <button class="opt-btn" onclick="selOpt(this,'panel-config');handleSpecialShape(this);updateShutterQuote()">Tier-on-tier</button>
-          <button class="opt-btn" onclick="selOpt(this,'panel-config');handleSpecialShape(this);updateShutterQuote()">Special shape</button>
+          <button class="opt-btn" onclick="selOpt(this,'panel-config');handlePanelConfig(this,'standard');updateShutterQuote()">Full height</button>
+          <button class="opt-btn" onclick="selOpt(this,'panel-config');handlePanelConfig(this,'standard');updateShutterQuote()">Caf&eacute; style</button>
+          <button class="opt-btn" onclick="selOpt(this,'panel-config');handlePanelConfig(this,'complex');updateShutterQuote()">Tier-on-tier</button>
+          <button class="opt-btn" onclick="selOpt(this,'panel-config');handlePanelConfig(this,'complex');updateShutterQuote()">Special shape</button>
         </div>
         <div class="config-cards-4">
           <div class="mat-card">
@@ -242,25 +242,67 @@
           </div>
           <div class="mat-card">
             <div class="mat-card-name">Tier-on-tier</div>
-            <div class="mat-card-desc">Top and bottom panels operate independently.</div>
+            <div class="mat-card-desc">Top and bottom panels operate independently. Must be ordered with us directly.</div>
           </div>
           <div class="mat-card">
             <div class="mat-card-name">Special shape</div>
-            <div class="mat-card-desc">Arched tops, circles, angles, French doors. Always custom.</div>
+            <div class="mat-card-desc">Arched tops, circles, angles, French doors. Must be ordered with us directly.</div>
           </div>
         </div>
-        <div id="special-shape-note" style="display:none" class="special-note">Special shape shutters are always custom-engineered. Please describe your window shape in the notes field at the bottom of the form.</div>
+        <div id="complex-config-notice" style="display:none;background:#FEF3C7;border:2px solid #FCA044;border-radius:10px;padding:14px 16px;margin-top:10px">
+          <div style="font-size:13px;font-weight:600;color:#7A4F00;margin-bottom:5px">This configuration requires us to assist you directly</div>
+          <div style="font-size:12px;color:#92400E;line-height:1.7">Tier-on-tier and special shape shutters have additional engineering requirements that can't be fully captured online. Complete this form for a detailed estimate — our team will contact you to confirm all specifications before anything is ordered.<br><strong>Call or text anytime: <a href="tel:6097421720" style="color:var(--gold)">(609) 742-1720</a></strong></div>
+        </div>
       </div>
 
-      <!-- STEP D: Frame style -->
+      <!-- STEP D: Panel count & operation -->
       <div class="config-section">
-        <div class="config-step-heading">Frame style</div>
+        <div class="config-step-heading">Number of panels &amp; operation</div>
+        <div style="font-size:12px;font-weight:500;color:#444;margin-bottom:6px">Panels per window opening</div>
+        <div class="opt-row" id="panel-count" style="flex-wrap:wrap">
+          <button class="opt-btn" onclick="selOpt(this,'panel-count');updatePanelStack();updateShutterQuote()">1 panel</button>
+          <button class="opt-btn" onclick="selOpt(this,'panel-count');updatePanelStack();updateShutterQuote()">2 panels (pair)</button>
+          <button class="opt-btn" onclick="selOpt(this,'panel-count');updatePanelStack();updateShutterQuote()">3 panels</button>
+          <button class="opt-btn" onclick="selOpt(this,'panel-count');updatePanelStack();updateShutterQuote()">4 panels</button>
+          <button class="opt-btn" onclick="selOpt(this,'panel-count');updatePanelStack();updateShutterQuote()">5+ panels</button>
+        </div>
+        <div style="font-size:12px;font-weight:500;color:#444;margin:10px 0 6px">Panel operation</div>
+        <div class="opt-row" id="panel-operation" style="flex-wrap:wrap">
+          <button class="opt-btn" onclick="selOpt(this,'panel-operation');updateShutterQuote()">Hinged / swing</button>
+          <button class="opt-btn" onclick="selOpt(this,'panel-operation');updateShutterQuote()">Bi-fold</button>
+          <button class="opt-btn" onclick="selOpt(this,'panel-operation');updateShutterQuote()">Sliding track</button>
+        </div>
+        <div id="panel-stack-wrap" style="margin-top:10px">
+          <div style="font-size:12px;font-weight:500;color:#444;margin-bottom:6px">Stack / open direction</div>
+          <div class="opt-row" id="panel-stack" style="flex-wrap:wrap">
+            <button class="opt-btn" onclick="selOpt(this,'panel-stack');updateShutterQuote()">Stack left</button>
+            <button class="opt-btn" onclick="selOpt(this,'panel-stack');updateShutterQuote()">Stack right</button>
+            <button class="opt-btn" onclick="selOpt(this,'panel-stack');updateShutterQuote()">Split center (L &amp; R)</button>
+            <button class="opt-btn" onclick="selOpt(this,'panel-stack');updateShutterQuote()">Not sure — advise me</button>
+          </div>
+        </div>
+        <div class="config-note" style="margin-top:8px">Single panel: swings one direction. Pair: two panels share the opening — split center is most common for standard windows. Bi-fold and sliding track are ideal for wide openings and sliding/French doors.</div>
+      </div>
+
+      <!-- STEP E: Frame style & coverage -->
+      <div class="config-section">
+        <div class="config-step-heading">Frame style &amp; coverage</div>
+        <div style="font-size:12px;font-weight:500;color:#444;margin-bottom:6px">Frame profile</div>
         <div class="opt-row" id="frame-style">
           <button class="opt-btn" onclick="selOpt(this,'frame-style');updateShutterQuote()">L-frame</button>
           <button class="opt-btn" onclick="selOpt(this,'frame-style');updateShutterQuote()">Z-frame</button>
           <button class="opt-btn" onclick="selOpt(this,'frame-style');updateShutterQuote()">Hidden / flush frame</button>
+          <button class="opt-btn" onclick="selOpt(this,'frame-style');updateShutterQuote()">No frame (Deco mount)</button>
         </div>
-        <div class="config-note">L-frame is standard for most windows. Z-frame goes over existing trim. Hidden frame is a premium flush-mount option.</div>
+        <div class="config-note" style="margin-bottom:10px">L-frame is standard for most windows. Z-frame goes over existing trim. Hidden frame is a premium flush-mount option. No frame / Deco mount attaches panels directly to the wall or reveals.</div>
+        <div style="font-size:12px;font-weight:500;color:#444;margin-bottom:6px">Frame sides (which sides of the window get a frame)</div>
+        <div class="opt-row" id="frame-sides" style="flex-wrap:wrap">
+          <button class="opt-btn" onclick="selOpt(this,'frame-sides');updateShutterQuote()">Full perimeter (4 sides)</button>
+          <button class="opt-btn" onclick="selOpt(this,'frame-sides');updateShutterQuote()">L/T/R — 3 sides (no sill)</button>
+          <button class="opt-btn" onclick="selOpt(this,'frame-sides');updateShutterQuote()">L/R — sides only</button>
+          <button class="opt-btn" onclick="selOpt(this,'frame-sides');updateShutterQuote()">Not sure — advise me</button>
+        </div>
+        <div class="config-note">Full perimeter = frame on all 4 sides. L/T/R = left, top, and right (common when sill stays exposed). L/R = left and right sides only. Your installer will confirm the best option at the measurement visit.</div>
       </div>
 
       <!-- STEP E: Tilt rod -->
@@ -492,8 +534,24 @@
           <span class="quote-row-val" id="qs-panel">&mdash;</span>
         </div>
         <div class="quote-row">
-          <span class="quote-row-label">Frame style</span>
+          <span class="quote-row-label">Panel count</span>
+          <span class="quote-row-val" id="qs-panel-count">&mdash;</span>
+        </div>
+        <div class="quote-row">
+          <span class="quote-row-label">Operation</span>
+          <span class="quote-row-val" id="qs-operation">&mdash;</span>
+        </div>
+        <div class="quote-row">
+          <span class="quote-row-label">Stack direction</span>
+          <span class="quote-row-val" id="qs-stack">&mdash;</span>
+        </div>
+        <div class="quote-row">
+          <span class="quote-row-label">Frame profile</span>
           <span class="quote-row-val" id="qs-frame">&mdash;</span>
+        </div>
+        <div class="quote-row">
+          <span class="quote-row-label">Frame sides</span>
+          <span class="quote-row-val" id="qs-frame-sides">&mdash;</span>
         </div>
         <div class="quote-row">
           <span class="quote-row-label">Tilt rod</span>
@@ -711,10 +769,18 @@ _initMeasureHelp(`
   </div>
 `, '../pages/measure-shutters.html');
 
+function handlePanelConfig(el, type) {
+  const notice = document.getElementById('complex-config-notice');
+  notice.style.display = (type === 'complex') ? 'block' : 'none';
+}
+
+function updatePanelStack() {
+  // no dynamic hiding needed — stack section always shown
+}
+
+// Legacy alias kept for any lingering references
 function handleSpecialShape(el) {
-  const note = document.getElementById('special-shape-note');
-  const isSpecial = el.textContent.trim().startsWith('Special');
-  note.style.display = isSpecial ? 'block' : 'none';
+  handlePanelConfig(el, el.textContent.trim().startsWith('Special') || el.textContent.trim().startsWith('Tier') ? 'complex' : 'standard');
 }
 
 function handleTiltRod(el) {
@@ -770,8 +836,12 @@ function updateShutterQuote() {
   const mat = matBtn ? matBtn.textContent.trim() : '—';
   document.getElementById('qs-material').textContent = mat;
   document.getElementById('qs-louver').textContent   = g('louver-size');
-  document.getElementById('qs-panel').textContent    = g('panel-config');
-  document.getElementById('qs-frame').textContent    = g('frame-style');
+  document.getElementById('qs-panel').textContent       = g('panel-config');
+  document.getElementById('qs-panel-count').textContent = g('panel-count');
+  document.getElementById('qs-operation').textContent   = g('panel-operation');
+  document.getElementById('qs-stack').textContent       = g('panel-stack');
+  document.getElementById('qs-frame').textContent       = g('frame-style');
+  document.getElementById('qs-frame-sides').textContent = g('frame-sides');
   document.getElementById('qs-tilt').textContent     = g('tilt-rod');
   document.getElementById('qs-color').textContent    = getSelectedColor();
   // Waterproof (WLP only)
@@ -826,8 +896,12 @@ function submitShutterForm() {
     (waterproof ? 'Waterproof:   Yes\n' : '') +
     (finishType ? 'Finish type:  ' + finishType + '\n' : '') +
     'Louver size:  ' + g('louver-size') + '\n' +
-    'Panel config: ' + g('panel-config') + '\n' +
-    'Frame style:  ' + g('frame-style') + '\n' +
+    'Panel config:  ' + g('panel-config') + '\n' +
+    'Panel count:   ' + g('panel-count') + '\n' +
+    'Operation:     ' + g('panel-operation') + '\n' +
+    'Stack dir:     ' + g('panel-stack') + '\n' +
+    'Frame profile: ' + g('frame-style') + '\n' +
+    'Frame sides:   ' + g('frame-sides') + '\n' +
     'Tilt rod:     ' + g('tilt-rod') + '\n' +
     'Color:        ' + getSelectedColor() + '\n' +
     'Windows:      ' + (document.getElementById('win-count') ? document.getElementById('win-count').value : '—') + '\n' +
@@ -836,7 +910,7 @@ function submitShutterForm() {
     pbInstallLine(document.getElementById('shutter-form-inner')) + '\n\n' +
     'Notes:\n' + (notes || '(none)');
 
-  window.location.href = 'mailto:justin@phillyblinds.com' +
+  window.location.href = 'mailto:blindznation@gmail.com' +
     '?subject=' + encodeURIComponent('Shutter Quote — ' + name) +
     '&body='    + encodeURIComponent(body);
 
@@ -857,7 +931,7 @@ async function handleShutterQuote(e) {
       document.getElementById('shutter-quote-success').style.display = 'block';
     } else {
       btn.disabled = false; btn.textContent = 'Send quote request →';
-      alert('Something went wrong. Please call (609) 742-1720 or email justin@phillyblinds.com');
+      alert('Something went wrong. Please call (609) 742-1720 or email blindznation@gmail.com');
     }
   } catch(err) {
     btn.disabled = false; btn.textContent = 'Send quote request →';
