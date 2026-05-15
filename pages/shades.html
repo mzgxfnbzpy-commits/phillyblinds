@@ -3815,9 +3815,186 @@ function pbRenderFabricColors() {
 
 let rnSystemType   = 'standard';
 let rnLiftType     = 'cord';
-const RN_RATE      = 22;   // placeholder $/sqft
-const RN_MOTOR_UP  = 120;  // motorization upcharge
-const RN_MIN       = 85;
+// ─── Norman Soluna Retail Pricing — from catalog scan (Feb 2026) ──────────
+// Width cols (inches): 24,30,36,42,48,54,60,66,72,78,84,90,96,108,120
+// Height rows (inches) for fabric: 36,42,48,54,60,66,72,84,96,108,120,132,144
+// Pricing is per shade (retail). Minimum $85/shade.
+// PG1/PG2 values derived from catalog scans — PG3/PG4 confirmed.
+const RN_W = [24,30,36,42,48,54,60,66,72,78,84,90,96,108,120];
+const RN_H_FABRIC  = [36,42,48,54,60,66,72,84,96,108,120,132,144];
+const RN_H_SOLAR   = [36,48,60,72,84,96,108,120,132,144];
+
+// Cordless Fabric — Price Group 1
+// Fabrics: Brook, Chelsea, Callie LF/RD, Elements, Verona LF, Scarlett, Catalina
+const RN_PG1_FABRIC = {
+  36: [254,273,291,312,333,351,401,429,474,500,526,551,601,652,750],
+  42: [279,318,346,377,414,448,482,524,566,626,655,690,717,774,826],
+  48: [296,336,369,414,448,482,524,566,620,655,690,717,774,826,903],
+  54: [313,357,399,448,482,524,566,620,670,717,760,800,844,931,1003],
+  60: [336,375,422,481,524,566,620,670,717,780,826,869,916,1010,1090],
+  66: [357,406,460,509,555,600,659,710,757,827,875,921,970,1070,1155],
+  72: [375,434,495,546,597,644,708,762,808,878,931,981,1034,1141,1231],
+  84: [409,469,531,592,647,702,770,830,879,956,1014,1068,1127,1244,1344],
+  96: [462,530,597,664,728,790,864,934,992,1082,1148,1209,1275,1411,1524],
+  108:[510,585,657,734,806,876,960,1038,1103,1207,1282,1352,1428,1582,1715],
+  120:[551,634,714,797,877,953,1044,1131,1204,1318,1401,1478,1561,1730,1877],
+  132:[599,690,780,872,960,1044,1145,1240,1321,1448,1539,1625,1717,1905,2068],
+  144:[640,738,833,932,1027,1120,1227,1330,1418,1556,1657,1751,1851,2056,2237]
+};
+
+// Cordless Fabric — Price Group 2
+// Fabrics: Samoa, Bali, Phuket, Bora Bora, Java, Riviera, Sumatra, Lake Tahoe,
+//          Francis, Emery, Hayes, Valerie, Lola LF, Amelia, Sierra, Shimmer, Remy,
+//          Jamaica, Bermuda, Fiji, Francis RD, Amelia RD, Dazzle, Lakeshore
+const RN_PG2_FABRIC = {
+  36: [278,323,341,366,404,430,471,490,525,557,587,617,652,731,843],
+  42: [301,349,375,405,447,486,523,567,612,680,714,754,783,848,912],
+  48: [322,368,407,447,491,535,580,626,675,742,789,836,874,960,1039],
+  54: [344,391,437,489,539,589,639,693,748,821,865,912,956,1055,1143],
+  60: [368,416,467,526,576,628,689,746,797,875,925,975,1030,1140,1237],
+  66: [393,445,502,560,613,666,733,792,843,929,983,1039,1097,1216,1323],
+  72: [414,473,540,598,656,710,781,844,898,985,1048,1110,1173,1301,1420],
+  84: [450,516,583,651,714,778,855,924,982,1078,1148,1215,1284,1425,1553],
+  96: [509,585,659,734,805,877,962,1043,1108,1218,1296,1371,1449,1611,1757],
+  108:[561,647,729,814,899,979,1075,1165,1241,1367,1456,1541,1631,1817,1987],
+  120:[608,703,794,889,979,1068,1172,1273,1357,1496,1596,1690,1790,1999,2190],
+  132:[660,764,864,968,1068,1164,1280,1390,1483,1638,1748,1853,1964,2198,2414],
+  144:[706,819,928,1037,1146,1253,1378,1499,1599,1770,1890,2007,2131,2390,2627]
+};
+
+// Cordless Fabric — Price Group 3 (CONFIRMED from catalog scan p.18)
+// Fabrics: Aruba, Caroline, Maui Natural, Cove, Clarissa, Breeze,
+//          Lola BO, Summerland, Cory, Garden, Remy RD, Breeze RD
+const RN_PG3_FABRIC = {
+  36: [307,337,365,396,424,454,485,517,552,609,645,680,719,786,856],
+  42: [337,372,407,443,482,522,563,605,648,715,755,800,841,927,1002],
+  48: [366,407,449,497,545,594,643,693,745,817,868,918,957,1044,1126],
+  54: [398,444,498,554,613,671,725,782,839,917,964,1011,1054,1153,1247],
+  60: [428,479,549,617,677,740,809,869,920,999,1049,1103,1154,1261,1366],
+  66: [462,530,602,674,737,779,869,930,981,1073,1130,1192,1255,1383,1508],
+  72: [495,575,651,728,800,872,958,1031,1094,1201,1268,1340,1415,1566,1712],
+  84: [534,620,703,789,869,950,1046,1130,1202,1324,1402,1484,1570,1742,1910],
+  96: [575,670,762,857,946,1037,1143,1238,1321,1458,1549,1646,1746,1941,2138],
+  108:[620,723,824,929,1028,1128,1245,1351,1445,1597,1700,1808,1922,2143,2373],
+  120:[662,776,886,1000,1109,1219,1348,1465,1571,1741,1857,1981,2110,2358,2617],
+  132:[699,822,942,1066,1185,1304,1447,1576,1693,1884,2016,2155,2302,2578,2882],
+  144:[607,708,811,897,976,1050,1138,1219,1285,1403,1485,1560,1635,1812,1974]
+};
+
+// Cordless Fabric — Price Group 4 (CONFIRMED from catalog scan p.18)
+// Fabrics: Kendra (LF Foliage only)
+const RN_PG4_FABRIC = {
+  36: [337,371,402,435,468,500,534,569,608,671,711,749,792,865,942],
+  42: [360,403,448,495,546,601,651,707,763,843,893,943,992,1086,1185],
+  48: [403,448,495,546,601,651,707,763,820,900,955,1011,1065,1176,1287],
+  54: [437,485,513,562,611,661,727,786,863,907,944,1023,1103,1181,1276],
+  60: [470,537,605,677,747,814,889,956,994,1042,1094,1180,1316,1380,1505],
+  66: [503,605,677,747,814,889,956,1039,1098,1155,1215,1316,1380,1505,1637],
+  72: [517,605,677,747,814,863,944,1013,1098,1173,1230,1316,1380,1521,1596],
+  84: [546,634,723,809,895,969,1041,1106,1179,1278,1349,1420,1488,1628,1770],
+  96: [626,723,809,895,969,1035,1107,1179,1278,1420,1488,1628,1770,1904,2040],
+  108:[634,723,809,895,1035,1107,1179,1278,1349,1488,1628,1770,1904,2172,2040],
+  120:[682,778,870,1015,1098,1187,1263,1365,1446,1596,1712,1812,1995,2172,2449],
+  132:[735,833,933,1075,1160,1252,1341,1449,1549,1721,1812,1994,2112,2388,2621],
+  144:[779,892,988,1075,1160,1252,1549,1633,1725,1812,1994,2172,2449,2725,3172]
+};
+
+// Cordless Solar Screen — Price Group 1 (from catalog scan)
+// Fabrics: Serene 7%, Flow 7%, Windsong 5%, NA400(3/5%), NA300(3/5%)
+const RN_PG1_SOLAR = {
+  36: [240,258,278,296,314,331,362,382,406,450,474,507,533,574,628],
+  48: [259,282,302,325,350,372,412,439,468,519,545,587,614,660,723],
+  60: [281,302,324,350,374,399,441,469,499,553,580,623,650,699,764],
+  72: [297,325,359,397,430,468,522,558,595,650,677,721,749,809,870],
+  84: [313,341,390,437,483,513,573,614,645,697,745,776,809,874,941],
+  96: [336,383,428,471,518,563,618,656,690,745,797,831,870,941,1015],
+  108:[361,411,461,511,558,600,659,697,737,795,850,890,932,1007,1088],
+  120:[387,440,495,546,597,635,697,739,780,844,903,949,990,1078,1160],
+  132:[408,450,526,582,627,670,737,780,826,894,956,1002,1049,1141,1235],
+  144:[434,498,561,609,659,703,777,823,872,940,1010,1061,1111,1206,1309]
+};
+
+// Cordless Solar Screen — Price Group 2 (from catalog scan)
+// Fabrics: Serene 1/3%, Flow 1/5%, Windsong 1%, Moon 5%, Breeze Screen,
+//          NA300(1%), NA400(1%), NA820(3%)
+const RN_PG2_SOLAR = {
+  36: [261,283,306,325,346,367,406,428,454,503,530,571,600,652,711],
+  48: [284,309,334,357,384,416,462,495,526,581,617,660,692,761,818],
+  60: [307,334,361,396,441,483,534,574,612,672,714,764,806,893,967],
+  72: [328,390,420,461,498,540,595,641,684,752,800,858,907,1007,1092],
+  84: [351,390,418,483,527,572,633,682,726,800,853,915,967,1075,1166],
+  96: [372,422,474,522,571,622,689,742,792,875,934,1001,1060,1181,1285],
+  108:[399,455,513,568,623,680,754,814,870,962,1029,1105,1171,1308,1428],
+  120:[428,490,554,615,677,739,820,887,949,1052,1127,1210,1285,1439,1574],
+  132:[454,520,590,657,726,793,881,956,1025,1139,1222,1314,1399,1570,1723],
+  144:[483,554,630,703,779,851,948,1030,1106,1232,1323,1424,1519,1709,1880]
+};
+
+// Cordless Solar Screen — Price Group 3 (from catalog scan)
+// Fabrics: Lakeview 3/7/10%, Meadows 1/3%, Jubilee 3%, Galaxy 3%
+const RN_PG3_SOLAR = {
+  36: [290,322,346,374,404,430,460,488,522,575,608,654,690,754,822],
+  48: [322,358,385,419,454,495,533,573,611,673,716,770,812,894,975],
+  60: [349,385,419,460,498,540,581,625,668,736,785,843,893,990,1081],
+  72: [376,420,470,525,569,616,664,716,768,848,906,974,1034,1150,1263],
+  84: [406,462,519,579,632,686,740,800,858,948,1014,1089,1158,1293,1424],
+  96: [436,501,564,632,692,753,816,884,951,1055,1130,1216,1297,1453,1605],
+  108:[469,542,614,690,758,829,901,979,1056,1175,1263,1360,1455,1633,1812],
+  120:[504,584,664,748,825,904,985,1073,1160,1296,1394,1504,1613,1817,2024],
+  132:[535,622,710,800,886,974,1065,1163,1263,1415,1526,1649,1776,2009,2252],
+  144:[571,666,763,862,957,1055,1155,1264,1375,1544,1670,1806,1954,2216,2498]
+};
+
+// Valance / Fascia surcharges by width (17 cols: 24–144")
+const RN_VALANCE_W = [24,30,36,42,48,54,60,66,72,78,84,90,96,108,120,132,144];
+const RN_SURCHARGE_FASCIA_WOOD  = [117,122,133,139,150,161,171,188,204,216,232,249,265,293,326,349,375];
+const RN_SURCHARGE_FABRIC_SMALL = [133,139,155,161,171,183,199,216,232,249,271,288,304,342,375,403,431];
+const RN_SURCHARGE_FABRIC_8     = [188,199,216,227,244,260,282,304,331,354,382,408,431,486,530,552,612];
+const RN_SURCHARGE_RACEWAY      = [56,61,67,73,78,84,94,100,111,117,122,133,150,161,null,null];
+
+// Map: fabric type string → price group matrices
+function rnGetPriceGroup() {
+  // Use collection name to determine group; fall back to fabric type
+  const c = (currentRollerColl || '').toLowerCase();
+  // PG4
+  if (c.includes('kendra')) return 4;
+  // PG3
+  if (c.includes('aruba')||c.includes('caroline')||c.includes('maui')||c.includes('cove')||
+      c.includes('clarissa')||c.includes('breeze')||c.includes('lola bo')||
+      c.includes('summerland')||c.includes('cory')||c.includes('garden')||
+      c.includes('remy rd')||c.includes('lakeview')||c.includes('meadows')||
+      c.includes('jubilee')||c.includes('galaxy')) return 3;
+  // PG1
+  if (c.includes('brook')||c.includes('chelsea')||c.includes('callie')||
+      c.includes('elements')||c.includes('verona')||c.includes('scarlett')||
+      c.includes('catalina')||c.includes('serene 7')||c.includes('flow 7')||
+      c.includes('windsong 5')) return 1;
+  // Default by fabric type
+  if (rnFabricType === 'commercial') return 1;
+  return 2; // PG2 is the most common group
+}
+
+function rnLookupPrice(w, h) {
+  const pg = rnGetPriceGroup();
+  const isSolar = (rnFabricType === 'solar' || rnFabricType === 'commercial');
+  const hRows = isSolar ? RN_H_SOLAR : RN_H_FABRIC;
+  const matrices = isSolar
+    ? [null, RN_PG1_SOLAR, RN_PG2_SOLAR, RN_PG3_SOLAR, RN_PG3_SOLAR]
+    : [null, RN_PG1_FABRIC, RN_PG2_FABRIC, RN_PG3_FABRIC, RN_PG4_FABRIC];
+
+  const pW = RN_W.find(function(v){ return v >= w; });
+  const pH = hRows.find(function(v){ return v >= h; });
+  if (!pW || !pH) return null;
+
+  const matrix = matrices[pg];
+  if (!matrix || !matrix[pH]) return null;
+  const wi = RN_W.indexOf(pW);
+  const price = matrix[pH][wi];
+  return { price: price || null, pricedAt: pW + '″ W × ' + pH + '″ H', group: pg };
+}
+
+const RN_MOTOR_UP  = 120;  // motorization upcharge — verify with Norman motor binder
+const RN_MIN       = 85;   // minimum per shade
 
 const RN_SYSTEM_NOTES = {
   standard:  'Standard: single shade per bracket set — most straightforward.',
@@ -4405,15 +4582,19 @@ function rnUpdatePrice() {
   }
 
   const sqft      = (w / 12) * (h / 12);
-  const perShade  = Math.max(RN_MIN, sqft * RN_RATE);
+  const lookup    = rnLookupPrice(w, h);
+  const basePrice = lookup ? lookup.price : null;
+  const perShade  = basePrice ? Math.max(RN_MIN, basePrice) : null;
   const motorCost = isMotor ? RN_MOTOR_UP * qty : 0;
-  const total     = (perShade * qty) + motorCost;
+  const total     = perShade ? (perShade * qty) + motorCost : null;
 
   document.getElementById('rn-pb-dims').textContent  = w + '″ W × ' + h + '″ H';
-  document.getElementById('rn-pb-sqft').textContent  = sqft.toFixed(2) + ' sqft';
-  document.getElementById('rn-pb-base').textContent  = '$' + RN_RATE + '/sqft → $' + perShade.toFixed(2);
-  document.getElementById('rn-pb-total').textContent = '$' + total.toFixed(2);
-  document.getElementById('rn-pb-min-note').style.display = perShade === RN_MIN ? 'block' : 'none';
+  document.getElementById('rn-pb-sqft').textContent  = sqft.toFixed(2) + ' sqft' + (lookup ? ' · priced at ' + lookup.pricedAt : '');
+  document.getElementById('rn-pb-base').textContent  = perShade
+    ? '$' + perShade.toFixed(0) + ' (PG' + (lookup ? lookup.group : '?') + ' · est.)'
+    : 'Size out of range — call for quote';
+  document.getElementById('rn-pb-total').textContent = total ? '$' + total.toFixed(0) + ' est.' : '—';
+  document.getElementById('rn-pb-min-note').style.display = (perShade === RN_MIN) ? 'block' : 'none';
   if (isMotor) {
     document.getElementById('rn-pb-motor-row').style.display = 'flex';
     document.getElementById('rn-pb-motor').textContent = '+$' + RN_MOTOR_UP + ' × ' + qty + ' = $' + (RN_MOTOR_UP * qty).toFixed(2);
