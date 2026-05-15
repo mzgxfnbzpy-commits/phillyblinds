@@ -103,13 +103,6 @@
   </div>
 </div>
 
-<!-- HERO PHOTO STRIP -->
-<div style="display:grid;grid-template-columns:2fr 1fr 1fr;height:220px;gap:3px;overflow:hidden">
-  <img src="../images/portfolio/IMG_1369.JPEG" alt="Custom wave drapery luxury bedroom" style="width:100%;height:100%;object-fit:cover;display:block">
-  <img src="../images/portfolio/IMG_5444.JPEG" alt="Custom drapery installation" style="width:100%;height:100%;object-fit:cover;display:block">
-  <img src="../images/portfolio/IMG_4927.JPEG" alt="Custom drapery detail" style="width:100%;height:100%;object-fit:cover;display:block">
-</div>
-
 <!-- TYPE TABS -->
 <div class="type-tabs" id="type-tabs">
   <button class="type-tab on" onclick="switchTab('drapes',this)">Custom Drapery</button>
@@ -290,7 +283,7 @@
     <div class="fabric-cards" id="drape-fabric-cards">
       <div class="fabric-card" onclick="selectFabric('drape',this,'We supply the fabric')">
         <h3>We supply the fabric</h3>
-        <p>Choose from our fabric library during a free in-home consultation. We'll bring samples to your space.</p>
+        <p>Choose from our fabric library. Pick a color below for your estimate — we'll bring samples to confirm.</p>
       </div>
       <div class="fabric-card" onclick="selectFabric('drape',this,'Customer supplies fabric')">
         <h3>I have my own fabric</h3>
@@ -300,6 +293,28 @@
         <h3>Not sure yet</h3>
         <p>Book a free in-home consult. We'll guide you through fabric, lining, and style for your space.</p>
       </div>
+    </div>
+
+    <!-- Fabric color + liner picker (shown when we supply fabric) -->
+    <div id="drape-fabric-detail" style="display:none;margin-top:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
+      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px">Choose a fabric color <span style="font-weight:400;color:#999;text-transform:none">— est. $25/yard · swatches brought to your consultation</span></div>
+      <div class="opt-row" id="grp-drape-color" style="flex-wrap:wrap">
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-color');calcDrapePrice()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#FAFAFA;border:1px solid #ccc;flex-shrink:0"></span>White</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-color');calcDrapePrice()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#FFF3DC;border:1px solid #ddd;flex-shrink:0"></span>Ivory</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-color');calcDrapePrice()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#D9CEBB;border:1px solid #ccc;flex-shrink:0"></span>Linen</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-color');calcDrapePrice()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#B5A898;border:1px solid #ccc;flex-shrink:0"></span>Taupe</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-color');calcDrapePrice()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#9E9E9E;border:1px solid #ccc;flex-shrink:0"></span>Gray</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-color');calcDrapePrice()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#5A5A5A;border:1px solid #ccc;flex-shrink:0"></span>Charcoal</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-color');calcDrapePrice()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#1A2744;flex-shrink:0"></span>Navy</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-color');calcDrapePrice()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#1A1A1A;flex-shrink:0"></span>Black</button>
+      </div>
+      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin:12px 0 8px">Lining <span style="font-weight:400;color:#999;text-transform:none">— est. $7/yard</span></div>
+      <div class="opt-row" id="grp-drape-liner">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-liner');calcDrapePrice()">No liner</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');calcDrapePrice()">Standard liner (+$7/yd)</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');calcDrapePrice()">Blackout liner (+$7/yd)</button>
+      </div>
+      <div style="font-size:11px;color:#aaa;margin-top:7px;line-height:1.5">Colors and exact fabric options confirmed during your free in-home consultation. Final pricing confirmed at order.</div>
     </div>
   </div>
 
@@ -636,7 +651,7 @@
     <div class="fabric-cards" id="roman-fabric-cards">
       <div class="fabric-card" onclick="selectFabric('roman',this,'We supply the fabric')">
         <h3>We supply the fabric</h3>
-        <p>In-home fabric consultation available — we bring samples to your space.</p>
+        <p>Choose a color below for your estimate — we bring samples to your space to confirm.</p>
       </div>
       <div class="fabric-card" onclick="selectFabric('roman',this,'Customer supplies fabric')">
         <h3>I have my own fabric</h3>
@@ -646,6 +661,28 @@
         <h3>Not sure yet</h3>
         <p>Book a free consult and we'll guide you through the options in your space.</p>
       </div>
+    </div>
+
+    <!-- Fabric color + liner picker (shown when we supply fabric) -->
+    <div id="roman-fabric-detail" style="display:none;margin-top:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
+      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px">Choose a fabric color <span style="font-weight:400;color:#999;text-transform:none">— est. $25/yard</span></div>
+      <div class="opt-row" id="grp-roman-color" style="flex-wrap:wrap">
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-color');calcRoman()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#FAFAFA;border:1px solid #ccc;flex-shrink:0"></span>White</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-color');calcRoman()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#FFF3DC;border:1px solid #ddd;flex-shrink:0"></span>Ivory</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-color');calcRoman()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#D9CEBB;border:1px solid #ccc;flex-shrink:0"></span>Linen</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-color');calcRoman()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#B5A898;border:1px solid #ccc;flex-shrink:0"></span>Taupe</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-color');calcRoman()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#9E9E9E;border:1px solid #ccc;flex-shrink:0"></span>Gray</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-color');calcRoman()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#5A5A5A;border:1px solid #ccc;flex-shrink:0"></span>Charcoal</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-color');calcRoman()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#1A2744;flex-shrink:0"></span>Navy</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-color');calcRoman()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#1A1A1A;flex-shrink:0"></span>Black</button>
+      </div>
+      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin:12px 0 8px">Lining <span style="font-weight:400;color:#999;text-transform:none">— est. $7/yard</span></div>
+      <div class="opt-row" id="grp-roman-liner">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-liner');calcRoman()">No liner</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-liner');calcRoman()">Standard liner (+$7/yd)</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-liner');calcRoman()">Blackout liner (+$7/yd)</button>
+      </div>
+      <div style="font-size:11px;color:#aaa;margin-top:7px;line-height:1.5">Colors confirmed during consultation. Final pricing at order.</div>
     </div>
   </div>
 
@@ -1255,8 +1292,26 @@ function selectFabric(tab, el, val) {
   var container = tab === 'drape' ? '#drape-fabric-cards' : '#roman-fabric-cards';
   document.querySelectorAll(container + ' .fabric-card').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
-  if (tab === 'drape') { drapeState.fabric = val; calcDrapePrice(); }
-  else romanState.fabric = val;
+  var weSupply = val === 'We supply the fabric';
+  if (tab === 'drape') {
+    drapeState.fabric = val;
+    var dp = document.getElementById('drape-fabric-detail');
+    if (dp) dp.style.display = weSupply ? 'block' : 'none';
+    calcDrapePrice();
+  } else {
+    romanState.fabric = val;
+    var rp = document.getElementById('roman-fabric-detail');
+    if (rp) rp.style.display = weSupply ? 'block' : 'none';
+    calcRoman();
+  }
+}
+
+// Helper: read shipping estimate from nearest delivery section ZIP input
+function _getShippingEst(containerEl) {
+  var el = containerEl ? containerEl.querySelector('.pb-ship-est .pb-zip-result strong') : null;
+  if (!el || !el.textContent) return 0;
+  var m = el.textContent.match(/\$(\d+)/);
+  return m ? parseInt(m[1]) : 0;
 }
 
 // ── Roman pricing ─────────────────────────────────────────
@@ -1313,15 +1368,40 @@ function calcRoman() {
 
   // Fabric yardage estimate
   var cutsPerShade = Math.max(1, Math.ceil(w / 54));
-  var yardsPerCut  = Math.ceil((h + 16) / 36 * 4) / 4; // round to nearest 0.25yd
+  var yardsPerCut  = Math.ceil((h + 16) / 36 * 4) / 4;
   var fabricYds    = cutsPerShade * yardsPerCut * qty;
 
-  var grandTotal = laborTotal + trimTotal;
+  // Fabric & liner cost if we supply
+  var fabricCost = 0; var linerCost = 0;
+  if (romanState.fabric === 'We supply the fabric') {
+    fabricCost = fabricYds * 25;
+    var linerBtn = document.querySelector('#grp-roman-liner .opt-btn.sel');
+    if (linerBtn && linerBtn.textContent.indexOf('liner') !== -1) {
+      linerCost = fabricYds * 7;
+    }
+  }
+
+  // Shipping estimate
+  var shipEst = _getShippingEst(document.getElementById('roman-form'));
+
+  var grandTotal = laborTotal + trimTotal + fabricCost + linerCost + shipEst;
   if (box) box.style.display = 'block';
   document.getElementById('rn-pb-style').textContent = (romanState.style || '—') + ' — $' + rate + '/sqft';
   document.getElementById('rn-pb-dims').textContent  = w + '″ W × ' + h + '″ H';
   document.getElementById('rn-pb-qty').textContent   = qty;
   document.getElementById('rn-pb-motor').textContent = getOpt('grp-roman-op') || 'Manual';
+  // Add fabric/liner/shipping rows to price box
+  var extraRows = document.getElementById('rn-pb-extra-rows');
+  if (!extraRows) {
+    extraRows = document.createElement('div');
+    extraRows.id = 'rn-pb-extra-rows';
+    document.getElementById('rn-pb-min-note').before(extraRows);
+  }
+  var xRows = '';
+  if (fabricCost) xRows += '<div class="pb-row"><span class="pb-key">Fabric est. (' + fabricYds.toFixed(1) + ' yd × $25)</span><span class="pb-val">$' + fabricCost.toFixed(0) + '</span></div>';
+  if (linerCost)  xRows += '<div class="pb-row"><span class="pb-key">Liner est. (' + fabricYds.toFixed(1) + ' yd × $7)</span><span class="pb-val">$' + linerCost.toFixed(0) + '</span></div>';
+  if (shipEst)    xRows += '<div class="pb-row"><span class="pb-key">Shipping est.</span><span class="pb-val">~$' + shipEst + '</span></div>';
+  extraRows.innerHTML = xRows;
   document.getElementById('rn-pb-total').textContent = '$' + grandTotal.toFixed(0);
   document.getElementById('rn-pb-min-note').style.display = perShade === RN_MIN ? 'block' : 'none';
   // Fabric yardage note
@@ -1341,8 +1421,8 @@ var D_RATE_LINED   = 110;   // per cut/width
 var D_MIN_WIDTHS   = 2;
 var D_FABRIC_WIDTH = 54;    // standard fabric width (inches)
 var D_LEN_SURCHARGE = 15;   // per width per 10" over 100"
-var D_FABRIC_PER_YD = 30;
-var D_LINING_PER_YD = 6;
+var D_FABRIC_PER_YD = 25;
+var D_LINING_PER_YD = 7;
 var D_CORNICE_PER_FT = 50;
 var D_CORNICE_MIN_FT = 4;
 var D_VALANCE_PER_FT = 50;
@@ -1435,7 +1515,21 @@ function calcDrapePrice() {
     trimTotal = Math.ceil(trimFt) * D_TRIM_PER_FT;
   }
 
-  var grandTotal = laborTotal + fabricCost + liningCost + corniceTotal + valanceTotal + trimTotal;
+  // Liner from drape liner picker (when we supply fabric)
+  var linerCost2 = 0;
+  if (drapeState.fabric === 'We supply the fabric') {
+    var dlBtn = document.querySelector('#grp-drape-liner .opt-btn.sel');
+    if (dlBtn && dlBtn.textContent.indexOf('liner') !== -1) {
+      linerCost2 = yardsTotal * D_LINING_PER_YD;
+    }
+    // Override liningCost with picker value (not from lining step)
+    liningCost = linerCost2;
+  }
+
+  // Shipping estimate
+  var dShipEst = _getShippingEst(document.getElementById('drape-form'));
+
+  var grandTotal = laborTotal + fabricCost + liningCost + corniceTotal + valanceTotal + trimTotal + dShipEst;
 
   // Render
   var rows = '';
@@ -1444,11 +1538,12 @@ function calcDrapePrice() {
       '<span>' + lbl + '</span><span style="color:var(--cream);font-weight:500">$' + val.toFixed(0) + '</span></div>';
   };
   row('Labor — ' + numWidths + ' widths × $' + effectiveRate + (lenSurcharge ? ' (incl. +$' + lenSurcharge + ' length)' : ''), laborTotal);
-  if (fabricCost)  row('Fabric est. (' + yardsTotal + ' yd × $' + D_FABRIC_PER_YD + ')', fabricCost);
-  if (liningCost)  row('Lining est. (' + yardsTotal + ' yd × $' + D_LINING_PER_YD + ')', liningCost);
+  if (fabricCost)  row('Fabric est. (' + yardsTotal + ' yd × $25/yd)', fabricCost);
+  if (liningCost)  row('Liner est. (' + yardsTotal + ' yd × $7/yd)', liningCost);
   if (trimTotal)   row('Trim', trimTotal);
   if (corniceTotal)row('Cornice', corniceTotal);
   if (valanceTotal)row('Valance', valanceTotal);
+  if (dShipEst)    row('Shipping est.', dShipEst);
 
   document.getElementById('drape-price-rows').innerHTML = rows;
   document.getElementById('drape-price-total').textContent = '$' + grandTotal.toFixed(0);
@@ -1701,6 +1796,7 @@ function submitDrape() {
     + '\nAddress: ' + (document.getElementById('d-address').value.trim() || '—') + '\n\n'
     + 'Pleat style: ' + (drapeState.pleat || '—') + '\n'
     + 'Fabric: ' + fabric + '\n'
+    + (fabric === 'We supply the fabric' ? 'Color: ' + (getOpt('grp-drape-color')||'—') + '  Liner: ' + (getOpt('grp-drape-liner')||'No liner') + '\n' : '')
     + 'Lining: ' + lining + '\n'
     + 'Panels: ' + panels + (panelSide !== '—' ? ' — ' + panelSide : '') + '\n'
     + (!isRipple && fullness !== '—' ? 'Fullness: ' + fullness + '\n' : '')
@@ -1785,6 +1881,7 @@ function submitRoman() {
     + 'Style: ' + (romanState.style || '—') + '\n'
     + 'TDBU: ' + tdbu + '\n'
     + 'Fabric: ' + (romanState.fabric || '—') + '\n'
+    + (romanState.fabric === 'We supply the fabric' ? 'Color: ' + (getOpt('grp-roman-color')||'—') + '  Liner: ' + (getOpt('grp-roman-liner')||'No liner') + '\n' : '')
     + 'Lining: ' + lining + '\n'
     + 'Operation: ' + op + '\n'
     + (isMotor
