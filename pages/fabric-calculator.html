@@ -502,6 +502,25 @@
             </div>
           </div>
 
+          <div class="field-group" style="margin-top:16px">
+            <label class="field-label">Welt / trim finishing</label>
+            <div class="opt-row" id="c-welt-type" style="flex-wrap:wrap">
+              <button class="opt-btn sel" data-welt="none" onclick="selOpt(this,'c-welt-type');toggleWeltEdges(false);calcCornice()">No welt</button>
+              <button class="opt-btn" data-welt="single" onclick="selOpt(this,'c-welt-type');toggleWeltEdges(true);calcCornice()">Self welt</button>
+              <button class="opt-btn" data-welt="double" onclick="selOpt(this,'c-welt-type');toggleWeltEdges(true);calcCornice()">Double self welt</button>
+            </div>
+            <div class="field-hint">Self welt uses the same fabric as the cornice. Extra yardage calculated and added to total.</div>
+          </div>
+          <div id="c-welt-edges" style="display:none;margin-bottom:8px">
+            <label class="field-label" style="margin-top:8px;display:block">Welted edges</label>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:4px">
+              <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:7px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff"><input type="checkbox" id="cw-top" onchange="calcCornice()"> Top edge</label>
+              <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:7px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff"><input type="checkbox" id="cw-bottom" checked onchange="calcCornice()"> Bottom edge</label>
+              <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:7px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff"><input type="checkbox" id="cw-sides" onchange="calcCornice()"> Both sides</label>
+              <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:7px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff"><input type="checkbox" id="cw-returns" onchange="calcCornice()"> Returns</label>
+            </div>
+          </div>
+
           <hr class="calc-divider">
           <div style="font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Recommended allowances <span style="font-weight:400;color:#aaa;text-transform:none;letter-spacing:0">(editable)</span></div>
 
@@ -785,6 +804,11 @@ function resetRoman() {
 }
 
 // ── Cornice Calculator ────────────────────────────────────────
+function toggleWeltEdges(show) {
+  var el = document.getElementById('c-welt-edges');
+  if (el) el.style.display = show ? 'block' : 'none';
+}
+
 function calcCornice() {
   const faceW   = v('c-width');
   const ret     = v('c-return') != null ? v('c-return') : 4;
@@ -806,7 +830,30 @@ function calcCornice() {
   const cutHeight = height + topWrap + botWrap + (repeat > 0 ? repeat : 0);
   const widthsNeeded = Math.ceil(totalRun / fabricW);
   const yardsPerCornice = (widthsNeeded * cutHeight) / 36;
-  const totalYards = roundUp(yardsPerCornice * qty * 1.10);
+  let   totalYards = roundUp(yardsPerCornice * qty * 1.10);
+
+  // ── Welt fabric calculation ──
+  const weltBtn = document.querySelector('#c-welt-type .opt-btn.sel');
+  const weltType = weltBtn ? weltBtn.getAttribute('data-welt') : 'none';
+  let weltYards = 0; let weltNote = '';
+  if (weltType !== 'none') {
+    // Calculate welt perimeter from selected edges
+    let weltIn = 0;
+    if (document.getElementById('cw-top')     && document.getElementById('cw-top').checked)     weltIn += faceW;
+    if (document.getElementById('cw-bottom')  && document.getElementById('cw-bottom').checked)   weltIn += faceW;
+    if (document.getElementById('cw-sides')   && document.getElementById('cw-sides').checked)    weltIn += height * 2;
+    if (document.getElementById('cw-returns') && document.getElementById('cw-returns').checked)  weltIn += ret * 2;
+    if (weltIn > 0) {
+      // Strip width: single welt 1.5" bias strip, double welt 3" per strip × 2 strips
+      const stripW = weltType === 'double' ? 3.0 : 1.5;
+      const stripsPerFt = Math.ceil(fabricW / stripW);
+      const weltFt = weltIn / 12;
+      const weltRows = Math.ceil(weltFt / (fabricW / 12 * stripsPerFt));
+      weltYards = roundUp((weltRows * stripW / 36) * qty * 1.10);
+      weltNote = `${weltType === 'double' ? 'Double' : 'Single'} self welt — ${(weltIn/12).toFixed(1)} ft × ${stripW}″ bias strips`;
+      totalYards = roundUp(totalYards + weltYards);
+    }
+  }
 
   const seamNote = widthsNeeded > 1
     ? '<div class="result-note">Face wider than bolt — seam required. Position at a return, never face center.</div>'
@@ -814,27 +861,25 @@ function calcCornice() {
 
   document.getElementById('c-result-body').innerHTML = `
     <div class="result-row">
-      <span class="result-label">Face fabric</span>
+      <span class="result-label">Total fabric needed</span>
       <span class="result-val">${fmtYards(totalYards)}<span class="val-unit">yds</span></span>
     </div>
     <div class="result-breakdown">
-      <h4>Horizontal run</h4>
+      <h4>Face / wrap fabric</h4>
       <div class="breakdown-row"><span>Face width</span><span>${faceW}″</span></div>
       <div class="breakdown-row"><span>+ Returns (${ret}″ × 2)</span><span>+${(ret*2).toFixed(0)}″</span></div>
       <div class="breakdown-row"><span>+ Side tuck (${sideTuck}″ × 2)</span><span>+${sideTuckTotal}″</span></div>
       <div class="breakdown-row" style="border-top:1px solid #3A2E24;margin-top:4px;padding-top:4px"><span><strong>= Total run</strong></span><span><strong>${totalRun.toFixed(1)}″</strong></span></div>
-    </div>
-    <div class="result-breakdown">
-      <h4>Cut height</h4>
-      <div class="breakdown-row"><span>Cornice height</span><span>${height}″</span></div>
-      <div class="breakdown-row"><span>+ Top wrap</span><span>+${topWrap}″</span></div>
-      <div class="breakdown-row"><span>+ Bottom wrap</span><span>+${botWrap}″</span></div>
-      ${repeat > 0 ? `<div class="breakdown-row"><span>+ Pattern repeat</span><span>+${repeat}″</span></div>` : ''}
-      <div class="breakdown-row" style="border-top:1px solid #3A2E24;margin-top:4px;padding-top:4px"><span><strong>= Cut height</strong></span><span><strong>${cutHeight.toFixed(1)}″</strong></span></div>
+      <div class="breakdown-row"><span>Cut height</span><span>${cutHeight.toFixed(1)}″</span></div>
       <div class="breakdown-row"><span>Widths from bolt</span><span>${widthsNeeded} × ${fabricW}″</span></div>
-      <div class="breakdown-row"><span>Yards / cornice (raw)</span><span>${yardsPerCornice.toFixed(2)} yds</span></div>
-      <div class="breakdown-row"><span>Qty</span><span>${qty} cornice${qty > 1 ? 's' : ''}</span></div>
+      <div class="breakdown-row"><span>Yards / cornice</span><span>${yardsPerCornice.toFixed(2)} yds</span></div>
+      <div class="breakdown-row"><span>Qty × +10% waste</span><span>${qty} cornice${qty > 1 ? 's' : ''}</span></div>
     </div>
+    ${weltYards > 0 ? `
+    <div class="result-breakdown">
+      <h4>Welt fabric</h4>
+      <div class="breakdown-row"><span>${weltNote}</span><span>${weltYards.toFixed(2)} yds</span></div>
+    </div>` : ''}
     ${seamNote}
     ${repeat > 0 ? `<div class="result-note" style="margin-top:6px">Pattern repeat of ${repeat}″ added to cut height. Buy one extra repeat per cornice for centering on the face.</div>` : ''}
   `;
@@ -851,6 +896,15 @@ function resetCornice() {
   setDefault('c-fabricw','54');
   document.getElementById('c-fabricw-val').value = '';
   document.getElementById('c-fabricw-custom').style.display = 'none';
+  // Reset welt options
+  document.querySelectorAll('#c-welt-type .opt-btn').forEach(function(b) {
+    b.classList.toggle('sel', b.getAttribute('data-welt') === 'none');
+  });
+  toggleWeltEdges(false);
+  ['cw-top','cw-sides','cw-returns'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.checked = false;
+  });
+  var cwBot = document.getElementById('cw-bottom'); if (cwBot) cwBot.checked = true;
   document.getElementById('c-result-body').innerHTML = emptyState();
 }
 

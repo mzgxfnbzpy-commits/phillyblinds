@@ -1028,9 +1028,11 @@
       <!-- Cornice: self welt or trim (both options) -->
       <div id="cv-cornice-finish">
         <div class="opt-row" id="grp-corn-trim">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-corn-trim');cornToggleTrim(false);calcCornice()">Self welt (same fabric)</button>
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-corn-trim');cornToggleTrim(false);calcCornice()">Self welt</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-corn-trim');cornToggleTrim(false);calcCornice()">Double self welt</button>
           <button class="opt-btn" onclick="selOpt(this,'grp-corn-trim');cornToggleTrim(true);calcCornice()">Applied trim (+$15/ft)</button>
         </div>
+        <div style="font-size:11px;color:#888;margin-top:4px">Self welt: single strip of shade fabric. Double self welt: two strips — fuller, more tailored look.</div>
       </div>
       <!-- Valance: trim only (always open the trim edge picker) -->
       <div id="cv-valance-finish" style="display:none">
@@ -1270,12 +1272,10 @@ _initMeasureHelp(`
 (function() {
   var tab = new URLSearchParams(window.location.search).get('tab');
   if (!tab) return;
-  var map = { roman: 2, cornval: 3 };
-  var idx = map[tab];
-  if (idx) {
-    var btn = document.querySelector('.type-tab:nth-child(' + idx + ')');
-    if (btn) switchTab(tab, btn);
-  }
+  var btn = Array.from(document.querySelectorAll('.type-tab')).find(function(b) {
+    return (b.getAttribute('onclick') || '').indexOf("'" + tab + "'") !== -1;
+  });
+  if (btn) switchTab(tab, btn);
 })();
 
 // ── Tab switcher ──────────────────────────────────────────
@@ -1764,10 +1764,13 @@ function _cvPriceBox(boxId, rowsId, totalId, noteId, w, h, ret, trimClass, trimG
   var rawFt   = (w + ret * 2) / 12;
   var ft      = Math.max(CV_MIN_FT, Math.ceil(rawFt));
   var labor   = Math.max(CV_MIN_PRICE, ft * CV_PER_FT);
-  var hasTrim = document.querySelector('#' + trimGrp + ' .opt-btn.sel') &&
-                document.querySelector('#' + trimGrp + ' .opt-btn.sel').textContent.indexOf('trim') !== -1;
-  var trimFt  = hasTrim ? _cvTrimFt(trimClass, w, h, ret) : 0;
-  var trimCost= Math.ceil(trimFt) * CV_TRIM_PER_FT;
+  var selTrimBtn = document.querySelector('#' + trimGrp + ' .opt-btn.sel');
+  var selTrimTxt = selTrimBtn ? selTrimBtn.textContent.trim() : '';
+  var hasTrim  = selTrimTxt.indexOf('Applied trim') !== -1;
+  var isDblWelt= selTrimTxt === 'Double self welt';
+  var isSelfWelt = selTrimTxt === 'Self welt' || isDblWelt;
+  var trimFt   = hasTrim ? _cvTrimFt(trimClass, w, h, ret) : 0;
+  var trimCost = Math.ceil(trimFt) * CV_TRIM_PER_FT;
   var fabricSup = document.querySelector('#' + fabricGrp + ' .opt-btn.sel');
   var weSupply  = fabricSup && fabricSup.textContent.trim() === 'We supply fabric';
   var fabricCost = 0; var fabricYds = 0;
@@ -1777,6 +1780,12 @@ function _cvPriceBox(boxId, rowsId, totalId, noteId, w, h, ret, trimClass, trimG
     var perimInches = isCorn ? (w + ret*2 + 24) : (w + ret*2);
     fabricYds = Math.ceil((perimInches * (h + 12)) / 1296 * 4) / 4;
     fabricYds = Math.max(fabricYds, 1);
+    // Add welt fabric: self welt ~0.25 yd per 10ft of perimeter; double welt ~0.5 yd
+    if (isCorn && isSelfWelt) {
+      var weltPerim = (w + ret * 2) / 12;
+      var weltYds = Math.ceil(weltPerim * (isDblWelt ? 0.05 : 0.025) * 4) / 4;
+      fabricYds = Math.round((fabricYds + weltYds) * 4) / 4;
+    }
     fabricCost = fabricYds * CV_FABRIC_YD;
   }
   var total = labor + trimCost + fabricCost;
