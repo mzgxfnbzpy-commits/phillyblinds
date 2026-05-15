@@ -1236,7 +1236,7 @@
             <div class="price-box-head">Live estimate</div>
             <div class="price-line"><span id="pb-product">—</span><span></span></div>
             <div class="price-line"><span>Dimensions</span><span id="pb-dims">Enter width &amp; height</span></div>
-            <div class="price-line"><span>Square footage</span><span id="pb-sqft">—</span></div>
+            <div class="price-line"><span>Pricing basis</span><span id="pb-sqft">—</span></div>
             <div class="price-line"><span>Base price / shade</span><span id="pb-base">—</span></div>
             <div class="price-line"><span>Qty</span><span id="pb-qty">1</span></div>
             <div class="price-line" id="pb-motor-row" style="display:none"><span>Motorization</span><span id="pb-motor">—</span></div>
@@ -2262,10 +2262,104 @@ _initMeasureHelp(`
   </div>
 `);
 
-// ─── Product rates ───────────────────────────────────────────
+// ── NORMAN PORTRAIT™ HONEYCOMB PRICING TABLES (Feb 2026 MSRP) ─
+// Widths:  24  30  36  42  48  54  60  66  72  84  96 108 120
+// Heights: 36  42  48  54  60  66  72  78  84  90  96 108 120 144
+const CELL_W = [24,30,36,42,48,54,60,66,72,84,96,108,120];
+const CELL_H = [36,42,48,54,60,66,72,78,84,90,96,108,120,144];
+// 9/16" Single (most popular, lowest price point)
+const CELL_9_16S = [
+  [212,254,274,297,318,362,437,460,508,551,630,711,791],
+  [238,270,282,312,336,385,460,486,543,579,659,737,814],
+  [248,278,291,328,366,404,485,513,573,616,695,771,849],
+  [252,286,304,340,374,423,512,543,607,659,747,837,923],
+  [266,301,318,353,412,445,543,572,642,669,750,862,918],
+  [282,326,340,368,420,463,566,596,671,723,811,898,988],
+  [289,335,349,385,439,486,592,625,707,763,864,966,1067],
+  [338,387,412,449,490,573,611,650,730,805,923,1043,1161],
+  [345,401,423,468,508,596,635,676,766,845,965,1081,1198],
+  [353,412,439,484,525,618,661,707,797,888,1002,1120,1235],
+  [365,423,451,499,544,640,688,737,829,927,1043,1157,1274],
+  [401,471,508,565,618,730,791,843,956,1011,1122,1233,1347],
+  [439,520,565,625,692,823,887,952,1083,1173,1281,1388,1494],
+  [519,622,674,748,838,1007,1080,1173,1264,1389,1500,1694,1790]
+];
+// 3/8" Single & 3/4" Single (same table)
+const CELL_3_8S = [
+  [270,336,351,387,418,448,472,569,600,666,727,868,1153],
+  [311,347,367,404,437,471,501,601,635,705,770,924,1227],
+  [319,359,382,424,484,497,527,634,672,747,821,981,1301],
+  [334,373,398,443,500,522,552,669,707,791,868,1035,1365],
+  [342,394,415,465,527,546,577,705,744,843,920,1097,1446],
+  [367,423,443,482,532,566,605,739,779,872,968,1148,1515],
+  [376,434,456,502,543,595,635,770,820,925,1017,1206,1593],
+  [438,504,537,590,639,699,747,800,850,956,1061,1258,1657],
+  [449,523,554,608,666,727,779,830,888,999,1108,1316,1727],
+  [465,537,573,629,688,752,810,866,924,1042,1155,1369,1797],
+  [474,552,592,650,713,780,841,897,960,1082,1204,1425,1873],
+  [507,596,639,705,778,850,919,987,1057,1195,1331,1576,2066],
+  [543,636,688,764,842,922,999,1074,1149,1312,1459,1726,2256],
+  [572,676,749,820,904,997,1079,1162,1249,1422,1652,1874,2450]
+];
+// 1/2" Double
+const CELL_1_2D = [
+  [281,347,364,402,433,464,490,592,623,690,752,900,1195],
+  [323,359,382,420,453,487,520,624,659,733,800,960,1275],
+  [333,373,397,440,501,515,545,658,698,775,852,1018,1352],
+  [346,388,411,460,519,541,573,695,736,818,900,1073,1417],
+  [356,407,430,483,545,567,601,733,772,874,955,1139,1500],
+  [382,439,460,499,549,587,628,767,810,904,1004,1192,1572],
+  [390,450,472,522,563,616,659,800,849,963,1055,1253,1652],
+  [454,526,558,609,665,725,775,830,882,992,1100,1309,1722],
+  [465,542,574,630,690,752,810,863,921,1037,1149,1365,1795],
+  [483,558,595,652,712,780,840,898,960,1081,1200,1422,1867],
+  [493,573,613,674,739,811,871,933,998,1123,1251,1479,1945],
+  [527,617,665,733,809,882,953,1022,1095,1243,1383,1635,2144],
+  [563,660,712,793,873,956,1037,1116,1193,1361,1516,1793,2341],
+  [594,690,766,849,939,1035,1120,1206,1295,1475,1650,1946,2543]
+];
+// 3/4" Double & 1 1/4" Single (most insulating, highest price)
+const CELL_3_4D = [
+  [336,416,436,483,519,555,591,707,746,827,903,1080,1437],
+  [387,432,457,503,544,586,625,747,792,878,960,1152,1529],
+  [399,446,474,529,602,620,655,789,839,932,1021,1220,1622],
+  [415,465,494,549,624,648,689,831,879,983,1080,1288,1700],
+  [429,490,517,577,655,680,721,878,925,1049,1146,1366,1801],
+  [457,527,549,600,660,704,753,920,970,1088,1204,1430,1885],
+  [469,541,569,626,675,739,792,960,1020,1154,1265,1503,1981],
+  [545,629,669,733,797,871,932,995,1058,1190,1320,1570,2067],
+  [561,649,690,759,827,903,970,1036,1105,1243,1380,1637,2153],
+  [577,669,713,786,854,938,1007,1079,1152,1298,1439,1705,2238],
+  [592,689,736,811,887,971,1046,1120,1196,1348,1499,1774,2333],
+  [630,740,797,878,969,1058,1145,1228,1316,1490,1658,1963,2571],
+  [675,793,854,951,1047,1148,1243,1341,1431,1632,1818,2149,2809],
+  [712,810,918,1020,1126,1241,1343,1447,1553,1769,1978,2334,3048]
+];
+
+function _cellTableLookup(w, h) {
+  var cellBtn = document.querySelector('#grp-cell-size .opt-btn.sel');
+  var t = cellBtn ? cellBtn.textContent : '';
+  var c1 = (t.match(/1/g)||[]).length;
+  var isD = t.indexOf('D') >= 0;
+  var tbl, name;
+  if (isD && c1 >= 1) { tbl = CELL_1_2D; name = '1/2" Double'; }
+  else if (isD)        { tbl = CELL_3_4D; name = '3/4" Double'; }
+  else if (c1 >= 2)    { tbl = CELL_3_4D; name = '1¼" Single'; }
+  else if (t.indexOf('9') >= 0) { tbl = CELL_9_16S; name = '9/16" Single'; }
+  else if (t.indexOf('4') >= 0) { tbl = CELL_3_8S; name = '3/4" Single'; }
+  else                 { tbl = CELL_3_8S; name = '3/8" Single'; }
+
+  var wi = -1, hi = -1;
+  for (var i=0;i<CELL_W.length;i++) { if (CELL_W[i]>=w){ wi=i; break; } }
+  for (var j=0;j<CELL_H.length;j++) { if (CELL_H[j]>=h){ hi=j; break; } }
+  if (wi<0||hi<0) return { name:name, price:null, pricedAt:null };
+  return { name:name, price:tbl[hi][wi], pricedAt: CELL_W[wi]+'″ W × '+CELL_H[hi]+'″ H' };
+}
+
+// ─── Product rates (fallback / non-cellular products) ────────
 const RATES = {
   roller:   22,
-  cellular: 26,
+  cellular: 26,  // unused — cellular now uses Portrait table lookup
   zebra:    20,
   woven:    18
 };
@@ -2746,19 +2840,65 @@ function updatePrice() {
     return;
   }
 
+  // ── CELLULAR: use Norman Portrait™ table lookup ──────────────
+  if (currentProduct === 'cellular') {
+    const res = _cellTableLookup(w, h);
+    if (!res.price) {
+      document.getElementById('pb-dims').textContent = w + '" W × ' + h + '" H — exceeds standard table, call for quote';
+      document.getElementById('pb-sqft').textContent = res.name;
+      document.getElementById('pb-base').textContent = 'Out of range — call (609) 742-1720';
+      document.getElementById('pb-total').textContent = '—';
+      document.getElementById('pb-min-note').style.display = 'none';
+      return;
+    }
+    // Surcharges from PDF
+    const fabBtn = document.querySelector('#grp-cell-fabric .opt-btn.sel');
+    const fabTxt = fabBtn ? fabBtn.textContent.trim() : '';
+    const liftDir = document.querySelector('#grp-cellular-lift .opt-btn.sel');
+    const liftTxt = liftDir ? liftDir.textContent.trim() : '';
+    const opBtn   = document.querySelector('#grp-op-cellular .opt-btn.sel');
+    const opTxt   = opBtn ? opBtn.textContent.trim() : '';
+
+    let base = res.price;
+    const notes = [];
+    if (fabTxt === 'Room Darkening' || fabTxt === 'Sheer') {
+      const add = Math.round(res.price * 0.20);
+      base += add;
+      notes.push(fabTxt + ' +20% (+$' + add + ')');
+    }
+    if (opTxt === 'Cord Loop') { base += 73; notes.push('Cord Loop +$73'); }
+    if (liftTxt === 'Top Down / Bottom Up') { base += 89; notes.push('TDBU +$89'); }
+    if (liftTxt === 'Day & Night') { base += 89; notes.push('D&N +$89'); }
+
+    const activeMotorUp = cellMotorUpcharge;
+    const motorCost = motorOn ? activeMotorUp * qty : 0;
+    const total = (base * qty) + motorCost;
+
+    document.getElementById('pb-dims').textContent = w + '" W × ' + h + '" H · table: ' + res.pricedAt;
+    document.getElementById('pb-sqft').textContent = res.name + (notes.length ? ' · ' + notes.join(', ') : '');
+    document.getElementById('pb-base').textContent = '$' + base + '/shade (Norman Portrait™ MSRP)';
+    if (motorOn) {
+      document.getElementById('pb-motor').textContent = '+$' + activeMotorUp + ' × ' + qty + ' = $' + (activeMotorUp * qty);
+    }
+    document.getElementById('pb-total').textContent = '$' + total.toLocaleString();
+    document.getElementById('pb-min-note').style.display = 'none';
+    return;
+  }
+
+  // ── ALL OTHER PRODUCTS: sqft estimate ────────────────────────
   const sqft = (w / 12) * (h / 12);
   const basePerShade = Math.max(MIN_ORDER, sqft * rate);
-  const activeMotorUp = (currentProduct === 'cellular') ? cellMotorUpcharge : MOTOR_UPCHARGE;
+  const activeMotorUp = MOTOR_UPCHARGE;
   const motorCost = motorOn ? activeMotorUp * qty : 0;
   const total = (basePerShade * qty) + motorCost;
 
   document.getElementById('pb-dims').textContent = w + '" W × ' + h + '" H';
   document.getElementById('pb-sqft').textContent = sqft.toFixed(2) + ' sqft';
-  document.getElementById('pb-base').textContent = '$' + rate + '/sqft → $' + basePerShade.toFixed(2);
+  document.getElementById('pb-base').textContent = '$' + rate + '/sqft → $' + basePerShade.toFixed(0) + ' est.';
   if (motorOn) {
-    document.getElementById('pb-motor').textContent = '+$' + activeMotorUp + ' × ' + qty + ' = $' + (activeMotorUp * qty).toFixed(2);
+    document.getElementById('pb-motor').textContent = '+$' + activeMotorUp + ' × ' + qty + ' = $' + (activeMotorUp * qty).toFixed(0);
   }
-  document.getElementById('pb-total').textContent = '$' + total.toFixed(2);
+  document.getElementById('pb-total').textContent = '$' + total.toFixed(0) + ' est.';
 
   const minApplied = (basePerShade === MIN_ORDER);
   document.getElementById('pb-min-note').style.display = minApplied ? 'block' : 'none';
