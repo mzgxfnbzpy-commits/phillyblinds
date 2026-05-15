@@ -652,11 +652,11 @@
             <div class="step-title">Lift system</div>
             <div class="opt-row" id="rn-grp-lift">
               <button class="opt-btn" onclick="selOpt(this,'rn-grp-lift');rnSetLift('cordless')">PrecisionLift™ Cordless</button>
-              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-lift');rnSetLift('cord')">Continuous Cord Loop</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-lift');rnSetLift('cord')">Chain Loop</button>
               <button class="opt-btn" onclick="selOpt(this,'rn-grp-lift');rnSetLift('smart')">SmartRelease™</button>
               <button class="opt-btn" onclick="selOpt(this,'rn-grp-lift');rnSetLift('motor')">Motorized</button>
             </div>
-            <div id="rn-lift-note" class="tooltip-note" style="margin-top:5px">Cord Loop handles large widths &amp; heavy fabrics — child-safe tensioner required. Cordless max width varies by fabric weight. SmartRelease adds controlled descent.</div>
+            <div id="rn-lift-note" class="tooltip-note" style="margin-top:5px">Chain Loop handles large widths &amp; heavy fabrics — child-safe tensioner required. Cordless max width varies by fabric weight. SmartRelease adds controlled descent.</div>
             <div id="rn-motor-wrap" style="display:none;margin-top:8px">
               <div class="tooltip-note" style="color:var(--gold)">&#9889; Motorization added — we'll confirm battery or hardwired options at measurement visit.</div>
             </div>
@@ -803,10 +803,10 @@
             <div id="rn-standard-hw" style="display:none">
               <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#666;margin-bottom:6px">Standard Hardware — Fascia / Cassette / LightGuard systems</div>
 
-              <!-- Control mechanism (shown only when Cord Loop lift selected) -->
+              <!-- Control mechanism (shown only when Chain Loop lift selected) -->
               <div id="rn-control-section" style="display:none">
                 <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Control</div>
-                <div id="rn-control-note" class="tooltip-note" style="margin-bottom:10px">Metal chain — standard control for continuous cord loop system.</div>
+                <div id="rn-control-note" class="tooltip-note" style="margin-bottom:10px">Metal chain — standard control for continuous chain loop system.</div>
               </div>
 
               <!-- Chain colors -->
@@ -2037,7 +2037,7 @@ const SYSTEM_LIMITS = {
   },
   cellular: {
     'Cordless':  { maxW: 108, maxH: 120, note: 'Cordless max 108″W × 120″H — child & pet safe' },
-    'Cord Loop': { maxW: 120, maxH: 144, note: 'Cord Loop max 120″W × 144″H — best for larger windows' },
+    'Chain Loop': { maxW: 120, maxH: 144, note: 'Chain Loop max 120″W × 144″H — best for larger windows' },
     'Motorized': { maxW: 120, maxH: 144, note: 'Motorized max 120″W × 144″H — app, remote & voice control' },
   },
   zebra: {
@@ -2228,7 +2228,7 @@ function cellularOpChange(type) {
     note.textContent = 'Selected operation: Motorized — choose motor brand and type in the section below.';
   } else {
     // Cord Loop
-    note.textContent = 'Cord Loop supports larger sizes (up to 120″ W × 144″ H). SmartRelease upgrade available.';
+    note.textContent = 'Chain Loop supports larger sizes (up to 120″ W × 144″ H). SmartRelease upgrade available.';
   }
 }
 
@@ -3747,13 +3747,13 @@ function rnSetLift(type) {
     if (chainWrap) chainWrap.style.display = 'none';
     if (cordWrap)  cordWrap.style.display  = 'none';
   } else {
-    // Show chain color picker for cord loop lift (metal chain is the control)
+    // Show chain color picker for chain loop lift (metal chain is the control)
     if (chainWrap) chainWrap.style.display = 'block';
   }
 
   const liftNotes = {
     cordless: 'PrecisionLift™ Cordless: child & pet safe, no exposed chain. Max width varies by fabric weight — not recommended for oversized or very heavy shades.',
-    cord:     'Continuous Cord Loop: handles large widths & heavy fabrics. Child-safe tensioner required. Choose chain or cord control below.',
+    cord:     'Chain Loop: handles large widths & heavy fabrics. Child-safe tensioner required. Choose chain or cord control below.',
     smart:    'SmartRelease™: controlled soft descent. Requires compatible raceway/cassette. Has surcharge.',
     motor:    'Motorized: required for large shades, hard-to-reach windows, dual & coupled systems. Battery or hardwired options available.'
   };
@@ -3864,7 +3864,7 @@ function validateSolunaColorConfig(config) {
   if (config.fasciaShape === "Flat")                                              errors.push("Flat fascia is not a valid Soluna option.");
   if (config.fasciaShape === "Curved" && config.fasciaMaterial === "Metal")       errors.push("Curved fascia must be fabric wrapped — curved metal is not allowed.");
   if (config.fasciaMaterial === "Metal" && config.fasciaShape !== "Square")       errors.push("Metal fascia is only available as square fascia.");
-  if (config.operatingSystem === "Cord Loop" && config.tensionDevice === false)   errors.push("Safety tension device is required for cord loop — cannot be removed.");
+  if (config.operatingSystem === "Chain Loop" && config.tensionDevice === false)   errors.push("Safety tension device is required for chain loop — cannot be removed.");
   if (config.systemType === "LightGuard 360" && config.usesFabricDefaultColor)   errors.push("LightGuard 360 requires manual housing color selection — fabric defaults do not apply.");
   if (config.systemType === "Cassette" && !config.cassetteColor)                 errors.push("Cassette color must be selected.");
   return { valid: errors.length === 0, errors };
@@ -3884,7 +3884,7 @@ function rnBuildConfig() {
     fasciaShape:        g('rn-grp-fascia-shape'),
     fasciaMaterial:     g('rn-grp-fascia-mat'),
     hemBarType:         g('rn-grp-hem-type'),
-    operatingSystem:    rnLiftType === 'motor' ? 'Motorized' : rnLiftType === 'cord' ? 'Cord Loop' : 'Cordless',
+    operatingSystem:    rnLiftType === 'motor' ? 'Motorized' : rnLiftType === 'cord' ? 'Chain Loop' : 'Cordless',
     motorType:          'Battery / Wired (TBD)',
     isDualShade:        rnSystemType === 'dual' || rnSystemType === 'dn',
     tensionDevice:      true,         // always required
@@ -4019,7 +4019,7 @@ function rnSetControl(type) {
   const note = document.getElementById('rn-control-note');
   if (note) {
     note.textContent = type === 'cord'
-      ? 'Cord loop (clutch): pairs with Continuous Cord Loop lift system. Color options are more limited than metal chain.'
+      ? 'Cord loop (clutch): pairs with Chain Loop lift system. Color options are more limited than metal chain.'
       : 'Metal chain: standard for most systems. Wide color selection. Plastic bead or stainless steel available.';
   }
 }
@@ -4062,7 +4062,7 @@ function rnRunValidation() {
     errors.push('Some natural fabrics (e.g. Maui Natural) have a maximum fabric height of 120″.');
   }
   if (rnLiftType === 'cordless' && w && w > 72) {
-    warnings.push('Cordless lift may not support widths over ~72″ depending on fabric weight. Consider Cord Loop or Motorized.');
+    warnings.push('Cordless lift may not support widths over ~72″ depending on fabric weight. Consider Chain Loop or Motorized.');
   }
   if (lgType === 'LightGuard 360™' && rnFabricType !== 'rd') {
     errors.push('LightGuard 360™ requires Room Darkening fabric to be effective. Select Room Darkening in Step 2.');
