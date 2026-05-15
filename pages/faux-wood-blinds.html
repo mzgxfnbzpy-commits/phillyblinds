@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Configure and price faux wood blinds online. SmartPrivacy® cordless design, 16 colors, instant pricing. Serving Philadelphia area.">
-<meta property="og:title" content="Faux Wood Blinds | Philly Blinds">
+<meta name="description" content="Configure and price SmartPrivacy Faux Wood Blinds online. Cordless, child-safe, 14 colors, instant pricing. Serving Philadelphia area.">
+<meta property="og:title" content="SmartPrivacy Faux Wood Blinds | Philly Blinds">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://phillyblinds.com/pages/faux-wood-blinds.html">
 <meta property="og:site_name" content="Philly Blinds">
-<title>Faux Wood Blinds — Philly Blinds</title>
+<title>SmartPrivacy Faux Wood Blinds — Philly Blinds</title>
 <link rel="stylesheet" href="../css/global.css">
 <style>
 .page-hero{background:linear-gradient(to right,rgba(28,21,16,.96) 40%,rgba(28,21,16,.65) 70%,rgba(28,21,16,.3) 100%),url('../images/thumbnails/faux-blinds-bay-window.JPEG') right center/cover no-repeat;padding:48px 28px 44px;min-height:280px}
 .breadcrumb{font-size:11px;color:var(--text-faint);margin-bottom:14px}
 .breadcrumb a{color:var(--text-muted);text-decoration:none}
-.page-hero h1{font-size:30px;font-weight:500;color:var(--cream);letter-spacing:-0.4px;margin-bottom:8px}
+.page-hero h1{font-size:30px;font-weight:500;color:var(--cream);letter-spacing:-0.4px;margin-bottom:8px;line-height:1.2}
 .page-hero .sub{font-size:14px;color:var(--text-dark);line-height:1.7;max-width:520px;margin-bottom:18px}
 .hero-pills{display:flex;gap:8px;flex-wrap:wrap}
 .hero-pill{font-size:11px;padding:4px 12px;border-radius:20px;border:.5px solid var(--border-dark);color:var(--text-faint)}
@@ -23,7 +23,6 @@
 .config-layout{display:grid;grid-template-columns:1fr 308px;gap:24px;max-width:1100px;margin:0 auto;padding:28px 28px 60px;align-items:start}
 @media(max-width:880px){.config-layout{grid-template-columns:1fr;padding:20px 16px 48px}}
 
-/* Steps */
 .step-block{background:#fff;border:1px solid #e8e8e4;border-radius:14px;margin-bottom:14px;overflow:hidden}
 .step-block.active{box-shadow:0 2px 18px rgba(200,151,63,.1);border-color:rgba(200,151,63,.3)}
 .step-head{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;user-select:none}
@@ -34,7 +33,6 @@
 .step-body{padding:4px 20px 20px;display:none}
 .step-block.active .step-body,.step-block.open .step-body{display:block}
 
-/* Option cards */
 .opt-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
 .opt-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
 @media(max-width:520px){.opt-grid-3{grid-template-columns:1fr 1fr}}
@@ -45,7 +43,6 @@
 .opt-card.sel .opt-card-title{color:#7A4F00}
 .opt-card-desc{font-size:11px;color:#666;line-height:1.45}
 
-/* Color grid */
 .color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:7px;margin-top:10px}
 .color-card{border:1.5px solid #e8e8e4;border-radius:9px;overflow:hidden;cursor:pointer;transition:all .15s}
 .color-card:hover{border-color:var(--gold);transform:translateY(-1px)}
@@ -57,7 +54,6 @@
 .color-finish{font-size:9px;color:#777;line-height:1.4}
 .color-printed-badge{font-size:8px;color:#B45309;background:#FEF3C7;padding:1px 4px;border-radius:3px;display:inline-block;margin-top:2px;font-weight:600}
 
-/* Dimensions */
 .dim-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
 .dim-label{font-size:12px;font-weight:500;color:#444;margin-bottom:5px}
 .dim-inputs{display:flex;gap:6px;align-items:center}
@@ -65,21 +61,19 @@
 .dim-frac{padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff;color:#333}
 .dim-unit{font-size:13px;color:#555;font-weight:500}
 
-.msg-box{border-radius:8px;padding:9px 13px;font-size:12px;margin-top:8px;line-height:1.5;display:none}
-.msg-err{background:#FEE2E2;border:1px solid #EF4444;color:#7f1d1d;display:block}
-.msg-ok{background:#DCFCE7;border:1px solid #86EFAC;color:#14532d;display:block}
-.msg-info{background:rgba(200,151,63,.08);border:1px solid rgba(200,151,63,.25);color:#7A4F00;display:block}
+.msg-box{border-radius:8px;padding:9px 13px;font-size:12px;margin-top:8px;line-height:1.5}
+.msg-err{background:#FEE2E2;border:1px solid #EF4444;color:#7f1d1d}
+.msg-warn{background:#FFF3CD;border:1px solid #FFC107;color:#7d5a00}
+.msg-info{background:rgba(200,151,63,.08);border:1px solid rgba(200,151,63,.25);color:#7A4F00}
+.msg-ok{background:#DCFCE7;border:1px solid #86EFAC;color:#14532d}
 
 .computed-box{background:#F9F7F4;border:1px solid #e4e0d8;border-radius:8px;padding:10px 14px;margin-top:10px}
 .cv-row{display:flex;justify-content:space-between;font-size:12px;padding:2px 0}
 .cv-key{color:#777}
 .cv-val{font-weight:500;color:#111}
 
-/* Subheading inside step */
 .sub-label{font-size:12px;font-weight:500;color:#444;margin:14px 0 5px}
-.sub-label:first-child{margin-top:0}
 
-/* Add-on toggle rows */
 .addon-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border:1.5px solid #e8e8e4;border-radius:9px;margin-top:7px;cursor:pointer;transition:all .15s;gap:10px}
 .addon-row:hover{border-color:var(--gold)}
 .addon-row.sel{border:2px solid var(--gold);background:rgba(200,151,63,.05)}
@@ -90,14 +84,14 @@
 .addon-sub{font-size:11px;color:#666;margin-top:1px}
 .addon-price{font-size:12px;font-weight:600;color:var(--gold);flex-shrink:0}
 
-/* Qty spinners */
 .spinner-row{display:flex;align-items:center;gap:9px;margin-top:8px}
 .spin-btn{width:32px;height:32px;border:1px solid #ddd;border-radius:7px;background:#fff;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;line-height:1}
 .spin-btn:hover{border-color:var(--gold)}
 .spin-num{width:44px;text-align:center;border:1px solid #ddd;border-radius:7px;font-size:14px;padding:5px}
 .spin-label{font-size:12px;color:#666}
 
-/* Quote panel */
+.step-note{font-size:11px;color:#999;line-height:1.6;margin-top:6px}
+
 .quote-panel{background:var(--espresso);border-radius:14px;padding:22px;position:sticky;top:72px}
 .qp-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:16px}
 .qp-pending{font-size:12px;color:var(--text-muted);text-align:center;padding:16px 0;font-style:italic;line-height:1.6}
@@ -110,22 +104,11 @@
 .qtotal-label{color:var(--cream)}
 .qtotal-val{color:var(--gold)}
 .qnote{font-size:10px;color:var(--text-dark);margin-top:8px;line-height:1.6}
-.qbadge{font-size:9px;background:rgba(252,160,68,.15);color:#FCA044;padding:1px 5px;border-radius:3px;margin-left:4px;vertical-align:middle}
+.qbadge{font-size:9px;background:rgba(252,160,68,.15);color:#FCA044;padding:1px 5px;border-radius:3px;margin-left:3px;vertical-align:middle}
 
-/* Info / warn boxes */
-.info-box{background:rgba(200,151,63,.08);border:1px solid rgba(200,151,63,.25);border-radius:8px;padding:10px 13px;font-size:12px;color:#7A4F00;margin-top:8px;line-height:1.6}
-.warn-box{background:#FFF3CD;border:1px solid #FFC107;border-radius:8px;padding:10px 13px;font-size:12px;color:#7d5a00;margin-top:8px;line-height:1.6}
-
-/* Return grid */
-.return-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:7px}
-@media(max-width:460px){.return-grid{grid-template-columns:1fr}}
-
-.step-note{font-size:11px;color:#999;line-height:1.6;margin-top:6px}
-
-/* Form */
 .form-group{margin-bottom:14px}
 .form-group label{display:block;font-size:12px;font-weight:500;color:#444;margin-bottom:4px}
-.form-group input,.form-group textarea,.form-group select{width:100%;padding:9px 12px;border:1px solid #ddd;border-radius:8px;font-size:13px;font-family:inherit;box-sizing:border-box}
+.form-group input,.form-group textarea{width:100%;padding:9px 12px;border:1px solid #ddd;border-radius:8px;font-size:13px;font-family:inherit;box-sizing:border-box}
 .form-group textarea{resize:vertical;min-height:72px}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:480px){.form-row{grid-template-columns:1fr}}
@@ -135,12 +118,23 @@
 .del-btn.sel{border-color:var(--gold);color:var(--gold);background:rgba(200,151,63,.05)}
 .del-note{font-size:11px;color:#555;line-height:1.6}
 .del-tariff{font-size:10px;color:#888;margin-top:4px;font-style:italic}
-.submit-btn{width:100%;padding:14px;background:var(--gold);color:#1C1510;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .15s;margin-top:2px;letter-spacing:.2px}
+.submit-btn{width:100%;padding:14px;background:var(--gold);color:#1C1510;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .15s;margin-top:2px}
 .submit-btn:hover{opacity:.88}
 .form-err{background:#FEE2E2;border:1px solid #EF4444;border-radius:8px;padding:9px 13px;font-size:12px;color:#7f1d1d;margin-bottom:10px;display:none}
 .success-box{background:#EEFBE8;border:1px solid #86EFAC;border-radius:12px;padding:22px;text-align:center;display:none}
 .success-box h3{font-size:15px;font-weight:600;color:#14532d;margin-bottom:6px}
 .success-box p{font-size:13px;color:#166534;line-height:1.6}
+.custom-notice{background:#FBF7F0;border:1px solid #D4B47A;border-radius:10px;padding:16px 18px;margin-bottom:14px}
+.custom-notice-head{font-size:13px;font-weight:600;color:#7A4F00;margin-bottom:5px}
+.custom-notice-body{font-size:12px;color:#8A6020;line-height:1.7}
+.warn-banner{background:#FFF3CD;border:1px solid #FFC107;border-radius:8px;padding:10px 14px;font-size:12px;color:#7d5a00;line-height:1.6;margin-top:8px}
+
+/* Custom quote blocker overlay */
+.custom-quote-block{background:#FEF3C7;border:2px solid #FCA044;border-radius:10px;padding:16px;margin-top:8px;display:none}
+.custom-quote-block-title{font-size:13px;font-weight:600;color:#7A4F00;margin-bottom:5px}
+.custom-quote-block-body{font-size:12px;color:#92400E;line-height:1.6}
+.custom-quote-block-phone{font-size:13px;margin-top:8px}
+.custom-quote-block-phone a{color:var(--gold);font-weight:600;text-decoration:none}
 </style>
 </head>
 <body>
@@ -149,15 +143,15 @@
 
 <div class="page-hero">
   <div class="hero-inner">
-    <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <a href="shades.html">Shades &amp; Blinds</a> &rsaquo; Faux Wood Blinds</div>
-    <h1>Faux Wood Blinds</h1>
+    <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <a href="shades.html">Shades &amp; Blinds</a> &rsaquo; SmartPrivacy Faux Wood Blinds</div>
+    <h1>SmartPrivacy<br>Faux Wood Blinds</h1>
     <p>Cordless faux wood blinds with SmartPrivacy® — the pivoting bottom rail that seals out light from below. Configure your exact specs and see your price instantly.</p>
     <div class="hero-pills">
       <span class="hero-pill hero-pill-gold">Instant pricing</span>
       <span class="hero-pill">Cordless &amp; child safe</span>
-      <span class="hero-pill">SmartPrivacy® included</span>
+      <span class="hero-pill">SmartPrivacy® closure</span>
       <span class="hero-pill">2&Prime; &amp; 2&frac12;&Prime; slats</span>
-      <span class="hero-pill">16 colors</span>
+      <span class="hero-pill">14 colors</span>
     </div>
   </div>
 </div>
@@ -170,15 +164,15 @@
     <div class="step-head" onclick="toggleStep('step1')">
       <div class="step-num">1</div>
       <div class="step-head-title">Slat Size</div>
-      <div class="step-head-val" id="s1val">—</div>
+      <div class="step-head-val" id="s1val">2&Prime; (selected)</div>
     </div>
     <div class="step-body">
       <div class="opt-grid-2">
-        <div class="opt-card sel" onclick="pickSlat(this,'2&Prime;','2in')">
+        <div class="opt-card sel" onclick="pickSlat(this,'2&Prime;')">
           <div class="opt-card-title">2&Prime; Slat</div>
           <div class="opt-card-desc">Classic proportion &middot; most popular</div>
         </div>
-        <div class="opt-card" onclick="pickSlat(this,'2&frac12;&Prime;','2.5in')">
+        <div class="opt-card" onclick="pickSlat(this,'2&frac12;&Prime;')">
           <div class="opt-card-title">2&frac12;&Prime; Slat</div>
           <div class="opt-card-desc">Wider look &middot; fewer slats visible</div>
         </div>
@@ -196,7 +190,6 @@
     </div>
     <div class="step-body">
       <div class="color-grid">
-        <!-- Solid colors -->
         <div class="color-card" onclick="pickColor(this,'Pure White &mdash; Smooth','P001',false)">
           <div class="color-swatch" style="background:#F7F7F7;border-bottom:1px solid #eee"></div>
           <div class="color-label"><div class="color-name">Pure White</div><div class="color-code">P001</div><div class="color-finish">Smooth</div></div>
@@ -220,14 +213,6 @@
         <div class="color-card" onclick="pickColor(this,'Silk White &mdash; Embossed','P003',false)">
           <div class="color-swatch" style="background:#E6E1D9;border-bottom:1px solid #eee"></div>
           <div class="color-label"><div class="color-name">Silk White</div><div class="color-code">P003</div><div class="color-finish">Embossed</div></div>
-        </div>
-        <div class="color-card" onclick="pickColor(this,'Bright White &mdash; Smooth','P004',false)">
-          <div class="color-swatch" style="background:#FAFAFA;border-bottom:1px solid #eee"></div>
-          <div class="color-label"><div class="color-name">Bright White</div><div class="color-code">P004</div><div class="color-finish">Smooth</div></div>
-        </div>
-        <div class="color-card" onclick="pickColor(this,'Bright White &mdash; Embossed','P004',false)">
-          <div class="color-swatch" style="background:#F2F2F0;border-bottom:1px solid #eee"></div>
-          <div class="color-label"><div class="color-name">Bright White</div><div class="color-code">P004</div><div class="color-finish">Embossed</div></div>
         </div>
         <div class="color-card" onclick="pickColor(this,'Pearl &mdash; Smooth','P006',false)">
           <div class="color-swatch" style="background:#E8E0D0;border-bottom:1px solid #eee"></div>
@@ -263,7 +248,7 @@
           <div class="color-label"><div class="color-name">Chestnut</div><div class="color-code">P226</div><div class="color-finish">Printed Embossed</div><span class="color-printed-badge">+20%</span></div>
         </div>
       </div>
-      <div class="step-note">Colors marked <strong>+20%</strong> are printed finishes with a 20% surcharge. Valance color always matches slat color.</div>
+      <div class="step-note">Colors marked <strong>+20%</strong> are printed finishes with a 20% surcharge. Colors may vary from digital images — request a physical swatch at your consultation. Valance color always matches slat color.</div>
     </div>
   </div>
 
@@ -275,21 +260,17 @@
       <div class="step-head-val" id="s3val">—</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-3">
+      <div class="opt-grid-2">
         <div class="opt-card" onclick="pickMount(this,'Inside Mount','inside')">
           <div class="opt-card-title">Inside Mount</div>
-          <div class="opt-card-desc">Fits inside the frame &middot; clean, recessed look<br><br>Mfr deducts 3/8&Prime; from ordered width</div>
+          <div class="opt-card-desc">Fits inside the window frame &middot; clean, recessed look<br><br>Mfr deducts 3/8&Prime; from width automatically</div>
         </div>
         <div class="opt-card" onclick="pickMount(this,'Outside Mount','outside')">
           <div class="opt-card-title">Outside Mount</div>
-          <div class="opt-card-desc">Mounts above or outside frame &middot; better light block<br><br>Add ~3&Prime; to both width &amp; height for full coverage</div>
-        </div>
-        <div class="opt-card" onclick="pickMount(this,'Side Mount','side')">
-          <div class="opt-card-title">Side Mount</div>
-          <div class="opt-card-desc">Brackets on the side wall &middot; inside mount rules apply<br><br>Max width 37&Prime; &middot; $23 bracket surcharge</div>
+          <div class="opt-card-desc">Mounts above or outside the frame &middot; better light block<br><br>Add ~3&Prime; to width &amp; height for full coverage</div>
         </div>
       </div>
-      <div id="mount-info" class="info-box" style="display:none"></div>
+      <div id="mount-note" class="msg-box msg-info" style="display:none"></div>
     </div>
   </div>
 
@@ -343,7 +324,7 @@
         <div class="cv-row"><span class="cv-key">Priced at</span><span class="cv-val" id="cv-pricesize">—</span></div>
         <div class="cv-row"><span class="cv-key">Area</span><span class="cv-val" id="cv-area">—</span></div>
       </div>
-      <div class="step-note" style="margin-top:10px">Enter your <strong>frame opening</strong> for inside/side mount, or your desired <strong>finished blind size</strong> for outside mount. Tolerances: width &plusmn;1/8&Prime;, height +0 to +2&nbsp;3/4&Prime;.</div>
+      <div class="step-note" style="margin-top:10px">Enter the <strong>frame opening</strong> for inside mount, or your desired <strong>finished blind size</strong> for outside mount. Tolerances: width &plusmn;1/8&Prime;, height +0 to +2&nbsp;3/4&Prime;. Finished sizes may vary within manufacturer tolerance.</div>
     </div>
   </div>
 
@@ -358,49 +339,18 @@
       <div class="opt-grid-3">
         <div class="opt-card" onclick="pickValance(this,'No Valance','none')">
           <div class="opt-card-title">No Valance</div>
-          <div class="opt-card-desc">Clean, modern headrail with built-in light block</div>
+          <div class="opt-card-desc">Clean headrail with built-in light block</div>
         </div>
         <div class="opt-card" onclick="pickValance(this,'Modern Curved 2&frac12;&Prime;','modern')">
           <div class="opt-card-title">Modern Curved</div>
-          <div class="opt-card-desc">2&frac12;&Prime; curved profile &middot; contemporary look</div>
+          <div class="opt-card-desc">2&frac12;&Prime; curved profile &middot; contemporary</div>
         </div>
         <div class="opt-card" onclick="pickValance(this,'Designer Crown 3&frac14;&Prime;','crown')">
           <div class="opt-card-title">Designer Crown</div>
-          <div class="opt-card-desc">3&frac14;&Prime; crown profile &middot; traditional look</div>
+          <div class="opt-card-desc">3&frac14;&Prime; crown profile &middot; traditional</div>
         </div>
       </div>
-
-      <!-- Valance returns — shown only when a valance is selected -->
-      <div id="return-section" style="display:none;margin-top:16px">
-        <div class="sub-label">Valance Returns</div>
-        <div class="return-grid">
-          <div class="opt-card" onclick="pickReturn(this,'Left only')">
-            <div class="opt-card-title">Left Only</div>
-          </div>
-          <div class="opt-card" onclick="pickReturn(this,'Right only')">
-            <div class="opt-card-title">Right Only</div>
-          </div>
-          <div class="opt-card" onclick="pickReturn(this,'Left &amp; Right')">
-            <div class="opt-card-title">Left &amp; Right</div>
-          </div>
-        </div>
-        <div class="step-note">Custom return depth: min 1/2&Prime;, max 5&Prime;. Standard size included.</div>
-
-        <!-- Keystone — only with valance -->
-        <div class="sub-label" style="margin-top:14px">Keystone <span style="font-weight:400;color:#999">(optional)</span></div>
-        <div class="addon-row" id="keystone-row" onclick="toggleAddon(this,'keystone')">
-          <div class="addon-left">
-            <div class="addon-check" id="keystone-check">&#10003;</div>
-            <div>
-              <div class="addon-name">Add Keystone</div>
-              <div class="addon-sub">Valance support connector &middot; $73 each</div>
-            </div>
-          </div>
-          <div class="addon-price">+$73</div>
-        </div>
-      </div>
-
-      <div class="step-note" style="margin-top:8px">Valance color always matches slat color.</div>
+      <div class="step-note">Valance color always matches slat color. Valance surcharge added to price when selected.</div>
     </div>
   </div>
 
@@ -408,15 +358,15 @@
   <div class="step-block" id="step6">
     <div class="step-head" onclick="toggleStep('step6')">
       <div class="step-num">6</div>
-      <div class="step-head-title">Add-Ons &amp; Wand</div>
+      <div class="step-head-title">Add-Ons &amp; Controls</div>
       <div class="step-head-val" id="s6val"></div>
     </div>
     <div class="step-body">
 
       <!-- Hold Down Brackets -->
-      <div class="sub-label">Hold Down Brackets</div>
-      <div id="hdb-auto" class="info-box" style="display:none">Included automatically for blinds 30&Prime; wide or less.</div>
-      <div class="addon-row" id="hdb-row" style="display:none" onclick="toggleAddon(this,'hdb')">
+      <div class="sub-label" style="margin-top:0">Hold Down Brackets</div>
+      <div id="hdb-auto" class="msg-box msg-info" style="display:none">Hold down brackets are included for blinds 30&Prime; wide or less.</div>
+      <div class="addon-row" id="hdb-row" style="display:none" onclick="toggleHdb()">
         <div class="addon-left">
           <div class="addon-check" id="hdb-check">&#10003;</div>
           <div>
@@ -428,10 +378,30 @@
       </div>
       <div id="hdb-prompt" class="step-note">Enter dimensions in Step 4 to see bracket options.</div>
 
-      <!-- Shims -->
+      <!-- Side Mount Brackets — inside mount only -->
+      <div id="side-mount-section" style="display:none">
+        <div class="sub-label" style="margin-top:14px">Side Mount Brackets <span style="font-weight:400;color:#999">(inside mount only &middot; $23/blind)</span></div>
+        <div id="side-mount-block" class="custom-quote-block">
+          <div class="custom-quote-block-title">Custom Quote Required</div>
+          <div class="custom-quote-block-body">Side mount blinds over 37&Prime; wide require a custom quote. Please call or submit a quote request.</div>
+          <div class="custom-quote-block-phone"><a href="tel:6097421720">(609) 742-1720</a> &mdash; available 24/7</div>
+        </div>
+        <div class="addon-row" id="side-row" style="display:none" onclick="toggleAddon(this,'sideMt')">
+          <div class="addon-left">
+            <div class="addon-check" id="sideMt-check">&#10003;</div>
+            <div>
+              <div class="addon-name">Side Mount Brackets</div>
+              <div class="addon-sub">Mounts on the side wall instead of ceiling/face</div>
+            </div>
+          </div>
+          <div class="addon-price">+$23</div>
+        </div>
+      </div>
+
+      <!-- Shims — outside mount only -->
       <div class="sub-label" style="margin-top:14px">Shims <span style="font-weight:400;color:#999">(outside mount only &middot; $7 each)</span></div>
       <div id="shim-section" style="display:none">
-        <div style="font-size:12px;color:#555;margin-bottom:6px;line-height:1.6">Extends bracket projection off the wall. 1 shim = 3/8&Prime; &middot; 2 shims stacked = 11/16&Prime;.</div>
+        <div class="step-note" style="margin-top:0;margin-bottom:6px">Extends bracket projection off the wall. 1 shim = 3/8&Prime; &middot; 2 shims stacked = 11/16&Prime;.</div>
         <div class="spinner-row">
           <span class="spin-label">Quantity:</span>
           <button class="spin-btn" onclick="adjShims(-1)">&#8722;</button>
@@ -443,60 +413,20 @@
       </div>
       <div id="shim-na" class="step-note" style="display:block">Shims only available with outside mount.</div>
 
-      <!-- Cut-Out -->
-      <div class="sub-label" style="margin-top:14px">Cut-Out <span style="font-weight:400;color:#999">(optional &middot; $89 per side)</span></div>
-      <div class="addon-row" id="cutout-row" onclick="toggleAddon(this,'cutout')">
-        <div class="addon-left">
-          <div class="addon-check" id="cutout-check">&#10003;</div>
-          <div>
-            <div class="addon-name">Add Cut-Out</div>
-            <div class="addon-sub">Custom routing for obstructions (handle, lock, etc.) &middot; add details in notes</div>
-          </div>
-        </div>
-        <div class="addon-price" id="cutout-price">+$89</div>
-      </div>
-      <div id="cutout-sides-row" style="display:none;margin-top:8px">
-        <div class="sub-label">Cut-out sides needed</div>
-        <div class="opt-grid-2">
-          <div class="opt-card sel" onclick="pickCutoutSides(this,1,'1 side')">
-            <div class="opt-card-title">1 Side</div>
-            <div class="opt-card-desc">+$89</div>
-          </div>
-          <div class="opt-card" onclick="pickCutoutSides(this,2,'2 sides')">
-            <div class="opt-card-title">2 Sides</div>
-            <div class="opt-card-desc">+$178</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Wand Drop -->
-      <div class="sub-label" style="margin-top:14px">Wand Drop Length</div>
-      <div id="wand-default-note" class="info-box" style="display:none"></div>
-      <div style="margin-top:8px">
-        <select id="wand-select" style="width:100%;padding:9px 12px;border:1px solid #ddd;border-radius:8px;font-size:13px;font-family:inherit" onchange="calcPrice()">
-          <option value="default">Default — based on blind height (no charge)</option>
-          <option value="11.75">11&nbsp;3/4&Prime;</option>
-          <option value="17.75">17&nbsp;3/4&Prime;</option>
-          <option value="24">24&Prime;</option>
-          <option value="29.75">29&nbsp;3/4&Prime;</option>
-          <option value="38.25">38&nbsp;1/4&Prime;</option>
-          <option value="47.25">47&nbsp;1/4&Prime; — 2-piece wand</option>
-          <option value="60">60&Prime; — 2-piece wand</option>
-        </select>
-      </div>
-
       <!-- Wand Location -->
       <div class="sub-label" style="margin-top:14px">Wand Location <span style="font-weight:400;color:#999">(no charge)</span></div>
-      <div class="opt-grid-2" style="margin-top:6px">
-        <div class="opt-card sel" id="wloc-left" onclick="pickWandLoc(this,'Left','left')">
+      <div id="wand-loc-normal" class="opt-grid-2" style="display:none;margin-top:6px">
+        <div class="opt-card sel" id="wloc-left" onclick="pickWandLoc(this,'Left')">
           <div class="opt-card-title">Left</div>
           <div class="opt-card-desc">Standard</div>
         </div>
-        <div class="opt-card" id="wloc-right" onclick="pickWandLoc(this,'Right','right')">
+        <div class="opt-card" id="wloc-right" onclick="pickWandLoc(this,'Right')">
           <div class="opt-card-title">Right</div>
           <div class="opt-card-desc">Optional</div>
         </div>
       </div>
+      <div id="wand-loc-center" class="msg-box msg-info" style="display:none">Blinds under 15&Prime; wide use a center wand with tilt only — no lift function.</div>
+      <div id="wand-loc-prompt" class="step-note">Enter dimensions in Step 4 to see wand options.</div>
       <div class="step-note">Wand placement may vary slightly between blinds and is not considered a defect.</div>
     </div>
   </div>
@@ -515,16 +445,16 @@
         <button class="spin-btn" onclick="adjQty(1)">&#43;</button>
         <span class="spin-label">blind(s) of this size &amp; color</span>
       </div>
-      <div class="step-note" style="margin-top:8px">Need multiple different sizes? Submit one quote per size. Freight is per order.</div>
+      <div class="step-note" style="margin-top:8px">Need different sizes? Submit a separate order for each size. Freight applies per order.</div>
     </div>
   </div>
 
-  <!-- STEP 8: YOUR INFO + SUBMIT -->
+  <!-- STEP 8: INFO + SUBMIT -->
   <div class="step-block" id="step8">
     <div class="step-head" onclick="toggleStep('step8')">
       <div class="step-num">8</div>
       <div class="step-head-title">Your Info &amp; Submit</div>
-      <div class="step-head-val" id="s8val"></div>
+      <div class="step-head-val"></div>
     </div>
     <div class="step-body">
       <div class="form-row">
@@ -532,7 +462,7 @@
         <div class="form-group"><label>Phone *</label><input type="tel" id="f-phone" placeholder="(215) 555-0100"></div>
       </div>
       <div class="form-group"><label>Email *</label><input type="email" id="f-email" placeholder="jane@example.com"></div>
-      <div class="form-group"><label>Notes <span style="font-weight:400;color:#999">(optional)</span></label><textarea id="f-notes" placeholder="Cut-out details, special installation requirements, existing hardware to reuse…"></textarea></div>
+      <div class="form-group"><label>Notes <span style="font-weight:400;color:#999">(optional)</span></label><textarea id="f-notes" placeholder="Special installation requirements, questions, or anything else we should know…"></textarea></div>
 
       <div class="delivery-wrap">
         <div style="font-size:13px;font-weight:500;color:#333;margin-bottom:8px">Delivery or pickup?</div>
@@ -544,6 +474,11 @@
           <div class="del-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately.</div>
         </div>
         <div class="del-note" id="del-pickup-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address disclosed after order confirmation.</div>
+      </div>
+
+      <div class="custom-notice">
+        <div class="custom-notice-head">Custom-made product</div>
+        <div class="custom-notice-body">Faux wood blinds are custom made to order. Inside mount blinds include standard manufacturer deductions. Finished sizes may vary within manufacturer tolerance. Large or specialty configurations may require a custom quote.</div>
       </div>
 
       <div class="form-err" id="form-err"></div>
@@ -558,20 +493,18 @@
 </div><!-- /left column -->
 
 <!-- STICKY PRICE PANEL -->
-<div class="quote-panel" id="quote-panel">
+<div class="quote-panel">
   <div class="qp-title">Price Summary</div>
   <div id="qp-pending" class="qp-pending">Complete your selections to see an instant price</div>
   <div id="qp-detail" style="display:none">
     <div class="qrow"><span class="qrow-label">Base price</span><span class="qrow-val" id="q-base">—</span></div>
     <div class="qrow" id="q-printed-row" style="display:none">
-      <span class="qrow-label">Printed color <span class="qbadge">+20%</span></span>
+      <span class="qrow-label">Printed color<span class="qbadge">+20%</span></span>
       <span class="qrow-val qrow-surcharge" id="q-printed">—</span>
     </div>
     <div class="qrow" id="q-valance-row" style="display:none"><span class="qrow-label">Valance</span><span class="qrow-val" id="q-valance">—</span></div>
-    <div class="qrow" id="q-keystone-row" style="display:none"><span class="qrow-label">Keystone</span><span class="qrow-val" id="q-keystone">—</span></div>
-    <div class="qrow" id="q-shim-row" style="display:none"><span class="qrow-label">Shims</span><span class="qrow-val" id="q-shim">—</span></div>
     <div class="qrow" id="q-side-row" style="display:none"><span class="qrow-label">Side mount bracket</span><span class="qrow-val" id="q-side">—</span></div>
-    <div class="qrow" id="q-cutout-row" style="display:none"><span class="qrow-label">Cut-out</span><span class="qrow-val" id="q-cutout">—</span></div>
+    <div class="qrow" id="q-shim-row" style="display:none"><span class="qrow-label">Shims</span><span class="qrow-val" id="q-shim">—</span></div>
     <div class="qrow"><span class="qrow-label">Quantity</span><span class="qrow-val" id="q-qty">—</span></div>
     <div class="qdiv"></div>
     <div class="qrow"><span class="qrow-label">Subtotal</span><span class="qrow-val" id="q-sub">—</span></div>
@@ -588,57 +521,52 @@
 <script>renderFooter(false);</script>
 
 <script>
-// ── PRICING DATA (from Norman Ultimate™ Cordless Faux Wood Blinds catalog) ────
+// ── PRICING DATA ──────────────────────────────────────────────────────────────
 const W_COLS = [24,28,32,36,42,48,54,60,66,72,78,84,96];
 const H_ROWS = [30,36,42,48,54,60,66,73,78,84,90,96];
-
-// null = NA (size combination not available)
 const MATRIX = {
-  30: [169,185,200,223,238,256,280,326,347,373,400,421,454],
-  36: [180,194,210,236,254,273,304,347,371,408,421,454,494],
-  42: [193,210,228,252,272,298,329,372,403,438,462,498,535],
-  48: [206,223,239,267,289,319,350,397,431,471,494,528,571],
-  54: [223,249,259,296,321,350,384,438,471,509,543,577,620],
-  60: [238,255,278,314,340,368,407,467,500,544,574,620,673],
-  66: [252,270,293,331,357,394,432,497,531,591,614,660,715],
-  73: [265,288,312,355,383,420,462,531,571,620,660,711,769],
-  78: [273,302,329,365,400,438,482,559,598,659,696,742,812],
-  84: [288,314,342,388,420,462,512,585,632,701,730,771,854],
-  90: [302,329,357,407,439,482,533,609,660,725,761,805,null],
-  96: [312,346,373,421,462,512,569,641,695,764,791,null,null]
+  30:[169,185,200,223,238,256,280,326,347,373,400,421,454],
+  36:[180,194,210,236,254,273,304,347,371,408,421,454,494],
+  42:[193,210,228,252,272,298,329,372,403,438,462,498,535],
+  48:[206,223,239,267,289,319,350,397,431,471,494,528,571],
+  54:[223,249,259,296,321,350,384,438,471,509,543,577,620],
+  60:[238,255,278,314,340,368,407,467,500,544,574,620,673],
+  66:[252,270,293,331,357,394,432,497,531,591,614,660,715],
+  73:[265,288,312,355,383,420,462,531,571,620,660,711,769],
+  78:[273,302,329,365,400,438,482,559,598,659,696,742,812],
+  84:[288,314,342,388,420,462,512,585,632,701,730,771,854],
+  90:[302,329,357,407,439,482,533,609,660,725,761,805,null],
+  96:[312,346,373,421,462,512,569,641,695,764,791,null,null]
 };
-
 const VALANCE_PRICE = {24:28,28:28,32:34,36:40,42:51,48:56,54:61,60:73,66:78,72:84,78:94,84:100,96:106};
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
 const S = {
   slat:'2in', color:null, isPrinted:false,
   mount:null, w:0, h:0, sizeOk:false,
-  valance:null, valReturn:null, keystone:false,
-  hdb:false, shims:0, cutout:false, cutoutSides:1,
+  valance:null,
+  hdb:false, sideMt:false, shims:0,
   wandLoc:'left', delivery:'ship', qty:1
 };
 
 const $=id=>document.getElementById(id);
 const fmt=n=>'$'+Math.round(n).toLocaleString();
 
-// ── STEP TOGGLE ───────────────────────────────────────────────────────────────
 function toggleStep(id){
-  const b=$(id);
-  b.classList.toggle('open');
-  b.classList.toggle('active');
+  const b=$(id); b.classList.toggle('open'); b.classList.toggle('active');
 }
 function markDone(id){ $(id).classList.add('done'); }
 
-// ── STEP 1: SLAT ──────────────────────────────────────────────────────────────
-function pickSlat(el,label,val){
+// ── STEP 1 ────────────────────────────────────────────────────────────────────
+function pickSlat(el,label){
   document.querySelectorAll('#step1 .opt-card').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
-  S.slat=val; $('s1val').innerHTML=label;
+  S.slat=label.includes('2½')?'2.5in':'2in';
+  $('s1val').innerHTML=label+' (selected)';
   markDone('step1'); calcPrice();
 }
 
-// ── STEP 2: COLOR ─────────────────────────────────────────────────────────────
+// ── STEP 2 ────────────────────────────────────────────────────────────────────
 function pickColor(el,label,code,printed){
   document.querySelectorAll('#step2 .color-card').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
@@ -647,88 +575,80 @@ function pickColor(el,label,code,printed){
   markDone('step2'); calcPrice();
 }
 
-// ── STEP 3: MOUNT ─────────────────────────────────────────────────────────────
+// ── STEP 3 ────────────────────────────────────────────────────────────────────
 function pickMount(el,label,val){
   document.querySelectorAll('#step3 .opt-card').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.mount=val; $('s3val').textContent=label;
-  const ni=$('mount-info');
+
+  const mn=$('mount-note');
   if(val==='inside'){
-    ni.textContent='Inside mount: manufacturer deducts 3/8″ from your ordered width. Enter the actual frame opening width.';
-    ni.style.display='block';
-  } else if(val==='outside'){
-    ni.textContent='Outside mount: no deduction. Add approximately 3″ to both width and height for best light control and privacy coverage.';
-    ni.style.display='block';
+    mn.textContent='Inside mount: manufacturer deducts 3/8″ from your ordered width. Enter the actual frame opening width.';
+    mn.style.display='block';
   } else {
-    ni.textContent='Side mount: inside mount rules apply. Max width 37″. A $23 side mount bracket surcharge applies. For widths over 37″, top mount brackets are required alongside side mount brackets.';
-    ni.style.display='block';
+    mn.textContent='Outside mount: no deduction. Add approximately 3″ to both width and height for best light control and privacy coverage.';
+    mn.style.display='block';
   }
-  // Shims only for outside
+
+  // Side mount brackets: only for inside mount
+  $('side-mount-section').style.display = val==='inside' ? 'block' : 'none';
+  if(val!=='inside'){ S.sideMt=false; $('side-row').classList.remove('sel'); updateSideMtUI(); }
+
+  // Shims: only for outside mount
   if(val==='outside'){
-    $('shim-section').style.display='block';
-    $('shim-na').style.display='none';
+    $('shim-section').style.display='block'; $('shim-na').style.display='none';
   } else {
-    $('shim-section').style.display='none';
-    $('shim-na').style.display='block';
+    $('shim-section').style.display='none'; $('shim-na').style.display='block';
     S.shims=0; $('shim-qty').value=0; $('shim-cost').textContent='$0';
   }
+
   markDone('step3'); calcSize(); calcPrice();
 }
 
-// ── STEP 4: SIZE ──────────────────────────────────────────────────────────────
+// ── STEP 4 ────────────────────────────────────────────────────────────────────
 function calcSize(){
-  const ww=parseFloat($('w-whole').value)||0;
-  const wf=parseFloat($('w-frac').value)||0;
-  const hw=parseFloat($('h-whole').value)||0;
-  const hf=parseFloat($('h-frac').value)||0;
-  const w=ww+wf, h=hw+hf;
+  const w=(parseFloat($('w-whole').value)||0)+(parseFloat($('w-frac').value)||0);
+  const h=(parseFloat($('h-whole').value)||0)+(parseFloat($('h-frac').value)||0);
   S.w=w; S.h=h; S.sizeOk=false;
 
   const msgs=$('size-msgs');
   const cbox=$('computed-box');
   msgs.innerHTML='';
 
-  if(!w && !h){ cbox.style.display='none'; $('s4val').textContent='—'; calcPrice(); return; }
+  if(!w&&!h){ cbox.style.display='none'; $('s4val').textContent='—'; updateWandUI(); calcPrice(); return; }
 
-  const maxW = S.mount==='side' ? 37 : 96;
   const errs=[];
-  if(w>0 && w<6.25) errs.push('Minimum width is 6¼″ (net blind width).');
-  if(w>maxW) errs.push('Maximum width is '+maxW+'″'+(S.mount==='side'?' for side mount.':(w>96?' for this product.':' for this product.')));
-  if(h>0 && h<16) errs.push('Minimum height is 16″.');
-  if(h>96) errs.push('Maximum height is 96″.');
+  if(w>0&&w<6.5)  errs.push('Minimum width is 6½″.');
+  if(w>96)        errs.push('Maximum width is 96″.');
+  if(h>0&&h<16)   errs.push('Minimum height is 16″.');
+  if(h>96)        errs.push('Maximum height is 96″.');
+  const area=(w*h)/144;
+  if(w>0&&h>0&&area>48) errs.push('Area is '+area.toFixed(1)+' sq ft — maximum is 48 sq ft. Reduce width or height.');
 
   if(errs.length){
     errs.forEach(e=>{const d=document.createElement('div');d.className='msg-box msg-err';d.textContent=e;msgs.appendChild(d);});
-    cbox.style.display='none'; $('s4val').textContent='—'; calcPrice(); return;
+    cbox.style.display='none'; $('s4val').textContent='—'; updateWandUI(); updateSideMtUI(); calcPrice(); return;
   }
-  if(!w||!h){ cbox.style.display='none'; $('s4val').textContent='—'; calcPrice(); return; }
+  if(!w||!h){ cbox.style.display='none'; updateWandUI(); calcPrice(); return; }
 
-  // Find price columns
   const pW=W_COLS.find(v=>v>=w);
   const pH=H_ROWS.find(v=>v>=h);
   if(!pW||!pH){
     const d=document.createElement('div');d.className='msg-box msg-err';
-    d.textContent='Size outside pricing range. Please call us for a quote.';msgs.appendChild(d);
-    cbox.style.display='none'; $('s4val').textContent='—'; calcPrice(); return;
+    d.textContent='Size is outside the pricing range. Please call us for a custom quote.';msgs.appendChild(d);
+    cbox.style.display='none'; $('s4val').textContent='—'; updateWandUI(); calcPrice(); return;
   }
 
-  // Check for NA in matrix
   const wi=W_COLS.indexOf(pW);
-  const price=MATRIX[pH][wi];
-  if(price===null){
+  if(MATRIX[pH][wi]===null){
     const d=document.createElement('div');d.className='msg-box msg-err';
-    d.textContent='This width × height combination is not available (exceeds structural limits). Try a smaller width or height.';msgs.appendChild(d);
-    cbox.style.display='none'; $('s4val').textContent='—'; calcPrice(); return;
+    d.textContent='This width × height combination is not available as a standard order. Please call us for a custom quote.';msgs.appendChild(d);
+    cbox.style.display='none'; $('s4val').textContent='—'; updateWandUI(); calcPrice(); return;
   }
 
-  // Area note
-  const area=(w*h)/144;
-  const areaNote=document.createElement('div');
-  if(area>48){
-    areaNote.className='msg-box msg-err';
-    areaNote.textContent='Area is '+area.toFixed(1)+' sq ft, which exceeds the 48 sq ft maximum. Please reduce width or height.';
-    msgs.appendChild(areaNote);
-    cbox.style.display='none'; $('s4val').textContent='—'; calcPrice(); return;
+  if(w>=90){
+    const d=document.createElement('div');d.className='msg-box msg-warn';
+    d.textContent='Width 90″ or over: oversized freight applies ($80 first blind, $50 each additional).';msgs.appendChild(d);
   }
 
   cbox.style.display='block';
@@ -740,102 +660,83 @@ function calcSize(){
   // Hold down brackets
   $('hdb-prompt').style.display='none';
   if(w<=30){
-    $('hdb-auto').style.display='block';
-    $('hdb-row').style.display='none';
-    S.hdb=true;
+    $('hdb-auto').style.display='block'; $('hdb-row').style.display='none'; S.hdb=true;
   } else {
-    $('hdb-auto').style.display='none';
-    $('hdb-row').style.display='flex';
-  }
-
-  // Wand default note
-  let defWand='17¾″';
-  if(h>72) defWand='38¼″';
-  else if(h>48) defWand='29¾″';
-  else if(h>36) defWand='24″';
-  const wdn=$('wand-default-note');
-  wdn.textContent='Default wand drop for this height: '+defWand+'. Override below only if needed.';
-  wdn.style.display='block';
-
-  // Oversized freight warning
-  if(w>=90){
-    const fw=document.createElement('div');fw.className='msg-box msg-info';
-    fw.textContent='Width 90″ or over: oversized freight applies ($80 first blind, $50 each additional).';
-    msgs.appendChild(fw);
+    $('hdb-auto').style.display='none'; $('hdb-row').style.display='flex';
   }
 
   S.sizeOk=true;
-  markDone('step4'); calcPrice();
+  markDone('step4'); updateWandUI(); updateSideMtUI(); calcPrice();
 }
 
-// ── STEP 5: VALANCE ───────────────────────────────────────────────────────────
-function pickValance(el,label,val){
-  document.querySelectorAll('#step5 > div.step-body > .opt-grid-3 .opt-card').forEach(c=>c.classList.remove('sel'));
-  el.classList.add('sel');
-  S.valance=val; S.valReturn=null; S.keystone=false;
-  $('return-section').style.display=(val==='none')?'none':'block';
-  if(val==='none'){
-    $('s5val').textContent='No Valance';
-    S.valReturn='n/a';
-    $('keystone-row').classList.remove('sel');
+function updateWandUI(){
+  const wl=$('wand-loc-normal');
+  const wc=$('wand-loc-center');
+  const wp=$('wand-loc-prompt');
+  if(!S.w){
+    wl.style.display='none'; wc.style.display='none'; wp.style.display='block';
+  } else if(S.w<15){
+    wl.style.display='none'; wc.style.display='block'; wp.style.display='none';
   } else {
-    $('s5val').innerHTML=label+' · return: —';
+    wl.style.display='grid'; wc.style.display='none'; wp.style.display='none';
   }
-  document.querySelectorAll('#return-section .return-grid .opt-card').forEach(c=>c.classList.remove('sel'));
+}
+
+function updateSideMtUI(){
+  if(S.mount!=='inside'){ return; }
+  const block=$('side-mount-block');
+  const row=$('side-row');
+  if(S.sizeOk && S.w>37){
+    block.style.display='block'; row.style.display='none';
+    S.sideMt=false;
+  } else {
+    block.style.display='none'; row.style.display='flex';
+  }
+}
+
+// ── STEP 5 ────────────────────────────────────────────────────────────────────
+function pickValance(el,label,val){
+  document.querySelectorAll('#step5 .opt-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  S.valance=val;
+  $('s5val').innerHTML=label;
   markDone('step5'); calcPrice();
 }
 
-function pickReturn(el,label){
-  document.querySelectorAll('#return-section .return-grid .opt-card').forEach(c=>c.classList.remove('sel'));
-  el.classList.add('sel');
-  S.valReturn=label;
-  const vl=S.valance==='modern'?'Modern Curved 2½″':'Designer Crown 3¼″';
-  $('s5val').textContent=vl+' · '+label;
+// ── STEP 6 ADD-ONS ────────────────────────────────────────────────────────────
+function toggleHdb(){
+  const row=$('hdb-row');
+  row.classList.toggle('sel');
+  S.hdb=row.classList.contains('sel');
   calcPrice();
 }
 
-// ── STEP 6: ADD-ONS ───────────────────────────────────────────────────────────
 function toggleAddon(el,key){
   el.classList.toggle('sel');
   S[key]=el.classList.contains('sel');
-  if(key==='cutout'){
-    $('cutout-sides-row').style.display=S.cutout?'block':'none';
-    if(!S.cutout) S.cutoutSides=1;
-  }
-  calcPrice();
-}
-
-function pickCutoutSides(el,n,label){
-  document.querySelectorAll('#cutout-sides-row .opt-card').forEach(c=>c.classList.remove('sel'));
-  el.classList.add('sel');
-  S.cutoutSides=n;
-  $('cutout-price').textContent='+$'+(89*n);
   calcPrice();
 }
 
 function adjShims(d){
-  const cur=parseInt($('shim-qty').value)||0;
-  const nv=Math.max(0,Math.min(2,cur+d));
+  const nv=Math.max(0,Math.min(2,(parseInt($('shim-qty').value)||0)+d));
   $('shim-qty').value=nv; S.shims=nv;
-  $('shim-cost').textContent='$'+(nv*7);
-  calcPrice();
+  $('shim-cost').textContent='$'+(nv*7); calcPrice();
 }
 
-function pickWandLoc(el,label,val){
-  document.querySelectorAll('#step6 .opt-grid-2 .opt-card').forEach(c=>c.classList.remove('sel'));
+function pickWandLoc(el,label){
+  document.querySelectorAll('#wand-loc-normal .opt-card').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
-  S.wandLoc=val; calcPrice();
+  S.wandLoc=label.toLowerCase(); calcPrice();
 }
 
-// ── STEP 7: QTY ───────────────────────────────────────────────────────────────
+// ── STEP 7 ────────────────────────────────────────────────────────────────────
 function adjQty(d){
   const nv=Math.max(1,Math.min(50,(parseInt($('qty-input').value)||1)+d));
   $('qty-input').value=nv; updateQty();
 }
 function updateQty(){
   S.qty=Math.max(1,parseInt($('qty-input').value)||1);
-  $('s7val').textContent=S.qty+(S.qty===1?' blind':' blinds');
-  calcPrice();
+  $('s7val').textContent=S.qty+(S.qty===1?' blind':' blinds'); calcPrice();
 }
 
 // ── DELIVERY ──────────────────────────────────────────────────────────────────
@@ -850,9 +751,7 @@ function pickDel(v){
 // ── PRICE CALC ────────────────────────────────────────────────────────────────
 function calcPrice(){
   if(!S.sizeOk||!S.color||!S.mount||!S.valance){
-    $('qp-pending').style.display='block';
-    $('qp-detail').style.display='none';
-    return;
+    $('qp-pending').style.display='block'; $('qp-detail').style.display='none'; return;
   }
   const pW=W_COLS.find(v=>v>=S.w);
   const pH=H_ROWS.find(v=>v>=S.h);
@@ -863,43 +762,41 @@ function calcPrice(){
 
   const printedAdd = S.isPrinted ? Math.round(base*0.20) : 0;
   const valAdd = (S.valance&&S.valance!=='none') ? (VALANCE_PRICE[pW]||0) : 0;
-  const keystoneAdd = S.keystone ? 73 : 0;
+  const sideAdd = S.sideMt ? 23 : 0;
   const shimAdd = S.shims*7;
-  const sideAdd = S.mount==='side' ? 23 : 0;
-  const cutoutAdd = S.cutout ? 89*S.cutoutSides : 0;
 
-  const unit = base+printedAdd+valAdd+keystoneAdd+shimAdd+sideAdd+cutoutAdd;
-  const subtotal = unit*S.qty;
+  const unit = base + printedAdd + valAdd + sideAdd + shimAdd;
+  const subtotal = unit * S.qty;
 
-  const isOversized = S.w>=90;
-  let freight;
-  if(isOversized){
-    freight = 80 + (S.qty>1?(S.qty-1)*50:0);
-  } else {
-    freight = 25 + (S.qty>1?(S.qty-1)*11:0);
-  }
-  const total = subtotal+freight;
+  const isOversized = S.w >= 90;
+  const freight = isOversized
+    ? (80 + (S.qty>1 ? (S.qty-1)*50 : 0))
+    : (25 + (S.qty>1 ? (S.qty-1)*11 : 0));
+  const total = subtotal + freight;
 
-  // Render
   $('qp-pending').style.display='none';
   $('qp-detail').style.display='block';
   $('q-base').textContent=fmt(base);
 
-  const showIf=(rowId,cond,val)=>{ $(rowId).style.display=cond?'flex':'none'; };
-  showIf('q-printed-row',S.isPrinted); if(S.isPrinted) $('q-printed').textContent='+'+fmt(printedAdd);
-  showIf('q-valance-row',valAdd>0); if(valAdd>0) $('q-valance').textContent='+'+fmt(valAdd);
-  showIf('q-keystone-row',S.keystone); if(S.keystone) $('q-keystone').textContent='+'+fmt(keystoneAdd);
-  showIf('q-shim-row',S.shims>0); if(S.shims>0) $('q-shim').textContent='+'+fmt(shimAdd)+' ('+S.shims+'×)';
-  showIf('q-side-row',S.mount==='side'); if(S.mount==='side') $('q-side').textContent='+'+fmt(sideAdd);
-  showIf('q-cutout-row',S.cutout); if(S.cutout) $('q-cutout').textContent='+'+fmt(cutoutAdd)+(S.cutoutSides>1?' ('+S.cutoutSides+' sides)':'');
+  $('q-printed-row').style.display = S.isPrinted ? 'flex' : 'none';
+  if(S.isPrinted) $('q-printed').textContent='+'+fmt(printedAdd);
+
+  $('q-valance-row').style.display = valAdd>0 ? 'flex' : 'none';
+  if(valAdd>0) $('q-valance').textContent='+'+fmt(valAdd);
+
+  $('q-side-row').style.display = S.sideMt ? 'flex' : 'none';
+  if(S.sideMt) $('q-side').textContent='+'+fmt(sideAdd);
+
+  $('q-shim-row').style.display = S.shims>0 ? 'flex' : 'none';
+  if(S.shims>0) $('q-shim').textContent='+'+fmt(shimAdd)+' ('+S.shims+'×)';
 
   $('q-qty').textContent='× '+S.qty;
   $('q-sub').textContent=fmt(subtotal);
   $('q-freight').textContent=fmt(freight);
   $('q-total').textContent=fmt(total);
-  $('q-note').textContent=isOversized
-    ?'Oversized freight: $80 first + $50 each additional (width 90″+).'
-    :'Freight: $25 first blind + $11 each additional.';
+  $('q-note').textContent = isOversized
+    ? 'Oversized freight: $80 first blind + $50 each additional (width 90″+).'
+    : 'Freight: $25 first blind + $11 each additional.';
 }
 
 // ── SUBMIT ────────────────────────────────────────────────────────────────────
@@ -916,7 +813,6 @@ function submitForm(){
   if(!S.mount){ errEl.textContent='Please select a mount type in Step 3.'; errEl.style.display='block'; return; }
   if(!S.sizeOk){ errEl.textContent='Please enter valid dimensions in Step 4.'; errEl.style.display='block'; return; }
   if(!S.valance){ errEl.textContent='Please select a valance option in Step 5.'; errEl.style.display='block'; return; }
-  if(S.valance!=='none'&&!S.valReturn){ errEl.textContent='Please select valance returns in Step 5.'; errEl.style.display='block'; return; }
 
   const pW=W_COLS.find(v=>v>=S.w);
   const pH=H_ROWS.find(v=>v>=S.h);
@@ -924,22 +820,20 @@ function submitForm(){
   const base=MATRIX[pH][wi];
   const printedAdd=S.isPrinted?Math.round(base*0.20):0;
   const valAdd=(S.valance&&S.valance!=='none')?(VALANCE_PRICE[pW]||0):0;
-  const keystoneAdd=S.keystone?73:0;
+  const sideAdd=S.sideMt?23:0;
   const shimAdd=S.shims*7;
-  const sideAdd=S.mount==='side'?23:0;
-  const cutoutAdd=S.cutout?89*S.cutoutSides:0;
-  const unit=base+printedAdd+valAdd+keystoneAdd+shimAdd+sideAdd+cutoutAdd;
+  const unit=base+printedAdd+valAdd+sideAdd+shimAdd;
   const subtotal=unit*S.qty;
   const isOversized=S.w>=90;
   const freight=isOversized?(80+(S.qty>1?(S.qty-1)*50:0)):(25+(S.qty>1?(S.qty-1)*11:0));
   const total=subtotal+freight;
 
-  const wand=$('wand-select').options[$('wand-select').selectedIndex].text;
   const valLabel=S.valance==='none'?'No Valance':(S.valance==='modern'?'Modern Curved 2½"':'Designer Crown 3¼"');
+  const slatLabel=S.slat==='2.5in'?'2½"':'2"';
 
   const body=[
-    'FAUX WOOD BLINDS QUOTE REQUEST',
-    '================================',
+    'SMARTPRIVACY FAUX WOOD BLINDS QUOTE REQUEST',
+    '=============================================',
     '',
     'CUSTOMER',
     'Name: '+name,
@@ -948,54 +842,46 @@ function submitForm(){
     'Delivery: '+(S.delivery==='ship'?'Ship to me (UPS/FedEx)':'Customer pickup'),
     '',
     'PRODUCT SPECS',
-    'Product: Faux Wood Blinds (SmartPrivacy® cordless)',
-    'Slat Size: '+(S.slat==='2in'?'2"':'2½"'),
+    'Product: SmartPrivacy Faux Wood Blinds (Ultimate program)',
+    'Slat Size: '+slatLabel,
     'Color: '+S.color+(S.isPrinted?' [PRINTED — +20% surcharge]':''),
-    'Mount Type: '+(S.mount==='inside'?'Inside Mount':S.mount==='outside'?'Outside Mount':'Side Mount'),
-    'Width: '+S.w+'",  Height: '+S.h+'"',
+    'Mount Type: '+(S.mount==='inside'?'Inside Mount':'Outside Mount'),
+    'Width: '+S.w+'"',
+    'Height: '+S.h+'"',
     'Area: '+(S.w*S.h/144).toFixed(2)+' sq ft',
     'Priced at: '+pW+'" W × '+pH+'" H',
     'Valance: '+valLabel,
-    'Valance Returns: '+(S.valance==='none'?'N/A':(S.valReturn||'Not selected')),
-    'Keystone: '+(S.keystone?'Yes (+$73)':'No'),
-    'Hold Down Brackets: '+(S.hdb||S.w<=30?'Yes (auto-included ≤30" or selected)':'Not selected'),
-    'Shims: '+S.shims+(S.shims>0?' (+$'+(S.shims*7)+')':''),
-    'Cut-Out: '+(S.cutout?'Yes — '+S.cutoutSides+' side(s) (+$'+cutoutAdd+')':'No'),
-    'Wand Drop: '+wand,
-    'Wand Location: '+(S.wandLoc==='left'?'Left (standard)':'Right'),
+    'Side Mount Brackets: '+(S.sideMt?'Yes (+$23)':'No'),
+    'Hold Down Brackets: '+(S.hdb||S.w<=30?'Yes':'No'),
+    'Shims: '+S.shims+(S.shims>0?' (+$'+shimAdd+')':''),
+    'Wand Location: '+(S.w<15?'Center (auto — blind under 15")':S.wandLoc.charAt(0).toUpperCase()+S.wandLoc.slice(1)),
     'Quantity: '+S.qty,
     '',
     'PRICING',
     'Base price (per blind): $'+base,
-    'Printed color surcharge: '+(printedAdd?'+$'+printedAdd:'—'),
+    'Printed surcharge: '+(printedAdd?'+$'+printedAdd:'—'),
     'Valance: '+(valAdd?'+$'+valAdd:'—'),
-    'Keystone: '+(keystoneAdd?'+$'+keystoneAdd:'—'),
-    'Shims: '+(shimAdd?'+$'+shimAdd:'—'),
     'Side mount bracket: '+(sideAdd?'+$'+sideAdd:'—'),
-    'Cut-out: '+(cutoutAdd?'+$'+cutoutAdd:'—'),
+    'Shims: '+(shimAdd?'+$'+shimAdd:'—'),
     'Unit price: $'+unit,
     'Qty: ×'+S.qty,
     'Subtotal: $'+subtotal,
-    'Freight: $'+freight+(isOversized?' (oversized — width 90"+)':''),
+    'Freight: $'+freight+(isOversized?' (oversized — width 90″+)':''),
     'TOTAL: $'+total,
     '',
     'NOTES',
     ($('f-notes').value||'None')
   ].join('\n');
 
-  const subj='Faux Wood Blinds Quote — '+name;
+  const subj='SmartPrivacy Faux Wood Blinds Quote — '+name;
   window.location.href='mailto:blindznation@gmail.com?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
   $('success-box').style.display='block';
-  $('form-err').style.display='none';
+  errEl.style.display='none';
 }
 
-// Init defaults
+// Init
 document.addEventListener('DOMContentLoaded',()=>{
-  $('s1val').innerHTML='2&Prime;';
-  $('s7val').textContent='1 blind';
-  // Pre-select slat so step 1 shows done
-  S.slat='2in';
-  markDone('step1');
+  S.slat='2in'; markDone('step1'); $('s7val').textContent='1 blind';
 });
 </script>
 </body>
