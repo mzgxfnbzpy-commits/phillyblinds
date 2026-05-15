@@ -13,9 +13,9 @@
   --gold-light: #D0FAF4;
   --gold-mid: #E8FDFB;
   --cream: #F5ECD7;
-  --text-dark: #A89880;
-  --text-muted: #7A6A58;
-  --text-faint: #5A4A38;
+  --text-dark: #C8B8A4;
+  --text-muted: #A89880;
+  --text-faint: #8A7A68;
   --border-dark: #2A201A;
   --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
@@ -46,10 +46,11 @@ body {
   border-bottom: 0.5px solid rgba(45,224,193,0.1);
 }
 .nav-company {
+  /* bumped to cream for readability on dark identity bar */
   font-size: 9px;
   letter-spacing: 1.8px;
   text-transform: uppercase;
-  color: var(--text-faint);
+  color: rgba(245,236,215,0.65);
   font-weight: 400;
 }
 .nav-brand-row { display: flex; align-items: center; gap: 8px; }
