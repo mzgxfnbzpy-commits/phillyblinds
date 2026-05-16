@@ -872,15 +872,17 @@
                 </div>
               </div>
 
-              <!-- Hardware / bracket color -->
+              <!-- Hardware / bracket / fascia color -->
               <div style="margin-bottom:14px">
-                <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Hardware &amp; bracket color</div>
-                <div class="opt-row" id="rn-grp-hw-color">
-                  <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-hw-color')">White</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')">Cottage White</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')">Black</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')">Anodized Silver</button>
+                <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Hardware, bracket &amp; fascia color</div>
+                <div class="opt-row" id="rn-grp-hw-color" style="flex-wrap:wrap">
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#C8A84A;flex-shrink:0;display:inline-block;border:1px solid rgba(0,0,0,.1)"></span>Brass</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#6B4423;flex-shrink:0;display:inline-block"></span>Bronze</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#2D2D2D;flex-shrink:0;display:inline-block"></span>Brushed Black</button>
+                  <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#B0B0B0;flex-shrink:0;display:inline-block"></span>Matte Silver</button>
+                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#F5F5F5;flex-shrink:0;display:inline-block;border:1px solid #ddd"></span>White</button>
                 </div>
+                <div class="tooltip-note" style="margin-top:4px">Applies to: brackets, hem bar, fascia/cassette housing, and all hardware components.</div>
               </div>
 
               <!-- Tensioner mandatory notice -->
@@ -1364,11 +1366,25 @@
       <!-- Fascia / Open Roll -->
       <div class="step-title" style="font-size:12px;margin:14px 0 8px">Headrail / fascia</div>
       <div class="opt-row" id="pb-grp-fascia">
-        <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-fascia')">Open Roll</button>
-        <button class="opt-btn" onclick="selOpt(this,'pb-grp-fascia')">Fabric Wrapped fascia</button>
-        <button class="opt-btn" onclick="selOpt(this,'pb-grp-fascia')">Metal fascia</button>
+        <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-fascia');pbToggleFasciaColor(false)">Open Roll</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-fascia');pbToggleFasciaColor(false)">Fabric Wrapped fascia</button>
+        <button class="opt-btn" onclick="selOpt(this,'pb-grp-fascia');pbToggleFasciaColor(true)">Metal fascia</button>
       </div>
-      <div class="tooltip-note" style="margin-top:4px">Open Roll: exposed tube, clean minimal profile. Fabric Wrapped: fabric-covered headrail for a seamless look. Metal: aluminum fascia — color confirmed at order.</div>
+      <div class="tooltip-note" style="margin-top:4px">Open Roll: exposed tube, minimal profile. Fabric Wrapped: fabric-covered headrail. Metal: aluminum fascia — select color below.</div>
+
+      <!-- Hardware color — always shown; fascia color also applies when Metal Fascia selected -->
+      <div style="margin-top:12px">
+        <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:4px" id="pb-hw-color-label">Hardware color</div>
+        <div id="pb-hw-color-note" style="display:none;font-size:11px;color:#888;margin-bottom:6px">Also applies to metal fascia finish.</div>
+        <div class="opt-row" id="pb-grp-hw-color" style="flex-wrap:wrap">
+          <button class="opt-btn" onclick="selOpt(this,'pb-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#C8A84A;flex-shrink:0;display:inline-block;border:1px solid rgba(0,0,0,.1)"></span>Brass</button>
+          <button class="opt-btn" onclick="selOpt(this,'pb-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#6B4423;flex-shrink:0;display:inline-block"></span>Bronze</button>
+          <button class="opt-btn" onclick="selOpt(this,'pb-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#2D2D2D;flex-shrink:0;display:inline-block"></span>Brushed Black</button>
+          <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#B0B0B0;flex-shrink:0;display:inline-block"></span>Matte Silver</button>
+          <button class="opt-btn" onclick="selOpt(this,'pb-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#F5F5F5;flex-shrink:0;display:inline-block;border:1px solid #ddd"></span>White</button>
+        </div>
+        <div class="tooltip-note" style="margin-top:4px">Applies to: brackets, hem bar, end caps, and hardware. Metal fascia matches this color.</div>
+      </div>
 
       <!-- End caps -->
       <div class="step-title" style="font-size:12px;margin:14px 0 8px">End caps</div>
@@ -2998,6 +3014,7 @@ function submitPBForm() {
     'Operation:      ' + gPB('pb-grp-operation') + '\n' +
     'Control side:   ' + gPB('pb-grp-control') + '\n' +
     'Fascia type:    ' + gPB('pb-grp-fascia') + '\n' +
+    'Hardware color: ' + gPB('pb-grp-hw-color') + '\n' +
     'End caps:       ' + gPB('pb-grp-endcap') + '\n' +
     'Fabric type:    ' + gPB('pb-grp-fabric-type') + '\n' +
     'Solar openness: ' + gPB('pb-grp-solar')     + '\n' +
@@ -3932,6 +3949,12 @@ const PB_FABRICS = {
   'Blackout':      ['White','Black','Cream','Off-White','Gray','Charcoal'],
   'Solar Screen':  ['White','Black','Cream','Off-White','Gray','Charcoal']
 };
+function pbToggleFasciaColor(isMetal) {
+  var lbl  = document.getElementById('pb-hw-color-label');
+  var note = document.getElementById('pb-hw-color-note');
+  if (lbl)  lbl.textContent  = isMetal ? 'Hardware & metal fascia color' : 'Hardware color';
+  if (note) note.style.display = isMetal ? 'block' : 'none';
+}
 function pbToggleMotor(show) {
   var el = document.getElementById('pb-motor-system-wrap');
   if (el) el.style.display = show ? 'block' : 'none';
