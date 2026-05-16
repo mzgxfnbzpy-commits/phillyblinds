@@ -2472,24 +2472,23 @@ function selectProduct(productId, productName, isInstant) {
       document.getElementById(id).style.display = 'none';
     });
 
-    // Cellular always uses Norman — skip brand chooser entirely
+    // Cellular always uses Norman — skip brand chooser, auto-select, let scroll/heading run
     if (productId === 'cellular') {
       document.getElementById('brand-chooser').style.display = 'none';
       selectBrand('norman');
-      return;
-    }
-
-    // Restore brand chooser for all other instant products
-    document.getElementById('brand-chooser').style.display = '';
-
-    // PB Custom is only valid for roller — dim the button for other products
-    const pbBtn = document.getElementById('btn-brand-pb');
-    if (productId === 'roller') {
-      pbBtn.classList.remove('disabled');
-      document.getElementById('pb-only-note').style.display = 'none';
     } else {
-      pbBtn.classList.add('disabled');
-      document.getElementById('pb-only-note').style.display = 'block';
+      // Restore brand chooser for all other instant products
+      document.getElementById('brand-chooser').style.display = '';
+
+      // PB Custom is only valid for roller — dim the button for other products
+      const pbBtn = document.getElementById('btn-brand-pb');
+      if (productId === 'roller') {
+        pbBtn.classList.remove('disabled');
+        document.getElementById('pb-only-note').style.display = 'none';
+      } else {
+        pbBtn.classList.add('disabled');
+        document.getElementById('pb-only-note').style.display = 'block';
+      }
     }
 
   } else if (productId === 'perfectsheer') {
