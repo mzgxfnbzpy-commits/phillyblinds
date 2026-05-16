@@ -919,6 +919,7 @@
               <div class="price-line"><span>Square footage</span><span id="rn-pb-sqft">—</span></div>
               <div class="price-line"><span>Base / shade</span><span id="rn-pb-base">—</span></div>
               <div class="price-line"><span>Qty</span><span id="rn-pb-qty">1</span></div>
+              <div class="price-line" id="rn-pb-headrail-row"><span id="rn-pb-headrail-label">Headrail</span><span id="rn-pb-headrail">Open Roll — included</span></div>
               <div class="price-line" id="rn-pb-motor-row" style="display:none"><span>Motorization</span><span id="rn-pb-motor">—</span></div>
               <hr class="price-divider">
               <div class="price-total"><span>Est. total</span><span id="rn-pb-total">—</span></div>
@@ -1120,31 +1121,47 @@
           </div>
         </div>
 
-        <!-- CELLULAR ONLY: fabric category + cell size -->
+        <!-- CELLULAR ONLY: cell size FIRST → then fabric + color -->
         <div class="step-block" id="cellular-opts" style="display:none">
           <div class="step-label">Step 3b</div>
-          <div class="step-title">Cell options</div>
-          <div style="margin-bottom:14px">
-            <div class="step-title" style="font-size:12px;margin-bottom:8px">Fabric category</div>
+          <div class="step-title">Cell size &amp; fabric</div>
+
+          <!-- ① Cell size — pick this first -->
+          <div style="margin-bottom:16px">
+            <div class="step-title" style="font-size:12px;margin-bottom:6px">① Cell size</div>
+            <div class="opt-row" id="grp-cell-size" style="flex-wrap:wrap">
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-size');selectCellSz('38s')">3&#8260;8&rdquo;&nbsp;S</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-size');selectCellSz('916s')">9&#8260;16&rdquo;&nbsp;S</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-size');selectCellSz('12d')">1&#8260;2&rdquo;&nbsp;D</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-size');selectCellSz('34s')">3&#8260;4&rdquo;&nbsp;S</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-size');selectCellSz('34d')">3&#8260;4&rdquo;&nbsp;D</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-size');selectCellSz('114s')">1 1&#8260;4&rdquo;&nbsp;S</button>
+            </div>
+            <div class="tooltip-note" style="margin-top:4px">S = single cell &nbsp;·&nbsp; D = double cell. Larger cell = more insulation. Smaller cell = cleaner raised profile.</div>
+            <div id="cell-size-note" class="tooltip-note" style="margin-top:4px;color:var(--gold);display:none"></div>
+          </div>
+
+          <!-- ② Fabric category -->
+          <div id="cell-fabric-section">
+            <div class="step-title" style="font-size:12px;margin-bottom:6px">② Fabric category</div>
             <div class="opt-row" id="grp-cell-fabric">
               <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('lf')">Light Filtering</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('rd')">Room Darkening</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('sheer')">Sheer</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('dn')">Day &amp; Night</button>
+              <button class="opt-btn" id="cell-fab-sheer-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('sheer')">Sheer</button>
+              <button class="opt-btn" id="cell-fab-dn-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('dn')">Day &amp; Night</button>
             </div>
-            <div class="tooltip-note" id="fabric-cell-note">Light Filtering is available in all 6 cell sizes.</div>
-            <!-- Inline fabric color picker — appears immediately after fabric category selection -->
+            <div class="tooltip-note" id="fabric-cell-note" style="margin-top:4px">Light Filtering is available in all 6 cell sizes.</div>
+            <!-- ③ Color picker -->
             <div id="cell-fabric-inline" style="margin-top:12px">
-              <!-- Standard fabric picker (hidden when D&N is selected) -->
+              <div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px">③ Select color</div>
               <div id="cell-fabric-inline-summary" style="font-size:11px;color:#888;margin-bottom:8px;line-height:1.5"></div>
               <div id="cell-fabric-inline-grid"></div>
 
-              <!-- Day & Night dual picker (shown only when D&N fabric type selected) -->
+              <!-- Day & Night dual picker -->
               <div id="cell-dn-wrap" style="display:none">
                 <div class="tooltip-note" style="margin-bottom:10px;color:var(--gold)">
-                  ⚠ Day &amp; Night cellular: two shades in one headrail — top (day) and bottom (night). Top &amp; bottom use the same cell size. Available in 3⁄8″S, 9⁄16″S, 3⁄4″S, and 1 1⁄4″S. (1⁄2″D and 3⁄4″D bottom shades pair with the nearest single-cell Sheer top.)
+                  ⚠ Day &amp; Night: two fabrics in one headrail — top (day) and bottom (night). Available in 9⁄16″S, 3⁄4″S, and 1 1⁄4″S only.
                 </div>
-                <!-- Top fabric -->
                 <div style="margin-bottom:14px">
                   <div class="step-title" style="font-size:12px;margin-bottom:6px">Top fabric (Day side)</div>
                   <div class="opt-row" id="grp-cell-dn-top">
@@ -1153,7 +1170,6 @@
                   </div>
                   <div id="cell-dn-top-grid" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px"></div>
                 </div>
-                <!-- Bottom fabric -->
                 <div>
                   <div class="step-title" style="font-size:12px;margin-bottom:6px">Bottom fabric (Night side)</div>
                   <div class="opt-row" id="grp-cell-dn-bottom">
@@ -1164,18 +1180,6 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div style="margin-bottom:14px">
-            <div class="step-title" style="font-size:12px;margin-bottom:8px">Cell size</div>
-            <div class="opt-row" id="grp-cell-size">
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-size')">3&#8260;8&rdquo; S</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-size')">9&#8260;16&rdquo; S</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-size')">1&#8260;2&rdquo; D</button>
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-size')">3&#8260;4&rdquo; S</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-size')">3&#8260;4&rdquo; D</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-size')">1 1&#8260;4&rdquo; S</button>
-            </div>
-            <div class="tooltip-note">S = single cell &nbsp;·&nbsp; D = double cell. Larger cell = more insulation. Smaller cell = cleaner raised profile. Not all fabrics available in all sizes.</div>
           </div>
         </div>
 
@@ -3939,8 +3943,10 @@ const PB_SOLAR   = {
   132: [408,470,526,582,627,670,737,780,826,894,956,1002,1049,1141,1235],
   144: [434,498,561,609,659,703,777,823,872,940,1010,1061,1111,1206,1309]
 };
-const PB_FASCIA_W = [24,30,36,42,48,54,60,66,72,78,84,90,96,108,120,132,144];
-const PB_FASCIA_P = [117,122,133,139,150,161,171,188,204,216,232,249,265,293,326,349,375];
+const PB_FASCIA_W  = [24,30,36,42,48,54,60,66,72,78,84,90,96,108,120,132,144];
+const PB_FASCIA_P  = [117,122,133,139,150,161,171,188,204,216,232,249,265,293,326,349,375];
+// Cassette / 8" Fabric Valance surcharge (Soluna Feb 2026 MSRP)
+const PB_CASSETTE_P = [188,199,216,227,244,260,282,304,331,354,382,408,431,486,530,552,612];
 
 function _pbRoundUp(val, arr) {
   for (var i=0;i<arr.length;i++) if (val<=arr[i]) return arr[i];
@@ -4630,6 +4636,8 @@ function rnSetFasciaShape(shape) {
   const metalBtn  = document.getElementById('rn-fascia-metal-btn');
   const matBtns   = document.querySelectorAll('#rn-grp-fascia-mat .opt-btn');
   const note      = document.getElementById('rn-fascia-rule-note');
+  // Defer price update until after state is set
+  setTimeout(rnUpdatePrice, 0);
 
   if (shape === 'curved') {
     // Force Fabric Wrapped, disable Metal
@@ -4682,6 +4690,7 @@ function rnSetFasciaMat(mat) {
     });
     if (note) note.innerHTML = 'Fabric Wrapped fascia available in Square or Curved shape. Fabric-wrapped fascias have max width limits — confirmed at order.';
   }
+  setTimeout(rnUpdatePrice, 0);
 }
 
 // ─── rnSetHeadrail ───────────────────────────────────────────
@@ -4708,6 +4717,7 @@ function rnSetHeadrail(type) {
     document.getElementById('rn-lg-note').style.display = 'none';
   }
   rnRunValidation();
+  setTimeout(rnUpdatePrice, 0);
 }
 
 // ─── rnSetControl ────────────────────────────────────────────
@@ -4857,7 +4867,36 @@ function rnUpdatePrice() {
   const basePrice = lookup ? lookup.price : null;
   const perShade  = basePrice ? Math.max(RN_MIN, basePrice) : null;
   const motorCost = isMotor ? RN_MOTOR_UP * qty : 0;
-  const total     = perShade ? (perShade * qty) + motorCost : null;
+
+  // ── Headrail / fascia surcharge ──────────────────────────────
+  var hrBtn2     = document.querySelector('#rn-grp-headrail .opt-btn.sel');
+  var hrType     = hrBtn2 ? hrBtn2.textContent.trim() : 'Open Roll';
+  var hrSurcharge = 0;
+  var hrLabel    = 'Open Roll';
+  var hrDisplay  = 'Open Roll — included';
+  var fascRW     = _pbRoundUp(w, PB_FASCIA_W);
+  var fascIdx    = fascRW ? PB_FASCIA_W.indexOf(fascRW) : -1;
+
+  if (hrType.includes('Fascia') && fascIdx >= 0) {
+    var shapeBtn = document.querySelector('#rn-grp-fascia-shape .opt-btn.sel');
+    var matBtn   = document.querySelector('#rn-grp-fascia-mat .opt-btn.sel');
+    var shape    = shapeBtn ? shapeBtn.textContent.trim() : 'Square';
+    var mat      = matBtn   ? matBtn.textContent.trim()   : 'Metal';
+    hrSurcharge  = PB_FASCIA_P[fascIdx];
+    hrLabel      = shape + ' Fascia' + (mat === 'Fabric Wrapped' ? ' (Fabric)' : '');
+    hrDisplay    = hrLabel + ': +$' + hrSurcharge.toLocaleString();
+  } else if (hrType.includes('Cassette') && fascIdx >= 0) {
+    hrSurcharge  = PB_CASSETTE_P[fascIdx];
+    hrLabel      = 'Cassette';
+    hrDisplay    = 'Cassette: +$' + hrSurcharge.toLocaleString();
+  }
+
+  var hrLblEl = document.getElementById('rn-pb-headrail-label');
+  var hrValEl = document.getElementById('rn-pb-headrail');
+  if (hrLblEl) hrLblEl.textContent = hrLabel;
+  if (hrValEl) hrValEl.textContent = hrDisplay;
+
+  const total = perShade ? (perShade * qty) + motorCost + hrSurcharge : null;
 
   document.getElementById('rn-pb-dims').textContent  = w + '″ W × ' + h + '″ H';
   document.getElementById('rn-pb-sqft').textContent  = sqft.toFixed(2) + ' sqft' + (lookup ? ' · priced at ' + lookup.pricedAt : '');
