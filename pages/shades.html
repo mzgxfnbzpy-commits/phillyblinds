@@ -2685,31 +2685,43 @@ function chainLenCheck(inputId, warnId, heightId) {
 
 // ─── cellularOpChange ────────────────────────────────────────
 // Handles operating system selection for cellular shades.
-// Key rule: TDBU/D&N are lift MODES, not operating systems.
-// Cordless, Cord Loop, and Motorized are the operating system choices.
-// Any lift mode can pair with any compatible operating system.
+// TDBU and Day & Night are mutually exclusive — auto-correct on conflict.
+// source: 'tdbu' = user just clicked TDBU, 'dn_fabric' = user just picked D&N fabric,
+//         'bu' = user switched back to Bottom Up, other = general check.
 function cellCheckConflict(source) {
-  var liftSel = (document.querySelector("#grp-cellular-lift .opt-btn.sel") || {}).textContent || "";
-  var fabSel  = (document.querySelector("#grp-cell-fabric .opt-btn.sel") || {}).textContent || "";
-  var isTDBU   = liftSel.indexOf("Top Down") !== -1;
-  var isDNFab  = fabSel.indexOf("Night") !== -1;
-  var isDNLift = liftSel.indexOf("Night") !== -1;
-  var el = document.getElementById("cell-conflict-note");
+  var liftSel = (document.querySelector('#grp-cellular-lift .opt-btn.sel') || {}).textContent || '';
+  var fabSel  = (document.querySelector('#grp-cell-fabric .opt-btn.sel')  || {}).textContent || '';
+  var isTDBU  = liftSel.indexOf('Top Down') !== -1;
+  var isDNFab = fabSel.indexOf('Night') !== -1;
+
+  // Ensure note element exists
+  var el = document.getElementById('cell-conflict-note');
   if (!el) {
-    el = document.createElement("div");
-    el.id = "cell-conflict-note";
-    el.style.cssText = "display:none;border-radius:8px;padding:10px 13px;font-size:12px;margin-top:8px;line-height:1.5";
-    var lr = document.getElementById("grp-cellular-lift");
+    el = document.createElement('div');
+    el.id = 'cell-conflict-note';
+    el.style.cssText = 'display:none;border-radius:8px;padding:10px 13px;font-size:12px;margin-top:8px;line-height:1.5';
+    var lr = document.getElementById('grp-cellular-lift');
     if (lr && lr.parentElement) lr.parentElement.appendChild(el);
   }
+
   if (isTDBU && isDNFab) {
-    el.style.cssText = "display:block;background:#FEE2E2;border:1px solid #FECACA;border-radius:8px;padding:10px 13px;font-size:12px;color:#991B1B;margin-top:8px;line-height:1.5";
-    el.textContent = "u26A0 Top Down / Bottom Up and Day u0026 Night cannot be combined. Please use Bottom Up lift mode with Day u0026 Night fabric, or choose a different fabric type.";
-  } else if (isDNLift && !isDNFab) {
-    el.style.cssText = "display:block;background:#FEF9C3;border:1px solid #FDE68A;border-radius:8px;padding:10px 13px;font-size:12px;color:#92400E;margin-top:8px;line-height:1.5";
-    el.textContent = "u2139 Day u0026 Night lift selected u2014 select Day u0026 Night in the fabric category below to configure the dual-shade options.";
+    if (source === 'tdbu') {
+      // User just selected TDBU while D&N fabric was active → switch fabric to Room Darkening
+      var rdBtn = Array.from(document.querySelectorAll('#grp-cell-fabric .opt-btn'))
+        .find(function(b){ return b.textContent.trim() === 'Room Darkening'; });
+      if (rdBtn) { selOpt(rdBtn, 'grp-cell-fabric'); filterCellSizes('rd'); }
+      el.style.cssText = 'display:block;background:#FEF9C3;border:1px solid #FDE68A;border-radius:8px;padding:10px 13px;font-size:12px;color:#92400E;margin-top:8px;line-height:1.5';
+      el.textContent = '⚠ Day & Night is not compatible with Top Down / Bottom Up — fabric auto-switched to Room Darkening. To use Day & Night, select Bottom Up lift.';
+    } else if (source === 'dn_fabric') {
+      // User just selected D&N fabric while TDBU was active → switch lift to Bottom Up
+      var buBtn = Array.from(document.querySelectorAll('#grp-cellular-lift .opt-btn'))
+        .find(function(b){ return b.textContent.trim() === 'Bottom Up'; });
+      if (buBtn) { selOpt(buBtn, 'grp-cellular-lift'); showCellularLiftNote('bu'); updateSizeLimits(); }
+      el.style.cssText = 'display:block;background:#FEF9C3;border:1px solid #FDE68A;border-radius:8px;padding:10px 13px;font-size:12px;color:#92400E;margin-top:8px;line-height:1.5';
+      el.textContent = '⚠ Top Down / Bottom Up is not compatible with Day & Night — lift auto-switched to Bottom Up. To use TDBU, select a different fabric.';
+    }
   } else {
-    el.style.display = "none";
+    el.style.display = 'none';
   }
 }
 function cellularOpChange(type) {
@@ -2950,6 +2962,9 @@ function filterCellSizes(fabric) {
     }
   }
   if (currentProduct === 'cellular') renderFlatFabricGrid('cell');
+  // Auto-correct TDBU + D&N conflict when D&N fabric is selected
+  if (fabric === 'dn') cellCheckConflict('dn_fabric');
+  else cellCheckConflict('other'); // clear any stale note if switching away from D&N
 }
 
 // ─── showCellularLiftNote ─────────────────────────────────────
