@@ -584,8 +584,28 @@ function selectProduct(p) {
 
   // Build operation options
   buildOperationStep(p);
-  // Measurements opens first — other steps unlock as dims are entered
-  activateStep('step-6');
+
+  if (p === 'sd') {
+    // SmartDrape — auto-select defaults so customer lands on measurements
+    // Customer can tap any completed step to change it
+    selectOpacity('lf');          // Step 2: Light Filtering (default)
+    selectOp('wand');             // Step 3: Wand Tilt (default for SmartDrape)
+    selectMount('inside');        // Step 4: Inside Mount (most common)
+    selectStack('left-stack');    // Step 5: Left Stack (default)
+    // Step 6 (measurements) is now active — customer fills in width & height
+    var infoBox = document.createElement('div');
+    infoBox.className = 'info-box';
+    infoBox.style.marginBottom = '12px';
+    infoBox.innerHTML = '✓ Defaults pre-selected (Light Filtering · Wand Tilt · Inside Mount · Left Stack). Tap any step above to change.';
+    var step6body = document.querySelector('#step-6 .step-body');
+    if (step6body && !document.getElementById('sd-defaults-note')) {
+      infoBox.id = 'sd-defaults-note';
+      step6body.insertBefore(infoBox, step6body.firstChild);
+    }
+  } else {
+    // PerfectSheer — start from step 2 as before
+    activateStep('step-2');
+  }
 }
 
 // ═══════════════════════════════════════════════════════
