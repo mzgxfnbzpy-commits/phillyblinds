@@ -1220,13 +1220,27 @@
             <button class="opt-btn" onclick="selOpt(this,'grp-motor');toggleMotor(true)">Yes, add motorization</button>
           </div>
           <div class="motor-sub" id="motor-sub">
-            <div style="font-size:12px;font-weight:500;color:#555;margin-bottom:8px">Select Norman motorization system:</div>
-            <div class="opt-row" id="grp-motor-type" style="flex-wrap:wrap;gap:6px">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-motor-type');cellMotorUpcharge=482;updatePrice()">Norman Smart — $482<br><span style="font-size:10px;font-weight:400;color:#888">App, voice, remote &middot; rechargeable or hardwired</span></button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-motor-type');cellMotorUpcharge=166;updatePrice()">AutoWand — $166<br><span style="font-size:10px;font-weight:400;color:#888">Wand-controlled &middot; no remote needed &middot; rechargeable</span></button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-motor-type');cellMotorUpcharge=682;updatePrice()">Automate Home — $682<br><span style="font-size:10px;font-weight:400;color:#888">15-ch remote, wall switch &middot; rechargeable or low-voltage DC</span></button>
+            <!-- Norman Cellular: specific motor system required -->
+            <div id="motor-sub-norman" style="display:none">
+              <div style="font-size:12px;font-weight:500;color:#555;margin-bottom:8px">Select Norman motorization system:</div>
+              <div class="opt-row" id="grp-motor-type" style="flex-wrap:wrap;gap:6px">
+                <button class="opt-btn sel" onclick="selOpt(this,'grp-motor-type');cellMotorUpcharge=482;updatePrice()">Norman Smart — $482<br><span style="font-size:10px;font-weight:400;color:#888">App, voice, remote &middot; rechargeable or hardwired</span></button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-motor-type');cellMotorUpcharge=166;updatePrice()">AutoWand — $166<br><span style="font-size:10px;font-weight:400;color:#888">Wand-controlled &middot; no remote needed &middot; rechargeable</span></button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-motor-type');cellMotorUpcharge=682;updatePrice()">Automate Home — $682<br><span style="font-size:10px;font-weight:400;color:#888">15-ch remote, wall switch &middot; rechargeable or low-voltage DC</span></button>
+              </div>
+              <div class="tooltip-note" style="color:var(--gold);margin-top:8px">&#9889; Norman Cellular shades use Norman-brand motorization only. Motor surcharge is per shade. Power source (battery/hardwired) confirmed at your measurement visit.</div>
             </div>
-            <div class="tooltip-note" style="color:var(--gold);margin-top:8px">&#9889; Norman Cellular shades use Norman-brand motorization only. Motor surcharge is per shade. Power source (battery/hardwired) confirmed at your measurement visit.</div>
+            <!-- Custom / non-Norman: optional brand preference -->
+            <div id="motor-sub-custom" style="display:none">
+              <div style="font-size:12px;color:#555;margin-bottom:8px;line-height:1.6">&#9889; Motorization added. We'll confirm motor type, power source, and pricing at your measurement visit.<br><span style="font-size:11px;color:#888">Motor brand is our recommendation — but if you have a preference, let us know:</span></div>
+              <div class="opt-row" id="grp-motor-brand" style="flex-wrap:wrap;gap:6px">
+                <button class="opt-btn" onclick="selOpt(this,'grp-motor-brand')">No preference</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-motor-brand')">Somfy</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-motor-brand')">Lutron</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-motor-brand')">Rollease Acmeda</button>
+              </div>
+              <div style="font-size:11px;color:#aaa;margin-top:6px;line-height:1.5">All motor brands support app control, voice (Alexa, Google, HomeKit), and battery or hardwired options. Final selection confirmed at your measurement visit.</div>
+            </div>
           </div>
         </div>
 
@@ -2552,8 +2566,18 @@ function toggleMotor(on) {
   motorOn = on;
   const sub = document.getElementById('motor-sub');
   const row = document.getElementById('pb-motor-row');
-  if (on) { sub.classList.add('show'); row.style.display = 'flex'; }
-  else     { sub.classList.remove('show'); row.style.display = 'none'; }
+  const normanSub = document.getElementById('motor-sub-norman');
+  const customSub = document.getElementById('motor-sub-custom');
+  if (on) {
+    sub.classList.add('show');
+    row.style.display = 'flex';
+    const isNorman = (currentProduct === 'cellular');
+    if (normanSub) normanSub.style.display = isNorman ? 'block' : 'none';
+    if (customSub) customSub.style.display = isNorman ? 'none' : 'block';
+  } else {
+    sub.classList.remove('show');
+    row.style.display = 'none';
+  }
   checkMotorConflict();
   updatePrice();
 }
@@ -2941,11 +2965,12 @@ function submitShadeForm() {
   const w = document.getElementById('inp-width').value;
   const h = document.getElementById('inp-height').value;
   const qty = document.getElementById('inp-qty').value;
-  const motorTypeSel = document.querySelector('#grp-motor-type .opt-btn.sel');
+  const motorTypeSel  = document.querySelector('#grp-motor-type .opt-btn.sel');
+  const motorBrandSel = document.querySelector('#grp-motor-brand .opt-btn.sel');
   const motorBrand = motorOn
     ? (currentProduct === 'cellular' && motorTypeSel
         ? motorTypeSel.textContent.split('\n')[0].trim()
-        : (document.getElementById('sel-motor-brand') || {}).value || 'Yes')
+        : (motorBrandSel ? motorBrandSel.textContent.trim() : 'Yes — brand confirmed at visit'))
     : 'No';
 
   // Roller hardware extras
