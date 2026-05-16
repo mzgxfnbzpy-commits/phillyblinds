@@ -845,6 +845,17 @@
               <div id="rn-control-section" style="display:none">
                 <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Control</div>
                 <div id="rn-control-note" class="tooltip-note" style="margin-bottom:10px">Metal chain — standard control for continuous chain loop system.</div>
+                <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Chain length</div>
+                <div class="opt-row" id="grp-rn-clen">
+                  <button class="opt-btn sel" onclick="selOpt(this,'grp-rn-clen');document.getElementById('rn-clen-custom').style.display='none'">Default</button>
+                  <button class="opt-btn" onclick="selOpt(this,'grp-rn-clen');document.getElementById('rn-clen-custom').style.display='flex'">Custom</button>
+                </div>
+                <div id="rn-clen-custom" style="display:none;align-items:center;gap:8px;margin-top:8px">
+                  <input type="number" id="rn-clen-in" placeholder="e.g. 54" min="9" style="width:80px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px" oninput="chainLenCheck('rn-clen-in','rn-clen-warn','rn-height')">
+                  <span style="font-size:13px;color:#666">inches</span>
+                </div>
+                <div id="rn-clen-warn" class="tooltip-note" style="display:none;color:#dc2626;margin-top:6px"></div>
+                <div class="tooltip-note" style="margin-top:6px;margin-bottom:10px">Custom chain must be at least 75% of shade height.</div>
               </div>
 
               <!-- Chain colors -->
@@ -980,6 +991,20 @@
               <button class="opt-btn" onclick="selOpt(this,'grp-op-cellular');updateSizeLimits();cellularOpChange('motor')">Motorized</button>
             </div>
             <div id="cellular-op-note" class="tooltip-note" style="margin-top:6px"></div>
+            <!-- Chain length — visible for Cord Loop only -->
+            <div id="cell-chain-len" style="display:none;margin-top:10px;padding:10px 12px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
+              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Chain length</div>
+              <div class="opt-row" id="grp-cell-clen">
+                <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-clen');document.getElementById('cell-clen-custom').style.display='none'">Default</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-cell-clen');document.getElementById('cell-clen-custom').style.display='flex'">Custom</button>
+              </div>
+              <div id="cell-clen-custom" style="display:none;align-items:center;gap:8px;margin-top:8px">
+                <input type="number" id="cell-clen-in" placeholder="e.g. 54" min="9" style="width:80px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px" oninput="chainLenCheck('cell-clen-in','cell-clen-warn','inp-height')">
+                <span style="font-size:13px;color:#666">inches</span>
+              </div>
+              <div id="cell-clen-warn" class="tooltip-note" style="display:none;color:#dc2626;margin-top:6px"></div>
+              <div class="tooltip-note" style="margin-top:6px">Custom chain must be at least 75% of shade height.</div>
+            </div>
           </div>
 
           <!-- Zebra / Banded -->
@@ -1187,18 +1212,22 @@
           </div>
 
           <div id="chain-opts" style="display:none;margin-bottom:16px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
-            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:8px">Chain or cord type</div>
+            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:8px">Chain type</div>
             <div class="opt-row" id="grp-chain-type">
               <button class="opt-btn sel" onclick="selOpt(this,'grp-chain-type')">Metal chain</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-chain-type')">Cord loop</button>
             </div>
-            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:8px;margin-top:12px">Chain / cord length</div>
+            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px;margin-top:12px">Chain length</div>
             <div class="opt-row" id="grp-chain-length">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-chain-length')">Standard (18&quot;)</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-chain-length')">Extended (36&quot;)</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-chain-length')">Extra long (48&quot;)</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-chain-length')">Custom length</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-chain-length');document.getElementById('chain-custom-wrap').style.display='none'">Default</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-chain-length');document.getElementById('chain-custom-wrap').style.display='flex'">Custom</button>
             </div>
+            <div id="chain-custom-wrap" style="display:none;align-items:center;gap:8px;margin-top:8px">
+              <input type="number" id="chain-custom-in" placeholder="e.g. 54" min="9" style="width:80px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px" oninput="chainLenCheck('chain-custom-in','chain-custom-warn','inp-height')">
+              <span style="font-size:13px;color:#666">inches</span>
+            </div>
+            <div id="chain-custom-warn" class="tooltip-note" style="display:none;color:#dc2626;margin-top:6px"></div>
+            <div class="tooltip-note" style="margin-top:6px">Custom chain must be at least 75% of shade height for comfortable reach.</div>
           </div>
 
           <div>
@@ -2019,6 +2048,21 @@
       <button class="opt-btn" onclick="selOpt(this,'grp-ps-cord')">Left</button>
     </div>
 
+    <!-- CHAIN LENGTH (shown for CCL only) -->
+    <div id="ps-chain-len-wrap" style="margin-top:10px">
+      <div class="step-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:6px">Chain length</div>
+      <div class="opt-row" id="grp-ps-clen">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-ps-clen');document.getElementById('ps-clen-custom').style.display='none'">Default</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-ps-clen');document.getElementById('ps-clen-custom').style.display='flex'">Custom</button>
+      </div>
+      <div id="ps-clen-custom" style="display:none;align-items:center;gap:8px;margin-top:8px">
+        <input type="number" id="ps-clen-in" placeholder="e.g. 54" min="9" style="width:80px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px" oninput="chainLenCheck('ps-clen-in','ps-clen-warn','ps-height')">
+        <span style="font-size:13px;color:#666">inches</span>
+      </div>
+      <div id="ps-clen-warn" class="tooltip-note" style="display:none;color:#dc2626;margin-top:6px"></div>
+      <div class="tooltip-note" style="margin-top:6px">Custom chain must be at least 75% of shade height for comfortable reach.</div>
+    </div>
+
     <!-- STEP 7: VALANCE -->
     <div class="step-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Step 7 — Valance / headrail cover</div>
     <div class="opt-row" id="grp-ps-valance">
@@ -2593,6 +2637,22 @@ function checkMotorConflict() {
   opBlock.style.outline = opBlock.style.borderRadius = opBlock.style.padding = '';
 }
 
+// ─── chainLenCheck — shared 75% validation ───────────────────
+function chainLenCheck(inputId, warnId, heightId) {
+  var len  = parseFloat(document.getElementById(inputId).value) || 0;
+  var h    = parseFloat(document.getElementById(heightId).value) || 0;
+  var warn = document.getElementById(warnId);
+  if (!warn) return;
+  if (!len || !h) { warn.style.display = 'none'; return; }
+  var minLen = Math.ceil(h * 0.75);
+  if (len < minLen) {
+    warn.style.display = 'block';
+    warn.textContent = '⚠ Minimum chain length is 75% of shade height — at least ' + minLen + '" for a ' + h + '" shade.';
+  } else {
+    warn.style.display = 'none';
+  }
+}
+
 // ─── cellularOpChange ────────────────────────────────────────
 // Handles operating system selection for cellular shades.
 // Key rule: TDBU/D&N are lift MODES, not operating systems.
@@ -2602,20 +2662,19 @@ function cellularOpChange(type) {
   const liftBtn  = document.querySelector('#grp-cellular-lift .opt-btn.sel');
   const liftMode = liftBtn ? liftBtn.textContent.trim() : 'Bottom Up';
   const note     = document.getElementById('cellular-op-note');
+  const chainWrap = document.getElementById('cell-chain-len');
+  if (chainWrap) chainWrap.style.display = type === 'cord' ? 'block' : 'none';
   if (!note) return;
 
   if (type === 'cordless') {
-    // Cordless has no motor — auto-deactivate motorization if it was on
     if (motorOn) toggleMotor(false);
     note.innerHTML =
       'Selected lift mode: <strong>' + liftMode + '</strong> &nbsp;·&nbsp; Selected operation: <strong>Cordless</strong><br>' +
       'Cordless operation has no motor. To add a motor, change the operating system to <strong>Motorized</strong>.';
   } else if (type === 'motor') {
-    // Motorized — auto-activate motorization toggle
     autoMotor();
     note.textContent = 'Selected operation: Motorized — choose motor brand and type in the section below.';
   } else {
-    // Cord Loop — manual chain, not motorized
     if (motorOn) toggleMotor(false);
     note.textContent = 'Cord Loop: handles larger windows up to 120″ W × 144″ H (80 sq ft max area). Available in Bottom Up, TDBU, and Day & Night. SmartRelease™ upgrade available.';
   }
