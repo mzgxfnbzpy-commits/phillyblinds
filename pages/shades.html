@@ -1754,73 +1754,92 @@
       <div class="config-title">Norman Faux Wood Blinds</div>
       <span class="badge badge-quote">Custom quote</span>
     </div>
-    <div style="background:var(--gold-mid);border:1px solid #E8DCC8;border-radius:10px;padding:14px 18px;margin-bottom:20px">
-      <div style="font-size:12px;font-weight:600;color:#0D4A42;margin-bottom:4px">Norman SmartPrivacy® Faux Wood Blinds — custom quoted</div>
-      <div style="font-size:12px;color:#0D4A42;line-height:1.6">Moisture-resistant PVC faux wood blinds with SmartPrivacy® pivoting bottom rail. 2″ and 2½″ slats, 16 colors. Full pricing at the SmartPrivacy configurator page.</div>
+    <div style="background:var(--gold-mid);border:1px solid #E8DCC8;border-radius:10px;padding:12px 16px;margin-bottom:18px;font-size:12px;color:#0D4A42;line-height:1.6">
+      <strong>Norman SmartPrivacy® Faux Wood Blinds</strong> — moisture-resistant PVC, SmartPrivacy® pivoting bottom rail. 2″ and 2½″ slats, 16 colors.
     </div>
 
-    <div class="step-title" style="font-size:12px;margin-bottom:8px">Slat size</div>
-    <div class="opt-row" id="fwb-grp-slat">
-      <button class="opt-btn sel" onclick="selOpt(this,'fwb-grp-slat')">2&quot; — most popular</button>
-      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-slat')">2&frac12;&quot;</button>
+    <!-- Step 1: Slat size -->
+    <div class="step-block">
+      <div class="step-hd"><div class="step-num-circle">1</div><div class="step-title">Slat size</div></div>
+      <div class="opt-row" id="fwb-grp-slat">
+        <button class="opt-btn sel" onclick="selOpt(this,'fwb-grp-slat')">2&quot; — most popular</button>
+        <button class="opt-btn" onclick="selOpt(this,'fwb-grp-slat')">2&frac12;&quot;</button>
       </div>
-
-    <div class="step-title" style="font-size:12px;margin:14px 0 8px">Color family</div>
-    <div class="opt-row" id="fwb-grp-color">
-      <button class="opt-btn sel" onclick="selOpt(this,'fwb-grp-color')">White / Off-White</button>
-      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-color')">Light Wood</button>
-      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-color')">Medium Wood</button>
-      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-color')">Dark Wood</button>
-      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-color')">Gray / Contemporary</button>
-    </div>
-    <div class="tooltip-note" style="margin-top:4px">Exact color confirmed from Norman swatch book at measurement visit.</div>
-
-    <div class="step-title" style="font-size:12px;margin:14px 0 8px">Operating system</div>
-    <div class="opt-row" id="fwb-grp-op">
-      <button class="opt-btn sel" onclick="selOpt(this,'fwb-grp-op')">Standard cord</button>
-      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-op')">Cordless</button>
-      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-op')">SofTilt&trade; (spring wand)</button>
-      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-op')">Motorized — Norman only</button>
-    </div>
-    <div class="tooltip-note" id="fwb-op-note" style="margin-top:4px">Cordless lift is child &amp; pet safe — cord-free operation with a push or pull.</div>
-
-    <div class="step-title" style="font-size:12px;margin:14px 0 8px">Mount type</div>
-    <div class="opt-row" id="fwb-grp-mount">
-      <button class="opt-btn sel" onclick="selOpt(this,'fwb-grp-mount')">Inside mount</button>
-      <button class="opt-btn" onclick="selOpt(this,'fwb-grp-mount')">Outside mount</button>
+      <div class="tooltip-note" style="margin-top:6px">Same price for both slat sizes.</div>
     </div>
 
-    <div style="margin-top:14px">
-      <div class="step-title" style="font-size:12px;margin-bottom:8px">Window measurements</div>
+    <!-- Step 2: Color family -->
+    <div class="step-block">
+      <div class="step-hd"><div class="step-num-circle">2</div><div class="step-title">Color family</div></div>
+      <div class="opt-row" id="fwb-grp-color">
+        <button class="opt-btn sel" onclick="selOpt(this,'fwb-grp-color')">White / Off-White</button>
+        <button class="opt-btn" onclick="selOpt(this,'fwb-grp-color')">Light Wood</button>
+        <button class="opt-btn" onclick="selOpt(this,'fwb-grp-color')">Medium Wood</button>
+        <button class="opt-btn" onclick="selOpt(this,'fwb-grp-color')">Dark Wood</button>
+        <button class="opt-btn" onclick="selOpt(this,'fwb-grp-color')">Gray / Contemporary</button>
+      </div>
+      <div class="tooltip-note" style="margin-top:6px">Exact color confirmed from Norman swatch book at measurement visit.</div>
+    </div>
+
+    <!-- Step 3: Operating system -->
+    <div class="step-block">
+      <div class="step-hd"><div class="step-num-circle">3</div><div class="step-title">Operating system</div></div>
+      <div class="opt-row" id="fwb-grp-op">
+        <button class="opt-btn sel" onclick="selOpt(this,'fwb-grp-op')">Standard cord</button>
+        <button class="opt-btn" onclick="selOpt(this,'fwb-grp-op')">Cordless</button>
+        <button class="opt-btn" onclick="selOpt(this,'fwb-grp-op')">SofTilt&trade; (spring wand)</button>
+        <button class="opt-btn" onclick="selOpt(this,'fwb-grp-op')">Motorized — Norman only</button>
+      </div>
+      <div class="tooltip-note" id="fwb-op-note" style="margin-top:6px">Cordless lift is child &amp; pet safe — cord-free operation with a push or pull.</div>
+    </div>
+
+    <!-- Step 4: Mount type -->
+    <div class="step-block">
+      <div class="step-hd"><div class="step-num-circle">4</div><div class="step-title">Mount type</div></div>
+      <div class="opt-row" id="fwb-grp-mount">
+        <button class="opt-btn sel" onclick="selOpt(this,'fwb-grp-mount')">Inside mount</button>
+        <button class="opt-btn" onclick="selOpt(this,'fwb-grp-mount')">Outside mount</button>
+      </div>
+    </div>
+
+    <!-- Step 5: Measurements + qty -->
+    <div class="step-block">
+      <div class="step-hd"><div class="step-num-circle">5</div><div class="step-title">Measurements &amp; quantity</div></div>
       <div class="dim-row">
         <div class="form-group"><label>Width (inches)</label><input type="number" id="fwb-width" min="10" max="96" step="0.5" placeholder="e.g. 36"></div>
         <div class="form-group"><label>Height (inches)</label><input type="number" id="fwb-height" min="12" max="120" step="0.5" placeholder="e.g. 48"></div>
       </div>
-      <div class="step-title" style="font-size:12px;margin:10px 0 8px">Quantity</div>
-      <div class="qty-btns">
-        <button class="qty-btn" onclick="fwbAdjQty(-1)">&#8722;</button>
-        <input class="qty-num" type="number" id="fwb-qty" value="1" min="1" max="20">
-        <button class="qty-btn" onclick="fwbAdjQty(1)">&#43;</button>
+      <div style="margin-top:10px">
+        <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Quantity</div>
+        <div class="qty-btns">
+          <button class="qty-btn" onclick="fwbAdjQty(-1)">&#8722;</button>
+          <input class="qty-num" type="number" id="fwb-qty" value="1" min="1" max="20">
+          <button class="qty-btn" onclick="fwbAdjQty(1)">&#43;</button>
+        </div>
       </div>
     </div>
 
-    <hr class="price-divider" style="margin:18px 0">
-    <div class="form-row">
-      <div class="form-group"><label>Your name *</label><input type="text" id="fwb-name" placeholder="Jane Smith"></div>
-      <div class="form-group"><label>Phone *</label><input type="tel" id="fwb-phone" placeholder="(215) 555-0100"></div>
-    </div>
-    <div class="form-group"><label>Email</label><input type="email" id="fwb-email" placeholder="jane@example.com"></div>
-    <div class="form-group"><label>Notes</label><textarea id="fwb-notes" placeholder="e.g. specific color, existing hardware to reuse, special installation requirements"></textarea></div>
-    <div class="delivery-section">
-      <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
-      <div class="opt-row" id="grp-del-fwb">
-        <button class="opt-btn sel" onclick="selOpt(this,'grp-del-fwb');document.getElementById('del-fwb-s').style.display='block';document.getElementById('del-fwb-p').style.display='none'">Ship to me</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-del-fwb');document.getElementById('del-fwb-s').style.display='none';document.getElementById('del-fwb-p').style.display='block'">I'll pick up</button>
+    <!-- Step 6: Quote form -->
+    <div class="step-block">
+      <div class="step-hd"><div class="step-num-circle">6</div><div class="step-title">Request quote</div></div>
+      <div class="form-row">
+        <div class="form-group"><label>Your name *</label><input type="text" id="fwb-name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="fwb-phone" placeholder="(215) 555-0100"></div>
       </div>
-      <div id="del-fwb-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately.</div></div>
-      <div id="del-fwb-p" class="delivery-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.</div>
+      <div class="form-group"><label>Email</label><input type="email" id="fwb-email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Notes</label><textarea id="fwb-notes" placeholder="e.g. specific color, existing hardware to reuse, special installation requirements"></textarea></div>
+      <div class="delivery-section">
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+        <div class="opt-row" id="grp-del-fwb">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-fwb');document.getElementById('del-fwb-s').style.display='block';document.getElementById('del-fwb-p').style.display='none'">Ship to me</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-del-fwb');document.getElementById('del-fwb-s').style.display='none';document.getElementById('del-fwb-p').style.display='block'">I'll pick up</button>
+        </div>
+        <div id="del-fwb-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional.</div></div>
+        <div id="del-fwb-p" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>
+      </div>
+      <button class="btn-gold" onclick="submitFWBForm()" style="width:100%;padding:13px;margin-top:12px">Request faux wood blinds quote &rarr;</button>
     </div>
-    <button class="btn-gold" onclick="submitFWBForm()" style="width:100%;padding:13px;margin-top:4px">Request faux wood blinds quote &rarr;</button>
+
     <div class="success-state" id="fwb-success">
       <h3>Quote request sent!</h3>
       <p>We'll follow up within a few hours with Norman color options and pricing. Call <strong>(609) 742-1720</strong> for anything urgent — available 24/7.</p>
@@ -1834,57 +1853,82 @@
       <div class="config-title">Real Wood Blinds</div>
       <span class="badge badge-quote">Custom quote</span>
     </div>
-    <div style="background:var(--gold-mid);border:1px solid #E8DCC8;border-radius:10px;padding:14px 18px;margin-bottom:20px">
-      <div style="font-size:12px;font-weight:600;color:#0D4A42;margin-bottom:4px">Real Wood Blinds — custom quoted</div>
-      <div style="font-size:12px;color:#0D4A42;line-height:1.6">Genuine hardwood slat blinds in rich stained and painted finishes. Available in 2″ and 2½″ slats. Beautiful natural grain — ideal for living rooms, offices, and traditional interiors.</div>
+    <div style="background:var(--gold-mid);border:1px solid #E8DCC8;border-radius:10px;padding:12px 16px;margin-bottom:18px;font-size:12px;color:#0D4A42;line-height:1.6">
+      <strong>Real Wood Blinds</strong> — genuine hardwood in rich stained and painted finishes. Beautiful natural grain, ideal for living rooms, offices, and traditional interiors.
     </div>
-    <div class="step-title" style="font-size:12px;margin-bottom:8px">Slat size</div>
-    <div class="opt-row" id="rwb-grp-slat">
-      <button class="opt-btn sel" onclick="selOpt(this,'rwb-grp-slat')">2&Prime; slats</button>
-      <button class="opt-btn" onclick="selOpt(this,'rwb-grp-slat')">2&frac12;&Prime; slats</button>
-    </div>
-    <div class="step-title" style="font-size:12px;margin:14px 0 8px">Wood finish</div>
-    <div class="opt-row" id="rwb-grp-finish">
-      <button class="opt-btn sel" onclick="selOpt(this,'rwb-grp-finish')">Natural / Light</button>
-      <button class="opt-btn" onclick="selOpt(this,'rwb-grp-finish')">Medium stain</button>
-      <button class="opt-btn" onclick="selOpt(this,'rwb-grp-finish')">Dark walnut</button>
-      <button class="opt-btn" onclick="selOpt(this,'rwb-grp-finish')">Painted white</button>
-      <button class="opt-btn" onclick="selOpt(this,'rwb-grp-finish')">Painted off-white</button>
-      <button class="opt-btn" onclick="selOpt(this,'rwb-grp-finish')">Not sure — bring samples</button>
-    </div>
-    <div class="step-title" style="font-size:12px;margin:14px 0 8px">Operating system</div>
-    <div class="opt-row" id="rwb-grp-op">
-      <button class="opt-btn sel" onclick="selOpt(this,'rwb-grp-op')">Cord &amp; tilt wand</button>
-      <button class="opt-btn" onclick="selOpt(this,'rwb-grp-op')">Cordless</button>
-      <button class="opt-btn" onclick="selOpt(this,'rwb-grp-op')">Motorized</button>
-    </div>
-    <div class="step-title" style="font-size:12px;margin:14px 0 8px">Mount type</div>
-    <div class="opt-row" id="rwb-grp-mount">
-      <button class="opt-btn sel" onclick="selOpt(this,'rwb-grp-mount')">Inside mount</button>
-      <button class="opt-btn" onclick="selOpt(this,'rwb-grp-mount')">Outside mount</button>
-    </div>
-    <div class="dim-row" style="margin-top:14px">
-      <div class="form-group"><label>Width (inches)</label><input type="number" id="rwb-width" min="10" max="96" step="0.5" placeholder="e.g. 36"></div>
-      <div class="form-group"><label>Height (inches)</label><input type="number" id="rwb-height" min="12" max="96" step="0.5" placeholder="e.g. 48"></div>
-    </div>
-    <div class="form-group"><label>Quantity</label><input type="number" id="rwb-qty" min="1" max="20" value="1"></div>
-    <hr class="price-divider" style="margin:18px 0">
-    <div class="form-row">
-      <div class="form-group"><label>Your name *</label><input type="text" id="rwb-name" placeholder="Jane Smith"></div>
-      <div class="form-group"><label>Phone *</label><input type="tel" id="rwb-phone" placeholder="(215) 555-0100"></div>
-    </div>
-    <div class="form-group"><label>Email</label><input type="email" id="rwb-email" placeholder="jane@example.com"></div>
-    <div class="form-group"><label>Notes</label><textarea id="rwb-notes" placeholder="e.g. specific finish, existing hardware, special requirements"></textarea></div>
-    <div class="delivery-section">
-      <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
-      <div class="opt-row" id="grp-del-rwb">
-        <button class="opt-btn sel" onclick="selOpt(this,'grp-del-rwb');document.getElementById('del-rwb-s').style.display='block';document.getElementById('del-rwb-p').style.display='none'">Ship to me</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-del-rwb');document.getElementById('del-rwb-s').style.display='none';document.getElementById('del-rwb-p').style.display='block'">I'll pick up</button>
+
+    <!-- Step 1: Slat size -->
+    <div class="step-block">
+      <div class="step-hd"><div class="step-num-circle">1</div><div class="step-title">Slat size</div></div>
+      <div class="opt-row" id="rwb-grp-slat">
+        <button class="opt-btn sel" onclick="selOpt(this,'rwb-grp-slat')">2&Prime; slats</button>
+        <button class="opt-btn" onclick="selOpt(this,'rwb-grp-slat')">2&frac12;&Prime; slats</button>
       </div>
-      <div id="del-rwb-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately.</div></div>
-      <div id="del-rwb-p" class="delivery-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.</div>
     </div>
-    <button class="btn-gold" onclick="submitRWBForm()" style="width:100%;padding:13px;margin-top:4px">Request real wood blinds quote &rarr;</button>
+
+    <!-- Step 2: Wood finish -->
+    <div class="step-block">
+      <div class="step-hd"><div class="step-num-circle">2</div><div class="step-title">Wood finish</div></div>
+      <div class="opt-row" id="rwb-grp-finish">
+        <button class="opt-btn sel" onclick="selOpt(this,'rwb-grp-finish')">Natural / Light</button>
+        <button class="opt-btn" onclick="selOpt(this,'rwb-grp-finish')">Medium stain</button>
+        <button class="opt-btn" onclick="selOpt(this,'rwb-grp-finish')">Dark walnut</button>
+        <button class="opt-btn" onclick="selOpt(this,'rwb-grp-finish')">Painted white</button>
+        <button class="opt-btn" onclick="selOpt(this,'rwb-grp-finish')">Painted off-white</button>
+        <button class="opt-btn" onclick="selOpt(this,'rwb-grp-finish')">Not sure — bring samples</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Operating system -->
+    <div class="step-block">
+      <div class="step-hd"><div class="step-num-circle">3</div><div class="step-title">Operating system</div></div>
+      <div class="opt-row" id="rwb-grp-op">
+        <button class="opt-btn sel" onclick="selOpt(this,'rwb-grp-op')">Cord &amp; tilt wand</button>
+        <button class="opt-btn" onclick="selOpt(this,'rwb-grp-op')">Cordless</button>
+        <button class="opt-btn" onclick="selOpt(this,'rwb-grp-op')">Motorized</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Mount type -->
+    <div class="step-block">
+      <div class="step-hd"><div class="step-num-circle">4</div><div class="step-title">Mount type</div></div>
+      <div class="opt-row" id="rwb-grp-mount">
+        <button class="opt-btn sel" onclick="selOpt(this,'rwb-grp-mount')">Inside mount</button>
+        <button class="opt-btn" onclick="selOpt(this,'rwb-grp-mount')">Outside mount</button>
+      </div>
+    </div>
+
+    <!-- Step 5: Measurements + qty -->
+    <div class="step-block">
+      <div class="step-hd"><div class="step-num-circle">5</div><div class="step-title">Measurements &amp; quantity</div></div>
+      <div class="dim-row">
+        <div class="form-group"><label>Width (inches)</label><input type="number" id="rwb-width" min="10" max="96" step="0.5" placeholder="e.g. 36"></div>
+        <div class="form-group"><label>Height (inches)</label><input type="number" id="rwb-height" min="12" max="96" step="0.5" placeholder="e.g. 48"></div>
+      </div>
+      <div class="form-group" style="margin-top:10px"><label>Quantity</label><input type="number" id="rwb-qty" min="1" max="20" value="1" style="width:80px"></div>
+    </div>
+
+    <!-- Step 6: Quote form -->
+    <div class="step-block">
+      <div class="step-hd"><div class="step-num-circle">6</div><div class="step-title">Request quote</div></div>
+      <div class="form-row">
+        <div class="form-group"><label>Your name *</label><input type="text" id="rwb-name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="rwb-phone" placeholder="(215) 555-0100"></div>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" id="rwb-email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Notes</label><textarea id="rwb-notes" placeholder="e.g. specific finish, existing hardware, special requirements"></textarea></div>
+      <div class="delivery-section">
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+        <div class="opt-row" id="grp-del-rwb">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-rwb');document.getElementById('del-rwb-s').style.display='block';document.getElementById('del-rwb-p').style.display='none'">Ship to me</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-del-rwb');document.getElementById('del-rwb-s').style.display='none';document.getElementById('del-rwb-p').style.display='block'">I'll pick up</button>
+        </div>
+        <div id="del-rwb-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional.</div></div>
+        <div id="del-rwb-p" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>
+      </div>
+      <button class="btn-gold" onclick="submitRWBForm()" style="width:100%;padding:13px;margin-top:12px">Request real wood blinds quote &rarr;</button>
+    </div>
+
     <div class="success-state" id="rwb-success">
       <h3>Quote request sent!</h3>
       <p>We'll follow up within a few hours with finish samples and pricing. Call <strong>(609) 742-1720</strong> for anything urgent — available 24/7.</p>
