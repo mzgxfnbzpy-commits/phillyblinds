@@ -971,9 +971,9 @@
           <div id="op-cellular" style="display:none">
             <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:7px">Lift mode</div>
             <div class="opt-row" id="grp-cellular-lift">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-cellular-lift');updateSizeLimits();showCellularLiftNote('bu')">Bottom Up</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cellular-lift');updateSizeLimits();showCellularLiftNote('tdbu')">Top Down / Bottom Up</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cellular-lift');updateSizeLimits();showCellularLiftNote('dn')">Day &amp; Night</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-cellular-lift');updateSizeLimits();showCellularLiftNote('bu');cellCheckConflict('bu')">Bottom Up</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cellular-lift');updateSizeLimits();showCellularLiftNote('tdbu');cellCheckConflict('tdbu')">Top Down / Bottom Up</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cellular-lift');updateSizeLimits();showCellularLiftNote('dn');cellCheckConflict('dn')">Day &amp; Night</button>
             </div>
             <div id="tdbu-note" class="tooltip-note" style="display:none;margin-top:4px;margin-bottom:6px">TDBU: shade raises from bottom <em>and</em> lowers from top — privacy with natural light. Max height 96″ · max 60 sq ft. (FR 3/8″S fabric: max height 86″.)</div>
             <div id="dn-note" class="tooltip-note" style="display:none;margin-top:4px;margin-bottom:6px">Day &amp; Night: two shades in one headrail. Valid top: Sheer, Windsong, LF, Designer LF. Valid bottom: LF, RD, Designer, Solus. <strong>Not available in D&amp;N:</strong> Woven Breeze, Ashton, FR/FR Essentials. Top &amp; bottom must use the same cell size.</div>
@@ -1134,10 +1134,10 @@
           <div id="cell-fabric-section">
             <div class="step-title" style="font-size:12px;margin-bottom:6px">② Fabric category</div>
             <div class="opt-row" id="grp-cell-fabric">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('lf')">Light Filtering</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('rd')">Room Darkening</button>
-              <button class="opt-btn" id="cell-fab-sheer-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('sheer')">Sheer</button>
-              <button class="opt-btn" id="cell-fab-dn-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('dn')">Day &amp; Night</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('lf');cellCheckConflict('fab-clear')">Light Filtering</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('rd');cellCheckConflict('fab-clear')">Room Darkening</button>
+              <button class="opt-btn" id="cell-fab-sheer-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('sheer');cellCheckConflict('fab-clear')">Sheer</button>
+              <button class="opt-btn" id="cell-fab-dn-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('dn');cellCheckConflict('fab-dn')">Day &amp; Night</button>
             </div>
             <div class="tooltip-note" id="fabric-cell-note" style="margin-top:4px">Light Filtering is available in all 6 cell sizes.</div>
             <!-- ③ Color picker -->
@@ -1751,8 +1751,8 @@
   <div class="configurator" id="fwb-config">
     <div class="config-head">
       <button class="config-back" onclick="clearProduct()">&#8592; Change product</button>
-      <div class="config-title">Norman Faux Wood Blinds</div>
-      <span class="badge badge-quote">Custom quote</span>
+      <div class="config-title">Faux Wood Blinds</div>
+      <button onclick="switchBlindsType('rwb')" style="background:var(--espresso);color:var(--gold);border:none;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap">Switch to Real Wood &#8594;</button>
     </div>
     <div style="background:var(--gold-mid);border:1px solid #E8DCC8;border-radius:10px;padding:12px 16px;margin-bottom:18px;font-size:12px;color:#0D4A42;line-height:1.6">
       <strong>Norman SmartPrivacy® Faux Wood Blinds</strong> — moisture-resistant PVC, SmartPrivacy® pivoting bottom rail. 2″ and 2½″ slats, 16 colors.
@@ -1849,9 +1849,9 @@
   <!-- REAL WOOD BLINDS CONFIG -->
   <div class="configurator" id="rwb-config">
     <div class="config-head">
-      <button class="config-back" onclick="showBlindsTypeSelector()">&#8592; Back to blinds type</button>
+      <button class="config-back" onclick="clearProduct()">&#8592; Change product</button>
       <div class="config-title">Real Wood Blinds</div>
-      <span class="badge badge-quote">Custom quote</span>
+      <button onclick="switchBlindsType('fwb')" style="background:var(--espresso);color:var(--gold);border:none;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap">Switch to Faux Wood &#8594;</button>
     </div>
     <div style="background:var(--gold-mid);border:1px solid #E8DCC8;border-radius:10px;padding:12px 16px;margin-bottom:18px;font-size:12px;color:#0D4A42;line-height:1.6">
       <strong>Real Wood Blinds</strong> — genuine hardwood in rich stained and painted finishes. Beautiful natural grain, ideal for living rooms, offices, and traditional interiors.
@@ -3977,10 +3977,57 @@ function selectBlindsType() {
 function selectBlindsSubtype(type) {
   document.getElementById('blinds-type-config').classList.remove('open');
   if (type === 'fwb') {
-    window.location.href = 'faux-wood-blinds.html';
+    document.getElementById('fwb-config').classList.add('open');
+    document.getElementById('rwb-config').classList.remove('open');
+    resetBlindsConfig('fwb');
   } else {
     document.getElementById('rwb-config').classList.add('open');
+    document.getElementById('fwb-config').classList.remove('open');
+    resetBlindsConfig('rwb');
   }
+  // Scroll to top of configurator section
+  setTimeout(function() {
+    var el = document.getElementById('configurator-section');
+    if (el) { var nav = document.getElementById('site-nav'); el.scrollIntoView({ behavior:'smooth', block:'start' }); }
+  }, 60);
+}
+function switchBlindsType(type) {
+  document.getElementById(type === 'fwb' ? 'rwb-config' : 'fwb-config').classList.remove('open');
+  document.getElementById(type + '-config').classList.add('open');
+  resetBlindsConfig(type);
+  setTimeout(function() {
+    var el = document.getElementById(type + '-config');
+    if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+  }, 60);
+}
+function resetBlindsConfig(type) {
+  var pfx = type + '-';
+  // Reset all opt-btn selections to their default (first button = sel)
+  ['grp-slat','grp-color','grp-finish','grp-op','grp-mount'].forEach(function(grp) {
+    var el = document.getElementById(pfx + grp);
+    if (!el) return;
+    var btns = el.querySelectorAll('.opt-btn');
+    btns.forEach(function(b, i) { b.classList.toggle('sel', i === 0); });
+  });
+  // Clear form fields
+  ['name','phone','email','notes','width','height'].forEach(function(f) {
+    var el = document.getElementById(pfx + f);
+    if (el) el.value = '';
+  });
+  var qty = document.getElementById(pfx + 'qty'); if (qty) qty.value = 1;
+  // Reset delivery to ship
+  var delGrp = document.getElementById('grp-del-' + type);
+  if (delGrp) {
+    var dbtns = delGrp.querySelectorAll('.opt-btn');
+    dbtns.forEach(function(b,i){ b.classList.toggle('sel', i===0); });
+  }
+  var ds = document.getElementById('del-' + type + '-s');
+  var dp = document.getElementById('del-' + type + '-p');
+  if (ds) ds.style.display = 'block';
+  if (dp) dp.style.display = 'none';
+  // Hide success
+  var succ = document.getElementById(type + '-success');
+  if (succ) succ.style.display = 'none';
 }
 function showBlindsTypeSelector() {
   document.getElementById('fwb-config').classList.remove('open');
