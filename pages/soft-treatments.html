@@ -1506,6 +1506,26 @@ function calcRoman() {
     box.appendChild(fabNote);
   }
   fabNote.textContent = '🧵 Est. fabric needed: ~' + fabricYds.toFixed(2) + ' yards' + (cutsPerShade > 1 ? ' ('+cutsPerShade+' widths)' : '') + ' — pattern repeats will add more. Confirmed at order.';
+
+  // Line-by-line estimate panel
+  var rnLines = [
+    { label: 'Product',        value: (romanState.style || 'Roman Shade') },
+    { label: 'Size',           value: w + '″ W × ' + h + '″ finished length' },
+    { label: 'Quantity',       value: qty + ' shade(s)' },
+    { label: 'Fabric',         value: (romanState.fabric || '—') },
+    { label: 'Lining',         value: (getOpt('grp-roman-lining') || '—') },
+    { label: 'Operation',      value: (getOpt('grp-roman-op') || '—') },
+    { label: 'Mounting',       value: (getOpt('grp-roman-mount-style') || '—') }
+  ];
+  if (trimTotal) rnLines.push({ label: 'Trim', value: '$' + trimTotal.toFixed(0) });
+  pbRenderEstimate('roman-pricebox', rnLines, grandTotal, '', function(checkout) {
+    pbCollectItem(romanState.style || 'Roman Shade', rnLines, grandTotal, getOpt('grp-roman-op')==='Motorized');
+    pbOpenCart();
+    if (checkout) setTimeout(function(){
+      var f=document.getElementById('pb-cart-foot'); if(f) f.style.display='block';
+      var q=document.getElementById('pb-cart-quote-form'); if(q) q.classList.add('open');
+    }, 150);
+  });
 }
 
 // ── DRAPERY PRICING CALCULATOR ───────────────────────────────
@@ -1677,6 +1697,33 @@ function calcDrapePrice() {
     (fabricCost ? '' : ' · Fabric & lining not included') +
     ' · 2-width minimum · Final price confirmed at order.';
   box.style.display = 'block';
+
+  // Shipping: drapes/romans $50 min; over 80" width = likely oversized
+  var dW = parseFloat(document.getElementById('d-exact-width').value) || 0;
+  var dShipMin = 50;
+  var dShipNote = dW > 80 ? 'Oversized (over 80") — heavy freight applies' : '$50 minimum (fabric shipments)';
+  dShipEst = Math.max(dShipMin, dShipEst);
+
+  // Line-by-line estimate panel
+  var drapeLines = [
+    { label: 'Product',     value: (drapeState.pleat || 'Custom Drapery') },
+    { label: 'Fabric',      value: (drapeState.fabric || '—') },
+    { label: 'Lining',      value: (lining || '—') },
+    { label: 'Widths',      value: numWidths + ' widths × $' + effectiveRate },
+    { label: 'Panels',      value: (panels || '—') + (panelSide !== '—' ? ' — ' + panelSide : '') }
+  ];
+  if (returnSz) drapeLines.push({ label: 'Return / Overlap', value: returnSz + '" / ' + overlapSz + '"' });
+  if (fabricCost) drapeLines.push({ label: 'Fabric est.', value: '~' + yardsTotal + ' yds × $25' });
+  if (liningCost) drapeLines.push({ label: 'Liner est.', value: '~' + yardsTotal + ' yds × $7' });
+  if (dShipEst) drapeLines.push({ label: 'Shipping est.', value: '~$' + dShipEst + ' (' + dShipNote + ')' });
+  pbRenderEstimate('drape-price-box', drapeLines, grandTotal, '', function(checkout) {
+    pbCollectItem(drapeState.pleat || 'Custom Drapery', drapeLines, grandTotal, false);
+    pbOpenCart();
+    if (checkout) setTimeout(function(){
+      var f=document.getElementById('pb-cart-foot'); if(f) f.style.display='block';
+      var q=document.getElementById('pb-cart-quote-form'); if(q) q.classList.add('open');
+    }, 150);
+  });
 }
 
 function drapeToggleAddon(type, show) {

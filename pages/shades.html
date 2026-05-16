@@ -3943,6 +3943,30 @@ function pbCalcPrice() {
     'Retail prices — installation quoted separately. Final confirmed at order.';
   document.getElementById('pb-price-note').textContent = note;
   box.style.display='block';
+
+  // Line-by-line estimate panel
+  var gPBs = function(id){ var b=document.querySelector('#'+id+' .pmm-opt.sel'); return b?b.textContent.trim():''; };
+  var selLines = [
+    { label:'Product',     value:'Custom Roller Shade' },
+    { label:'Fabric type', value: fabType },
+    { label:'Size',        value: w+'″ W × '+h+'″ H → '+result.rw+'″ × '+result.rh+'"' },
+    { label:'Operation',   value: gPB('pb-grp-operation') || '—' },
+    { label:'Fascia',      value: gPB('pb-grp-fascia') || '—' },
+    { label:'End caps',    value: gPB('pb-grp-endcap') || '—' },
+    { label:'Mount',       value: gPB('pb-grp-mount') || '—' },
+    { label:'Quantity',    value: (parseInt(document.getElementById('pb-qty-inp').value)||1)+' shade(s)' },
+    { label:'Freight',     value: isOversized ? 'Oversized rate ($80 first + $50 ea.)' : 'Standard ($25 first + $11 ea.)' }
+  ];
+  pbRenderEstimate('pb-price-box', selLines, grandTotal, '', function(checkout) {
+    pbCollectItem('Custom Roller Shade', selLines, grandTotal, gPB('pb-grp-operation')==='Motorized');
+    pbOpenCart();
+    if (checkout) {
+      setTimeout(function(){
+        var f=document.getElementById('pb-cart-foot'); if(f) f.style.display='block';
+        var q=document.getElementById('pb-cart-quote-form'); if(q) q.classList.add('open');
+      }, 150);
+    }
+  });
 }
 
 const PB_FABRICS = {

@@ -547,6 +547,105 @@ function _initMotorModal() {
   document.body.appendChild(ov);
 }
 
+// ============================================================
+// ESTIMATE PANEL + CHECKOUT
+// ============================================================
+
+var PB_TARIFF_RATE = 0; // default 0 — set per product when tariffs apply
+
+/**
+ * Render a clean line-by-line estimate panel after a price box.
+ * Call this from each configurator's calc function.
+ *
+ * @param {string} priceBoxId   — the existing dark price box element ID
+ * @param {Array}  lines        — [{label, value}] list of selected options
+ * @param {number} subtotal     — calculated price before tariff
+ * @param {string} conflictMsg  — non-empty string = show error, block checkout
+ * @param {Function} onCheckout — called when user clicks Check Out Now (after validation)
+ */
+function pbRenderEstimate(priceBoxId, lines, subtotal, conflictMsg, onCheckout) {
+  var priceBox = document.getElementById(priceBoxId);
+  if (!priceBox) return;
+
+  var panelId = priceBoxId + '-checkout-panel';
+  var panel = document.getElementById(panelId);
+  if (!panel) {
+    panel = document.createElement('div');
+    panel.id = panelId;
+    panel.style.cssText = 'margin-top:12px;background:#fff;border:1px solid #e8e8e4;border-radius:12px;overflow:hidden';
+    priceBox.after(panel);
+  }
+
+  var tariffAmt = subtotal ? Math.round(subtotal * PB_TARIFF_RATE) : 0;
+  var total = subtotal ? subtotal + tariffAmt : 0;
+  var hasConflict = conflictMsg && conflictMsg.trim().length > 0;
+
+  // Build line-by-line HTML
+  var linesHtml = lines.map(function(l) {
+    return '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:6px 0;border-bottom:1px solid #f5f5f3">' +
+      '<span style="font-size:12px;color:#666;flex-shrink:0">' + l.label + '</span>' +
+      '<span style="font-size:12px;font-weight:500;color:#1a1a1a;text-align:right">' + l.value + '</span>' +
+      '</div>';
+  }).join('');
+
+  var tariffLine = PB_TARIFF_RATE > 0
+    ? '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f5f5f3"><span style="font-size:12px;color:#666">Tariff (' + Math.round(PB_TARIFF_RATE*100) + '%)</span><span style="font-size:12px;font-weight:500;color:#b45309">+$' + tariffAmt.toFixed(0) + '</span></div>'
+    : '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f5f5f3"><span style="font-size:12px;color:#999">Tariff</span><span style="font-size:11px;color:#aaa">None on this product</span></div>';
+
+  var conflictHtml = hasConflict
+    ? '<div style="background:#FEE2E2;border-radius:8px;padding:10px 13px;margin-bottom:12px;font-size:12px;color:#991B1B;line-height:1.5">⚠ ' + conflictMsg + '</div>'
+    : '';
+
+  var totalColor = hasConflict ? '#aaa' : 'var(--espresso)';
+  var totalHtml = subtotal
+    ? '<div style="display:flex;justify-content:space-between;align-items:baseline;padding:10px 0 4px"><span style="font-size:13px;font-weight:600;color:#1a1a1a">Estimated total</span><span style="font-size:20px;font-weight:700;color:' + totalColor + '">$' + total.toFixed(0) + '</span></div>'
+    : '<div style="font-size:13px;color:#888;padding:8px 0">Enter dimensions above to see estimate.</div>';
+
+  panel.innerHTML =
+    '<div style="padding:16px 18px">' +
+      '<div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Your selection</div>' +
+      linesHtml +
+      (subtotal ? tariffLine : '') +
+      totalHtml +
+      '<div style="font-size:10px;color:#aaa;margin-bottom:14px">Estimate only — final price confirmed at order. Shipping calculated at checkout.</div>' +
+      conflictHtml +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' +
+        '<button onclick="pbEstimateAddCart(\'' + priceBoxId + '\')" style="padding:11px;border:1.5px solid #e8e8e4;border-radius:8px;background:#fff;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;color:#333">Add to Cart</button>' +
+        '<button onclick="pbEstimateCheckout(\'' + priceBoxId + '\')" ' +
+          (hasConflict ? 'disabled style="padding:11px;border-radius:8px;background:#e5e5e5;font-size:13px;font-weight:700;cursor:not-allowed;font-family:inherit;color:#aaa;border:none"' :
+                         'style="padding:11px;border-radius:8px;background:var(--espresso);color:var(--gold);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;border:none"') +
+          '>Check Out Now &#8594;</button>' +
+      '</div>' +
+    '</div>';
+
+  panel._pbOnCheckout = onCheckout || null;
+}
+
+function pbEstimateAddCart(priceBoxId) {
+  var panel = document.getElementById(priceBoxId + '-checkout-panel');
+  if (panel && panel._pbOnCheckout) panel._pbOnCheckout(false);
+  else pbOpenCart();
+}
+
+function pbEstimateCheckout(priceBoxId) {
+  var panel = document.getElementById(priceBoxId + '-checkout-panel');
+  if (panel && panel._pbOnCheckout) panel._pbOnCheckout(true);
+  else {
+    pbOpenCart();
+    setTimeout(function() {
+      var foot = document.getElementById('pb-cart-foot');
+      if (foot) foot.style.display = 'block';
+      var form = document.getElementById('pb-cart-quote-form');
+      if (form) form.classList.add('open');
+    }, 100);
+  }
+}
+
+function pbCollectItem(productName, lines, total, motorized) {
+  var specs = lines.map(function(l){ return l.label + ': ' + l.value; }).join(' | ');
+  pbAddToCartWithMotor({ product: productName, specs: specs, qty: 1 }, !!motorized);
+}
+
 // ---- INSTALLATION ADD-ON — auto-injects into every quote form ----
 function _initInstallationAddons() {
   document.querySelectorAll('.delivery-section').forEach(function(del) {
@@ -648,25 +747,29 @@ function _initFileUploads() {
 }
 
 // ---- SHIPPING ESTIMATOR ----
-function _calcShipping(zip) {
-  var p = parseInt(String(zip).replace(/\D/g,'').padStart(5,'0').substring(0,3));
+function _calcShipping(zip, opts) {
+  opts = opts || {};
+  var p = parseInt(String(zip).replace(/D/g,"").padStart(5,"0").substring(0,3));
   if (isNaN(p)) return null;
   var zone = 6;
-  if      ((p>=70&&p<=89)||(p>=190&&p<=199))                              zone=1; // PA, NJ, DE
-  else if ((p>=10&&p<=69)||(p>=200&&p<=269)||(p>=430&&p<=458)||(p>=400&&p<=427)) zone=2; // NY, NE, MD, VA, OH
-  else if ((p>=270&&p<=349)||(p>=460&&p<=499)||(p>=600&&p<=629))          zone=3; // SE, Midwest near
-  else if ((p>=350&&p<=399)||(p>=500&&p<=599)||(p>=630&&p<=679))          zone=4; // South, Midwest
-  else if ((p>=700&&p<=849))                                               zone=5; // TX, Mountain
-  // else zone = 6 — West Coast / HI / AK
-  var rates = {
-    1:{low:14,high:28,region:'PA / NJ / DE'},
-    2:{low:22,high:40,region:'NY / New England / MD / OH'},
-    3:{low:32,high:52,region:'Southeast / Midwest'},
-    4:{low:42,high:65,region:'South / Midwest'},
-    5:{low:55,high:80,region:'Mountain West / TX'},
-    6:{low:68,high:98,region:'West Coast / HI / AK'}
+  if      ((p>=70&&p<=89)||(p>=190&&p<=199))                              zone=1;
+  else if ((p>=10&&p<=69)||(p>=200&&p<=269)||(p>=430&&p<=458)||(p>=400&&p<=427)) zone=2;
+  else if ((p>=270&&p<=349)||(p>=460&&p<=499)||(p>=600&&p<=629))          zone=3;
+  else if ((p>=350&&p<=399)||(p>=500&&p<=599)||(p>=630&&p<=679))          zone=4;
+  else if ((p>=700&&p<=849))                                               zone=5;
+  var base = {
+    1:{low:14,high:28,region:"PA / NJ / DE"},
+    2:{low:22,high:40,region:"NY / NE / MD / OH"},
+    3:{low:32,high:52,region:"Southeast / Midwest"},
+    4:{low:42,high:65,region:"South / Midwest"},
+    5:{low:55,high:80,region:"Mountain West / TX"},
+    6:{low:68,high:98,region:"West Coast / HI / AK"}
   };
-  return rates[zone] || rates[6];
+  var r = Object.assign({}, base[zone] || base[6]);
+  if (opts.oversized) { r.low += 30; r.high += 55; r.region += " (oversized)"; }
+  if (opts.softGoods) { r.low = Math.max(50, r.low * 2); r.high = Math.max(50, r.high * 2); }
+  if (opts.minShip)   { r.low = Math.max(opts.minShip, r.low); r.high = Math.max(opts.minShip, r.high); }
+  return r;
 }
 
 function _initShippingEstimators() {
@@ -689,8 +792,17 @@ function _initShippingEstimators() {
     input.addEventListener('input', function() {
       var zip = this.value.replace(/\D/g,'');
       if (zip.length === 5) {
-        var est = _calcShipping(zip);
+        // Detect product type from nearest form context for correct shipping rules
+        var elId = el.id || '';
+        var isSoft = /drape|roman|val|corn|soft/.test(elId);
+        var parentText = (el.closest('form,div') || document.body).textContent || '';
+        var isOversized = false; // set by individual configurators via data attribute
+        var dataEl = el.closest('[data-ship-oversized]');
+        if (dataEl) isOversized = dataEl.getAttribute('data-ship-oversized') === 'true';
+        var est = _calcShipping(zip, { softGoods: isSoft, oversized: isOversized, minShip: isSoft ? 50 : 0 });
         if (est) result.innerHTML = '<strong style="color:#1C1510">~$'+est.low+' – $'+est.high+'</strong> <span style="font-size:11px;color:#888">('+est.region+')</span>';
+        // Note: pickup from SLC/Huntingdon Valley still incurs shipping charges
+        if (result.innerHTML) result.innerHTML += '<div style="font-size:10px;color:#999;margin-top:3px">Note: Pickup still incurs freight — product ships to you first.</div>';
       } else {
         result.textContent = '';
       }
