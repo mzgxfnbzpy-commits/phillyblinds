@@ -4674,7 +4674,7 @@ function rnBuildConfig() {
     motorType:          'Battery / Wired (TBD)',
     isDualShade:        rnSystemType === 'dual' || rnSystemType === 'dn',
     tensionDevice:      true,         // always required
-    cassetteColor:      null,         // placeholder until cassette color picker added
+    cassetteColor:      'Standard',   // defaults to standard — cassette color confirmed at order
     usesFabricDefaultColor: !isPremium,
     premiumFinish:      isPremium ? g('rn-grp-premium-finish') : null
   };
