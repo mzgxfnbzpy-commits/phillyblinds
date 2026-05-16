@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Configure Norman PerfectSheer™ and SmartDrape™ — professional specification tool. Custom quote generation. Serving Philadelphia area.">
-<meta property="og:title" content="Norman PerfectSheer™ &amp; SmartDrape™ Configurator | Philly Blinds">
+<meta name="description" content="Configure Norman SmartDrape™ — vertical sheer vane system. Wand tilt or motorized. Custom quote generation. Serving Philadelphia area.">
+<meta property="og:title" content="Norman SmartDrape™ Configurator | Philly Blinds">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://phillyblinds.com/pages/norman-sheers.html">
 <meta property="og:site_name" content="Philly Blinds">
-<title>Norman PerfectSheer™ &amp; SmartDrape™ | Philly Blinds</title>
+<title>Norman SmartDrape™ | Philly Blinds</title>
 <link rel="stylesheet" href="../css/global.css">
 <style>
 /* ── HERO ── */
@@ -140,14 +140,14 @@
 <nav class="site-nav" id="site-nav"></nav>
 
 <div class="page-hero">
-  <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <a href="shades.html">Shades</a> &rsaquo; Norman Sheers</div>
-  <h1>Norman PerfectSheer™ &amp; SmartDrape™</h1>
-  <p class="sub">Professional specification tool for Norman's premium sheer systems. Configure your product, validate compatibility, and generate a custom quote — all in one place.</p>
+  <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <a href="shades.html">Shades</a> &rsaquo; SmartDrape™</div>
+  <h1>Norman SmartDrape™</h1>
+  <p class="sub">Vertical sheer vane system — drapery-style elegance with the function of a shade. Wide-span capable, wand tilt or motorized. Configure and get a custom quote below.</p>
   <div class="hero-pills">
     <span class="hero-pill-gold hero-pill">Norman Authorized</span>
-    <span class="hero-pill">Custom quote only</span>
-    <span class="hero-pill">Live rules engine</span>
-    <span class="hero-pill">Spec-ready output</span>
+    <span class="hero-pill">Wand tilt or motorized</span>
+    <span class="hero-pill">Wide-span capable</span>
+    <span class="hero-pill">Custom quote</span>
   </div>
 </div>
 
@@ -156,28 +156,12 @@
   <!-- ══ LEFT COLUMN: CONFIGURATOR STEPS ══════════════════ -->
   <div id="configurator">
 
-    <!-- STEP 1: PRODUCT -->
-    <div class="step-block active open" id="step-1">
+    <!-- STEP 1: PRODUCT (SmartDrape only — PerfectSheer has its own configurator on shades.html) -->
+    <div class="step-block active open" id="step-1" style="display:none">
       <div class="step-head">
         <div class="step-num-circle">1</div>
-        <div class="step-head-title">Select product</div>
-        <div class="step-head-val" id="s1-val"></div>
-      </div>
-      <div class="step-body">
-        <div class="product-grid">
-          <div class="product-card-big" id="pc-ps" onclick="selectProduct('ps')">
-            <div class="icon">🪟</div>
-            <h3>PerfectSheer™</h3>
-            <p>Hybrid sheer shade — alternating sheer + fabric vanes. Open, closed, and privacy positions. Horizontal operation.</p>
-            <span class="product-badge">Cord loop or motorized</span>
-          </div>
-          <div class="product-card-big" id="pc-sd" onclick="selectProduct('sd')">
-            <div class="icon">🏛️</div>
-            <h3>SmartDrape™</h3>
-            <p>Vertical sheer vane system — drapery-style operation. Left/right/center stack configurations. Wide-span capable.</p>
-            <span class="product-badge">Wand tilt or motorized</span>
-          </div>
-        </div>
+        <div class="step-head-title">Product</div>
+        <div class="step-head-val" id="s1-val">SmartDrape™</div>
       </div>
     </div>
 
@@ -502,7 +486,7 @@
     <!-- Norman brand note -->
     <div style="background:var(--gold-mid);border:1px solid #e8e8e4;border-radius:12px;padding:16px;margin-top:14px">
       <div style="font-size:11px;font-weight:600;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-bottom:6px">Norman® Authorized</div>
-      <div style="font-size:12px;color:#555;line-height:1.6">PerfectSheer and SmartDrape are Norman® brand products. All motorization uses Norman's proprietary motor systems only.</div>
+      <div style="font-size:12px;color:#555;line-height:1.6">SmartDrape™ is a Norman® brand product. All motorization uses Norman's proprietary motor systems only. Looking for PerfectSheer™? <a href="shades.html#card-perfectsheer" style="color:var(--gold)">Configure it here →</a></div>
     </div>
   </div>
 
@@ -523,6 +507,8 @@
 <script src="../js/shared.js"></script>
 <script>
 renderNav('Shades & blinds'); renderFooter(false);
+// SmartDrape is the only product on this page — select it automatically
+selectProduct('sd');
 
 // ═══════════════════════════════════════════════════════
 // STATE
