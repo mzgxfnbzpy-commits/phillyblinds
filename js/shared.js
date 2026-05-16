@@ -601,24 +601,26 @@ function pbRenderEstimate(priceBoxId, lines, subtotal, conflictMsg, onCheckout) 
     ? '<div style="display:flex;justify-content:space-between;align-items:baseline;padding:10px 0 4px"><span style="font-size:13px;font-weight:600;color:#1a1a1a">Estimated total</span><span style="font-size:20px;font-weight:700;color:' + totalColor + '">$' + total.toFixed(0) + '</span></div>'
     : '<div style="font-size:13px;color:#888;padding:8px 0">Enter dimensions above to see estimate.</div>';
 
+  // Store order data on panel for checkout modal
+  panel._pbOrderData = { lines: lines, total: subtotal, product: lines.length ? lines[0].value : '' };
+  panel._pbOnCheckout = onCheckout || null;
+
   panel.innerHTML =
     '<div style="padding:16px 18px">' +
       '<div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Your selection</div>' +
       linesHtml +
       (subtotal ? tariffLine : '') +
       totalHtml +
-      '<div style="font-size:10px;color:#aaa;margin-bottom:14px">Estimate only — final price confirmed at order. Shipping calculated at checkout.</div>' +
+      '<div style="font-size:10px;color:#aaa;margin-bottom:6px">Estimate only. Shipping and final pricing confirmed at order review.</div>' +
       conflictHtml +
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' +
         '<button onclick="pbEstimateAddCart(\'' + priceBoxId + '\')" style="padding:11px;border:1.5px solid #e8e8e4;border-radius:8px;background:#fff;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;color:#333">Add to Cart</button>' +
-        '<button onclick="pbEstimateCheckout(\'' + priceBoxId + '\')" ' +
+        '<button onclick="pbEstimateCheckoutNew(\'' + priceBoxId + '\')" ' +
           (hasConflict ? 'disabled style="padding:11px;border-radius:8px;background:#e5e5e5;font-size:13px;font-weight:700;cursor:not-allowed;font-family:inherit;color:#aaa;border:none"' :
                          'style="padding:11px;border-radius:8px;background:var(--espresso);color:var(--gold);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;border:none"') +
           '>Check Out Now &#8594;</button>' +
       '</div>' +
     '</div>';
-
-  panel._pbOnCheckout = onCheckout || null;
 }
 
 function pbEstimateAddCart(priceBoxId) {
@@ -630,20 +632,156 @@ function pbEstimateAddCart(priceBoxId) {
 function pbEstimateCheckout(priceBoxId) {
   var panel = document.getElementById(priceBoxId + '-checkout-panel');
   if (panel && panel._pbOnCheckout) panel._pbOnCheckout(true);
-  else {
-    pbOpenCart();
-    setTimeout(function() {
-      var foot = document.getElementById('pb-cart-foot');
-      if (foot) foot.style.display = 'block';
-      var form = document.getElementById('pb-cart-quote-form');
-      if (form) form.classList.add('open');
-    }, 100);
+}
+function pbEstimateCheckoutNew(priceBoxId) {
+  var panel = document.getElementById(priceBoxId + '-checkout-panel');
+  if (!panel) return;
+  if (panel._pbOrderData) {
+    pbShowCheckout(panel._pbOrderData);
+  } else if (panel._pbOnCheckout) {
+    panel._pbOnCheckout(true);
   }
 }
 
 function pbCollectItem(productName, lines, total, motorized) {
   var specs = lines.map(function(l){ return l.label + ': ' + l.value; }).join(' | ');
   pbAddToCartWithMotor({ product: productName, specs: specs, qty: 1 }, !!motorized);
+}
+
+// ── FULL CHECKOUT MODAL ─────────────────────────────────────────
+// Flow: Options → estimate → "Check Out Now" → this modal (contact + billing last)
+var _pbCheckoutOrder = null;
+
+function pbInitCheckoutModal() {
+  if (document.getElementById('pb-checkout-overlay')) return;
+
+  var s = document.createElement('style');
+  s.textContent =
+    '.pb-co2{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:800;align-items:center;justify-content:center;padding:12px}' +
+    '.pb-co2.open{display:flex}' +
+    '.pb-checkout-modal{background:#fff;border-radius:16px;width:100%;max-width:560px;max-height:94vh;overflow-y:auto;display:flex;flex-direction:column}' +
+    '.pb-chk-head{background:var(--espresso);padding:20px 22px;border-radius:16px 16px 0 0;display:flex;align-items:center;justify-content:space-between}' +
+    '.pb-chk-title{font-size:16px;font-weight:700;color:var(--cream)}' +
+    '.pb-chk-close{background:none;border:none;color:var(--text-muted);font-size:22px;cursor:pointer;line-height:1;font-family:inherit}.pb-chk-close:hover{color:var(--cream)}' +
+    '.pb-chk-body{padding:20px 22px;flex:1}' +
+    '.pb-chk-section{margin-bottom:20px}' +
+    '.pb-chk-section-title{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}' +
+    '.pb-chk-line{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px solid #f0f0ec}' +
+    '.pb-chk-line:last-child{border-bottom:none}' +
+    '.pb-chk-label{color:#666}.pb-chk-value{font-weight:500;color:#1a1a1a;text-align:right;max-width:60%}' +
+    '.pb-chk-total{display:flex;justify-content:space-between;font-size:18px;font-weight:700;padding:12px 0;border-top:2px solid var(--espresso);margin-top:8px}' +
+    '.pb-chk-notice{background:#FBF7F0;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 13px;font-size:12px;color:#7A5A28;line-height:1.6;margin-bottom:16px}' +
+    '.pb-chk-field{margin-bottom:12px}' +
+    '.pb-chk-field label{font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px}' +
+    '.pb-chk-field input,.pb-chk-field select{width:100%;padding:10px 12px;border:1px solid #e8e8e4;border-radius:8px;font-size:14px;font-family:inherit;color:#1a1a1a}' +
+    '.pb-chk-field input:focus{border-color:var(--gold);outline:none}' +
+    '.pb-pay-notice{background:var(--espresso);border-radius:10px;padding:14px 16px;margin-bottom:16px}' +
+    '.pb-pay-notice-title{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}' +
+    '.pb-pay-notice-body{font-size:12px;color:var(--text-dark);line-height:1.6}' +
+    '.pb-chk-submit{width:100%;background:var(--espresso);color:var(--gold);border:none;border-radius:10px;padding:15px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.3px}' +
+    '.pb-chk-submit:hover{opacity:.9}' +
+    '.pb-chk-sent{display:none;text-align:center;padding:24px;background:#EAF3DE;border-radius:10px;margin-top:10px}';
+  document.head.appendChild(s);
+
+  var ov = document.createElement('div');
+  ov.id = 'pb-checkout-overlay';
+  ov.className = 'pb-co2';
+  ov.addEventListener('click', function(e){ if(e.target===ov) pbCloseCheckout(); });
+  ov.innerHTML =
+    '<div class="pb-checkout-modal">' +
+      '<div class="pb-chk-head">' +
+        '<div class="pb-chk-title">&#128274; Secure Checkout</div>' +
+        '<button class="pb-chk-close" onclick="pbCloseCheckout()">&#215;</button>' +
+      '</div>' +
+      '<div class="pb-chk-body">' +
+        // Order summary
+        '<div class="pb-chk-section">' +
+          '<div class="pb-chk-section-title">Order summary</div>' +
+          '<div id="pb-chk-lines"></div>' +
+          '<div class="pb-chk-total"><span>Estimated total</span><span id="pb-chk-total" style="color:var(--espresso)">—</span></div>' +
+        '</div>' +
+        // Shipping notice
+        '<div class="pb-chk-notice">' +
+          '&#128667; <strong>Shipping &amp; pricing subject to final confirmation.</strong> Freight charges may be adjusted based on actual package dimensions and weight. We will contact you before any changes are made.' +
+        '</div>' +
+        // Contact info
+        '<div class="pb-chk-section">' +
+          '<div class="pb-chk-section-title">Your information</div>' +
+          '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' +
+            '<div class="pb-chk-field"><label>First name *</label><input id="pb-chk-fname" type="text" placeholder="Jane"></div>' +
+            '<div class="pb-chk-field"><label>Last name *</label><input id="pb-chk-lname" type="text" placeholder="Smith"></div>' +
+          '</div>' +
+          '<div class="pb-chk-field"><label>Phone *</label><input id="pb-chk-phone" type="tel" placeholder="(215) 555-0100"></div>' +
+          '<div class="pb-chk-field"><label>Email *</label><input id="pb-chk-email" type="email" placeholder="jane@example.com"></div>' +
+          '<div class="pb-chk-field"><label>Shipping address *</label><input id="pb-chk-addr" type="text" placeholder="123 Main St, Philadelphia PA 19103"></div>' +
+          '<div class="pb-chk-field"><label>Notes / special instructions</label><input id="pb-chk-notes" type="text" placeholder="Room name, timeline, questions..."></div>' +
+        '</div>' +
+        // Payment notice
+        '<div class="pb-pay-notice">' +
+          '<div class="pb-pay-notice-title">&#128274; Payment authorization</div>' +
+          '<div class="pb-pay-notice-body">Your card will <strong style="color:var(--cream)">not be charged</strong> until we review and approve your order. A payment link will be sent to your email once we confirm availability, final pricing, and shipping. If anything changes, we contact you first — always.</div>' +
+        '</div>' +
+        '<button class="pb-chk-submit" onclick="pbSubmitCheckout()">Place Order Request &#8594;</button>' +
+        '<div class="pb-chk-sent" id="pb-chk-sent">' +
+          '<div style="font-size:24px;margin-bottom:10px">&#10003;</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#27500A;margin-bottom:8px">Order request received!</div>' +
+          '<div style="font-size:13px;color:#3B6D11;margin-bottom:14px">Justin will review your order, confirm final pricing and shipping, then send a secure payment link to your email. Expect to hear from us within a few hours.</div>' +
+          '<a href="tel:6097421720" style="display:inline-block;background:var(--espresso);color:var(--gold);font-size:14px;font-weight:700;padding:11px 22px;border-radius:8px;text-decoration:none">&#128222; (609) 742-1720</a>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(ov);
+}
+
+function pbShowCheckout(order) {
+  pbInitCheckoutModal();
+  _pbCheckoutOrder = order;
+  var linesHtml = (order.lines || []).map(function(l) {
+    return '<div class="pb-chk-line"><span class="pb-chk-label">' + l.label + '</span><span class="pb-chk-value">' + l.value + '</span></div>';
+  }).join('');
+  document.getElementById('pb-chk-lines').innerHTML = linesHtml;
+  document.getElementById('pb-chk-total').textContent = order.total ? '$' + Number(order.total).toFixed(0) + ' est.' : '—';
+  document.getElementById('pb-chk-sent').style.display = 'none';
+  document.querySelector('.pb-chk-submit').style.display = 'block';
+  document.getElementById('pb-checkout-overlay').classList.add('open');
+}
+
+function pbCloseCheckout() {
+  var ov = document.getElementById('pb-checkout-overlay');
+  if (ov) ov.classList.remove('open');
+}
+
+function pbSubmitCheckout() {
+  var fname = (document.getElementById('pb-chk-fname')||{}).value || '';
+  var lname = (document.getElementById('pb-chk-lname')||{}).value || '';
+  var phone = (document.getElementById('pb-chk-phone')||{}).value || '';
+  var email = (document.getElementById('pb-chk-email')||{}).value || '';
+  var addr  = (document.getElementById('pb-chk-addr') ||{}).value || '';
+  if (!fname.trim() || !phone.trim() || !email.trim() || !addr.trim()) {
+    alert('Please fill in your name, phone, email, and shipping address.');
+    return;
+  }
+  var order = _pbCheckoutOrder || {};
+  var lines = (order.lines || []).map(function(l){ return l.label + ': ' + l.value; }).join('\n');
+  var notes = (document.getElementById('pb-chk-notes')||{}).value || '';
+  var body = 'ORDER REQUEST\n' +
+    '===========================\n' +
+    'Name:    ' + fname + ' ' + lname + '\n' +
+    'Phone:   ' + phone + '\n' +
+    'Email:   ' + email + '\n' +
+    'Address: ' + addr + '\n\n' +
+    'PRODUCT:\n' + (order.product || '—') + '\n\n' +
+    'SELECTIONS:\n' + lines + '\n\n' +
+    'Estimated total: $' + (order.total ? Number(order.total).toFixed(0) : '—') + '\n\n' +
+    'Notes: ' + (notes || 'None') + '\n\n' +
+    'NOTE: Card NOT yet charged — awaiting order review and approval.';
+  window.location.href = 'mailto:justin@phillyblinds.com' +
+    '?subject=' + encodeURIComponent('Order Request — ' + fname + ' ' + lname) +
+    '&body=' + encodeURIComponent(body);
+  document.querySelector('.pb-chk-submit').style.display = 'none';
+  document.getElementById('pb-chk-sent').style.display = 'block';
+  // Also add to cart for tracking
+  pbAddToCart({ product: order.product || 'Order', specs: lines, qty: 1, cartId: Date.now()+'-order' });
 }
 
 // ---- INSTALLATION ADD-ON — auto-injects into every quote form ----
