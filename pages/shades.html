@@ -2287,7 +2287,7 @@ window.addEventListener("load", function() {
   if (!product) return;
   var map = {
     "roller":     ["roller",    "Roller Shades",               true],
-    "cellular":   ["cellular",  "Cellular / Honeycomb Shades", true],
+    "cellular":   ["cellular",  "Cellular / Honeycomb Shades", true, "norman"],
     "fwb":        ["fwb",       "Wood Blinds",                 false],
     "exterior":   ["exterior",  "Exterior Roller Shades",      false],
     "pb":         ["roller",    "Custom Roller Shades",        true, "pb"]
@@ -2297,7 +2297,7 @@ window.addEventListener("load", function() {
   setTimeout(function() {
     selectProduct(args[0], args[1], args[2]);
     var autoBrand = brand || args[3];
-    if (autoBrand) setTimeout(function(){ if(typeof selectBrand==="function") selectBrand(autoBrand); }, 400);
+    if (autoBrand) setTimeout(function(){ if(typeof selectBrand==="function") selectBrand(autoBrand); }, 150);
   }, 300);
 });
 _initMeasureHelp(`
