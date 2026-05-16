@@ -56,6 +56,10 @@
 .config-back{font-size:12px;color:var(--gold);cursor:pointer;text-decoration:none;border:none;background:none;font-family:var(--font);padding:0}
 .config-back:hover{text-decoration:underline}
 .step-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:8px}
+/* ── Numbered step bubble ── */
+.step-hd{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.step-hd .step-title{margin-bottom:0}
+.step-num-circle{width:28px;height:28px;border-radius:50%;background:var(--espresso);color:var(--gold);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--font);letter-spacing:0;text-transform:none}
 .step-block{margin-bottom:22px}
 .step-title{font-size:13px;font-weight:500;color:#111;margin-bottom:10px}
 .tooltip-note{font-size:11px;color:#888;margin-top:4px;line-height:1.5}
@@ -509,8 +513,7 @@
 
     <!-- ── BRAND / COMPANY CHOOSER ────────────────────────────── -->
     <div class="step-block" id="brand-chooser">
-      <div class="step-label">First — choose manufacturer</div>
-      <div class="step-title">Who is making your shade?</div>
+      <div class="step-hd"><div class="step-num-circle">1</div><div class="step-title">Who is making your shade?</div></div>
       <div class="brand-row" id="grp-brand">
         <button class="brand-btn" id="btn-brand-norman" onclick="selectBrand('norman')">
           <span class="brand-btn-name">Norman</span>
@@ -531,8 +534,7 @@
 
     <!-- Step A: Measure path -->
     <div class="step-block">
-      <div class="step-label">Step 1</div>
-      <div class="step-title">Do you have your measurements?</div>
+      <div class="step-hd"><div class="step-num-circle">1</div><div class="step-title">Do you have your measurements?</div></div>
       <div class="opt-row" id="grp-measure">
         <button class="opt-btn" onclick="selOpt(this,'grp-measure');toggleMeasure('help')">Help me measure</button>
         <button class="opt-btn sel" onclick="selOpt(this,'grp-measure');toggleMeasure('have')">I have my measurements</button>
@@ -546,8 +548,7 @@
 
           <!-- Step 1: Shade Configuration / System Type -->
           <div class="step-block">
-            <div class="step-label">Step 1</div>
-            <div class="step-title">Shade configuration</div>
+            <div class="step-hd"><div class="step-num-circle">1</div><div class="step-title">Shade configuration</div></div>
             <div class="opt-row" id="rn-grp-system">
               <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-system');rnSetSystem('standard')">Standard Roller</button>
               <button class="opt-btn" onclick="selOpt(this,'rn-grp-system');rnSetSystem('dual')">Dual Shade</button>
@@ -561,8 +562,7 @@
 
           <!-- Step 2: Fabric Type — visual cards with descriptions -->
           <div class="step-block">
-            <div class="step-label">Step 2</div>
-            <div class="step-title">Fabric type</div>
+            <div class="step-hd"><div class="step-num-circle">2</div><div class="step-title">Fabric type</div></div>
             <div class="rn-fabric-cards" id="rn-grp-fabric">
               <button class="rn-fabric-card" onclick="selRnFabric(this,'sheer')">
                 <div class="rn-fc-name">Sheer</div>
@@ -606,8 +606,7 @@
 
           <!-- Step 3: Shade Size + auto fabric width compatibility -->
           <div class="step-block">
-            <div class="step-label">Step 3</div>
-            <div class="step-title">Window measurements</div>
+            <div class="step-hd"><div class="step-num-circle">3</div><div class="step-title">Window measurements</div></div>
             <div class="dim-box">
               <div class="dim-box-label">Enter your window size</div>
               <div class="form-row">
@@ -640,16 +639,14 @@
 
           <!-- Step 3a: Single-shade fabric collection & color (hidden when dual/D&N active) -->
           <div class="step-block" id="rn-single-fabric-block">
-            <div class="step-label">Step 3a</div>
-            <div class="step-title">Fabric collection &amp; color</div>
+            <div class="step-hd"><div class="step-num-circle">3a</div><div class="step-title">Fabric collection &amp; color</div></div>
             <div id="rn-fabric-inline-summary" style="font-size:11px;color:#888;margin-bottom:8px;line-height:1.5"></div>
             <div id="rn-fabric-inline-grid"></div>
           </div>
 
           <!-- Step 3b: Dual / Day & Night fabric (shown when dual or D&N system selected) -->
           <div class="step-block" id="rn-dual-fabric" style="display:none">
-            <div class="step-label">Step 3b</div>
-            <div class="step-title">Dual roll fabrics</div>
+            <div class="step-hd"><div class="step-num-circle">3b</div><div class="step-title">Dual roll fabrics</div></div>
 
             <!-- Blackout position -->
             <div style="margin-bottom:16px">
@@ -682,8 +679,7 @@
 
           <!-- Step 4: Lift System -->
           <div class="step-block">
-            <div class="step-label">Step 4</div>
-            <div class="step-title">Lift system</div>
+            <div class="step-hd"><div class="step-num-circle">4</div><div class="step-title">Lift system</div></div>
             <div class="opt-row" id="rn-grp-lift">
               <button class="opt-btn" onclick="selOpt(this,'rn-grp-lift');rnSetLift('cordless')">PrecisionLift™ Cordless</button>
               <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-lift');rnSetLift('cord')">Continuous Cord Loop</button>
@@ -698,8 +694,7 @@
 
           <!-- Step 5: Mount Type -->
           <div class="step-block">
-            <div class="step-label">Step 5</div>
-            <div class="step-title">Mount type</div>
+            <div class="step-hd"><div class="step-num-circle">5</div><div class="step-title">Mount type</div></div>
             <div class="opt-row" id="rn-grp-mount">
               <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-mount')">Inside mount</button>
               <button class="opt-btn" onclick="selOpt(this,'rn-grp-mount')">Outside mount</button>
@@ -710,8 +705,7 @@
 
           <!-- Step 6: Headrail & Top Treatment — corrected structure -->
           <div class="step-block">
-            <div class="step-label">Step 6</div>
-            <div class="step-title">Headrail &amp; top treatment</div>
+            <div class="step-hd"><div class="step-num-circle">6</div><div class="step-title">Headrail &amp; top treatment</div></div>
 
             <!-- Primary: headrail type -->
             <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:7px">Headrail type</div>
@@ -767,8 +761,7 @@
 
           <!-- Step 7: Hardware Colors — Premium (Open Roll) or Standard (Fascia/Cassette) -->
           <div class="step-block">
-            <div class="step-label">Step 7</div>
-            <div class="step-title">Hardware colors</div>
+            <div class="step-hd"><div class="step-num-circle">7</div><div class="step-title">Hardware colors</div></div>
 
             <!-- ── PREMIUM HARDWARE (Open Roll only) ────────────── -->
             <div id="rn-premium-hw">
@@ -905,8 +898,7 @@
 
           <!-- Step 8: Price + Compatibility + Submit -->
           <div class="step-block">
-            <div class="step-label">Step 8</div>
-            <div class="step-title">Estimated price</div>
+            <div class="step-hd"><div class="step-num-circle">8</div><div class="step-title">Estimated price</div></div>
             <div class="price-box" id="rn-price-box">
               <div class="price-box-head">Live estimate</div>
               <div class="price-line"><span>Product</span><span id="rn-pb-product">Norman Soluna Roller Shade</span></div>
@@ -962,8 +954,7 @@
 
         <!-- OPERATING SYSTEM (shown per product, drives size limits) -->
         <div class="step-block" id="op-system-block" style="display:none">
-          <div class="step-label">Step 2</div>
-          <div class="step-title">Operating system</div>
+          <div class="step-hd"><div class="step-num-circle">2</div><div class="step-title">Operating system</div></div>
 
           <!-- Roller -->
           <div id="op-roller" style="display:none">
@@ -1033,8 +1024,7 @@
 
         <!-- Step B: Dimensions -->
         <div class="step-block" style="margin-bottom:14px">
-          <div class="step-label">Step 2</div>
-          <div class="step-title">Window measurements</div>
+          <div class="step-hd"><div class="step-num-circle">2</div><div class="step-title">Window measurements</div></div>
           <div class="dim-box">
             <div class="dim-box-label">Enter your window size</div>
             <div class="form-row">
@@ -1067,8 +1057,7 @@
 
         <!-- Step C: Light / fabric options — per product -->
         <div class="step-block" id="step-light">
-          <div class="step-label">Step 3</div>
-          <div class="step-title" id="light-step-title">Light control</div>
+          <div class="step-hd"><div class="step-num-circle">3</div><div class="step-title" id="light-step-title">Light control</div></div>
 
           <!-- ROLLER: Sheer · LF · RD · LightGuard 360 · Solar -->
           <div id="light-roller" style="display:none">
@@ -1124,8 +1113,7 @@
 
         <!-- CELLULAR ONLY: cell size FIRST → then fabric + color -->
         <div class="step-block" id="cellular-opts" style="display:none">
-          <div class="step-label">Step 3b</div>
-          <div class="step-title">Cell size &amp; fabric</div>
+          <div class="step-hd"><div class="step-num-circle">3b</div><div class="step-title">Cell size &amp; fabric</div></div>
 
           <!-- ① Cell size — pick this first -->
           <div style="margin-bottom:16px">
@@ -1186,8 +1174,7 @@
 
         <!-- WOVEN WOOD ONLY: material preference -->
         <div class="step-block" id="woven-material-opts" style="display:none">
-          <div class="step-label">Step 3b</div>
-          <div class="step-title">Material preference</div>
+          <div class="step-hd"><div class="step-num-circle">3b</div><div class="step-title">Material preference</div></div>
           <div class="opt-row" id="grp-woven-material">
             <button class="opt-btn sel" onclick="selOpt(this,'grp-woven-material')">Bamboo</button>
             <button class="opt-btn" onclick="selOpt(this,'grp-woven-material')">Jute</button>
@@ -1200,8 +1187,7 @@
 
         <!-- ROLLER ONLY: hardware & finish -->
         <div class="step-block" id="roller-hardware-opts" style="display:none">
-          <div class="step-label">Step 3b</div>
-          <div class="step-title">Hardware &amp; finish</div>
+          <div class="step-hd"><div class="step-num-circle">3b</div><div class="step-title">Hardware &amp; finish</div></div>
 
           <div style="margin-bottom:16px">
             <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:8px">Fascia style</div>
@@ -1279,8 +1265,7 @@
 
         <!-- Step E: Price box -->
         <div class="step-block">
-          <div class="step-label">Step 5</div>
-          <div class="step-title">Estimated price</div>
+          <div class="step-hd"><div class="step-num-circle">5</div><div class="step-title">Estimated price</div></div>
           <div class="price-box" id="price-box">
             <div class="price-box-head">Live estimate</div>
             <div class="price-line"><span id="pb-product">—</span><span></span></div>
@@ -1742,8 +1727,7 @@
       <span class="badge badge-quote">Custom quote</span>
     </div>
     <div class="step-block">
-      <div class="step-label">Choose type</div>
-      <div class="step-title">Faux wood or real wood?</div>
+      <div class="step-hd"><div class="step-num-circle">1</div><div class="step-title">Faux wood or real wood?</div></div>
       <div class="brand-row" style="margin-top:12px">
         <button class="brand-btn" onclick="selectBlindsSubtype('fwb')" style="flex:1;min-width:0">
           <div class="product-img-photo" style="height:140px;border-radius:8px;overflow:hidden;margin-bottom:10px">
@@ -1921,7 +1905,7 @@
     <p style="font-size:13px;color:#555;margin-bottom:20px;line-height:1.6">Soft horizontal vanes that tilt open and closed like blinds while riding on sheer fabric — diffusing light beautifully. 100% polyester, 32 fabric colors in light filtering or room darkening.</p>
 
     <!-- STEP 1: DIMENSIONS -->
-    <div class="step-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Step 1 — Dimensions</div>
+    <div class="step-hd"><div class="step-num-circle">1</div><div class="step-title" style="margin-bottom:0">Dimensions</div></div>
     <div class="dim-box">
       <div class="dim-box-label">Enter your window size</div>
       <div class="form-row">
@@ -1940,7 +1924,7 @@
     <div class="tooltip-note" style="margin-top:-10px;margin-bottom:18px">Measure to the nearest &#188;&Prime;. For inside mount, give us the exact opening &mdash; we take the deduction.</div>
 
     <!-- STEP 2: MOUNT TYPE -->
-    <div class="step-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Step 2 — Mount type</div>
+    <div class="step-hd"><div class="step-num-circle">2</div><div class="step-title" style="margin-bottom:0">Mount type</div></div>
     <div class="opt-row" id="grp-ps-mount">
       <button class="opt-btn sel" onclick="selOpt(this,'grp-ps-mount');psCalc()">Inside mount</button>
       <button class="opt-btn" onclick="selOpt(this,'grp-ps-mount');psCalc()">Outside mount</button>
@@ -1948,7 +1932,7 @@
     </div>
 
     <!-- STEP 3: OPACITY -->
-    <div class="step-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Step 3 — Light control</div>
+    <div class="step-hd"><div class="step-num-circle">3</div><div class="step-title" style="margin-bottom:0">Light control</div></div>
     <div class="opt-row" id="grp-ps-opacity">
       <button class="opt-btn sel" onclick="selOpt(this,'grp-ps-opacity');psUpdateColors('lf');psCalc()">Light filtering &mdash; 22 colors</button>
       <button class="opt-btn" onclick="selOpt(this,'grp-ps-opacity');psUpdateColors('rd');psCalc()">Room darkening &mdash; 10 colors <span style="font-size:10px;opacity:.7">+20%</span></button>
@@ -1956,7 +1940,7 @@
     <div class="tooltip-note" style="margin-bottom:16px">Room darkening provides more privacy when closed but is not a true blackout.</div>
 
     <!-- STEP 4: FABRIC COLOR -->
-    <div class="step-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Step 4 — Fabric color</div>
+    <div class="step-hd"><div class="step-num-circle">4</div><div class="step-title" style="margin-bottom:0">Fabric color</div></div>
     <div class="form-group">
       <select id="ps-color" onchange="psCalc()" style="font-size:14px">
         <optgroup label="Light Filtering (22 colors)">
@@ -1999,7 +1983,7 @@
     </div>
 
     <!-- STEP 5: LIFT SYSTEM -->
-    <div class="step-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Step 5 — Operation</div>
+    <div class="step-hd"><div class="step-num-circle">5</div><div class="step-title" style="margin-bottom:0">Operation</div></div>
     <div class="opt-row" id="grp-ps-lift">
       <button class="opt-btn sel" onclick="selOpt(this,'grp-ps-lift');document.getElementById('ps-motor-note').style.display='none';psCalc()">Continuous cord loop</button>
       <button class="opt-btn" onclick="selOpt(this,'grp-ps-lift');document.getElementById('ps-motor-note').style.display='block';psCalc()">Norman motorization</button>
@@ -2007,7 +1991,7 @@
     <div id="ps-motor-note" class="tooltip-note" style="display:none;margin-bottom:8px">&#9889; Norman Smart Rechargeable Battery or AC Adapter Plug-in — motorization surcharge will be added to your quote. Minimum width varies by motor.</div>
 
     <!-- STEP 6: CORD SIDE -->
-    <div class="step-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Step 6 — Cord side</div>
+    <div class="step-hd"><div class="step-num-circle">6</div><div class="step-title" style="margin-bottom:0">Cord side</div></div>
     <div class="opt-row" id="grp-ps-cord">
       <button class="opt-btn sel" onclick="selOpt(this,'grp-ps-cord')">Right (default)</button>
       <button class="opt-btn" onclick="selOpt(this,'grp-ps-cord')">Left</button>
@@ -2015,7 +1999,7 @@
 
     <!-- CHAIN LENGTH (shown for CCL only) -->
     <div id="ps-chain-len-wrap" style="margin-top:10px">
-      <div class="step-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:6px">Chain length</div>
+      <div class="step-label">Chain length</div>
       <div class="opt-row" id="grp-ps-clen">
         <button class="opt-btn sel" onclick="selOpt(this,'grp-ps-clen');document.getElementById('ps-clen-custom').style.display='none'">Default</button>
         <button class="opt-btn" onclick="selOpt(this,'grp-ps-clen');document.getElementById('ps-clen-custom').style.display='flex'">Custom</button>
@@ -2029,7 +2013,7 @@
     </div>
 
     <!-- STEP 7: VALANCE -->
-    <div class="step-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Step 7 — Valance / headrail cover</div>
+    <div class="step-hd"><div class="step-num-circle">7</div><div class="step-title" style="margin-bottom:0">Valance / headrail cover</div></div>
     <div class="opt-row" id="grp-ps-valance">
       <button class="opt-btn sel" onclick="selOpt(this,'grp-ps-valance');psCalc()">Curved fascia (free)</button>
       <button class="opt-btn" onclick="selOpt(this,'grp-ps-valance');psCalc()">Fabric valance 3&#189;&Prime;</button>
@@ -2039,7 +2023,7 @@
     <div class="tooltip-note" style="margin-bottom:16px">Curved fascia with matching fabric is included at no charge. Fabric valance adds a flat front panel; wood valance is painted or stained hardwood.</div>
 
     <!-- STEP 8: ADD-ONS -->
-    <div class="step-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Step 8 — Accessories</div>
+    <div class="step-hd"><div class="step-num-circle">8</div><div class="step-title" style="margin-bottom:0">Accessories</div></div>
     <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px">
       <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer">
         <input type="checkbox" id="ps-lightguard-basic" onchange="document.getElementById('ps-lightguard-premium').checked=false;psCalc()" style="width:16px;height:16px">
@@ -2710,8 +2694,8 @@ function configureForProduct(productId) {
   });
   // Renumber: op-system is Step 2, dimensions becomes Step 3
   if (hasSystem) {
-    document.querySelector('#op-system-block .step-label').textContent = 'Step 2';
-    document.querySelector('#measure-inputs > .step-block:nth-child(2) .step-label').textContent = 'Step 3';
+    var el=document.querySelector('#op-system-block .step-num-circle'); if(el) el.textContent='2';
+    var el2=document.querySelector('#measure-inputs > .step-block:nth-child(2) .step-num-circle'); if(el2) el2.textContent='3';
   }
 
   // Show correct light control section
