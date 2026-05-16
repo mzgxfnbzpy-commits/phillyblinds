@@ -473,7 +473,7 @@
       <div class="spec-row"><span class="spec-key">Width × Height</span><span class="spec-val empty" id="sp-dims">—</span></div>
       <div class="spec-row"><span class="spec-key">Qty</span><span class="spec-val empty" id="sp-qty">—</span></div>
       <div class="spec-row"><span class="spec-key">Fabric</span><span class="spec-val empty" id="sp-fabric">—</span></div>
-      <div class="spec-row" id="sp-valance-row"><span class="spec-key">Valance</span><span class="spec-val empty" id="sp-valance">—</span></div>
+      <div class="spec-row" id="sp-valance-row" style="display:none"><span class="spec-key">Valance</span><span class="spec-val empty" id="sp-valance">—</span></div>
       <div class="spec-row"><span class="spec-key">Accessories</span><span class="spec-val empty" id="sp-acc">None</span></div>
       <div class="spec-divider"></div>
       <div class="spec-row"><span class="spec-key">Pricing</span><span class="spec-val" style="color:var(--gold)">Custom quote</span></div>
@@ -535,42 +535,8 @@ var S = {
 // ═══════════════════════════════════════════════════════
 // FABRIC DATA
 // ═══════════════════════════════════════════════════════
-var PS_LF_FABRICS = [
-  {code:'F1191',name:'Nightfall',color:'#1a1a2e'},
-  {code:'F1192',name:'Granite',color:'#808080'},
-  {code:'F1193',name:'Mineral',color:'#6b7280'},
-  {code:'F1178',name:'Snowflake',color:'#f0f0f0'},
-  {code:'F1179',name:'Lily Cream',color:'#f5f0e8'},
-  {code:'F1180',name:'Dunes',color:'#c4a882'},
-  {code:'F1181',name:'Smoke',color:'#9ca3af'},
-  {code:'F1182',name:'Midnight',color:'#0f172a'},
-  {code:'F1183',name:'Cottonwood',color:'#f0ebe0'},
-  {code:'F1184',name:'Cedar Cream',color:'#a0785a'},
-  {code:'F1185',name:'Quarry',color:'#5f6b6b'},
-  {code:'F1186',name:'Soft White',color:'#f5f2ec'},
-  {code:'F1187',name:'Cinnamon',color:'#8b4513'},
-  {code:'F1188',name:'Platinum',color:'#e5e4e2'},
-  {code:'F1189',name:'Magnetic Gray',color:'#4a4a4a'},
-  {code:'F1190',name:'Cast Iron',color:'#383838'},
-  {code:'F1194',name:'Frosty Asphalt',color:'#4b5563'},
-  {code:'F1195',name:'Frosty Gray',color:'#9ca3af'},
-  {code:'F1196',name:'Frosty White',color:'#e8ecf0'},
-  {code:'F1197',name:'Light Gray',color:'#d1d5db'},
-  {code:'F1363',name:'Ivory',color:'#fffff0'},
-  {code:'F1364',name:'Silver',color:'#c0c0c0'}
-];
-var PS_RD_FABRICS = [
-  {code:'F1200',name:'Moon',color:'#f8f5f0'},
-  {code:'F1201',name:'Silk',color:'#faf0e6'},
-  {code:'F1202',name:'Chai Latte',color:'#c4956a'},
-  {code:'F1203',name:'Sky',color:'#87ceeb'},
-  {code:'F1204',name:'Mars Black',color:'#c1440e'},
-  {code:'F1205',name:'Seaside',color:'#4a9ebe'},
-  {code:'F1206',name:'Palm',color:'#4a7c59'},
-  {code:'F1207',name:'Stone',color:'#8b8680'},
-  {code:'F1208',name:'Heather Gray',color:'#9f8fa4'},
-  {code:'F1209',name:'Ash Gray',color:'#b2bec3'}
-];
+// PerfectSheer fabric data removed — this page is SmartDrape only.
+// PerfectSheer is configured via shades.html.
 var SD_LF_COLLECTIONS = [
   {name:'Plain',desc:'Clean solid colors'},
   {name:'Net',desc:'Subtle net texture'},
@@ -605,8 +571,10 @@ function toggleStep(id) {
 function selectProduct(p) {
   S.product = p;
   S.stack = ''; S.valance = ''; S.fabric = ''; S.fabricCode = '';
-  document.getElementById('pc-ps').classList.toggle('sel', p === 'ps');
-  document.getElementById('pc-sd').classList.toggle('sel', p === 'sd');
+  var pcPs = document.getElementById('pc-ps');
+  var pcSd = document.getElementById('pc-sd');
+  if (pcPs) pcPs.classList.toggle('sel', p === 'ps');
+  if (pcSd) pcSd.classList.toggle('sel', p === 'sd');
   completeStep('step-1', p === 'ps' ? 'PerfectSheer™' : 'SmartDrape™');
   updateSpec('sp-product', p === 'ps' ? 'PerfectSheer™' : 'SmartDrape™');
 
@@ -639,49 +607,18 @@ function selectOpacity(o) {
 // ═══════════════════════════════════════════════════════
 function buildOperationStep(p) {
   var body = document.getElementById('s3-body');
-  if (p === 'ps') {
-    body.innerHTML = '<div class="opt-grid-2">' +
-      '<div class="opt-card" id="op-cord" onclick="selectOp(\'cord\')">' +
-        '<div class="opt-card-icon">🔄</div>' +
-        '<div class="opt-card-title">Continuous Cord Loop</div>' +
-        '<div class="opt-card-desc">Standard operation — left or right control. Auto cord length calculated.</div>' +
-      '</div>' +
-      '<div class="opt-card" id="op-motor" onclick="selectOp(\'motor\')">' +
-        '<div class="opt-card-icon">⚡</div>' +
-        '<div class="opt-card-title">Motorized</div>' +
-        '<div class="opt-card-desc">Norman Smart Rechargeable Battery or AC Plug-In. Remote / smart home compatible.</div>' +
-      '</div>' +
+  body.innerHTML = '<div class="opt-grid-2">' +
+    '<div class="opt-card" id="op-wand" onclick="selectOp(\'wand\')">' +
+      '<div class="opt-card-icon">🪄</div>' +
+      '<div class="opt-card-title">Wand Tilt</div>' +
+      '<div class="opt-card-desc">Manual wand control. Left, right, or traveling center stack.</div>' +
     '</div>' +
-    '<div id="cord-side-wrap" style="display:none;margin-top:14px">' +
-      '<div style="font-size:12px;font-weight:500;color:#444;margin-bottom:8px">Cord control side</div>' +
-      '<div class="opt-row" id="grp-cord-side">' +
-        '<button class="opt-btn sel" onclick="selOpt(this,\'grp-cord-side\')">Left</button>' +
-        '<button class="opt-btn" onclick="selOpt(this,\'grp-cord-side\')">Right</button>' +
-      '</div>' +
+    '<div class="opt-card" id="op-motor" onclick="selectOp(\'motor\')">' +
+      '<div class="opt-card-icon">⚡</div>' +
+      '<div class="opt-card-title">Motorized</div>' +
+      '<div class="opt-card-desc">Full range of stack configurations including center opening.</div>' +
     '</div>' +
-    '<div id="motor-opts-wrap" style="display:none;margin-top:14px">' +
-      '<div style="font-size:12px;font-weight:500;color:#444;margin-bottom:8px">Motor type</div>' +
-      '<div class="opt-row" id="grp-motor-type" style="flex-wrap:wrap">' +
-        '<button class="opt-btn sel" onclick="selOpt(this,\'grp-motor-type\')">Smart Rechargeable Battery</button>' +
-        '<button class="opt-btn" onclick="selOpt(this,\'grp-motor-type\')">AC Adapter Plug-In</button>' +
-        '<button class="opt-btn" onclick="selOpt(this,\'grp-motor-type\')">Other Norman System</button>' +
-      '</div>' +
-      '<div class="info-box" style="margin-top:8px">⚠️ Motorization availability depends on final dimensions. Confirmed at quote stage.</div>' +
-    '</div>';
-  } else {
-    body.innerHTML = '<div class="opt-grid-2">' +
-      '<div class="opt-card" id="op-wand" onclick="selectOp(\'wand\')">' +
-        '<div class="opt-card-icon">🪄</div>' +
-        '<div class="opt-card-title">Wand Tilt</div>' +
-        '<div class="opt-card-desc">Manual wand control. Left, right, or traveling center stack.</div>' +
-      '</div>' +
-      '<div class="opt-card" id="op-motor" onclick="selectOp(\'motor\')">' +
-        '<div class="opt-card-icon">⚡</div>' +
-        '<div class="opt-card-title">Motorized</div>' +
-        '<div class="opt-card-desc">Full range of stack configurations including center opening.</div>' +
-      '</div>' +
-    '</div>';
-  }
+  '</div>';
 }
 
 function selectOp(op) {
@@ -903,36 +840,20 @@ function checkValanceSplice(w) {
 // ═══════════════════════════════════════════════════════
 function buildFabricStep() {
   var body = document.getElementById('s7-body');
-  if (S.product === 'ps') {
-    var fabrics = S.opacity === 'lf' ? PS_LF_FABRICS : PS_RD_FABRICS;
-    body.innerHTML = '<div style="font-size:12px;color:#666;margin-bottom:4px">Click a swatch to select</div>' +
-      '<div class="fabric-grid">' +
-      fabrics.map(function(f){
-        var isDark = isDarkColor(f.color);
-        return '<div class="swatch" id="sw-' + f.code + '" onclick="selectFabric(\'' + f.code + '\',\'' + f.name + '\')">' +
-          '<div class="swatch-color" style="background:' + f.color + ';border-bottom:1px solid #e8e8e4">' +
-          (isDark ? '<div style="padding:4px 6px;font-size:9px;color:rgba(255,255,255,0.4)">' + f.code + '</div>' : '') + '</div>' +
-          '<div class="swatch-label"><div class="swatch-name">' + f.name + '</div>' +
-          (!isDark ? '<div class="swatch-code">' + f.code + '</div>' : '') + '</div>' +
-        '</div>';
-      }).join('') + '</div>';
+  var heading = S.opacity === 'lf' ? 'Light Filtering Collections' : 'Room Darkening';
+  body.innerHTML = '<div style="font-size:12px;color:#666;margin-bottom:8px">' + heading + '</div>';
+  if (S.opacity === 'rd') {
+    body.innerHTML += '<div class="info-box">Room Darkening is available for SmartDrape with a 20% surcharge. Fabric selections confirmed at quote stage.</div>' +
+      '<div class="opt-row" style="margin-top:12px"><button class="opt-btn sel" onclick="selectFabric(\'rd-surcharge\',\'Room Darkening\')">Room Darkening (+ 20% surcharge)</button></div>';
   } else {
-    // SmartDrape — show collections
-    var heading = S.opacity === 'lf' ? 'Light Filtering Collections' : 'Room Darkening';
-    body.innerHTML = '<div style="font-size:12px;color:#666;margin-bottom:8px">' + heading + '</div>';
-    if (S.opacity === 'rd') {
-      body.innerHTML += '<div class="info-box">Room Darkening is available for SmartDrape with a surcharge. Fabric selections confirmed at quote stage.</div>' +
-        '<div class="opt-row" style="margin-top:12px"><button class="opt-btn sel" onclick="selectFabric(\'rd-surcharge\',\'Room Darkening\')">Room Darkening (+ surcharge)</button></div>';
-    } else {
-      body.innerHTML += '<div class="collection-grid">' +
-        SD_LF_COLLECTIONS.map(function(c){
-          return '<div class="collection-card" id="coll-' + c.name.replace(/\s+/g,'-').toLowerCase() + '" onclick="selectFabric(\'' + c.name + '\',\'' + c.name + '\')">' +
-            '<div class="coll-name">' + c.name + '</div>' +
-            '<div class="coll-desc">' + c.desc + '</div>' +
-          '</div>';
-        }).join('') + '</div>' +
-        '<div class="info-box" style="margin-top:12px">Individual color selections within each collection are confirmed during the quote process. We\'ll send you swatches if needed.</div>';
-    }
+    body.innerHTML += '<div class="collection-grid">' +
+      SD_LF_COLLECTIONS.map(function(c){
+        return '<div class="collection-card" id="coll-' + c.name.replace(/\s+/g,'-').toLowerCase() + '" onclick="selectFabric(\'' + c.name + '\',\'' + c.name + '\')">' +
+          '<div class="coll-name">' + c.name + '</div>' +
+          '<div class="coll-desc">' + c.desc + '</div>' +
+        '</div>';
+      }).join('') + '</div>' +
+      '<div class="info-box" style="margin-top:12px">Individual color selections confirmed during the quote process. We\'ll send swatches if needed.</div>';
   }
 }
 
@@ -950,7 +871,7 @@ function selectFabric(code, name) {
   completeStep('step-7', name + (code && code.startsWith('F') ? ' (' + code + ')' : ''));
   updateSpec('sp-fabric', name + (code && code.startsWith('F') ? ' · ' + code : ''));
   buildAccessoryStep();
-  activateStep(S.product === 'ps' ? 'step-8' : 'step-9');
+  activateStep('step-9');
 }
 
 // ═══════════════════════════════════════════════════════
@@ -976,22 +897,15 @@ function selectValance(v) {
 // ═══════════════════════════════════════════════════════
 function buildAccessoryStep() {
   var body = document.getElementById('s9-body');
-  var items = [];
-  if (S.product === 'ps') {
-    items.push({id:'acc-lightguard-basic',   label:'Basic Light Guard',        sub:'Side channels in 6 colors: White, Cottage White, Sahara, Chocolate, Silver, Black Ink.'});
-    items.push({id:'acc-lightguard-wood',    label:'Premium Wood Light Guard', sub:'Wood side channels. Colors: Stone Gray, Clay, Limed White, Dark Teak, Weathered Teak, Wenge, Matte Black.'});
-    if (S.isDoor) {
-      items.push({id:'acc-holddowns',        label:'Magnetic Hold-Downs ✓',    sub:'Required for door applications — automatically included.', required:true});
-    } else {
-      items.push({id:'acc-holddowns',        label:'Magnetic Hold-Downs',      sub:'Optional for non-door applications.'});
-    }
-    items.push({id:'acc-shims',             label:'Shims',                     sub:'Aluminum shims for bracket leveling. Max 3 per bracket. Qty calculated at install.'});
-  } else {
-    items.push({id:'acc-keystones',         label:'Keystones',                 sub:'Decorative track splice covers. Optional for SmartJoint connections.'});
-    items.push({id:'acc-extra-wand',        label:'Additional Wand',           sub:'Extra operation wand — surcharge applies.'});
-    items.push({id:'acc-alt-colors',        label:'Alternating Colors',        sub:'Two-color alternating vane pattern — surcharge applies.'});
-    items.push({id:'acc-shims',             label:'Aluminum Shims',            sub:'For bracket leveling — surcharge applies.'});
-    items.push({id:'acc-long-brackets',     label:'Long L Brackets',           sub:'Extended reach brackets — surcharge applies.'});
+  var items = [
+    {id:'acc-keystones',     label:'Keystones',          sub:'Decorative track splice covers. Optional for SmartJoint connections. $73 each.'},
+    {id:'acc-extra-wand',    label:'Additional Wand',    sub:'Extra operation wand for Traveling Center Stack. $89 surcharge.'},
+    {id:'acc-alt-colors',    label:'Alternating Colors', sub:'Two-color alternating vane pattern. 10% surcharge applies.'},
+    {id:'acc-shims',         label:'Aluminum Shims',     sub:'For bracket projection off wall. $28 each — one per L bracket.'},
+    {id:'acc-long-brackets', label:'Long L Brackets',    sub:'Extended reach when additional clearance is needed. $61/shade surcharge.'}
+  ];
+  if (S.isDoor) {
+    items.unshift({id:'acc-holddowns', label:'Magnetic Hold-Downs ✓', sub:'Required for door applications — automatically included.', required:true});
   }
   body.innerHTML = items.map(function(item){
     var disabled = item.required ? 'disabled checked' : '';
@@ -1000,23 +914,6 @@ function buildAccessoryStep() {
       '<div><div class="acc-label">' + item.label + '</div><div class="acc-sub">' + item.sub + '</div></div>' +
     '</div>';
   }).join('');
-
-  // Light guard color selectors (hidden by default)
-  body.innerHTML += '<div id="lg-basic-colors" style="display:none;margin-top:8px;padding-left:28px">' +
-    '<div style="font-size:12px;color:#444;margin-bottom:6px">Basic Light Guard color</div>' +
-    '<div class="opt-row" id="grp-lg-basic" style="flex-wrap:wrap">' +
-    ['White','Cottage White','Sahara','Chocolate','Silver','Black Ink'].map(function(c){ return '<button class="opt-btn" onclick="selOpt(this,\'grp-lg-basic\')">' + c + '</button>'; }).join('') +
-    '</div></div>' +
-    '<div id="lg-wood-colors" style="display:none;margin-top:8px;padding-left:28px">' +
-    '<div style="font-size:12px;color:#444;margin-bottom:6px">Wood Light Guard finish</div>' +
-    '<div class="opt-row" id="grp-lg-wood" style="flex-wrap:wrap">' +
-    ['Stone Gray','Clay','Limed White','Dark Teak','Weathered Teak','Wenge','Matte Black'].map(function(c){ return '<button class="opt-btn" onclick="selOpt(this,\'grp-lg-wood\')">' + c + '</button>'; }).join('') +
-    '</div></div>';
-
-  var lgBasic = document.getElementById('acc-lightguard-basic');
-  var lgWood  = document.getElementById('acc-lightguard-wood');
-  if (lgBasic) lgBasic.addEventListener('change', function(){ document.getElementById('lg-basic-colors').style.display = this.checked ? 'block' : 'none'; updateAccState(); });
-  if (lgWood)  lgWood.addEventListener('change',  function(){ document.getElementById('lg-wood-colors').style.display  = this.checked ? 'block' : 'none'; updateAccState(); });
 }
 
 function updateAccState() {
@@ -1095,7 +992,7 @@ function submitQuote() {
     + '── NOTES ──\n'
     + (document.getElementById('q-notes').value.trim() || 'None');
 
-  window.location.href = 'mailto:justin@phillyblinds.com'
+  window.location.href = 'mailto:blindznation@gmail.com'
     + '?subject=' + encodeURIComponent('Norman ' + (S.product === 'ps' ? 'PerfectSheer™' : 'SmartDrape™') + ' Spec — ' + name)
     + '&body=' + encodeURIComponent(body);
 
