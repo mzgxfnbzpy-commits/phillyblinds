@@ -1646,24 +1646,22 @@
       </div>
     </div>
 
-    <!-- Fascia -->
-    <div class="step-block">
-      <div class="step-title" style="font-size:13px;margin-bottom:8px">Fascia type</div>
-      <div class="opt-row" id="ext-grp-fascia">
-        <button class="opt-btn sel" onclick="selOpt(this,'ext-grp-fascia')">Open Roll</button>
-        <button class="opt-btn" onclick="selOpt(this,'ext-grp-fascia')">Fabric Wrapped</button>
-        <button class="opt-btn" onclick="selOpt(this,'ext-grp-fascia')">Metal fascia</button>
-        <button class="opt-btn" onclick="selOpt(this,'ext-grp-fascia')">Cassette</button>
-      </div>
+    <!-- Cassette — always included, no choice needed -->
+    <div style="display:flex;align-items:center;gap:10px;background:#F9F7F4;border:1px solid #e8e4dc;border-radius:10px;padding:11px 14px;margin-bottom:14px;font-size:12px;color:#555;line-height:1.5">
+      <span style="font-size:16px;flex-shrink:0">&#9646;</span>
+      <span><strong>Cassette housing included</strong> — all exterior roller shades come standard with a full cassette that encloses the tube and fabric roll for weather protection.</span>
     </div>
 
-    <!-- End caps -->
+    <!-- Side channels -->
     <div class="step-block">
-      <div class="step-title" style="font-size:13px;margin-bottom:8px">End caps</div>
-      <div class="opt-row" id="ext-grp-endcap">
-        <button class="opt-btn sel" onclick="selOpt(this,'ext-grp-endcap')">Standard</button>
-        <button class="opt-btn" onclick="selOpt(this,'ext-grp-endcap')">Designer</button>
+      <div class="step-title" style="font-size:13px;margin-bottom:4px">Side channels</div>
+      <div class="tooltip-note" style="margin-bottom:8px">Choose how the shade is secured on each side for wind resistance and light control.</div>
+      <div class="opt-row" id="ext-grp-channels">
+        <button class="opt-btn" onclick="selOpt(this,'ext-grp-channels');extChannelNote(this)">None</button>
+        <button class="opt-btn" onclick="selOpt(this,'ext-grp-channels');extChannelNote(this)">Zipper track channels</button>
+        <button class="opt-btn" onclick="selOpt(this,'ext-grp-channels');extChannelNote(this)">Cable hold-downs</button>
       </div>
+      <div id="ext-channel-note" style="display:none;margin-top:8px;padding:10px 13px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px;font-size:12px;color:#555;line-height:1.6"></div>
     </div>
 
     <!-- Operation -->
@@ -5187,6 +5185,17 @@ function extToggleMotor(show) {
   var el = document.getElementById('ext-motor-note');
   if (el) el.style.display = show ? 'block' : 'none';
 }
+function extChannelNote(btn) {
+  var note = document.getElementById('ext-channel-note');
+  var val = btn.textContent.trim();
+  var msgs = {
+    'None': '',
+    'Zipper track channels': 'Fabric edge zips into an aluminum track on each side — provides maximum wind resistance and a near-blackout seal at the sides. Best for enclosed patios, pergolas, or any application needing full weather protection.',
+    'Cable hold-downs': 'Stainless cables run vertically on each side and attach to the fabric at the bottom rail — keeps the shade from lifting in wind. Simpler installation, open at the sides. Best for patios where some airflow is acceptable.'
+  };
+  if (msgs[val]) { note.textContent = msgs[val]; note.style.display = 'block'; }
+  else { note.style.display = 'none'; }
+}
 function submitExteriorForm() {
   var name  = (document.getElementById('ext-name') || {}).value || '';
   var phone = (document.getElementById('ext-phone') || {}).value || '';
@@ -5202,16 +5211,16 @@ function submitExteriorForm() {
     'Name:  ' + name + '\nPhone: ' + phone +
     '\nEmail: ' + (document.getElementById('ext-email').value.trim() || '—') + '\n\n' +
     'Width: ' + (w || '—') + '"  Height: ' + (h || '—') + '"  Qty: ' + qty + '\n' +
-    'Mount: '      + gExt('ext-grp-mount')    + '\n' +
-    'Openness: '   + gExt('ext-grp-openness') + '\n' +
-    'Color: '      + gExt('ext-grp-color')    + '\n' +
-    'Fascia: '     + gExt('ext-grp-fascia')   + '\n' +
-    'End caps: '   + gExt('ext-grp-endcap')   + '\n' +
-    'Operation: '  + gExt('ext-grp-op')       + '\n' +
+    'Mount: '       + gExt('ext-grp-mount')    + '\n' +
+    'Openness: '    + gExt('ext-grp-openness') + '\n' +
+    'Color: '       + gExt('ext-grp-color')    + '\n' +
+    'Housing: Cassette (standard)\n' +
+    'Side channels: '+ gExt('ext-grp-channels') + '\n' +
+    'Operation: '   + gExt('ext-grp-op')       + '\n' +
     (motorReq ? 'Motor preference: ' + motorReq + '\n' : '') +
-    'Control side: '+ gExt('ext-grp-control') + '\n' +
-    'Fabric: '     + gExt('ext-grp-fabric')   + '\n' +
-    'Delivery: '   + delivery                 + '\n\n' +
+    'Control side: '+ gExt('ext-grp-control')  + '\n' +
+    'Fabric: '      + gExt('ext-grp-fabric')   + '\n' +
+    'Delivery: '    + delivery                  + '\n\n' +
     'Notes:\n' + (document.getElementById('ext-notes').value.trim() || 'None');
   window.location.href = 'mailto:blindznation@gmail.com' +
     '?subject=' + encodeURIComponent('Exterior Roller Shade Quote — ' + name) +
