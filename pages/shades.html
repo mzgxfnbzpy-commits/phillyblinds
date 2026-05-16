@@ -216,7 +216,7 @@
           </div>
         </div>
 
-        <div class="product-card" id="card-cellular" onclick="selectProduct('cellular','Cellular / Honeycomb Shades',true)">
+        <div class="product-card" id="card-cellular" onclick="selectProduct('cellular','Cellular / Honeycomb Shades',true);setTimeout(function(){selectBrand('norman');},150)">
           <div class="product-img-photo">
             <img src="../images/thumbnails/cellular-shades-new.png" alt="Cellular Shades" loading="eager">
             <div class="motor-chip">+ motorized</div>
@@ -2297,8 +2297,8 @@ window.addEventListener("load", function() {
   setTimeout(function() {
     selectProduct(args[0], args[1], args[2]);
     var autoBrand = brand || args[3];
-    if (autoBrand) setTimeout(function(){ if(typeof selectBrand==="function") selectBrand(autoBrand); }, 150);
-  }, 300);
+    if (autoBrand) setTimeout(function(){ if(typeof selectBrand==="function") selectBrand(autoBrand); }, 100);
+  }, 200);
 });
 _initMeasureHelp(`
   <div class="pb-help-heading">How to measure your windows</div>
