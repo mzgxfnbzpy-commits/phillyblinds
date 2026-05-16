@@ -912,14 +912,19 @@
               <div class="price-line"><span>Product</span><span id="rn-pb-product">Norman Soluna Roller Shade</span></div>
               <div class="price-line"><span>Fabric type</span><span id="rn-pb-fabric">—</span></div>
               <div class="price-line"><span>Dimensions</span><span id="rn-pb-dims">Enter width &amp; height</span></div>
-              <div class="price-line"><span>Square footage</span><span id="rn-pb-sqft">—</span></div>
+              <div class="price-line"><span>Priced at</span><span id="rn-pb-sqft">—</span></div>
               <div class="price-line"><span>Base / shade</span><span id="rn-pb-base">—</span></div>
               <div class="price-line"><span>Qty</span><span id="rn-pb-qty">1</span></div>
               <div class="price-line" id="rn-pb-headrail-row"><span id="rn-pb-headrail-label">Headrail</span><span id="rn-pb-headrail">Open Roll — included</span></div>
+              <div class="price-line" id="rn-pb-system-row" style="display:none"><span id="rn-pb-system-label">System type</span><span id="rn-pb-system">—</span></div>
+              <div class="price-line" id="rn-pb-liftsur-row" style="display:none"><span id="rn-pb-liftsur-label">Lift surcharge</span><span id="rn-pb-liftsur">—</span></div>
+              <div class="price-line" id="rn-pb-lg-row" style="display:none"><span id="rn-pb-lg-label">Light guard</span><span id="rn-pb-lg">—</span></div>
+              <div class="price-line" id="rn-pb-holddown-row" style="display:none"><span>Hold-down (door)</span><span id="rn-pb-holddown">—</span></div>
               <div class="price-line" id="rn-pb-motor-row" style="display:none"><span>Motorization</span><span id="rn-pb-motor">—</span></div>
+              <div class="price-line" id="rn-pb-freight-row" style="display:none"><span>Freight est.</span><span id="rn-pb-freight">—</span></div>
               <hr class="price-divider">
               <div class="price-total"><span>Est. total</span><span id="rn-pb-total">—</span></div>
-              <div class="price-note">Estimate only · confirmed at order · min $85/shade</div>
+              <div class="price-note">MSRP estimate &middot; confirmed at order &middot; min $85/shade</div>
               <div class="price-min-note" id="rn-pb-min-note" style="display:none">Minimum order applied.</div>
             </div>
           </div>
@@ -1284,10 +1289,14 @@
             <div class="price-line"><span>Pricing basis</span><span id="pb-sqft">—</span></div>
             <div class="price-line"><span>Base price / shade</span><span id="pb-base">—</span></div>
             <div class="price-line"><span>Qty</span><span id="pb-qty">1</span></div>
+            <div class="price-line" id="pb-sur-rd-row" style="display:none"><span id="pb-sur-rd-label">Fabric surcharge</span><span id="pb-sur-rd">—</span></div>
+            <div class="price-line" id="pb-sur-op-row" style="display:none"><span id="pb-sur-op-label">Lift surcharge</span><span id="pb-sur-op">—</span></div>
+            <div class="price-line" id="pb-sur-lift-row" style="display:none"><span id="pb-sur-lift-label">Lift direction</span><span id="pb-sur-lift">—</span></div>
             <div class="price-line" id="pb-motor-row" style="display:none"><span>Motorization</span><span id="pb-motor">—</span></div>
+            <div class="price-line" id="pb-freight-row" style="display:none"><span>Freight est.</span><span id="pb-freight">—</span></div>
             <hr class="price-divider">
             <div class="price-total"><span>Est. total</span><span id="pb-total">—</span></div>
-            <div class="price-note">Final price confirmed at order. Minimum $85 per shade.</div>
+            <div class="price-note">MSRP estimate · confirmed at order · min $85/shade</div>
             <div class="price-min-note" id="pb-min-note" style="display:none">Minimum order applied.</div>
           </div>
         </div>
@@ -2954,47 +2963,74 @@ function updatePrice() {
     return;
   }
 
-  // ── CELLULAR: use Norman Portrait™ table lookup ──────────────
+  // ── CELLULAR: Norman Portrait™ table lookup — all line items ─
   if (currentProduct === 'cellular') {
     const res = _cellTableLookup(w, h);
+    // Helper to show/hide a row
+    function cellRow(rowId, labelId, valId, label, val) {
+      const row = document.getElementById(rowId);
+      if (!row) return;
+      if (val !== null) {
+        row.style.display = 'flex';
+        if (labelId) { const l = document.getElementById(labelId); if (l) l.textContent = label; }
+        if (valId)   { const v = document.getElementById(valId);   if (v) v.textContent = val; }
+      } else { row.style.display = 'none'; }
+    }
     if (!res.price) {
-      document.getElementById('pb-dims').textContent = w + '" W × ' + h + '" H — exceeds standard table, call for quote';
+      document.getElementById('pb-dims').textContent = w + '" W × ' + h + '" H — exceeds table, call for quote';
       document.getElementById('pb-sqft').textContent = res.name;
       document.getElementById('pb-base').textContent = 'Out of range — call (609) 742-1720';
       document.getElementById('pb-total').textContent = '—';
-      document.getElementById('pb-min-note').style.display = 'none';
+      ['pb-sur-rd-row','pb-sur-op-row','pb-sur-lift-row','pb-freight-row'].forEach(function(id){
+        var el = document.getElementById(id); if (el) el.style.display = 'none';
+      });
       return;
     }
-    // Surcharges from PDF
-    const fabBtn = document.querySelector('#grp-cell-fabric .opt-btn.sel');
-    const fabTxt = fabBtn ? fabBtn.textContent.trim() : '';
+    const fabBtn  = document.querySelector('#grp-cell-fabric .opt-btn.sel');
+    const fabTxt  = fabBtn ? fabBtn.textContent.trim() : '';
     const liftDir = document.querySelector('#grp-cellular-lift .opt-btn.sel');
     const liftTxt = liftDir ? liftDir.textContent.trim() : '';
     const opBtn   = document.querySelector('#grp-op-cellular .opt-btn.sel');
     const opTxt   = opBtn ? opBtn.textContent.trim() : '';
 
-    let base = res.price;
-    const notes = [];
-    if (fabTxt === 'Room Darkening' || fabTxt === 'Sheer') {
-      const add = Math.round(res.price * 0.20);
-      base += add;
-      notes.push(fabTxt + ' +20% (+$' + add + ')');
-    }
-    if (opTxt === 'Cord Loop') { base += 73; notes.push('Cord Loop +$73'); }
-    if (liftTxt === 'Top Down / Bottom Up') { base += 89; notes.push('TDBU +$89'); }
-    if (liftTxt === 'Day & Night') { base += 89; notes.push('D&N +$89'); }
+    // Base (table price, no surcharges)
+    const tableBase = res.price;
 
+    // Fabric surcharge (+20%)
+    const rdAdd = (fabTxt === 'Room Darkening' || fabTxt === 'Sheer') ? Math.round(tableBase * 0.20) : 0;
+    cellRow('pb-sur-rd-row', 'pb-sur-rd-label', 'pb-sur-rd',
+      fabTxt + ' fabric (+20%)', rdAdd > 0 ? '+$' + rdAdd : null);
+
+    // Operating system surcharge (CCL +$73)
+    const opAdd = opTxt === 'Cord Loop' ? 73 : 0;
+    cellRow('pb-sur-op-row', 'pb-sur-op-label', 'pb-sur-op',
+      'Cord Loop system', opAdd > 0 ? '+$73' : null);
+
+    // Lift direction surcharge (TDBU/D&N +$89)
+    const liftAdd = (liftTxt === 'Top Down / Bottom Up') ? 89 : (liftTxt === 'Day & Night') ? 89 : 0;
+    const liftLabel = liftTxt === 'Top Down / Bottom Up' ? 'Top Down / Bottom Up' : liftTxt === 'Day & Night' ? 'Day & Night' : '';
+    cellRow('pb-sur-lift-row', 'pb-sur-lift-label', 'pb-sur-lift',
+      liftLabel, liftAdd > 0 ? '+$89' : null);
+
+    // Freight
+    const cellFreight = w >= 90 ? (80 + Math.max(0,qty-1)*50) : (25 + Math.max(0,qty-1)*11);
+    cellRow('pb-freight-row', null, 'pb-freight', '', '$' + cellFreight + (w >= 90 ? ' (90″+ oversize)' : ''));
+
+    const perShadeAll = tableBase + rdAdd + opAdd + liftAdd;
     const activeMotorUp = cellMotorUpcharge;
     const motorCost = motorOn ? activeMotorUp * qty : 0;
-    const total = (base * qty) + motorCost;
+    const total = (perShadeAll * qty) + motorCost + cellFreight;
 
-    document.getElementById('pb-dims').textContent = w + '" W × ' + h + '" H · table: ' + res.pricedAt;
-    document.getElementById('pb-sqft').textContent = res.name + (notes.length ? ' · ' + notes.join(', ') : '');
-    document.getElementById('pb-base').textContent = '$' + base + '/shade (Norman Portrait™ MSRP)';
+    document.getElementById('pb-dims').textContent = w + '" W × ' + h + '" H';
+    document.getElementById('pb-sqft').textContent = res.name + '  ·  table: ' + res.pricedAt;
+    document.getElementById('pb-base').textContent = '$' + tableBase + '/shade (Norman Portrait™ MSRP)';
     if (motorOn) {
+      document.getElementById('pb-motor-row').style.display = 'flex';
       document.getElementById('pb-motor').textContent = '+$' + activeMotorUp + ' × ' + qty + ' = $' + (activeMotorUp * qty);
+    } else {
+      document.getElementById('pb-motor-row').style.display = 'none';
     }
-    document.getElementById('pb-total').textContent = '$' + total.toLocaleString();
+    document.getElementById('pb-total').textContent = '$' + total.toLocaleString() + ' est.';
     document.getElementById('pb-min-note').style.display = 'none';
     return;
   }
@@ -4907,23 +4943,91 @@ function rnUpdatePrice() {
     hrDisplay    = 'Cassette: +$' + hrSurcharge.toLocaleString();
   }
 
+  // ── Headrail display ───────────────────────────────────────
   var hrLblEl = document.getElementById('rn-pb-headrail-label');
   var hrValEl = document.getElementById('rn-pb-headrail');
   if (hrLblEl) hrLblEl.textContent = hrLabel;
   if (hrValEl) hrValEl.textContent = hrDisplay;
 
-  const total = perShade ? (perShade * qty) + motorCost + hrSurcharge : null;
+  // ── System type surcharge ──────────────────────────────────
+  var sysBtn    = document.querySelector('#rn-grp-system .opt-btn.sel');
+  var sysText   = sysBtn ? sysBtn.textContent.trim() : 'Standard Roller';
+  var sysSur    = 0;
+  var sysRow    = document.getElementById('rn-pb-system-row');
+  var sysSurEl  = document.getElementById('rn-pb-system');
+  var sysLblEl  = document.getElementById('rn-pb-system-label');
+  if (sysText.includes('Dual'))      { sysSur = 73;  }
+  else if (sysText.includes('2 Sh')) { sysSur = 117; }
+  else if (sysText.includes('3 Sh')) { sysSur = 234; }
+  else if (sysText.includes('4 Sh')) { sysSur = 351; }
+  if (sysSur > 0 && sysRow) {
+    sysRow.style.display = 'flex';
+    if (sysLblEl) sysLblEl.textContent = sysText;
+    if (sysSurEl) sysSurEl.textContent = '+$' + sysSur;
+  } else if (sysRow) { sysRow.style.display = 'none'; }
+
+  // ── Lift system surcharge (SmartRelease only) ──────────────
+  var liftBtn2  = document.querySelector('#rn-grp-lift .opt-btn.sel');
+  var liftText2 = liftBtn2 ? liftBtn2.textContent.trim() : '';
+  var liftSur   = liftText2.includes('SmartRelease') ? 89 : 0;
+  var liftRow   = document.getElementById('rn-pb-liftsur-row');
+  var liftSurEl = document.getElementById('rn-pb-liftsur');
+  var liftLblEl = document.getElementById('rn-pb-liftsur-label');
+  if (liftSur > 0 && liftRow) {
+    liftRow.style.display = 'flex';
+    if (liftLblEl) liftLblEl.textContent = 'SmartRelease™';
+    if (liftSurEl) liftSurEl.textContent = '+$89';
+  } else if (liftRow) { liftRow.style.display = 'none'; }
+
+  // ── Light guard surcharge ─────────────────────────────────
+  var lgSelBtn  = document.querySelector('#rn-grp-lg .opt-btn.sel');
+  var lgText    = lgSelBtn ? lgSelBtn.textContent.trim() : 'None';
+  var lgSur     = lgText.includes('360') ? 375 : lgText.includes('LightGap') ? 45 : 0;
+  var lgLabel   = lgText.includes('360') ? 'LightGuard 360™' : lgText.includes('LightGap') ? 'Basic light guard' : '';
+  var lgRow     = document.getElementById('rn-pb-lg-row');
+  var lgEl      = document.getElementById('rn-pb-lg');
+  var lgLblEl   = document.getElementById('rn-pb-lg-label');
+  if (lgSur > 0 && lgRow) {
+    lgRow.style.display = 'flex';
+    if (lgLblEl) lgLblEl.textContent = lgLabel;
+    if (lgEl)    lgEl.textContent    = '+$' + lgSur;
+  } else if (lgRow) { lgRow.style.display = 'none'; }
+
+  // ── Hold-down (door application) ──────────────────────────
+  var mountBtn  = document.querySelector('#rn-grp-mount .opt-btn.sel');
+  var isDoor    = mountBtn && mountBtn.textContent.includes('Door');
+  var hdSur     = isDoor ? (28 * qty) : 0;
+  var hdRow     = document.getElementById('rn-pb-holddown-row');
+  var hdEl      = document.getElementById('rn-pb-holddown');
+  if (isDoor && hdRow) {
+    hdRow.style.display = 'flex';
+    if (hdEl) hdEl.textContent = '+$28 × ' + qty + ' = $' + hdSur;
+  } else if (hdRow) { hdRow.style.display = 'none'; }
+
+  // ── Freight estimate ───────────────────────────────────────
+  var freightRow = document.getElementById('rn-pb-freight-row');
+  var freightEl  = document.getElementById('rn-pb-freight');
+  var oversize   = w >= 90;
+  var freightAmt = oversize ? (80 + Math.max(0, qty - 1) * 50) : (25 + Math.max(0, qty - 1) * 11);
+  if (freightRow) {
+    freightRow.style.display = 'flex';
+    if (freightEl) freightEl.textContent = '$' + freightAmt + (oversize ? ' (90″+ oversize rate)' : '');
+  }
+
+  // ── Grand total ───────────────────────────────────────────
+  const allSurcharges = hrSurcharge + sysSur + liftSur + lgSur + hdSur + freightAmt;
+  const total = perShade ? (perShade * qty) + motorCost + allSurcharges : null;
 
   document.getElementById('rn-pb-dims').textContent  = w + '″ W × ' + h + '″ H';
-  document.getElementById('rn-pb-sqft').textContent  = sqft.toFixed(2) + ' sqft' + (lookup ? ' · priced at ' + lookup.pricedAt : '');
+  document.getElementById('rn-pb-sqft').textContent  = lookup ? lookup.pricedAt : '—';
   document.getElementById('rn-pb-base').textContent  = perShade
-    ? '$' + perShade.toFixed(0) + ' (PG' + (lookup ? lookup.group : '?') + ' · est.)'
+    ? '$' + perShade.toFixed(0) + '/shade (PG' + (lookup ? lookup.group : '?') + ')'
     : 'Size out of range — call for quote';
   document.getElementById('rn-pb-total').textContent = total ? '$' + total.toFixed(0) + ' est.' : '—';
   document.getElementById('rn-pb-min-note').style.display = (perShade === RN_MIN) ? 'block' : 'none';
   if (isMotor) {
     document.getElementById('rn-pb-motor-row').style.display = 'flex';
-    document.getElementById('rn-pb-motor').textContent = '+$' + RN_MOTOR_UP + ' × ' + qty + ' = $' + (RN_MOTOR_UP * qty).toFixed(2);
+    document.getElementById('rn-pb-motor').textContent = '+$' + RN_MOTOR_UP + ' × ' + qty + ' = $' + (RN_MOTOR_UP * qty).toFixed(0);
   } else {
     document.getElementById('rn-pb-motor-row').style.display = 'none';
   }
