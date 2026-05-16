@@ -1285,15 +1285,15 @@ _initMeasureHelp(`
     </ul>
   </div>
 `, '../pages/measure-drapes.html');
-// Auto-switch tabs based on URL ?tab= param
-(function() {
+// Auto-switch tabs based on URL ?tab= param — runs on load so everything is ready
+window.addEventListener('load', function() {
   var tab = new URLSearchParams(window.location.search).get('tab');
   if (!tab) return;
   var btn = Array.from(document.querySelectorAll('.type-tab')).find(function(b) {
     return (b.getAttribute('onclick') || '').indexOf("'" + tab + "'") !== -1;
   });
   if (btn) switchTab(tab, btn);
-})();
+});
 
 // ── Tab switcher ──────────────────────────────────────────
 function switchTab(id, btn) {
