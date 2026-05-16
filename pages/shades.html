@@ -520,10 +520,6 @@
           <span class="brand-btn-name">Custom Roller Shades</span>
           <span class="brand-btn-sub">Our in-house fabrication · any fabric</span>
         </button>
-        <button class="brand-btn" id="btn-brand-other" onclick="selectBrand('other')">
-          <span class="brand-btn-name">Other / Not sure</span>
-          <span class="brand-btn-sub">We'll recommend the right brand</span>
-        </button>
       </div>
       <div id="pb-only-note" class="tooltip-note" style="display:none;margin-top:6px;color:#888">
         Custom Roller Shade fabrication is available for <strong>roller shades only</strong>. Choose Norman or Other for this product type.
@@ -1513,45 +1509,6 @@
       </div>
     </div><!-- /brand-pb-content -->
 
-    <!-- ── OTHER BRAND / NOT SURE ──────────────────────────────── -->
-    <div id="brand-other-content" style="display:none">
-      <div style="background:var(--espresso-mid);border:0.5px solid var(--border-dark);border-radius:10px;padding:14px 18px;margin-bottom:20px">
-        <div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:4px">Custom quote — any brand</div>
-        <div style="font-size:12px;color:var(--text-dark);line-height:1.6">We carry Norman, Wallace, Hunter Douglas, and many more. Tell us what you need and we'll match you to the right product and manufacturer.</div>
-      </div>
-      <div class="form-group"><label>What product are you looking for?</label><input type="text" id="oth-product" placeholder="e.g. woven wood shade, zebra blind, cellular"></div>
-      <div class="dim-row">
-        <div class="form-group"><label>Approx. width (inches)</label><input type="number" id="oth-width" min="12" max="300" placeholder="e.g. 60"></div>
-        <div class="form-group"><label>Approx. height (inches)</label><input type="number" id="oth-height" min="12" max="200" placeholder="e.g. 84"></div>
-      </div>
-      <div class="form-group"><label>Brand preference (if any)</label><input type="text" id="oth-brand" placeholder="e.g. Hunter Douglas, or leave blank if not sure"></div>
-      <div class="form-group"><label>Notes</label><textarea id="oth-notes" placeholder="Room name, style preference, budget range, timeline — anything helpful"></textarea></div>
-      <hr class="price-divider" style="margin:18px 0">
-      <div class="form-row">
-        <div class="form-group"><label>Your name *</label><input type="text" id="oth-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="oth-phone" placeholder="(215) 555-0100"></div>
-      </div>
-      <div class="form-group"><label>Email</label><input type="email" id="oth-email" placeholder="jane@example.com"></div>
-      <div class="delivery-section">
-        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
-        <div class="opt-row" id="grp-del-oth">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-oth');document.getElementById('del-oth-s').style.display='block';document.getElementById('del-oth-p').style.display='none'">Ship to me</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-del-oth');document.getElementById('del-oth-s').style.display='none';document.getElementById('del-oth-p').style.display='block'">I'll pick up</button>
-        </div>
-        <div id="del-oth-s" class="delivery-note">
-          Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.
-          <div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately in your quote.</div>
-        </div>
-        <div id="del-oth-p" class="delivery-note" style="display:none">
-          Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.
-        </div>
-      </div>
-      <button class="btn-gold" onclick="submitOtherForm()" style="width:100%;padding:13px;margin-top:4px">Send quote request &rarr;</button>
-      <div class="success-state" id="oth-success">
-        <h3>Quote request received!</h3>
-        <p>We'll be in touch within a few hours. Urgent? Call <strong>(609) 742-1720</strong> — available 24/7.</p>
-      </div>
-    </div><!-- /brand-other-content -->
 
   </div><!-- /instant-config -->
 
@@ -2501,7 +2458,7 @@ function selectProduct(productId, productName, isInstant) {
 
     // Reset brand chooser — hide all brand content, clear selections
     document.querySelectorAll('.brand-btn').forEach(b => b.classList.remove('sel'));
-    ['brand-norman-content','brand-pb-content','brand-other-content'].forEach(id => {
+    ['brand-norman-content','brand-pb-content'].forEach(id => {
       document.getElementById(id).style.display = 'none';
     });
 
@@ -2571,7 +2528,6 @@ function selectBrand(brand) {
 
   document.getElementById('brand-norman-content').style.display = brand === 'norman' ? 'block' : 'none';
   document.getElementById('brand-pb-content').style.display    = brand === 'pb'     ? 'block' : 'none';
-  document.getElementById('brand-other-content').style.display = brand === 'other'  ? 'block' : 'none';
 
   // Update config title
   if (brand === 'pb') {
