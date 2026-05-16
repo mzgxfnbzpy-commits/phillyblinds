@@ -156,8 +156,8 @@
   <!-- ══ LEFT COLUMN: CONFIGURATOR STEPS ══════════════════ -->
   <div id="configurator">
 
-    <!-- STEP 1: PRODUCT (SmartDrape only — PerfectSheer has its own configurator on shades.html) -->
-    <div class="step-block active open" id="step-1" style="display:none">
+    <!-- STEP 1: PRODUCT (hidden — SmartDrape auto-selected) -->
+    <div class="step-block" id="step-1" style="display:none">
       <div class="step-head">
         <div class="step-num-circle">1</div>
         <div class="step-head-title">Product</div>
@@ -165,10 +165,55 @@
       </div>
     </div>
 
+    <!-- STEP 6: MEASUREMENTS — shown FIRST -->
+    <div class="step-block" id="step-6">
+      <div class="step-head" onclick="toggleStep('step-6')">
+        <div class="step-num-circle">1</div>
+        <div class="step-head-title">Measurements</div>
+        <div class="step-head-val" id="s6-val"></div>
+      </div>
+      <div class="step-body">
+        <div id="mount-deduction-note" class="info-box" style="display:none"></div>
+        <div class="dim-row">
+          <div class="dim-field">
+            <div class="dim-label">Order Width</div>
+            <div class="dim-input-wrap">
+              <input class="dim-input" type="number" id="inp-w" min="0" max="300" step="0.125" placeholder="e.g. 36" oninput="validateSizes()">
+              <span class="dim-unit">inches</span>
+            </div>
+          </div>
+          <div class="dim-field">
+            <div class="dim-label">Order Height</div>
+            <div class="dim-input-wrap">
+              <input class="dim-input" type="number" id="inp-h" min="0" max="300" step="0.125" placeholder="e.g. 72" oninput="validateSizes()">
+              <span class="dim-unit">inches</span>
+            </div>
+          </div>
+        </div>
+        <div class="dim-row" style="margin-top:6px">
+          <div class="dim-field">
+            <div class="dim-label">Quantity</div>
+            <div class="dim-input-wrap">
+              <input class="dim-input" type="number" id="inp-qty" min="1" max="50" value="1" oninput="validateSizes()">
+              <span class="dim-unit">shades</span>
+            </div>
+          </div>
+        </div>
+        <div id="size-errors" class="size-errors" style="margin-top:12px"></div>
+        <div id="computed-panel" class="computed-info" style="display:none">
+          <div class="computed-row"><span class="computed-key">Shade width (after deduction)</span><span class="computed-val" id="cp-shadeW">—</span></div>
+          <div class="computed-row" id="cp-cord-row" style="display:none"><span class="computed-key">Default cord length</span><span class="computed-val" id="cp-cord">—</span></div>
+          <div class="computed-row" id="cp-joint-row" style="display:none"><span class="computed-key">SmartJoints required</span><span class="computed-val" id="cp-joints">—</span></div>
+          <div class="computed-row" id="cp-area-row" style="display:none"><span class="computed-key">Area per shade</span><span class="computed-val" id="cp-area">—</span></div>
+          <div class="computed-row" id="cp-ratio-row" style="display:none"><span class="computed-key">H:W ratio</span><span class="computed-val" id="cp-ratio">—</span></div>
+        </div>
+      </div>
+    </div>
+
     <!-- STEP 2: OPACITY -->
     <div class="step-block" id="step-2">
       <div class="step-head">
-        <div class="step-num-circle">2</div>
+        <div class="step-num-circle">2</div> <!-- visual 2 -->
         <div class="step-head-title">Light control</div>
         <div class="step-head-val" id="s2-val"></div>
       </div>
@@ -248,51 +293,6 @@
       </div>
       <div class="step-body" id="s5-body">
         <!-- filled dynamically -->
-      </div>
-    </div>
-
-    <!-- STEP 6: MEASUREMENTS -->
-    <div class="step-block" id="step-6">
-      <div class="step-head" onclick="toggleStep('step-6')">
-        <div class="step-num-circle">6</div>
-        <div class="step-head-title">Measurements</div>
-        <div class="step-head-val" id="s6-val"></div>
-      </div>
-      <div class="step-body">
-        <div id="mount-deduction-note" class="info-box" style="display:none"></div>
-        <div class="dim-row">
-          <div class="dim-field">
-            <div class="dim-label">Order Width</div>
-            <div class="dim-input-wrap">
-              <input class="dim-input" type="number" id="inp-w" min="0" max="300" step="0.125" placeholder="e.g. 36" oninput="validateSizes()">
-              <span class="dim-unit">inches</span>
-            </div>
-          </div>
-          <div class="dim-field">
-            <div class="dim-label">Order Height</div>
-            <div class="dim-input-wrap">
-              <input class="dim-input" type="number" id="inp-h" min="0" max="300" step="0.125" placeholder="e.g. 72">
-              <span class="dim-unit">inches</span>
-            </div>
-          </div>
-        </div>
-        <div class="dim-row" style="margin-top:6px">
-          <div class="dim-field">
-            <div class="dim-label">Quantity</div>
-            <div class="dim-input-wrap">
-              <input class="dim-input" type="number" id="inp-qty" min="1" max="50" value="1" oninput="validateSizes()">
-              <span class="dim-unit">shades</span>
-            </div>
-          </div>
-        </div>
-        <div id="size-errors" class="size-errors" style="margin-top:12px"></div>
-        <div id="computed-panel" class="computed-info" style="display:none">
-          <div class="computed-row"><span class="computed-key">Shade width (after deduction)</span><span class="computed-val" id="cp-shadeW">—</span></div>
-          <div class="computed-row" id="cp-cord-row" style="display:none"><span class="computed-key">Default cord length</span><span class="computed-val" id="cp-cord">—</span></div>
-          <div class="computed-row" id="cp-joint-row" style="display:none"><span class="computed-key">SmartJoints required</span><span class="computed-val" id="cp-joints">—</span></div>
-          <div class="computed-row" id="cp-area-row" style="display:none"><span class="computed-key">Area per shade</span><span class="computed-val" id="cp-area">—</span></div>
-          <div class="computed-row" id="cp-ratio-row" style="display:none"><span class="computed-key">H:W ratio</span><span class="computed-val" id="cp-ratio">—</span></div>
-        </div>
       </div>
     </div>
 
@@ -584,7 +584,8 @@ function selectProduct(p) {
 
   // Build operation options
   buildOperationStep(p);
-  activateStep('step-2');
+  // Measurements opens first — other steps unlock as dims are entered
+  activateStep('step-6');
 }
 
 // ═══════════════════════════════════════════════════════
@@ -801,6 +802,11 @@ function validateSizes() {
   });
   if (errors.length === 0 && w > 0 && h > 0) {
     errEl.innerHTML = '<div class="size-ok">✓ Dimensions are within specification.</div>';
+    // Auto-open next steps once valid dims entered
+    var s2 = document.getElementById('step-2');
+    if (s2 && !s2.classList.contains('active') && !s2.classList.contains('done')) {
+      activateStep('step-2');
+    }
   }
 
   checkCustomQuoteTriggers();
