@@ -2283,6 +2283,28 @@
 <script>
 renderNav('Shades & blinds');
 renderFooter(false);
+
+// Auto-open product configurator from URL ?product=xxx parameter
+window.addEventListener("load", function() {
+  var params = new URLSearchParams(window.location.search);
+  var product = params.get("product");
+  var brand   = params.get("brand");
+  if (!product) return;
+  var map = {
+    "roller":     ["roller",    "Roller Shades",               true],
+    "cellular":   ["cellular",  "Cellular / Honeycomb Shades", true],
+    "fwb":        ["fwb",       "Wood Blinds",                 false],
+    "exterior":   ["exterior",  "Exterior Roller Shades",      false],
+    "pb":         ["roller",    "Custom Roller Shades",        true, "pb"]
+  };
+  var args = map[product];
+  if (!args) return;
+  setTimeout(function() {
+    selectProduct(args[0], args[1], args[2]);
+    var autoBrand = brand || args[3];
+    if (autoBrand) setTimeout(function(){ if(typeof selectBrand==="function") selectBrand(autoBrand); }, 400);
+  }, 300);
+});
 _initMeasureHelp(`
   <div class="pb-help-heading">How to measure your windows</div>
   <div class="pb-help-sub">Quick guide — inside or outside mount</div>
