@@ -238,15 +238,34 @@
   <div class="step-block" id="step9">
     <div class="step-head" onclick="toggleStep('step9')">
       <div class="step-num">9</div>
-      <div class="step-head-title">Your Info &amp; Submit</div>
+      <div class="step-head-title">Review &amp; Submit</div>
       <div class="step-head-val"></div>
     </div>
     <div class="step-body">
-      <div class="form-row">
-        <div class="form-group"><label>Name *</label><input type="text" id="f-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="f-phone" placeholder="(215) 555-0100"></div>
+
+      <!-- INLINE PRICE SUMMARY — always visible in step 9 -->
+      <div id="inline-summary" style="background:var(--espresso);border-radius:12px;padding:18px 20px;margin-bottom:20px">
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:14px">Your Configuration &amp; Estimate</div>
+        <div id="inline-rows"><div style="font-size:12px;color:var(--text-muted);font-style:italic">Select brand and size above to see your estimate build in real time.</div></div>
+        <div style="border-top:.5px solid rgba(255,255,255,.12);margin:12px 0"></div>
+        <div style="display:flex;justify-content:space-between;font-size:17px;font-weight:700;align-items:baseline">
+          <span style="color:var(--cream)">Total Estimate</span>
+          <span style="color:var(--gold)" id="inline-total">—</span>
+        </div>
+        <div style="font-size:10px;color:var(--text-dark);margin-top:6px;line-height:1.5">Hardware only &middot; installation quoted separately &middot; final price confirmed at order</div>
       </div>
-      <div class="form-group"><label>Email *</label><input type="email" id="f-email" placeholder="jane@example.com"></div>
+
+      <!-- VALIDATION CHECKLIST — shows what's still needed before submit -->
+      <div id="checklist-box" style="background:#FFF8EC;border:1px solid #F59E0B;border-radius:10px;padding:14px 16px;margin-bottom:16px;display:none">
+        <div style="font-size:12px;font-weight:600;color:#92400E;margin-bottom:8px">Complete these before submitting:</div>
+        <div id="checklist-items" style="font-size:12px;color:#78350F;line-height:1.8"></div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group"><label>Name *</label><input type="text" id="f-name" placeholder="Jane Smith" oninput="updateSubmitState()"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="f-phone" placeholder="(215) 555-0100" oninput="updateSubmitState()"></div>
+      </div>
+      <div class="form-group"><label>Email *</label><input type="email" id="f-email" placeholder="jane@example.com" oninput="updateSubmitState()"></div>
       <div class="form-group"><label>Notes <span style="font-weight:400;color:#999">(room, fabric weight, existing hardware, etc.)</span></label><textarea id="f-notes" placeholder="e.g. master bedroom, 96&quot; panels, replacing brass rods…"></textarea></div>
       <div class="delivery-wrap">
         <div style="font-size:13px;font-weight:500;color:#333;margin-bottom:8px">Delivery or pickup?</div>
@@ -260,7 +279,7 @@
         <div class="del-note" id="del-pickup-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Address disclosed after order.</div>
       </div>
       <div class="form-err" id="form-err"></div>
-      <button class="submit-btn" onclick="submitForm()">Send quote request &rarr;</button>
+      <button class="submit-btn" id="submit-btn" onclick="submitForm()" style="opacity:.45;cursor:not-allowed" disabled>Complete required fields to submit &rarr;</button>
       <div class="success-box" id="success-box">
         <h3>Quote request sent!</h3>
         <p>We&rsquo;ll follow up within a few hours to confirm your specs. Call <strong>(609) 742-1720</strong> 24/7 for anything urgent.</p>
@@ -783,29 +802,46 @@ function pickDel(v){
 }
 
 // ── PRICE CALC ────────────────────────────────────────────────────────────────
+// KB traverse: map draw type + length index to KB_TRAVERSE key
+const KB_DRAW_KEYS = {
+  split: ['split_30_48','split_48_84','split_66_120','split_84_156','split_156_228'],
+  oneR:  ['oneR_30_48', 'oneR_48_84', 'oneR_66_120'],
+  oneL:  ['oneL_30_48', 'oneL_48_84'],
+  double:['dbl_48_84',  'dbl_84_156']
+};
+
 function calcPrice(){
-  if(!S.brand){ $('qp-pending').style.display='block'; $('qp-detail').style.display='none'; return; }
+  if(!S.brand){
+    $('qp-pending').style.display='block'; $('qp-detail').style.display='none';
+    updateSubmitState(); return;
+  }
   $('qp-pending').style.display='none';
   $('qp-detail').style.display='block';
-
   $('q-brand').textContent=S.brandLabel;
 
   let rodCost=0, rodLabel='—';
+
   if(S.brand==='pt' && S.length && S.diameter){
     const pmap=S.diameter==='158'?PT_POLES_158:PT_POLES_178;
     const pp=pmap[S.length]||0;
     rodCost=pp*ptSections;
-    rodLabel=ptSections+'×'+S.length+'ft @ '+fmt(pp)+'ea = '+fmt(rodCost);
+    rodLabel=ptSections+'×'+S.length+'ft @ '+fmt(pp)+'/section = '+fmt(rodCost);
   } else if(S.brand==='sm' && S.length){
     const pmap=S.diameter==='34'?SM_34_POLES:SM_138_POLES;
     const pp=pmap[S.length]||0;
-    rodCost=pp; rodLabel=S.length+'ft @ '+fmt(pp);
+    rodCost=pp; rodLabel=S.length+'ft pole = '+fmt(pp);
   } else if(S.brand==='moto' && S.motorTrackWidth){
     const tm=MOTOR_TRACK[S.motorTrackWidth];
     if(tm){rodCost=tm.price; rodLabel=tm.label+' = '+fmt(rodCost);}
-  } else if(S.brand==='kb'){
-    // pricing done via bracket step for traverse
-    rodCost=0; rodLabel='See bracket/traverse';
+  } else if(S.brand==='kb' && S.diameter && S.length){
+    // Map draw type + length range index to KB_TRAVERSE entry
+    const drawKeys=KB_DRAW_KEYS[S.diameter]||[];
+    const rangeIdx=parseInt(S.length.replace('kb',''))||0;
+    const key=drawKeys[rangeIdx];
+    if(key && KB_TRAVERSE[key]){
+      rodCost=KB_TRAVERSE[key].price;
+      rodLabel=KB_TRAVERSE[key].label+' = '+fmt(rodCost);
+    }
   }
   if(rodCost>0){$('q-rod-row').style.display='flex'; $('q-rod').textContent=rodLabel;}
   else $('q-rod-row').style.display='none';
@@ -823,10 +859,9 @@ function calcPrice(){
     if(S.frenchReturn){
       const frP=S.diameter==='178'?105.06:92.70;
       braCost+=frP;
-      braCost=braCost;
     }
     $('q-bracket-row').style.display='flex';
-    $('q-bracket').textContent=S.bracketQty+'× = '+fmt(braCost);
+    $('q-bracket').textContent=S.bracketQty+' × '+fmt(bracketPrice)+' = '+fmt(braCost)+(S.frenchReturn?' + French Returns':'');
   } else $('q-bracket-row').style.display='none';
 
   let ringCost=0;
@@ -834,14 +869,70 @@ function calcPrice(){
     const rp=S.brand==='sm'?(S.diameter==='34'?SM_RING_34:SM_RING_138):PT_RING_158;
     ringCost=rp*S.rings;
     $('q-rings-row').style.display='flex';
-    $('q-rings').textContent=S.rings+' @ '+fmt(rp)+' = '+fmt(ringCost);
+    $('q-rings').textContent=S.rings+' rings @ '+fmt(rp)+' = '+fmt(ringCost);
   } else $('q-rings-row').style.display='none';
 
-  const motorCost=0; // decorative rod motor pricing done at quote
   $('q-motor-row').style.display='none';
 
-  const total=rodCost+finCost+braCost+ringCost+motorCost;
+  const total=rodCost+finCost+braCost+ringCost;
   $('q-total').textContent=total>0?fmt(total)+' est.':'TBD';
+
+  // ── Update inline summary in Step 9 (always shown once brand picked) ──
+  const inlineRows=$('inline-rows');
+  const inlineTotal=$('inline-total');
+  if(inlineRows && inlineTotal){
+    if(S.brand){
+      let rows='';
+      rows+='<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:.5px solid rgba(255,255,255,.08);margin-bottom:8px">' +
+        '<span style="color:var(--text-muted)">Brand</span>' +
+        '<span style="color:var(--cream);font-weight:500">'+S.brandLabel+'</span></div>';
+      if(S.diameter) rows+='<div style="display:flex;justify-content:space-between;font-size:12px;padding:2px 0"><span style="color:var(--text-muted)">Type / Diameter</span><span style="color:var(--cream)">'+S.diameter+'</span></div>';
+      if(S.finishLabel) rows+='<div style="display:flex;justify-content:space-between;font-size:12px;padding:2px 0"><span style="color:var(--text-muted)">Finish</span><span style="color:var(--cream)">'+S.finishLabel+'</span></div>';
+      if(rodCost>0) rows+='<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0"><span style="color:var(--text-muted)">Rod / Track</span><span style="color:var(--cream)">'+fmt(rodCost)+'</span></div>';
+      else if(S.length) rows+='<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0"><span style="color:var(--text-muted)">Length</span><span style="color:#aaa;font-style:italic">Confirm at quote</span></div>';
+      if(finCost>0) rows+='<div style="display:flex;justify-content:space-between;font-size:12px;padding:2px 0"><span style="color:var(--text-muted)">Finials</span><span style="color:var(--cream)">'+fmt(finCost)+'</span></div>';
+      if(braCost>0) rows+='<div style="display:flex;justify-content:space-between;font-size:12px;padding:2px 0"><span style="color:var(--text-muted)">Brackets</span><span style="color:var(--cream)">'+fmt(braCost)+'</span></div>';
+      if(ringCost>0) rows+='<div style="display:flex;justify-content:space-between;font-size:12px;padding:2px 0"><span style="color:var(--text-muted)">Rings ('+S.rings+')</span><span style="color:var(--cream)">'+fmt(ringCost)+'</span></div>';
+      if(!rows) rows='<div style="font-size:12px;color:var(--text-muted);font-style:italic">Keep filling in the steps above — your estimate builds as you go.</div>';
+      inlineRows.innerHTML=rows;
+      inlineTotal.textContent=total>0?fmt(total)+' est.':'Building...';
+    } else {
+      inlineRows.innerHTML='<div style="font-size:12px;color:var(--text-muted);font-style:italic">Select brand and size above to see your estimate build in real time.</div>';
+      inlineTotal.textContent='—';
+    }
+  }
+
+  updateSubmitState();
+}
+
+// ── SUBMIT VALIDATION ─────────────────────────────────────────────────────────
+function updateSubmitState(){
+  const name=($('f-name')||{}).value||'';
+  const phone=($('f-phone')||{}).value||'';
+  const email=($('f-email')||{}).value||'';
+  const missing=[];
+
+  if(!S.brand) missing.push('Select a brand (Step 1)');
+  if(!S.diameter && S.brand!=='other') missing.push('Choose diameter or configuration (Step 2)');
+  if(!S.length && S.brand!=='other') missing.push('Choose a length (Step 3)');
+  if(!S.finish && S.brand!=='kb' && S.brand!=='moto' && S.brand!=='other') missing.push('Choose a finish (Step 4)');
+  if(!name.trim()) missing.push('Enter your name');
+  if(!phone.trim() && !email.trim()) missing.push('Enter a phone number or email');
+
+  const btn=$('submit-btn');
+  const clBox=$('checklist-box');
+  const clItems=$('checklist-items');
+
+  if(missing.length===0){
+    if(btn){ btn.disabled=false; btn.style.opacity='1'; btn.style.cursor='pointer'; btn.textContent='Send quote request →'; }
+    if(clBox) clBox.style.display='none';
+  } else {
+    if(btn){ btn.disabled=true; btn.style.opacity='.45'; btn.style.cursor='not-allowed'; btn.textContent='Complete required fields to submit →'; }
+    if(clBox && clItems){
+      clBox.style.display='block';
+      clItems.innerHTML=missing.map(m=>'• '+m).join('<br>');
+    }
+  }
 }
 
 // ── SUBMIT ────────────────────────────────────────────────────────────────────
