@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -2505,6 +2505,16 @@ function selectProduct(productId, productName, isInstant) {
       document.getElementById(id).style.display = 'none';
     });
 
+    // Cellular always uses Norman — skip brand chooser entirely
+    if (productId === 'cellular') {
+      document.getElementById('brand-chooser').style.display = 'none';
+      selectBrand('norman');
+      return;
+    }
+
+    // Restore brand chooser for all other instant products
+    document.getElementById('brand-chooser').style.display = '';
+
     // PB Custom is only valid for roller — dim the button for other products
     const pbBtn = document.getElementById('btn-brand-pb');
     if (productId === 'roller') {
@@ -2732,6 +2742,14 @@ function configureForProduct(productId) {
   if (productId === 'roller') {
     renderFlatFabricGrid('roller');
   } else if (productId === 'cellular') {
+    // Initialize cell size state from the currently selected button
+    var selSzBtn = document.querySelector('#grp-cell-size .opt-btn.sel');
+    if (selSzBtn) {
+      var szMap = {'3⁄8″ S':'38s','9⁄16″ S':'916s','1⁄2″ D':'12d','3⁄4″ S':'34s','3⁄4″ D':'34d','1 1⁄4″ S':'114s'};
+      var szKey = Object.keys(szMap).find(function(k){ return selSzBtn.textContent.trim().startsWith(k.substring(0,3)); });
+      currentCellSizeCode = szKey ? szMap[szKey] : '34s';
+    }
+    selectCellSz(currentCellSizeCode);
     renderFlatFabricGrid('cell');
   }
   // Always reset chain-opts when switching products
@@ -2809,6 +2827,43 @@ function toggleLightGuardNote(on) {
   if (el) el.style.display = on ? 'block' : 'none';
 }
 
+// ─── 9/16"S limited color availability (Norman HC 9/16"S chart) ──────
+const CELL_916S_LF = new Set(['C7015K','C7016K','C7017K','C7427K','C7135K','C7138K',
+  'C7423K','C7424K','C7425K','C7142K','C7208K','C7143K','C7516K','C7617K','C7715K']);
+const CELL_916S_RD = new Set(['C4008T','C4009T','C4010T','C4011T','C4427T','C4123T',
+  'C4126T','C4420T','C4421T','C4422T','C4131T','C4205T','C4130T','C4518T','C4609T','C4708T']);
+let currentCellSizeCode = '34s';
+const CELL_SZ_IDX = {'38s':0,'916s':1,'12d':2,'34s':3,'34d':4,'114s':5};
+
+function selectCellSz(sizeCode) {
+  currentCellSizeCode = sizeCode;
+  var sizeIdx = CELL_SZ_IDX[sizeCode] !== undefined ? CELL_SZ_IDX[sizeCode] : 3;
+  var fabSels = {'lf':'#grp-cell-fabric .opt-btn:first-child','rd':'#grp-cell-fabric .opt-btn:nth-child(2)','sheer':'#cell-fab-sheer-btn','dn':'#cell-fab-dn-btn'};
+  var needReset = false;
+  ['lf','rd','sheer','dn'].forEach(function(fab) {
+    var allowed = CELL_COMPAT[fab] || [0,1,2,3,4,5];
+    var ok = allowed.includes(sizeIdx);
+    var btn = document.querySelector(fabSels[fab]);
+    if (!btn) return;
+    btn.disabled = !ok; btn.style.opacity = ok?'1':'0.35'; btn.style.cursor = ok?'pointer':'not-allowed';
+    if (!ok && btn.classList.contains('sel')) { btn.classList.remove('sel'); needReset = true; }
+  });
+  if (needReset) {
+    var lfBtn = document.querySelector('#grp-cell-fabric .opt-btn:first-child');
+    if (lfBtn) { lfBtn.classList.add('sel'); filterCellSizes('lf'); return; }
+  }
+  var msgs = {
+    '38s':'3⁄8″S: Light Filtering and Sheer available. Room Darkening not available in 3⁄8″S.',
+    '916s':'9⁄16″S has a limited colour palette — 15 Light Filtering and 16 Room Darkening colors. Sheer not available.',
+    '12d':'1⁄2″D: Light Filtering and Room Darkening available. Sheer not available in double-cell.',
+    '34d':'3⁄4″D: Light Filtering and Room Darkening available. Sheer not available in double-cell.',
+    '34s':'3⁄4″S: All fabric categories available.',
+    '114s':'1 1⁄4″S: All fabric categories available.'
+  };
+  var noteEl = document.getElementById('cell-size-note');
+  if (noteEl) { var m=msgs[sizeCode]||''; noteEl.textContent=m; noteEl.style.display=m?'block':'none'; }
+  if (currentProduct === 'cellular') renderFlatFabricGrid('cell');
+}
 // ─── filterCellSizes ─────────────────────────────────────────
 // Fabric → cell size compatibility from Norman Portrait catalog
 const CELL_COMPAT = {
@@ -3807,6 +3862,11 @@ function renderFlatFabricGrid(product) {
         const isObj  = color && typeof color === 'object';
         const cName  = isObj ? color.n : color;
         const cCode  = isObj ? color.c : '';
+        // Filter by cell size for cellular product
+        if (product === 'cell' && cCode && currentCellSizeCode === '916s') {
+          if (currentCellFabric === 'lf' && !CELL_916S_LF.has(cCode)) return;
+          if (currentCellFabric === 'rd' && !CELL_916S_RD.has(cCode)) return;
+        }
         const dot    = colorDot(cName);
         const codeTxt = cCode ? ' <span style="font-size:9px;color:#aaa;margin-left:2px">' + cCode + '</span>' : '';
         html += '<button class="opt-btn" style="font-size:11px;display:inline-flex;align-items:center;gap:0" onclick="selFlatFabric(this,\'' + product + '\',' + ci + ',' + ki + ')">'
