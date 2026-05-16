@@ -210,13 +210,6 @@
   <div class="hw-section" id="sec-quote">
     <div class="step">
       <div id="hw-form">
-        <!-- Summary bar — shows selections made -->
-        <div id="hw-summary-bar" style="background:var(--espresso);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:12px;color:var(--cream);display:flex;gap:6px;flex-wrap:wrap;align-items:center">
-          <span style="color:var(--gold);font-weight:600">Your selections:</span>
-          <span id="hw-sum-type" style="background:rgba(45,224,193,.15);border-radius:6px;padding:2px 8px"></span>
-          <span id="hw-sum-style" style="background:rgba(45,224,193,.15);border-radius:6px;padding:2px 8px;display:none"></span>
-          <span id="hw-sum-brand" style="background:rgba(45,224,193,.15);border-radius:6px;padding:2px 8px;display:none"></span>
-        </div>
 
         <div class="form-row">
           <div class="form-group"><label>Your name *</label><input type="text" id="hw-name" placeholder="Jane Smith"></div>
@@ -293,15 +286,6 @@ function hwReveal(id) {
   setTimeout(function(){ el.scrollIntoView({ behavior:'smooth', block:'nearest' }); }, 60);
 }
 function hwUpdateSummary() {
-  var labels = {
-    'decorative': 'Decorative',
-    'functional': 'Non-decorative / Traverse'
-  };
-  document.getElementById('hw-sum-type').textContent = labels[hwState.type] || hwState.type;
-  var styleEl = document.getElementById('hw-sum-style');
-  if (hwState.style) { styleEl.textContent = hwState.style; styleEl.style.display = ''; }
-  var brandEl = document.getElementById('hw-sum-brand');
-  if (hwState.brand) { brandEl.textContent = hwState.brand; brandEl.style.display = ''; }
 }
 
 function hwPickType(type) {
