@@ -381,25 +381,17 @@
         <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');calcDrapePrice()">Standard liner (+$7/yd)</button>
         <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');calcDrapePrice()">Blackout liner (+$7/yd)</button>
       </div>
+      <div style="margin-top:8px;display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid #e8e4dc;border-radius:8px;background:#f9f7f4">
+        <input type="checkbox" id="d-interlining-check" onchange="calcDrapePrice()" style="width:16px;height:16px;cursor:pointer;flex-shrink:0">
+        <label for="d-interlining-check" style="font-size:12px;font-weight:500;color:#444;cursor:pointer;line-height:1.4">Add interlining <span style="color:#888;font-weight:400">(+$7/yd — adds body, weight &amp; insulation; works with any liner)</span></label>
+      </div>
       <div style="font-size:11px;color:#aaa;margin-top:7px;line-height:1.5">Colors and exact fabric options confirmed during your free in-home consultation. Final pricing confirmed at order.</div>
     </div>
   </div>
 
-  <!-- STEP 3: LINING -->
+  <!-- STEP 3: QUOTE FORM -->
   <div class="step">
     <div class="step-label">Step 3</div>
-    <div class="step-title">Lining</div>
-    <div class="opt-row" id="grp-drape-lining" style="margin-top:12px">
-      <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-lining');calcDrapePrice()">Unlined</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-drape-lining');calcDrapePrice()">Lined</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-drape-lining');calcDrapePrice()">Blackout lined</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-drape-lining');calcDrapePrice()">Interlining (luxury)</button>
-    </div>
-  </div>
-
-  <!-- STEP 4: QUOTE FORM -->
-  <div class="step">
-    <div class="step-label">Step 4</div>
     <div class="step-title">Review price &amp; request order</div>
     <div class="step-sub">Enter your dimensions above to get an instant price estimate. Fill out the form and we'll confirm everything before fabrication.</div>
     <div style="display:flex;align-items:flex-start;gap:10px;background:#fef9ec;border:1px solid #f0d070;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#7a5c00;line-height:1.5">
@@ -1568,12 +1560,13 @@ function calcDrapePrice() {
   // Widths
   var numWidths = Math.max(D_MIN_WIDTHS, Math.ceil((w * fullness) / D_FABRIC_WIDTH));
 
-  // Lining
-  var lBtn = document.querySelector('#grp-drape-lining .opt-btn.sel');
-  var lining = lBtn ? lBtn.textContent.trim() : 'Unlined';
-  var isLined      = lining !== 'Unlined';
-  var isInterlining = lining === 'Interlining (luxury)';
-  var ratePerWidth = (isLined ? D_RATE_LINED : D_RATE_UNLINED) + (isInterlining ? 15 : 0);
+  // Lining — read from inline liner picker (grp-drape-liner)
+  var lBtn = document.querySelector('#grp-drape-liner .opt-btn.sel');
+  var lining = lBtn ? lBtn.textContent.trim() : 'No liner';
+  var isLined = lining !== 'No liner';
+  var interCheck = document.getElementById('d-interlining-check');
+  var isInterlining = interCheck ? interCheck.checked : false;
+  var ratePerWidth = (isLined ? D_RATE_LINED : D_RATE_UNLINED);
 
   // Length surcharge (over 100")
   var lenSurcharge = h > 100 ? Math.ceil((h - 100) / 10) * D_LEN_SURCHARGE : 0;
@@ -1586,6 +1579,7 @@ function calcDrapePrice() {
     yardsTotal = Math.ceil(((h + 16) / 36) * numWidths * 10) / 10;
     fabricCost = yardsTotal * D_FABRIC_PER_YD;
     if (isLined) liningCost = yardsTotal * D_LINING_PER_YD;
+    if (isInterlining) liningCost += yardsTotal * D_LINING_PER_YD; // interlining +$7/yd
   }
 
   // Cornice
@@ -1692,7 +1686,7 @@ function calcDrapePrice() {
     ') — pattern repeats add more. Confirmed at order.';
 
   document.getElementById('drape-price-note').textContent =
-    '$' + ratePerWidth + '/width ' + (isInterlining ? '(lined + $15 interlining)' : isLined ? '(lined)' : '(unlined)') +
+    '$' + ratePerWidth + '/width ' + (isLined ? '(lined' + (isInterlining ? ' + interlining)' : ')') : '(unlined)') +
     (lenSurcharge ? ', +$15/width per 10" over 100"' : '') +
     (fabricCost ? '' : ' · Fabric & lining not included') +
     ' · 2-width minimum · Final price confirmed at order.';
@@ -1945,7 +1939,9 @@ function submitDrape() {
   if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
   var pleat      = drapeState.pleat  || getOpt('pleat-cards') || '—';
   var fabric     = drapeState.fabric || '—';
-  var lining     = getOpt('grp-drape-lining');
+  var lining     = getOpt('grp-drape-liner') || 'No liner';
+  var interCb    = document.getElementById('d-interlining-check');
+  var interlining = interCb && interCb.checked;
   var panels     = getOpt('grp-drape-panels');
   var panelSide  = panels === 'Single panel' ? getOpt('grp-drape-side') : '—';
   var returnSz   = document.getElementById('d-return').value || '4';
@@ -1969,8 +1965,8 @@ function submitDrape() {
     + '\nAddress: ' + (document.getElementById('d-address').value.trim() || '—') + '\n\n'
     + 'Pleat style: ' + (drapeState.pleat || '—') + '\n'
     + 'Fabric: ' + fabric + '\n'
-    + (fabric === 'We supply the fabric' ? 'Color: ' + (getOpt('grp-drape-color')||'—') + '  Liner: ' + (getOpt('grp-drape-liner')||'No liner') + '\n' : '')
-    + 'Lining: ' + lining + '\n'
+    + (fabric === 'We supply the fabric' ? 'Color: ' + (getOpt('grp-drape-color')||'—') + '  Liner: ' + lining + '\n' : '')
+    + 'Lining: ' + lining + (interlining ? ' + Interlining (+$7/yd)' : '') + '\n'
     + 'Panels: ' + panels + (panelSide !== '—' ? ' — ' + panelSide : '') + '\n'
     + (!isRipple && pleat !== 'Rod Pocket / Sheered Pocket' && fullness !== '—' ? 'Fullness: ' + fullness + '\n' : '')
     + (pleat === 'Rod Pocket / Sheered Pocket' ? (function(){
