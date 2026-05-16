@@ -189,21 +189,199 @@
   </div><!-- /sec-decorative -->
 
   <!-- ── FUNCTIONAL PATH ────────────────────────── -->
+  <!-- ── KIRSCH BASICS CONFIGURATOR ──────────────────────────── -->
   <div class="hw-section" id="sec-functional">
-    <div class="step">
-      <div class="step-title" style="margin-bottom:4px">Kirsch Architrac &amp; traverse systems</div>
-      <div class="step-sub">The industry standard for smooth traverse operation — perfect for large windows, motorized panels, and commercial applications.</div>
-      <div style="background:var(--gold-mid);border:1px solid #e8e8e4;border-radius:12px;padding:18px 20px;margin:14px 0">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 20px">
-          <div style="font-size:12px;color:#444;display:flex;gap:8px"><span style="color:var(--gold);font-weight:700">✓</span>Single or double track</div>
-          <div style="font-size:12px;color:#444;display:flex;gap:8px"><span style="color:var(--gold);font-weight:700">✓</span>Motorization compatible</div>
-          <div style="font-size:12px;color:#444;display:flex;gap:8px"><span style="color:var(--gold);font-weight:700">✓</span>Cut to exact width</div>
-          <div style="font-size:12px;color:#444;display:flex;gap:8px"><span style="color:var(--gold);font-weight:700">✓</span>Ceiling or wall mount</div>
-          <div style="font-size:12px;color:#444;display:flex;gap:8px"><span style="color:var(--gold);font-weight:700">✓</span>Commercial grade</div>
-          <div style="font-size:12px;color:#444;display:flex;gap:8px"><span style="color:var(--gold);font-weight:700">✓</span>Ripple fold carrier system</div>
-        </div>
+
+    <!-- Header -->
+    <div style="background:var(--espresso);border-radius:12px;padding:18px 22px;margin-bottom:24px;display:flex;align-items:center;gap:14px">
+      <div>
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:4px">Kirsch Basics</div>
+        <div style="font-size:16px;font-weight:600;color:var(--cream)">Non-Decorative Hardware</div>
+        <div style="font-size:12px;color:var(--text-dark);margin-top:3px">Traverse rods, curtain rods, tension &amp; sash rods — functional, reliable, white finish.</div>
       </div>
     </div>
+
+    <!-- Step 1: System type -->
+    <div class="step" id="kf-step1">
+      <div class="step-label">Step 1</div>
+      <div class="step-title">What type of system?</div>
+      <div class="opt-cards" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));margin-top:14px">
+
+        <div class="opt-card" onclick="kfSetType('traverse',this)">
+          <div class="opt-art" style="height:90px;background:#f5f5f3">
+            <svg viewBox="0 0 200 60" width="160" xmlns="http://www.w3.org/2000/svg">
+              <rect x="5" y="22" width="190" height="8" rx="4" fill="#ccc"/>
+              <rect x="0" y="18" width="12" height="16" rx="3" fill="#aaa"/>
+              <rect x="188" y="18" width="12" height="16" rx="3" fill="#aaa"/>
+              <rect x="90" y="14" width="20" height="24" rx="3" fill="#bbb"/>
+              <line x1="60" y1="30" x2="60" y2="56" stroke="#bbb" stroke-width="2"/>
+              <line x1="140" y1="30" x2="140" y2="56" stroke="#bbb" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="opt-label-bar"><div class="opt-name">Traverse Rod</div><div class="opt-desc">Cord-draw system — panels open &amp; close on a track</div></div>
+        </div>
+
+        <div class="opt-card" onclick="kfSetType('lockseam',this)">
+          <div class="opt-art" style="height:90px;background:#f5f5f3">
+            <svg viewBox="0 0 200 60" width="160" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="24" width="180" height="12" rx="6" fill="#ccc"/>
+              <rect x="0" y="20" width="14" height="20" rx="4" fill="#aaa"/>
+              <rect x="186" y="20" width="14" height="20" rx="4" fill="#aaa"/>
+              <rect x="93" y="16" width="14" height="28" rx="4" fill="#bbb"/>
+            </svg>
+          </div>
+          <div class="opt-label-bar"><div class="opt-name">Lockseam Curtain Rod</div><div class="opt-desc">Stationary rod — rod pocket, grommet, or tab panels</div></div>
+        </div>
+
+        <div class="opt-card" onclick="kfSetType('tension',this)">
+          <div class="opt-art" style="height:90px;background:#f5f5f3">
+            <svg viewBox="0 0 200 60" width="160" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="100" cy="30" rx="90" ry="6" fill="#ccc"/>
+              <circle cx="10" cy="30" r="8" fill="#aaa"/>
+              <circle cx="190" cy="30" r="8" fill="#aaa"/>
+            </svg>
+          </div>
+          <div class="opt-label-bar"><div class="opt-name">Tension Rod</div><div class="opt-desc">Spring-loaded, no holes needed — café curtains &amp; sheers</div></div>
+        </div>
+
+        <div class="opt-card" onclick="kfSetType('sash',this)">
+          <div class="opt-art" style="height:90px;background:#f5f5f3">
+            <svg viewBox="0 0 200 60" width="160" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="27" width="180" height="6" rx="3" fill="#ccc"/>
+              <circle cx="12" cy="30" r="5" fill="#aaa"/>
+              <circle cx="188" cy="30" r="5" fill="#aaa"/>
+              <rect x="10" y="35" width="180" height="6" rx="3" fill="#ccc"/>
+            </svg>
+          </div>
+          <div class="opt-label-bar"><div class="opt-name">Sash Rod</div><div class="opt-desc">Flat or round — door panels, café tiers, small windows</div></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Step 2: Sub-options (changes per type) -->
+    <div class="step" id="kf-step2" style="display:none">
+      <div class="step-label">Step 2</div>
+      <div class="step-title" id="kf-step2-title">Options</div>
+
+      <!-- TRAVERSE sub-options -->
+      <div id="kf-traverse-opts" style="display:none">
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Number of panels / tracks</div>
+        <div class="opt-row" id="grp-kf-tracks">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-kf-tracks');kfUpdate()">Single traverse</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-tracks');kfUpdate()">Double traverse</button>
+        </div>
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px;margin-top:14px">Draw type</div>
+        <div class="opt-row" id="grp-kf-draw">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-kf-draw');kfUpdate()">Split draw (opens from center)</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-draw');kfUpdate()">One-way right</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-draw');kfUpdate()">One-way left</button>
+        </div>
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px;margin-top:14px">Width range</div>
+        <div class="opt-row" id="grp-kf-trav-width">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-kf-trav-width');kfUpdate()">30″ – 48″</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-trav-width');kfUpdate()">48″ – 84″</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-trav-width');kfUpdate()">66″ – 120″</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-trav-width');kfUpdate()">84″ – 156″</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-trav-width');kfUpdate()">156″ – 228″</button>
+        </div>
+        <div class="tooltip-note" style="margin-top:8px">Front return: 2¼″ – 4½″. All White finish. Safety tensioner included.</div>
+      </div>
+
+      <!-- LOCKSEAM sub-options -->
+      <div id="kf-lockseam-opts" style="display:none">
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Rod configuration</div>
+        <div class="opt-row" id="grp-kf-rconfig">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-kf-rconfig');kfUpdate()">Single rod</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-rconfig');kfUpdate()">Double rod</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-rconfig');kfUpdate()">Triple rod</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-rconfig');kfUpdate()">Bay rod</button>
+        </div>
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px;margin-top:14px">Rod diameter (front rod)</div>
+        <div class="opt-row" id="grp-kf-diam">
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-diam');kfUpdate()">½″ <span style="font-size:10px;color:#888">sheer/café</span></button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-diam');kfUpdate()">1½″</button>
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-kf-diam');kfUpdate()">2½″ <span style="font-size:10px;color:#888">standard</span></button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-diam');kfUpdate()">3½″</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-diam');kfUpdate()">5½″ <span style="font-size:10px;color:#888">wide valance</span></button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-diam');kfUpdate()">8½″ <span style="font-size:10px;color:#888">wide valance</span></button>
+        </div>
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px;margin-top:14px">Width range</div>
+        <div class="opt-row" id="grp-kf-ls-width">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-kf-ls-width');kfUpdate()">Under 28″</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-ls-width');kfUpdate()">28″ – 48″</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-ls-width');kfUpdate()">48″ – 84″</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-ls-width');kfUpdate()">84″ – 120″</button>
+        </div>
+        <div class="tooltip-note" style="margin-top:8px">All White finish. Center support bracket included on orders over 48″. Bay rod available 78″–127″.</div>
+      </div>
+
+      <!-- TENSION sub-options -->
+      <div id="kf-tension-opts" style="display:none">
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Tension rod type</div>
+        <div class="opt-row" id="grp-kf-ten-type">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-kf-ten-type');kfUpdate()">⅝″ Oval</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-ten-type');kfUpdate()">¾″ Round</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-ten-type');kfUpdate()">Door sash (zinc)</button>
+        </div>
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px;margin-top:14px">Width range</div>
+        <div class="opt-row" id="grp-kf-ten-width">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-kf-ten-width');kfUpdate()">8″ – 16″</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-ten-width');kfUpdate()">16″ – 28″</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-ten-width');kfUpdate()">22″ – 48″</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-ten-width');kfUpdate()">36″ – 72″</button>
+        </div>
+        <div class="tooltip-note" style="margin-top:8px">Spring-loaded — no drilling. White or zinc. Perfect for café curtains, sheers, and door panels.</div>
+      </div>
+
+      <!-- SASH sub-options -->
+      <div id="kf-sash-opts" style="display:none">
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Sash rod type</div>
+        <div class="opt-row" id="grp-kf-sash-type">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-kf-sash-type');kfUpdate()">¾″ Door sash rod</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-sash-type');kfUpdate()">⅝″ Flat sash rod</button>
+        </div>
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px;margin-top:14px">Width range</div>
+        <div class="opt-row" id="grp-kf-sash-width">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-kf-sash-width');kfUpdate()">11″ – 19″</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-sash-width');kfUpdate()">16″ – 28″</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-sash-width');kfUpdate()">20″ – 36″</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-sash-width');kfUpdate()">28″ – 50″</button>
+        </div>
+        <div class="tooltip-note" style="margin-top:8px">White finish. Ideal for door panels, café tiers, and small specialty windows.</div>
+      </div>
+    </div>
+
+    <!-- Step 3: Quantity + mount + summary -->
+    <div class="step" id="kf-step3" style="display:none">
+      <div class="step-label">Step 3</div>
+      <div class="step-title">Quantity &amp; details</div>
+      <div class="form-row" style="margin-top:12px">
+        <div class="form-group">
+          <label>How many rods / windows?</label>
+          <div class="qty-btns">
+            <button class="qty-btn" onclick="var n=document.getElementById('kf-qty');n.value=Math.max(1,parseInt(n.value)-1);kfUpdate()">−</button>
+            <input class="qty-num" id="kf-qty" type="number" value="1" min="1" max="50" oninput="kfUpdate()">
+            <button class="qty-btn" onclick="var n=document.getElementById('kf-qty');n.value=parseInt(n.value)+1;kfUpdate()">+</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Mount</label>
+          <div class="opt-row" id="grp-kf-mount" style="margin-top:8px">
+            <button class="opt-btn sel" onclick="selOpt(this,'grp-kf-mount');kfUpdate()">Wall mount</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-kf-mount');kfUpdate()">Ceiling mount</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary box -->
+      <div id="kf-summary" style="display:none;background:var(--espresso);border-radius:12px;padding:16px 18px;margin:16px 0">
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Your selection</div>
+        <div id="kf-summary-lines"></div>
+        <div style="font-size:11px;color:var(--text-faint);margin-top:10px;line-height:1.5">Kirsch Basic hardware — White finish · Quote includes supply only. Installation available — ask in notes.</div>
+      </div>
+    </div>
+
   </div>
 
   <!-- ── QUOTE FORM — appears automatically ────────────────────── -->
@@ -304,10 +482,116 @@ function hwPickType(type) {
     hwReveal('sec-decorative');
   } else {
     hwReveal('sec-functional');
-    // Functional path goes straight to form
-    hwUpdateSummary();
-    hwReveal('sec-quote');
+    // Kirsch basics starts at type selection — no auto-reveal of form
   }
+}
+
+// ── KIRSCH BASICS CONFIGURATOR ────────────────────────────
+var kfType = '';
+
+function kfSetType(type, el) {
+  kfType = type;
+  document.querySelectorAll('#kf-step1 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  if (el) el.classList.add('sel');
+
+  // Show/hide sub-option panels
+  ['traverse','lockseam','tension','sash'].forEach(function(t) {
+    var el2 = document.getElementById('kf-' + t + '-opts');
+    if (el2) el2.style.display = t === type ? 'block' : 'none';
+  });
+
+  var titles = {
+    traverse: 'Traverse rod configuration',
+    lockseam: 'Curtain rod options',
+    tension:  'Tension rod options',
+    sash:     'Sash rod options'
+  };
+  document.getElementById('kf-step2-title').textContent = titles[type] || 'Options';
+  document.getElementById('kf-step2').style.display = 'block';
+  document.getElementById('kf-step3').style.display = 'block';
+  kfUpdate();
+  hwReveal('sec-quote');
+  setTimeout(function() {
+    var s = document.getElementById('kf-step2');
+    if (s) { var nav = document.getElementById('site-nav'); var off = nav ? nav.offsetHeight + 12 : 86; window.scrollTo({ top: s.getBoundingClientRect().top + window.scrollY - off, behavior: 'smooth' }); }
+  }, 80);
+}
+
+function kfUpdate() {
+  var qty = parseInt(document.getElementById('kf-qty').value) || 1;
+  var mount = (document.querySelector('#grp-kf-mount .opt-btn.sel') || {}).textContent || 'Wall mount';
+  var lines = [];
+
+  if (kfType === 'traverse') {
+    var tracks = (document.querySelector('#grp-kf-tracks .opt-btn.sel') || {}).textContent || '—';
+    var draw   = (document.querySelector('#grp-kf-draw .opt-btn.sel') || {}).textContent || '—';
+    var width  = (document.querySelector('#grp-kf-trav-width .opt-btn.sel') || {}).textContent || '—';
+    lines = [
+      {l:'System', v:'Kirsch Superfine® Pro Traverse'},
+      {l:'Configuration', v:tracks},
+      {l:'Draw type', v:draw},
+      {l:'Width range', v:width},
+      {l:'Mount', v:mount},
+      {l:'Quantity', v:qty + ' rod(s)'},
+      {l:'Finish', v:'White · Safety tensioner included'}
+    ];
+  } else if (kfType === 'lockseam') {
+    var config = (document.querySelector('#grp-kf-rconfig .opt-btn.sel') || {}).textContent || '—';
+    var diam   = (document.querySelector('#grp-kf-diam .opt-btn.sel') || {}).textContent || '—';
+    var width2 = (document.querySelector('#grp-kf-ls-width .opt-btn.sel') || {}).textContent || '—';
+    lines = [
+      {l:'System', v:'Kirsch Lockseam® Curtain Rod'},
+      {l:'Configuration', v:config},
+      {l:'Rod diameter', v:diam.replace(/<[^>]+>/g,'').trim()},
+      {l:'Width range', v:width2},
+      {l:'Mount', v:mount},
+      {l:'Quantity', v:qty + ' rod(s)'},
+      {l:'Finish', v:'White · Brackets included'}
+    ];
+  } else if (kfType === 'tension') {
+    var ttype = (document.querySelector('#grp-kf-ten-type .opt-btn.sel') || {}).textContent || '—';
+    var twidth= (document.querySelector('#grp-kf-ten-width .opt-btn.sel') || {}).textContent || '—';
+    lines = [
+      {l:'System', v:'Kirsch Tension Rod'},
+      {l:'Type', v:ttype},
+      {l:'Width range', v:twidth},
+      {l:'Quantity', v:qty + ' rod(s)'},
+      {l:'Finish', v:'White (zinc for door sash)'}
+    ];
+  } else if (kfType === 'sash') {
+    var stype = (document.querySelector('#grp-kf-sash-type .opt-btn.sel') || {}).textContent || '—';
+    var swidth= (document.querySelector('#grp-kf-sash-width .opt-btn.sel') || {}).textContent || '—';
+    lines = [
+      {l:'System', v:'Kirsch Lockseam® Sash Rod'},
+      {l:'Type', v:stype},
+      {l:'Width range', v:swidth},
+      {l:'Mount', v:mount},
+      {l:'Quantity', v:qty + ' rod(s)'},
+      {l:'Finish', v:'White'}
+    ];
+  }
+
+  if (!lines.length) return;
+  var html = lines.map(function(l) {
+    return '<div style="display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-bottom:.5px solid rgba(45,224,193,.15)">' +
+      '<span style="color:var(--text-muted)">' + l.l + '</span>' +
+      '<span style="color:var(--cream);font-weight:500">' + l.v + '</span>' +
+      '</div>';
+  }).join('');
+  document.getElementById('kf-summary-lines').innerHTML = html;
+  document.getElementById('kf-summary').style.display = 'block';
+
+  // Pre-fill the quote form
+  document.getElementById('hw-notes').placeholder = 'e.g. ' + (lines[0].v) + ', ' + qty + ' window(s), ' + mount.toLowerCase() + '. Any other details…';
+}
+
+function kfGetSummary() {
+  var lines = [];
+  document.querySelectorAll('#kf-summary-lines > div').forEach(function(d) {
+    var spans = d.querySelectorAll('span');
+    if (spans.length >= 2) lines.push(spans[0].textContent + ': ' + spans[1].textContent);
+  });
+  return lines.join('\n');
 }
 
 function hwPickStyle(el, style) {
@@ -339,18 +623,21 @@ function submitHardware() {
   var phone = document.getElementById('hw-phone').value.trim();
   if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
   var delivery = getOpt('grp-del-hw');
+  // Include Kirsch selection if non-decorative
+  var kirschSummary = (hwState.type !== 'decorative' && typeof kfGetSummary === 'function') ? kfGetSummary() : '';
   var body = 'HARDWARE QUOTE REQUEST\n\n'
     + 'Name: ' + name + '\nPhone: ' + phone
     + '\nEmail: ' + (document.getElementById('hw-email').value.trim() || '—') + '\n\n'
-    + 'Hardware type: ' + (hwState.type === 'decorative' ? 'Decorative' : 'Non-decorative / Traverse') + '\n'
+    + 'Hardware type: ' + (hwState.type === 'decorative' ? 'Decorative' : 'Non-decorative — Kirsch Basics') + '\n'
     + (hwState.style ? 'Style: ' + hwState.style + '\n' : '')
     + (hwState.brand ? 'Brand: ' + hwState.brand + '\n' : '')
-    + 'Qty (windows): ' + document.getElementById('hw-qty').value + '\n'
+    + (kirschSummary ? '\nKIRSCH SELECTION:\n' + kirschSummary + '\n' : '')
+    + '\nQty (windows): ' + (document.getElementById('kf-qty') ? document.getElementById('kf-qty').value : document.getElementById('hw-qty').value) + '\n'
     + 'Width: ' + document.getElementById('hw-width').value + '\n'
     + 'Finish: ' + document.getElementById('hw-finish').value + '\n'
     + 'Delivery: ' + delivery + '\n\n'
     + 'Notes:\n' + (document.getElementById('hw-notes').value.trim() || 'None');
-  window.location.href = 'mailto:blindznation@gmail.com'
+  window.location.href = 'mailto:justin@phillyblinds.com'
     + '?subject=' + encodeURIComponent('Hardware Quote — ' + (hwState.style || hwState.type) + ' — ' + name)
     + '&body=' + encodeURIComponent(body);
   document.getElementById('hw-form').style.display = 'none';
