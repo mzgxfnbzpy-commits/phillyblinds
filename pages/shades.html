@@ -2688,6 +2688,30 @@ function chainLenCheck(inputId, warnId, heightId) {
 // Key rule: TDBU/D&N are lift MODES, not operating systems.
 // Cordless, Cord Loop, and Motorized are the operating system choices.
 // Any lift mode can pair with any compatible operating system.
+function cellCheckConflict(source) {
+  var liftSel = (document.querySelector("#grp-cellular-lift .opt-btn.sel") || {}).textContent || "";
+  var fabSel  = (document.querySelector("#grp-cell-fabric .opt-btn.sel") || {}).textContent || "";
+  var isTDBU   = liftSel.indexOf("Top Down") !== -1;
+  var isDNFab  = fabSel.indexOf("Night") !== -1;
+  var isDNLift = liftSel.indexOf("Night") !== -1;
+  var el = document.getElementById("cell-conflict-note");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "cell-conflict-note";
+    el.style.cssText = "display:none;border-radius:8px;padding:10px 13px;font-size:12px;margin-top:8px;line-height:1.5";
+    var lr = document.getElementById("grp-cellular-lift");
+    if (lr && lr.parentElement) lr.parentElement.appendChild(el);
+  }
+  if (isTDBU && isDNFab) {
+    el.style.cssText = "display:block;background:#FEE2E2;border:1px solid #FECACA;border-radius:8px;padding:10px 13px;font-size:12px;color:#991B1B;margin-top:8px;line-height:1.5";
+    el.textContent = "u26A0 Top Down / Bottom Up and Day u0026 Night cannot be combined. Please use Bottom Up lift mode with Day u0026 Night fabric, or choose a different fabric type.";
+  } else if (isDNLift && !isDNFab) {
+    el.style.cssText = "display:block;background:#FEF9C3;border:1px solid #FDE68A;border-radius:8px;padding:10px 13px;font-size:12px;color:#92400E;margin-top:8px;line-height:1.5";
+    el.textContent = "u2139 Day u0026 Night lift selected u2014 select Day u0026 Night in the fabric category below to configure the dual-shade options.";
+  } else {
+    el.style.display = "none";
+  }
+}
 function cellularOpChange(type) {
   const liftBtn  = document.querySelector('#grp-cellular-lift .opt-btn.sel');
   const liftMode = liftBtn ? liftBtn.textContent.trim() : 'Bottom Up';
