@@ -199,7 +199,7 @@
       <div>
         <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:4px">Kirsch Basics</div>
         <div style="font-size:16px;font-weight:600;color:var(--cream)">Non-Decorative Hardware</div>
-        <div style="font-size:12px;color:var(--text-dark);margin-top:3px">Traverse rods, curtain rods, tension &amp; sash rods — functional, reliable, white finish.</div>
+        <div style="font-size:12px;color:var(--text-dark);margin-top:3px">Traverse rods, curtain rods, tension &amp; sash rods — functional, reliable. Architrac available in White or Black.</div>
       </div>
     </div>
 
@@ -848,12 +848,16 @@ function archCalc() {
   var mInp = document.getElementById('arch-masters-inp');
   if (isSplit) {
     if (masterWrap) masterWrap.style.display = 'block';
-    if (mNote) mNote.innerHTML = 'Split draw: <strong>1 set</strong> (1 over + 1 under master) per pair of panels. Default is 1 set. Add more sets below if you have additional pairs.';
+    if (mNote) mNote.innerHTML = 'Split draw: <strong>1 overlap set</strong> (1 over-arm + 1 under-arm) at the center per pair of panels. Default is 1 set. Add more sets if you have additional panel pairs.';
     if (mInp && parseInt(mInp.value) < 1) mInp.value = 1;
+    var soldTag = masterWrap ? masterWrap.querySelector('[style*="gold-mid"]') : null;
+    if (soldTag) soldTag.textContent = 'Sold in pairs — 1 over + 1 under';
   } else {
     if (masterWrap) masterWrap.style.display = 'block';
-    if (mNote) mNote.innerHTML = 'One-way draw: <strong>1 set</strong> (1 over + 1 under master) on the leading edge. Add more sets below if needed.';
+    if (mNote) mNote.innerHTML = 'One-way draw: <strong>1 single-arm master carrier</strong> at the leading edge of the panel. Specify left or right in the notes.';
     if (mInp && parseInt(mInp.value) < 1) mInp.value = 1;
+    var soldTag = masterWrap ? masterWrap.querySelector('[style*="gold-mid"]') : null;
+    if (soldTag) soldTag.textContent = 'Single-arm carrier';
   }
 
   // Carriers: ball bearing (standard) or ripplefold snap carriers
@@ -891,23 +895,12 @@ function archCalc() {
 
   archRenderBatons();
 
-  // Sync bracket/carrier color to track color if neither has been manually changed
+  // Auto-sync bracket/carrier color to track color unless user manually overrode it
   var trackColorBtn = document.querySelector('#grp-arch-color .opt-btn.sel');
-  var trackColorText = (trackColorBtn || {}).textContent || '';
-  var trackIsBlack = trackColorText.indexOf('Black') !== -1;
-  function syncColorGroup(grpId) {
-    var btns = document.querySelectorAll('#' + grpId + ' .opt-btn');
-    var hasSel = document.querySelector('#' + grpId + ' .opt-btn.sel');
-    if (!hasSel) return;
-    // Only auto-sync if the color wasn't changed independently of the track
-    // We do this by checking if the current selection matches neither, then default to track
-  }
-  // Auto-match bracket/carrier color to track color on first load (when default White is selected)
+  var trackIsBlack = (trackColorBtn || {}).textContent.indexOf('Black') !== -1;
   ['grp-bracket-color','grp-carrier-color'].forEach(function(gid) {
     var btns = document.querySelectorAll('#' + gid + ' .opt-btn');
     if (!btns.length) return;
-    // Check if user has explicitly interacted (skip auto-sync if so)
-    // We use a data attribute to track manual changes
     var grpEl = document.getElementById(gid);
     if (grpEl && !grpEl.dataset.manualSet) {
       btns.forEach(function(b){ b.classList.remove('sel'); });
@@ -915,16 +908,25 @@ function archCalc() {
     }
   });
 
-  // Build arch summary
-  var color  = (document.querySelector('#grp-arch-color .opt-btn.sel') || {}).textContent || 'White';
-  var bracketColor = (document.querySelector('#grp-bracket-color .opt-btn.sel') || {}).textContent || color;
-  var carrierColor = (document.querySelector('#grp-carrier-color .opt-btn.sel') || {}).textContent || color;
-  var mount  = (document.querySelector('#grp-arch-mount .opt-btn.sel') || {}).textContent || 'Wall mount';
+  // Read actual user-adjusted quantities (not auto-calculated)
+  var finalBrackets = parseInt((document.getElementById('arch-brackets-inp') || {}).value) || totalBrackets;
+  var finalCarriers = parseInt((document.getElementById('arch-carriers-inp') || {}).value) || rawCarriers;
+  var finalMasters  = parseInt((document.getElementById('arch-masters-inp')  || {}).value) || 1;
+  var finalBatons   = parseInt((document.getElementById('arch-batons-inp')   || {}).value) || numPanels;
+
+  // Extract clean color labels (strip dot-span whitespace)
+  function colorLabel(grpSel, fallback) {
+    var t = ((document.querySelector(grpSel + ' .opt-btn.sel') || {}).textContent || fallback).trim();
+    return t.replace(/^\s+|\s+$/g,'').replace(/\s+/g,' ');
+  }
+  var color        = colorLabel('#grp-arch-color', 'White');
+  var bracketColor = colorLabel('#grp-bracket-color', color);
+  var carrierColor = colorLabel('#grp-carrier-color', color);
+  var mount   = (document.querySelector('#grp-arch-mount .opt-btn.sel') || {}).textContent || 'Wall mount';
   var pleatSel = (document.querySelector('#grp-arch-pleat .opt-btn.sel') || {}).textContent || 'Pinch pleat';
   var ripplePct = pleatSel.indexOf('Ripple') !== -1
     ? ' — ' + ((document.querySelector('#grp-arch-ripple-pct .opt-btn.sel') || {}).textContent || '80%') + ' fullness'
     : '';
-
   var cordSel = _archModel === '94001'
     ? ((document.querySelector('#grp-arch-cord .opt-btn.sel') || {}).textContent || '').trim()
     : '';
@@ -934,13 +936,15 @@ function archCalc() {
     'Track width: ' + w + '"',
     'Draw: ' + drawSel.split('—')[0].trim(),
     'Drapery style: ' + pleatSel.trim() + ripplePct,
-    'Color: ' + color.trim(),
+    'Track color: ' + color,
     'Mount: ' + mount,
     (_archModel === '94001' && cordSel ? 'Cord length: ' + cordSel : ''),
-    'Brackets: ' + totalBrackets + ' — ' + bracketColor.trim().replace(/\s+/g,' '),
-    'Master carriers: ' + (mInp ? mInp.value : '1') + ' set(s) — 1 per pair',
-    (isRipple ? 'Ripplefold snap carriers' : 'Ball bearing carriers') + ': ' + rawCarriers + ' — ' + carrierColor.trim().replace(/\s+/g,' '),
-    'Batons: ' + (bainp ? bainp.value : numPanels) + ' (1 per panel, sold individually)'
+    'Brackets: ' + finalBrackets + ' — ' + bracketColor,
+    isSplit
+      ? 'Master carriers: ' + finalMasters + ' overlap set(s) (over + under arm each)'
+      : 'Master carrier: ' + finalMasters + ' single-arm (specify left or right in notes)',
+    (isRipple ? 'Ripplefold snap carriers' : 'Ball bearing carriers') + ': ' + finalCarriers + ' — ' + carrierColor,
+    'Batons: ' + finalBatons + ' (1 per panel, sold individually)'
   ].filter(Boolean);
 }
 
