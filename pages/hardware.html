@@ -337,6 +337,26 @@
           </div>
         </div>
 
+        <!-- Pleat / drapery style -->
+        <div style="margin-top:14px">
+          <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Drapery style on this track</div>
+          <div class="opt-row" id="grp-arch-pleat">
+            <button class="opt-btn sel" onclick="selOpt(this,'grp-arch-pleat');archTogglePleat('pinch')">Pinch pleat</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-arch-pleat');archTogglePleat('ripple')">Ripple fold</button>
+          </div>
+          <!-- Ripple fold fullness — shown only for ripple fold -->
+          <div id="arch-ripple-opts" style="display:none;margin-top:10px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
+            <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:7px">Ripple fold fullness %</div>
+            <div class="opt-row" id="grp-arch-ripple-pct">
+              <button class="opt-btn" onclick="selOpt(this,'grp-arch-ripple-pct');archCalc()">60%</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-arch-ripple-pct');archCalc()">80%</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-arch-ripple-pct');archCalc()">100%</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-arch-ripple-pct');archCalc()">120%</button>
+            </div>
+            <div style="font-size:10px;color:#aaa;margin-top:6px">80% is standard ripple fold. Higher % = more wave depth.</div>
+          </div>
+        </div>
+
         <!-- Auto-calculated accessories -->
         <div id="arch-accessories" style="display:none;margin-top:20px">
           <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Recommended accessories</div>
@@ -799,19 +819,19 @@ function archCalc() {
     if (mInp && parseInt(mInp.value) < 1) mInp.value = 1;
   }
 
-  // Ball bearing carriers: 7 per 15 inches
-  var rawCarriers = Math.ceil(w / 15 * 7);
+  // Ball bearing carriers: 25 per 50 inches (= 1 per 2 inches) — to be safe
+  var rawCarriers = Math.ceil(w / 50 * 25);
   var cInp = document.getElementById('arch-carriers-inp');
   if (cInp) cInp.value = rawCarriers;
   var cCount = document.getElementById('arch-carrier-count');
   if (cCount) cCount.textContent = rawCarriers + ' carriers';
   var cNote = document.getElementById('arch-carrier-note');
-  if (cNote) cNote.innerHTML = '<strong>7 carriers per 15"</strong> of track × ' + Math.ceil(w/12) + ' ft = <strong>' + rawCarriers + ' carriers</strong>. Edit below if needed.';
+  if (cNote) cNote.innerHTML = '<strong>25 carriers per 50"</strong> of track for ' + w + '" = <strong>' + rawCarriers + ' carriers</strong>. Edit below if needed.';
 
-  // Batons: 1 per panel (1 for one-way, 2 for split draw — one per panel)
+  // Batons: 1 per panel — sold individually, default 1 each
   var numPanels = isSplit ? 2 : 1;
   var bainp = document.getElementById('arch-batons-inp');
-  if (bainp) bainp.value = numPanels;
+  if (bainp && parseInt(bainp.value) < numPanels) bainp.value = numPanels; // only set if lower than default
   var bainpLabel = bainp ? bainp.closest('div') : null;
   // Update baton count label
   var batonSetsNote = document.querySelector('#arch-accessories .qty-val, #arch-batons-inp + *');
@@ -825,17 +845,29 @@ function archCalc() {
   // Build arch summary
   var color  = (document.querySelector('#grp-arch-color .opt-btn.sel') || {}).textContent || 'White';
   var mount  = (document.querySelector('#grp-arch-mount .opt-btn.sel') || {}).textContent || 'Wall mount';
+  var pleatSel = (document.querySelector('#grp-arch-pleat .opt-btn.sel') || {}).textContent || 'Pinch pleat';
+  var ripplePct = pleatSel.indexOf('Ripple') !== -1
+    ? ' — ' + ((document.querySelector('#grp-arch-ripple-pct .opt-btn.sel') || {}).textContent || '80%') + ' fullness'
+    : '';
+
   window._archSummary = [
     'Architrac model: ' + _archModel,
     'Track width: ' + w + '"',
     'Draw: ' + drawSel.split('—')[0].trim(),
+    'Drapery style: ' + pleatSel.trim() + ripplePct,
     'Color: ' + color.trim(),
     'Mount: ' + mount,
-    'Brackets: ' + totalBrackets,
-    'Master carriers: ' + (mInp ? mInp.value : '1') + ' pair(s)',
-    'Ball bearing carriers: ' + rawCarriers,
-    'Batons: ' + (bainp ? bainp.value : '—') + ' set(s) — White'
+    'Brackets: ' + totalBrackets + ' (1/ft + 2 extra, editable)',
+    'Master carriers: ' + (mInp ? mInp.value : '1') + ' set(s) — 1 per pair',
+    'Ball bearing carriers: ' + rawCarriers + ' (25 per 50", editable)',
+    'Batons: ' + (bainp ? bainp.value : numPanels) + ' (1 per panel, sold individually)'
   ];
+}
+
+function archTogglePleat(type) {
+  var rippleOpts = document.getElementById('arch-ripple-opts');
+  if (rippleOpts) rippleOpts.style.display = type === 'ripple' ? 'block' : 'none';
+  archCalc();
 }
 
 function archRenderBatons() {
