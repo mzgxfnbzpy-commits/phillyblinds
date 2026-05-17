@@ -396,7 +396,7 @@
     <div class="step-sub">Enter your dimensions above to get an instant price estimate. Fill out the form and we'll confirm everything before fabrication.</div>
     <div style="display:flex;align-items:flex-start;gap:10px;background:#fef9ec;border:1px solid #f0d070;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#7a5c00;line-height:1.5">
       <span style="font-size:15px;flex-shrink:0">&#9888;</span>
-      <span><strong>Specialty shapes &amp; designs</strong> — arched windows, bay windows, goblet / barrel pleat, or heavily trimmed panels require a custom quote. Use the <strong>Specialty ✦</strong> tab above or call <a href="tel:6097421720" style="color:#7a5c00;font-weight:600">(609) 742-1720</a> and we'll price it out together.</span>
+      <span><strong>Specialty shapes &amp; designs</strong> — arched windows, bay windows, or heavily trimmed panels require a custom quote. Use the <strong>Specialty ✦</strong> tab above or call <a href="tel:6097421720" style="color:#7a5c00;font-weight:600">(609) 742-1720</a> and we'll price it out together. Goblet &amp; Barrel pleat are instant-priced below at $130/width.</span>
     </div>
 
     <div style="background:#fff;border:1px solid #e8e8e4;border-radius:12px;padding:24px;margin-top:16px" id="drape-form">
@@ -1596,7 +1596,11 @@ function calcDrapePrice() {
   var isLined = lining !== 'No liner';
   var interCheck = document.getElementById('d-interlining-check');
   var isInterlining = interCheck ? interCheck.checked : false;
-  var ratePerWidth = (isLined ? D_RATE_LINED : D_RATE_UNLINED);
+  // Goblet and Barrel pleat carry a premium — $130/width unlined, $140/width lined
+  var isSpecialtyPleat = drapeState.pleat === 'Goblet Pleat' || drapeState.pleat === 'Barrel Pleat';
+  var ratePerWidth = isSpecialtyPleat
+    ? (isLined ? 140 : 130)
+    : (isLined ? D_RATE_LINED : D_RATE_UNLINED);
 
   // Length surcharge (over 100")
   var lenSurcharge = h > 100 ? Math.ceil((h - 100) / 10) * D_LEN_SURCHARGE : 0;
