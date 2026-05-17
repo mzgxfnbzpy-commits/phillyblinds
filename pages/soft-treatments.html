@@ -806,21 +806,8 @@
     </div>
 
     <!-- Motorized sub-options -->
-    <div id="roman-motor-opts" style="display:none;margin-top:12px;padding:14px 16px;background:var(--espresso-mid);border-radius:8px">
-      <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Motorization details</div>
-      <div style="font-size:12px;font-weight:500;color:var(--cream);margin-bottom:7px">Number of remotes</div>
-      <div class="opt-row" id="grp-roman-remotes">
-        <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-remotes')">1</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-roman-remotes')">2</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-roman-remotes')">3</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-roman-remotes')">4+</button>
-      </div>
-      <div style="font-size:12px;font-weight:500;color:var(--cream);margin-bottom:7px;margin-top:12px">Channel type</div>
-      <div class="opt-row" id="grp-roman-channel">
-        <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-channel')">Single channel</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-roman-channel')">Multi channel</button>
-      </div>
-      <div style="font-size:11px;color:var(--text-dark);margin-top:8px;line-height:1.5">Single channel: one remote controls all shades together. Multi channel: control each shade independently.</div>
+    <div id="roman-motor-opts" style="display:none;margin-top:12px">
+      <div id="roman-motor-norman-section"></div>
     </div>
 
     <!-- Control side — applies to both manual chain and motorized -->
@@ -1412,6 +1399,9 @@ function romanChainCheck() {
 function romanToggleOp(type) {
   document.getElementById('roman-manual-opts').style.display = type === 'manual'    ? 'block' : 'none';
   document.getElementById('roman-motor-opts').style.display  = type === 'motorized' ? 'block' : 'none';
+  if (type === 'motorized' && typeof normanMotorSection === 'function') {
+    normanMotorSection('roman-motor-norman-section', 'Roman Shade');
+  }
 }
 function selectFabric(tab, el, val) {
   var container = tab === 'drape' ? '#drape-fabric-cards' : '#roman-fabric-cards';

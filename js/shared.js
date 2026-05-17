@@ -784,6 +784,115 @@ function pbSubmitCheckout() {
   pbAddToCart({ product: order.product || 'Order', specs: lines, qty: 1, cartId: Date.now()+'-order' });
 }
 
+// ============================================================
+// NORMAN SMART MOTORIZATION — shared section for all products
+// ============================================================
+/**
+ * Renders a Norman motorization options panel inside containerId.
+ * Call this when "Motorized" is selected in any product configurator.
+ * @param {string} containerId  — element to inject into (or null to return HTML)
+ * @param {string} productName  — e.g. 'Cellular Shade', 'Roller Shade'
+ * @param {Function} onChange   — called when any option changes
+ */
+function normanMotorSection(containerId, productName, onChange) {
+  var html =
+    '<div class="pb-norman-motor" style="margin-top:12px;padding:16px 18px;background:var(--espresso-mid);border-radius:12px;border:0.5px solid var(--border-dark)">' +
+      '<div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px">&#9889; Norman Smart Motorization</div>' +
+
+      // Power source
+      '<div style="margin-bottom:12px">' +
+        '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Power source</div>' +
+        '<div class="opt-row" id="nm-grp-power">' +
+          '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-power\');nmTogglePower(\'battery\')" style="color:#333">&#128267; Rechargeable battery</button>' +
+          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-power\');nmTogglePower(\'hardwire\')" style="color:#333">&#9889; Hardwired</button>' +
+        '</div>' +
+      '</div>' +
+
+      // Battery detail
+      '<div id="nm-battery-opts" style="margin-bottom:12px;padding:10px 12px;background:rgba(255,255,255,.06);border-radius:8px">' +
+        '<div style="font-size:11px;color:var(--text-dark);line-height:1.6">Rechargeable lithium battery. Charge every 4–6 months with the included USB-C charger. No wiring required — ideal for retrofit installations.</div>' +
+      '</div>' +
+
+      // Hardwire detail
+      '<div id="nm-hardwire-opts" style="display:none;margin-bottom:12px">' +
+        '<div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px">Wiring type</div>' +
+        '<div class="opt-row" id="nm-grp-wire">' +
+          '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-wire\')" style="color:#333">24V DC (low voltage)</button>' +
+          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-wire\')" style="color:#333">Line voltage (120V)</button>' +
+        '</div>' +
+        '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">Hardwired installation by licensed electrician recommended. Confirmed at measurement visit.</div>' +
+      '</div>' +
+
+      // Remote
+      '<div style="margin-bottom:12px">' +
+        '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Remote control</div>' +
+        '<div class="opt-row" id="nm-grp-remote">' +
+          '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-remote\');nmToggleRemote(true)" style="color:#333">Yes — include remote</button>' +
+          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-remote\');nmToggleRemote(false)" style="color:#333">No remote (app only)</button>' +
+        '</div>' +
+      '</div>' +
+
+      // Remote detail
+      '<div id="nm-remote-detail" style="padding:10px 12px;background:rgba(255,255,255,.06);border-radius:8px;margin-bottom:12px">' +
+        '<div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px">Number of remotes</div>' +
+        '<div class="opt-row" id="nm-grp-remotes">' +
+          '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-remotes\')" style="color:#333">1</button>' +
+          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-remotes\')" style="color:#333">2</button>' +
+          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-remotes\')" style="color:#333">3</button>' +
+          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-remotes\')" style="color:#333">4+</button>' +
+        '</div>' +
+        '<div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px;margin-top:10px">Channel type</div>' +
+        '<div class="opt-row" id="nm-grp-channel">' +
+          '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-channel\')" style="color:#333">Single channel</button>' +
+          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-channel\')" style="color:#333">Multi channel</button>' +
+        '</div>' +
+        '<div style="font-size:10px;color:var(--text-faint);margin-top:5px">Single: one remote controls all shades together. Multi: control each shade independently.</div>' +
+      '</div>' +
+
+      // Smart home
+      '<div>' +
+        '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Smart home integration</div>' +
+        '<div class="opt-row" id="nm-grp-smart" style="flex-wrap:wrap">' +
+          '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-smart\')" style="color:#333">None</button>' +
+          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-smart\')" style="color:#333">Amazon Alexa</button>' +
+          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-smart\')" style="color:#333">Google Home</button>' +
+          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-smart\')" style="color:#333">Apple HomeKit</button>' +
+        '</div>' +
+        '<div style="font-size:10px;color:var(--text-faint);margin-top:5px">Smart home integration requires a compatible hub/bridge. Availability confirmed per motor model at measurement visit.</div>' +
+      '</div>' +
+    '</div>';
+
+  if (containerId) {
+    var el = document.getElementById(containerId);
+    if (el) el.innerHTML = html;
+  }
+  return html;
+}
+
+function nmTogglePower(type) {
+  var bat = document.getElementById('nm-battery-opts');
+  var hw  = document.getElementById('nm-hardwire-opts');
+  if (bat) bat.style.display = type === 'battery' ? 'block' : 'none';
+  if (hw)  hw.style.display  = type === 'hardwire' ? 'block' : 'none';
+}
+function nmToggleRemote(show) {
+  var el = document.getElementById('nm-remote-detail');
+  if (el) el.style.display = show ? 'block' : 'none';
+}
+function nmGetMotorSummary() {
+  var power   = (document.querySelector('#nm-grp-power .opt-btn.sel') || {}).textContent || '—';
+  var wire    = (document.querySelector('#nm-grp-wire .opt-btn.sel') || {}).textContent || '';
+  var remote  = (document.querySelector('#nm-grp-remote .opt-btn.sel') || {}).textContent || '—';
+  var remotes = (document.querySelector('#nm-grp-remotes .opt-btn.sel') || {}).textContent || '';
+  var channel = (document.querySelector('#nm-grp-channel .opt-btn.sel') || {}).textContent || '';
+  var smart   = (document.querySelector('#nm-grp-smart .opt-btn.sel') || {}).textContent || 'None';
+  return 'Power: ' + power.replace(/[^\w\s]/g,'').trim() +
+    (wire ? ' — ' + wire : '') +
+    ' | Remote: ' + remote.replace(/[^\w\s\-]/g,'').trim() +
+    (remotes ? ' × ' + remotes + ' (' + channel + ')' : '') +
+    ' | Smart home: ' + smart;
+}
+
 // ---- INSTALLATION ADD-ON — auto-injects into every quote form ----
 function _initInstallationAddons() {
   document.querySelectorAll('.delivery-section').forEach(function(del) {

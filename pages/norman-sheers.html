@@ -655,7 +655,15 @@ function selectOp(op) {
   var cordWrap = document.getElementById('cord-side-wrap');
   var motorWrap = document.getElementById('motor-opts-wrap');
   if (cordWrap) cordWrap.style.display = op === 'cord' ? 'block' : 'none';
-  if (motorWrap) motorWrap.style.display = op === 'motor' ? 'block' : 'none';
+  if (motorWrap) {
+    motorWrap.style.display = op === 'motor' ? 'block' : 'none';
+    if (op === 'motor' && typeof normanMotorSection === 'function') {
+      if (!motorWrap.querySelector('.pb-norman-motor')) {
+        motorWrap.innerHTML = '';
+        normanMotorSection('motor-opts-wrap', 'PerfectSheer™ / SmartDrape™');
+      }
+    }
+  }
 
   var opLabel = op === 'cord' ? 'Continuous Cord Loop' : op === 'wand' ? 'Wand Tilt' : 'Motorized';
   completeStep('step-3', opLabel);

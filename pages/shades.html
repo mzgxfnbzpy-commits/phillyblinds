@@ -2744,7 +2744,17 @@ function cellularOpChange(type) {
       'Cordless operation has no motor. To add a motor, change the operating system to <strong>Motorized</strong>.';
   } else if (type === 'motor') {
     autoMotor();
-    note.textContent = 'Selected operation: Motorized — choose motor brand and type in the section below.';
+    note.textContent = 'Norman Smart Motorization — configure power source, remote, and smart home options below.';
+    // Inject Norman motor section
+    var cellMotorWrap = document.getElementById('cell-motor-section');
+    if (!cellMotorWrap) {
+      cellMotorWrap = document.createElement('div');
+      cellMotorWrap.id = 'cell-motor-section';
+      var noteEl = document.getElementById('cellular-op-note');
+      if (noteEl && noteEl.parentElement) noteEl.after(cellMotorWrap);
+    }
+    if (typeof normanMotorSection === 'function') normanMotorSection('cell-motor-section', 'Cellular Shade');
+    else cellMotorWrap.innerHTML = '<div style="background:var(--espresso-mid);border-radius:8px;padding:12px 14px;margin-top:10px;font-size:12px;color:var(--text-dark)">Norman Smart Motorization: power source (battery/hardwired), remote, and smart home options confirmed at measurement visit.</div>';
   } else {
     if (motorOn) toggleMotor(false);
     note.textContent = 'Cord Loop: handles larger windows up to 120″ W × 144″ H (80 sq ft max area). Available in Bottom Up, TDBU, and Day & Night. SmartRelease™ upgrade available.';
@@ -4644,7 +4654,12 @@ function rnSetFabricWidth(w) {
 function rnSetLift(type) {
   rnLiftType = type;
   const motorWrap = document.getElementById('rn-motor-wrap');
-  if (motorWrap) motorWrap.style.display = type === 'motor' ? 'block' : 'none';
+  if (motorWrap) {
+    motorWrap.style.display = type === 'motor' ? 'block' : 'none';
+    if (type === 'motor') {
+      if (typeof normanMotorSection === 'function') normanMotorSection('rn-norman-motor-section', 'Norman Roller Shade');
+    }
+  }
 
   // Chain/cord control + color options only apply when Cord Loop is selected
   const isCordLoop = type === 'cord';
