@@ -398,3 +398,52 @@ Audit date: 2026-05-16
 1. D&N cell sizes: HTML tooltip says 9/16"S, 3/4"S, 1.25"S only but CELL_COMPAT allows all 6
 2. Automate Home motor: confirm this is Norman product, not Automate Rollease Acmeda brand
 3. Windsong as D&N valid top: dn-note mentions it but D&N top picker only shows Sheer/LF
+
+---
+
+## Norman Soluna + Portrait Cellular Audit — 2026-05-16
+
+### Soluna Roller Shades Audit
+Verified against: Norman - Soluna Roller Shades.pdf (February 2026)
+
+**Errors found and corrected in SOLUNA_COLLECTIONS (pages/shades.html):**
+
+1. **Commercial solar section was missing active colors** (incorrectly commented as "all discontinued"):
+   - The Feb 2026 PDF (page 20 active fabric list) shows these as ACTIVE:
+     - NA400 3%: F0381 Chalk, F0382 Chalk/Beige, F0384 Charcoal
+     - NA820 3%: F0407 Oyster/Pewter
+     - NA400 5%: F0388 Chalk/Beige, F0390 Charcoal
+     - NA400 10%: F0396 Charcoal
+   - These codes also appear in the Appendix 2 under old "A400"/"A820" naming, but
+     they are still offered in the current catalog under "NA400"/"NA820" naming.
+   - All restored to 'commercial' section of SOLUNA_COLLECTIONS.
+
+2. **Elements White Backing (F1108-F1113) incorrectly removed**:
+   - Feb 2026 PDF (page 16) shows F1108-F1113 as ACTIVE under "Elements White Backing"
+   - Old "Glamour" collection NAME was discontinued; same F-codes now under new collection name
+   - Appendix p.66 lists them as discontinued from "Glamour" — not from "Elements White Backing"
+   - Restored: added 'Elements White Backing' collection back to 'rd' section of SOLUNA_COLLECTIONS
+
+**Verified correct (no changes needed):**
+- Fabric collections and color codes match the Feb 2026 PDF
+- Discontinued codes (Emery F0756/F0757, Shimmer F1433-F1435/F1438, Breeze F0892, Francis F0880/F0881/F0887,
+  Bali F0666/F0667, Sumatra F0855, old Sheer codes) are all absent from active picker
+- Bermuda F0833 Gray: correctly absent
+- Pricing matrices (7 price groups) were previously verified correct
+
+**Motorization (Norman Soluna):**
+- "Norman Smart", "AutoWand", and "Automate Home™" are Norman-brand motorization products
+- These are correctly labeled "Norman-brand motorization exclusively"
+- Third-party brands (Somfy, Lutron, Rollease) do NOT appear as Norman Soluna motor options ✓
+
+### Portrait Cellular Audit
+Verified against: Norman - Portrait Cellular (2).pdf, discontinued files
+
+**Previously corrected (prior session):**
+- C7018K Soft Stone LF: absent from active CELL_COLLECTIONS ✓
+- All 2025-round discontinued codes: never in our data (new K/T suffix format) ✓
+- Rustica designer colors: never in our data ✓
+
+**Motorization (Norman Portrait Cellular):**
+- Norman Smart Motor, AutoWand, and Automate Home™ are Norman-brand options ✓
+- Third-party brands (Somfy, Lutron, Rollease Acmeda) appear only for custom/PB roller shades section ✓
