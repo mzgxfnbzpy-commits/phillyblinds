@@ -105,13 +105,13 @@
 </style>
 </head>
 <body>
-<script>/* shared.js loaded once at bottom */</script>
+<nav class="site-nav" id="site-nav"></nav>
 
 <div class="page-hero">
   <div class="hero-inner">
     <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <a href="shades.html">Shades &amp; Blinds</a> &rsaquo; Synchrony™ Vertical Blinds</div>
     <h1>Synchrony™<br>Vertical Blinds</h1>
-    <p class="sub">Norman's sleek, valance-free vertical blind. Cordless wand tilt, reversible headrail, and 4 fabric collections from classic whites to woven textures. Perfect for sliding doors and wide windows.</p>
+    <p class="sub">Norman's sleek, valance-free vertical blind. Cordless wand tilt, reversible PolyDeco headrail, and 10 fabric collections from classic whites to woven textures. Perfect for sliding doors and wide windows.</p>
     <div class="hero-pills">
       <span class="hero-pill hero-pill-gold">Instant pricing</span>
       <span class="hero-pill">Valance-free design</span>
@@ -613,7 +613,7 @@ const MATRICES={
   4:{48:[319,394,480,549,633,692,781,888],60:[338,423,514,580,664,730,829,938],72:[359,441,543,614,696,764,866,988],84:[374,463,573,649,736,800,911,1037],96:[394,486,598,679,776,842,958,1089],108:[406,510,629,710,811,888,1001,1141]}
 };
 
-let state={group:null,collection:null,colorName:null,vane:null,mount:null,w:0,h:0,shim:false,shimQty:1,qty:1,del:null};
+let state={group:null,collection:null,colorName:null,vane:null,mount:null,w:0,h:0,shim:false,shimQty:1,qty:1,del:null,wand:'No preference'};
 
 function toggleStep(id){
   const b=document.getElementById(id);
@@ -724,6 +724,11 @@ function adjQty(d){
   markDone('step5');
   calcPrice();
 }
+function pickWand(btn,side){
+  btn.parentElement.querySelectorAll('button').forEach(b=>{b.style.borderColor='#e8e8e4';b.style.color='';b.style.background='#fff';});
+  btn.style.borderColor='var(--gold)';btn.style.color='#7A4F00';btn.style.background='rgba(200,151,63,.06)';
+  state.wand=side;
+}
 function pickDel(btn,key){
   document.querySelectorAll('.del-btn').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');
@@ -739,6 +744,7 @@ function updateQuote(){
   const qty=parseInt(document.getElementById('qty').value)||1;
   state.qty=qty;
   document.getElementById('s5val').textContent=qty+' blind'+(qty>1?'s':'');
+  const mountLabel=state.mount==='inside'?'Inside Mount':state.mount==='semi'?'Semi-Inside Mount':state.mount==='outside'?'Outside Mount':'';
   const ready=state.group&&state.colorName&&state.mount&&state.w&&state.h;
   if(!ready){document.getElementById('qp-pending').style.display='block';document.getElementById('qp-detail').style.display='none';return;}
   if(state.w<18||state.w>100||state.h<36||state.h>108){document.getElementById('qp-pending').style.display='block';document.getElementById('qp-pending').textContent='Fix the size error above.';document.getElementById('qp-detail').style.display='none';return;}
@@ -759,7 +765,7 @@ function updateQuote(){
   document.getElementById('qp-detail').style.display='block';
   document.getElementById('qr-group').textContent=(state.collection||'—')+' — '+(state.colorName||'—');
   document.getElementById('qr-vane').textContent=state.vane||'—';
-  document.getElementById('qr-mount').textContent=state.mount==='inside'?'Inside Mount':'Outside Mount';
+  document.getElementById('qr-mount').textContent=state.mount==='inside'?'Inside Mount':state.mount==='semi'?'Semi-Inside Mount':'Outside Mount';
   document.getElementById('qr-dims').textContent=state.w+'″ × '+state.h+'″';
   document.getElementById('qr-qty').textContent=qty+(qty>1?' blinds':' blind');
   document.getElementById('qr-price').textContent='$'+pricePerBlind+' each';
@@ -782,7 +788,8 @@ function submitQuote(){
     'Collection: '+(state.collection||'—'),
     'Color: '+(state.colorName||'—'),
     'Vane style: '+(state.vane||'—'),
-    'Mount: '+(state.mount==='inside'?'Inside Mount':'Outside Mount'),
+    'Mount: '+(state.mount==='inside'?'Inside Mount (fully flushed)':state.mount==='semi'?'Semi-Inside Mount':'Outside Mount'),
+    'Wand/control side: '+state.wand,
     'Width: '+state.w+'″',
     'Height: '+state.h+'″',
     'Shims: '+(state.shim?state.shimQty+' × $7':'No'),

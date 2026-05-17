@@ -295,14 +295,15 @@ Note: "Automate Home" is Norman's own brand — NOT the separate "Automate" bran
 |---|---|---|---|---|---|
 | Soluna Roller Shades | Yes | Norman Smart, AutoWand, Automate Home | Roller: Yes (not with cassette/dual) | Yes | Rechargeable or hardwired |
 | Portrait Cellular / Honeycomb | Yes | Norman Smart | Cellular: Yes (not with cassette/dual) | Yes | Motor type confirmed at measurement |
-| PerfectSheer | Yes | Norman Smart | No — not available | Yes | Via shared.js normanMotorSection |
-| SmartDrape | Yes | Norman Smart | No — not available | **NO** — DC Low Voltage NOT available for SmartDrape | $642/shade; hardwire via AC/battery only |
+| PerfectSheer | Yes | Norman Smart | No — battery Charging Wand not available for PerfectSheer | Yes | Via shared.js normanMotorSection |
+| SmartDrape | Yes | Norman Smart | Charging Extension Wand: YES as optional accessory (not a battery charger type) — DC battery charged via AC adapter only | **NO** — DC Low Voltage NOT available for SmartDrape | $642/shade; rechargeable battery or AC adapter plug-in only |
 | Synchrony Verticals | No motorization | N/A | N/A | N/A | Cordless wand tilt only |
 | City Lights Aluminum | No motorization | N/A | N/A | N/A | Cordless or cord-tilt only |
 | SmartPrivacy Faux Wood | No motorization | N/A | N/A | N/A | Cordless only |
 
 ### Rules enforced in shared.js normanMotorSection()
-- Charging Wand: available only for Roller and Honeycomb (Cellular) — NOT for Roman, PerfectSheer, SmartDrape, SmartFold
+- Charging Wand (battery charger type): available only for Roller and Honeycomb (Cellular) — NOT for Roman, PerfectSheer, SmartDrape, SmartFold
+- SmartDrape Charging Extension Wand: this is a separate ACCESSORY (not a battery charger) — correctly shown in Step 9 accessories of norman-sheers.html for motorized SmartDrape
 - SmartDrape: DC Low Voltage is NOT available (button disabled/strikethrough in UI)
 - Norman Smart and Automate Home are incompatible (different RF protocols) — conflict warning enforced in shades.html
 - Max 2 remotes per Norman Smart system
@@ -372,6 +373,147 @@ No action required for Wallace honeycomb in our site code.
 
 *Last agent to work on this: Claude Code — May 16, 2026*
 *Last session: Norman motorization audit. Corrected soluna-roller-shades.html spec bar ("multiple brands" → "Norman-brand only"). Added nmGetMotorSummary() to Norman Roller and Norman Cellular quote emails. Added Norman Motorization Audit section to CLAUDE.md with product-by-product motor compatibility table. No Somfy/Lutron/Rollease/Automate-brand references found on any Norman product page. All rules in shared.js normanMotorSection() verified against PDF.*
+
+---
+
+## Norman PerfectSheer + SmartDrape Audit (May 2026)
+
+### Source PDFs verified against
+- `C:\Users\Blind\PhillyBlinds Photos\PDF PRODUCTS\Norman\Norman - Perfect Sheer Smart Drape.pdf` — February 2026 Program Reference Guide and Price Book
+- `C:\Users\Blind\PhillyBlinds Photos\PDF PRODUCTS\Norman\Norman Automated - Motorized shades.pdf`
+
+### CRITICAL: These are TWO separate products — never merge their configurators
+
+---
+
+### PerfectSheer™ Shades — Confirmed Specs (PDF Feb 2026)
+
+**Description:** Horizontal sheer vane shade. Vanes tilt open/closed. 100% polyester fabric.
+
+**Size limits (PDF p.4):**
+- Continuous Cord Loop: min 12"W × 12"H, max **98"W × 98"H**
+- Motorized: min per motorization guide; max per price book (up to **110"W × 120"H**)
+- Ratio limit: height cannot exceed 4× width (1:4 ratio)
+- Inside mount deduction: shade width = order width – 1/8"
+
+**Fabric collections (PDF p.18):**
+- Light Filtering: 22 colors (F1178–F1197, F1363, F1364)
+- Room Darkening: 10 colors (F1200–F1209) — +20% surcharge
+
+**Valance options (PDF p.8):**
+- Curved Fascia with Fabric — free, 3.5" or 4.5", max single 93" (splice if wider)
+- Fabric Valance — 3.5" or 4.5", max single 93" (splice if wider), returns on semi-IB/OB
+- Modern Wood Valance — 4.5" only, 6 paint + 6 stain finishes, max single 93"
+- **Valances NOT recommended for door applications**
+
+**Mount types:** Inside Mount, Semi-Inside Mount, Outside Mount
+
+**Operation:** Continuous Cord Loop (default right, optional left) or Motorized (Norman Smart)
+
+**Motorization:** Norman Smart Rechargeable Battery (AC adapter charger) or AC Adapter Plug-in
+- **Charging Wand (battery charger type): NOT available for PerfectSheer**
+- DC Low Voltage: YES available
+
+**Room darkening note:** Not blackout — some light passes through edges/vanes
+
+**Door application:** Magnetic hold-downs required (+$28). Extra 1/16" fabric deduction per side.
+
+**Accessories:** Basic Light Guard (+$45), Premium Wood Light Guard (+$117), Magnetic hold-down (+$28), Shims (+$7 each), Keystone (+$73)
+
+**Site location:** pages/shades.html — PerfectSheer configurator, card #card-perfectsheer
+
+---
+
+### SmartDrape™ Shades — Confirmed Specs (PDF Feb 2026)
+
+**Description:** Vertical sheer vane system. Fabric vanes hang from metal headrail. Drapery-style. Cordless (Best for Kids certified).
+
+**Size limits (PDF p.24):**
+- Single shade wand tilt: min track 17 5/8", max track 285 5/8", shade (F) 280 1/8"
+- Side by side (wand): min track 15 5/8" each, max 284 3/8" each
+- Min height: **24"**, Max height: **144"**
+- Max area: **237 sq ft** (track width × height)
+- Motorized min width: see motorization guide
+
+**Fabric collections (PDF pp.40–41):**
+- Light Filtering: Plain, Net, Pacific, Circle, Coronado, Teardrop (6 collections × 5–10 colors each)
+- Light Filtering Essentials: Lakeshore Stripe (10 colors)
+- Room Darkening: 6 colors standard, Plain and Pacific sub-collections (12 more RD colors)
+- All 100% polyester. Room Darkening: +20% surcharge. Alternating colors: +10% surcharge.
+
+**Headrail:** Sleek metal, valance-free — **NO valance available**. Colors: White, Cottage White, Matte Silver, Black, Bronze, Brass.
+
+**Stack options (wand tilt):** Left Stack, Right Stack, Traveling Center Stack
+**Stack options (motorized):** Left Stack, Right Stack, Center Stack (new Jan 2026), Center Opening
+
+**Side by side:** Two independently operated shades butted together. Wand Tilt only. Same height required.
+
+**Mount types (PDF p.32):** **Outside Mount ONLY**
+- Wall Mount (L bracket — standard, 3 15/16" long)
+- Ceiling Mount (direct mount using pre-drilled headrail, or C clip)
+- Ceiling Pocket Mount (direct mount using pre-drilled headrail, min pocket depth 4 7/8")
+- **NEVER inside mount — no deductions taken**
+
+**Operation:** Wand Tilt (manual) or Norman Smart Motorized (rechargeable battery or AC adapter plug-in)
+
+**Motorization:**
+- Motor: Norman Smart ($642/shade)
+- Power: Rechargeable battery (AC adapter charger) or AC Adapter Plug-in
+- **DC Low Voltage NOT available for SmartDrape** — enforced in shared.js
+- **Charging Wand (battery charger type): NOT available** — battery charged via AC adapter
+- **Charging Extension Wand: YES — optional ACCESSORY** (not a charger), defaults to fabric color. Colors: Cloud Cream, Day Light, Silver, Black, Chocolate, Moonbeam. Available for Norman Smart rechargeable battery only. (PDF p.42, revision log 5/31/2025)
+
+**Accessories:** Keystones ($73), Additional Wand ($89), Alternating Colors (+10%), Additional Vane Packs ($230–$540), Aluminum Shims ($28 — wall mount only), Long L Brackets ($61/shade)
+
+**SmartJoints:** Tracks 97 5/8"–189 5/8": 1 SmartJoint. Tracks 193 5/8"–285 5/8": 2 SmartJoints.
+
+**Patio door recommendation:** Fabric vanes overlap opening min 4" width, 3" height. Min ½" floor clearance.
+
+**Site location:** pages/norman-sheers.html — dedicated SmartDrape configurator
+
+---
+
+### Corrections Made (May 2026)
+
+| File | Correction | Source |
+|---|---|---|
+| pages/norman-sheers.html | req-info button: changed "PerfectSheer™ / SmartDrape™" → "SmartDrape™" | Product separation |
+| pages/norman-sheers.html | normanMotorSection call: changed "PerfectSheer™ / SmartDrape™" → "SmartDrape™" | Product separation; DC Low Voltage now correctly blocked |
+| pages/norman-sheers.html | Mount step: replaced Inside/Outside/Semi-Inside with Wall/Ceiling/Ceiling Pocket (Outside Mount only) | PDF p.32 |
+| pages/norman-sheers.html | Auto-select default changed from 'inside' to 'wall' mount | PDF p.32 |
+| pages/norman-sheers.html | Door checkbox label: "Installed on a door" → "Patio door / slider application" | SmartDrape terminology |
+| pages/norman-sheers.html | Door warning: removed magnetic hold-down reference (SmartDrape does not use hold-downs) | PDF — hold-downs are PerfectSheer only |
+| pages/norman-sheers.html | Quote email: mount labels updated to wall/ceiling/pocket; patio door note corrected | PDF p.32 |
+| pages/norman-sheers.html | Accessories: removed magnetic hold-down from door-triggered items (SmartDrape only) | PDF |
+| pages/shades.html | PerfectSheer dim notes: added CCL/motorized size distinction (CCL max 98"×98") | PDF p.4 |
+| pages/shades.html | psCalc(): added CCL size validation — blocks >98" W or H for CCL, directs to motorized | PDF p.4 |
+| CLAUDE.md | Motor table: clarified Charging Wand (charger type) vs Charging Extension Wand (accessory) for SmartDrape | PDF p.42 |
+| CLAUDE.md | normanMotorSection() rules: added clarification on SmartDrape extension wand as accessory | PDF p.42 |
+
+### Restrictions Confirmed
+
+| Product | Rule | Source |
+|---|---|---|
+| PerfectSheer CCL | Max 98" × 98" | PDF p.4 |
+| PerfectSheer Motorized | Max 110" × 120" (price book range) | PDF p.5 |
+| PerfectSheer | Room Darkening +20% surcharge | PDF p.5 |
+| PerfectSheer | Valance NOT recommended for doors | PDF p.8 |
+| SmartDrape | Outside Mount ONLY (wall, ceiling, ceiling pocket) | PDF p.32 |
+| SmartDrape | No valance — valance-free metal headrail | PDF p.23 |
+| SmartDrape | Room Darkening +20% surcharge | PDF p.23 |
+| SmartDrape | Alternating colors +10% surcharge | PDF p.23 |
+| SmartDrape | DC Low Voltage NOT available | PDF p.24 |
+| SmartDrape | Min height 24", max height 144" | PDF p.24 |
+| SmartDrape | Max area 237 sq ft per shade | PDF p.24 |
+| SmartDrape | Side by side: Wand Tilt only (no motorized side-by-side) | PDF p.24 |
+| SmartDrape | Center Opening: Motorized only | PDF p.24–25 |
+| SmartDrape | Center Stack (motorized): added Jan 2026 | PDF p.2 revision log |
+
+### Needs Owner Confirmation
+- SmartDrape motorized min width: PDF p.2 says "9/24/2025: Updated Motorized shade min. width" — exact value not in this PDF, in motorization binder
+- PerfectSheer motorized min width: same — in motorization binder
+
+*Audit completed: Claude Code — May 16, 2026*
 
 
 ---
@@ -447,3 +589,69 @@ Verified against: Norman - Portrait Cellular (2).pdf, discontinued files
 **Motorization (Norman Portrait Cellular):**
 - Norman Smart Motor, AutoWand, and Automate Home™ are Norman-brand options ✓
 - Third-party brands (Somfy, Lutron, Rollease Acmeda) appear only for custom/PB roller shades section ✓
+
+---
+
+## Norman Synchrony Verticals Audit — 2026-05-16
+
+Verified against: Norman - Synchrony Verticals.pdf (February 2026 price book)
+Motorization PDF checked: No Synchrony motorization exists — confirmed cordless wand tilt only.
+
+### Errors found and corrected in pages/synchrony-verticals.html:
+
+1. **Grasscloth section mislabeled 5 Willow colors as "Grasscloth"**
+   - Grasscloth has ONE active color: Botanical Garden
+   - Mist, Birch, Burnished Clay, Cloud, Natural Gray belong to the separate "Willow" collection
+   - Fixed: Split into two sections; Willow colors now call `pickFabric(this,'Willow',...)` (quote email was showing wrong collection)
+   - Source: PDF p.11 Color Availability table
+
+2. **Hero pill said "4 fabric collections"** — there are 10 distinct collections
+   - Fixed to "10 fabric collections"
+   - Source: PDF p.11 (Classic, S-Curved, Sandblasted, Flaxen, Adobe, Shantung, Linen, Grasscloth, Willow, Faux Wood)
+
+3. **Hero description said "4 fabric collections"** — fixed to "10 fabric collections"
+
+4. **Semi-inside mount was missing** — PDF has 3 mount types
+   - Added: Semi-inside mount option (min depth 2 13/16″, same deductions as IM)
+   - Source: PDF p.9 Mounting Requirements
+
+5. **Shim logic allowed shims for inside mount** — fixed to outside mount only
+   - Semi-inside mount also disables shims (shims = outside mount only)
+   - Source: PDF p.10 Parts & Hardware: "Available for OM only"
+
+6. **Center support note said "may require"** — it IS required at ≥78″
+   - Fixed: "required and included for widths 78″ or wider"
+   - Source: PDF p.10 Parts & Hardware
+
+7. **Side-by-side rule missing** — PDF says both blinds must use same stack direction (LL or RR)
+   - Added to dimensions step note
+   - Source: PDF p.7 Side by Side section
+
+8. **No wand side preference field** — headrail is reversible upon installation
+   - Added wand side selector (Left/Right/No preference) in Options step
+   - Field included in quote email output
+   - Source: PDF p.6 Control section
+
+9. **shared.js loaded twice** — was at line 108 AND line 585
+   - Fixed: Single load at bottom with nav+footer render
+
+### Verified correct (no changes needed):
+- Pricing matrices (Groups 1–4, all widths/heights): match PDF p.33 ✓
+- Size limits 18″–100″ W / 36″–108″ H: correct ✓
+- Inside mount deductions −3/8″ W / −3/16″ H: correct ✓
+- Discontinued Grasscloth colors (Silver Cloud, Coffee, Onyx): absent ✓
+- No motorization options shown: correct ✓
+- S-Curved vane data-vane attribute: correct ✓
+- Shim price $7 each: correct ✓
+- Freight rates ($25 first + $11 ea; $80/$50 for ≥90″): correct ✓
+
+### Active collections (Price Group 4 includes Willow):
+- Price Group 1: Classic (5 colors)
+- Price Group 2: S-Curved (5 colors) + Sandblasted (4 colors)
+- Price Group 3: Flaxen (4) + Adobe (5) + Shantung (7)
+- Price Group 4: Linen (6) + Grasscloth (1) + Willow (5) + Faux Wood (5)
+
+### Motorization rule:
+- Synchrony Vertical Blinds = NO motorization. Cordless wand tilt only.
+- Do NOT add motor options to this page ever.
+- Source: Synchrony PDF has no motorization section. Norman Automated PDF does not list Synchrony.
