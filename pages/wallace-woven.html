@@ -98,6 +98,9 @@ textarea.inp-field{resize:vertical;min-height:80px}
 .success-box{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:12px;padding:24px;color:#2e7d32;font-size:14px;line-height:1.8;display:none;text-align:center}
 .success-box h3{font-size:20px;margin-bottom:8px}
 
+/* Anchor scroll offset so sticky nav doesn't cover target */
+#roman-woven-choice,#roller-woven-choice{scroll-margin-top:80px}
+
 /* Sliding panel auto-calc display */
 .panel-calc{background:#f5f0e8;border-radius:8px;padding:12px 14px;font-size:12px;color:#555;margin-top:8px;display:none}
 .panel-calc strong{color:#111}
@@ -116,15 +119,14 @@ textarea.inp-field{resize:vertical;min-height:80px}
 <section class="page-hero">
   <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <a href="shades.html">Shades &amp; Blinds</a> &rsaquo; Wallace Natural Woven</div>
   <h1>Natural Woven Shades</h1>
-  <p class="sub">Roller shades and Roman shades in bamboo, grass, jute, and textured natural weaves. Five collections — Portfolio, Walden Premier, Walden Select, Dynasty 2025, and Galaxy 2025. Configure and get an instant quote below.</p>
+  <p class="sub">Roller shades and Roman shades in bamboo, grass, jute, and textured natural weaves. Four collections — Portfolio, Galaxy, Walden Premier, and Walden Select. Configure and get an instant quote below.</p>
   <div class="hero-pills">
     <span class="hero-pill hero-pill-gold">Roller Shades</span>
     <span class="hero-pill hero-pill-gold">Roman Shades</span>
     <span class="hero-pill">Portfolio</span>
-    <span class="hero-pill">Walden Premier &amp; Select</span>
-    <span class="hero-pill">Dynasty 2025</span>
     <span class="hero-pill">Galaxy 2025</span>
-    <span class="hero-pill">Custom Quote</span>
+    <span class="hero-pill">Walden Premier &amp; Select</span>
+    <span class="hero-pill">Instant quote</span>
   </div>
 </section>
 
@@ -148,10 +150,13 @@ textarea.inp-field{resize:vertical;min-height:80px}
       </div>
       <div class="choice-card" id="style-roman" onclick="pickStyle('roman',this)">
         <div class="choice-card-title">Roman Shade / Panels / Drapery</div>
-        <div class="choice-card-sub">Five collections: Portfolio, Walden Premier, Walden Select, Dynasty 2025, Galaxy 2025. Roman shades, sliding panels, and natural draperies.</div>
+        <div class="choice-card-sub">Four collections: Portfolio, Galaxy, Walden Premier, and Walden Select. Roman shades, sliding panels, and natural draperies.</div>
       </div>
     </div>
   </div>
+
+  <!-- ── ROLLER WOVEN ANCHOR ── -->
+  <div id="roller-woven-choice" style="height:0;overflow:hidden;margin:0;padding:0"></div>
 
   <!-- ── ROLLER QUOTE SECTION ── -->
   <div id="roller-section" style="display:none">
@@ -296,17 +301,6 @@ textarea.inp-field{resize:vertical;min-height:80px}
       <div class="choice-card" onclick="pickCollection('select',this)">
         <div class="choice-card-title">Walden Select</div>
         <div class="choice-card-sub">56 natural woven fabrics with WS fabric codes. Ramie edge binding only. TDBU for all fabrics (max 70"W × 96"H). 3 liner types. Sliding panels &amp; draperies available.</div>
-      </div>
-    </div>
-    <div class="choice-grid" style="margin-top:0">
-      <div class="choice-card" onclick="pickCollection('dynasty',this)">
-        <div class="choice-badge">2025 Collection</div>
-        <div class="choice-card-title">Dynasty Woven Collection</div>
-        <div class="choice-card-sub">48 patterns · 5 price groups · waterfall, flat fold &amp; hobbled styles · privacy &amp; blackout liner options · motorization available. Opens the Dynasty configurator.</div>
-      </div>
-      <div class="choice-card" onclick="pickCollection('galaxy',this)">
-        <div class="choice-card-title">Galaxy Woven Collection 2025</div>
-        <div class="choice-card-sub">73 patterns · 6 price groups · flat fold, waterfall &amp; hobbled · privacy &amp; blackout liner · motorization available. Opens the Galaxy configurator.</div>
       </div>
     </div>
   </div>
@@ -680,12 +674,18 @@ textarea.inp-field{resize:vertical;min-height:80px}
 renderNav('Natural Woven Shades');
 renderFooter(false);
 
-// Anchor-based entry: if URL contains #roman-woven-choice, scroll and highlight step 1
+// Anchor-based auto-selection: #roman-woven-choice or #roller-woven-choice
 (function(){
-  if(window.location.hash === '#roman-woven-choice') {
+  var hash = window.location.hash;
+  if(hash === '#roman-woven-choice' || hash === '#roller-woven-choice') {
+    var style = hash === '#roller-woven-choice' ? 'roller' : 'roman';
     window.addEventListener('load', function(){
-      var anchor = document.getElementById('roman-woven-choice');
-      if(anchor) { setTimeout(function(){ anchor.scrollIntoView({behavior:'smooth',block:'start'}); }, 200); }
+      setTimeout(function(){
+        var card = document.getElementById('style-' + style);
+        if(card) pickStyle(style, card);
+        var anchor = document.getElementById(hash.slice(1));
+        if(anchor) anchor.scrollIntoView({behavior:'smooth', block:'start'});
+      }, 250);
     });
   }
 })();
@@ -1051,8 +1051,6 @@ function submitRollerQuote() {
 
 /* ── Step 1: Collection ── */
 function pickCollection(c, el) {
-  if(c==='dynasty'){ window.location.href='dynasty-woven-woods.html'; return; }
-  if(c==='galaxy'){  window.location.href='galaxy-woven-woods.html';  return; }
   S.collection = c;
   _s6setup = false;
   document.querySelectorAll('#s1 .choice-card').forEach(function(cc){cc.classList.remove('sel');});
