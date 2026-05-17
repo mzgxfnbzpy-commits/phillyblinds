@@ -1822,8 +1822,6 @@ function cvSetType(type) {
   if (sub)   sub.textContent   = isCorn
     ? 'Fabric-wrapped wood box valances. $50/linear ft · 4 ft min.'
     : 'Fabric soft top treatment. $50/linear ft + fabric.';
-  var dirRow  = document.getElementById('cv-direction-row');
-  if (dirRow) dirRow.style.display = isCorn ? 'block' : 'none';
   var cornFin = document.getElementById('cv-cornice-finish');
   var valFin  = document.getElementById('cv-valance-finish');
   var trimOpts= document.getElementById('corn-trim-opts');
