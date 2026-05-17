@@ -582,6 +582,12 @@ function toggleStep(id){
   b.classList.toggle('active',!b.classList.contains('active')||b.classList.contains('open'));
 }
 function markDone(id){document.getElementById(id).classList.add('done');}
+function goNext(fromId,toId,collapseFrom=true){
+  if(collapseFrom){const f=document.getElementById(fromId);f.classList.remove('active','open');}
+  const t=document.getElementById(toId);
+  t.classList.add('active');
+  setTimeout(()=>t.scrollIntoView({behavior:'smooth',block:'nearest'}),80);
+}
 
 function filterColorsBySlat(slatKey){
   const warn=document.getElementById('color-compat-warn');
@@ -625,6 +631,7 @@ function pickSlat(el,key,label){
   else n.textContent='Max width 96″ · max height 96″ · max area 48 sq ft. Side mount available (IB only).';
   filterColorsBySlat(key);
   calcPrice();
+  goNext('step1','step2');
 }
 function pickColor(el,code,name,surcharge){
   document.querySelectorAll('#color-grid .color-card').forEach(c=>c.classList.remove('sel'));
@@ -634,6 +641,7 @@ function pickColor(el,code,name,surcharge){
   document.getElementById('color-compat-warn').style.display='none';
   markDone('step2');
   calcPrice();
+  goNext('step2','step3');
 }
 function pickMount(el,key,label){
   document.querySelectorAll('#step3 .opt-card').forEach(c=>c.classList.remove('sel'));
@@ -644,10 +652,10 @@ function pickMount(el,key,label){
   const note=document.getElementById('mount-note');
   if(key==='inside'){note.style.display='block';note.textContent='Inside mount: measure exact frame opening. Mfr deducts 3/8″ from width automatically.';}
   else{note.style.display='block';note.textContent='Outside mount: measure the area you want covered. Add ~3″ to width & height for light block. Shim available for trim clearance.';}
-  // show shim option for outside mount
   document.getElementById('shim-wrap').style.display=(key==='outside')?'block':'none';
   if(key==='inside'){state.shim=false;document.getElementById('shim-addon').classList.remove('sel');document.getElementById('shim-qty-wrap').style.display='none';}
   calcPrice();
+  goNext('step3','step4');
 }
 
 function calcPrice(){
@@ -705,6 +713,11 @@ function calcPrice(){
   document.getElementById('s4val').textContent=`${state.w}″ × ${state.h}″`;
   markDone('step4');
   sizeBox.style.display='block';
+  // Auto-open steps 5-8 the first time dimensions are valid
+  ['step5','step6','step7','step8'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el.classList.contains('active')&&!el.classList.contains('open'))el.classList.add('active');
+  });
   document.getElementById('cv-size').textContent=`${state.w}″ W × ${state.h}″ H`;
   document.getElementById('cv-sqft').textContent=sqft.toFixed(2)+' sq ft';
   document.getElementById('cv-bracket').textContent=`${wCol}″ W × ${hRow}″ H`;
@@ -745,6 +758,7 @@ function pickDel(btn,key){
   document.getElementById('s7val').textContent=key==='ship'?'Ship to me':'Pick up';
   markDone('step7');
   calcPrice();
+  goNext('step7','step8');
 }
 
 function updateQuote(){
