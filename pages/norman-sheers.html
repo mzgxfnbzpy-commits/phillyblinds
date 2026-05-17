@@ -394,8 +394,8 @@
     </div>
 
     <!-- STEP 10: QUOTE -->
-    <div class="step-block" id="step-10">
-      <div class="step-head">
+    <div class="step-block open" id="step-10">
+      <div class="step-head" onclick="toggleStep('step-10')">
         <div class="step-num-circle">10</div>
         <div class="step-head-title">Get your custom quote</div>
       </div>
@@ -416,11 +416,19 @@
           <div class="form-group"><label>Additional notes or questions</label><textarea id="q-notes" style="min-height:70px" placeholder="Timeline, room details, existing hardware, anything else..."></textarea></div>
 
           <!-- DELIVERY -->
-          <div class="delivery-section" style="margin-top:4px">
+          <div class="delivery-section" style="margin-top:12px">
             <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
-            <div class="opt-row" id="grp-del-ns">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-del-ns');document.getElementById('del-ns-s').style.display='block';document.getElementById('del-ns-p').style.display='none'">Ship to me</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-del-ns');document.getElementById('del-ns-s').style.display='none';document.getElementById('del-ns-p').style.display='block'">I'll pick up</button>
+            <div class="opt-grid-2">
+              <div class="opt-card sel" id="del-card-ship" onclick="selectDelivery('ship')">
+                <div class="opt-card-icon">📦</div>
+                <div class="opt-card-title">Ship to me</div>
+                <div class="opt-card-desc">UPS or FedEx from Huntingdon Valley, PA</div>
+              </div>
+              <div class="opt-card" id="del-card-pickup" onclick="selectDelivery('pickup')">
+                <div class="opt-card-icon">🏠</div>
+                <div class="opt-card-title">I'll pick up</div>
+                <div class="opt-card-desc">Pickup in Huntingdon Valley, PA. Address confirmed after order.</div>
+              </div>
             </div>
             <div id="del-ns-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA. <div class="delivery-tariff">Tariffs and import fees are additional.</div></div>
             <div id="del-ns-p" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>
@@ -475,6 +483,7 @@
       <div class="spec-row"><span class="spec-key">Fabric</span><span class="spec-val empty" id="sp-fabric">—</span></div>
       <div class="spec-row" id="sp-valance-row" style="display:none"><span class="spec-key">Valance</span><span class="spec-val empty" id="sp-valance">—</span></div>
       <div class="spec-row"><span class="spec-key">Accessories</span><span class="spec-val empty" id="sp-acc">None</span></div>
+      <div class="spec-row"><span class="spec-key">Hardware color</span><span class="spec-val" id="sp-hwcolor">Fabric Default</span></div>
       <div class="spec-divider"></div>
       <div class="spec-row"><span class="spec-key">Pricing</span><span class="spec-val" style="color:var(--gold)">Custom quote</span></div>
       <div class="spec-row"><span class="spec-key">Lead time</span><span class="spec-val">Confirmed at quote</span></div>
@@ -528,7 +537,9 @@ var S = {
   valance:    '',
   valanceSize:'3.5"',
   woodFinish: '',
+  hwColor:    'Fabric Default',
   accessories:[],
+  delivery:   'ship',
   customQuoteReasons: []
 };
 
@@ -669,6 +680,9 @@ function selectOp(op) {
   completeStep('step-3', opLabel);
   updateSpec('sp-operation', opLabel);
   buildStackStep();
+  // Rebuild accessories if already rendered (charging wand depends on operation)
+  var s9 = document.getElementById('s9-body');
+  if (s9 && s9.innerHTML.trim()) buildAccessoryStep();
   activateStep('step-4');
 }
 
@@ -686,10 +700,10 @@ function selectMount(m) {
   var note = document.getElementById('mount-deduction-note');
   if (m === 'inside') {
     note.style.display = 'block';
-    note.textContent = 'Inside mount deduction: shade width = order width − 1/8"';
+    note.textContent = 'Inside mount: manufacturer applies track clearance deductions based on configuration. Order your measured opening width — deductions are factory-applied.';
   } else if (m === 'outside') {
     note.style.display = 'block';
-    note.textContent = 'Outside mount: shade width = order width (no deduction).';
+    note.textContent = 'Outside mount: order the desired finished width. No deduction applied.';
   } else {
     note.style.display = 'none';
   }
@@ -722,10 +736,10 @@ function buildStackStep() {
     ];
   } else if (op === 'motor') {
     options = [
-      {val:'left-stack',   label:'Left Stack',       desc:'Panel stacks to left'},
-      {val:'right-stack',  label:'Right Stack',       desc:'Panel stacks to right'},
-      {val:'center-open',  label:'Center Opening',    desc:'Motorized only — two panels part from center'},
-      {val:'center-stack', label:'Center Stack',      desc:'Motorized only — both panels stack center'}
+      {val:'left-stack',    label:'Left Stack',             desc:'Panel stacks to left side'},
+      {val:'right-stack',   label:'Right Stack',            desc:'Panel stacks to right side'},
+      {val:'center-travel', label:'Traveling Center Stack', desc:'Panel travels from center to one side'},
+      {val:'center-open',   label:'Center Opening',         desc:'Motorized only — two panels part from center outward'}
     ];
   }
   body.innerHTML = '<div class="opt-grid">' + options.map(function(o){
@@ -734,11 +748,11 @@ function buildStackStep() {
       '<div class="opt-card-desc">' + o.desc + '</div>' +
     '</div>';
   }).join('') + '</div>' +
-  '<div id="sbs-toggle-wrap" style="margin-top:14px;display:flex;align-items:center;gap:10px">' +
+  (op === 'wand' ? '<div id="sbs-toggle-wrap" style="margin-top:14px;display:flex;align-items:center;gap:10px">' +
     '<input type="checkbox" id="sbs-check" onchange="toggleSBS()" style="width:16px;height:16px;cursor:pointer">' +
-    '<label for="sbs-check" style="font-size:13px;color:#444;cursor:pointer">Side-by-side configuration (wand tilt only)</label>' +
-  '</div>' +
-  (op === 'motor' ? '<div class="info-box" style="margin-top:10px">Center Opening and Center Stack are available on motorized operation only.</div>' : '');
+    '<label for="sbs-check" style="font-size:13px;color:#444;cursor:pointer">Side-by-side configuration</label>' +
+  '</div>' : '') +
+  (op === 'motor' ? '<div class="info-box" style="margin-top:10px">Traveling Center Stack and Center Opening are both available on motorized operation. Center Opening requires two synchronized track panels.</div>' : '');
 }
 
 function selectStack(v) {
@@ -746,7 +760,7 @@ function selectStack(v) {
   document.querySelectorAll('[id^="stk-"]').forEach(function(el){ el.classList.remove('sel'); });
   var el = document.getElementById('stk-' + v);
   if (el) el.classList.add('sel');
-  var labels = {'left-stack':'Left Stack','right-stack':'Right Stack','center-travel':'Traveling Center Stack','center-open':'Center Opening','center-stack':'Center Stack'};
+  var labels = {'left-stack':'Left Stack','right-stack':'Right Stack','center-travel':'Traveling Center Stack','center-open':'Center Opening'};
   completeStep('step-5', labels[v] || v);
   updateSpec('sp-stack', labels[v] || v);
   document.getElementById('sp-stack-row').style.display = 'flex';
@@ -754,13 +768,8 @@ function selectStack(v) {
 }
 
 function toggleSBS() {
-  var checked = document.getElementById('sbs-check') && document.getElementById('sbs-check').checked;
-  if (checked && S.operation === 'motor') {
-    alert('Side-by-side is only available with Wand Tilt operation. Please switch to Wand Tilt or uncheck this option.');
-    document.getElementById('sbs-check').checked = false;
-    return;
-  }
   validateSizes();
+  buildAccessoryStep();
 }
 
 // ═══════════════════════════════════════════════════════
@@ -931,23 +940,44 @@ function selectValance(v) {
 // ═══════════════════════════════════════════════════════
 function buildAccessoryStep() {
   var body = document.getElementById('s9-body');
+  var isMotor = S.operation === 'motor';
+  var isSingle = !document.getElementById('sbs-check') || !document.getElementById('sbs-check').checked;
+  var isSBS = document.getElementById('sbs-check') && document.getElementById('sbs-check').checked;
+  var canAltColors = isSingle || isSBS;
+
   var items = [
-    {id:'acc-keystones',     label:'Keystones',          sub:'Decorative track splice covers. Optional for SmartJoint connections. $73 each.'},
-    {id:'acc-extra-wand',    label:'Additional Wand',    sub:'Extra operation wand for Traveling Center Stack. $89 surcharge.'},
-    {id:'acc-alt-colors',    label:'Alternating Colors', sub:'Two-color alternating vane pattern. 10% surcharge applies.'},
+    {id:'acc-keystones',     label:'Keystones',          sub:'Decorative track splice covers for SmartJoint connections. $73 each.'},
+    {id:'acc-extra-wand',    label:'Additional Wand',    sub:'Extra operation wand (e.g. for Traveling Center Stack). $89 surcharge.'},
+    {id:'acc-alt-colors',    label:'Alternating Colors', sub:'Two-color alternating vane pattern (+10% surcharge). Available for single shade or side-by-side configurations only — not available with Center Opening.'},
+    {id:'acc-vane-packs',    label:'Additional Vane Pack', sub:'Replacement or additional vanes. $230–$540 per pack depending on shade height. Confirm quantity at quote stage.'},
     {id:'acc-shims',         label:'Aluminum Shims',     sub:'For bracket projection off wall. $28 each — one per L bracket.'},
-    {id:'acc-long-brackets', label:'Long L Brackets',    sub:'Extended reach when additional clearance is needed. $61/shade surcharge.'}
+    {id:'acc-long-brackets', label:'Long L Brackets',    sub:'Extended reach for additional wall clearance. $61 surcharge per shade.'}
   ];
+  if (isMotor) {
+    items.push({id:'acc-charge-wand', label:'Charging Extension Wand', sub:'Optional for motorized systems. Defaults to fabric color. Also available in Cloud Cream, Day Light, Silver, Black, Chocolate, or Moonbeam — specify at quote.'});
+  }
   if (S.isDoor) {
     items.unshift({id:'acc-holddowns', label:'Magnetic Hold-Downs ✓', sub:'Required for door applications — automatically included.', required:true});
   }
+
   body.innerHTML = items.map(function(item){
     var disabled = item.required ? 'disabled checked' : '';
-    return '<div class="acc-item">' +
+    var dimmed = (item.id === 'acc-alt-colors' && !canAltColors) ? 'opacity:0.5;pointer-events:none' : '';
+    return '<div class="acc-item" style="' + dimmed + '">' +
       '<input type="checkbox" class="acc-check" id="' + item.id + '" ' + disabled + ' onchange="updateAccState()" style="width:16px;height:16px;cursor:pointer">' +
       '<div><div class="acc-label">' + item.label + '</div><div class="acc-sub">' + item.sub + '</div></div>' +
     '</div>';
-  }).join('');
+  }).join('') +
+  '<div style="margin-top:16px;border-top:.5px solid #f0f0ee;padding-top:14px">' +
+    '<div style="font-size:12px;font-weight:500;color:#444;margin-bottom:8px">Headrail / Hardware Color</div>' +
+    '<div style="font-size:11px;color:#666;margin-bottom:8px">Default color is coordinated to selected fabric. You may override below.</div>' +
+    '<div class="opt-row" id="grp-hw-color" style="flex-wrap:wrap;gap:8px">' +
+      ['White','Cottage White','Matte Silver','Black','Bronze','Brass'].map(function(c){
+        return '<button class="opt-btn" onclick="selHwColor(this,\'' + c + '\')">' + c + '</button>';
+      }).join('') +
+    '</div>' +
+    '<div style="font-size:11px;color:#888;margin-top:6px">Wand, shims, and motor components will match headrail selection. Keystone color matches headrail.</div>' +
+  '</div>';
 }
 
 function updateAccState() {
@@ -958,6 +988,13 @@ function updateAccState() {
   });
   S.accessories = checked;
   updateSpec('sp-acc', checked.length > 0 ? checked.join(', ') : 'None');
+}
+
+function selHwColor(btn, color) {
+  document.querySelectorAll('#grp-hw-color .opt-btn').forEach(function(b){ b.classList.remove('sel'); });
+  btn.classList.add('sel');
+  S.hwColor = color;
+  updateSpec('sp-hwcolor', color);
 }
 
 // ═══════════════════════════════════════════════════════
@@ -991,13 +1028,24 @@ function updateSpec(id, val) {
 }
 
 // ═══════════════════════════════════════════════════════
+// DELIVERY SELECTION
+// ═══════════════════════════════════════════════════════
+function selectDelivery(mode) {
+  S.delivery = mode;
+  document.getElementById('del-card-ship').classList.toggle('sel', mode === 'ship');
+  document.getElementById('del-card-pickup').classList.toggle('sel', mode === 'pickup');
+  document.getElementById('del-ns-s').style.display = mode === 'ship' ? 'block' : 'none';
+  document.getElementById('del-ns-p').style.display = mode === 'pickup' ? 'block' : 'none';
+}
+
+// ═══════════════════════════════════════════════════════
 // SUBMIT QUOTE
 // ═══════════════════════════════════════════════════════
 function submitQuote() {
   var name  = document.getElementById('q-name').value.trim();
   var phone = document.getElementById('q-phone').value.trim();
   if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
-  var delivery = getOpt('grp-del-ns');
+  var delivery = S.delivery === 'pickup' ? "I'll pick up (Huntingdon Valley, PA)" : 'Ship to me (UPS/FedEx)';
   var body = 'NORMAN SHEER SPECIFICATION REQUEST\n\n'
     + '── CUSTOMER ──\n'
     + 'Name: ' + name + '\nPhone: ' + phone
@@ -1022,6 +1070,7 @@ function submitQuote() {
     + (S.product === 'ps' ? 'Valance: ' + (S.valance || '—') + '\n' : '')
     + (S.valance === 'modern-wood' ? 'Wood finish (paint): ' + getOpt('grp-wood-paint') + ' / Stain: ' + getOpt('grp-wood-stain') + '\n' : '')
     + 'Accessories: ' + (S.accessories.length > 0 ? S.accessories.join(', ') : 'None') + '\n'
+    + 'Hardware color: ' + (S.hwColor || 'Fabric Default') + '\n'
     + 'Delivery: ' + delivery + '\n\n'
     + '── NOTES ──\n'
     + (document.getElementById('q-notes').value.trim() || 'None');
