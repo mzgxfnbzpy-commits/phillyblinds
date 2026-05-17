@@ -410,7 +410,7 @@
           <!-- Qty of baton sets -->
           <div style="background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-bottom:4px">
             <div style="font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:6px">Number of baton sets</div>
-            <div style="font-size:11px;color:#666;margin-bottom:10px">For split draw: typically 2 (one per panel). For one-way: 1.</div>
+            <div style="font-size:11px;color:#666;margin-bottom:10px">1 baton per panel — split draw defaults to 2 (one per panel), one-way defaults to 1. Edit below if needed.</div>
             <div class="qty-btns">
               <button class="qty-btn" onclick="var n=document.getElementById('arch-batons-inp');n.value=Math.max(1,parseInt(n.value)-1)">−</button>
               <input class="qty-num" id="arch-batons-inp" type="number" value="2" min="1" max="20">
@@ -775,43 +775,48 @@ function archCalc() {
   if (!w) { if (acc) acc.style.display = 'none'; return; }
   if (acc) acc.style.display = 'block';
 
-  // Brackets: 1 every 24", plus 2 at each stack end (1 ft apart) = 2 end sets
-  var centerBrackets = Math.max(0, Math.ceil((w - 24) / 24));
-  var stackBrackets = isSplit ? 4 : 2; // 2 per stack end
-  var totalBrackets = stackBrackets + centerBrackets;
+  // Brackets: 1 per foot (every 12") + 2 extra
+  var feetBrackets = Math.ceil(w / 12);
+  var totalBrackets = feetBrackets + 2;
   var bInp = document.getElementById('arch-brackets-inp');
   if (bInp) bInp.value = totalBrackets;
   var bCount = document.getElementById('arch-bracket-count');
   if (bCount) bCount.textContent = totalBrackets + ' brackets';
   var bNote = document.getElementById('arch-bracket-note');
-  if (bNote) bNote.textContent = '1 bracket every 24" center + ' + stackBrackets + ' stack-end brackets (2 per stack, 12" apart). Adjust as needed.';
+  if (bNote) bNote.innerHTML = '<strong>' + feetBrackets + '</strong> brackets (1 per foot for ' + Math.ceil(w/12) + ' ft) + <strong>2 extra</strong> = <strong>' + totalBrackets + ' total</strong>. Edit the quantity below if needed.';
 
-  // Master carriers: for split draw = 1 pair (over + under), one-way = 1 master
+  // Master carriers: 1 set per pair
   var masterWrap = document.getElementById('arch-master-wrap');
   var mNote = document.getElementById('arch-master-note');
   var mInp = document.getElementById('arch-masters-inp');
   if (isSplit) {
     if (masterWrap) masterWrap.style.display = 'block';
-    if (mNote) mNote.textContent = 'Split draw: 1 pair of master carriers (1 over + 1 under) recommended. Add more pairs for multiple draw points.';
+    if (mNote) mNote.innerHTML = 'Split draw: <strong>1 set</strong> (1 over + 1 under master) per pair of panels. Default is 1 set. Add more sets below if you have additional pairs.';
     if (mInp && parseInt(mInp.value) < 1) mInp.value = 1;
   } else {
     if (masterWrap) masterWrap.style.display = 'block';
-    if (mNote) mNote.textContent = 'One-way draw: 1 master carrier on the leading edge. Pairs sold over/under — quantity 1 pair covers one draw point.';
+    if (mNote) mNote.innerHTML = 'One-way draw: <strong>1 set</strong> (1 over + 1 under master) on the leading edge. Add more sets below if needed.';
     if (mInp && parseInt(mInp.value) < 1) mInp.value = 1;
   }
 
-  // Ball bearing carriers: 6 per 20" + 2 extras
-  var rawCarriers = Math.ceil(w / 20 * 6) + 2;
+  // Ball bearing carriers: 7 per 15 inches
+  var rawCarriers = Math.ceil(w / 15 * 7);
   var cInp = document.getElementById('arch-carriers-inp');
   if (cInp) cInp.value = rawCarriers;
   var cCount = document.getElementById('arch-carrier-count');
   if (cCount) cCount.textContent = rawCarriers + ' carriers';
   var cNote = document.getElementById('arch-carrier-note');
-  if (cNote) cNote.textContent = 'We recommend 6 carriers per 20" of track (= ' + Math.ceil(w/20*6) + ') + 2 extras for a total of ' + rawCarriers + '. Adjust for pleat density.';
+  if (cNote) cNote.innerHTML = '<strong>7 carriers per 15"</strong> of track × ' + Math.ceil(w/12) + ' ft = <strong>' + rawCarriers + ' carriers</strong>. Edit below if needed.';
 
-  // Batons: suggest 2 for split, 1 for one-way
+  // Batons: 1 per panel (1 for one-way, 2 for split draw — one per panel)
+  var numPanels = isSplit ? 2 : 1;
   var bainp = document.getElementById('arch-batons-inp');
-  if (bainp) bainp.value = isSplit ? 2 : 1;
+  if (bainp) bainp.value = numPanels;
+  var bainpLabel = bainp ? bainp.closest('div') : null;
+  // Update baton count label
+  var batonSetsNote = document.querySelector('#arch-accessories .qty-val, #arch-batons-inp + *');
+  // note is in the qty section
+  var batonQtyDiv = bainp ? bainp.closest('[style]') : null;
   var bcn = document.getElementById('arch-baton-custom-note');
   if (bcn) bcn.textContent = 'White only. Need a custom color? Use the link below.';
 
