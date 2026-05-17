@@ -1150,13 +1150,14 @@
               <!-- Day & Night dual picker -->
               <div id="cell-dn-wrap" style="display:none">
                 <div class="tooltip-note" style="margin-bottom:10px;color:var(--gold)">
-                  ⚠ Day &amp; Night: two fabrics in one headrail — top (day) and bottom (night). Available in 9⁄16″S, 3⁄4″S, and 1 1⁄4″S only.
+                  ⚠ Day &amp; Night: two fabrics in one headrail — top (day) and bottom (night). Available in all 6 cell sizes — top and bottom must use the same cell size.
                 </div>
                 <div style="margin-bottom:14px">
                   <div class="step-title" style="font-size:12px;margin-bottom:6px">Top fabric (Day side)</div>
                   <div class="opt-row" id="grp-cell-dn-top">
                     <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-dn-top');cellDnRender('top','sheer')">Sheer</button>
                     <button class="opt-btn" onclick="selOpt(this,'grp-cell-dn-top');cellDnRender('top','lf')">Light Filtering</button>
+                    <button class="opt-btn" onclick="selOpt(this,'grp-cell-dn-top');cellDnRender('top','windsong')">Woven Windsong</button>
                   </div>
                   <div id="cell-dn-top-grid" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px"></div>
                 </div>
@@ -1246,7 +1247,7 @@
               <div class="opt-row" id="grp-motor-type" style="flex-wrap:wrap;gap:6px">
                 <button class="opt-btn sel" onclick="selOpt(this,'grp-motor-type');cellMotorUpcharge=482;updatePrice()">Norman Smart — $482<br><span style="font-size:10px;font-weight:400;color:#888">App, voice, remote &middot; rechargeable or hardwired</span></button>
                 <button class="opt-btn" onclick="selOpt(this,'grp-motor-type');cellMotorUpcharge=166;updatePrice()">AutoWand — $166<br><span style="font-size:10px;font-weight:400;color:#888">Wand-controlled &middot; no remote needed &middot; rechargeable</span></button>
-                <button class="opt-btn" onclick="selOpt(this,'grp-motor-type');cellMotorUpcharge=682;updatePrice()">Automate Home — $682<br><span style="font-size:10px;font-weight:400;color:#888">15-ch remote, wall switch &middot; rechargeable or low-voltage DC</span></button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-motor-type');cellMotorUpcharge=682;updatePrice()">Automate Home Motorization by Norman — $682<br><span style="font-size:10px;font-weight:400;color:#888">15-ch RF remote, wall switch &middot; rechargeable or low-voltage DC &middot; <strong style="color:#dc2626">not compatible with Norman Smart controls</strong></span></button>
               </div>
               <div class="tooltip-note" style="color:var(--gold);margin-top:8px">&#9889; Norman Cellular shades use Norman-brand motorization only. Motor surcharge is per shade. Power source (battery/hardwired) confirmed at your measurement visit.</div>
             </div>
@@ -2964,10 +2965,7 @@ const CELL_COMPAT = {
   'lf':   [0,1,2,3,4,5],  // Light Filtering — all 6 sizes
   'rd':   [  1,2,3,4,5],  // Room Darkening — 9/16"S (16-color limited palette), 1/2"D, 3/4"S, 3/4"D, 1¼"S. NOT 3/8"S.
   'sheer':[0],             // Sheer — 3/8"S only as single shade (9/16"S top in D&N only)
-  'dn':   [0,1,2,3,4,5],  // Day & Night — all sizes per FABRIC_NOTES; pairing rules apply for double-cell bottom
-  // ⚠ OWNER CONFIRM: The HTML D&N picker tooltip says "9/16"S, 3/4"S, and 1¼"S only" but
-  // CELL_COMPAT and FABRIC_NOTES allow all 6 sizes. Verify against Norman Portrait PDF.
-  // If D&N is restricted to fewer sizes, update to e.g. [1,3,5] and remove index 0/2/4.
+  'dn':   [0,1,2,3,4,5],  // Day & Night — all 6 cell sizes confirmed by owner 2026-05-16. Top & bottom same cell size.
 };
 const FABRIC_NOTES = {
   'lf':   'Light Filtering: available in all 6 cell sizes.',
@@ -3883,13 +3881,22 @@ const CELL_COLLECTIONS = {
   ]
 };
 
+// ─── Windsong D&N colors (valid as top/day shade in Day & Night config)
+// Windsong is a woven-texture Norman Portrait fabric — specify exact color in quote notes.
+// Full color list not programmed; customer selects via notes field.
+CELL_COLLECTIONS['windsong'] = [
+  {name:'Woven Windsong (Day shade)', colors:[
+    {n:'Specify color in notes below', c:'WS'}
+  ]}
+];
+
 // ─── Fabric type → human label maps ──────────────────────────
 const RN_FABRIC_LABELS = {
   'sheer':'Sheer','lf':'Light Filtering','natural':'Natural',
   'rd':'Room Darkening','solar':'Solar Screen','commercial':'Commercial Solar'
 };
 const CELL_FABRIC_LABELS = {
-  'lf':'Light Filtering','rd':'Room Darkening','sheer':'Sheer','dn':'Day & Night'
+  'lf':'Light Filtering','rd':'Room Darkening','sheer':'Sheer','dn':'Day & Night','windsong':'Woven Windsong'
 };
 
 // ─── Color swatch map ────────────────────────────────────────
