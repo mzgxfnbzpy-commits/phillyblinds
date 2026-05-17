@@ -655,3 +655,61 @@ Motorization PDF checked: No Synchrony motorization exists — confirmed cordles
 - Synchrony Vertical Blinds = NO motorization. Cordless wand tilt only.
 - Do NOT add motor options to this page ever.
 - Source: Synchrony PDF has no motorization section. Norman Automated PDF does not list Synchrony.
+
+---
+
+## Norman City Lights Aluminum Blinds Audit — 2026-05-16
+
+Verified against:
+C:\Users\Blind\PhillyBlinds Photos\PDF PRODUCTS\Norman\Norman - City Lights Aluminum Blinds.pdf
+(October 2025 edition)
+
+### Product Rules
+- City Lights is separate from Norman Faux Wood / SmartPrivacy Faux Wood / any wood blind.
+- Do NOT mix colors, motor options, or slat rules with other Norman products.
+- City Lights is CORDLESS only — NO motorization in the PDF. Do not add motor options.
+
+### Slat Sizes (all cordless)
+- ½″ Micro: min 9″ / max 78″ width, min 10″ / max 96″ height, max 50 sq ft — +10% surcharge
+- 1″ Standard: same size limits as ½″ — base price (no slat surcharge)
+- 2″ SmartPrivacy®: min 10.5″ / max 96″ width, min 16″ / max 96″ height, max 48 sq ft — +20% surcharge (SmartPrivacy included)
+
+### SmartPrivacy
+- STANDARD on 2″ slats only (included in 20% slat surcharge)
+- NOT available on ½″ or 1″ as an add-on
+- Do NOT add a separate SmartPrivacy surcharge — it is bundled into the 2″ slat price
+
+### Privacy Slats
+- Optional add-on for 1″ ONLY (+10%)
+- NOT available for ½″ (regular route hole only)
+- NOT available for 2″ (SmartPrivacy is already standard)
+
+### Colors
+- 33 total colors across all slat sizes
+- ½″: 20 colors · 1″: 30 colors · 2″: 16 colors
+- Colors with * in the PDF carry a finish surcharge: +10% metallic/perforated/matte, +20% textured
+- Champagne (7029): 1″ only, +20% textured
+- Porcelain (7031): 1″ only, +10% matte
+- See color coordination charts (PDF pages 17-20) for headrail/rail color matching
+
+### Mounting
+- Inside Mount (IM): deducts 3/8″ from ordered width automatically
+- Outside Mount (OM): shims available (optional, + each)
+- Side Mount bracket: 2″ only, +/blind, inside mount only
+
+### Pricing Matrix (1″ slat base — October 2025)
+Width cols: 24-96″ (14 columns). Height rows: 42,48,54,61,66,73,78,84,90,96.
+Max width for ½″ and 1″ is 78″ (84/90/96 columns are 2″ only).
+Matrix verified correct in pages/city-lights-aluminum-blinds.html.
+
+### Freight
+- Standard:  first +  each additional
+- Oversized (≥90″ width):  first +  each additional
+
+### Audit Result (2026-05-16)
+- Pricing matrix: CORRECT — all values match PDF ✓
+- Colors/codes/surcharges: CORRECT ✓
+- Size limits: CORRECT ✓
+- Motorization: ABSENT (correct — not in PDF) ✓
+- Bug FIXED: Privacy slat add-on was incorrectly shown for 2″ slats.
+  SmartPrivacy is already standard on 2″; privacy add-on is 1″ only.

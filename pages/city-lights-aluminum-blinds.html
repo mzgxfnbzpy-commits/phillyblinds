@@ -406,7 +406,7 @@
             <div class="addon-check" id="privacy-check">✓</div>
             <div>
               <div class="addon-name">Privacy Slats</div>
-              <div class="addon-sub">More seamless look &middot; enhanced light control &middot; available for 1&Prime; &amp; 2&Prime; slats</div>
+              <div class="addon-sub">More seamless look &middot; enhanced light control &middot; 1&Prime; slats only (SmartPrivacy® is already standard on 2&Prime;)</div>
             </div>
           </div>
           <div class="addon-price">+10%</div>
@@ -616,7 +616,9 @@ function pickSlat(el,key,label){
   state.slat=key;
   document.getElementById('s1val').textContent=label;
   markDone('step1');
-  document.getElementById('privacy-wrap').style.display=(key==='half')?'none':'block';
+  // Privacy slat option: 1" only. ½" has no privacy option. 2" has SmartPrivacy STANDARD (included).
+  document.getElementById('privacy-wrap').style.display=(key==='one')?'block':'none';
+  if(key!=='one'){state.privacy=false;document.getElementById('privacy-addon').classList.remove('sel');}
   document.getElementById('sidemount-wrap').style.display=(key==='two')?'block':'none';
   const n=document.getElementById('size-limits-note');
   if(key==='half'||key==='one') n.textContent='Max width 78″ · max height 96″ · max area 50 sq ft.';
