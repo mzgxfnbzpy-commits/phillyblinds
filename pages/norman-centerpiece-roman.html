@@ -1062,7 +1062,7 @@ function updateSpec() {
   var room=document.getElementById('room-label').value.trim(); S.room=room;
   sp('sp-qty', S.qty?(S.qty+' shade'+(S.qty>1?'s':''))+(room?' · '+room:''):'');
   sp('sp-lift', S.lift?(LIFT_LIMITS[S.lift]&&LIFT_LIMITS[S.lift].label)||S.lift:'');
-  sp('sp-size', S.width&&S.height?S.width+'"×'+S.height+'":"');
+  sp('sp-size', S.width&&S.height ? S.width+'"×'+S.height+'"' : '');
   var mountBtn=document.querySelector('#grp-mount .opt-btn.sel');
   sp('sp-mount', mountBtn?mountBtn.textContent.trim():'Inside mount');
   var sLabels={flat:'Flat Fold without Seams',batten:'Flat Fold with Batten Back',soft:'Soft Fold'};
