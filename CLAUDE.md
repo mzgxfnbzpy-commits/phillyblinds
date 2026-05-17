@@ -108,6 +108,7 @@ Every page MUST include:
 | pages/drapery.html | Custom drapery & hardware | 6 pleat styles, hardware selector (type/brand/diameter/finish/finial/rings), motorization â†’ notes only; mailto + delivery |
 | pages/shutters.html | Plantation shutters | Norman shutters: Normandy, Woodlore, Woodlore Plus (Brightwood removed); louver/frame options; mailto + delivery |
 | pages/measure-shutters.html | Measure guide (shutters) | 4 tabs: inside mount, outside mount, frame styles &amp; depth, tips. 3WÃ—3H rule explained with SVG diagrams |
+| pages/kirsch-rods.html | **Kirsch Rod Selector (NEW)** | 7-step configurator for all Kirsch rod types. Covers Designer Metals (8 finishes, 27 finials, 1"/1⅜"/2"), Wood Trends (9 finishes, 18 finials, 1⅜"/2"), Wrought Iron (6 finishes, 18 finials, 1"/1⅜"), Architrac 94001, Basic hardware. AMP™ motorization step. Quote via mailto. Linked from hardware.html Kirsch brand card. |
 | pages/catalogs.html | Spec catalogs download | 32 PDFs across Norman/Wallace/Woven/Kirsch/hardware brands, pricing whited out |
 | pages/product-specs.html | Product specifications | 9 tabs, 20+ products with full specs |
 | pages/soluna-roller-shades.html | Norman Soluna detail page | Full product deep-dive |
