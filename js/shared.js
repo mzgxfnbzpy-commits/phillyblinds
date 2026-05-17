@@ -795,32 +795,66 @@ function pbSubmitCheckout() {
  * @param {Function} onChange   — called when any option changes
  */
 function normanMotorSection(containerId, productName, onChange) {
+  // Per Norman April 2026 price book:
+  // - Charging Wand only available on Honeycomb and Roller (not Roman, PerfectSheer, SmartDrape, SmartFold)
+  // - SmartDrape: DC Low Voltage NOT available
+  // - Max 2 remotes (Basic or SmartDial G2) per Norman Smart system
+  var isSmartDrape  = (productName || '').toLowerCase().indexOf('smartdrape') !== -1 ||
+                      (productName || '').toLowerCase().indexOf('smart drape') !== -1;
+  var wandAllowed   = !isSmartDrape &&
+                      (productName || '').toLowerCase().indexOf('roman') === -1 &&
+                      (productName || '').toLowerCase().indexOf('smartfold') === -1 &&
+                      (productName || '').toLowerCase().indexOf('perfectsheer') === -1;
+
+  var batteryDetail = wandAllowed
+    ? '<div style="font-size:11px;color:var(--text-dark);line-height:1.6;margin-bottom:6px">Battery options:</div>' +
+      '<div class="opt-row" id="nm-grp-battery-type">' +
+        '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">Charging Wand</button>' +
+        '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">AC Adapter Charger</button>' +
+      '</div>' +
+      '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">Charging Wand: NOT available with Cassette headrail or Dual shades. Use AC Adapter Charger for those configurations.</div>'
+    : '<div style="font-size:11px;color:var(--text-dark);line-height:1.6">Rechargeable battery with AC Adapter Charger. No wiring required — ideal for retrofit installations. ' +
+      (isSmartDrape ? '' : '') +
+      'Charging Wand is not available for this product type.</div>';
+
+  var dcLowVoltageBtn = isSmartDrape
+    ? '<button class="opt-btn" style="color:#aaa;text-decoration:line-through;cursor:not-allowed" disabled title="DC Low Voltage not available for SmartDrape">DC Low Voltage ⚠</button>'
+    : '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-wire\')" style="color:#333">24V DC (low voltage)</button>';
+
   var html =
     '<div class="pb-norman-motor" style="margin-top:12px;padding:16px 18px;background:var(--espresso-mid);border-radius:12px;border:0.5px solid var(--border-dark)">' +
       '<div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px">&#9889; Norman Smart Motorization</div>' +
+      (isSmartDrape ? '<div style="font-size:11px;background:#2a1c0e;border:1px solid #7a5020;border-radius:7px;padding:8px 12px;color:#e8b060;margin-bottom:12px;line-height:1.5">SmartDrape motor: $642 per shade (Norman Smart). DC Low Voltage is not available for SmartDrape.</div>' : '') +
 
       // Power source
       '<div style="margin-bottom:12px">' +
         '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Power source</div>' +
         '<div class="opt-row" id="nm-grp-power">' +
           '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-power\');nmTogglePower(\'battery\')" style="color:#333">&#128267; Rechargeable battery</button>' +
-          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-power\');nmTogglePower(\'hardwire\')" style="color:#333">&#9889; Hardwired</button>' +
+          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-power\');nmTogglePower(\'ac\')" style="color:#333">&#128268; AC Adapter plug-in</button>' +
+          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-power\');nmTogglePower(\'hardwire\')" style="color:#333">&#9889; DC Hardwired</button>' +
         '</div>' +
       '</div>' +
 
       // Battery detail
       '<div id="nm-battery-opts" style="margin-bottom:12px;padding:10px 12px;background:rgba(255,255,255,.06);border-radius:8px">' +
-        '<div style="font-size:11px;color:var(--text-dark);line-height:1.6">Rechargeable lithium battery. Charge every 4–6 months with the included USB-C charger. No wiring required — ideal for retrofit installations.</div>' +
+        batteryDetail +
+      '</div>' +
+
+      // AC adapter detail
+      '<div id="nm-ac-opts" style="display:none;margin-bottom:12px;padding:10px 12px;background:rgba(255,255,255,.06);border-radius:8px">' +
+        '<div style="font-size:11px;color:var(--text-dark);line-height:1.6">AC Adapter plug-in. Plugs into standard 120V outlet. No battery charging required. Cord management needed near the window.</div>' +
       '</div>' +
 
       // Hardwire detail
       '<div id="nm-hardwire-opts" style="display:none;margin-bottom:12px">' +
-        '<div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px">Wiring type</div>' +
+        '<div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px">DC wiring</div>' +
         '<div class="opt-row" id="nm-grp-wire">' +
-          '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-wire\')" style="color:#333">24V DC (low voltage)</button>' +
-          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-wire\')" style="color:#333">Line voltage (120V)</button>' +
+          dcLowVoltageBtn +
+          (isSmartDrape ? '' : '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-wire\')" style="color:#333">DC Low Voltage hard wire</button>') +
         '</div>' +
-        '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">Hardwired installation by licensed electrician recommended. Confirmed at measurement visit.</div>' +
+        '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">DC hard wire (15V). Licensed electrician install recommended. Confirmed at measurement visit.' +
+          (isSmartDrape ? ' DC Low Voltage is NOT available for SmartDrape.' : '') + '</div>' +
       '</div>' +
 
       // Remote
@@ -834,19 +868,22 @@ function normanMotorSection(containerId, productName, onChange) {
 
       // Remote detail
       '<div id="nm-remote-detail" style="padding:10px 12px;background:rgba(255,255,255,.06);border-radius:8px;margin-bottom:12px">' +
-        '<div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px">Number of remotes</div>' +
+        '<div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px">Number of remotes <span style="font-size:10px;font-weight:400;color:var(--text-faint)">(max 2 per Norman Smart system)</span></div>' +
         '<div class="opt-row" id="nm-grp-remotes">' +
           '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-remotes\')" style="color:#333">1</button>' +
           '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-remotes\')" style="color:#333">2</button>' +
-          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-remotes\')" style="color:#333">3</button>' +
-          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-remotes\')" style="color:#333">4+</button>' +
         '</div>' +
-        '<div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px;margin-top:10px">Channel type</div>' +
+        '<div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px;margin-top:10px">Remote type</div>' +
+        '<div class="opt-row" id="nm-grp-remote-type">' +
+          '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-remote-type\')" style="color:#333">Basic Remote — $75</button>' +
+          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-remote-type\')" style="color:#333">SmartDial G2 — $268</button>' +
+        '</div>' +
+        '<div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px;margin-top:10px">Channel assignment</div>' +
         '<div class="opt-row" id="nm-grp-channel">' +
           '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-channel\')" style="color:#333">Single channel</button>' +
           '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-channel\')" style="color:#333">Multi channel</button>' +
         '</div>' +
-        '<div style="font-size:10px;color:var(--text-faint);margin-top:5px">Single: one remote controls all shades together. Multi: control each shade independently.</div>' +
+        '<div style="font-size:10px;color:var(--text-faint);margin-top:5px">Single: all shades respond together. Multi: control each shade independently. Shades default to Ch 1 if not assigned.</div>' +
       '</div>' +
 
       // Smart home
@@ -858,7 +895,7 @@ function normanMotorSection(containerId, productName, onChange) {
           '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-smart\')" style="color:#333">Google Home</button>' +
           '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-smart\')" style="color:#333">Apple HomeKit</button>' +
         '</div>' +
-        '<div style="font-size:10px;color:var(--text-faint);margin-top:5px">Smart home integration requires a compatible hub/bridge. Availability confirmed per motor model at measurement visit.</div>' +
+        '<div style="font-size:10px;color:var(--text-faint);margin-top:5px">Hub required for app and voice control. ShadeAuto Hub + Repeater available as add-on. Max 5 repeaters per system.</div>' +
       '</div>' +
     '</div>';
 
@@ -871,9 +908,11 @@ function normanMotorSection(containerId, productName, onChange) {
 
 function nmTogglePower(type) {
   var bat = document.getElementById('nm-battery-opts');
+  var ac  = document.getElementById('nm-ac-opts');
   var hw  = document.getElementById('nm-hardwire-opts');
-  if (bat) bat.style.display = type === 'battery' ? 'block' : 'none';
-  if (hw)  hw.style.display  = type === 'hardwire' ? 'block' : 'none';
+  if (bat) bat.style.display = type === 'battery'   ? 'block' : 'none';
+  if (ac)  ac.style.display  = type === 'ac'        ? 'block' : 'none';
+  if (hw)  hw.style.display  = type === 'hardwire'  ? 'block' : 'none';
 }
 function nmToggleRemote(show) {
   var el = document.getElementById('nm-remote-detail');

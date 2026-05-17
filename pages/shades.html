@@ -2496,7 +2496,7 @@ const SYSTEM_LIMITS = {
     'Motorized':  { maxW: 96, maxH: 108, note: 'Motorized max 96″W × 108″H — app, remote & voice control' },
   }
 };
-const MOTOR_UPCHARGE = 95;
+const MOTOR_UPCHARGE = 482; // Norman Smart motor per shade (Norman brand products)
 const MIN_ORDER = 85;
 
 // ─── State ───────────────────────────────────────────────────
@@ -2662,14 +2662,24 @@ function toggleMotor(on) {
 }
 
 function checkMotorConflict() {
-  // For cellular, cellularOpChange() handles messaging — no red error needed.
-  // For other products (roller shared, zebra, woven): clear any stale motor note.
-  if (currentProduct === 'cellular') return;
-  const opBlock = document.getElementById('op-system-block');
-  if (!opBlock) return;
-  const warn = document.getElementById('motor-conflict-note');
-  if (warn) warn.remove();
-  opBlock.style.outline = opBlock.style.borderRadius = opBlock.style.padding = '';
+  // Enforce: Norman Smart controls and Automate Home motors are NOT compatible.
+  // Both programs are Norman-brand but use different RF protocols — cannot mix.
+  if (currentProduct !== 'cellular') return;
+  const motorTypeSel = document.querySelector('#grp-motor-type .opt-btn.sel');
+  if (!motorTypeSel || !motorOn) return;
+  const motorLabel = motorTypeSel.textContent || '';
+  const isNormanSmart   = motorLabel.indexOf('Norman Smart') !== -1;
+  const isAutomateHome  = motorLabel.indexOf('Automate Home') !== -1;
+  // Currently UI only lets user pick one at a time, so mix can't happen via normal flow.
+  // This guard exists in case programmatic state gets out of sync.
+  const conflictNote = document.getElementById('motor-program-conflict');
+  if (!conflictNote) return;
+  if (isNormanSmart && isAutomateHome) {
+    conflictNote.style.display = 'block';
+    conflictNote.textContent = '⛔ Norman Smart and Automate Home are NOT compatible — they use different RF protocols. Select one system only.';
+  } else {
+    conflictNote.style.display = 'none';
+  }
 }
 
 // ─── updateChainStdLabel — live 75%-of-height on Standard btn ─
@@ -3368,7 +3378,7 @@ function buildCartItem() {
   const rate     = RATES[currentProduct] || 0;
   const sqft     = (w / 12) * (h / 12);
   const base     = Math.max(85, sqft * rate);
-  const motorCost = motorOn ? 95 * qty : 0;
+  const motorCost = motorOn ? MOTOR_UPCHARGE * qty : 0;
   const estimated = (base * qty) + motorCost;
 
   const productName = document.getElementById('config-product-name').textContent;
@@ -4492,7 +4502,7 @@ function rnLookupPrice(w, h) {
   return { price: price || null, pricedAt: pW + '″ W × ' + pH + '″ H', group: pg };
 }
 
-const RN_MOTOR_UP  = 120;  // motorization upcharge — verify with Norman motor binder
+const RN_MOTOR_UP  = 482;  // Norman Smart motor per shade (per April 2026 Norman price book)
 const RN_MIN       = 85;   // minimum per shade
 
 const RN_SYSTEM_NOTES = {
@@ -5004,6 +5014,18 @@ function rnRunValidation() {
   }
   if (rnSystemType === 'dual' || rnSystemType === 'dn') {
     warnings.push('Dual / Day & Night shades require extra mounting depth — confirm depth at order. Price calculated as two individual shades.');
+    if (rnLiftType === 'motor') {
+      warnings.push('Dual shade + Motorized: Rechargeable Battery with Charging Wand is NOT available. Power source must be AC Adapter or DC Low Voltage. Confirmed at order.');
+    }
+  }
+  // Cassette + motorized: charging wand not available
+  const headrailSel = document.querySelector('#rn-grp-headrail .opt-btn.sel');
+  if (headrailSel && headrailSel.textContent.includes('Cassette') && rnLiftType === 'motor') {
+    warnings.push('Cassette System + Motorized: Rechargeable Battery with Charging Wand is NOT available. Power source must be AC Adapter Charger or DC Low Voltage.');
+  }
+  // Day & Night (dual roller) 3:1 height-to-width ratio limit per Norman spec
+  if ((rnSystemType === 'dn') && w && h && h > w * 3) {
+    errors.push('Day & Night shades cannot exceed a 3:1 height-to-width ratio (height must be ≤ 3× width) because of telescoping mechanism. Current ratio: ' + (h/w).toFixed(1) + ':1. Reduce height or increase width.');
   }
   if (['coupled2','coupled3','coupled4'].includes(rnSystemType)) {
     warnings.push('Coupled shades must use the same lift system. Center gaps and alignment tolerance may be visible. Surcharge applies per linked section.');
