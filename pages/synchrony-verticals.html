@@ -105,8 +105,7 @@
 </style>
 </head>
 <body>
-<script src="../js/shared.js"></script>
-<script>renderNav('Shades &amp; Blinds');</script>
+<script>/* shared.js loaded once at bottom */</script>
 
 <div class="page-hero">
   <div class="hero-inner">
@@ -117,7 +116,7 @@
       <span class="hero-pill hero-pill-gold">Instant pricing</span>
       <span class="hero-pill">Valance-free design</span>
       <span class="hero-pill">Cordless wand tilt</span>
-      <span class="hero-pill">4 fabric collections</span>
+      <span class="hero-pill">10 fabric collections</span>
       <span class="hero-pill">NORMAN®</span>
     </div>
   </div>
@@ -328,23 +327,29 @@
             <div class="color-swatch" style="background:#9AAA84"></div>
             <div class="color-label"><div class="color-name">Botanical Garden</div></div>
           </div>
-          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Grasscloth','Willow Mist',4)">
+        </div>
+      </div>
+
+      <div class="fabric-section">
+        <div class="fabric-section-head">Willow — Woven Texture</div>
+        <div class="color-grid">
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Willow','Mist',4)">
             <div class="color-swatch" style="background:#D8DDE0"></div>
-            <div class="color-label"><div class="color-name">Willow Mist</div></div>
+            <div class="color-label"><div class="color-name">Mist</div></div>
           </div>
-          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Grasscloth','Birch',4)">
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Willow','Birch',4)">
             <div class="color-swatch" style="background:#C8B898"></div>
             <div class="color-label"><div class="color-name">Birch</div></div>
           </div>
-          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Grasscloth','Burnished Clay',4)">
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Willow','Burnished Clay',4)">
             <div class="color-swatch" style="background:#B07050"></div>
             <div class="color-label"><div class="color-name">Burnished Clay</div></div>
           </div>
-          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Grasscloth','Cloud',4)">
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Willow','Cloud',4)">
             <div class="color-swatch" style="background:#C8CDD0"></div>
             <div class="color-label"><div class="color-name">Cloud</div></div>
           </div>
-          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Grasscloth','Natural Gray',4)">
+          <div class="color-card" data-group="4" data-vane="Traditional Curved" onclick="pickFabric(this,'Willow','Natural Gray',4)">
             <div class="color-swatch" style="background:#A8A8A0"></div>
             <div class="color-label"><div class="color-name">Natural Gray</div></div>
           </div>
@@ -390,13 +395,17 @@
     </div>
     <div class="step-body">
       <div class="opt-grid-2">
-        <div class="opt-card" onclick="pickMount(this,'inside','Inside Mount')">
+        <div class="opt-card" onclick="pickMount(this,'inside','Inside Mount — Fully Flushed')">
           <div class="opt-card-title">Inside Mount</div>
-          <div class="opt-card-desc">Fully flushed — no valance needed<br>Min depth 3¾&Prime; (2 13/16&Prime; semi-flush)<br><br>Mfr deducts 3/8&Prime; W &amp; 3/16&Prime; H</div>
+          <div class="opt-card-desc">Fully flushed — no valance needed<br>Min depth 3¾&Prime; required<br><br>Mfr deducts 3/8&Prime; W &amp; 3/16&Prime; H</div>
+        </div>
+        <div class="opt-card" onclick="pickMount(this,'semi','Semi-Inside Mount')">
+          <div class="opt-card-title">Semi-Inside Mount</div>
+          <div class="opt-card-desc">Partial recess into opening<br>Min depth 2 13/16&Prime;<br><br>Mfr deducts 3/8&Prime; W &amp; 3/16&Prime; H</div>
         </div>
         <div class="opt-card" onclick="pickMount(this,'outside','Outside Mount')">
           <div class="opt-card-title">Outside Mount</div>
-          <div class="opt-card-desc">Mounts above or outside the frame<br>Add ~1½&Prime; each side for light block</div>
+          <div class="opt-card-desc">Mounts above or outside the frame<br>No deductions — add ~1½&Prime; each side for light block<br>Total projection: 3¾&Prime;–4⅛&Prime;</div>
         </div>
       </div>
       <div id="mount-note" class="msg-box msg-info" style="display:none"></div>
@@ -453,7 +462,7 @@
         <div class="cv-row"><span class="cv-key">Pricing bracket</span><span class="cv-val" id="cv-bracket">—</span></div>
         <div class="cv-row"><span class="cv-key">Price per blind</span><span class="cv-val" id="cv-price">—</span></div>
       </div>
-      <div class="step-note">Width 18&Prime;–100&Prime; &middot; Height 36&Prime;–108&Prime;. Oversized widths may require a center support bracket (included). For large openings needing multiple blinds side-by-side, we'll advise at your consultation.</div>
+      <div class="step-note">Width 18&Prime;–100&Prime; &middot; Height 36&Prime;–108&Prime;. A center support bracket is <strong>required and included</strong> for widths 78&Prime; or wider. For openings wider than 100&Prime;, order two side-by-side blinds — both <strong>must use the same stack direction</strong> (both stack left or both stack right; do not mix directions or the vanes will interfere).</div>
     </div>
   </div>
 
@@ -485,7 +494,15 @@
           <span class="spin-label">shim(s) &times; $7 ea</span>
         </div>
       </div>
-      <div class="step-note">For outside mount, we recommend at least one shim per bracket when mounting above a trim or molding.</div>
+      <div class="step-note">For outside mount, we recommend at least one shim per bracket when mounting above a trim or molding. Shims are plastic, 3/8″ thick; stack two for 1 11/16″ total extension.</div>
+
+      <div class="sub-label" style="margin-top:16px">Wand / control side <span style="font-weight:400;color:#999">(headrail is reversible)</span></div>
+      <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap">
+        <button style="flex:1;padding:10px 8px;border:1.5px solid #e8e8e4;border-radius:9px;cursor:pointer;background:#fff;font-size:12px;font-weight:500;transition:all .15s" onclick="pickWand(this,'Left side')">Wand on left</button>
+        <button style="flex:1;padding:10px 8px;border:1.5px solid #e8e8e4;border-radius:9px;cursor:pointer;background:#fff;font-size:12px;font-weight:500;transition:all .15s" onclick="pickWand(this,'Right side')">Wand on right</button>
+        <button style="flex:1;padding:10px 8px;border:1.5px solid #e8e8e4;border-radius:9px;cursor:pointer;background:#fff;font-size:12px;font-weight:500;transition:all .15s" onclick="pickWand(this,'No preference')">No preference</button>
+      </div>
+      <div class="step-note" style="margin-top:4px">The wand tilts the vanes. Vanes always stack on the same side as the wand (tilt side). Installer confirms at measurement.</div>
     </div>
   </div>
 
@@ -583,7 +600,7 @@
 </div><!-- /config-layout -->
 
 <script src="../js/shared.js"></script>
-<script>renderFooter(false);</script>
+<script>renderNav('Shades & Blinds'); renderFooter(false);</script>
 
 <script>
 // ── PRICING DATA ──────────────────────────────────────────────────────────────
@@ -626,12 +643,17 @@ function pickMount(el,key,label){
   document.getElementById('s2val').textContent=label;
   markDone('step2');
   const note=document.getElementById('mount-note');
-  if(key==='inside'){note.style.display='block';note.textContent='Inside mount: measure exact frame opening width & height. Mfr deducts 3/8″ W and 3/16″ H. Min depth 3¾″ (2 13/16″ semi-flush).';}
-  else{note.style.display='block';note.textContent='Outside mount: no deductions. Recommend adding ~1½″ each side for light block.';}
+  const msgs={
+    inside:'Inside mount (fully flushed): min depth 3¾″. Mfr deducts 3/8″ W and 3/16″ H.',
+    semi:'Semi-inside mount: min depth 2 13/16″. Mfr deducts 3/8″ W and 3/16″ H.',
+    outside:'Outside mount: no deductions. Add ~1½″ each side to minimize light leakage. Total projection: 3¾″–4⅛″.'
+  };
+  note.style.display='block';
+  note.textContent=msgs[key]||'';
   // Shims: outside mount only per Norman spec
   const shimAddon=document.getElementById('shim-addon');
   const shimNa=document.getElementById('shim-na-note');
-  if(key==='inside'){
+  if(key!=='outside'){
     if(shimAddon){shimAddon.style.opacity='0.35';shimAddon.style.pointerEvents='none';shimAddon.classList.remove('sel');}
     if(shimNa)shimNa.style.display='block';
     state.shim=false;document.getElementById('shim-qty-wrap').style.display='none';

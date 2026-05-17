@@ -257,29 +257,32 @@
         <div class="step-head-val" id="s4-val"></div>
       </div>
       <div class="step-body">
+        <!-- SmartDrape is Outside Mount ONLY (wall, ceiling, or ceiling pocket) per Norman PDF p.32 -->
+        <div class="info-box" style="margin-bottom:12px">SmartDrape™ is available in <strong>Outside Mount only</strong> — no inside mount deductions apply. Choose your bracket style below.</div>
         <div class="opt-grid-3">
-          <div class="opt-card" id="mc-in" onclick="selectMount('inside')">
-            <div class="opt-card-icon">⬛</div>
-            <div class="opt-card-title">Inside Mount</div>
-            <div class="opt-card-desc">Fits within the window frame</div>
-          </div>
-          <div class="opt-card" id="mc-out" onclick="selectMount('outside')">
+          <div class="opt-card sel" id="mc-wall" onclick="selectMount('wall')">
             <div class="opt-card-icon">🔲</div>
-            <div class="opt-card-title">Outside Mount</div>
-            <div class="opt-card-desc">Mounts on the wall above frame</div>
+            <div class="opt-card-title">Wall Mount</div>
+            <div class="opt-card-desc">L bracket — standard. Mounts to wall above frame.</div>
           </div>
-          <div class="opt-card" id="mc-semi" onclick="selectMount('semi')">
-            <div class="opt-card-icon">◽</div>
-            <div class="opt-card-title">Semi-Inside</div>
-            <div class="opt-card-desc">Partially recessed into the frame</div>
+          <div class="opt-card" id="mc-ceiling" onclick="selectMount('ceiling')">
+            <div class="opt-card-icon">⬆</div>
+            <div class="opt-card-title">Ceiling Mount</div>
+            <div class="opt-card-desc">Direct mount via pre-drilled headrail or C clip.</div>
+          </div>
+          <div class="opt-card" id="mc-pocket" onclick="selectMount('pocket')">
+            <div class="opt-card-icon">▫</div>
+            <div class="opt-card-title">Ceiling Pocket</div>
+            <div class="opt-card-desc">Recessed into ceiling pocket. Min pocket depth 4⅞".</div>
           </div>
         </div>
+        <div class="info-box" style="margin-top:12px">For patio doors or windows: fabric vanes should overlap the opening by at least 4" on each side and 3" in height. Allow ½" minimum floor clearance.</div>
         <div id="door-toggle-wrap" style="margin-top:14px;display:flex;align-items:center;gap:10px">
           <input type="checkbox" id="door-check" onchange="toggleDoor()" style="width:16px;height:16px;cursor:pointer">
-          <label for="door-check" style="font-size:13px;color:#444;cursor:pointer">Installed on a door</label>
+          <label for="door-check" style="font-size:13px;color:#444;cursor:pointer">Patio door / slider application</label>
         </div>
         <div id="door-warnings" style="display:none">
-          <div class="warn-box warn-box-red" style="margin-top:8px"><span class="warn-icon">🚪</span><div><strong>Door application:</strong> Magnetic hold-downs are required and will be automatically included. Valances are not recommended. Additional fabric deductions (~1/16" per side) apply. Metal doors may affect motorization compatibility.</div></div>
+          <div class="warn-box" style="margin-top:8px"><span class="warn-icon">🚪</span><div><strong>Patio door / slider:</strong> Allow at least 4" overlap beyond opening width and 3" above opening height. Allow ½" floor clearance. No magnetic hold-downs (SmartDrape does not use hold-downs). Wall mount recommended for door applications.</div></div>
         </div>
       </div>
     </div>
@@ -434,7 +437,7 @@
             <div id="del-ns-p" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>
           </div>
 
-          <button onclick="reqMoreInfo('Norman PerfectSheer™ / SmartDrape™')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Norman PerfectSheer™ / SmartDrape™ →</button>
+          <button onclick="reqMoreInfo('Norman SmartDrape™')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Norman SmartDrape™ →</button>
         <button class="btn-gold" onclick="submitQuote()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:16px">Submit Specification &amp; Request Quote &rarr;</button>
         </div>
 
@@ -602,7 +605,7 @@ function selectProduct(p) {
     // Customer can tap any completed step to change it
     selectOpacity('lf');          // Step 2: Light Filtering (default)
     selectOp('wand');             // Step 3: Wand Tilt (default for SmartDrape)
-    selectMount('inside');        // Step 4: Inside Mount (most common)
+    selectMount('wall');          // Step 4: Wall Mount (Outside Mount — SmartDrape only option)
     selectStack('left-stack');    // Step 5: Left Stack (default)
     // Step 6 (measurements) is now active — customer fills in width & height
     var infoBox = document.createElement('div');
@@ -672,7 +675,7 @@ function selectOp(op) {
     if (op === 'motor' && typeof normanMotorSection === 'function') {
       if (!motorWrap.querySelector('.pb-norman-motor')) {
         motorWrap.innerHTML = '';
-        normanMotorSection('motor-opts-wrap', 'PerfectSheer™ / SmartDrape™');
+        normanMotorSection('motor-opts-wrap', 'SmartDrape™');
       }
     }
   }
@@ -689,35 +692,43 @@ function selectOp(op) {
 
 // ═══════════════════════════════════════════════════════
 // STEP 4 — MOUNT
+// SmartDrape is Outside Mount ONLY (wall, ceiling, ceiling pocket) — PDF p.32
 // ═══════════════════════════════════════════════════════
 function selectMount(m) {
   S.mount = m;
-  ['mc-in','mc-out','mc-semi'].forEach(function(id){ document.getElementById(id).classList.remove('sel'); });
-  document.getElementById('mc-' + (m === 'inside' ? 'in' : m === 'outside' ? 'out' : 'semi')).classList.add('sel');
-  var mLabel = m === 'inside' ? 'Inside Mount' : m === 'outside' ? 'Outside Mount' : 'Semi-Inside Mount';
+  // SmartDrape mount IDs: mc-wall, mc-ceiling, mc-pocket
+  ['mc-wall','mc-ceiling','mc-pocket'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.classList.remove('sel');
+  });
+  var selId = m === 'wall' ? 'mc-wall' : m === 'ceiling' ? 'mc-ceiling' : 'mc-pocket';
+  var selEl = document.getElementById(selId);
+  if (selEl) selEl.classList.add('sel');
+
+  var mLabels = {
+    'wall':    'Wall Mount (L bracket)',
+    'ceiling': 'Ceiling Mount',
+    'pocket':  'Ceiling Pocket Mount'
+  };
+  var mLabel = mLabels[m] || 'Outside Mount';
   completeStep('step-4', mLabel);
   updateSpec('sp-mount', mLabel);
 
   var note = document.getElementById('mount-deduction-note');
-  if (m === 'inside') {
+  if (note) {
     note.style.display = 'block';
-    note.textContent = 'Inside mount: manufacturer applies track clearance deductions based on configuration. Order your measured opening width — deductions are factory-applied.';
-  } else if (m === 'outside') {
-    note.style.display = 'block';
-    note.textContent = 'Outside mount: order the desired finished width. No deduction applied.';
-  } else {
-    note.style.display = 'none';
+    note.textContent = 'SmartDrape is outside mount only — no deductions applied. Order your desired finished track width.';
   }
 
   validateSizes();
-  if (S.product === 'sd') { buildStackStep(); }
-  activateStep(S.product === 'sd' ? 'step-5' : 'step-6');
+  buildStackStep();
+  activateStep('step-5');
 }
 
 function toggleDoor() {
   S.isDoor = document.getElementById('door-check').checked;
   document.getElementById('door-warnings').style.display = S.isDoor ? 'block' : 'none';
-  document.getElementById('valance-door-warn').style.display = S.isDoor ? 'flex' : 'none';
+  // Note: SmartDrape has no valance (valance-free headrail) so valance-door-warn is not applicable
   checkCustomQuoteTriggers();
 }
 
@@ -957,9 +968,8 @@ function buildAccessoryStep() {
   if (isMotor) {
     items.push({id:'acc-charge-wand', label:'Charging Extension Wand', sub:'Optional for motorized systems. Defaults to fabric color. Also available in Cloud Cream, Day Light, Silver, Black, Chocolate, or Moonbeam — specify at quote.'});
   }
-  if (S.isDoor) {
-    items.unshift({id:'acc-holddowns', label:'Magnetic Hold-Downs ✓', sub:'Required for door applications — automatically included.', required:true});
-  }
+  // SmartDrape does NOT use magnetic hold-downs — that is a PerfectSheer accessory only.
+  // For patio door applications, SmartDrape relies on wall mount and overlap measurements.
 
   body.innerHTML = items.map(function(item){
     var disabled = item.required ? 'disabled checked' : '';
@@ -1058,13 +1068,13 @@ function submitQuote() {
     + 'Operation: ' + (S.operation === 'cord' ? 'Continuous Cord Loop' : S.operation === 'wand' ? 'Wand Tilt' : 'Motorized') + '\n'
     + (S.operation === 'cord' ? 'Cord side: ' + getOpt('grp-cord-side') + '\n' : '')
     + (S.operation === 'motor' && S.product === 'ps' ? 'Motor type: ' + getOpt('grp-motor-type') + '\n' : '')
-    + 'Mount: ' + (S.mount === 'inside' ? 'Inside Mount' : S.mount === 'outside' ? 'Outside Mount' : 'Semi-Inside Mount') + '\n'
-    + (S.isDoor ? 'Door application: YES — magnetic hold-downs required\n' : '')
+    + 'Mount: ' + (S.mount === 'wall' ? 'Wall Mount (L bracket)' : S.mount === 'ceiling' ? 'Ceiling Mount' : S.mount === 'pocket' ? 'Ceiling Pocket Mount' : 'Outside Mount') + '\n'
+    + (S.isDoor ? 'Patio door / slider application: YES — allow 4" overlap each side, 3" above, ½" floor clearance\n' : '')
     + (S.stack ? 'Stack configuration: ' + S.stack + '\n' : '')
     + 'Width: ' + (S.width || '—') + '"\n'
     + 'Height: ' + (S.height || '—') + '"\n'
     + 'Quantity: ' + S.qty + '\n'
-    + (S.mount === 'inside' ? 'Shade width (deducted): ' + (S.width - 0.125).toFixed(3) + '"\n' : '')
+    /* SmartDrape is outside mount only — no shade-width deduction applied */
     + (S.product === 'ps' && S.operation === 'cord' ? 'Default cord length: ' + calcCordLength(S.height) + '"\n' : '')
     + (S.product === 'sd' ? 'SmartJoints required: ' + calcSmartJoints(S.width) + '\n' : '')
     + 'Fabric: ' + (S.fabric || '—') + (S.fabricCode && S.fabricCode.startsWith('F') ? ' (' + S.fabricCode + ')' : '') + '\n'

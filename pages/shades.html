@@ -1962,12 +1962,12 @@
         <div class="form-group">
           <label>Width</label>
           <input type="number" id="ps-width" min="12" max="110" placeholder="48" oninput="psCalc()">
-          <div class="dim-unit">inches &bull; min 12&Prime;, max 110&Prime;</div>
+          <div class="dim-unit">inches &bull; CCL: min 12&Prime;, max 98&Prime; &bull; Motorized: up to 110&Prime;</div>
         </div>
         <div class="form-group">
           <label>Height</label>
           <input type="number" id="ps-height" min="12" max="120" placeholder="60" oninput="psCalc()">
-          <div class="dim-unit">inches &bull; min 12&Prime;, max 120&Prime;</div>
+          <div class="dim-unit">inches &bull; CCL: min 12&Prime;, max 98&Prime; &bull; Motorized: up to 120&Prime;</div>
         </div>
       </div>
     </div>
@@ -5510,10 +5510,15 @@ function psCalc() {
   pb.style.display = 'none'; pn.style.display = 'none';
   if (!w || !h) return;
 
-  // Validate size
+  // Validate size — Norman PerfectSheer PDF p.4 spec table:
+  // CCL: min 12"×12", max 98"×98". Motorized: min per motor guide, max per price book (up to 110"W × 120"H).
+  var liftBtn = document.querySelector('#grp-ps-lift .opt-btn.sel');
+  var isCCL = !liftBtn || liftBtn.textContent.indexOf('Continuous') >= 0;
   if (w < 12 || h < 12) { pn.style.display='block'; pn.textContent='Minimum size is 12″ × 12″.'; return; }
   if (w > 110) { pn.style.display='block'; pn.textContent='Width over 110″ — call us for a custom quote on oversized shades: (609) 742-1720.'; return; }
   if (h > 120) { pn.style.display='block'; pn.textContent='Height over 120″ — call us for a custom quote: (609) 742-1720.'; return; }
+  if (isCCL && w > 98) { pn.style.display='block'; pn.textContent='Continuous Cord Loop max width is 98″ (Norman spec). For 98″–110″ width, motorization is required — select "Norman motorization" above.'; return; }
+  if (isCCL && h > 98) { pn.style.display='block'; pn.textContent='Continuous Cord Loop max height is 98″ (Norman spec). For 98″–120″ height, motorization is required — select "Norman motorization" above.'; return; }
   if (h > 4*w) { pn.style.display='block'; pn.textContent='Height cannot exceed 4× the width (ratio limit). Adjust your dimensions.'; return; }
 
   var wi = psGetIdx(PS_WIDTHS,  w);
