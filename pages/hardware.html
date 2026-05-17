@@ -265,27 +265,159 @@
       <div class="step-title" id="kf-step2-title">Options</div>
 
       <!-- TRAVERSE sub-options -->
+      <!-- ── ARCHITRAC FULL CONFIGURATOR ── -->
       <div id="kf-traverse-opts" style="display:none">
-        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Number of panels / tracks</div>
-        <div class="opt-row" id="grp-kf-tracks">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-kf-tracks');kfUpdate()">Single traverse</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-kf-tracks');kfUpdate()">Double traverse</button>
+
+        <!-- Model selection -->
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:10px">Kirsch Architrac® model</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:6px">
+
+          <div id="arch-94003-card" class="opt-card sel" onclick="archSelModel('94003',this)" style="padding:14px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+              <span style="font-size:13px;font-weight:700;color:#1a1a1a">94003</span>
+              <span style="font-size:9px;font-weight:700;background:var(--gold);color:var(--espresso);padding:2px 7px;border-radius:8px">RECOMMENDED</span>
+            </div>
+            <div style="font-size:12px;color:#555;line-height:1.5">Wall &amp; ceiling mount · Curvable for bay windows · Most versatile</div>
+          </div>
+
+          <div id="arch-94001-card" class="opt-card" onclick="archSelModel('94001',this)" style="padding:14px">
+            <div style="font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:6px">94001</div>
+            <div style="font-size:12px;color:#555;line-height:1.5">Cord draw · Standard residential traverse · Wall or ceiling mount</div>
+          </div>
+
+          <div id="arch-94004-card" class="opt-card" onclick="archSelModel('94004',this)" style="padding:14px">
+            <div style="font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:6px">94004</div>
+            <div style="font-size:12px;color:#555;line-height:1.5">Easy ceiling mount · Flange on back for flush ceiling installation</div>
+          </div>
+
+          <div id="arch-94005-card" class="opt-card" onclick="archSelModel('94005',this)" style="padding:14px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+              <span style="font-size:13px;font-weight:700;color:#1a1a1a">94005</span>
+              <span style="font-size:9px;font-weight:700;background:#FEE2E2;color:#991B1B;padding:2px 7px;border-radius:8px">NOT REC.</span>
+            </div>
+            <div style="font-size:12px;color:#555;line-height:1.5">Direct mount through track · Requires low-profile trim screws · Limited access</div>
+          </div>
         </div>
+        <div id="arch-model-note" class="tooltip-note" style="margin-bottom:16px">94003 Architrac: wall or ceiling mount, can be curved for bay windows. Most versatile — recommended for most applications.</div>
+
+        <!-- Exact width -->
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px;margin-top:4px">Exact track width (inches)</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+          <div class="dim-box" style="flex:0 0 auto;padding:12px 16px;margin-bottom:0">
+            <div class="dim-box-label" style="margin-bottom:8px">Track width</div>
+            <input type="number" id="arch-width" min="12" max="240" step="0.5" placeholder="84" oninput="archCalc()" style="font-size:22px;font-weight:600;height:50px;text-align:center;width:110px">
+            <div class="dim-unit">inches</div>
+          </div>
+          <div style="font-size:12px;color:#666;line-height:1.7">Enter the exact finished width of your window opening or desired coverage. We cut the track to size.</div>
+        </div>
+
+        <!-- Draw type -->
         <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px;margin-top:14px">Draw type</div>
         <div class="opt-row" id="grp-kf-draw">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-kf-draw');kfUpdate()">Split draw (opens from center)</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-kf-draw');kfUpdate()">One-way right</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-kf-draw');kfUpdate()">One-way left</button>
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-kf-draw');archCalc()">Split draw — pair of panels opens from center</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-draw');archCalc()">One-way right — single panel draws right</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-kf-draw');archCalc()">One-way left — single panel draws left</button>
         </div>
-        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px;margin-top:14px">Width range</div>
-        <div class="opt-row" id="grp-kf-trav-width">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-kf-trav-width');kfUpdate()">30″ – 48″</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-kf-trav-width');kfUpdate()">48″ – 84″</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-kf-trav-width');kfUpdate()">66″ – 120″</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-kf-trav-width');kfUpdate()">84″ – 156″</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-kf-trav-width');kfUpdate()">156″ – 228″</button>
+
+        <!-- Color + Mount -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px">
+          <div>
+            <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Track color</div>
+            <div class="opt-row" id="grp-arch-color">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-arch-color');archCalc()"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#F0F0F0;border:1px solid #ccc;margin-right:5px;vertical-align:middle"></span>White</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-arch-color');archCalc()"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#222;margin-right:5px;vertical-align:middle"></span>Black</button>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Mount type</div>
+            <div class="opt-row" id="grp-arch-mount">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-arch-mount');archCalc()">Wall mount</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-arch-mount');archCalc()">Ceiling mount</button>
+            </div>
+          </div>
         </div>
-        <div class="tooltip-note" style="margin-top:8px">Front return: 2¼″ – 4½″. All White finish. Safety tensioner included.</div>
+
+        <!-- Auto-calculated accessories -->
+        <div id="arch-accessories" style="display:none;margin-top:20px">
+          <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Recommended accessories</div>
+
+          <!-- Brackets -->
+          <div style="background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-bottom:12px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <div style="font-size:13px;font-weight:600;color:#1a1a1a">Brackets</div>
+              <div id="arch-bracket-count" style="font-size:16px;font-weight:700;color:var(--espresso)"></div>
+            </div>
+            <div id="arch-bracket-note" style="font-size:11px;color:#666;line-height:1.6;margin-bottom:10px"></div>
+            <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px">Adjust quantity if needed</div>
+            <div class="qty-btns">
+              <button class="qty-btn" onclick="var n=document.getElementById('arch-brackets-inp');n.value=Math.max(1,parseInt(n.value)-1)">−</button>
+              <input class="qty-num" id="arch-brackets-inp" type="number" value="2" min="1" max="50">
+              <button class="qty-btn" onclick="var n=document.getElementById('arch-brackets-inp');n.value=parseInt(n.value)+1">+</button>
+            </div>
+          </div>
+
+          <!-- Master carriers -->
+          <div id="arch-master-wrap" style="background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-bottom:12px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <div style="font-size:13px;font-weight:600;color:#1a1a1a">Master carriers</div>
+              <span style="font-size:10px;background:var(--gold-mid);color:#7A5A28;padding:2px 8px;border-radius:6px">Sold in pairs</span>
+            </div>
+            <div id="arch-master-note" style="font-size:11px;color:#666;line-height:1.6;margin-bottom:10px"></div>
+            <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px">Pairs needed (1 pair = 1 over + 1 under)</div>
+            <div class="qty-btns">
+              <button class="qty-btn" onclick="var n=document.getElementById('arch-masters-inp');n.value=Math.max(1,parseInt(n.value)-1)">−</button>
+              <input class="qty-num" id="arch-masters-inp" type="number" value="1" min="1" max="20">
+              <button class="qty-btn" onclick="var n=document.getElementById('arch-masters-inp');n.value=parseInt(n.value)+1">+</button>
+            </div>
+          </div>
+
+          <!-- Ball bearing carriers -->
+          <div style="background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-bottom:12px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <div style="font-size:13px;font-weight:600;color:#1a1a1a">Ball bearing carriers</div>
+              <div id="arch-carrier-count" style="font-size:16px;font-weight:700;color:var(--espresso)"></div>
+            </div>
+            <div id="arch-carrier-note" style="font-size:11px;color:#666;line-height:1.6;margin-bottom:10px"></div>
+            <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px">Adjust quantity</div>
+            <div class="qty-btns">
+              <button class="qty-btn" onclick="var n=document.getElementById('arch-carriers-inp');n.value=Math.max(1,parseInt(n.value)-1)">−</button>
+              <input class="qty-num" id="arch-carriers-inp" type="number" value="6" min="1" max="200">
+              <button class="qty-btn" onclick="var n=document.getElementById('arch-carriers-inp');n.value=parseInt(n.value)+1">+</button>
+            </div>
+          </div>
+
+          <!-- Batons -->
+          <div style="background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-bottom:12px">
+            <div style="font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:6px">Batons (manual pull)</div>
+            <div style="font-size:11px;color:#666;margin-bottom:10px;line-height:1.5">White only — standard option. Pull to open/close panels. <span id="arch-baton-custom-note"></span></div>
+
+            <!-- Attachment type -->
+            <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px">Attachment clip</div>
+            <div class="opt-row" id="grp-arch-baton-clip">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-arch-baton-clip');archRenderBatons()">Plastic clip</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-arch-baton-clip');archRenderBatons()">Stainless steel clip</button>
+            </div>
+
+            <!-- Baton length grid -->
+            <div style="font-size:11px;font-weight:600;color:#555;margin:10px 0 6px">Length (select one or more)</div>
+            <div id="arch-baton-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px"></div>
+
+            <div style="margin-top:10px;padding:10px 13px;background:#FBF7F0;border-radius:8px;font-size:11px;color:#7A5A28;line-height:1.5">
+              Need a custom color baton? <button onclick="pbShowContact('Custom color baton for Architrac traverse system')" style="background:none;border:none;color:var(--gold);font-weight:600;cursor:pointer;font-size:11px;font-family:inherit;text-decoration:underline;padding:0">Request a quote →</button>
+            </div>
+          </div>
+
+          <!-- Qty of baton sets -->
+          <div style="background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-bottom:4px">
+            <div style="font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:6px">Number of baton sets</div>
+            <div style="font-size:11px;color:#666;margin-bottom:10px">For split draw: typically 2 (one per panel). For one-way: 1.</div>
+            <div class="qty-btns">
+              <button class="qty-btn" onclick="var n=document.getElementById('arch-batons-inp');n.value=Math.max(1,parseInt(n.value)-1)">−</button>
+              <input class="qty-num" id="arch-batons-inp" type="number" value="2" min="1" max="20">
+              <button class="qty-btn" onclick="var n=document.getElementById('arch-batons-inp');n.value=parseInt(n.value)+1">+</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- LOCKSEAM sub-options -->
@@ -591,8 +723,163 @@ function kfGetSummary() {
     var spans = d.querySelectorAll('span');
     if (spans.length >= 2) lines.push(spans[0].textContent + ': ' + spans[1].textContent);
   });
+  // Also grab Architrac summary if traverse
+  if (window._archSummary) lines = lines.concat(window._archSummary);
   return lines.join('\n');
 }
+
+// ── ARCHITRAC CONFIGURATOR ────────────────────────────────────
+var ARCH_MODEL_NOTES = {
+  '94001': '94001 Cord draw — standard residential traverse. Wall or ceiling mount. Solid workhorse for most installs.',
+  '94003': '94003 Architrac (Recommended) — wall or ceiling mount, can be curved for bay windows. Most versatile option for any application.',
+  '94004': '94004 Easy ceiling mount — flange on back of track for flush ceiling installation. Great for low-clearance ceilings.',
+  '94005': '⚠ 94005 Direct mount — screws go through the track. Requires low-profile trim screws. Difficult to adjust after install. Not recommended.'
+};
+
+var ARCH_BATONS = [
+  {sku:'BA80A',len:24,att:'Plastic',price:3.71},
+  {sku:'BA80S',len:24,att:'Stainless Steel',price:3.71},
+  {sku:'BA81A',len:30,att:'Plastic',price:3.90},
+  {sku:'BA81S',len:30,att:'Stainless Steel',price:3.90},
+  {sku:'BA82A',len:36,att:'Plastic',price:5.20},
+  {sku:'BA82S',len:36,att:'Stainless Steel',price:5.20},
+  {sku:'BA84A',len:48,att:'Plastic',price:7.80},
+  {sku:'BA84S',len:48,att:'Stainless Steel',price:7.80},
+  {sku:'BA86A',len:60,att:'Plastic',price:9.10},
+  {sku:'BA86S',len:60,att:'Stainless Steel',price:9.10},
+  {sku:'BA88A',len:72,att:'Plastic',price:10.40},
+  {sku:'BA88S',len:72,att:'Stainless Steel',price:10.40},
+  {sku:'BA94A',len:84,att:'Plastic',price:12.35},
+  {sku:'BA96A',len:96,att:'Plastic',price:13.00}
+];
+
+var _archModel = '94003';
+var _archSelectedBatons = [];
+
+function archSelModel(model, el) {
+  _archModel = model;
+  ['94001','94003','94004','94005'].forEach(function(m) {
+    var c = document.getElementById('arch-' + m + '-card');
+    if (c) c.classList.toggle('sel', m === model);
+  });
+  var note = document.getElementById('arch-model-note');
+  if (note) note.textContent = ARCH_MODEL_NOTES[model] || '';
+  archCalc();
+}
+
+function archCalc() {
+  var w = parseFloat(document.getElementById('arch-width').value) || 0;
+  var drawSel = (document.querySelector('#grp-kf-draw .opt-btn.sel') || {}).textContent || '';
+  var isSplit = drawSel.indexOf('Split') !== -1;
+  var acc = document.getElementById('arch-accessories');
+  if (!w) { if (acc) acc.style.display = 'none'; return; }
+  if (acc) acc.style.display = 'block';
+
+  // Brackets: 1 every 24", plus 2 at each stack end (1 ft apart) = 2 end sets
+  var centerBrackets = Math.max(0, Math.ceil((w - 24) / 24));
+  var stackBrackets = isSplit ? 4 : 2; // 2 per stack end
+  var totalBrackets = stackBrackets + centerBrackets;
+  var bInp = document.getElementById('arch-brackets-inp');
+  if (bInp) bInp.value = totalBrackets;
+  var bCount = document.getElementById('arch-bracket-count');
+  if (bCount) bCount.textContent = totalBrackets + ' brackets';
+  var bNote = document.getElementById('arch-bracket-note');
+  if (bNote) bNote.textContent = '1 bracket every 24" center + ' + stackBrackets + ' stack-end brackets (2 per stack, 12" apart). Adjust as needed.';
+
+  // Master carriers: for split draw = 1 pair (over + under), one-way = 1 master
+  var masterWrap = document.getElementById('arch-master-wrap');
+  var mNote = document.getElementById('arch-master-note');
+  var mInp = document.getElementById('arch-masters-inp');
+  if (isSplit) {
+    if (masterWrap) masterWrap.style.display = 'block';
+    if (mNote) mNote.textContent = 'Split draw: 1 pair of master carriers (1 over + 1 under) recommended. Add more pairs for multiple draw points.';
+    if (mInp && parseInt(mInp.value) < 1) mInp.value = 1;
+  } else {
+    if (masterWrap) masterWrap.style.display = 'block';
+    if (mNote) mNote.textContent = 'One-way draw: 1 master carrier on the leading edge. Pairs sold over/under — quantity 1 pair covers one draw point.';
+    if (mInp && parseInt(mInp.value) < 1) mInp.value = 1;
+  }
+
+  // Ball bearing carriers: 6 per 20" + 2 extras
+  var rawCarriers = Math.ceil(w / 20 * 6) + 2;
+  var cInp = document.getElementById('arch-carriers-inp');
+  if (cInp) cInp.value = rawCarriers;
+  var cCount = document.getElementById('arch-carrier-count');
+  if (cCount) cCount.textContent = rawCarriers + ' carriers';
+  var cNote = document.getElementById('arch-carrier-note');
+  if (cNote) cNote.textContent = 'We recommend 6 carriers per 20" of track (= ' + Math.ceil(w/20*6) + ') + 2 extras for a total of ' + rawCarriers + '. Adjust for pleat density.';
+
+  // Batons: suggest 2 for split, 1 for one-way
+  var bainp = document.getElementById('arch-batons-inp');
+  if (bainp) bainp.value = isSplit ? 2 : 1;
+  var bcn = document.getElementById('arch-baton-custom-note');
+  if (bcn) bcn.textContent = 'White only. Need a custom color? Use the link below.';
+
+  archRenderBatons();
+
+  // Build arch summary
+  var color  = (document.querySelector('#grp-arch-color .opt-btn.sel') || {}).textContent || 'White';
+  var mount  = (document.querySelector('#grp-arch-mount .opt-btn.sel') || {}).textContent || 'Wall mount';
+  window._archSummary = [
+    'Architrac model: ' + _archModel,
+    'Track width: ' + w + '"',
+    'Draw: ' + drawSel.split('—')[0].trim(),
+    'Color: ' + color.trim(),
+    'Mount: ' + mount,
+    'Brackets: ' + totalBrackets,
+    'Master carriers: ' + (mInp ? mInp.value : '1') + ' pair(s)',
+    'Ball bearing carriers: ' + rawCarriers,
+    'Batons: ' + (bainp ? bainp.value : '—') + ' set(s) — White'
+  ];
+}
+
+function archRenderBatons() {
+  var clipSel = (document.querySelector('#grp-arch-baton-clip .opt-btn.sel') || {}).textContent || 'Plastic clip';
+  var isPlastic = clipSel.indexOf('Plastic') !== -1 || clipSel.indexOf('plastic') !== -1;
+  var filtered = ARCH_BATONS.filter(function(b) {
+    return isPlastic ? b.att === 'Plastic' : b.att === 'Stainless Steel';
+  });
+  var grid = document.getElementById('arch-baton-grid');
+  if (!grid) return;
+  grid.innerHTML = filtered.map(function(b) {
+    var sel = _archSelectedBatons.indexOf(b.sku) !== -1;
+    return '<div onclick="archToggleBaton(\'' + b.sku + '\',this)" style="border:1.5px solid ' + (sel ? 'var(--gold)' : '#e8e8e4') + ';background:' + (sel ? 'var(--gold-mid)' : '#fff') + ';border-radius:8px;padding:10px 12px;cursor:pointer;transition:border-color .15s">' +
+      '<div style="font-size:13px;font-weight:600;color:#1a1a1a">' + b.len + '"</div>' +
+      '<div style="font-size:10px;color:#888;margin-top:2px">' + b.sku + '</div>' +
+      '<div style="font-size:13px;font-weight:700;color:var(--espresso);margin-top:4px">$' + b.price.toFixed(2) + '</div>' +
+      '</div>';
+  }).join('');
+}
+
+function archToggleBaton(sku, el) {
+  var idx = _archSelectedBatons.indexOf(sku);
+  if (idx === -1) {
+    _archSelectedBatons.push(sku);
+    el.style.borderColor = 'var(--gold)';
+    el.style.background = 'var(--gold-mid)';
+  } else {
+    _archSelectedBatons.splice(idx, 1);
+    el.style.borderColor = '#e8e8e4';
+    el.style.background = '#fff';
+  }
+}
+
+// Auto-init: make Traverse the default when non-decorative is selected
+(function() {
+  var origHwPickType = window.hwPickType;
+  window.hwPickType = function(type) {
+    if (origHwPickType) origHwPickType(type);
+    if (type === 'functional') {
+      // Auto-select Traverse as default
+      setTimeout(function() {
+        var traverseCard = document.querySelector('#kf-step1 .opt-card:first-child');
+        if (traverseCard && !traverseCard.classList.contains('sel')) {
+          kfSetType('traverse', traverseCard);
+        }
+      }, 50);
+    }
+  };
+})();
 
 function hwPickStyle(el, style) {
   hwState.style = style; hwState.brand = '';
