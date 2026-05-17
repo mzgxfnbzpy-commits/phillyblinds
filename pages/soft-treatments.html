@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -1923,7 +1923,7 @@ function submitCornice() {
     'Finishing: ' + fin + '\nFabric: ' + fab + '\nEstimate: ' + est + '\n' +
     pbInstallLine(document.getElementById('corn-form')) + '\n\n' +
     'Notes:\n' + (document.getElementById('cn-notes').value.trim() || 'None');
-  window.location.href = 'mailto:justin@phillyblinds.com?subject=' +
+  window.location.href = 'mailto:blindznation@gmail.com?subject=' +
     encodeURIComponent('Cornice Quote — ' + name) + '&body=' + encodeURIComponent(body);
   document.getElementById('corn-form').style.display = 'none';
   document.getElementById('corn-success').style.display = 'block';
@@ -1944,7 +1944,7 @@ function submitValanceCv() {
     'Width: ' + w + '"  Height: ' + h + '"  Return: ' + ret + '"\n' +
     'Finishing: ' + fin + '\nFabric: ' + fab + '\nEstimate: ' + est + '\n\n' +
     'Notes:\n' + (document.getElementById('vn-notes').value.trim() || 'None');
-  window.location.href = 'mailto:justin@phillyblinds.com?subject=' +
+  window.location.href = 'mailto:blindznation@gmail.com?subject=' +
     encodeURIComponent('Valance Quote — ' + name) + '&body=' + encodeURIComponent(body);
   document.getElementById('val-form').style.display = 'none';
   document.getElementById('val-cv-success').style.display = 'block';
@@ -2055,8 +2055,8 @@ function submitDrape() {
     + 'Delivery: ' + delivery + '\n'
     + pbInstallLine(document.getElementById('drape-form')) + '\n\n'
     + 'Notes:\n' + (document.getElementById('d-notes').value.trim() || 'None')
-    + (function(){ var fu = document.querySelector('#drape-form .pb-fu-wrap input[type="file"]'); var n = fu && fu.files.length ? '\n\nFiles to send: ' + Array.from(fu.files).map(function(f){return f.name;}).join(', ') + '\n(Customer will email these to justin@phillyblinds.com)' : ''; return n; }());
-  window.location.href = 'mailto:justin@phillyblinds.com'
+    + (function(){ var fu = document.querySelector('#drape-form .pb-fu-wrap input[type="file"]'); var n = fu && fu.files.length ? '\n\nFiles to send: ' + Array.from(fu.files).map(function(f){return f.name;}).join(', ') + '\n(Customer will email these to blindznation@gmail.com)' : ''; return n; }());
+  window.location.href = 'mailto:blindznation@gmail.com'
     + '?subject=' + encodeURIComponent('Drapery Quote — ' + name)
     + '&body=' + encodeURIComponent(body);
   document.getElementById('drape-form').style.display = 'none';
@@ -2076,7 +2076,7 @@ function submitValance() {
     + 'Number of folds: ' + (document.getElementById('val-folds').value || '—') + '\n'
     + 'Fold section size: ' + (document.getElementById('val-fold-size').value || '—') + '"\n\n'
     + 'Notes:\n' + (document.getElementById('val-notes').value.trim() || 'None');
-  window.location.href = 'mailto:justin@phillyblinds.com'
+  window.location.href = 'mailto:blindznation@gmail.com'
     + '?subject=' + encodeURIComponent('Roman Valance Quote — ' + name)
     + '&body=' + encodeURIComponent(body);
   document.getElementById('valance-success').style.display = 'block';
@@ -2138,8 +2138,8 @@ function submitRoman() {
         var box = document.getElementById('roman-pricebox');
         return (el && box && box.style.display !== 'none') ? '\nEstimate: ' + el.textContent : '';
       }())
-    + (function(){ var fu = document.querySelector('#roman-form .pb-fu-wrap input[type="file"]'); var n = fu && fu.files.length ? '\n\nFiles to send: ' + Array.from(fu.files).map(function(f){return f.name;}).join(', ') + '\n(Customer will email these to justin@phillyblinds.com)' : ''; return n; }());
-  window.location.href = 'mailto:justin@phillyblinds.com'
+    + (function(){ var fu = document.querySelector('#roman-form .pb-fu-wrap input[type="file"]'); var n = fu && fu.files.length ? '\n\nFiles to send: ' + Array.from(fu.files).map(function(f){return f.name;}).join(', ') + '\n(Customer will email these to blindznation@gmail.com)' : ''; return n; }());
+  window.location.href = 'mailto:blindznation@gmail.com'
     + '?subject=' + encodeURIComponent('Roman Shade Quote — ' + name)
     + '&body=' + encodeURIComponent(body);
   document.getElementById('roman-form').style.display = 'none';
@@ -2158,7 +2158,7 @@ async function handleSoftQuote(e) {
       document.getElementById('soft-quote-success').style.display = 'block';
     } else {
       btn.disabled = false; btn.textContent = 'Send quote request →';
-      alert('Something went wrong. Please call (609) 742-1720 or email justin@phillyblinds.com');
+      alert('Something went wrong. Please call (609) 742-1720 or email blindznation@gmail.com');
     }
   } catch(err) {
     btn.disabled = false; btn.textContent = 'Send quote request →';
