@@ -110,16 +110,23 @@ Every page MUST include:
 | pages/measure-shutters.html | Measure guide (shutters) | 4 tabs: inside mount, outside mount, frame styles &amp; depth, tips. 3WÃ—3H rule explained with SVG diagrams |
 | pages/paris-texas-rods.html | **Paris Texas Hardware Configurator (NEW)** | 8-step configurator. Covers all 3 rod types (stationary, baton traverse, R-TEC motorized, heavy duty). All 35 Portfolio + 6 QS Metal + 5 QS Wood & Resin + PTH Perfect Match finishes. All 3 diameters (1⅛"/1⅜"/2¼"). Full finial catalog with compatibility rules (cuff requirements). R-TEC pricing estimator. Somfy motor options. All compatibility restrictions enforced (AGL only static, 1⅛" cuffs, 1⅜" TT/HC cuffs, 2¼" no metal traverse, Somfy 2¼" only, slim/flat/mitered no finials). Quote via mailto. Linked from hardware.html Paris Texas brand card. |
 | pages/kirsch-rods.html | **Kirsch Rod Selector (NEW)** | 7-step configurator for all Kirsch rod types. Covers Designer Metals (8 finishes, 27 finials, 1"/1⅜"/2"), Wood Trends (9 finishes, 18 finials, 1⅜"/2"), Wrought Iron (6 finishes, 18 finials, 1"/1⅜"), Architrac 94001, Basic hardware. AMP™ motorization step. Quote via mailto. Linked from hardware.html Kirsch brand card. |
-| pages/catalogs.html | Spec catalogs download | 32 PDFs across Norman/Wallace/Woven/Kirsch/hardware brands, pricing whited out |
-| pages/product-specs.html | Product specifications | 9 tabs, 20+ products with full specs |
-| pages/soluna-roller-shades.html | Norman Soluna detail page | Full product deep-dive |
+| pages/select-rods.html | **Select Rod Configurator** | Select brand hardware configurator. Linked from hardware.html Select brand card. |
+| pages/city-lights-aluminum-blinds.html | **Norman City Lights Aluminum Blinds** | Norman aluminum blind configurator. |
+| pages/synchrony-verticals.html | **Norman Synchrony Verticals** | Norman vertical blind configurator. |
+| pages/hardware-quote.html | Hardware Quote | Hardware quote request form. |
+| pages/installation.html | Installation Services | Service info and install booking. |
+| pages/upholstery.html | Custom Upholstery | Upholstery services page. |
+| pages/privacy.html | Privacy Policy | Privacy policy. |
+| pages/product-specs.html | Product specifications | 9 tabs, 20+ products with full specs. Brightwood removed (not offered). |
+| pages/soluna-roller-shades.html | Norman Soluna detail page | Full product deep-dive. Norman motorization ONLY — do not add Somfy/Automate/Lutron. |
 | css/global.css | Shared styles | Delivery section styles; identity bar styles |
 | js/shared.js | Shared nav/footer | Identity bar (Michael J. Healy Installations LLC + Philly Blinds Â· Blindznation); footer shows both brands + LLC name |
 
 ### âŒ STILL NEEDED
 | File | Page | Priority | Notes |
 |------|------|----------|-------|
-| pages/shades.html | Fabric swatch photos | ðŸŸ¡ MEDIUM â€” picker is fully wired with Norman collections + color-dot CSS fallback; upload real swatch photos when available |
+| pages/shades.html | Fabric swatch photos | MEDIUM — picker is fully wired with Norman collections + color-dot CSS fallback; upload real swatch photos when available |
+| pages/catalogs.html | Spec catalogs download | MISSING — page does not exist; removed from sitemap.xml (May 2026). Recreate only when catalog PDFs are confirmed safe for public exposure (no wholesale pricing). |
 
 ---
 
@@ -233,8 +240,31 @@ Update it when completing tasks â€” mark items done.
 
 ---
 
+## PRODUCT DATA INTEGRITY NOTES (Updated May 2026)
+
+### Norman motorization — DO NOT mix brands
+Norman-branded product pages (Soluna, Portrait Cellular, Synchrony Verticals, City Lights, SmartPrivacy Faux Wood) must use ONLY Norman-brand motors:
+- Norman Smart ($482/shade)
+- AutoWand ($166/shade)
+- Automate Home™ ($682/shade)
+Do NOT list Somfy, Lutron, Automate (the separate brand), or Rollease on these pages.
+Custom non-Norman roller/roman shades CAN offer any brand in notes.
+
+### Brightwood shutters — removed
+Norman no longer offers Brightwood. Removed from product-specs.html (May 2026). If user adds it back, verify against current Norman shutter PDF catalog first.
+
+### Normandy shutter spec corrections (May 2026)
+- Max single-panel widths: 1⅞″→30″, 2½″/3″→36″, 3½″/4½″→42″ (not 24/30/36 as previously coded)
+- Divider rail required over 78″ (not 74″)
+- InvisibleTilt™ is the correct Norman brand name (not “Clearview” — that is Hunter Douglas)
+- Matte Black (246) is a STAIN color, not a paint color
+- Paint surcharge colors: 017 Gray Black, 836 Classic Black, 609 Chateau Brown (3 colors, not 4)
+
+### Discontinued Norman fabrics
+User will provide updated discontinued fabric list. When received: remove from configurators, update this section with date and affected files.
+
 *This file is the single source of truth. If you change anything on the project, update this file.*
-*Last agent to work on this: Claude Code â€” May 11, 2026*
+*Last agent to work on this: Claude Code — May 16, 2026*
 *Last session summary: Full site audit â€” 0 broken links, 0 broken images, all 765 portfolio images verified, all nav/footer/meta/phone present on every page. Replaced 6 remaining SVG placeholders in soft-treatments.html with real photos (3-Prong Tack Bottom, Flat Roman, Hobbled Roman, Relaxed Roman, TDBU, Arch/Specialty). All pleat and roman style cards now use real photos. Chatbot needs ANTHROPIC_API_KEY set in Vercel env vars to go live.*
 
 
