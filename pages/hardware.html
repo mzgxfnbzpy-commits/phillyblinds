@@ -518,7 +518,7 @@
             <button class="qty-btn" onclick="var n=document.getElementById('kf-qty');n.value=parseInt(n.value)+1;kfUpdate()">+</button>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" id="kf-mount-group">
           <label>Mount</label>
           <div class="opt-row" id="grp-kf-mount" style="margin-top:8px">
             <button class="opt-btn sel" onclick="selOpt(this,'grp-kf-mount');kfUpdate()">Wall mount</button>
@@ -662,6 +662,9 @@ function kfSetType(type, el) {
   document.getElementById('kf-step2-title').textContent = titles[type] || 'Options';
   document.getElementById('kf-step2').style.display = 'block';
   document.getElementById('kf-step3').style.display = 'block';
+  // Mount is already chosen inside the Architrac configurator — don't repeat it in Step 3
+  var mountGroup = document.getElementById('kf-mount-group');
+  if (mountGroup) mountGroup.style.display = type === 'traverse' ? 'none' : '';
   kfUpdate();
   hwReveal('sec-quote');
   setTimeout(function() {
