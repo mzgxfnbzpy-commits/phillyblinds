@@ -2962,13 +2962,16 @@ const CELL_COMPAT = {
   // indices: 0=3/8S · 1=9/16S · 2=1/2D · 3=3/4S · 4=3/4D · 5=1¼S
   // Source: Norman Portrait Honeycomb catalog Option Reference Chart
   'lf':   [0,1,2,3,4,5],  // Light Filtering — all 6 sizes
-  'rd':   [    2,3,4,5],  // Room Darkening — 1/2"D, 3/4"S, 3/4"D, 1¼"S only (NOT 3/8"S or 9/16"S)
+  'rd':   [  1,2,3,4,5],  // Room Darkening — 9/16"S (16-color limited palette), 1/2"D, 3/4"S, 3/4"D, 1¼"S. NOT 3/8"S.
   'sheer':[0],             // Sheer — 3/8"S only as single shade (9/16"S top in D&N only)
-  'dn':   [0,1,2,3,4,5],  // Day & Night — all sizes; pairing rules apply for double-cell bottom
+  'dn':   [0,1,2,3,4,5],  // Day & Night — all sizes per FABRIC_NOTES; pairing rules apply for double-cell bottom
+  // ⚠ OWNER CONFIRM: The HTML D&N picker tooltip says "9/16"S, 3/4"S, and 1¼"S only" but
+  // CELL_COMPAT and FABRIC_NOTES allow all 6 sizes. Verify against Norman Portrait PDF.
+  // If D&N is restricted to fewer sizes, update to e.g. [1,3,5] and remove index 0/2/4.
 };
 const FABRIC_NOTES = {
   'lf':   'Light Filtering: available in all 6 cell sizes.',
-  'rd':   'Room Darkening: available in 1⁄2″D, 3⁄4″S, 3⁄4″D, and 1 1⁄4″S only. Not available in 3⁄8″S or 9⁄16″S.',
+  'rd':   'Room Darkening: available in 9⁄16″S (16-color limited palette), 1⁄2″D, 3⁄4″S, 3⁄4″D, and 1 1⁄4″S. Not available in 3⁄8″S.',
   'sheer':'Sheer is available in 3⁄8″S only as a single shade. 9⁄16″S Sheer is available as the top (day) shade in Day &amp; Night mode.',
   'dn':   'Day &amp; Night: two shades in one headrail — all 6 cell sizes available. Top &amp; bottom use the same cell size. 1⁄2″D or 3⁄4″D bottom pairs with nearest single-cell Sheer top.',
 };
@@ -3243,8 +3246,9 @@ function submitShadeForm() {
     'Operating:    ' + getOpt('grp-op-' + currentProduct) +
     cellLift + cellSize + cellType +
     fascia + endcap + chainType + chainLen + '\n' +
-    'Motorization: ' + (motorOn ? 'Yes — ' + motorBrand : 'No') + '\n\n' +
-    'Delivery: ' + delivery + '\n\n' +
+    'Motorization: ' + (motorOn ? 'Yes — ' + motorBrand : 'No') + '\n' +
+    (motorOn && currentBrand === 'norman' && typeof nmGetMotorSummary === 'function' ? 'Motor options: ' + nmGetMotorSummary() + '\n' : '') +
+    '\nDelivery: ' + delivery + '\n\n' +
     'Notes:\n' + (notes || '(none)');
 
   window.location.href = 'mailto:blindznation@gmail.com' +
@@ -3628,7 +3632,12 @@ const SOLUNA_COLLECTIONS = {
       {n:'RD Foliage',c:'F0853'},{n:'Winter White',c:'F1514'},{n:'Ecru',c:'F1515'},
       {n:'Cinnamon',c:'F1516'},{n:'Forest',c:'F1517'},{n:'Midnight',c:'F1518'}
     ]},
-    // Elements White Backing (Glamour) — F1108-F1113 fully discontinued, removed
+    // Elements White Backing: F1108-F1113 are ACTIVE per Feb 2026 PDF (page 16).
+    // Old "Glamour" collection NAME was discontinued; same codes now listed under "Elements White Backing".
+    {name:'Elements White Backing', colors:[
+      {n:'White',c:'F1108'},{n:'Stone Gray',c:'F1109'},{n:'Broken White',c:'F1110'},
+      {n:'Cloudy Gray',c:'F1111'},{n:'Gray',c:'F1112'},{n:'Anthracite Gray',c:'F1113'}
+    ]},
     {name:'Elements', colors:[
       {n:'Stone Gray',c:'F2109'},{n:'Broken White',c:'F2110'},{n:'Cloudy Gray',c:'F2111'},
       {n:'Gray',c:'F2112'},{n:'Anthracite Gray',c:'F2113'},{n:'Weathered White',c:'F2114'},
@@ -3716,24 +3725,35 @@ const SOLUNA_COLLECTIONS = {
     ]},
     {name:'Galaxy 3%', colors:[{n:'Soft White',c:'F1728'},{n:'Ash',c:'F1731'},{n:'Black',c:'F1727'}]}
   ],
-  // Commercial solar — discontinued codes removed per Norman handoff (Soluna 2026)
-  // F0355-F0369 (NA300 1/3/5%), F0378-F0384 (NA400 1/3%), F0388/F0390 (NA400 5%),
-  // F0396 (NA400 10%), F0407 (NA820 3%) all discontinued.
-  // Kept: F1872/F1873/F1874 Charcoal (NA300 series), F1875/F1876 Chalk/Chalk-Beige (NA400 1%)
+  // Commercial solar — verified against Feb 2026 Norman Soluna PDF (pages 20 active fabric list).
+  // OLD F0355-F0369 variants (Pearl/Linen/Pewter/Chestnut/Gray in NA300): discontinued per appendix p.66 → NOT in picker
+  // NEW F1872/F1873/F1874 Charcoal (NA300) and F1875/F1876 Chalk (NA400 1%): ACTIVE ✓
+  // NA400 3%: F0381/F0382/F0384 — shown ACTIVE on PDF p.20 (no F1xxx replacement) ✓
+  // NA820 3%: F0407 Oyster/Pewter — shown ACTIVE on PDF p.20 ✓
+  // NA400 5%: F0388/F0390 — shown ACTIVE on PDF p.20 ✓
+  // NA400 10%: F0396 Charcoal — shown ACTIVE on PDF p.20 ✓
+  // Note: appendix also lists F0396/F0407/F0381-F0390 under old "A400"/"A820" naming — these are
+  // the same products now listed as "NA400"/"NA820" in the current Feb 2026 active catalog.
   'commercial': [
     {name:'NA300 1%', colors:[{n:'Charcoal',c:'F1872'}]},
     {name:'NA400 1%', colors:[{n:'Chalk',c:'F1875'},{n:'Chalk/Beige',c:'F1876'}]},
     {name:'NA300 3%', colors:[{n:'Charcoal',c:'F1873'}]},
-    {name:'NA300 5%', colors:[{n:'Charcoal',c:'F1874'}]}
+    {name:'NA400 3%', colors:[{n:'Chalk',c:'F0381'},{n:'Chalk/Beige',c:'F0382'},{n:'Charcoal',c:'F0384'}]},
+    {name:'NA820 3%', colors:[{n:'Oyster/Pewter',c:'F0407'}]},
+    {name:'NA300 5%', colors:[{n:'Charcoal',c:'F1874'}]},
+    {name:'NA400 5%', colors:[{n:'Chalk/Beige',c:'F0388'},{n:'Charcoal',c:'F0390'}]},
+    {name:'NA400 10%', colors:[{n:'Charcoal',c:'F0396'}]}
   ]
 };
 
 // ─── Norman Portrait Cellular — real fabric data (2025-2026) ──
 // Source: Norman HC Color Coordination spreadsheet, updated 2026-03-06
 // ⚠ DISCONTINUED — DO NOT RE-ADD:
-//   C7018K Soft Stone (Light Filtering) — discontinued 3/6/2026 per Wallace email 2026-04-23
-//     Removed from ALL cell sizes: 3/8"S, 9/16"S, 1/2"D, 3/4"S, 3/4"D, 1-1/4"S
+// Discontinued per Wallace email dated 2026-04-23 (see C:\Users\Blind\PhillyBlinds Photos\fabrics\discontinued.png):
+//   Light Filtering C7018K Soft Stone — removed from ALL Portrait honeycomb cell sizes:
+//     9/16"S, 3/8"S, 1/2"D, 3/4"S, 3/4"D, 1 1/4"S
 //   Rustica designer colors (C7004/C7409/C7610/C7113 LF, C4004/C4403/C4606/C4115 RD) — discontinued 2/1/2026
+// Audit verified 2026-05-16 — no C7018K in active CELL_COLLECTIONS or CELL_916S_LF.
 // NOTE: C4011T "Soft Stone RD" is a DIFFERENT color and is still active.
 // Colors stored as {n: name, c: code}
 const CELL_COLLECTIONS = {
@@ -5314,6 +5334,7 @@ function rnSubmitForm() {
     'Height:         ' + (h || '—') + '″\n' +
     'Qty:            ' + qty + '\n' +
     'Lift system:    ' + g('rn-grp-lift')     + '\n' +
+    (rnLiftType === 'motor' ? '── MOTORIZATION ─────────────────────────\n' + (typeof nmGetMotorSummary === 'function' ? nmGetMotorSummary() : 'Motor details: confirmed at measurement visit') + '\n\n' : '') +
     'Mount type:     ' + g('rn-grp-mount')    + '\n\n' +
     '── HEADRAIL & TOP ───────────────────────\n' +
     'Headrail type:  ' + hrType + hrDetail     + '\n' +

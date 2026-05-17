@@ -271,6 +271,57 @@ User will provide updated discontinued fabric list. When received: remove from c
 
 ---
 
+## Norman Motorization Audit (May 2026)
+
+### Source PDF verified against
+- `C:\Users\Blind\PhillyBlinds Photos\PDF PRODUCTS\Norman\Norman Automated - Motorized shades.pdf`
+- PDF title (from metadata): **"Automate Home-Norman Smart Motorization Program Reference Guide"**
+- This confirms both "Automate Home" and "Norman Smart" are Norman-brand motor systems.
+- AutoWand is also a Norman-brand motor system.
+
+### Core rule — CRITICAL
+Norman-brand product pages must NEVER show Somfy, Lutron, Automate (the separate brand), Rollease Acmeda, or PowerView as motor options. Use Norman-brand motors only.
+
+### Norman motor systems (confirmed Norman-brand)
+- **Norman Smart** — app, voice (Alexa/Google/HomeKit), remote, rechargeable or hardwired
+- **AutoWand** — wand-controlled, rechargeable battery, no remote needed
+- **Automate Home™** — 15-ch remote, wall switch, rechargeable or DC low voltage
+
+Note: "Automate Home" is Norman's own brand — NOT the separate "Automate" brand. Do not confuse.
+
+### Product-specific motor availability (from PDF + site audit May 2026)
+
+| Norman Product | Motorization | Motor Systems | Charging Wand | DC Low Voltage | Notes |
+|---|---|---|---|---|---|
+| Soluna Roller Shades | Yes | Norman Smart, AutoWand, Automate Home | Roller: Yes (not with cassette/dual) | Yes | Rechargeable or hardwired |
+| Portrait Cellular / Honeycomb | Yes | Norman Smart | Cellular: Yes (not with cassette/dual) | Yes | Motor type confirmed at measurement |
+| PerfectSheer | Yes | Norman Smart | No — not available | Yes | Via shared.js normanMotorSection |
+| SmartDrape | Yes | Norman Smart | No — not available | **NO** — DC Low Voltage NOT available for SmartDrape | $642/shade; hardwire via AC/battery only |
+| Synchrony Verticals | No motorization | N/A | N/A | N/A | Cordless wand tilt only |
+| City Lights Aluminum | No motorization | N/A | N/A | N/A | Cordless or cord-tilt only |
+| SmartPrivacy Faux Wood | No motorization | N/A | N/A | N/A | Cordless only |
+
+### Rules enforced in shared.js normanMotorSection()
+- Charging Wand: available only for Roller and Honeycomb (Cellular) — NOT for Roman, PerfectSheer, SmartDrape, SmartFold
+- SmartDrape: DC Low Voltage is NOT available (button disabled/strikethrough in UI)
+- Norman Smart and Automate Home are incompatible (different RF protocols) — conflict warning enforced in shades.html
+- Max 2 remotes per Norman Smart system
+
+### Spec bar correction (May 2026)
+- `soluna-roller-shades.html` line 227: Changed "Yes — multiple brands" → "Yes — Norman-brand only"
+
+### Quote email corrections (May 2026)
+- Norman Soluna roller quote: now includes `nmGetMotorSummary()` (power source, remote, hub) when motorized
+- Norman Cellular quote: now includes `nmGetMotorSummary()` when motorized and brand=norman
+
+### Prices (April 2026 Norman price book — shown as MSRP estimates on site)
+- Norman Smart: $482/shade
+- AutoWand: $166/shade
+- Automate Home: $682/shade
+- SmartDrape Norman Smart: $642/shade
+
+---
+
 ## Discontinued Fabric Updates
 
 ### Portrait Honeycomb / Cellular — Wallace/Norman Email Chain 2025–2026
@@ -318,3 +369,6 @@ No action required for Wallace honeycomb in our site code.
 - Soft Stone RD (C4011T): still active, correct ✓
 - All other discontinued codes from 2025: not in our data ✓
 - Wallace Honeycomb: not a separate product on our site ✓
+
+*Last agent to work on this: Claude Code — May 16, 2026*
+*Last session: Norman motorization audit. Corrected soluna-roller-shades.html spec bar ("multiple brands" → "Norman-brand only"). Added nmGetMotorSummary() to Norman Roller and Norman Cellular quote emails. Added Norman Motorization Audit section to CLAUDE.md with product-by-product motor compatibility table. No Somfy/Lutron/Rollease/Automate-brand references found on any Norman product page. All rules in shared.js normanMotorSection() verified against PDF.*
