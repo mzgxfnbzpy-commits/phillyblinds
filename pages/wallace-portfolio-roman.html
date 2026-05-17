@@ -221,6 +221,10 @@
         </div>
       </div>
       <div style="font-size:11px;color:#888;margin-top:6px">For inside mount, give exact window opening. We apply the standard 1/4&Prime; IB deduction. Measure to nearest 1/8&Prime;.</div>
+      <div id="roman-valance-height-note" class="info-box" style="display:none;margin-top:10px">
+        <strong>Roman Valance &mdash; Total Height:</strong> Enter the <strong>total height including all folds and spacing</strong>, not just the visible face. A Roman Valance is priced and fabricated to the full folded height.<br>
+        Example: 12&Prime; visible face + 3 folds &times; 8&Prime; each = 36&Prime; total height. Enter 36&Prime; here.
+      </div>
       <div id="dim-feedback" style="margin-top:10px"></div>
     </div>
   </div>
@@ -238,6 +242,7 @@
         <button class="opt-btn" onclick="setShadeStyle('waterfall',this)">Waterfall Without Valance</button>
         <button class="opt-btn" onclick="setShadeStyle('waterfall-fv',this)">Waterfall Front Valance</button>
         <button class="opt-btn" onclick="setShadeStyle('valance-only',this)">Valance Only</button>
+        <button class="opt-btn" onclick="setShadeStyle('roman-valance',this)">Roman Valance</button>
       </div>
       <div id="shade-style-note" class="info-box" style="display:none;margin-top:10px"></div>
     </div>
@@ -906,16 +911,25 @@ function validateDims() {
   var controlKey=getControlKey();
   var panelGrp=S.panelStyle==='hobbled'?'hobbled':'standard';
   var errs=[], warns=[];
-  if(controlKey&&SIZE_LIMITS[controlKey]){
-    var lim=SIZE_LIMITS[controlKey][panelGrp];
-    if(lim){
-      if(S.width<lim.minW) errs.push('Width '+S.width+'" < minimum '+lim.minW+'" for '+getControlLabel()+'.');
-      if(S.width>lim.maxW) errs.push('Width '+S.width+'" > maximum '+lim.maxW+'".');
-      if(S.length<lim.minL) errs.push('Length '+S.length+'" < minimum '+lim.minL+'" for '+getControlLabel()+'.');
-      if(S.length>lim.maxL) errs.push('Length '+S.length+'" > maximum '+lim.maxL+'".');
+  // Roman Valance: decorative, no lift system — skip control-based size limits
+  if(S.shadeStyle!=='roman-valance'){
+    if(controlKey&&SIZE_LIMITS[controlKey]){
+      var lim=SIZE_LIMITS[controlKey][panelGrp];
+      if(lim){
+        if(S.width<lim.minW) errs.push('Width '+S.width+'" < minimum '+lim.minW+'" for '+getControlLabel()+'.');
+        if(S.width>lim.maxW) errs.push('Width '+S.width+'" > maximum '+lim.maxW+'".');
+        if(S.length<lim.minL) errs.push('Length '+S.length+'" < minimum '+lim.minL+'" for '+getControlLabel()+'.');
+        if(S.length>lim.maxL) errs.push('Length '+S.length+'" > maximum '+lim.maxL+'".');
+      }
     }
+    if(S.panelStyle==='hobbled'&&S.length>72) errs.push('Hobbled style max length is 72".');
+  } else {
+    // Roman Valance: width must be 16"-96"; length is total height (no max — decorative)
+    if(S.width<16) errs.push('Width '+S.width+'" is below minimum 16" for a Roman Valance.');
+    if(S.width>96) errs.push('Width '+S.width+'" exceeds maximum 96".');
+    if(S.length<12) errs.push('Total height '+S.length+'" — enter the full height including folds (minimum 12").');
+    warns.push('Roman Valance: total height entered = '+S.length+'". This is the FULL fabric height including all folds — used for flat roman pricing.');
   }
-  if(S.panelStyle==='hobbled'&&S.length>72) errs.push('Hobbled style max length is 72".');
   var html='';
   if(errs.length) html+=errs.map(function(e){return'<div class="warn-box warn-box-red" style="margin-top:6px">&#9888; '+e+'</div>';}).join('');
   if(warns.length) html+=warns.map(function(e){return'<div class="warn-box" style="margin-top:6px">&#9888; '+e+'</div>';}).join('');
@@ -945,7 +959,7 @@ function getControlLabel() {
 function setShadeStyle(style, el) {
   S.shadeStyle=style;
   selBtn(el,'grp-shade-style');
-  var labels={standard:'Standard With Valance',waterfall:'Waterfall Without Valance','waterfall-fv':'Waterfall Front Valance','valance-only':'Valance Only'};
+  var labels={standard:'Standard With Valance',waterfall:'Waterfall Without Valance','waterfall-fv':'Waterfall Front Valance','valance-only':'Valance Only','roman-valance':'Roman Valance (decorative)'};
   document.getElementById('val5').textContent=labels[style]||style;
   sp('sp-shade-style',labels[style]||style);
   document.getElementById('step5').classList.add('done');
@@ -953,7 +967,8 @@ function setShadeStyle(style, el) {
     standard:'6" front valance; shade fabric comes off back of headrail.',
     waterfall:'Shade fabric comes off front of headrail; no front valance. Control loop hidden behind shade; cannot use Clutch adjacent.',
     'waterfall-fv':'Waterfall with front valance surcharge — used to cover the top fold.',
-    'valance-only':'Valance Only: max 96" W × 18" L. Attached to 1½" or 2½" headrail.'
+    'valance-only':'Valance Only: max 96" W × 18" L. Attached to 1½" or 2½" headrail.',
+    'roman-valance':'Decorative non-functional Roman Valance — flat roman construction, stays in the raised position. No lift system. Price = flat roman pricing at TOTAL height (including all folds). Flat panel style only.'
   };
   var noteEl=document.getElementById('shade-style-note');
   noteEl.textContent=notes[style]||''; noteEl.style.display=notes[style]?'':'none';
@@ -969,6 +984,35 @@ function setShadeStyle(style, el) {
   if(pwBtn){
     pwBtn.classList.toggle('blocked',isWaterfall||style==='waterfall-fv');
     if((isWaterfall||style==='waterfall-fv')&&S.control==='prowand'){S.control='';document.getElementById('val10').textContent='—';}
+  }
+  // Roman Valance: Flat panel only, no lift system, show total-height note
+  var isRV=style==='roman-valance';
+  var flatBtn=document.getElementById('btn-flat');
+  var hobBtn=document.getElementById('btn-hobbled');
+  // Block Hobbled for Roman Valance (Flat only makes sense)
+  if(hobBtn) hobBtn.classList.toggle('blocked',!isWaterfall||isRV);
+  // Auto-select Flat if Roman Valance and no flat-compatible style chosen
+  if(isRV&&S.panelStyle&&S.panelStyle!=='flat'&&S.panelStyle!=='knife'){
+    S.panelStyle='flat';
+    document.querySelectorAll('#grp-panel-style .opt-btn').forEach(function(b){b.classList.remove('sel');});
+    if(flatBtn) flatBtn.classList.add('sel');
+    document.getElementById('val6').textContent='Flat';
+    sp('sp-panel-style','Flat');
+  }
+  // Show/hide total-height note
+  var rvHNote=document.getElementById('roman-valance-height-note');
+  if(rvHNote) rvHNote.style.display=isRV?'':'none';
+  // Show/hide control step — Roman Valance is decorative, no lift needed
+  document.getElementById('step10').style.display=isRV?'none':'';
+  document.getElementById('step13').style.display=isRV||S.control!=='motor'?'none':'';
+  if(isRV){
+    // Clear any previously chosen control
+    S.control=''; S.motorType='';
+    document.getElementById('val10').textContent='Decorative — no lift system';
+    sp('sp-control','Decorative — no lift system');
+  } else if(!S.control){
+    document.getElementById('val10').textContent='—';
+    sp('sp-control','');
   }
   validateTDBU(); validate2on1(); validateDims(); updateSpec(); openNext('step6');
 }
@@ -1236,8 +1280,8 @@ function submitQuote() {
   if(!S.shadeStyle) errs.push('Select shade construction style (Step 5).');
   if(!S.panelStyle) errs.push('Select panel style (Step 6).');
   if(!S.fabric)     errs.push('Select a fabric (Step 7).');
-  if(!S.control)    errs.push('Select control type (Step 10).');
-  if(S.control==='motor'&&!S.motorType) errs.push('Select motor type (Step 10).');
+  if(!S.control&&S.shadeStyle!=='roman-valance') errs.push('Select control type (Step 10).');
+  if(S.control==='motor'&&!S.motorType&&S.shadeStyle!=='roman-valance') errs.push('Select motor type (Step 10).');
 
   // Validation warnings to flag in email
   var validationFlags=[];
@@ -1295,7 +1339,7 @@ function submitQuote() {
     'Width: '+S.width+'"',
     'Length: '+S.length+'"','',
     'CONSTRUCTION',
-    'Shade style: '+(shadStyleLabels[S.shadeStyle]||S.shadeStyle),
+    'Shade style: '+(S.shadeStyle==='roman-valance'?'Roman Valance — decorative non-functional flat roman (no lift system)':shadStyleLabels[S.shadeStyle]||S.shadeStyle),
     'Panel style: '+(panelLabels[S.panelStyle]||S.panelStyle),'',
     'FABRIC',
     'Pattern: '+(S.fabric?S.fabric.pattern:'—'),
@@ -1313,7 +1357,7 @@ function submitQuote() {
     'Liner: '+S.liner+' — '+S.linerLabel,
     'Panel alignment: '+(S.alignment==='top'?'Top Panel Aligned':'Bottom Panel Aligned'),'',
     'CONTROL',
-    'Control type: '+(controlLabels[S.control]||S.control),
+    'Control type: '+(S.shadeStyle==='roman-valance'?'Decorative — no lift system (Roman Valance)':controlLabels[S.control]||S.control),
     (S.control==='clutch'?'Chain length: '+chainLen:''),
     (S.control==='prowand'?'Wand length: '+wandLen+' (White)':''),
     ((S.control==='clutch'||S.control==='prowand'||S.control==='motor')?'Control side: '+controlSide:''),
@@ -1333,7 +1377,8 @@ function submitQuote() {
       var f=S.fabric,w=S.width,l=S.length;
       if(!f||!w||!l) return 'Enter dims + fabric to calculate';
       var isHob=S.panelStyle==='hobbled';
-      var p=isHob?getPriceHobbled(w,l,f.priceGroup):getPriceFlat(w,l,f.priceGroup,f.noFlat);
+      // Roman Valance: priced as flat roman using total height (already in S.length)
+var p=isHob?getPriceHobbled(w,l,f.priceGroup):getPriceFlat(w,l,f.priceGroup,f.noFlat);
       if(!p) return 'Out of table range — call for price';
       var tot=p;var ns=[];
       if(S.liner==='BO01'){tot=Math.round(tot*1.10);ns.push('blackout +10%');}
