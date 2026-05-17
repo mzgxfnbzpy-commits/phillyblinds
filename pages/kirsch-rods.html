@@ -272,7 +272,7 @@ textarea.inp-field{resize:vertical;min-height:90px}
           </div>
           <div class="coll-body">
             <div class="coll-name">Wood Trends™</div>
-            <div class="coll-sub">9 wood finishes — Black, Coffee, Dark Chocolate, Estate Oak, Mahogany, Marble, Turffle, White, Unfinished</div>
+            <div class="coll-sub">9 wood finishes — Black, Coffee, Dark Chocolate, Estate Oak, Mahogany, Marble, Truffle, White, Unfinished</div>
             <div class="coll-chips">
               <span class="coll-chip">1⅜" · 2"</span>
               <span class="coll-chip">18 finials</span>
@@ -414,6 +414,7 @@ textarea.inp-field{resize:vertical;min-height:90px}
 
     <!-- Wood Trends finishes -->
     <div id="finish-wt" style="display:none">
+      <div class="info-banner" style="margin-bottom:14px"><strong>Wood Trends™ — 9 Finishes:</strong> Wood stains and neutral paints. <strong>Note:</strong> Unfinished finish is not available on Estate™ Traverse Rods — stationary poles only. Rings, brackets, holdback medallions, and accessories are available in matching finishes.</div>
       <div class="finish-grid">
         <div class="finish-card" onclick="selectFinish('Black')">
           <div class="finish-swatch" style="background:#1a1a1a"></div>
@@ -439,9 +440,9 @@ textarea.inp-field{resize:vertical;min-height:90px}
           <div class="finish-swatch" style="background:linear-gradient(135deg,#e8e0d8,#c8c0b8)"></div>
           <div class="finish-name">Marble</div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Turffle')">
+        <div class="finish-card" onclick="selectFinish('Truffle')">
           <div class="finish-swatch" style="background:linear-gradient(135deg,#c8c0a8,#a8a090)"></div>
-          <div class="finish-name">Turffle</div>
+          <div class="finish-name">Truffle</div>
         </div>
         <div class="finish-card" onclick="selectFinish('White')">
           <div class="finish-swatch" style="background:#f5f0e8;border-bottom:1px solid #e0dbd2"></div>
@@ -599,17 +600,43 @@ textarea.inp-field{resize:vertical;min-height:90px}
       </div>
     </div>
 
-    <!-- Wood Trends finials -->
-    <div id="finials-wt" style="display:none">
-      <div class="info-banner"><strong>Wood Trends™</strong> has 18 distinctive wood-and-metal finials. Please describe the style you're looking for (ball, spear, disc, etc.) in the notes field and we'll match you with the best options — or request a sample to be shown at your consultation.</div>
+    <!-- Wood Trends 1⅜" finials -->
+    <div id="finials-wt-138" style="display:none">
+      <div class="sec-label" style="margin-top:0">1⅜" Finials — Wood Trends™</div>
+      <div class="info-banner" style="margin-bottom:14px"><strong>Sold as pairs · 10 pairs/box.</strong> Available in all 9 finishes. <strong>Note:</strong> Button Ball is not available in Unfinished finish.</div>
+      <div class="finial-grid">
+        <div class="finial-card" onclick="selectFinial('Button Ball')"><div class="finial-art">●</div><div class="finial-name">Button Ball</div><div class="finial-desc">3½"D · 2½"H · 2½"W · Not in Unfinished</div></div>
+        <div class="finial-card" onclick="selectFinial('Chaucer')"><div class="finial-art">◍</div><div class="finial-name">Chaucer</div><div class="finial-desc">3¾"D · 3¼"H · 3¼"W · turned classic</div></div>
+        <div class="finial-card" onclick="selectFinial('Ethan')"><div class="finial-art">⬙</div><div class="finial-name">Ethan</div><div class="finial-desc">2¾"D · 3¼"H · 3¼"W · knob style</div></div>
+        <div class="finial-card" onclick="selectFinial('Hugo')"><div class="finial-art">⬤</div><div class="finial-name">Hugo</div><div class="finial-desc">2"D · 2½"H · 2½"W · barrel cap</div></div>
+        <div class="finial-card" onclick="selectFinial('Miller')"><div class="finial-art">◑</div><div class="finial-name">Miller</div><div class="finial-desc">2⅜"D · 3"H · 3"W · oval</div></div>
+        <div class="finial-card" onclick="selectFinial('Sherwood')"><div class="finial-art">⬡</div><div class="finial-name">Sherwood</div><div class="finial-desc">3¾"D · 2¾"H · 2¾"W · urn</div></div>
+        <div class="finial-card" onclick="selectFinial('Warren')"><div class="finial-art">⊕</div><div class="finial-name">Warren</div><div class="finial-desc">1¼"D · 2½"H · 2½"W · disc</div></div>
+        <div class="finial-card" onclick="selectFinial('Wood Ball')"><div class="finial-art">⬤</div><div class="finial-name">Wood Ball</div><div class="finial-desc">3½"D · 2½"H · 2½"W · classic ball</div></div>
+      </div>
+      <div class="sec-label" style="margin-top:14px">Or choose an Endcap (flush, no projection)</div>
       <div class="opt-row">
-        <div class="opt-pill" onclick="selectFinial('Ball style');toggleOptPill(this)">Ball / Round</div>
-        <div class="opt-pill" onclick="selectFinial('Disc / flat');toggleOptPill(this)">Disc / Flat</div>
-        <div class="opt-pill" onclick="selectFinial('Spear / tapered');toggleOptPill(this)">Spear / Tapered</div>
-        <div class="opt-pill" onclick="selectFinial('Cylinder / barrel');toggleOptPill(this)">Cylinder / Barrel</div>
-        <div class="opt-pill" onclick="selectFinial('Square / block');toggleOptPill(this)">Square / Block</div>
-        <div class="opt-pill" onclick="selectFinial('Open / cage');toggleOptPill(this)">Open / Cage</div>
-        <div class="opt-pill" onclick="selectFinial('Not sure - show me options');toggleOptPill(this)">Show me options</div>
+        <div class="opt-pill" onclick="selectFinial('Endcap 1⅜&quot;');toggleOptPill(this,'wt-end')">Endcap — ¾"D · 2"H · all 9 finishes</div>
+      </div>
+    </div>
+
+    <!-- Wood Trends 2" finials -->
+    <div id="finials-wt-2" style="display:none">
+      <div class="sec-label" style="margin-top:0">2" Finials — Wood Trends™</div>
+      <div class="info-banner" style="margin-bottom:14px"><strong>Sold as pairs · 10 pairs/box.</strong> All 9 finishes including Unfinished available on all 2" styles.</div>
+      <div class="finial-grid">
+        <div class="finial-card" onclick="selectFinial('Button Ball')"><div class="finial-art">●</div><div class="finial-name">Button Ball</div><div class="finial-desc">4⅝"D · 3½"H · 3½"W</div></div>
+        <div class="finial-card" onclick="selectFinial('Chaucer')"><div class="finial-art">◍</div><div class="finial-name">Chaucer</div><div class="finial-desc">4⅜"D · 3¾"H · 3¾"W · turned</div></div>
+        <div class="finial-card" onclick="selectFinial('Ethan')"><div class="finial-art">⬙</div><div class="finial-name">Ethan</div><div class="finial-desc">4"D · 4¾"H · 4¾"W · knob</div></div>
+        <div class="finial-card" onclick="selectFinial('Hugo')"><div class="finial-art">⬤</div><div class="finial-name">Hugo</div><div class="finial-desc">2⅞"D · 3¾"H · 3¾"W · barrel</div></div>
+        <div class="finial-card" onclick="selectFinial('Miller')"><div class="finial-art">◑</div><div class="finial-name">Miller</div><div class="finial-desc">3½"D · 4½"H · 4½"W · oval</div></div>
+        <div class="finial-card" onclick="selectFinial('Sherwood')"><div class="finial-art">⬡</div><div class="finial-name">Sherwood</div><div class="finial-desc">5"D · 3"H · 3"W · urn</div></div>
+        <div class="finial-card" onclick="selectFinial('Warren')"><div class="finial-art">⊕</div><div class="finial-name">Warren</div><div class="finial-desc">1⅞"D · 3¾"H · 3¾"W · disc</div></div>
+        <div class="finial-card" onclick="selectFinial('Wood Ball')"><div class="finial-art">⬤</div><div class="finial-name">Wood Ball</div><div class="finial-desc">5¼"D · 3¾"H · 3¾"W · ball</div></div>
+      </div>
+      <div class="sec-label" style="margin-top:14px">Or choose an Endcap (flush, no projection)</div>
+      <div class="opt-row">
+        <div class="opt-pill" onclick="selectFinial('Endcap 2&quot;');toggleOptPill(this,'wt-end')">Endcap — 1⅜"D · 3"H · all 9 finishes</div>
       </div>
     </div>
 
@@ -642,6 +669,15 @@ textarea.inp-field{resize:vertical;min-height:90px}
       <div class="sec-label" style="margin-top:0">Pole Diameter</div>
       <div class="opt-row" id="pole-dia-opts">
         <!-- filled by JS based on collection -->
+      </div>
+    </div>
+
+    <!-- POLE STYLE (smooth vs fluted — Wood Trends only) -->
+    <div id="sz-pole-style" style="display:none">
+      <div class="sec-label" style="margin-top:12px">Pole Style</div>
+      <div class="opt-row">
+        <div class="opt-pill" onclick="S.poleStyle='Smooth';toggleOptPill(this,'polestyle')">Smooth</div>
+        <div class="opt-pill" onclick="S.poleStyle='Fluted';toggleOptPill(this,'polestyle')">Fluted</div>
       </div>
     </div>
 
@@ -821,6 +857,25 @@ textarea.inp-field{resize:vertical;min-height:90px}
       <div class="info-banner">AMP™ motorization is only available on <strong>Estate™ traverse rods</strong> and <strong>Architrac® 94001</strong> tracks. Your current selection (stationary pole or basic hardware) cannot be motorized through Kirsch. If you need motorized drapery, consider upgrading to an Estate™ traverse rod — let us know in the notes.</div>
     </div>
 
+    <!-- Wood Trends accessories (shown for wt collection) -->
+    <div id="wt-accessories" style="display:none;margin-top:20px">
+      <div class="divider"></div>
+      <div class="sec-label" style="margin-top:0">Wood Trends™ Accessories — Add to Your Order?</div>
+      <div class="sec-sub" style="font-size:12px;margin-bottom:14px">Check anything you'd like to include. We'll add pricing to your quote. All items available in your chosen finish.</div>
+      <div class="opt-row" style="flex-wrap:wrap">
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'rings')">Rings with Eyelet <span style="font-size:10px;color:#888">1⅜"=$15.37 · 2"=$18.17/bag</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'bracket-3.5')">3½" Return Bracket <span style="font-size:10px;color:#888">$11.77 ea</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'bracket-4.25')">4¼" Return Bracket (1⅜" only) <span style="font-size:10px;color:#888">$12.44 ea</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'bracket-6')">6" Return Bracket <span style="font-size:10px;color:#888">$35.25/pair</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'ceiling-bracket')">Ceiling Mount Bracket <span style="font-size:10px;color:#888">$21.77 ea</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'double-bracket')">Double Bracket (layered rods) <span style="font-size:10px;color:#888">$24.86 ea</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'holdback')">3¾" Holdback Medallion <span style="font-size:10px;color:#888">$42.47/pair</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'swivel-socket')">Swivel Socket (bay window) <span style="font-size:10px;color:#888">1⅜"=$26.72 · 2"=$32.73</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'elbow')">Wood Elbow Kit (wrap-around) <span style="font-size:10px;color:#888">3½"–8" clearance</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'teflon')">Teflon Tape (smooth ring glide) <span style="font-size:10px;color:#888">$65.18/roll</span></div>
+      </div>
+    </div>
+
     <div class="btn-row">
       <button class="btn-back" onclick="goStep(5)">← Back</button>
       <button class="btn-next" onclick="goStep(7)">Next →</button>
@@ -940,6 +995,7 @@ const S = {
   finish: '',
   finial: '',
   poleDia: '',
+  poleStyle: '',    // 'Smooth'|'Fluted' (Wood Trends only)
   rodWidth: '',
   rodQty: 1,
   draw: '',
@@ -1101,7 +1157,7 @@ function clearFinishSel() {
 // ── STEP 4 ──
 function updateStep4() {
   // Hide all finial panels
-  ['finials-dm-1','finials-dm-138','finials-dm-2','finials-wi-1','finials-wi-138','finials-wt','finials-arch','finials-basic'].forEach(hide);
+  ['finials-dm-1','finials-dm-138','finials-dm-2','finials-wi-1','finials-wi-138','finials-wt-138','finials-wt-2','finials-arch','finials-basic'].forEach(hide);
 
   document.getElementById('sec4-title').textContent = 'Choose a Finial';
   document.getElementById('sec4-sub').textContent = 'Select the finial style for the ends of your pole or rod.';
@@ -1112,7 +1168,8 @@ function updateStep4() {
     if (S.poleDia === '1"') { hide('finials-dm-138'); show('finials-dm-1'); }
     else if (S.poleDia === '2"') { hide('finials-dm-138'); show('finials-dm-2'); }
   } else if (S.collection === 'wt') {
-    show('finials-wt');
+    if (S.poleDia === '2"') show('finials-wt-2');
+    else show('finials-wt-138');
   } else if (S.collection === 'wi') {
     show('finials-wi-138');
     if (S.poleDia === '1"') { hide('finials-wi-138'); show('finials-wi-1'); }
@@ -1135,12 +1192,13 @@ function selectFinial(f) {
 // ── STEP 5 ──
 function updateStep5() {
   hide('sz-pole-diameter'); hide('sz-stationary'); hide('sz-traverse'); hide('sz-basic');
-  hide('sz-superfine-opts'); hide('sz-lockseam-opts');
+  hide('sz-superfine-opts'); hide('sz-lockseam-opts'); hide('sz-tension-opts'); hide('sz-pole-style');
   document.getElementById('mount-recessed').style.display = S.collection === 'arch' ? '' : 'none';
 
   if (S.type === 'static') {
     show('sz-pole-diameter');
     show('sz-stationary');
+    if (S.collection === 'wt') show('sz-pole-style');
 
     // Fill diameter options
     const opts = document.getElementById('pole-dia-opts');
@@ -1155,7 +1213,7 @@ function updateStep5() {
     // Pole length info
     const info = document.getElementById('pole-length-info');
     if (S.collection === 'dm') info.innerHTML = '<strong>Designer Metals™ poles:</strong> Fixed 4\', 6\', 8\' or Telescoping 36"–66", 66"–120", 120"–180". Can be spliced for longer runs.';
-    else if (S.collection === 'wt') info.innerHTML = '<strong>Wood Trends™ poles:</strong> Fixed 4\', 6\', 8\', 12\'. Can be spliced for longer runs.';
+    else if (S.collection === 'wt') info.innerHTML = '<strong>Wood Trends™ poles:</strong> Fixed 4\', 6\', 8\', 12\' — Smooth or Fluted. Can be spliced for longer runs using Pole Connector #5610E061 (always support splice with a bracket). <strong>1⅜" pricing:</strong> 4\'=$25.80 · 6\'=$38.61 · 8\'=$49.56 · 12\'=$77.32. <strong>2" pricing:</strong> 4\'=$58.52 · 6\'=$85.20 · 8\'=$112.97 · 12\'=$172.41 (per-piece pricing).';
     else if (S.collection === 'wi') info.innerHTML = '<strong>Wrought Iron poles:</strong> Fixed 6\' or 8\'. Can be spliced and spliced with internal rod splice for longer runs.';
     else info.innerHTML = '';
 
@@ -1163,7 +1221,8 @@ function updateStep5() {
     show('sz-traverse');
     const info = document.getElementById('traverse-limits-info');
     if (S.traverseSystem === 'estate' || S.collection !== 'arch') {
-      info.innerHTML = '<strong>Estate™ Traverse Rod:</strong> Min 18" · Max 192" (16ft). Tracks over 8ft will include 1 splice and 1 keystone. 4 lbs/ft max drapery load.';
+      const estPrice = S.collection === 'wt' ? ' <strong>1⅜" = $42/ft · 2" = $48/ft</strong> (manual). AMP™ motorization +$621.' : '';
+      info.innerHTML = '<strong>Estate™ Traverse Rod:</strong> Min 18" · Max 192" (16ft). Tracks over 8ft will include 1 splice. Max load 64 lbs (4 lbs/ft). Pleated or Ripplefold™ headers.' + estPrice + (S.collection === 'wt' ? ' <strong>Note:</strong> Unfinished finish not available on Estate™ Traverse Rods.' : '');
     } else {
       info.innerHTML = '<strong>Architrac® 94001:</strong> Manual: One-Way max 20ft (80 lbs); Two-Way max 40ft (160 lbs). Motorized: max 16ft (64 lbs). Can be curved/bent (manual only).';
     }
@@ -1177,17 +1236,17 @@ function updateStep5() {
 
 function selectPoleDia(d) {
   S.poleDia = d;
-  // Refresh finial panel for DM when diameter changes
-  if (S.collection === 'dm' || S.collection === 'wi') {
-    ['finials-dm-1','finials-dm-138','finials-dm-2','finials-wi-1','finials-wi-138'].forEach(hide);
-    if (S.collection === 'dm') {
-      if (d === '1"') show('finials-dm-1');
-      else if (d === '2"') show('finials-dm-2');
-      else show('finials-dm-138');
-    } else {
-      if (d === '1"') show('finials-wi-1');
-      else show('finials-wi-138');
-    }
+  ['finials-dm-1','finials-dm-138','finials-dm-2','finials-wi-1','finials-wi-138','finials-wt-138','finials-wt-2'].forEach(hide);
+  if (S.collection === 'dm') {
+    if (d === '1"') show('finials-dm-1');
+    else if (d === '2"') show('finials-dm-2');
+    else show('finials-dm-138');
+  } else if (S.collection === 'wi') {
+    if (d === '1"') show('finials-wi-1');
+    else show('finials-wi-138');
+  } else if (S.collection === 'wt') {
+    if (d === '2"') show('finials-wt-2');
+    else show('finials-wt-138');
   }
 }
 
@@ -1250,6 +1309,7 @@ function updateStep7() {
     ['Finish', S.finish || '—'],
     ['Finial', S.finial || '—'],
     ['Pole Diameter', S.poleDia || '—'],
+    ['Pole Style', S.poleStyle || '—'],
     ['Track Width', (document.getElementById('trav-width') || {value:''}).value ? document.getElementById('trav-width').value + '"' : (document.getElementById('rod-width') || {value:''}).value ? document.getElementById('rod-width').value + '"' : '—'],
     ['Draw', S.draw || '—'],
     ['Header Style', S.header ? (S.header + (S.fullness ? ' ' + S.fullness : '')) : '—'],
@@ -1302,6 +1362,7 @@ function submitQuote() {
     'Finish/Color: ' + (S.finish || 'Not specified'),
     'Finial: ' + (S.finial || 'N/A'),
     'Pole Diameter: ' + (S.poleDia || 'N/A'),
+    'Pole Style: ' + (S.poleStyle || 'N/A'),
     'Width: ' + (travW || rodW || 'See notes'),
     'Quantity: ' + (document.getElementById('rod-qty')?.value || document.getElementById('trav-qty')?.value || '1'),
     'Draw Type: ' + (S.draw || 'N/A'),
