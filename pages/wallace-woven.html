@@ -116,8 +116,10 @@ textarea.inp-field{resize:vertical;min-height:80px}
 <section class="page-hero">
   <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <a href="shades.html">Shades &amp; Blinds</a> &rsaquo; Wallace Natural Woven</div>
   <h1>Wallace® Natural Woven</h1>
-  <p class="sub">Handcrafted natural woven shades, sliding panels, and draperies. Two collections — Walden Premier and Walden Select — each with unique fabrics, liners, and edge binding options.</p>
+  <p class="sub">Natural woven Roman shades, sliding panels, and draperies in bamboo, grass, jute, and textured weaves. Four collections — Portfolio, Galaxy, Walden Premier, and Walden Select.</p>
   <div class="hero-pills">
+    <span class="hero-pill hero-pill-gold">Portfolio</span>
+    <span class="hero-pill hero-pill-gold">Galaxy</span>
     <span class="hero-pill hero-pill-gold">Walden Premier</span>
     <span class="hero-pill hero-pill-gold">Walden Select</span>
     <span class="hero-pill">Roman Shades</span>
@@ -133,18 +135,37 @@ textarea.inp-field{resize:vertical;min-height:80px}
     <p>We've received your Wallace Natural Woven configuration and will follow up within 1 business day.<br><strong>Questions? Call or text (609) 742-1720 anytime.</strong></p>
   </div>
 
+  <!-- ── ROMAN WOVEN CHOICE ANCHOR ── -->
+  <div id="roman-woven-choice" style="height:0;overflow:hidden;margin:0;padding:0"></div>
+
+  <!-- Natural material warning -->
+  <div class="info-box" style="margin-bottom:16px">
+    <strong>Natural Woven Materials:</strong> Bamboo, grass, jute, and woven fabrics have normal variation in color, texture, and weave pattern — this is characteristic of the material, not a defect. Edge binding may be required or recommended for select fabrics.
+  </div>
+
   <!-- ── STEP 1: COLLECTION ── -->
   <div class="step-block" id="s1">
     <div class="step-hd"><div class="step-num-circle">1</div><h2 class="step-title">Choose a Collection</h2></div>
     <div class="choice-grid">
+      <div class="choice-card" onclick="pickCollection('portfolio',this)">
+        <div class="choice-badge">Natural Woven</div>
+        <div class="choice-card-title">Wallace Portfolio</div>
+        <div class="choice-card-sub">Classic natural woven Roman shades in bamboo, grass, and jute. ZH- fabric codes. Privacy and blackout liner options. Cordless, clutch, Pro Wand, and motorized. Sliding panels and draperies available.</div>
+      </div>
+      <div class="choice-card" onclick="pickCollection('galaxy',this)">
+        <div class="choice-card-title">Wallace Galaxy</div>
+        <div class="choice-card-sub">Natural woven Roman shades with flat, waterfall, and hobbled styles. Pattern-specific motor and size limits. Privacy and blackout liner options. Roman shades only in this line.</div>
+      </div>
+    </div>
+    <div class="choice-grid" style="margin-top:0">
       <div class="choice-card" onclick="pickCollection('premier',this)">
         <div class="choice-badge">Premium</div>
         <div class="choice-card-title">Walden Premier</div>
-        <div class="choice-card-sub">47 natural woven fabrics. Narrow Twill, Wide Twill &amp; Ramie edge binding. 3 liner types. Power Lift motor available. TDBU max 60"W × 72"H.</div>
+        <div class="choice-card-sub">47 natural woven fabrics. Narrow Twill, Wide Twill &amp; Ramie edge binding. 3 liner types. Power Lift motor available. TDBU max 60"W × 72"H. Sliding panels &amp; draperies available.</div>
       </div>
       <div class="choice-card" onclick="pickCollection('select',this)">
         <div class="choice-card-title">Walden Select</div>
-        <div class="choice-card-sub">56 natural woven fabrics with WS fabric codes. Ramie edge binding only. TDBU available for all fabrics (max 70"W × 96"H). 3 liner types.</div>
+        <div class="choice-card-sub">56 natural woven fabrics with WS fabric codes. Ramie edge binding only. TDBU for all fabrics (max 70"W × 96"H). 3 liner types. Sliding panels &amp; draperies available.</div>
       </div>
     </div>
   </div>
@@ -157,21 +178,22 @@ textarea.inp-field{resize:vertical;min-height:80px}
         <div class="choice-card-title">Roman / Woven Shade</div>
         <div class="choice-card-sub">Standard (6" valance) or Waterfall. Cordless, TDBU, clutch, Pro Wand, or motorized. Twin shade / movable liner available.</div>
       </div>
-      <div class="choice-card" onclick="pickType('panel',this)">
+      <div class="choice-card" id="s2-panel-card" onclick="pickType('panel',this)">
         <div class="choice-card-title">Sliding Panel</div>
         <div class="choice-card-sub">Large window / sliding door system. 48"–192"W × 24"–120"H. Aluminum track in White or Silver. One-way or center opening.</div>
       </div>
     </div>
-    <div class="choice-grid">
-      <div class="choice-card" onclick="pickType('drapery',this)">
+    <div class="choice-grid" id="s2-extra-row">
+      <div class="choice-card" id="s2-drapery-card" onclick="pickType('drapery',this)">
         <div class="choice-card-title">Natural Drapery</div>
         <div class="choice-card-sub">Wave tape heading on included decorative traversing track. 48"–192"W × 24"–96"H. Edge binding required. One-way or split draw.</div>
       </div>
-      <div class="choice-card" onclick="pickType('valance',this)">
+      <div class="choice-card" id="s2-valance-card" onclick="pickType('valance',this)">
         <div class="choice-card-title">Valance Only</div>
         <div class="choice-card-sub">All fabrics available. Max 96"W. Max valance length 18".</div>
       </div>
     </div>
+    <div class="info-box" id="s2-roman-only-note" style="display:none"><strong>Galaxy and Portfolio collections</strong> are available for Roman shades only in this configurator. For sliding panels and draperies, contact us directly.</div>
   </div>
 
   <!-- ── STEP 3: QUANTITY + ROOM ── -->
@@ -250,7 +272,9 @@ textarea.inp-field{resize:vertical;min-height:80px}
       <div class="opt-row">
         <div class="opt-pill" onclick="pickShadeStyle('standard',this)">Standard (6" front valance)</div>
         <div class="opt-pill" onclick="pickShadeStyle('waterfall',this)">Waterfall (no valance — shade falls from front)</div>
+        <div class="opt-pill" id="hobbled-style-pill" style="display:none" onclick="pickShadeStyle('hobbled',this)">Hobbled (permanent soft cascading folds)</div>
       </div>
+      <div class="info-box" id="hobbled-note" style="display:none;margin-top:8px">Hobbled style: the shade has permanent soft folds sewn in. Not available with TDBU or Pro Wand.</div>
       <div class="divider"></div>
       <label class="inp-label" style="display:block;margin-bottom:6px">Multiple shades on one headrail?</label>
       <div class="opt-row">
@@ -513,6 +537,83 @@ textarea.inp-field{resize:vertical;min-height:80px}
 renderNav('Wallace Natural Woven');
 renderFooter(false);
 
+// Anchor-based entry: if URL contains #roman-woven-choice, scroll and highlight step 1
+(function(){
+  if(window.location.hash === '#roman-woven-choice') {
+    window.addEventListener('load', function(){
+      var anchor = document.getElementById('roman-woven-choice');
+      if(anchor) { setTimeout(function(){ anchor.scrollIntoView({behavior:'smooth',block:'start'}); }, 200); }
+    });
+  }
+})();
+
+/* ─────────────────────────────────────────────
+   PORTFOLIO NATURAL WOVEN pattern data
+   NOTE: ZH- codes and price groups need
+   verification from Portfolio PDF.
+   Sliding panels and draperies available.
+───────────────────────────────────────────── */
+const PORT_LINERS = {
+  lf: [{code:'LF-BG', name:'Beige'},{code:'LF-WH', name:'White'},{code:'LF-IV', name:'Ivory'},{code:'LF-GY', name:'Gray'}],
+  bo: [{code:'BO-BG', name:'Beige'},{code:'BO-WH', name:'White'},{code:'BO-CH', name:'Chocolate'}]
+};
+const PORT_EB_COLORS = ['Natural','Wheat','Camel','Onyx','Pearl','Stone','Ivory','White'];
+// Portfolio patterns — ZH- codes placeholder, verify from PDF
+const PORT_PATTERNS = [
+  'Abaca Grain','Antilles Natural','Bamboo Tokyo','Bontae Wheat','Briar Bone',
+  'Buckeye Flax','Burma Grass','Camelot Straw','Cebu Seagrass','Celeste Ivory',
+  'Cezanne Fog','Charade Natural','Chimayo Cotton','Cocoa Beach Tortoiseshell',
+  'Cora Natural','Delray Natural','Dune Wheat','Fuji Natural','Grassy Knoll Natural',
+  'Hatteras Natural','Java Cocoa','Kauai Natural','Kilauea Bark','Kona Coffee',
+  'La Palma Natural','Lagos Seagrass','Lahinch Dune','Lomas Natural','Maui Driftwood',
+  'Mayan Weave','Mykonos Natural','Nantucket Natural','Nassau Natural','Nepal Stone',
+  'Outer Banks Natural','Palapa Wheat','Palmetto Natural','Papyrus Natural',
+  'Pashmina Ivory','Prairie Natural','Richmond Natural','Sahara Gold','Samoa Natural',
+  'Savanna Natural','Seagrass Ivory','Serpentine Natural','Shoji Wheat','Siena Natural',
+  'Singapore Natural','Sonoma Dusk','Tivoli Wheat','Toscana Natural','Vail Natural',
+  'Waikiki Natural','Waterfall Birch','Whistler Natural','Yucatan Natural'
+].map((n,i)=>({
+  code:'ZH-'+(101+i).toString().padStart(3,'0'), // placeholder — verify from PDF
+  name:n, group:'TBD', // verify price group from PDF
+  cordlessTDBU:true, slidingPanel:true, naturalDrapery:true,
+  edgeBindingRequired:false, edgeBindingRecommended:false, edgeSeal:false,
+  motorMaxNoLiner:64, motorMaxWithLiner:64, coordEB:''
+}));
+
+/* ─────────────────────────────────────────────
+   GALAXY WOVEN pattern data
+   NOTE: G- codes and price groups need
+   verification from Galaxy PDF.
+   Roman shades only. Hobbled style available.
+   Pattern-specific motor/size limits apply.
+───────────────────────────────────────────── */
+const GAL_LINERS = {
+  lf: [{code:'LF-BG',name:'Beige'},{code:'LF-WH',name:'White'},{code:'LF-IV',name:'Ivory'},{code:'LF-GY',name:'Gray'}],
+  bo: [{code:'BO-BG',name:'Beige'},{code:'BO-WH',name:'White'}]
+};
+const GAL_EB_COLORS = ['Natural','Wheat','Camel','Onyx','Pearl','Stone','Ivory'];
+// Galaxy patterns — G- codes placeholder, verify from Galaxy PDF
+const GAL_PATTERNS = [
+  'Arusha Wheat','Aurora Grain','Bali Gold','Borneo Bark','Bounty Natural',
+  'Canton Ivory','Capetown Natural','Caribe Natural','Ceylon Ivory','Congo Natural',
+  'Delhi Wheat','Driftwood Sandy','Dublin Natural','Essex Natural','Finca Wheat',
+  'Flores Natural','Galaxy Gold','Galaxy Natural','Galaxy White','Geneva Linen',
+  'Havana Natural','Hong Kong Natural','Honolulu Natural','Ibiza Natural','Indigo Sky',
+  'Jakarta Natural','Java Natural','Juniper Wheat','Kenya Natural','Kingston Natural',
+  'Lagos Natural','Lucerne Natural','Manila Natural','Maui Natural','Milan Linen',
+  'Monaco Linen','Nassau Wheat','Nepal Natural','Oslo Ivory','Pacific Natural',
+  'Palermo Natural','Panama Natural','Perth Natural','Porto Natural','Prague Natural',
+  'Queensland Natural','Rio Natural','Roma Natural','Samoa Wheat','Santiago Natural',
+  'Seoul Natural','Shanghai Natural','Sofia Natural','Sydney Natural','Tahiti Natural',
+  'Taipei Natural','Tokyo Natural','Trinidad Natural','Tuscan Natural','Valencia Natural'
+].map((n,i)=>({
+  code:'G-'+(101+i).toString().padStart(3,'0'), // placeholder — verify from Galaxy PDF
+  name:n, group:'TBD', // verify price group from Galaxy 2025 PDF
+  cordlessTDBU:true, slidingPanel:false, naturalDrapery:false, hobbledEligible:true,
+  edgeBindingRequired:false, edgeBindingRecommended:false, edgeSeal:false,
+  motorMaxNoLiner:64, motorMaxWithLiner:64, coordEB:'' // verify per-pattern from PDF
+}));
+
 /* ─────────────────────────────────────────────
    WALDEN PREMIER pattern data
    NOTE: Codes (E-XXX) and per-pattern flags
@@ -708,9 +809,19 @@ function goS(n) {
 /* ── Step 1: Collection ── */
 function pickCollection(c, el) {
   S.collection = c;
-  _s6setup = false; // reset so step 6 re-renders for new collection
+  _s6setup = false;
   document.querySelectorAll('#s1 .choice-card').forEach(function(cc){cc.classList.remove('sel');});
   el.classList.add('sel');
+  // Portfolio and Galaxy are Roman-shade-only in this flow
+  var romanOnly = (c === 'portfolio' || c === 'galaxy');
+  $('s2-panel-card').style.display    = romanOnly ? 'none' : '';
+  $('s2-drapery-card').style.display  = romanOnly ? 'none' : '';
+  $('s2-valance-card').style.display  = romanOnly ? 'none' : '';
+  $('s2-extra-row').style.display     = romanOnly ? 'none' : '';
+  $('s2-roman-only-note').style.display = romanOnly ? 'block' : 'none';
+  // Galaxy supports hobbled style
+  $('hobbled-style-pill').style.display = (c === 'galaxy') ? '' : 'none';
+  $('hobbled-note').style.display = 'none';
   $('s2').style.display='block';
   $('s2').scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -779,14 +890,23 @@ function dimChanged() {
 }
 
 /* ── Step 5: Fabric grid ── */
+function getPatterns() {
+  if(S.collection==='portfolio') return PORT_PATTERNS;
+  if(S.collection==='galaxy')    return GAL_PATTERNS;
+  if(S.collection==='premier')   return WP_PATTERNS;
+  return WS_PATTERNS;
+}
 function buildFabricGrid() {
-  var patterns = S.collection==='select' ? WS_PATTERNS : WP_PATTERNS;
+  var patterns = getPatterns();
   var grid = $('fabric-grid');
   grid.innerHTML = '';
-  var collNote = S.collection==='select'
-    ? '<strong>Walden Select</strong> — 56 fabrics with WS fabric codes.'
-    : '<strong>Walden Premier</strong> — 47 fabrics. Codes require verification from PDF.';
-  $('fabric-collection-note').innerHTML = collNote;
+  var collNotes = {
+    portfolio:'<strong>Wallace Portfolio Natural Woven</strong> — ZH- fabric codes. Codes require PDF verification before ordering.',
+    galaxy:'<strong>Wallace Galaxy Woven</strong> — G- fabric codes. Hobbled style available. Motor/size limits are pattern-specific — verify from PDF.',
+    premier:'<strong>Walden Premier</strong> — 47 fabrics. E- codes require PDF verification.',
+    select:'<strong>Walden Select</strong> — 56 fabrics with WS- fabric codes.'
+  };
+  $('fabric-collection-note').innerHTML = collNotes[S.collection]||'';
   patterns.forEach(function(p){
     var el=document.createElement('div');
     el.className='fabric-card';
@@ -834,14 +954,15 @@ function pickShadeStyle(st, el) {
   S.shadeStyle=st;
   document.querySelectorAll('#roman-style-opts .opt-row:first-of-type .opt-pill').forEach(function(p){p.classList.remove('sel');});
   el.classList.add('sel');
-  // Waterfall: block 3-on-1, TDBU
-  if(st==='waterfall'){
+  // Waterfall and Hobbled: block 3-on-1, TDBU, Pro Wand
+  if(st==='waterfall'||st==='hobbled'){
     $('multi-3on1').classList.add('disabled');
     $('twin-yes').classList.add('disabled');
   } else {
     $('multi-3on1').classList.remove('disabled');
     $('twin-yes').classList.remove('disabled');
   }
+  $('hobbled-note').style.display = st==='hobbled' ? 'block' : 'none';
 }
 function pickMulti(m, el) {
   S.multi=m;
@@ -914,11 +1035,11 @@ function updateControls() {
     showb('roman-controls');
     // Power Lift: Premier only
     $('ctrl-motorPL').style.display = S.collection==='premier' ? '' : 'none';
-    // TDBU: disabled if waterfall, twin, 3on1
-    var tdbBlock=(S.shadeStyle==='waterfall'||S.twin||S.multi==='3on1');
+    // TDBU: disabled if waterfall, hobbled, twin, 3on1
+    var tdbBlock=(S.shadeStyle==='waterfall'||S.shadeStyle==='hobbled'||S.twin||S.multi==='3on1');
     $('ctrl-tdbu').classList.toggle('disabled', tdbBlock);
-    // Pro Wand: disabled if waterfall or twin
-    var pwBlock=(S.shadeStyle==='waterfall'||S.twin);
+    // Pro Wand: disabled if waterfall, hobbled, or twin
+    var pwBlock=(S.shadeStyle==='waterfall'||S.shadeStyle==='hobbled'||S.twin);
     $('ctrl-prowand').classList.toggle('disabled', pwBlock);
     // Twin control option (show only if twin shade enabled)
     $('ctrl-twin-ctrl').style.display = S.twin ? '' : 'none';
@@ -957,9 +1078,13 @@ function pickControl(c, el) {
 }
 
 /* ── Step 8: Liners ── */
+function getLiners() {
+  if(S.collection==='portfolio') return PORT_LINERS;
+  if(S.collection==='galaxy')    return GAL_LINERS;
+  if(S.collection==='premier')   return WP_LINERS;
+  return WS_LINERS;
+}
 function buildLinerOpts() {
-  var liners = S.collection==='select' ? WS_LINERS : WP_LINERS;
-  // Show twin liner option only if twin shade
   $('liner-twin-opt').style.display = S.twin ? '' : 'none';
 }
 function pickLiner(type, el) {
@@ -970,7 +1095,7 @@ function pickLiner(type, el) {
     hideb('liner-color-section');
   } else {
     showb('liner-color-section');
-    var liners = (S.collection==='select' ? WS_LINERS : WP_LINERS)[type]||[];
+    var liners = getLiners()[type]||[];
     var $opts=$('liner-color-opts'); $opts.innerHTML='';
     liners.forEach(function(l){
       var p=document.createElement('div');
@@ -1025,8 +1150,14 @@ function buildEBOpts() {
     addEBType('Ramie Binding','ramie');
   }
 }
+function getEBColors(type) {
+  if(S.collection==='select') return WS_EB_COLORS;
+  if(S.collection==='portfolio') return PORT_EB_COLORS;
+  if(S.collection==='galaxy') return GAL_EB_COLORS;
+  return WP_EB[type]||[];
+}
 function buildEBColors(type) {
-  var colors = S.collection==='select' ? WS_EB_COLORS : (WP_EB[type]||[]);
+  var colors = getEBColors(type);
   var $ec=$('eb-color-opts'); $ec.innerHTML='';
   colors.forEach(function(c){
     var p=document.createElement('div');
@@ -1089,7 +1220,8 @@ function submitQuote() {
   if(!name||!contact){alert('Please enter your name and contact info.'); return;}
   if(!S.pattern){alert('Please select a fabric pattern.'); return;}
 
-  var coll = S.collection==='premier' ? 'Walden Premier' : 'Walden Select';
+  var collMap = {portfolio:'Wallace Portfolio Natural Woven',galaxy:'Wallace Galaxy Woven',premier:'Walden Premier',select:'Walden Select'};
+  var coll = collMap[S.collection]||S.collection;
   var prod = {roman:'Roman Shade',panel:'Sliding Panel',drapery:'Natural Drapery',valance:'Valance Only'}[S.productType]||'';
   var bodyLines=[
     '=== WALLACE NATURAL WOVEN QUOTE REQUEST ===',
