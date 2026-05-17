@@ -616,11 +616,11 @@ const GAL_PATTERNS = [
 
 /* ─────────────────────────────────────────────
    WALDEN PREMIER pattern data
-   NOTE: Codes (E-XXX) and per-pattern flags
-   (cordlessTDBU, slidingPanel, naturalDrapery,
-   edgeBindingRequired, motorMaxSqFt) must be
-   verified from PDF pages 4-5 before ordering.
-   All flags defaulted to true / 64 sqft.
+   Source: 2026 Walden Premier PDF pages 4-5
+   All 47 patterns verified: real E-codes, groups
+   A-F, per-pattern cordlessTDBU/slidingPanel/
+   naturalDrapery flags, motor sq ft, coordEB.
+   Max width: 96" for all patterns.
 ───────────────────────────────────────────── */
 const WP_LINERS = {
   lf: [
@@ -637,25 +637,56 @@ const WP_EB = {
   wide:   ['W3 Beige','W10 Black','W4 Chocolate','W5 Copper','W8 Cream','W6 Desert Sand','W2 Light Beige','W15 Natural','W11 Sienna','W1 White'],
   ramie:  ['NL4 Brown','NL35 Camel','NL88 Cedar','NL1 Chalk','NL3 Graphite','NL2 Linen','NL7 Midnight','NL6 Navy','NL71 Stone','NL33 Titanium']
 };
-// Premier patterns — codes TBD from PDF pages 4-5
+// Premier patterns — verified from 2026 Walden Premier PDF pages 4-5
 const WP_PATTERNS = [
-  'Aires White','Alder Oak','Andell Linen','Artisan Weave','Aspen Ebony','Aspen Walnut',
-  'Aspen White','Avon Dawn','Avon Lace','Bamboo Forest','Barcelona Cafe','Bora Bora',
-  'Capri Natural','Castelo Black','Castelo White','Catalina','Devon Ivory','Devon Maple',
-  'Devon White','Driftwood Natural','Java Cocoa','Mandalay Umber','Mykonos Dunes',
-  'Natural Jute','Navarre White Sand','Orleans Macaroon','Penang Oak','Prairie Golden',
-  'Prairie Snow','Prairie White','Remi Breeze','Rhone Blanc','Sakura Oregano',
-  'Savanna Husk','Saybrook Stone','Seaside White','Sierra Sand','Sunshade Brown',
-  'Sunshade White','Tamarind Sunset','Telluride Frost','Telluride Thunder',
-  'Twyla Cascade','Twyla Cotton','Zahra Dark Olive','Zahra Sepia','Zahra Sorbet'
-].map((n,i) => ({
-  code: 'E-P'+(101+i), // placeholder codes — verify from PDF
-  name: n, group:'TBD', // verify group from PDF
-  cordlessTDBU:true, slidingPanel:true, naturalDrapery:true,
-  edgeBindingRequired:false, edgeBindingRecommended:false, edgeSeal:false,
-  motorMaxNoLiner:64, motorMaxWithLiner:64, // verify per-pattern from PDF
-  coordEB:''
-}));
+  {code:'E-M01',  name:'Aires White',        group:'F', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:true,  motorMaxNoLiner:64, motorMaxWithLiner:64, coordEB:'Chalk',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-87K',  name:'Alder Oak',          group:'B', edgeBindingRequired:false, cordlessTDBU:false, slidingPanel:true,  naturalDrapery:true,  motorMaxNoLiner:44, motorMaxWithLiner:38, coordEB:'Camel',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-232W', name:'Andell Linen',       group:'F', edgeBindingRequired:true,  cordlessTDBU:true,  slidingPanel:false, naturalDrapery:false, motorMaxNoLiner:64, motorMaxWithLiner:64, coordEB:'Stone',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-432',  name:'Artisan Weave',      group:'E', edgeBindingRequired:false, cordlessTDBU:false, slidingPanel:false, naturalDrapery:false, motorMaxNoLiner:44, motorMaxWithLiner:38, coordEB:'Stone',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-416-3',name:'Aspen Ebony',        group:'C', edgeBindingRequired:false, cordlessTDBU:false, slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:44, motorMaxWithLiner:38, coordEB:'Brown',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-082',  name:'Aspen Walnut',       group:'C', edgeBindingRequired:false, cordlessTDBU:false, slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:44, motorMaxWithLiner:38, coordEB:'Brown',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-416-4',name:'Aspen White',        group:'C', edgeBindingRequired:false, cordlessTDBU:false, slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:44, motorMaxWithLiner:38, coordEB:'Chalk',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-234G', name:'Avon Dawn',          group:'F', edgeBindingRequired:true,  cordlessTDBU:true,  slidingPanel:false, naturalDrapery:false, motorMaxNoLiner:64, motorMaxWithLiner:64, coordEB:'Stone',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-234W', name:'Avon Lace',          group:'F', edgeBindingRequired:true,  cordlessTDBU:true,  slidingPanel:false, naturalDrapery:false, motorMaxNoLiner:64, motorMaxWithLiner:64, coordEB:'Chalk',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-R26',  name:'Bamboo Forest',      group:'B', edgeBindingRequired:false, cordlessTDBU:false, slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:44, motorMaxWithLiner:38, coordEB:'Camel',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-365',  name:'Barcelona Café',     group:'B', edgeBindingRequired:false, cordlessTDBU:false, slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:54, motorMaxWithLiner:44, coordEB:'Camel',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-861',  name:'Bora Bora',          group:'B', edgeBindingRequired:false, cordlessTDBU:false, slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:50, motorMaxWithLiner:42, coordEB:'Camel',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-430',  name:'Capri Natural',      group:'D', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:64, motorMaxWithLiner:56, coordEB:'Camel',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-233B', name:'Castelo Black',      group:'D', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:false, naturalDrapery:true,  motorMaxNoLiner:64, motorMaxWithLiner:56, coordEB:'Midnight', edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-233P', name:'Castelo White',      group:'D', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:false, naturalDrapery:true,  motorMaxNoLiner:64, motorMaxWithLiner:56, coordEB:'Chalk',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-389',  name:'Catalina',           group:'E', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:true,  motorMaxNoLiner:64, motorMaxWithLiner:64, coordEB:'Linen',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-E11',  name:'Devon Ivory',        group:'A', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:true,  motorMaxNoLiner:56, motorMaxWithLiner:45, coordEB:'Linen',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-E06',  name:'Devon Maple',        group:'A', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:true,  motorMaxNoLiner:56, motorMaxWithLiner:45, coordEB:'Cedar',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-E02',  name:'Devon White',        group:'A', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:true,  motorMaxNoLiner:56, motorMaxWithLiner:45, coordEB:'Chalk',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-68N',  name:'Driftwood Natural',  group:'B', edgeBindingRequired:false, cordlessTDBU:false, slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:44, motorMaxWithLiner:38, coordEB:'Linen',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-055',  name:'Java Cocoa',         group:'B', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:54, motorMaxWithLiner:44, coordEB:'Brown',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-B01',  name:'Mandalay Umber',     group:'C', edgeBindingRequired:false, cordlessTDBU:false, slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:33, motorMaxWithLiner:30, coordEB:'Brown',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-801',  name:'Mykonos Dunes',      group:'F', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:64, motorMaxWithLiner:56, coordEB:'Linen',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-390',  name:'Natural Jute',       group:'E', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:true,  motorMaxNoLiner:64, motorMaxWithLiner:56, coordEB:'Linen',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-803',  name:'Navarre White Sand', group:'F', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:64, motorMaxWithLiner:56, coordEB:'Linen',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-P01',  name:'Orleans Macaroon',   group:'E', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:false, naturalDrapery:false, motorMaxNoLiner:64, motorMaxWithLiner:64, coordEB:'Chalk',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-403-B',name:'Penang Oak',         group:'A', edgeBindingRequired:false, cordlessTDBU:false, slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:56, motorMaxWithLiner:45, coordEB:'Camel',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-427',  name:'Prairie Golden',     group:'E', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:64, motorMaxWithLiner:56, coordEB:'Linen',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-828',  name:'Prairie Snow',       group:'F', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:64, motorMaxWithLiner:56, coordEB:'Linen',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-428',  name:'Prairie White',      group:'E', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:64, motorMaxWithLiner:56, coordEB:'Linen',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-M04',  name:'Remi Breeze',        group:'E', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:64, motorMaxWithLiner:56, coordEB:'Stone',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-233W', name:'Rhone Blanc',        group:'E', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:false, naturalDrapery:false, motorMaxNoLiner:64, motorMaxWithLiner:64, coordEB:'Chalk',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-001',  name:'Sakura Oregano',     group:'C', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:54, motorMaxWithLiner:44, coordEB:'Cedar',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-352',  name:'Savanna Husk',       group:'C', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:64, motorMaxWithLiner:56, coordEB:'Camel',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-U01',  name:'Saybrook Stone',     group:'E', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:56, motorMaxWithLiner:45, coordEB:'Cedar',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-U03',  name:'Seaside White',      group:'F', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:56, motorMaxWithLiner:45, coordEB:'Stone',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-370',  name:'Sierra Sand',        group:'D', edgeBindingRequired:false, cordlessTDBU:false, slidingPanel:false, naturalDrapery:false, motorMaxNoLiner:50, motorMaxWithLiner:42, coordEB:'Camel',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-438',  name:'Sunshade Brown',     group:'A', edgeBindingRequired:false, cordlessTDBU:false, slidingPanel:true,  naturalDrapery:true,  motorMaxNoLiner:54, motorMaxWithLiner:48, coordEB:'Camel',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-10H',  name:'Sunshade White',     group:'C', edgeBindingRequired:false, cordlessTDBU:false, slidingPanel:true,  naturalDrapery:true,  motorMaxNoLiner:44, motorMaxWithLiner:38, coordEB:'Chalk',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-394',  name:'Tamarind Sunset',    group:'B', edgeBindingRequired:false, cordlessTDBU:false, slidingPanel:true,  naturalDrapery:true,  motorMaxNoLiner:44, motorMaxWithLiner:38, coordEB:'Camel',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-805',  name:'Telluride Frost',    group:'D', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:true,  motorMaxNoLiner:44, motorMaxWithLiner:38, coordEB:'Chalk',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-806',  name:'Telluride Thunder',  group:'D', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:true,  motorMaxNoLiner:44, motorMaxWithLiner:38, coordEB:'Stone',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-2203', name:'Twyla Cascade',      group:'E', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:56, motorMaxWithLiner:45, coordEB:'Stone',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-2201', name:'Twyla Cotton',       group:'E', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:56, motorMaxWithLiner:45, coordEB:'Chalk',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-2104', name:'Zahra Dark Olive',   group:'F', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:64, motorMaxWithLiner:56, coordEB:'Cedar',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-2103', name:'Zahra Sepia',        group:'F', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:64, motorMaxWithLiner:56, coordEB:'Cedar',    edgeBindingRecommended:false, edgeSeal:false},
+  {code:'E-2102', name:'Zahra Sorbet',       group:'F', edgeBindingRequired:false, cordlessTDBU:true,  slidingPanel:true,  naturalDrapery:false, motorMaxNoLiner:64, motorMaxWithLiner:56, coordEB:'Stone',    edgeBindingRecommended:false, edgeSeal:false},
+];
 
 /* ─────────────────────────────────────────────
    WALDEN SELECT pattern data — complete from PDF
