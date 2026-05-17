@@ -27,4 +27,15 @@
   <url><loc>https://phillyblinds.com/pages/upholstery.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://phillyblinds.com/pages/installation.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://phillyblinds.com/pages/privacy.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <!-- Product configurator pages added 2026-05 -->
+  <url><loc>https://phillyblinds.com/pages/norman-centerpiece-roman.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://phillyblinds.com/pages/wallace-portfolio-roman.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://phillyblinds.com/pages/wallace-banded-shades.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://phillyblinds.com/pages/wallace-natural-roller-shades.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://phillyblinds.com/pages/wallace-3d-sheer.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://phillyblinds.com/pages/wallace-verticals.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://phillyblinds.com/pages/wallace-woven.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://phillyblinds.com/pages/portfolio-dual-sheer.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://phillyblinds.com/pages/dynasty-woven-woods.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://phillyblinds.com/pages/galaxy-woven-woods.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>

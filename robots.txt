@@ -1,5 +1,16 @@
 User-agent: *
 Allow: /
+
+# Internal / developer folders
 Disallow: /.claude/
 Disallow: /.vercel/
+Disallow: /node_modules/
+Disallow: /scripts/
+Disallow: /api/
+
+# PDF scan images and internal pricing docs (not deployed, but block as defense-in-depth)
+Disallow: /pdfs/wholesale-pricing/
+Disallow: /pdfs/scan/
+Disallow: /pdfs/scan2/
+
 Sitemap: https://phillyblinds.com/sitemap.xml
