@@ -114,6 +114,7 @@ Every page MUST include:
 | pages/select-rods.html | **Select Rod Configurator** | Select brand hardware configurator. Linked from hardware.html Select brand card. |
 | pages/city-lights-aluminum-blinds.html | **Norman City Lights Aluminum Blinds** | Norman aluminum blind configurator. |
 | pages/synchrony-verticals.html | **Norman Synchrony Verticals** | Norman vertical blind configurator. |
+| pages/galaxy-woven-woods.html | **Wallace Galaxy Woven Woods configurator** | 73 patterns, 6 price groups. Styles: Waterfall/Flat Fold/Hobbled/TDBU/Motorized/Dual Shade. All price matrices embedded (PG1-PG6, W×H). Control surcharges (Loop/Cordless/TDBU/Motor). Liner (Privacy/Blackout, single &amp; dual shade). Edge binding (½″/1½″). Valance upgrades (6″/12″/18″). Motor: Rollease Acmeda Automate $515 + hub/remote/charger/solar accessories. Freight: $25 first + $8 ea; $80 oversize ≥90″. Hobbled +30%. TDBU/motor pattern limits enforced. Pricing labeled estimate only. Delivery + mailto:blindznation@gmail.com. Linked from index.html Woven Wood Shades card. |
 | pages/hardware-quote.html | Hardware Quote | Hardware quote request form. |
 | pages/installation.html | Installation Services | Service info and install booking. |
 | pages/upholstery.html | Custom Upholstery | Upholstery services page. |
