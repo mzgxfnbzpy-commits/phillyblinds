@@ -115,16 +115,15 @@ textarea.inp-field{resize:vertical;min-height:80px}
 
 <section class="page-hero">
   <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <a href="shades.html">Shades &amp; Blinds</a> &rsaquo; Wallace Natural Woven</div>
-  <h1>Wallace® Natural Woven</h1>
-  <p class="sub">Natural woven Roman shades, sliding panels, and draperies in bamboo, grass, jute, and textured weaves. Four collections — Portfolio, Galaxy, Walden Premier, and Walden Select.</p>
+  <h1>Natural Woven Shades</h1>
+  <p class="sub">Roller shades and Roman shades in bamboo, grass, jute, and textured natural weaves. Five collections — Portfolio, Walden Premier, Walden Select, Dynasty 2025, and Galaxy 2025. Configure and get an instant quote below.</p>
   <div class="hero-pills">
-    <span class="hero-pill hero-pill-gold">Portfolio</span>
-    <span class="hero-pill hero-pill-gold">Galaxy</span>
-    <span class="hero-pill hero-pill-gold">Walden Premier</span>
-    <span class="hero-pill hero-pill-gold">Walden Select</span>
-    <span class="hero-pill">Roman Shades</span>
-    <span class="hero-pill">Sliding Panels</span>
-    <span class="hero-pill">Natural Draperies</span>
+    <span class="hero-pill hero-pill-gold">Roller Shades</span>
+    <span class="hero-pill hero-pill-gold">Roman Shades</span>
+    <span class="hero-pill">Portfolio</span>
+    <span class="hero-pill">Walden Premier &amp; Select</span>
+    <span class="hero-pill">Dynasty 2025</span>
+    <span class="hero-pill">Galaxy 2025</span>
     <span class="hero-pill">Custom Quote</span>
   </div>
 </section>
@@ -137,6 +136,137 @@ textarea.inp-field{resize:vertical;min-height:80px}
 
   <!-- ── ROMAN WOVEN CHOICE ANCHOR ── -->
   <div id="roman-woven-choice" style="height:0;overflow:hidden;margin:0;padding:0"></div>
+
+  <!-- ── STYLE CHOOSER ── -->
+  <div class="step-block" id="s0">
+    <div class="step-hd"><div class="step-num-circle" style="background:var(--gold);color:var(--espresso)">→</div><h2 class="step-title" style="font-size:16px">What type of shade?</h2></div>
+    <div class="choice-grid">
+      <div class="choice-card" id="style-roller" onclick="pickStyle('roller',this)">
+        <div class="choice-badge">Natural Woven</div>
+        <div class="choice-card-title">Roller Shade</div>
+        <div class="choice-card-sub">Wallace Portfolio Natural Woven Rollers — natural &amp; woven fabrics on a roller. Motorized, chain, or cordless.</div>
+      </div>
+      <div class="choice-card" id="style-roman" onclick="pickStyle('roman',this)">
+        <div class="choice-card-title">Roman Shade / Panels / Drapery</div>
+        <div class="choice-card-sub">Five collections: Portfolio, Walden Premier, Walden Select, Dynasty 2025, Galaxy 2025. Roman shades, sliding panels, and natural draperies.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ROLLER QUOTE SECTION ── -->
+  <div id="roller-section" style="display:none">
+    <div class="info-box" style="margin-bottom:16px"><strong>Wallace Portfolio Natural Woven Rollers</strong> — Natural woven &amp; solar fabrics on a roller. Bamboo, grass, jute, and textured weaves. Motorized or manual.</div>
+
+    <div class="step-block">
+      <div class="step-hd"><div class="step-num-circle">1</div><h2 class="step-title">Fabric preference</h2></div>
+      <div class="step-sub">Describe the look, color, or pattern you have in mind. We&rsquo;ll match you with the best options from the collection.</div>
+      <div class="inp-row">
+        <div class="inp-group">
+          <label class="inp-label">Pattern / style preference</label>
+          <input class="inp-field" type="text" id="r-pattern" placeholder="e.g. Bamboo Natural, Seagrass Ivory, light weave…">
+        </div>
+        <div class="inp-group">
+          <label class="inp-label">Color preference</label>
+          <input class="inp-field" type="text" id="r-color" placeholder="e.g. natural, wheat, dark brown…">
+        </div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-hd"><div class="step-num-circle">2</div><h2 class="step-title">Dimensions</h2></div>
+      <div class="inp-row">
+        <div class="inp-group">
+          <label class="inp-label">Width (inches)</label>
+          <input class="inp-field" type="number" id="r-w" min="12" max="120" step="0.125" placeholder="e.g. 36">
+        </div>
+        <div class="inp-group">
+          <label class="inp-label">Height (inches)</label>
+          <input class="inp-field" type="number" id="r-h" min="12" max="108" step="0.125" placeholder="e.g. 72">
+        </div>
+      </div>
+      <div class="inp-row">
+        <div class="inp-group">
+          <label class="inp-label">Quantity</label>
+          <input class="inp-field" type="number" id="r-qty" min="1" max="50" value="1">
+        </div>
+        <div class="inp-group">
+          <label class="inp-label">Room / window label</label>
+          <input class="inp-field" type="text" id="r-room" placeholder="e.g. Living Room — Left">
+        </div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-hd"><div class="step-num-circle">3</div><h2 class="step-title">Mount &amp; control</h2></div>
+      <label class="inp-label" style="display:block;margin-bottom:6px">Mount type</label>
+      <div class="opt-row" id="r-mount-opts">
+        <div class="opt-pill" onclick="rPill(this,'r-mount-opts');rS.mount='Inside Mount'">Inside Mount</div>
+        <div class="opt-pill" onclick="rPill(this,'r-mount-opts');rS.mount='Outside Mount'">Outside Mount</div>
+      </div>
+      <label class="inp-label" style="display:block;margin-bottom:6px;margin-top:12px">Control method</label>
+      <div class="opt-row" id="r-ctrl-opts">
+        <div class="opt-pill" onclick="rPill(this,'r-ctrl-opts');rS.ctrl='Chain'">Chain (manual)</div>
+        <div class="opt-pill" onclick="rPill(this,'r-ctrl-opts');rS.ctrl='Cordless'">Cordless</div>
+        <div class="opt-pill" onclick="rPill(this,'r-ctrl-opts');rS.ctrl='Motorized'">Motorized</div>
+      </div>
+      <label class="inp-label" style="display:block;margin-bottom:6px;margin-top:12px">Light control / liner</label>
+      <div class="opt-row" id="r-liner-opts">
+        <div class="opt-pill" onclick="rPill(this,'r-liner-opts');rS.liner='Open weave (no liner)'">Open weave — no liner</div>
+        <div class="opt-pill" onclick="rPill(this,'r-liner-opts');rS.liner='Light filtering liner'">Light filtering liner</div>
+        <div class="opt-pill" onclick="rPill(this,'r-liner-opts');rS.liner='Privacy liner'">Privacy liner</div>
+        <div class="opt-pill" onclick="rPill(this,'r-liner-opts');rS.liner='Blackout liner'">Blackout liner</div>
+      </div>
+      <label class="inp-label" style="display:block;margin-bottom:6px;margin-top:12px">Cassette color</label>
+      <div class="opt-row" id="r-cass-opts">
+        <div class="opt-pill" onclick="rPill(this,'r-cass-opts');rS.cass='White'">White</div>
+        <div class="opt-pill" onclick="rPill(this,'r-cass-opts');rS.cass='Cream'">Cream</div>
+        <div class="opt-pill" onclick="rPill(this,'r-cass-opts');rS.cass='Brown'">Brown</div>
+        <div class="opt-pill" onclick="rPill(this,'r-cass-opts');rS.cass='Black'">Black</div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-hd"><div class="step-num-circle">4</div><h2 class="step-title">Delivery &amp; contact</h2></div>
+      <div class="delivery-section">
+        <div class="delivery-opt" id="r-del-install" onclick="rPill(this,'r-del-grp');rS.delivery='Professional Installation'">
+          <div class="delivery-opt-title">Professional Installation (Philadelphia / South Jersey)</div>
+          <div class="delivery-opt-sub">We measure, supply, and install.</div>
+        </div>
+        <div class="delivery-opt" id="r-del-ship" onclick="rPill(this,'r-del-grp');rS.delivery='Ship to Me'">
+          <div class="delivery-opt-title">Ship to Me</div>
+          <div class="delivery-opt-sub">Shipped from manufacturer. Freight quoted at order. Tariffs and duties may apply.</div>
+        </div>
+        <div class="delivery-opt" id="r-del-pickup" onclick="rPill(this,'r-del-grp');rS.delivery='Pick Up'">
+          <div class="delivery-opt-title">Pick Up</div>
+          <div class="delivery-opt-sub">Huntingdon Valley, PA 19006 — address provided after confirmation.</div>
+        </div>
+      </div>
+      <div class="inp-row" style="margin-top:12px">
+        <div class="inp-group">
+          <label class="inp-label">Your Name *</label>
+          <input class="inp-field" type="text" id="r-name" placeholder="Full name">
+        </div>
+        <div class="inp-group">
+          <label class="inp-label">Phone / Email *</label>
+          <input class="inp-field" type="text" id="r-contact" placeholder="Best way to reach you">
+        </div>
+      </div>
+      <div class="inp-group" style="margin-bottom:12px">
+        <label class="inp-label">Project Address / City</label>
+        <input class="inp-field" type="text" id="r-address" placeholder="City, State">
+      </div>
+      <div class="inp-group" style="margin-bottom:16px">
+        <label class="inp-label">Notes / questions</label>
+        <textarea class="inp-field" id="r-notes" placeholder="Pattern preferences, timeline, any special requirements…"></textarea>
+      </div>
+      <div class="btn-row">
+        <button class="btn-submit" onclick="submitRollerQuote()">Send Quote Request →</button>
+      </div>
+    </div>
+  </div><!-- /#roller-section -->
+
+  <!-- ── ROMAN SECTION (existing flow) ── -->
+  <div id="roman-section" style="display:none">
 
   <!-- Natural material warning -->
   <div class="info-box" style="margin-bottom:16px">
@@ -166,6 +296,17 @@ textarea.inp-field{resize:vertical;min-height:80px}
       <div class="choice-card" onclick="pickCollection('select',this)">
         <div class="choice-card-title">Walden Select</div>
         <div class="choice-card-sub">56 natural woven fabrics with WS fabric codes. Ramie edge binding only. TDBU for all fabrics (max 70"W × 96"H). 3 liner types. Sliding panels &amp; draperies available.</div>
+      </div>
+    </div>
+    <div class="choice-grid" style="margin-top:0">
+      <div class="choice-card" onclick="pickCollection('dynasty',this)">
+        <div class="choice-badge">2025 Collection</div>
+        <div class="choice-card-title">Dynasty Woven Collection</div>
+        <div class="choice-card-sub">48 patterns · 5 price groups · waterfall, flat fold &amp; hobbled styles · privacy &amp; blackout liner options · motorization available. Opens the Dynasty configurator.</div>
+      </div>
+      <div class="choice-card" onclick="pickCollection('galaxy',this)">
+        <div class="choice-card-title">Galaxy Woven Collection 2025</div>
+        <div class="choice-card-sub">73 patterns · 6 price groups · flat fold, waterfall &amp; hobbled · privacy &amp; blackout liner · motorization available. Opens the Galaxy configurator.</div>
       </div>
     </div>
   </div>
@@ -530,11 +671,13 @@ textarea.inp-field{resize:vertical;min-height:80px}
       <button class="btn-submit" onclick="submitQuote()">Send Quote Request →</button>
     </div>
   </div>
+
+  </div><!-- /#roman-section -->
 </div><!-- end config-wrap -->
 
 <script src="../js/shared.js"></script>
 <script>
-renderNav('Wallace Natural Woven');
+renderNav('Natural Woven Shades');
 renderFooter(false);
 
 // Anchor-based entry: if URL contains #roman-woven-choice, scroll and highlight step 1
@@ -837,8 +980,79 @@ function goS(n) {
   if(n===11) updateMotor();
 }
 
+/* ── Style picker (Roller vs Roman) ── */
+var rS = { mount:'', ctrl:'', liner:'', cass:'', delivery:'' };
+
+function pickStyle(s, el) {
+  document.querySelectorAll('#s0 .choice-card').forEach(function(c){c.classList.remove('sel');});
+  if(el) el.classList.add('sel');
+  document.getElementById('roller-section').style.display = s==='roller' ? 'block' : 'none';
+  document.getElementById('roman-section').style.display  = s==='roman'  ? 'block' : 'none';
+  if(s==='roman') setTimeout(function(){
+    document.getElementById('roman-section').scrollIntoView({behavior:'smooth',block:'start'});
+  },80);
+  if(s==='roller') setTimeout(function(){
+    document.getElementById('roller-section').scrollIntoView({behavior:'smooth',block:'start'});
+  },80);
+}
+
+function rPill(el, grpId) {
+  // For opt-pill groups, remove sel from siblings; for delivery-opt groups remove sel
+  if(grpId==='r-del-grp') {
+    ['r-del-install','r-del-ship','r-del-pickup'].forEach(function(id){
+      var e=document.getElementById(id); if(e) e.classList.remove('sel');
+    });
+    el.classList.add('sel');
+  } else {
+    var grp = document.getElementById(grpId);
+    if(grp) grp.querySelectorAll('.opt-pill').forEach(function(p){p.classList.remove('sel');});
+    el.classList.add('sel');
+  }
+}
+
+function submitRollerQuote() {
+  var name = (document.getElementById('r-name')||{}).value||'';
+  var contact = (document.getElementById('r-contact')||{}).value||'';
+  name = name.trim(); contact = contact.trim();
+  if(!name||!contact){ alert('Please enter your name and contact info.'); return; }
+
+  var body =
+    'Wallace Portfolio Natural Woven Rollers — Quote Request\n'
+    +'=====================================================\n\n'
+    +'PRODUCT: Roller Shade — Wallace Portfolio Natural Woven Rollers\n\n'
+    +'FABRIC PREFERENCE\n'
+    +'  Pattern / style : '+((document.getElementById('r-pattern')||{}).value||'—')+'\n'
+    +'  Color           : '+((document.getElementById('r-color')||{}).value||'—')+'\n\n'
+    +'DIMENSIONS\n'
+    +'  Width  : '+((document.getElementById('r-w')||{}).value||'—')+' in\n'
+    +'  Height : '+((document.getElementById('r-h')||{}).value||'—')+' in\n'
+    +'  Qty    : '+((document.getElementById('r-qty')||{}).value||'1')+'\n'
+    +'  Room   : '+((document.getElementById('r-room')||{}).value||'—')+'\n\n'
+    +'OPTIONS\n'
+    +'  Mount          : '+(rS.mount||'—')+'\n'
+    +'  Control        : '+(rS.ctrl||'—')+'\n'
+    +'  Light / liner  : '+(rS.liner||'—')+'\n'
+    +'  Cassette color : '+(rS.cass||'—')+'\n\n'
+    +'DELIVERY: '+(rS.delivery||'—')+'\n\n'
+    +'CONTACT\n'
+    +'  Name    : '+name+'\n'
+    +'  Contact : '+contact+'\n'
+    +'  Address : '+((document.getElementById('r-address')||{}).value||'—')+'\n'
+    +'  Notes   : '+((document.getElementById('r-notes')||{}).value||'—');
+
+  window.location.href = 'mailto:blindznation@gmail.com'
+    +'?subject='+encodeURIComponent('Natural Woven Roller Shades Quote — '+name)
+    +'&body='+encodeURIComponent(body);
+
+  document.getElementById('success-box').style.display = 'block';
+  document.getElementById('roller-section').style.display = 'none';
+  document.getElementById('s0').style.display = 'none';
+}
+
 /* ── Step 1: Collection ── */
 function pickCollection(c, el) {
+  if(c==='dynasty'){ window.location.href='dynasty-woven-woods.html'; return; }
+  if(c==='galaxy'){  window.location.href='galaxy-woven-woods.html';  return; }
   S.collection = c;
   _s6setup = false;
   document.querySelectorAll('#s1 .choice-card').forEach(function(cc){cc.classList.remove('sel');});
