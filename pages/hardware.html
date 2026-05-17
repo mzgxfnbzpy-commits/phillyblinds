@@ -385,6 +385,11 @@
               <div id="arch-bracket-count" style="font-size:16px;font-weight:700;color:var(--espresso)"></div>
             </div>
             <div id="arch-bracket-note" style="font-size:11px;color:#666;line-height:1.6;margin-bottom:10px"></div>
+            <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:5px">Color</div>
+            <div class="opt-row" id="grp-bracket-color" style="margin-bottom:10px">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-bracket-color');document.getElementById('grp-bracket-color').dataset.manualSet='1'"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#F0F0F0;border:1px solid #ccc;margin-right:5px;vertical-align:middle"></span>White</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-bracket-color');document.getElementById('grp-bracket-color').dataset.manualSet='1'"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#222;margin-right:5px;vertical-align:middle"></span>Black</button>
+            </div>
             <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px">Adjust quantity if needed</div>
             <div class="qty-btns">
               <button class="qty-btn" onclick="var n=document.getElementById('arch-brackets-inp');n.value=Math.max(1,parseInt(n.value)-1)">−</button>
@@ -415,6 +420,11 @@
               <div id="arch-carrier-count" style="font-size:16px;font-weight:700;color:var(--espresso)"></div>
             </div>
             <div id="arch-carrier-note" style="font-size:11px;color:#666;line-height:1.6;margin-bottom:10px"></div>
+            <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:5px">Color</div>
+            <div class="opt-row" id="grp-carrier-color" style="margin-bottom:10px">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-carrier-color');document.getElementById('grp-carrier-color').dataset.manualSet='1'"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#F0F0F0;border:1px solid #ccc;margin-right:5px;vertical-align:middle"></span>White</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-carrier-color');document.getElementById('grp-carrier-color').dataset.manualSet='1'"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#222;margin-right:5px;vertical-align:middle"></span>Black</button>
+            </div>
             <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px">Adjust quantity</div>
             <div class="qty-btns">
               <button class="qty-btn" onclick="var n=document.getElementById('arch-carriers-inp');n.value=Math.max(1,parseInt(n.value)-1)">−</button>
@@ -879,8 +889,34 @@ function archCalc() {
 
   archRenderBatons();
 
+  // Sync bracket/carrier color to track color if neither has been manually changed
+  var trackColorBtn = document.querySelector('#grp-arch-color .opt-btn.sel');
+  var trackColorText = (trackColorBtn || {}).textContent || '';
+  var trackIsBlack = trackColorText.indexOf('Black') !== -1;
+  function syncColorGroup(grpId) {
+    var btns = document.querySelectorAll('#' + grpId + ' .opt-btn');
+    var hasSel = document.querySelector('#' + grpId + ' .opt-btn.sel');
+    if (!hasSel) return;
+    // Only auto-sync if the color wasn't changed independently of the track
+    // We do this by checking if the current selection matches neither, then default to track
+  }
+  // Auto-match bracket/carrier color to track color on first load (when default White is selected)
+  ['grp-bracket-color','grp-carrier-color'].forEach(function(gid) {
+    var btns = document.querySelectorAll('#' + gid + ' .opt-btn');
+    if (!btns.length) return;
+    // Check if user has explicitly interacted (skip auto-sync if so)
+    // We use a data attribute to track manual changes
+    var grpEl = document.getElementById(gid);
+    if (grpEl && !grpEl.dataset.manualSet) {
+      btns.forEach(function(b){ b.classList.remove('sel'); });
+      btns[trackIsBlack ? 1 : 0].classList.add('sel');
+    }
+  });
+
   // Build arch summary
   var color  = (document.querySelector('#grp-arch-color .opt-btn.sel') || {}).textContent || 'White';
+  var bracketColor = (document.querySelector('#grp-bracket-color .opt-btn.sel') || {}).textContent || color;
+  var carrierColor = (document.querySelector('#grp-carrier-color .opt-btn.sel') || {}).textContent || color;
   var mount  = (document.querySelector('#grp-arch-mount .opt-btn.sel') || {}).textContent || 'Wall mount';
   var pleatSel = (document.querySelector('#grp-arch-pleat .opt-btn.sel') || {}).textContent || 'Pinch pleat';
   var ripplePct = pleatSel.indexOf('Ripple') !== -1
@@ -899,9 +935,9 @@ function archCalc() {
     'Color: ' + color.trim(),
     'Mount: ' + mount,
     (_archModel === '94001' && cordSel ? 'Cord length: ' + cordSel : ''),
-    'Brackets: ' + totalBrackets + ' (1/ft + 2 extra, editable)',
+    'Brackets: ' + totalBrackets + ' — ' + bracketColor.trim().replace(/\s+/g,' '),
     'Master carriers: ' + (mInp ? mInp.value : '1') + ' set(s) — 1 per pair',
-    'Ball bearing carriers: ' + rawCarriers + ' (25 per 50", editable)',
+    (isRipple ? 'Ripplefold snap carriers' : 'Ball bearing carriers') + ': ' + rawCarriers + ' — ' + carrierColor.trim().replace(/\s+/g,' '),
     'Batons: ' + (bainp ? bainp.value : numPanels) + ' (1 per panel, sold individually)'
   ].filter(Boolean);
 }
