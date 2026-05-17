@@ -884,7 +884,8 @@ function selectFabric(f) {
 
 // ── STEP 7: LINING ────────────────────────────────────────────────────────────
 function updateLining() {
-  var txt = document.querySelector('#grp-lining .opt-btn.sel').textContent.trim();
+  var btn = document.querySelector('#grp-lining .opt-btn.sel');
+  var txt = btn ? btn.textContent.trim() : 'Translucent (standard)';
   S.lining = txt.includes('Blackout') ? 'Blackout' : 'Translucent';
   document.getElementById('val7').textContent = S.lining;
   document.getElementById('step7').classList.add('done');
@@ -1062,7 +1063,8 @@ function updateSpec() {
   sp('sp-qty', S.qty?(S.qty+' shade'+(S.qty>1?'s':''))+(room?' · '+room:''):'');
   sp('sp-lift', S.lift?(LIFT_LIMITS[S.lift]&&LIFT_LIMITS[S.lift].label)||S.lift:'');
   sp('sp-size', S.width&&S.height?S.width+'"×'+S.height+'":"');
-  sp('sp-mount', document.querySelector('#grp-mount .opt-btn.sel')?.textContent.trim()||'Inside mount');
+  var mountBtn=document.querySelector('#grp-mount .opt-btn.sel');
+  sp('sp-mount', mountBtn?mountBtn.textContent.trim():'Inside mount');
   var sLabels={flat:'Flat Fold without Seams',batten:'Flat Fold with Batten Back',soft:'Soft Fold'};
   sp('sp-style', S.style?sLabels[S.style]||S.style:'');
   sp('sp-fabric', S.fabric?S.fabric.name+' · '+S.fabric.coll+' ('+S.fabric.code+') G'+S.fabric.g:'');
@@ -1136,14 +1138,16 @@ function submitQuote() {
   if(errs.length){errEl.innerHTML='⚠ Please complete: '+errs.join(' ');errEl.style.display='';document.getElementById('step15').scrollIntoView({behavior:'smooth',block:'start'});return;}
   errEl.style.display='none';
   var liftLabel=(LIFT_LIMITS[S.lift]&&LIFT_LIMITS[S.lift].label)||S.lift;
-  var mount=document.querySelector('#grp-mount .opt-btn.sel')?.textContent.trim()||'Inside mount';
+  var _mountBtn=document.querySelector('#grp-mount .opt-btn.sel');
+  var mount=_mountBtn?_mountBtn.textContent.trim():'Inside mount';
   var lining=S.lining;
   var valance=S.valance?'Fabric valance ($'+getValanceSurcharge(S.width)+')':'None';
   var sbs=S.sbs?'Yes':'No';
   var sLabels={flat:'Flat Fold without Seams',batten:'Flat Fold with Batten Back',soft:'Soft Fold'};
   var delivery={ship:'Ship (UPS/FedEx from Huntingdon Valley PA)',pickup:'Pick up (Huntingdon Valley PA)',install:'Professional installation'}[S.delivery]||S.delivery;
   var motorLabel={smart:'Norman Smart Motor',autowand:'AutoWand™',automate:'Automate Home by Norman'}[S.motor]||'—';
-  var power=document.querySelector('#grp-power .opt-btn.sel')?.textContent.trim()||'—';
+  var _powerBtn=document.querySelector('#grp-power .opt-btn.sel');
+  var power=_powerBtn?_powerBtn.textContent.trim():'Rechargeable battery';
   var accList=[(S.holddown?'Magnetic hold-down (+$28/shade)':''),(S.pole?'Pole attachment (+$40)':''),(S.cordlessPole?'Cordless operating pole (+$89)':''),((S.shims||0)>0?S.shims+' shim(s) (+$'+(S.shims*7)+')':'')].filter(Boolean).join(', ')||'None';
   var bandDesc=S.banding==='none'?'None':S.banding==='ribbon'?'Ribbon banding (+15%) — color: '+(S.ribbonColor?S.ribbonColor.name+' '+S.ribbonColor.code:'TBD'):'Edge banding/Border (+30%) — base: '+(S.edgeBase?S.edgeBase.name+' '+S.edgeBase.code:'—')+' / border: '+(S.edgeBorder?S.edgeBorder.name+' '+S.edgeBorder.code:'—');
   var body=[
