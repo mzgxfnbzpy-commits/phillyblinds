@@ -330,22 +330,22 @@ textarea.inp-field{resize:vertical;min-height:90px}
         <div class="choice-card" onclick="selectBasic('superfine')">
           <div class="choice-icon">⇔</div>
           <div class="choice-title">Superfine Pro Traverse Rod</div>
-          <div class="choice-desc">Telescoping cord/baton/hand draw. Split draw, one-way left, or one-way right. Sizes from 30" to 228". White only. Double rod options available.</div>
-          <div class="choice-tag">Traversing · White only</div>
+          <div class="choice-desc">Telescoping traverse rod. Single split draw (30"–228"), one-way draw (30"–120"), or double split draw (48"–156"). Continuous loop, baton, or hand draw. White only.</div>
+          <div class="choice-tag">Traversing · White only · Front return 2¾"–4½"</div>
         </div>
         <div class="choice-card" onclick="selectBasic('lockseam')">
           <div class="choice-icon">≡</div>
           <div class="choice-title">Lockseam Rod</div>
-          <div class="choice-desc">Flat profile stationary rods for sheers and lightweight panels. ½" to 8½" face widths. Single, double, or triple configurations. Bay rod available.</div>
+          <div class="choice-desc">Flat-profile stationary curtain rods. ½" to 8½" face widths. Single, double (3½"+2½"), triple (5½"+3½"+2½"), or bay rod (78"–127"). White only.</div>
           <div class="choice-tag">Stationary · White only</div>
         </div>
       </div>
       <div class="choice-grid">
         <div class="choice-card" onclick="selectBasic('tension')">
           <div class="choice-icon">↕</div>
-          <div class="choice-title">Tension / Sash Rod</div>
-          <div class="choice-desc">Spring tension — no brackets needed. ⅝" oval or 7/16" styles, 8" to 72". Perfect for door panels, café curtains, or inside-mount sheers.</div>
-          <div class="choice-tag">Tension · White only</div>
+          <div class="choice-title">Spring Tension / Sash Rod</div>
+          <div class="choice-desc">No brackets needed. Spring tension rods (⅝" oval 8"–72", ⁷⁄₁₆" 18"–48"), door sash rods (⁵⁄₁₆" 11"–36", ⁷⁄₁₆" 18"–28"), or flat sash (¹¹⁄₁₆" 16"–50"). Mostly White; Zinc available on door sash.</div>
+          <div class="choice-tag">Tension / Sash · White &amp; Zinc</div>
         </div>
         <div class="choice-card" onclick="goSection('unsure-form')">
           <div class="choice-icon">💬</div>
@@ -497,7 +497,7 @@ textarea.inp-field{resize:vertical;min-height:90px}
 
     <!-- Basic White note -->
     <div id="finish-basic" style="display:none">
-      <div class="info-banner"><strong>White finish only.</strong> All basic Kirsch hardware (Superfine Pro, Lockseam, Tension, Sash rods) is available in White only.</div>
+      <div class="info-banner"><strong>Finish:</strong> Superfine Pro, Lockseam, and most Tension/Sash rods are <strong>White only</strong>. Exception: the Zinc Door Sash Tension Rod (20"–36") is available in Zinc finish.</div>
     </div>
 
     <div class="btn-row">
@@ -728,29 +728,47 @@ textarea.inp-field{resize:vertical;min-height:90px}
       <div id="sz-superfine-opts" style="display:none">
         <div class="sec-label" style="margin-top:4px">Draw Configuration</div>
         <div class="opt-row">
-          <div class="opt-pill" onclick="selectDraw('Split Draw');toggleOptPill(this,'draw')">Split Draw</div>
-          <div class="opt-pill" onclick="selectDraw('One-Way Right');toggleOptPill(this,'draw')">One-Way Right</div>
-          <div class="opt-pill" onclick="selectDraw('One-Way Left');toggleOptPill(this,'draw')">One-Way Left</div>
+          <div class="opt-pill" onclick="selectDraw('Split Draw');toggleOptPill(this,'draw');showSFNote('split')">Split Draw <span style="font-size:10px;color:#888">(30"–228")</span></div>
+          <div class="opt-pill" onclick="selectDraw('One-Way Right');toggleOptPill(this,'draw');showSFNote('oneway')">One-Way Right <span style="font-size:10px;color:#888">(30"–120" max)</span></div>
+          <div class="opt-pill" onclick="selectDraw('One-Way Left');toggleOptPill(this,'draw');showSFNote('oneway')">One-Way Left <span style="font-size:10px;color:#888">(30"–120" max)</span></div>
+          <div class="opt-pill" onclick="selectDraw('Double Split Draw');toggleOptPill(this,'draw');showSFNote('double')">Double Split Draw <span style="font-size:10px;color:#888">(48"–156" max)</span></div>
         </div>
+        <div id="sf-draw-note" class="info-banner" style="display:none;margin-top:8px;font-size:12px"></div>
         <div class="sec-label" style="margin-top:8px">Operation</div>
         <div class="opt-row">
-          <div class="opt-pill" onclick="selectBasicOp('Cord');toggleOptPill(this,'basicop')">Cord Draw</div>
+          <div class="opt-pill" onclick="selectBasicOp('Continuous Loop');toggleOptPill(this,'basicop')">Continuous Loop (Cord)</div>
           <div class="opt-pill" onclick="selectBasicOp('Baton');toggleOptPill(this,'basicop')">Baton Draw</div>
           <div class="opt-pill" onclick="selectBasicOp('Hand Draw');toggleOptPill(this,'basicop')">Hand Draw</div>
         </div>
       </div>
 
+      <!-- Tension / Sash rod type selector -->
+      <div id="sz-tension-opts" style="display:none">
+        <div class="sec-label" style="margin-top:4px">Rod Type</div>
+        <div class="info-banner" style="font-size:12px;margin-bottom:10px">Spring tension and sash rods are mostly White. Zinc Door Sash Tension Rod available in Zinc finish.</div>
+        <div class="opt-row" style="flex-wrap:wrap">
+          <div class="opt-pill" onclick="selectLockseam('Spring Tension Rod ⅝&quot; Oval (8&quot;–72&quot;, White)');toggleOptPill(this,'trtype')">⅝" Oval Tension <span style="font-size:10px;color:#888">(8"–72")</span></div>
+          <div class="opt-pill" onclick="selectLockseam('Spring Tension Rod ⁷⁄₁₆&quot; (18&quot;–48&quot;, White)');toggleOptPill(this,'trtype')">⁷⁄₁₆" Tension <span style="font-size:10px;color:#888">(18"–48")</span></div>
+          <div class="opt-pill" onclick="selectLockseam('Door Sash Tension Rod 20&quot;–36&quot; (Zinc)');toggleOptPill(this,'trtype')">Door Sash Tension — Zinc <span style="font-size:10px;color:#888">(20"–36")</span></div>
+          <div class="opt-pill" onclick="selectLockseam('Door Sash Rod ⁵⁄₁₆&quot; (11&quot;–36&quot;, White)');toggleOptPill(this,'trtype')">⁵⁄₁₆" Door Sash <span style="font-size:10px;color:#888">(11"–36")</span></div>
+          <div class="opt-pill" onclick="selectLockseam('Door Sash Rod ⁷⁄₁₆&quot; (18&quot;–28&quot;, White)');toggleOptPill(this,'trtype')">⁷⁄₁₆" Door Sash <span style="font-size:10px;color:#888">(18"–28")</span></div>
+          <div class="opt-pill" onclick="selectLockseam('Flat Sash Rod ¹¹⁄₁₆&quot; (16&quot;–50&quot;, White)');toggleOptPill(this,'trtype')">¹¹⁄₁₆" Flat Sash <span style="font-size:10px;color:#888">(16"–50")</span></div>
+        </div>
+      </div>
+
       <div id="sz-lockseam-opts" style="display:none">
-        <div class="sec-label" style="margin-top:4px">Rod Width (face)</div>
-        <div class="opt-row">
-          <div class="opt-pill" onclick="selectLockseam('½&quot; Single');toggleOptPill(this,'lsw')">½" Single</div>
-          <div class="opt-pill" onclick="selectLockseam('1½&quot; Single');toggleOptPill(this,'lsw')">1½" Single</div>
-          <div class="opt-pill" onclick="selectLockseam('2½&quot; Single');toggleOptPill(this,'lsw')">2½" Single</div>
-          <div class="opt-pill" onclick="selectLockseam('3½&quot; Single');toggleOptPill(this,'lsw')">3½" Single</div>
-          <div class="opt-pill" onclick="selectLockseam('5½&quot; Single');toggleOptPill(this,'lsw')">5½" Single</div>
-          <div class="opt-pill" onclick="selectLockseam('8½&quot; Single');toggleOptPill(this,'lsw')">8½" Single</div>
-          <div class="opt-pill" onclick="selectLockseam('Double (3½&quot;+2½&quot;)');toggleOptPill(this,'lsw')">Double</div>
-          <div class="opt-pill" onclick="selectLockseam('Triple (5½&quot;+3½&quot;+2½&quot;)');toggleOptPill(this,'lsw')">Triple</div>
+        <div class="sec-label" style="margin-top:4px">Rod Type &amp; Face Width</div>
+        <div class="info-banner" style="font-size:12px;margin-bottom:10px">Single rods: all White, available 6"–120" depending on face width. Double: front 3½" + back 2½". Triple: front 5½" + mid 3½" + back 2½". Bay: 78"–127". Return depth equals face width.</div>
+        <div class="opt-row" style="flex-wrap:wrap">
+          <div class="opt-pill" onclick="selectLockseam('½&quot; Single (6&quot;–48&quot;)');toggleOptPill(this,'lsw')">½" Single <span style="font-size:10px;color:#888">(6"–48")</span></div>
+          <div class="opt-pill" onclick="selectLockseam('1½&quot; Single (28&quot;–84&quot;)');toggleOptPill(this,'lsw')">1½" Single <span style="font-size:10px;color:#888">(28"–84")</span></div>
+          <div class="opt-pill" onclick="selectLockseam('2½&quot; Single (18&quot;–120&quot;)');toggleOptPill(this,'lsw')">2½" Single <span style="font-size:10px;color:#888">(18"–120")</span></div>
+          <div class="opt-pill" onclick="selectLockseam('3½&quot; Single (28&quot;–120&quot;)');toggleOptPill(this,'lsw')">3½" Single <span style="font-size:10px;color:#888">(28"–120")</span></div>
+          <div class="opt-pill" onclick="selectLockseam('5½&quot; Single (28&quot;–120&quot;)');toggleOptPill(this,'lsw')">5½" Single <span style="font-size:10px;color:#888">(28"–120")</span></div>
+          <div class="opt-pill" onclick="selectLockseam('8½&quot; Single (28&quot;–120&quot;)');toggleOptPill(this,'lsw')">8½" Single <span style="font-size:10px;color:#888">(28"–120")</span></div>
+          <div class="opt-pill" onclick="selectLockseam('Double Rod (3½&quot; front + 2½&quot; back, 28&quot;–120&quot;)');toggleOptPill(this,'lsw')">Double <span style="font-size:10px;color:#888">(3½"+2½", 28"–120")</span></div>
+          <div class="opt-pill" onclick="selectLockseam('Triple Rod (5½&quot; front + 3½&quot; mid + 2½&quot; back, 28&quot;–120&quot;)');toggleOptPill(this,'lsw')">Triple <span style="font-size:10px;color:#888">(5½"+3½"+2½", 28"–120")</span></div>
+          <div class="opt-pill" onclick="selectLockseam('Bay Rod (2½&quot; front return, 78&quot;–127&quot;)');toggleOptPill(this,'lsw')">Bay Rod <span style="font-size:10px;color:#888">(78"–127")</span></div>
         </div>
       </div>
     </div>
@@ -1153,6 +1171,7 @@ function updateStep5() {
     show('sz-basic');
     if (S.basicSubtype === 'superfine') show('sz-superfine-opts');
     else if (S.basicSubtype === 'lockseam') show('sz-lockseam-opts');
+    else if (S.basicSubtype === 'tension') show('sz-tension-opts');
   }
 }
 
@@ -1173,6 +1192,17 @@ function selectPoleDia(d) {
 }
 
 function selectDraw(d) { S.draw = d; }
+function showSFNote(type) {
+  var el = document.getElementById('sf-draw-note');
+  if (!el) return;
+  var msgs = {
+    'split':  'Split Draw: available in 30"–48", 48"–84", 66"–120", 84"–156", and 156"–228". Front return 2¾"–4½".',
+    'oneway': 'One-Way Draw (Left or Right): available up to 66"–120" maximum. Not available above 120". Front return 2¾"–4½".',
+    'double': 'Double Traverse Split Draw: available in 48"–84" and 84"–156" only. Front return 2¾"–4½" and 5¼"–6½".'
+  };
+  el.textContent = msgs[type] || '';
+  el.style.display = msgs[type] ? 'block' : 'none';
+}
 function selectHeader(h) {
   S.header = h;
   document.getElementById('ripplefold-options').style.display = h === 'Ripplefold' ? 'block' : 'none';
