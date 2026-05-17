@@ -220,7 +220,7 @@
           <button class="opt-btn" onclick="selOpt(this,'louver-size');checkInvisibleTiltConflict();updateShutterQuote()">4½&Prime;</button>
         </div>
         <div class="config-note">Larger louvers = bigger view-through, more contemporary look. 3½&Prime; is most popular. Max single-panel width: <strong>1⅞&Prime; → 30&Prime;</strong> · <strong>2½&Prime;/3&Prime; → 36&Prime;</strong> · <strong>3½&Prime;/4½&Prime; → 42&Prime;</strong>. Note: panels 36&Prime;+ wide cannot be double-hung without a horizontal T-post and must have bottom support.</div>
-        <div id="louver-clearview-warn" style="display:none;background:#FEE2E2;border:1px solid #EF4444;border-radius:8px;padding:10px 14px;font-size:12px;color:#7f1d1d;margin-top:6px">⚠ <strong>Hidden tilt (Clearview / InvisibleTilt) is not available with 1⅞&Prime; Elliptical louvers.</strong> Please select a different louver size or choose a different tilt rod option.</div>
+        <div id="louver-clearview-warn" style="display:none;background:#FEE2E2;border:1px solid #EF4444;border-radius:8px;padding:10px 14px;font-size:12px;color:#7f1d1d;margin-top:6px">⚠ <strong>InvisibleTilt&trade; is not available with 1⅞&Prime; Elliptical louvers.</strong> Please select a different louver size or choose a different tilt rod option.</div>
       </div>
 
       <!-- STEP C: Panel configuration -->
@@ -312,7 +312,7 @@
         <div class="opt-row" id="tilt-rod">
           <button class="opt-btn" onclick="selOpt(this,'tilt-rod');handleTiltRod(this);updateShutterQuote()">Center tilt rod</button>
           <button class="opt-btn" onclick="selOpt(this,'tilt-rod');handleTiltRod(this);updateShutterQuote()">Offset tilt rod</button>
-          <button class="opt-btn" onclick="selOpt(this,'tilt-rod');handleTiltRod(this);updateShutterQuote()">Hidden tilt (Clearview)</button>
+          <button class="opt-btn" onclick="selOpt(this,'tilt-rod');handleTiltRod(this);updateShutterQuote()">Hidden tilt (InvisibleTilt&trade;)</button>
           <button class="opt-btn" onclick="selOpt(this,'tilt-rod');handleTiltRod(this);updateShutterQuote()">Motorized tilt</button>
         </div>
         <div id="motor-tilt-brand" style="display:none" class="motor-brand-selector">
@@ -822,7 +822,7 @@ function updateMaterialColors() {
   const mat = matBtn ? matBtn.textContent.trim() : '';
   const isWL  = mat.includes('Woodlore') && !mat.includes('Plus');
   const isWLP = mat.includes('Plus');
-  const isND  = mat.includes('Normandy') || mat.includes('Wood');
+  const isND  = mat.includes('Normandy');
   document.getElementById('colors-woodlore').style.display      = isWL  ? 'block' : 'none';
   document.getElementById('colors-woodlore-plus').style.display = isWLP ? 'block' : 'none';
   document.getElementById('nd-finish-type').style.display       = isND  ? 'block' : 'none';
