@@ -550,6 +550,13 @@
         <textarea id="d-notes" style="min-height:90px" placeholder="e.g. Ripple fold panels, customer-supplied linen fabric, 3 windows in master bedroom..."></textarea>
       </div>
 
+      <!-- CORNICE / VALANCE → CV TAB RECOMMENDATION -->
+      <div id="drape-cv-rec" style="display:none;background:#FFF3CD;border:1px solid #FFC107;border-radius:10px;padding:14px 16px;margin-bottom:16px">
+        <div style="font-size:13px;font-weight:600;color:#7d5a00;margin-bottom:6px">⚠ Configure your cornice / valance before submitting</div>
+        <div style="font-size:12px;color:#7d5a00;line-height:1.6;margin-bottom:10px">You've added a cornice or valance to this drapery. For accurate sizing and pricing, please set up the full details in the <strong>Cornices &amp; Valances tab</strong> before checking out.</div>
+        <button onclick="(function(){var b=Array.from(document.querySelectorAll('.type-tab')).find(function(t){return(t.getAttribute('onclick')||'').indexOf(\"'cornval'\")!==-1;});if(b)switchTab('cornval',b);})()" style="font-size:12px;font-weight:600;background:#1C1510;color:var(--gold);border:none;padding:8px 16px;border-radius:8px;cursor:pointer">Go to Cornices &amp; Valances tab &rarr;</button>
+      </div>
+
       <!-- HARDWARE QUESTION -->
       <div style="border:1px solid #e8e8e4;border-radius:10px;padding:16px 18px;margin-bottom:16px">
         <div style="font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:10px">Do you have your hardware (rod / track)?</div>
@@ -566,9 +573,12 @@
             <button class="opt-btn" onclick="selOpt(this,'grp-drape-hw-type')">Motorized track</button>
             <button class="opt-btn" onclick="selOpt(this,'grp-drape-hw-type')">Not sure — advise me</button>
           </div>
-          <div style="margin-top:12px;background:var(--gold-mid);border:1px solid #e0d8c8;border-radius:8px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-            <div style="font-size:12px;color:#555;line-height:1.5">We supply and install decorative rods, traverse tracks, ripple fold systems, and motorized tracks — all brands.</div>
-            <a href="hardware.html" style="font-size:12px;font-weight:600;color:var(--espresso);background:var(--gold);padding:8px 14px;border-radius:8px;text-decoration:none;white-space:nowrap">Browse Hardware &rarr;</a>
+          <div style="margin-top:12px;background:var(--gold-mid);border:1px solid #e0d8c8;border-radius:8px;padding:12px 14px">
+            <div style="font-size:12px;color:#555;line-height:1.5;margin-bottom:10px">We supply and install decorative rods, traverse tracks, ripple fold systems, and motorized tracks — all brands.</div>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <a href="hardware.html" target="_blank" style="font-size:12px;font-weight:600;color:var(--espresso);background:var(--gold);padding:8px 14px;border-radius:8px;text-decoration:none;white-space:nowrap">Browse Hardware ↗</a>
+              <span style="font-size:11px;color:#888">Opens in a new tab — your drapery quote stays open here.</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1757,6 +1767,11 @@ function calcDrapePrice() {
 function drapeToggleAddon(type, show) {
   var el = document.getElementById('d-' + type + '-opts');
   if (el) el.style.display = show ? 'block' : 'none';
+  // Show recommendation banner if either cornice or valance is checked
+  var corniceOn = document.getElementById('d-cornice-check') && document.getElementById('d-cornice-check').checked;
+  var valanceOn = document.getElementById('d-valance-check') && document.getElementById('d-valance-check').checked;
+  var rec = document.getElementById('drape-cv-rec');
+  if (rec) rec.style.display = (corniceOn || valanceOn) ? 'block' : 'none';
   calcDrapePrice();
 }
 function drapeShowTrimSupply() {
@@ -1971,6 +1986,18 @@ function submitDrape() {
   var name  = document.getElementById('d-name').value.trim();
   var phone = document.getElementById('d-phone').value.trim();
   if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  // Warn if cornice or valance is added but not yet configured in CV tab
+  var corniceOn = document.getElementById('d-cornice-check') && document.getElementById('d-cornice-check').checked;
+  var valanceOn = document.getElementById('d-valance-check') && document.getElementById('d-valance-check').checked;
+  if (corniceOn || valanceOn) {
+    var what = corniceOn && valanceOn ? 'cornice and valance' : corniceOn ? 'cornice' : 'valance';
+    var ok = confirm('You have a ' + what + ' added to this drapery.\n\nHave you already configured it in the Cornices & Valances tab?\n\nClick OK to submit anyway, or Cancel to go configure it first.');
+    if (!ok) {
+      var cvBtn = document.querySelector('.type-tab:nth-child(3)');
+      if (cvBtn) switchTab('cornval', cvBtn);
+      return;
+    }
+  }
   var pleat      = drapeState.pleat  || getOpt('pleat-cards') || '—';
   var fabric     = drapeState.fabric || '—';
   var lining     = getOpt('grp-drape-liner') || 'No liner';
