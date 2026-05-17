@@ -336,18 +336,6 @@
           <button class="opt-btn" onclick="selOpt(this,'grp-kf-draw');archCalc()">One-way left — single panel draws left</button>
         </div>
 
-        <!-- Double rod — 94001 and 94003 only -->
-        <div id="arch-double-rod-wrap" style="display:none;margin-top:14px">
-          <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Rod configuration</div>
-          <div class="opt-row" id="grp-arch-rod-config">
-            <button class="opt-btn sel" onclick="selOpt(this,'grp-arch-rod-config');archToggleDouble(false)">Single rod</button>
-            <button class="opt-btn" onclick="selOpt(this,'grp-arch-rod-config');archToggleDouble(true)">Double rod</button>
-          </div>
-          <div id="arch-double-note" style="display:none;margin-top:8px;padding:10px 13px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px;font-size:11px;color:#555;line-height:1.65">
-            Two tracks from one bracket point — typically a sheer track in front and a drapery track behind. Requires <strong>double brackets</strong> throughout. Front track projection ≈ 2¾", rear track projection ≈ 4¾". Quote will reflect double bracket count.
-          </div>
-        </div>
-
         <!-- Color + Mount -->
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px">
           <div>
@@ -806,7 +794,6 @@ var ARCH_BATONS = [
 ];
 
 var _archModel = '94003';
-var _archIsDouble = false;
 var _archSelectedBatons = [];
 
 function archSelModel(model, el) {
@@ -821,19 +808,6 @@ function archSelModel(model, el) {
   // Cord length: 94001 only (cord-draw model)
   var cordWrap = document.getElementById('arch-cord-wrap');
   if (cordWrap) cordWrap.style.display = model === '94001' ? 'block' : 'none';
-
-  // Double rod: 94001 and 94003 only
-  var dblWrap = document.getElementById('arch-double-rod-wrap');
-  if (dblWrap) dblWrap.style.display = (model === '94001' || model === '94003') ? 'block' : 'none';
-
-  // If switching to 94004/94005, reset double rod to single
-  if (model !== '94001' && model !== '94003') {
-    _archIsDouble = false;
-    var rdBtns = document.querySelectorAll('#grp-arch-rod-config .opt-btn');
-    rdBtns.forEach(function(b, i) { b.classList.toggle('sel', i === 0); });
-    var dn = document.getElementById('arch-double-note');
-    if (dn) dn.style.display = 'none';
-  }
 
   archCalc();
 }
@@ -851,11 +825,10 @@ function archCalc() {
   var totalBrackets = feetBrackets + 2;
   var bInp = document.getElementById('arch-brackets-inp');
   if (bInp) bInp.value = totalBrackets;
-  var bracketType = _archIsDouble ? 'double brackets' : 'brackets';
   var bCount = document.getElementById('arch-bracket-count');
-  if (bCount) bCount.textContent = totalBrackets + ' ' + bracketType;
+  if (bCount) bCount.textContent = totalBrackets + ' brackets';
   var bNote = document.getElementById('arch-bracket-note');
-  if (bNote) bNote.innerHTML = '<strong>' + feetBrackets + '</strong> ' + bracketType + ' (1 per foot for ' + Math.ceil(w/12) + ' ft) + <strong>2 extra</strong> = <strong>' + totalBrackets + ' total</strong>.' + (_archIsDouble ? ' <span style="color:var(--gold);font-weight:600">Double brackets hold both tracks from one wall point.</span>' : '') + ' Edit the quantity below if needed.';
+  if (bNote) bNote.innerHTML = '<strong>' + feetBrackets + '</strong> brackets (1 per foot for ' + Math.ceil(w/12) + ' ft) + <strong>2 extra</strong> = <strong>' + totalBrackets + ' total</strong>. Edit the quantity below if needed.';
 
   // Master carriers: 1 set per pair
   var masterWrap = document.getElementById('arch-master-wrap');
@@ -917,18 +890,16 @@ function archCalc() {
   var cordSel = _archModel === '94001'
     ? ((document.querySelector('#grp-arch-cord .opt-btn.sel') || {}).textContent || '').trim()
     : '';
-  var rodConfig = _archIsDouble ? 'Double rod (two tracks, double brackets)' : 'Single rod';
 
   window._archSummary = [
     'Architrac model: ' + _archModel,
-    'Rod configuration: ' + rodConfig,
     'Track width: ' + w + '"',
     'Draw: ' + drawSel.split('—')[0].trim(),
     'Drapery style: ' + pleatSel.trim() + ripplePct,
     'Color: ' + color.trim(),
     'Mount: ' + mount,
     (_archModel === '94001' && cordSel ? 'Cord length: ' + cordSel : ''),
-    'Brackets: ' + totalBrackets + ' ' + (_archIsDouble ? 'DOUBLE brackets' : 'brackets') + ' (1/ft + 2 extra, editable)',
+    'Brackets: ' + totalBrackets + ' (1/ft + 2 extra, editable)',
     'Master carriers: ' + (mInp ? mInp.value : '1') + ' set(s) — 1 per pair',
     'Ball bearing carriers: ' + rawCarriers + ' (25 per 50", editable)',
     'Batons: ' + (bainp ? bainp.value : numPanels) + ' (1 per panel, sold individually)'
@@ -938,13 +909,6 @@ function archCalc() {
 function archTogglePleat(type) {
   var rippleOpts = document.getElementById('arch-ripple-opts');
   if (rippleOpts) rippleOpts.style.display = type === 'ripple' ? 'block' : 'none';
-  archCalc();
-}
-
-function archToggleDouble(isDouble) {
-  _archIsDouble = isDouble;
-  var dn = document.getElementById('arch-double-note');
-  if (dn) dn.style.display = isDouble ? 'block' : 'none';
   archCalc();
 }
 
