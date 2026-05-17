@@ -677,9 +677,31 @@
             </div>
           </div>
 
-          <!-- Step 6: Contact -->
-          <div class="step-block" id="contact-block">
+          <!-- Step 6: Delivery -->
+          <div class="step-block">
             <div class="step-label">Step 6</div>
+            <div class="step-title">Delivery or pickup</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;background:#fafaf8;border:1.5px solid #e0dbd2;border-radius:9px;padding:11px 14px" id="del-opt-ship">
+                <input type="radio" name="cf-delivery" value="ship" checked onchange="solPickDel('ship')" style="margin-top:3px;accent-color:var(--gold)">
+                <div>
+                  <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:2px">Ship to me — UPS / FedEx</div>
+                  <div style="font-size:11px;color:#666;line-height:1.5">Ships from Huntingdon Valley, PA. We'll confirm freight cost with your quote.<br><em style="font-size:10px;color:#999">Note: Prices subject to change due to tariffs or duties. Any applicable charges disclosed before order is finalized.</em></div>
+                </div>
+              </label>
+              <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;background:#fafaf8;border:1.5px solid #e0dbd2;border-radius:9px;padding:11px 14px" id="del-opt-pickup">
+                <input type="radio" name="cf-delivery" value="pickup" onchange="solPickDel('pickup')" style="margin-top:3px;accent-color:var(--gold)">
+                <div>
+                  <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:2px">I'll pick up</div>
+                  <div style="font-size:11px;color:#666">Location provided after order is placed (Huntingdon Valley, PA 19006).</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Step 7: Contact -->
+          <div class="step-block" id="contact-block">
+            <div class="step-label">Step 7</div>
             <div class="step-title">Your details</div>
             <div class="dim-row">
               <div class="form-group"><label>Name *</label><input type="text" id="cf-name" placeholder="Jane Smith"></div>
@@ -692,7 +714,7 @@
 
           <div class="success-state" id="quote-success">
             <h3>Quote request sent!</h3>
-            <p>We'll follow up within a few hours with a written estimate. For anything urgent: <strong>(609) 742-1720</strong> — available 24/7.</p>
+            <p>Your email app opened with all details pre-filled. We'll follow up within a few hours. For anything urgent: <strong>(609) 742-1720</strong> — available 24/7.</p>
           </div>
 
         </div>
@@ -784,6 +806,12 @@
 renderNav('');
 renderFooter(false);
 
+var solDelivery = 'ship';
+
+function solPickDel(v) {
+  solDelivery = v;
+}
+
 function toggleMotor(on) {
   document.getElementById('motor-sub').classList.toggle('show', on);
   document.getElementById('s-motor-row').style.display = on ? 'flex' : 'none';
@@ -823,7 +851,54 @@ function submitQuote() {
   const name  = document.getElementById('cf-name').value.trim();
   const phone = document.getElementById('cf-phone').value.trim();
   if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
-  document.getElementById('contact-block').style.display = 'none';
+
+  const light  = getOpt('grp-light') || '—';
+  const op     = getOpt('grp-op') || '—';
+  const mount  = getOpt('grp-mount') || '—';
+  const w      = document.getElementById('inp-width').value || '—';
+  const h      = document.getElementById('inp-height').value || '—';
+  const qty    = document.getElementById('inp-qty').value || 1;
+  const email  = document.getElementById('cf-email').value.trim();
+  const notes  = document.getElementById('cf-notes').value.trim();
+  const motorSub = document.getElementById('motor-sub');
+  const motorOn  = motorSub && motorSub.classList.contains('show');
+  const motorVal = motorOn ? (document.getElementById('sel-motor').value || '—') : 'None';
+  const addons   = [...document.querySelectorAll('#grp-addons .opt-btn.sel')].map(b => b.textContent.trim());
+  const deliveryLabel = solDelivery === 'pickup'
+    ? "I'll pick up (Huntingdon Valley, PA 19006 — address confirmed after order)"
+    : 'Ship to me — UPS / FedEx from Huntingdon Valley, PA (freight TBD)';
+
+  const body = [
+    '=== NORMAN SOLUNA ROLLER SHADE QUOTE REQUEST ===',
+    '',
+    'PRODUCT: Norman Soluna Roller Shades',
+    '',
+    'CONFIGURATION',
+    'Light control: ' + light,
+    'Operating system: ' + op,
+    'Motorization: ' + motorVal,
+    'Mount type: ' + mount,
+    'Width: ' + w + '"',
+    'Height: ' + h + '"',
+    'Quantity: ' + qty,
+    'Add-ons: ' + (addons.length ? addons.join(', ') : 'None'),
+    '',
+    'DELIVERY',
+    deliveryLabel,
+    '',
+    'CUSTOMER',
+    'Name: ' + name,
+    'Phone: ' + phone,
+    (email ? 'Email: ' + email : ''),
+    (notes ? 'Notes: ' + notes : ''),
+    '',
+    '=== END QUOTE REQUEST ===',
+    'Sent from phillyblinds.com/pages/soluna-roller-shades.html'
+  ].filter(l => l !== undefined && l !== null).join('\n');
+
+  const subj = 'Soluna Roller Quote — ' + w + '"×' + h + '" ' + light + ' — ' + name;
+  window.location.href = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
+
   document.getElementById('quote-success').classList.add('show');
   document.getElementById('quote-success').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
