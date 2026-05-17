@@ -708,6 +708,7 @@ function goS(n) {
 /* ── Step 1: Collection ── */
 function pickCollection(c, el) {
   S.collection = c;
+  _s6setup = false; // reset so step 6 re-renders for new collection
   document.querySelectorAll('#s1 .choice-card').forEach(function(cc){cc.classList.remove('sel');});
   el.classList.add('sel');
   $('s2').style.display='block';
@@ -717,6 +718,7 @@ function pickCollection(c, el) {
 /* ── Step 2: Product type ── */
 function pickType(t, el) {
   S.productType = t;
+  _s6setup = false; // reset so step 6 re-renders for new product type
   document.querySelectorAll('#s2 .choice-card').forEach(function(cc){cc.classList.remove('sel');});
   el.classList.add('sel');
   // Ceiling mount only for panels/draperies
