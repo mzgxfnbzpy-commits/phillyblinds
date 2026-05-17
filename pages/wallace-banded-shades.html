@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Configure Wallace 2D Dual Sheer / Banded Shades — 46 fabric collections, cassette options, motorization. Custom quote for Philadelphia area.">
+<meta property="og:title" content="Wallace 2D Dual Sheer Banded Shades | Philly Blinds">
+<meta property="og:type" content="website">
+<title>Wallace 2D Dual Sheer Shades | Philly Blinds</title>
+<link rel="stylesheet" href="../css/global.css">
+<style>
+.page-hero{background:var(--espresso);padding:44px 28px 40px}
+.breadcrumb{font-size:11px;color:var(--text-faint);margin-bottom:14px}
+.breadcrumb a{color:var(--text-muted);text-decoration:none}
+.page-hero h1{font-size:30px;font-weight:500;color:var(--cream);letter-spacing:-0.4px;margin-bottom:8px}
+.page-hero .sub{font-size:14px;color:var(--text-dark);line-height:1.7;max-width:560px;margin-bottom:20px}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap}
+.hero-pill{font-size:11px;padding:4px 12px;border-radius:20px;border:.5px solid var(--border-dark);color:var(--text-faint)}
+.hero-pill-gold{background:rgba(45,224,193,.12);border-color:rgba(45,224,193,.3);color:var(--gold)}
+
+.config-layout{display:grid;grid-template-columns:1fr 300px;gap:24px;max-width:1140px;margin:0 auto;padding:28px 28px 60px;align-items:start}
+@media(max-width:880px){.config-layout{grid-template-columns:1fr;padding:20px 16px 48px}}
+
+.step-block{background:#fff;border:1px solid #e8e8e4;border-radius:14px;margin-bottom:16px;overflow:hidden;transition:box-shadow .15s}
+.step-block.active{box-shadow:0 2px 20px rgba(45,224,193,.1);border-color:rgba(45,224,193,.3)}
+.step-head{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;background:#fff}
+.step-num-circle{width:28px;height:28px;border-radius:50%;background:var(--espresso);color:var(--gold);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-block.done .step-num-circle{background:var(--gold);color:var(--espresso)}
+.step-head-title{font-size:14px;font-weight:500;color:#111;flex:1}
+.step-head-val{font-size:12px;color:var(--gold);font-weight:500;text-align:right}
+.step-body{padding:0 20px 20px;display:none}
+.step-block.active .step-body,.step-block.open .step-body{display:block}
+
+.filter-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.filter-tab{font-size:11px;padding:4px 12px;border-radius:16px;border:1px solid #ddd;background:#fff;cursor:pointer;font-family:inherit;transition:all .12s}
+.filter-tab.on{background:var(--espresso);color:var(--gold);border-color:var(--espresso)}
+
+.coll-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;max-height:380px;overflow-y:auto;padding-right:4px}
+.coll-card{border:1.5px solid #e8e8e4;border-radius:10px;padding:12px 10px;cursor:pointer;transition:all .12s;background:#fff}
+.coll-card:hover{border-color:var(--gold)}
+.coll-card.sel{border:2px solid var(--gold);background:rgba(45,224,193,.05)}
+.coll-name{font-size:13px;font-weight:500;color:#111;margin-bottom:3px}
+.coll-meta{font-size:10px;color:#777;line-height:1.5}
+.coll-badge{display:inline-block;font-size:9px;padding:1px 6px;border-radius:5px;font-weight:600;margin-bottom:4px}
+.badge-t{background:#EEF6FF;color:#1E40AF}
+.badge-rd{background:#FEE2E2;color:#991B1B}
+
+.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-top:10px}
+.color-swatch{border:1.5px solid #e8e8e4;border-radius:9px;overflow:hidden;cursor:pointer;transition:all .12s}
+.color-swatch:hover{border-color:var(--gold);transform:translateY(-1px)}
+.color-swatch.sel{border:2px solid var(--gold);box-shadow:0 2px 8px rgba(45,224,193,.2)}
+.swatch-dot{height:48px;width:100%}
+.swatch-info{padding:4px 6px;background:#fff}
+.swatch-name{font-size:10px;font-weight:500;color:#222;line-height:1.3}
+.swatch-code{font-size:9px;color:#999}
+
+.opt-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.opt-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+@media(max-width:480px){.opt-grid-2,.opt-grid-3{grid-template-columns:1fr 1fr}}
+.opt-card{background:#fff;border:1.5px solid #e8e8e4;border-radius:11px;padding:13px 11px;cursor:pointer;transition:all .12s;text-align:center}
+.opt-card:hover{border-color:var(--gold)}
+.opt-card.sel{border:2px solid var(--gold);background:rgba(45,224,193,.06)}
+.opt-card-icon{font-size:20px;margin-bottom:5px}
+.opt-card-title{font-size:13px;font-weight:500;color:#111;margin-bottom:2px}
+.opt-card-desc{font-size:11px;color:#666;line-height:1.4}
+.opt-card.sel .opt-card-title{color:#0A4A42}
+
+.color-dot-btn{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:5px;flex-shrink:0;border:1px solid rgba(0,0,0,.12);vertical-align:middle}
+
+.dim-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+@media(max-width:480px){.dim-row{grid-template-columns:1fr}}
+.dim-field{display:flex;flex-direction:column;gap:4px}
+.dim-label{font-size:12px;font-weight:500;color:#444}
+.dim-input{width:80px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px;text-align:center}
+.dim-unit{font-size:12px;color:#666;margin-left:4px}
+
+.size-ok{background:#DCFCE7;border:1px solid #86EFAC;border-radius:8px;padding:8px 12px;font-size:12px;color:#14532d;margin-top:8px}
+.size-error{background:#FEE2E2;border:1px solid #EF4444;border-radius:8px;padding:8px 12px;font-size:12px;color:#7f1d1d;margin-top:6px}
+.size-warn{background:#FFF3CD;border:1px solid #FFC107;border-radius:8px;padding:8px 12px;font-size:12px;color:#7d5a00;margin-top:6px}
+.computed-info{background:var(--gold-mid);border:1px solid #e8e8e4;border-radius:8px;padding:10px 14px;margin-top:10px}
+.computed-row{display:flex;justify-content:space-between;font-size:12px;padding:2px 0}
+.computed-key{color:#666}
+.computed-val{font-weight:500;color:#111}
+
+.info-box{background:rgba(45,224,193,.08);border:1px solid rgba(45,224,193,.25);border-radius:8px;padding:10px 14px;font-size:12px;color:#0A4A42;margin-top:10px;line-height:1.6}
+.warn-box{background:#FFF3CD;border:1px solid #FFC107;border-radius:8px;padding:10px 14px;font-size:12px;color:#7d5a00;margin-top:10px;line-height:1.6;display:flex;gap:8px}
+
+.spec-panel{background:var(--espresso);border-radius:14px;padding:20px;position:sticky;top:80px}
+.spec-title{font-size:11px;font-weight:600;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
+.spec-row{display:flex;justify-content:space-between;align-items:flex-start;font-size:12px;padding:5px 0;border-bottom:.5px solid #2A201A;gap:8px}
+.spec-row:last-of-type{border-bottom:none}
+.spec-key{color:#7A6A58;flex-shrink:0}
+.spec-val{color:var(--cream);font-weight:500;text-align:right;word-break:break-word}
+.spec-val.empty{color:#3A2E24;font-style:italic}
+.spec-divider{border:.5px solid #2A201A;margin:10px 0}
+
+.acc-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:.5px solid #f0f0ee}
+.acc-item:last-child{border-bottom:none}
+.acc-label{font-size:13px;font-weight:500;color:#111}
+.acc-sub{font-size:11px;color:#666;line-height:1.4;margin-top:2px}
+
+.hw-color-dot{width:18px;height:18px;border-radius:50%;display:inline-block;border:1.5px solid rgba(0,0,0,.12);flex-shrink:0}
+.hw-color-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.hw-color-opt{display:flex;align-items:center;gap:6px;padding:6px 10px;border:1.5px solid #e8e8e4;border-radius:8px;cursor:pointer;font-size:12px;transition:all .12s}
+.hw-color-opt:hover{border-color:var(--gold)}
+.hw-color-opt.sel{border:2px solid var(--gold);background:rgba(45,224,193,.06);font-weight:500}
+</style>
+</head>
+<body>
+<nav class="site-nav" id="site-nav"></nav>
+
+<div class="page-hero">
+  <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <a href="shades.html">Shades</a> &rsaquo; Wallace 2D Dual Sheer</div>
+  <h1>Wallace 2D Dual Sheer / Banded Shades</h1>
+  <p class="sub">Zebra-style dual sheer shades — alternating sheer and solid fabric bands that tilt between view-through and privacy positions. 46 fabric collections, motorization available. Configure and get a custom quote below.</p>
+  <div class="hero-pills">
+    <span class="hero-pill-gold hero-pill">Wallace Authorized</span>
+    <span class="hero-pill">46 fabric collections</span>
+    <span class="hero-pill">Translucent &amp; room darkening</span>
+    <span class="hero-pill">Motorization available</span>
+    <span class="hero-pill">Custom quote</span>
+  </div>
+</div>
+
+<div class="config-layout">
+<div id="configurator">
+
+<!-- STEP 1: COLLECTION -->
+<div class="step-block active open" id="step-1">
+  <div class="step-head" onclick="toggleStep('step-1')">
+    <div class="step-num-circle">1</div>
+    <div class="step-head-title">Fabric collection</div>
+    <div class="step-head-val" id="s1-val"></div>
+  </div>
+  <div class="step-body">
+    <div style="font-size:12px;color:#666;margin-bottom:8px;line-height:1.6">Select a collection — this determines max width/height, band size, and light control.</div>
+    <div class="filter-tabs">
+      <button class="filter-tab on" onclick="filterColls('all',this)">All (46)</button>
+      <button class="filter-tab" onclick="filterColls('T',this)">Translucent</button>
+      <button class="filter-tab" onclick="filterColls('RD',this)">Room Darkening</button>
+    </div>
+    <div class="coll-grid" id="coll-grid"></div>
+  </div>
+</div>
+
+<!-- STEP 2: COLOR -->
+<div class="step-block" id="step-2">
+  <div class="step-head" onclick="toggleStep('step-2')">
+    <div class="step-num-circle">2</div>
+    <div class="step-head-title">Fabric color</div>
+    <div class="step-head-val" id="s2-val"></div>
+  </div>
+  <div class="step-body" id="s2-body">
+    <div style="font-size:12px;color:#666">Select a collection first.</div>
+  </div>
+</div>
+
+<!-- STEP 3: MOUNT -->
+<div class="step-block" id="step-3">
+  <div class="step-head" onclick="toggleStep('step-3')">
+    <div class="step-num-circle">3</div>
+    <div class="step-head-title">Mount type</div>
+    <div class="step-head-val" id="s3-val"></div>
+  </div>
+  <div class="step-body">
+    <div class="opt-grid-2">
+      <div class="opt-card" id="mc-in" onclick="selectMount('inside')">
+        <div class="opt-card-icon">⬛</div>
+        <div class="opt-card-title">Inside Mount</div>
+        <div class="opt-card-desc">Fits within the window frame. Min 1½" shallow surface, 3" flush depth.</div>
+      </div>
+      <div class="opt-card" id="mc-out" onclick="selectMount('outside')">
+        <div class="opt-card-icon">🔲</div>
+        <div class="opt-card-title">Outside Mount</div>
+        <div class="opt-card-desc">Mounts on the wall above frame. Min 1½" surface.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 4: SIZE -->
+<div class="step-block" id="step-4">
+  <div class="step-head" onclick="toggleStep('step-4')">
+    <div class="step-num-circle">4</div>
+    <div class="step-head-title">Width &amp; height</div>
+    <div class="step-head-val" id="s4-val"></div>
+  </div>
+  <div class="step-body">
+    <div id="size-collection-note" class="info-box" style="display:none"></div>
+    <div class="dim-row" style="margin-top:12px">
+      <div class="dim-field">
+        <div class="dim-label">Order Width</div>
+        <div style="display:flex;align-items:center">
+          <input class="dim-input" type="number" id="inp-w" min="12" max="120" step="0.125" placeholder="e.g. 36" oninput="validateSize()">
+          <span class="dim-unit">in</span>
+        </div>
+      </div>
+      <div class="dim-field">
+        <div class="dim-label">Order Height</div>
+        <div style="display:flex;align-items:center">
+          <input class="dim-input" type="number" id="inp-h" min="12" max="130" step="0.125" placeholder="e.g. 72" oninput="validateSize()">
+          <span class="dim-unit">in</span>
+        </div>
+      </div>
+    </div>
+    <div class="dim-row" style="margin-top:6px">
+      <div class="dim-field">
+        <div class="dim-label">Quantity</div>
+        <div style="display:flex;align-items:center">
+          <input class="dim-input" type="number" id="inp-qty" min="1" max="50" value="1" oninput="validateSize()">
+          <span class="dim-unit">shades</span>
+        </div>
+      </div>
+      <div class="dim-field">
+        <div class="dim-label">Room / window label</div>
+        <input type="text" id="inp-room" placeholder="e.g. Living Room Left" style="padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;width:100%">
+      </div>
+    </div>
+    <div id="size-msgs" style="margin-top:8px"></div>
+    <div id="size-computed" class="computed-info" style="display:none;margin-top:10px">
+      <div class="computed-row"><span class="computed-key">Cassette width</span><span class="computed-val" id="cp-cassW">—</span></div>
+      <div class="computed-row"><span class="computed-key">Fabric width</span><span class="computed-val" id="cp-fabW">—</span></div>
+      <div class="computed-row" id="cp-cord-row"><span class="computed-key">Cord/chain drop</span><span class="computed-val" id="cp-cord">—</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 5: CASSETTE -->
+<div class="step-block" id="step-5">
+  <div class="step-head" onclick="toggleStep('step-5')">
+    <div class="step-num-circle">5</div>
+    <div class="step-head-title">Cassette style</div>
+    <div class="step-head-val" id="s5-val"></div>
+  </div>
+  <div class="step-body">
+    <div class="opt-grid-2">
+      <div class="opt-card sel" id="cas-round" onclick="selectCassette('round')">
+        <div class="opt-card-icon">⭕</div>
+        <div class="opt-card-title">Round Elite Cassette</div>
+        <div class="opt-card-desc">Standard. Fabric insert included. 3¼" D × 3" H.</div>
+      </div>
+      <div class="opt-card" id="cas-square" onclick="selectCassette('square')">
+        <div class="opt-card-icon">🔲</div>
+        <div class="opt-card-title">Square Elite Cassette</div>
+        <div class="opt-card-desc">Surcharge option. Fabric insert included. 3¼" D × 3⅛" H. Metal side caps available.</div>
+      </div>
+    </div>
+    <div id="square-caps-wrap" style="display:none;margin-top:14px">
+      <div style="font-size:12px;font-weight:500;color:#444;margin-bottom:8px">Metal side caps (square cassette only — surcharge)</div>
+      <div class="opt-grid-3">
+        <div class="opt-card sel" id="cap-none" onclick="selectCaps('none')"><div class="opt-card-title">None</div></div>
+        <div class="opt-card" id="cap-copper" onclick="selectCaps('copper')"><div class="opt-card-title">Copper</div></div>
+        <div class="opt-card" id="cap-silver" onclick="selectCaps('silver')"><div class="opt-card-title">Silver</div></div>
+      </div>
+    </div>
+    <div style="font-size:12px;font-weight:500;color:#444;margin:14px 0 8px">Cassette color</div>
+    <div class="hw-color-row" id="grp-cassette-color">
+      <div class="hw-color-opt sel" onclick="selectCassetteColor('White',this)"><span class="hw-color-dot" style="background:#F5F5F5"></span>White</div>
+      <div class="hw-color-opt" onclick="selectCassetteColor('Cream',this)"><span class="hw-color-dot" style="background:#F0E8D0"></span>Cream</div>
+      <div class="hw-color-opt" onclick="selectCassetteColor('Grey',this)"><span class="hw-color-dot" style="background:#A0A0A0"></span>Grey</div>
+      <div class="hw-color-opt" onclick="selectCassetteColor('Brown',this)"><span class="hw-color-dot" style="background:#6B4423"></span>Brown</div>
+      <div class="hw-color-opt" onclick="selectCassetteColor('Black',this)"><span class="hw-color-dot" style="background:#1A1A1A"></span>Black</div>
+    </div>
+    <div id="hw-suggest" class="info-box" style="display:none;margin-top:10px"></div>
+  </div>
+</div>
+
+<!-- STEP 6: BOTTOM RAIL -->
+<div class="step-block" id="step-6">
+  <div class="step-head" onclick="toggleStep('step-6')">
+    <div class="step-num-circle">6</div>
+    <div class="step-head-title">Bottom rail</div>
+    <div class="step-head-val" id="s6-val"></div>
+  </div>
+  <div class="step-body">
+    <div id="large-rail-note" class="info-box" style="display:none">This collection defaults to <strong>Large</strong> bottom rail.</div>
+    <div style="font-size:12px;font-weight:500;color:#444;margin:10px 0 8px">Rail size</div>
+    <div class="opt-grid-2">
+      <div class="opt-card sel" id="rail-reg" onclick="selectRail('regular')">
+        <div class="opt-card-title">Regular</div>
+        <div class="opt-card-desc">Standard smooth round bottom rail</div>
+      </div>
+      <div class="opt-card" id="rail-large" onclick="selectRail('large')">
+        <div class="opt-card-title">Large</div>
+        <div class="opt-card-desc">Larger profile — default for Almond, Equus, Palisander</div>
+      </div>
+    </div>
+    <div style="font-size:12px;font-weight:500;color:#444;margin:14px 0 8px">Rail insert</div>
+    <div class="opt-grid-2">
+      <div class="opt-card sel" id="rail-smooth" onclick="selectRailInsert('smooth')">
+        <div class="opt-card-title">Smooth Round</div>
+        <div class="opt-card-desc">Standard — no surcharge</div>
+      </div>
+      <div class="opt-card" id="rail-fabric" onclick="selectRailInsert('fabric')">
+        <div class="opt-card-title">Fabric Insert</div>
+        <div class="opt-card-desc">Surcharge option — fabric-wrapped bottom rail</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 7: CONTROL -->
+<div class="step-block" id="step-7">
+  <div class="step-head" onclick="toggleStep('step-7')">
+    <div class="step-num-circle">7</div>
+    <div class="step-head-title">Control method</div>
+    <div class="step-head-val" id="s7-val"></div>
+  </div>
+  <div class="step-body" id="s7-body">
+    <!-- built dynamically -->
+  </div>
+</div>
+
+<!-- STEP 8: CONTROL SIDE -->
+<div class="step-block" id="step-8" style="display:none">
+  <div class="step-head" onclick="toggleStep('step-8')">
+    <div class="step-num-circle">8</div>
+    <div class="step-head-title" id="s8-title">Control side</div>
+    <div class="step-head-val" id="s8-val"></div>
+  </div>
+  <div class="step-body" id="s8-body">
+    <!-- built dynamically -->
+  </div>
+</div>
+
+<!-- STEP 9: MOTOR ACCESSORIES -->
+<div class="step-block" id="step-9" style="display:none">
+  <div class="step-head" onclick="toggleStep('step-9')">
+    <div class="step-num-circle">9</div>
+    <div class="step-head-title">Motor accessories</div>
+    <div class="step-head-val" id="s9-val">Optional</div>
+  </div>
+  <div class="step-body" id="s9-body">
+    <!-- built dynamically for motorized -->
+  </div>
+</div>
+
+<!-- STEP 10: MULTI-HEADRAIL (optional) -->
+<div class="step-block" id="step-10">
+  <div class="step-head" onclick="toggleStep('step-10')">
+    <div class="step-num-circle">10</div>
+    <div class="step-head-title">2-on-1 / 3-on-1 headrail <span style="font-size:11px;color:#aaa;font-weight:400">(optional)</span></div>
+    <div class="step-head-val" id="s10-val">Not needed</div>
+  </div>
+  <div class="step-body">
+    <div class="info-box" style="margin-bottom:12px">Combines 2 or 3 shades on one headrail. No extra charge — price as separate shades. Max combined width 112". Not compatible with Soft Touch Cordless.</div>
+    <div class="opt-grid-3">
+      <div class="opt-card sel" id="mh-none" onclick="selectMultiHead('none')"><div class="opt-card-title">Not needed</div></div>
+      <div class="opt-card" id="mh-2on1" onclick="selectMultiHead('2on1')"><div class="opt-card-title">2-on-1</div><div class="opt-card-desc">Two shades, one headrail</div></div>
+      <div class="opt-card" id="mh-3on1" onclick="selectMultiHead('3on1')"><div class="opt-card-title">3-on-1</div><div class="opt-card-desc">Three shades, one headrail</div></div>
+    </div>
+    <div id="mh-detail" style="display:none;margin-top:12px">
+      <div style="font-size:12px;font-weight:500;color:#444;margin-bottom:6px">Individual shade widths</div>
+      <input type="text" id="mh-widths" placeholder='e.g. "24", "24" for 2-on-1' style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px">
+      <div id="mh-seam-warn" class="warn-box" style="display:none;margin-top:8px"><span>⚠️</span><span id="mh-seam-text"></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 11: SIDE-BY-SIDE (optional) -->
+<div class="step-block" id="step-11">
+  <div class="step-head" onclick="toggleStep('step-11')">
+    <div class="step-num-circle">11</div>
+    <div class="step-head-title">Side-by-side alignment <span style="font-size:11px;color:#aaa;font-weight:400">(optional)</span></div>
+    <div class="step-head-val" id="s11-val">Not needed</div>
+  </div>
+  <div class="step-body">
+    <div class="info-box" style="margin-bottom:12px">Band alignment is guaranteed within ½". Shades must be identical style, color, and height — ordered at the same time.</div>
+    <div class="opt-grid-2">
+      <div class="opt-card sel" id="sbs-no" onclick="selectSBS(false)"><div class="opt-card-title">Not needed</div></div>
+      <div class="opt-card" id="sbs-yes" onclick="selectSBS(true)"><div class="opt-card-title">Yes — request alignment</div><div class="opt-card-desc">Same style, color, height required</div></div>
+    </div>
+    <div id="sbs-detail" style="display:none;margin-top:12px" class="info-box">Note: When bands align to view-through position, bottom rail rises ~½" off sill. Shades must be ordered together to guarantee matching.</div>
+  </div>
+</div>
+
+<!-- STEP 12: QUOTE FORM -->
+<div class="step-block open" id="step-12">
+  <div class="step-head" onclick="toggleStep('step-12')">
+    <div class="step-num-circle">12</div>
+    <div class="step-head-title">Get your custom quote</div>
+  </div>
+  <div class="step-body">
+    <div class="form-row" style="margin-top:12px">
+      <div class="form-group"><label>Name *</label><input type="text" id="q-name" placeholder="Jane Smith"></div>
+      <div class="form-group"><label>Phone *</label><input type="tel" id="q-phone" placeholder="(215) 555-0100"></div>
+    </div>
+    <div class="form-group"><label>Email</label><input type="email" id="q-email" placeholder="jane@example.com"></div>
+    <div class="form-group"><label>Installation address</label><input type="text" id="q-address" placeholder="123 Main St, Philadelphia PA"></div>
+    <div class="form-group"><label>Additional notes / questions</label><textarea id="q-notes" style="min-height:70px" placeholder="Timeline, room details, fabric swatch requests, anything else..."></textarea></div>
+
+    <div class="delivery-section" style="margin-top:12px">
+      <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+      <div class="opt-grid-2">
+        <div class="opt-card sel" id="del-card-ship" onclick="selectDelivery('ship')">
+          <div class="opt-card-icon">📦</div>
+          <div class="opt-card-title">Ship to me</div>
+          <div class="opt-card-desc">UPS or FedEx from Huntingdon Valley, PA</div>
+        </div>
+        <div class="opt-card" id="del-card-pickup" onclick="selectDelivery('pickup')">
+          <div class="opt-card-icon">🏠</div>
+          <div class="opt-card-title">I'll pick up</div>
+          <div class="opt-card-desc">Pickup in Huntingdon Valley, PA. Address confirmed after order.</div>
+        </div>
+      </div>
+      <div id="del-ship-note" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA. <div class="delivery-tariff">Tariffs and import fees are additional.</div></div>
+      <div id="del-pickup-note" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>
+    </div>
+
+    <button class="btn-gold" onclick="submitQuote()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:16px">Submit Specification &amp; Request Quote &rarr;</button>
+
+    <div id="quote-success" style="display:none;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:10px;padding:20px;color:#2e7d32;font-size:14px;line-height:1.7;margin-top:12px">
+      <strong>Specification submitted!</strong><br>Your email app opened with the complete spec pre-filled. Our team will review and follow up within a few hours.<br><br>
+      Urgent? <a href="tel:6097421720" style="color:#2e7d32">(609) 742-1720</a> &middot; 24/7.
+    </div>
+
+    <button class="disclaimer-toggle" onclick="this.nextElementSibling.classList.toggle('open')" style="margin-top:16px">
+      ▶ Product notes &amp; disclaimers
+    </button>
+    <div class="disclaimer-body">
+      <div class="disclaimer-item">Soft Touch Cordless may not precisely stop at all open positions due to dual sheer fabric structure</div>
+      <div class="disclaimer-item">Side-by-side band alignment guaranteed within ½"</div>
+      <div class="disclaimer-item">Fabric inserts over 109" (94" for Linen/Line 7550/Beehive/Sparkle) will have a seam</div>
+      <div class="disclaimer-item">Bottom rail rises slightly (~½") when bands align to view-through position</div>
+      <div class="disclaimer-item">Oversize surcharge applies for widths 90"–99⅞" (+$40/unit) and 100"+ (+$80/unit)</div>
+      <div class="disclaimer-item">Handling: $25 first shade, $8 each additional</div>
+      <div class="disclaimer-item">Wallace 2D Dual Sheer / Banded Shades — not woven wood</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /configurator -->
+
+<!-- SPEC PANEL -->
+<div>
+  <div class="spec-panel">
+    <div class="spec-title">Live Specification</div>
+    <div class="spec-row"><span class="spec-key">Collection</span><span class="spec-val empty" id="sp-coll">— select above</span></div>
+    <div class="spec-row"><span class="spec-key">Deck</span><span class="spec-val empty" id="sp-deck">—</span></div>
+    <div class="spec-row"><span class="spec-key">Light control</span><span class="spec-val empty" id="sp-light">—</span></div>
+    <div class="spec-row"><span class="spec-key">Band size</span><span class="spec-val empty" id="sp-band">—</span></div>
+    <div class="spec-row"><span class="spec-key">Price group</span><span class="spec-val empty" id="sp-group">—</span></div>
+    <div class="spec-row"><span class="spec-key">Color</span><span class="spec-val empty" id="sp-color">—</span></div>
+    <div class="spec-row"><span class="spec-key">Mount</span><span class="spec-val empty" id="sp-mount">—</span></div>
+    <div class="spec-row"><span class="spec-key">Width × Height</span><span class="spec-val empty" id="sp-dims">—</span></div>
+    <div class="spec-row"><span class="spec-key">Qty</span><span class="spec-val empty" id="sp-qty">—</span></div>
+    <div class="spec-row"><span class="spec-key">Cassette</span><span class="spec-val empty" id="sp-cassette">—</span></div>
+    <div class="spec-row"><span class="spec-key">Bottom rail</span><span class="spec-val empty" id="sp-rail">—</span></div>
+    <div class="spec-row"><span class="spec-key">Control</span><span class="spec-val empty" id="sp-control">—</span></div>
+    <div class="spec-divider"></div>
+    <div class="spec-row"><span class="spec-key">Pricing</span><span class="spec-val" style="color:var(--gold)">Custom quote</span></div>
+    <div class="spec-row"><span class="spec-key">Lead time</span><span class="spec-val">Confirmed at quote</span></div>
+    <div style="margin-top:14px">
+      <a href="tel:6097421720" class="btn-gold" style="display:block;text-align:center;padding:11px;font-size:13px">(609) 742-1720 &middot; 24/7</a>
+    </div>
+  </div>
+  <div style="background:var(--gold-mid);border:1px solid #e8e8e4;border-radius:12px;padding:16px;margin-top:14px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-bottom:6px">Wallace Blinds</div>
+    <div style="font-size:12px;color:#555;line-height:1.6">2D Dual Sheer / Banded Shades — a zebra-style dual sheer system. Not woven wood. Bands tilt between view-through and privacy positions.</div>
+  </div>
+</div>
+
+</div><!-- /config-layout -->
+
+<div class="cta-banner">
+  <div>
+    <h2>Need help choosing a collection?</h2>
+    <p>We can order swatches and walk you through every option. Call or text Justin anytime.</p>
+  </div>
+  <div class="cta-banner-btns">
+    <a class="btn-dark" href="tel:6097421720">(609) 742-1720 &middot; 24/7</a>
+    <a class="btn-outline" href="consult.html">Book free consultation</a>
+  </div>
+</div>
+
+<footer class="site-footer" id="site-footer"></footer>
+<script src="../js/shared.js"></script>
+<script>
+renderNav('Shades & blinds'); renderFooter(false);
+
+// ═══════════════════════════════════════════════════════════════
+// COLLECTION DATA
+// T = Translucent, RD = Room Darkening
+// largeBail = defaults to Large bottom rail
+// cordless:false = Soft Touch Cordless not available
+// colors:null = PDF pages 2-3 not scanned — color entry via text input
+// ═══════════════════════════════════════════════════════════════
+var WB_COLLS = [
+  {deck:1,  name:'Reed',             light:'T',  band:'3 3/8"', group:'E', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:[{n:'Ice White',c:'DRE-01',hw:'White'},{n:'White',c:'DRE-02',hw:'White'},{n:'Ivory',c:'DRE-03',hw:'White'},{n:'Light Grey',c:'DRE-04',hw:'Grey'},{n:'Grey',c:'DRE-05',hw:'Grey'},{n:'Dark Grey',c:'DRE-06',hw:'Grey'}]},
+  {deck:2,  name:'Cona',             light:'T',  band:'3"',     group:'B', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:null},
+  {deck:3,  name:'Palisander',       light:'T',  band:'3"',     group:'D', maxW:106, maxH:125, cordless:true,  cMaxW:98,  largeBail:true, colors:[{n:'White',c:'DPA-01',hw:'White'},{n:'Brown',c:'DPA-02',hw:'Brown'},{n:'Grey',c:'DPA-03',hw:'Grey'},{n:'Black',c:'DPA-04',hw:'Black'}]},
+  {deck:4,  name:'Manado',           light:'T',  band:'3"',     group:'E', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:[{n:'White',c:'DMD-01',hw:'White'},{n:'Ivory',c:'DMD-02',hw:'Cream'},{n:'Sand',c:'DMD-03',hw:'Cream'},{n:'Khaki',c:'DMD-04',hw:'Cream'},{n:'Grey',c:'DMD-05',hw:'Grey'}]},
+  {deck:5,  name:'Manresa',          light:'T',  band:'3"',     group:'E', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:[{n:'White',c:'DMS-01',hw:'White'},{n:'Pearl',c:'DMS-02',hw:'Cream'},{n:'Cream',c:'DMS-03',hw:'Cream'},{n:'Blue Grey',c:'DMS-04',hw:'Grey'},{n:'Blue',c:'DMS-05',hw:'Grey'},{n:'Stone Blue',c:'DMS-06',hw:'Grey'},{n:'Dark Grey',c:'DMS-07',hw:'Grey'}]},
+  {deck:6,  name:'Bermuda Normal',   light:'T',  band:'3"',     group:'A', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:null},
+  {deck:7,  name:'Bumblebee',        light:'T',  band:'3"',     group:'D', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:null},
+  {deck:8,  name:'Woodlook',         light:'T',  band:'3"',     group:'B', maxW:106, maxH:118, cordless:true,  cMaxW:98,  colors:[{n:'White',c:'DWO-01',hw:'White'},{n:'Ice White',c:'DWO-02',hw:'White'},{n:'Mushroom',c:'DWO-03',hw:'Cream'},{n:'L-45',c:'DWO-05',hw:'Cream'},{n:'Khaki',c:'DWO-07',hw:'Cream'},{n:'J-3',c:'DWO-09',hw:'Grey'},{n:'Chocolate',c:'DWO-10',hw:'Brown'}]},
+  {deck:9,  name:'Woodlook Wide',    light:'T',  band:'4 1/2"', group:'C', maxW:106, maxH:118, cordless:true,  cMaxW:98,  colors:[{n:'White',c:'DWW-01',hw:'White'},{n:'Ice White',c:'DWW-02',hw:'White'},{n:'Mushroom',c:'DWW-03',hw:'Cream'},{n:'Khaki',c:'DWW-05',hw:'Cream'},{n:'B-1',c:'DWW-06',hw:'Grey'}]},
+  {deck:10, name:'Linen',            light:'T',  band:'3"',     group:'B', maxW:94,  maxH:125, cordless:true,  cMaxW:94,  colors:null},
+  {deck:11, name:'Lanikai',          light:'T',  band:'3 3/4"', group:'E', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:null},
+  {deck:12, name:'Palau',            light:'T',  band:'3"',     group:'C', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:[{n:'White',c:'DPL-01',hw:'White'},{n:'Ivory',c:'DPL-02',hw:'White'},{n:'Sand',c:'DPL-03',hw:'Cream'},{n:'Beige',c:'DPL-04',hw:'Cream'},{n:'Grey',c:'DPL-05',hw:'Grey'},{n:'Reed',c:'DPL-06',hw:'White'}]},
+  {deck:13, name:'Comfy',            light:'T',  band:'3"',     group:'C', maxW:70,  maxH:90,  cordless:true,  cMaxW:70,  colors:null},
+  {deck:14, name:'Pony',             light:'T',  band:'3 3/4"', group:'C', maxW:70,  maxH:90,  cordless:true,  cMaxW:70,  colors:[{n:'White',c:'DPO-01',hw:'White'},{n:'Ivory',c:'DPO-02',hw:'Cream'},{n:'Grey',c:'DPO-03',hw:'Grey'},{n:'Dark Grey',c:'DPO-04',hw:'Grey'}]},
+  {deck:15, name:'Foliate',          light:'T',  band:'3"',     group:'D', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:null},
+  {deck:16, name:'Dot',              light:'T',  band:'3"',     group:'C', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:null},
+  {deck:17, name:'Iron',             light:'T',  band:'3"',     group:'C', maxW:70,  maxH:90,  cordless:true,  cMaxW:70,  colors:null},
+  {deck:18, name:'Lexus 9570',       light:'T',  band:'3 3/4"', group:'C', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:null},
+  {deck:19, name:'Line 7550',        light:'T',  band:'3"',     group:'D', maxW:94,  maxH:125, cordless:true,  cMaxW:94,  colors:null},
+  {deck:20, name:'Neat 9570',        light:'T',  band:'3 3/4"', group:'C', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:[{n:'White',c:'DNE-01',hw:'White'},{n:'Beige',c:'DNE-02',hw:'Cream'},{n:'Grey',c:'DNE-03',hw:'Grey'},{n:'Charcoal',c:'DNE-04',hw:'Black'}]},
+  {deck:21, name:'Tivoli',           light:'T',  band:'4 1/2"', group:'C', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:[{n:'Khaki',c:'DTI-01',hw:'Cream'},{n:'White',c:'DTI-02',hw:'White'},{n:'Ivory',c:'DTI-03',hw:'Cream'},{n:'Grey',c:'DTI-04',hw:'Grey'},{n:'Dark Grey',c:'DTI-05',hw:'Grey'}]},
+  {deck:22, name:'Stellar Two Tone', light:'T',  band:'3 7/8"', group:'D', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:[{n:'Ice White',c:'DST2-01',hw:'White'},{n:'White',c:'DST2-02',hw:'White'},{n:'Ivory',c:'DST2-03',hw:'Cream'},{n:'Baby Pink',c:'DST2-04',hw:'White'},{n:'Sky Blue',c:'DST2-05',hw:'White'},{n:'Mint',c:'DST2-06',hw:'White'},{n:'Light Grey',c:'DST2-07',hw:'Grey'},{n:'Grey',c:'DST2-08',hw:'Grey'}]},
+  {deck:23, name:'Luxury Wide',      light:'T',  band:'4 1/2"', group:'D', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:[{n:'White',c:'DLU-01',hw:'White'},{n:'Ivory',c:'DLU-02',hw:'Cream'},{n:'Beige',c:'DLU-03',hw:'Cream'},{n:'Grey',c:'DLU-04',hw:'Grey'},{n:'Light Grey',c:'DLU-05',hw:'Grey'}]},
+  {deck:24, name:'Luxury',           light:'T',  band:'3"',     group:'D', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:[{n:'White',c:'DLX-01',hw:'White'},{n:'Ivory',c:'DLX-02',hw:'Cream'},{n:'Beige',c:'DLX-03',hw:'Cream'},{n:'Grey',c:'DLX-04',hw:'Grey'}]},
+  {deck:25, name:'Selene',           light:'T',  band:'3"',     group:'C', maxW:70,  maxH:90,  cordless:true,  cMaxW:70,  colors:[{n:'Ice White',c:'DSE-02',hw:'White'},{n:'Dark Grey',c:'DSE-03',hw:'Grey'},{n:'Cream',c:'DSE-04',hw:'Cream'}]},
+  {deck:26, name:'Beehive 1',        light:'T',  band:'3"',     group:'D', maxW:94,  maxH:125, cordless:true,  cMaxW:94,  colors:null},
+  {deck:27, name:'Beehive 2',        light:'T',  band:'3"',     group:'D', maxW:94,  maxH:125, cordless:true,  cMaxW:94,  colors:null},
+  {deck:28, name:'Chaqra',           light:'T',  band:'3"',     group:'D', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:null},
+  {deck:29, name:'Glow',             light:'T',  band:'5 7/8"', group:'E', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:null},
+  {deck:30, name:'Sparkle',          light:'T',  band:'3"',     group:'E', maxW:94,  maxH:125, cordless:true,  cMaxW:94,  colors:[{n:'White (9-2)',c:'DSP-01',hw:'White'},{n:'Ivory (7-4)',c:'DSP-02',hw:'Cream'},{n:'2-6',c:'DSP-03',hw:'Grey'},{n:'3-4',c:'DSP-04',hw:'Grey'},{n:'Black',c:'DSP-05',hw:'Black'}]},
+  {deck:31, name:'Chroma',           light:'T',  band:'5 1/8"', group:'E', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:null},
+  {deck:32, name:'Spread 1390',      light:'T',  band:'5 1/8"', group:'E', maxW:106, maxH:125, cordless:true,  cMaxW:98,  colors:[{n:'White',c:'DSS-01',hw:'White'},{n:'Grey',c:'DSS-03',hw:'Grey'},{n:'Stone Blue',c:'DSS-04',hw:'Grey'},{n:'Black Brown',c:'DSS-05',hw:'Black'}]},
+  {deck:33, name:'Maseru Pleats',    light:'T',  band:'5 1/8"', group:'E', maxW:106, maxH:125, cordless:false, cMaxW:0,   colors:[{n:'White',c:'DMA-01',hw:'White'},{n:'Ivory',c:'DMA-02',hw:'Cream'},{n:'Beige',c:'DMA-03',hw:'Cream'},{n:'Pastel',c:'DMA-04',hw:'Cream'},{n:'Grey',c:'DMA-05',hw:'Grey'},{n:'Black',c:'DMA-06',hw:'Black'}]},
+  {deck:34, name:'Hardin Pleats',    light:'T',  band:'5 1/8"', group:'D', maxW:106, maxH:125, cordless:false, cMaxW:0,   colors:null},
+  {deck:35, name:'Bari Pleats',      light:'T',  band:'4 1/2"', group:'D', maxW:106, maxH:125, cordless:false, cMaxW:0,   colors:null},
+  {deck:36, name:'Abakan',           light:'RD', band:'3 3/4"', group:'E', maxW:106, maxH:106, cordless:true,  cMaxW:98,  colors:null},
+  {deck:37, name:'Almond',           light:'RD', band:'3 7/8"', group:'D', maxW:106, maxH:106, cordless:true,  cMaxW:98,  largeBail:true, colors:[{n:'Ice White',c:'DAD-01',hw:'White'},{n:'Ivory',c:'DAD-02',hw:'Cream'},{n:'Beige',c:'DAD-03',hw:'Cream'},{n:'Latte',c:'DAD-04',hw:'Cream'},{n:'Grey',c:'DAD-05',hw:'Grey'},{n:'Teak',c:'DAD-06',hw:'Brown'},{n:'Khaki',c:'DAD-07',hw:'Cream'},{n:'Anthracite',c:'DAD-08',hw:'Black'}]},
+  {deck:38, name:'Equus One Tone',   light:'RD', band:'3 1/8"', group:'E', maxW:106, maxH:106, cordless:true,  cMaxW:98,  largeBail:true, colors:null},
+  {deck:39, name:'Equus Two Tone',   light:'RD', band:'3 1/8"', group:'E', maxW:106, maxH:106, cordless:true,  cMaxW:98,  largeBail:true, colors:null},
+  {deck:40, name:'SB Grand One Tone',light:'RD', band:'3 7/8"', group:'E', maxW:106, maxH:106, cordless:true,  cMaxW:98,  colors:[{n:'White',c:'DSB1-01',hw:'White'},{n:'Ocher',c:'DSB1-02',hw:'Cream'},{n:'Clay',c:'DSB1-03',hw:'Grey'}]},
+  {deck:41, name:'SB Grand Two Tone',light:'RD', band:'3 7/8"', group:'E', maxW:106, maxH:106, cordless:true,  cMaxW:98,  colors:[{n:'Ocher',c:'DSB2-01',hw:'Cream'},{n:'White',c:'DSB2-02',hw:'White'},{n:'Beige',c:'DSB2-03',hw:'Cream'},{n:'Grey',c:'DSB2-04',hw:'Grey'},{n:'Teak',c:'DSB2-05',hw:'Brown'}]},
+  {deck:'N1',name:'New Avante',      light:'T',  band:'3"',     group:'C', maxW:106, maxH:120, cordless:true,  cMaxW:98,  colors:[{n:'Ice White',c:'DNA-01',hw:'White'},{n:'White',c:'DNA-02',hw:'White'},{n:'Cream',c:'DNA-03',hw:'Cream'},{n:'Beige',c:'DNA-04',hw:'Cream'},{n:'Light Grey',c:'DNA-05',hw:'Grey'},{n:'Grey',c:'DNA-06',hw:'Grey'},{n:'Charcoal',c:'DNA-07',hw:'Black'}]},
+  {deck:'N2',name:'Cooing',          light:'T',  band:'3 3/4"', group:'D', maxW:106, maxH:120, cordless:true,  cMaxW:98,  colors:null},
+  {deck:'N3',name:'Linen 15%',       light:'RD', band:'4"',     group:'E', maxW:106, maxH:120, cordless:true,  cMaxW:98,  colors:[{n:'White',c:'DLD-01',hw:'White'},{n:'Beige',c:'DLD-02',hw:'Cream'},{n:'Brown',c:'DLD-03',hw:'Brown'},{n:'Grey',c:'DLD-04',hw:'Grey'}]},
+  {deck:'N4',name:'Adana',           light:'RD', band:'4"',     group:'F', maxW:106, maxH:120, cordless:true,  cMaxW:98,  colors:[{n:'White',c:'DAK-01',hw:'White'},{n:'Ivory',c:'DAK-02',hw:'Cream'},{n:'Beige',c:'DAK-03',hw:'Cream'},{n:'Light Grey',c:'DAK-04',hw:'Grey'},{n:'Grey',c:'DAK-05',hw:'Grey'},{n:'Black',c:'DAK-06',hw:'Black'}]},
+  {deck:'N5',name:'True Black & White',light:'RD',band:'4"',    group:'F', maxW:106, maxH:100, cordless:true,  cMaxW:98,  colors:[{n:'Ice White',c:'DTB-01',hw:'White'},{n:'White',c:'DTB-02',hw:'White'},{n:'Cloud White',c:'DTB-03',hw:'White'},{n:'Black',c:'DTB-04',hw:'Black'}]}
+];
+
+// Collections where seamed insert limit is 94" instead of 109"
+var SEAM_94 = ['Linen','Line 7550','Beehive 1','Beehive 2','Sparkle'];
+
+// CSS color approximations for swatches
+var DOT_COLORS = {
+  'White':'#F5F5F5','Ice White':'#EEF2F4','Cloud White':'#F0EDE8',
+  'Ivory':'#F4ECD8','Cream':'#F0E4C0','Pastel':'#E8DDD0',
+  'Pearl':'#E2D8D0','Beige':'#D4B896','Sand':'#C9A97A',
+  'Latte':'#C8A87A','L-45':'#C0966A','Khaki':'#B0956A',
+  'Ocher':'#C8A040','Reed':'#C8C0A0','Mushroom':'#B8A898',
+  'Clay':'#C89068','Light Grey':'#C0C0C0','Grey':'#909090',
+  'Blue Grey':'#809098','Stone Blue':'#7090A0','Sky Blue':'#80B0C8',
+  'Mint':'#90C8B8','Baby Pink':'#F0C0C0','Dark Grey':'#585858',
+  'Charcoal':'#404040','Anthracite':'#383838','Teak':'#8B5E3C',
+  'Brown':'#6B4423','Chocolate':'#5C3820','J-3':'#808060',
+  'B-1':'#908870','2-6':'#707060','3-4':'#808070',
+  'Black Brown':'#2A1810','Black':'#1A1A1A',
+  'White (9-2)':'#F5F5F5','Ivory (7-4)':'#F4ECD8'
+};
+
+// Fabric width deductions (inches) by mount + control
+var DEDUCTIONS = {
+  inside:  {cord:1.3125, cordless:1.125, battery:1.3125, quiet:1.4375, wand:1.3125},
+  outside: {cord:1.0625, cordless:0.875, battery:1.0625, quiet:1.1875,  wand:1.0625}
+};
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+var S = {
+  coll: null, colorName:'', colorCode:'', colorHW:'White', customColor:'',
+  mount:'', width:0, height:0, qty:1, room:'',
+  cassette:'round', cassCaps:'none', cassetteColor:'White',
+  railSize:'regular', railInsert:'smooth',
+  control:'', controlSide:'', wandColor:'White',
+  motorAccessories:[],
+  multiHead:'none', sideBySide:false,
+  delivery:'ship'
+};
+
+// ═══════════════════════════════════════════════════════════════
+// COLLECTION GRID
+// ═══════════════════════════════════════════════════════════════
+function buildCollGrid(filter) {
+  var grid = document.getElementById('coll-grid');
+  var list = filter === 'all' ? WB_COLLS : WB_COLLS.filter(function(c){ return c.light === filter; });
+  grid.innerHTML = list.map(function(c) {
+    var badgeCls = c.light === 'T' ? 'badge-t' : 'badge-rd';
+    var badgeTxt = c.light === 'T' ? 'Translucent' : 'Room Darkening';
+    var sel = S.coll && S.coll.name === c.name ? ' sel' : '';
+    return '<div class="coll-card' + sel + '" onclick="selectColl(' + WB_COLLS.indexOf(c) + ')">' +
+      '<span class="coll-badge ' + badgeCls + '">' + badgeTxt + '</span>' +
+      '<div class="coll-name">' + c.name + '</div>' +
+      '<div class="coll-meta">Band ' + c.band + ' &middot; Group ' + c.group + '<br>Max ' + c.maxW + '" W &times; ' + c.maxH + '" H</div>' +
+    '</div>';
+  }).join('');
+}
+
+function filterColls(f, btn) {
+  document.querySelectorAll('.filter-tab').forEach(function(t){ t.classList.remove('on'); });
+  btn.classList.add('on');
+  buildCollGrid(f);
+}
+
+function selectColl(idx) {
+  S.coll = WB_COLLS[idx];
+  S.colorName = ''; S.colorCode = ''; S.colorHW = 'White'; S.customColor = '';
+  buildCollGrid('all');
+  document.querySelectorAll('.filter-tab')[0].click();
+  completeStep('step-1', S.coll.name);
+  updateSpec('sp-coll', S.coll.name);
+  updateSpec('sp-deck', 'Deck ' + S.coll.deck);
+  updateSpec('sp-light', S.coll.light === 'T' ? 'Translucent' : 'Room Darkening');
+  updateSpec('sp-band', S.coll.band);
+  updateSpec('sp-group', 'Group ' + S.coll.group);
+  updateSpec('sp-color', '—');
+
+  // Auto large bail
+  if (S.coll.largeBail) {
+    S.railSize = 'large';
+    document.getElementById('rail-reg').classList.remove('sel');
+    document.getElementById('rail-large').classList.add('sel');
+    document.getElementById('large-rail-note').style.display = 'block';
+  } else {
+    document.getElementById('large-rail-note').style.display = 'none';
+  }
+
+  buildColorStep();
+  buildControlStep();
+  activateStep('step-2');
+
+  // Reset size validation note
+  if (S.width > 0) validateSize();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// COLOR STEP
+// ═══════════════════════════════════════════════════════════════
+function buildColorStep() {
+  var body = document.getElementById('s2-body');
+  if (!S.coll) { body.innerHTML = '<div style="font-size:12px;color:#666">Select a collection first.</div>'; return; }
+
+  if (S.coll.colors) {
+    body.innerHTML = '<div style="font-size:12px;color:#666;margin-bottom:4px">Select your color — coordinated hardware/cord color shown in spec panel.</div>' +
+      '<div class="color-grid">' +
+      S.coll.colors.map(function(cl) {
+        var bg = DOT_COLORS[cl.n] || '#D0D0D0';
+        var border = cl.n.indexOf('White') !== -1 || cl.n === 'Ice White' || cl.n === 'Cloud White' ? 'border:1px solid #ccc;' : '';
+        return '<div class="color-swatch" id="sw-' + cl.c + '" onclick="selectColor(\'' + cl.c + '\',\'' + cl.n.replace(/'/g,'\\\'') + '\',\'' + cl.hw + '\')">' +
+          '<div class="swatch-dot" style="background:' + bg + ';' + border + '"></div>' +
+          '<div class="swatch-info"><div class="swatch-name">' + cl.n + '</div><div class="swatch-code">' + cl.c + '</div></div>' +
+        '</div>';
+      }).join('') +
+      '</div>';
+  } else {
+    body.innerHTML = '<div class="warn-box" style="margin-bottom:10px"><span>📋</span><span>Color chart for this collection requires the full PDF (pages 2–3). Please specify your color name and code from the Wallace 2D Banded Shades catalog, or call us for swatches.</span></div>' +
+      '<div style="font-size:12px;font-weight:500;color:#444;margin-bottom:6px">Color name and code</div>' +
+      '<input type="text" id="custom-color-inp" placeholder="e.g. Ivory · DAX-02" style="width:100%;padding:9px 11px;border:1px solid #ddd;border-radius:8px;font-size:13px" oninput="selectCustomColor(this.value)">';
+  }
+}
+
+function selectColor(code, name, hw) {
+  S.colorCode = code; S.colorName = name; S.colorHW = hw;
+  document.querySelectorAll('.color-swatch').forEach(function(el){ el.classList.remove('sel'); });
+  var el = document.getElementById('sw-' + code);
+  if (el) el.classList.add('sel');
+  completeStep('step-2', name + ' · ' + code);
+  updateSpec('sp-color', name + ' · ' + code);
+  showHWSuggest();
+  activateStep('step-3');
+}
+
+function selectCustomColor(val) {
+  S.customColor = val; S.colorName = val; S.colorCode = '—';
+  if (val.trim()) {
+    completeStep('step-2', val);
+    updateSpec('sp-color', val);
+    showHWSuggest();
+    activateStep('step-3');
+  }
+}
+
+function showHWSuggest() {
+  var box = document.getElementById('hw-suggest');
+  if (S.colorHW && S.colorHW !== 'White') {
+    box.style.display = 'block';
+    box.textContent = 'Coordinated hardware/cord color for this fabric: ' + S.colorHW + '. Cassette color suggestion applied — you may change it below.';
+    selectCassetteColor(S.colorHW, null);
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MOUNT
+// ═══════════════════════════════════════════════════════════════
+function selectMount(m) {
+  S.mount = m;
+  document.getElementById('mc-in').classList.toggle('sel', m === 'inside');
+  document.getElementById('mc-out').classList.toggle('sel', m === 'outside');
+  var label = m === 'inside' ? 'Inside Mount' : 'Outside Mount';
+  completeStep('step-3', label);
+  updateSpec('sp-mount', label);
+  validateSize();
+  activateStep('step-4');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SIZE VALIDATION
+// ═══════════════════════════════════════════════════════════════
+function getCordDrop(h) {
+  if (h <= 32) return 19; if (h <= 43) return 29; if (h <= 53) return 39;
+  if (h <= 63) return 49; if (h <= 75) return 59; if (h <= 85) return 69;
+  if (h <= 95) return 79; if (h <= 106) return 89; return 99;
+}
+
+function getWandLength(h) {
+  if (h <= 40) return '2 ft'; if (h <= 55) return '3 ft'; if (h <= 60) return '4 ft'; return '5 ft';
+}
+
+function validateSize() {
+  var w = parseFloat(document.getElementById('inp-w').value) || 0;
+  var h = parseFloat(document.getElementById('inp-h').value) || 0;
+  var qty = parseInt(document.getElementById('inp-qty').value) || 1;
+  S.width = w; S.height = h; S.qty = qty;
+  S.room = document.getElementById('inp-room').value.trim();
+
+  var msgs = document.getElementById('size-msgs');
+  msgs.innerHTML = '';
+  var errors = [], warns = [];
+
+  if (w > 0 && h > 0) {
+    if (S.coll) {
+      var note = document.getElementById('size-collection-note');
+      note.style.display = 'block';
+      note.textContent = S.coll.name + ' limits: max ' + S.coll.maxW + '" W × ' + S.coll.maxH + '" H.';
+
+      if (w > S.coll.maxW) errors.push('Width ' + w + '" exceeds ' + S.coll.name + ' maximum of ' + S.coll.maxW + '".');
+      if (h > S.coll.maxH) errors.push('Height ' + h + '" exceeds ' + S.coll.name + ' maximum of ' + S.coll.maxH + '".');
+      if (w >= 90 && w < 100) warns.push('Width ' + w + '" — oversize surcharge applies ($40/unit).');
+      if (w >= 100) warns.push('Width ' + w + '" — oversize surcharge applies ($80/unit).');
+    } else {
+      document.getElementById('size-collection-note').style.display = 'none';
+    }
+    if (w < 12) errors.push('Minimum width is 12".');
+    if (h < 18) errors.push('Minimum height is 18".');
+
+    errors.forEach(function(e){ msgs.innerHTML += '<div class="size-error">⚠️ ' + e + '</div>'; });
+    warns.forEach(function(w){ msgs.innerHTML += '<div class="size-warn">⚠️ ' + w + '</div>'; });
+
+    if (!errors.length) {
+      msgs.innerHTML += '<div class="size-ok">✓ Dimensions within specification.</div>';
+      updateSpec('sp-dims', w + '" × ' + h + '"');
+      updateSpec('sp-qty', qty);
+      document.getElementById('s4-val').textContent = w + '" × ' + h + '"';
+
+      // Computed deductions
+      var mount = S.mount || 'inside';
+      var ctrlKey = S.control === 'cordless' ? 'cordless' :
+                    S.control === 'wand' ? 'wand' :
+                    S.control === 'battery' ? 'battery' :
+                    S.control === 'quiet' ? 'quiet' : 'cord';
+      var ded = DEDUCTIONS[mount][ctrlKey];
+      var cassW = mount === 'inside' ? (w - 0.25).toFixed(3) : w.toFixed(3);
+      var fabW  = (w - ded).toFixed(3);
+      document.getElementById('cp-cassW').textContent = cassW + '"';
+      document.getElementById('cp-fabW').textContent = fabW + '"';
+      var cordRow = document.getElementById('cp-cord-row');
+      if (S.control === 'cord' || !S.control) {
+        cordRow.style.display = 'flex';
+        document.getElementById('cp-cord').textContent = getCordDrop(h) + '"';
+      } else { cordRow.style.display = 'none'; }
+      document.getElementById('size-computed').style.display = 'block';
+      if (!document.getElementById('step-5').classList.contains('done')) activateStep('step-5');
+    } else {
+      document.getElementById('size-computed').style.display = 'none';
+    }
+  } else {
+    document.getElementById('size-computed').style.display = 'none';
+    document.getElementById('size-collection-note').style.display = 'none';
+  }
+  buildControlStep();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CASSETTE
+// ═══════════════════════════════════════════════════════════════
+function selectCassette(style) {
+  S.cassette = style;
+  document.getElementById('cas-round').classList.toggle('sel', style === 'round');
+  document.getElementById('cas-square').classList.toggle('sel', style === 'square');
+  document.getElementById('square-caps-wrap').style.display = style === 'square' ? 'block' : 'none';
+  updateCassetteSpec();
+  activateStep('step-6');
+}
+
+function selectCaps(v) {
+  S.cassCaps = v;
+  ['cap-none','cap-copper','cap-silver'].forEach(function(id){ document.getElementById(id).classList.remove('sel'); });
+  document.getElementById('cap-' + v).classList.add('sel');
+  updateCassetteSpec();
+}
+
+function selectCassetteColor(color, el) {
+  S.cassetteColor = color;
+  document.querySelectorAll('#grp-cassette-color .hw-color-opt').forEach(function(e){ e.classList.remove('sel'); });
+  if (el) { el.classList.add('sel'); }
+  else {
+    document.querySelectorAll('#grp-cassette-color .hw-color-opt').forEach(function(e){
+      if (e.textContent.trim() === color) e.classList.add('sel');
+    });
+  }
+  updateCassetteSpec();
+}
+
+function updateCassetteSpec() {
+  var desc = (S.cassette === 'round' ? 'Round Elite' : 'Square Elite') + ' · ' + S.cassetteColor;
+  if (S.cassette === 'square' && S.cassCaps !== 'none') desc += ' · ' + S.cassCaps.charAt(0).toUpperCase() + S.cassCaps.slice(1) + ' caps';
+  completeStep('step-5', desc);
+  updateSpec('sp-cassette', desc);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// BOTTOM RAIL
+// ═══════════════════════════════════════════════════════════════
+function selectRail(size) {
+  S.railSize = size;
+  document.getElementById('rail-reg').classList.toggle('sel', size === 'regular');
+  document.getElementById('rail-large').classList.toggle('sel', size === 'large');
+  updateRailSpec();
+}
+
+function selectRailInsert(ins) {
+  S.railInsert = ins;
+  document.getElementById('rail-smooth').classList.toggle('sel', ins === 'smooth');
+  document.getElementById('rail-fabric').classList.toggle('sel', ins === 'fabric');
+  updateRailSpec();
+}
+
+function updateRailSpec() {
+  var desc = (S.railSize === 'large' ? 'Large' : 'Regular') + ' · ' + (S.railInsert === 'fabric' ? 'Fabric Insert' : 'Smooth Round');
+  completeStep('step-6', desc);
+  updateSpec('sp-rail', desc);
+  activateStep('step-7');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROL METHOD
+// ═══════════════════════════════════════════════════════════════
+function buildControlStep() {
+  var w = S.width, h = S.height;
+  var isCordlessBlocked = S.coll && !S.coll.cordless;
+  var body = document.getElementById('s7-body');
+
+  var opts = [
+    {id:'ctrl-cord',     key:'cord',     icon:'🔗', title:'Continuous Cord Loop',   desc:'Standard. Min 12" W × 18" H. Color-coordinated cord.',          minW:12,  minH:18, blocked:false},
+    {id:'ctrl-cordless', key:'cordless', icon:'👆', title:'Soft Touch Cordless',     desc:'Nudge up/down freely. Min 20" W × 20" H. Max 98" W × 84" H.',   minW:20,  minH:20, blocked:isCordlessBlocked},
+    {id:'ctrl-wand',     key:'wand',     icon:'⚡', title:'Wand Motor',              desc:'Rechargeable battery, wand operated. Min 22" W × 18" H.',        minW:22,  minH:18, blocked:false},
+    {id:'ctrl-battery',  key:'battery',  icon:'🔋', title:'Standard Battery Motor',  desc:'Rechargeable Li-ion, remote controlled. Min 23" W × 18" H.',     minW:23,  minH:18, blocked:false},
+    {id:'ctrl-quiet',    key:'quiet',    icon:'🔌', title:'DC / AC Motor',           desc:'Mini DC battery or AC hardwired. Min 23" W. Max 106" W × 120" H.',minW:23,  minH:18, blocked:false}
+  ];
+
+  body.innerHTML = '<div class="opt-grid">' + opts.map(function(o) {
+    var disabled = o.blocked || (w > 0 && w < o.minW) || (h > 0 && h < o.minH);
+    var whyDisabled = o.blocked ? 'Not available for ' + (S.coll ? S.coll.name : 'this collection') :
+      (w > 0 && w < o.minW) ? 'Min width ' + o.minW + '"' :
+      (h > 0 && h < o.minH) ? 'Min height ' + o.minH + '"' : '';
+    var selClass = S.control === o.key && !disabled ? ' sel' : '';
+    var dimStyle = disabled ? 'opacity:.45;pointer-events:none;' : '';
+    return '<div class="opt-card' + selClass + '" id="' + o.id + '" onclick="selectControl(\'' + o.key + '\')" style="' + dimStyle + '">' +
+      '<div class="opt-card-icon">' + o.icon + '</div>' +
+      '<div class="opt-card-title">' + o.title + '</div>' +
+      '<div class="opt-card-desc">' + (disabled && whyDisabled ? '<span style="color:#dc2626;font-weight:600">' + whyDisabled + '</span>' : o.desc) + '</div>' +
+    '</div>';
+  }).join('') + '</div>' +
+  (isCordlessBlocked ? '<div class="warn-box" style="margin-top:10px"><span>⚠️</span><span>Soft Touch Cordless is not available for ' + (S.coll ? S.coll.name : 'this collection') + '.</span></div>' : '');
+}
+
+function selectControl(key) {
+  S.control = key;
+  S.controlSide = '';
+  var labels = {cord:'Cord Loop', cordless:'Soft Touch Cordless', wand:'Wand Motor', battery:'Battery Motor', quiet:'DC/AC Motor'};
+  completeStep('step-7', labels[key]);
+  updateSpec('sp-control', labels[key]);
+  validateSize();
+
+  // Show/hide control side step
+  var needsSide = key === 'cord' || key === 'wand' || key === 'battery' || key === 'quiet';
+  document.getElementById('step-8').style.display = needsSide ? 'block' : 'none';
+  document.getElementById('step-9').style.display = (key === 'wand' || key === 'battery' || key === 'quiet') ? 'block' : 'none';
+
+  if (needsSide) buildControlSideStep(key);
+  if (key === 'wand' || key === 'battery' || key === 'quiet') buildMotorAccessories(key);
+
+  activateStep(needsSide ? 'step-8' : 'step-10');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROL SIDE
+// ═══════════════════════════════════════════════════════════════
+function buildControlSideStep(key) {
+  var titleEl = document.getElementById('s8-title');
+  var body = document.getElementById('s8-body');
+  titleEl.textContent = key === 'cord' ? 'Cord / chain side' : key === 'wand' ? 'Wand color' : 'Motor control side';
+
+  var sideOpts = '<div class="opt-grid-2">' +
+    '<div class="opt-card" id="side-right" onclick="selectControlSide(\'Right\')"><div class="opt-card-title">Right</div><div class="opt-card-desc">Control on right side</div></div>' +
+    '<div class="opt-card" id="side-left" onclick="selectControlSide(\'Left\')"><div class="opt-card-title">Left</div><div class="opt-card-desc">Control on left side</div></div>' +
+  '</div>';
+
+  var cordColorOpts = (key === 'cord') ?
+    '<div style="font-size:12px;font-weight:500;color:#444;margin:14px 0 8px">Cord / chain color</div>' +
+    '<div class="hw-color-row" id="grp-cord-color">' +
+    ['White','Cream','Grey','Brown','Black'].map(function(c) {
+      var bg = DOT_COLORS[c] || '#888';
+      return '<div class="hw-color-opt' + (c === S.cassetteColor ? ' sel' : '') + '" onclick="selectCordColor(\'' + c + '\',this)"><span class="hw-color-dot" style="background:' + bg + '"></span>' + c + '</div>';
+    }).join('') +
+    '</div>' +
+    '<div class="opt-grid-2" style="margin-top:10px">' +
+    '<div class="opt-card" id="chain-ball" onclick="selChainType(\'ball\')"><div class="opt-card-title">Ball Chain</div><div class="opt-card-desc">Optional upgrade</div></div>' +
+    '<div class="opt-card" id="chain-standard" onclick="selChainType(\'standard\')"><div class="opt-card-title">Standard Cord</div><div class="opt-card-desc">Default — color-coordinated</div></div>' +
+    '</div>' : '';
+
+  var wandColorOpts = (key === 'wand') ?
+    '<div style="font-size:12px;font-weight:500;color:#444;margin:14px 0 8px">Wand color</div>' +
+    '<div class="hw-color-row" id="grp-wand-color">' +
+    ['White','Cream','Grey','Brown','Black'].map(function(c) {
+      var bg = DOT_COLORS[c] || '#888';
+      return '<div class="hw-color-opt' + (c === 'White' ? ' sel' : '') + '" onclick="selectWandColor(\'' + c + '\',this)"><span class="hw-color-dot" style="background:' + bg + '"></span>' + c + '</div>';
+    }).join('') +
+    '</div>' +
+    (S.height > 0 ? '<div class="info-box" style="margin-top:10px">Wand length for ' + S.height + '" shade: <strong>' + getWandLength(S.height) + '</strong></div>' : '') : '';
+
+  body.innerHTML = sideOpts + cordColorOpts + wandColorOpts;
+}
+
+function selectControlSide(side) {
+  S.controlSide = side;
+  ['side-right','side-left'].forEach(function(id){ var el=document.getElementById(id); if(el) el.classList.remove('sel'); });
+  var el = document.getElementById('side-' + side.toLowerCase());
+  if (el) el.classList.add('sel');
+  completeStep('step-8', side);
+  activateStep('step-10');
+}
+
+function selectCordColor(c, el) {
+  document.querySelectorAll('#grp-cord-color .hw-color-opt').forEach(function(e){ e.classList.remove('sel'); });
+  el.classList.add('sel');
+}
+
+function selChainType(t) {
+  ['chain-ball','chain-standard'].forEach(function(id){ var el=document.getElementById(id); if(el) el.classList.remove('sel'); });
+  var el=document.getElementById('chain-'+t); if(el) el.classList.add('sel');
+}
+
+function selectWandColor(c, el) {
+  S.wandColor = c;
+  document.querySelectorAll('#grp-wand-color .hw-color-opt').forEach(function(e){ e.classList.remove('sel'); });
+  el.classList.add('sel');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MOTOR ACCESSORIES
+// ═══════════════════════════════════════════════════════════════
+function buildMotorAccessories(key) {
+  var body = document.getElementById('s9-body');
+  var items = [
+    {id:'acc-remote1',  label:'Single Remote',           sub:'1-channel remote control'},
+    {id:'acc-remote15', label:'15-Channel Remote',       sub:'Control up to 15 shades'},
+    {id:'acc-switch1',  label:'Single Wall Switch',      sub:'1-channel wall-mounted switch'},
+    {id:'acc-switch15', label:'15-Channel Wall Switch',  sub:'Control up to 15 shades'},
+    {id:'acc-charger10',label:'10 ft Charger Cable',     sub:'With plug — for rechargeable motors'},
+    {id:'acc-charger16',label:'16 ft Charger Cable',     sub:'Extended reach charger'},
+    {id:'acc-solar',    label:'Solar Charger',           sub:'Direct sunshine only'},
+    {id:'acc-hub',      label:'Smart Connector Hub',     sub:'Wi-Fi/Ethernet · Alexa, Google, Control4, Crestron, ELAN, URC, RTI'},
+  ];
+  if (key === 'quiet') {
+    items.push({id:'acc-batt8aa', label:'AA Battery Wand',     sub:'8×AA battery pack for Mini DC motor'});
+    items.push({id:'acc-transformer', label:'Plug-in Transformer', sub:'Continuous-use adapter'});
+  }
+  body.innerHTML = items.map(function(item) {
+    return '<div class="acc-item">' +
+      '<input type="checkbox" class="acc-check" id="' + item.id + '" onchange="updateMotorAcc()" style="width:16px;height:16px;cursor:pointer;flex-shrink:0;margin-top:2px">' +
+      '<div><div class="acc-label">' + item.label + '</div><div class="acc-sub">' + item.sub + '</div></div>' +
+    '</div>';
+  }).join('');
+}
+
+function updateMotorAcc() {
+  var acc = [];
+  document.querySelectorAll('#s9-body .acc-check:checked').forEach(function(el) {
+    var lbl = el.nextElementSibling && el.nextElementSibling.querySelector('.acc-label');
+    if (lbl) acc.push(lbl.textContent);
+  });
+  S.motorAccessories = acc;
+  document.getElementById('s9-val').textContent = acc.length ? acc.length + ' selected' : 'Optional';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MULTI-HEADRAIL
+// ═══════════════════════════════════════════════════════════════
+function selectMultiHead(v) {
+  S.multiHead = v;
+  ['mh-none','mh-2on1','mh-3on1'].forEach(function(id){ document.getElementById(id).classList.remove('sel'); });
+  document.getElementById('mh-' + v).classList.add('sel');
+  var detail = document.getElementById('mh-detail');
+  detail.style.display = v === 'none' ? 'none' : 'block';
+  completeStep('step-10', v === 'none' ? 'Not needed' : v);
+  document.getElementById('s10-val').textContent = v === 'none' ? 'Not needed' : v;
+  if (v !== 'none' && S.control === 'cordless') {
+    document.getElementById('mh-seam-warn').style.display = 'flex';
+    document.getElementById('mh-seam-text').textContent = 'Multi-headrail is not compatible with Soft Touch Cordless. Please change your control method.';
+  } else {
+    checkSeamWarn();
+  }
+}
+
+function checkSeamWarn() {
+  var total = S.width;
+  var collName = S.coll ? S.coll.name : '';
+  var seamMax = SEAM_94.indexOf(collName) !== -1 ? 94 : 109;
+  var warnEl = document.getElementById('mh-seam-warn');
+  var txtEl = document.getElementById('mh-seam-text');
+  if (total > seamMax && S.multiHead !== 'none') {
+    warnEl.style.display = 'flex';
+    txtEl.textContent = 'Combined width exceeds ' + seamMax + '" — fabric insert will have a visible seam in the middle.';
+  } else {
+    warnEl.style.display = 'none';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SIDE-BY-SIDE
+// ═══════════════════════════════════════════════════════════════
+function selectSBS(v) {
+  S.sideBySide = v;
+  document.getElementById('sbs-no').classList.toggle('sel', !v);
+  document.getElementById('sbs-yes').classList.toggle('sel', v);
+  document.getElementById('sbs-detail').style.display = v ? 'block' : 'none';
+  document.getElementById('s11-val').textContent = v ? 'Alignment requested' : 'Not needed';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// DELIVERY
+// ═══════════════════════════════════════════════════════════════
+function selectDelivery(mode) {
+  S.delivery = mode;
+  document.getElementById('del-card-ship').classList.toggle('sel', mode === 'ship');
+  document.getElementById('del-card-pickup').classList.toggle('sel', mode === 'pickup');
+  document.getElementById('del-ship-note').style.display = mode === 'ship' ? 'block' : 'none';
+  document.getElementById('del-pickup-note').style.display = mode === 'pickup' ? 'block' : 'none';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// STEP HELPERS
+// ═══════════════════════════════════════════════════════════════
+function activateStep(id) { document.getElementById(id).classList.add('active','open'); }
+function toggleStep(id) { document.getElementById(id).classList.toggle('open'); }
+function completeStep(id, val) {
+  var el = document.getElementById(id);
+  el.classList.add('done'); el.classList.remove('active');
+  var vid = id.replace('step-','s') + '-val';
+  var vel = document.getElementById(vid);
+  if (vel) vel.textContent = val;
+}
+function updateSpec(id, val) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = val; el.classList.remove('empty');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SUBMIT QUOTE
+// ═══════════════════════════════════════════════════════════════
+function getOptText(grpId) {
+  var el = document.querySelector('#' + grpId + ' .hw-color-opt.sel');
+  return el ? el.textContent.trim() : '—';
+}
+
+function submitQuote() {
+  var name  = document.getElementById('q-name').value.trim();
+  var phone = document.getElementById('q-phone').value.trim();
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+
+  var coll = S.coll;
+  var cordColorSel = getOptText('grp-cord-color');
+  var chainType = document.getElementById('chain-ball') && document.getElementById('chain-ball').classList.contains('sel') ? 'Ball Chain' : 'Standard Cord';
+  var wandColorSel = S.control === 'wand' ? (getOptText('grp-wand-color') || S.wandColor) : '';
+  var multiWidths = document.getElementById('mh-widths') ? document.getElementById('mh-widths').value.trim() : '';
+  var delivery = S.delivery === 'pickup' ? "I'll pick up (Huntingdon Valley, PA)" : 'Ship to me (UPS/FedEx from Huntingdon Valley, PA)';
+
+  // Size warnings for email
+  var sizeWarns = [];
+  if (S.width >= 90 && S.width < 100) sizeWarns.push('Oversize surcharge: $40/unit (90"–99⅞" width)');
+  if (S.width >= 100) sizeWarns.push('Oversize surcharge: $80/unit (100"+ width)');
+  if (coll && S.width > (SEAM_94.indexOf(coll.name) !== -1 ? 94 : 109) && S.multiHead !== 'none') sizeWarns.push('Fabric insert will be seamed');
+
+  var sizeValid = coll ? ('Within ' + coll.name + ' limits: ' + coll.maxW + '" W × ' + coll.maxH + '" H — ✓ OK') : '(No collection selected — verify manually)';
+
+  var body = 'WALLACE 2D DUAL SHEER / BANDED SHADES — SPECIFICATION REQUEST\n\n'
+    + '── CUSTOMER ──\n'
+    + 'Name: ' + name + '\nPhone: ' + phone
+    + '\nEmail: ' + (document.getElementById('q-email').value.trim() || '—')
+    + '\nAddress: ' + (document.getElementById('q-address').value.trim() || '—') + '\n\n'
+    + '── PRODUCT SPECIFICATION ──\n'
+    + 'Product: Wallace 2D Dual Sheer / Banded Shades\n'
+    + 'Room / window: ' + (S.room || '—') + '\n'
+    + 'Collection: ' + (coll ? coll.name + ' (Deck ' + coll.deck + ')' : '—') + '\n'
+    + 'Light control: ' + (coll ? (coll.light === 'T' ? 'Translucent' : 'Room Darkening') : '—') + '\n'
+    + 'Band size: ' + (coll ? coll.band : '—') + '\n'
+    + 'Price group: ' + (coll ? 'Group ' + coll.group : '—') + '\n'
+    + 'Color: ' + (S.colorName || S.customColor || '—') + (S.colorCode && S.colorCode !== '—' ? ' (' + S.colorCode + ')' : '') + '\n'
+    + 'Coordinated hardware color: ' + (S.colorHW || '—') + '\n'
+    + 'Mount: ' + (S.mount === 'inside' ? 'Inside Mount' : S.mount === 'outside' ? 'Outside Mount' : '—') + '\n'
+    + 'Ordered width: ' + (S.width || '—') + '"\n'
+    + 'Ordered height: ' + (S.height || '—') + '"\n'
+    + 'Quantity: ' + S.qty + '\n'
+    + 'Size validation: ' + sizeValid + '\n'
+    + (S.mount ? 'Cassette width: ' + (S.mount === 'inside' ? (S.width - 0.25).toFixed(3) : S.width.toFixed(3)) + '"\n' : '')
+    + '\n── HARDWARE SELECTIONS ──\n'
+    + 'Cassette style: ' + (S.cassette === 'round' ? 'Round Elite Cassette' : 'Square Elite Cassette') + '\n'
+    + 'Cassette color: ' + S.cassetteColor + '\n'
+    + (S.cassette === 'square' && S.cassCaps !== 'none' ? 'Metal side caps: ' + S.cassCaps.charAt(0).toUpperCase() + S.cassCaps.slice(1) + '\n' : '')
+    + 'Bottom rail size: ' + (S.railSize === 'large' ? 'Large' : 'Regular') + '\n'
+    + 'Bottom rail insert: ' + (S.railInsert === 'fabric' ? 'Fabric Insert (surcharge)' : 'Smooth Round') + '\n'
+    + '\n── CONTROL ──\n'
+    + 'Control method: ' + (S.control === 'cord' ? 'Continuous Cord Loop' : S.control === 'cordless' ? 'Soft Touch Cordless' : S.control === 'wand' ? 'Wand Motor' : S.control === 'battery' ? 'Standard Battery Motor' : S.control === 'quiet' ? 'DC / AC Motor' : '—') + '\n'
+    + (S.controlSide ? 'Control side: ' + S.controlSide + '\n' : '')
+    + (S.control === 'cord' ? 'Cord color: ' + cordColorSel + '\nChain type: ' + chainType + '\nCord drop: ' + getCordDrop(S.height) + '"\n' : '')
+    + (S.control === 'wand' ? 'Wand color: ' + wandColorSel + '\nWand length: ' + getWandLength(S.height) + '\n' : '')
+    + (S.motorAccessories.length ? 'Motor accessories: ' + S.motorAccessories.join(', ') + '\n' : '')
+    + '\n── OPTIONS ──\n'
+    + 'Multi-headrail: ' + (S.multiHead === 'none' ? 'None' : S.multiHead + (multiWidths ? ' — individual widths: ' + multiWidths : '')) + '\n'
+    + 'Side-by-side alignment: ' + (S.sideBySide ? 'Yes — same collection, color, and height required' : 'No') + '\n'
+    + (sizeWarns.length ? '\n── SURCHARGES / WARNINGS ──\n' + sizeWarns.map(function(w){ return '• ' + w; }).join('\n') + '\n' : '')
+    + '\n── DELIVERY ──\n'
+    + delivery + '\n\n'
+    + '── NOTES ──\n'
+    + (document.getElementById('q-notes').value.trim() || 'None');
+
+  window.location.href = 'mailto:blindznation@gmail.com'
+    + '?subject=' + encodeURIComponent('Wallace 2D Dual Sheer Spec — ' + name + (S.coll ? ' · ' + S.coll.name : ''))
+    + '&body=' + encodeURIComponent(body);
+
+  document.getElementById('quote-success').style.display = 'block';
+}
+
+// ── INIT ──
+buildCollGrid('all');
+buildControlStep();
+</script>
+</body>
+</html>
