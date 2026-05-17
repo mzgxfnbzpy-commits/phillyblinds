@@ -716,3 +716,96 @@ Matrix verified correct in pages/city-lights-aluminum-blinds.html.
 - Motorization: ABSENT (correct — not in PDF) ✓
 - Bug FIXED: Privacy slat add-on was incorrectly shown for 2″ slats.
   SmartPrivacy is already standard on 2″; privacy add-on is 1″ only.
+
+---
+
+## Paris Texas Hardware Audit (May 2026)
+
+### Source PDFs verified against
+- `C:\Users\Blind\PhillyBlinds Photos\PDF PRODUCTS\paris texas\2025 Paris Texas Hardware Price List wTARIFF (email) (1).pdf` — 2022 Drapery Hardware Catalog (celebrating 30 years)
+- `C:\Users\Blind\PhillyBlinds Photos\PDF PRODUCTS\paris texas\2025 Paris Texas Hardware Price List wTARIFF bdd.pdf` — Retail Price List, effective June 2, 2025 (includes 10% tariff surcharge)
+
+### Product Systems Confirmed
+| System | Diameters | Finishes Available | Max Length |
+|---|---|---|---|
+| Stationary / Decorative Pole | 1⅛", 1⅜", 2¼" | All (Portfolio, QS Metal, QS Wood, PTH) | 12' metal / 16' wood |
+| Baton Draw Metal Traverse | 1⅛", 1⅜" | Portfolio (no AGL), QS Metal, QS Wood (1⅜" only), PTH | 20' max (spliced) |
+| R-TEC Motorized Metal Traverse | 1⅜" ONLY | Portfolio (no AGL), QS Metal, QS Wood, PTH | 24' max (2 splices) |
+| R-TEC Motorized Heavy Duty Traverse | 1⅜" and 2¼" fascia | Portfolio, QS Wood, PTH (NO QS Metal) | 36' max |
+| Somfy Motorized Heavy Duty Traverse | 2¼" fascia ONLY | Portfolio, QS Wood, PTH (NO QS Metal, NO 1⅜") | 36' max |
+| Heavy Duty Corded or Baton Traverse | 1⅜" and 2¼" fascia | Portfolio, QS Wood, PTH (NO QS Metal) | 40' max |
+
+### Finish Collections
+| Collection | Count | Systems Available |
+|---|---|---|
+| Portfolio (hand-painted) | 35 finishes | All systems |
+| Quick Ship Metal | 6 finishes (BN, SG, RGD, BZ, CZ, MK) | 1⅜" R-TEC, 1⅛" Baton, 1⅜" Baton ONLY — NOT for HD traverse or Somfy |
+| Quick Ship Wood & Resin | 5 finishes (AB, ORB, PL, RG, WAL) | 1⅜" R-TEC, 1⅜" Baton, all HD traverse — NOT available for 1⅛" systems |
+| PTH Perfect Match | Any Benjamin Moore color | All systems |
+
+**35 Portfolio finishes (confirmed):** Amulet (AM), Andiron (AND), Antique Gold (AG), Antique Gold Leaf (AGL), Art Bronze (AB), Barnwood (BW), Black (BL), Blush (BLU), Bronzed Pewter (BP), Concrete (CO), Couture (COU), Dark Chocolate (DC), Firelight (FL), Gossamer (GOS), Greige (GRE), Halo (HA), Java (JA), Linen (LIN), Luminous (LU), Manor (MA), Mink (MK), Moonlight (ML), Mystic (MYS), New Age Bronze (NAB), Patina (PAT), Shimmer (SH), Silver Maple (SM), Spicewood (SPW), Spun Gold (SPG), Stardust (STA), Starlet (ST), Titanium (TTM), Truffle (TRU), Urban Bronze (URB), White (WH)
+
+**AGL restriction:** Antique Gold Leaf (AGL) is stationary poles ONLY — not available on any traverse system.
+
+### Finial Collections and Cuff Rules
+| Diameter | Style Category | Cuff Required for Traverse? | Notes |
+|---|---|---|---|
+| 1⅛" | Modern, Clean Deco, Transitional Luxe, Bohemian Chic, Rustic Retreat | YES — ALL 1⅛" finials require Transitional Cuff (PO118CUFF) or Deco Cuff (PO118DECUFF) | 2 cuff styles available |
+| 1⅜" | Modern | NO — attaches directly to traverse with set screw | Finials: Adair, Ainsley End Cap, Asher End Cap, Cohen, Exton, London-Crystal, Quinn, Remi-Crystal, Sterling-Crystal, Zara |
+| 1⅜" | Today's Traditional | YES — requires Transitional Cuff (PO138CUFF / QS138CUFF) | Also required when using QS Wood & Resin finishes |
+| 1⅜" | Heritage Classics | YES — requires Transitional Cuff (PO138CUFF / QS138CUFF) | Also required when using QS Wood & Resin finishes |
+| 2¼" | Today's Traditional, Heritage Classics | NO cuff needed for stationary or HD traverse | Not compatible with metal traverse or R-TEC slim track |
+
+**Additional rule:** QS Wood & Resin 1⅜" traverse ALWAYS requires a Transitional Cuff for any finial style (confirmed in PDF General Info: "All 1 1/8" and Wood & Resin 1 3/8" require Transitional Cuff / Finial Adapters").
+
+### R-TEC Motorization Details
+- Motor: R-TEC Automation® Slim Drapery Motor (RTMLDSS50)
+- Slim 1⅜" traverse: max 77 lbs, max 24' (2 splices), 4' minimum
+- HD traverse R-TEC: max 110 lbs, max 36' (spliced), 4' minimum, 19' max continuous
+- Power options: Li-ion Battery (rechargeable, 500+ cycles) or 110v AC/DC Power Transformer
+- Included: Push5 5-channel handheld remote with wall mount
+- Controls: 1-ch remote, 5-ch push remote, 15-ch push remote, 15-ch LCD remote, 5-ch surface wall switch, 15-ch wall box switch, interior sun sensor, **R-TEC Hub RTMHUB2** (Wi-Fi, R-TEC Automation App + voice control)
+- App: R-TEC Automation App (Apple App Store / Google Play)
+- **NOTE:** The control hub is called "R-TEC Hub (RTMHUB2)" — NOT "Automate Pulse 2" (that is a different brand). Do not confuse.
+- 5-year warranty
+- Motor can be top-mounted (HD) or side-mounted
+
+### Somfy Motorization Details
+- Somfy HD traverse: 2¼" fascia ONLY — 1⅜" NOT available with Somfy systems (confirmed PDF)
+- 6' minimum, 20' max continuous, up to 36' spliced
+- Motors: Glydea ULTRA 60e (132 lbs, 36' max), Glydea ULTRA 35e (77 lbs, 32' max), Irismo 45 (99 lbs, 32' max, rechargeable battery), Irismo 35 Mini (77 lbs, 32' max, DC transformer)
+- App: TaHoma® (Apple App Store / Google Play)
+- Curved tracks available with minimum 11.8" radius; curving fees apply
+- $25 packaging surcharge for Somfy traverse orders
+
+### Tariff / Freight Notes (PDF confirmed)
+- **Tariff:** Due to U.S. government tariff policy, all Paris Texas Hardware products are subject to surcharges:
+  - Existing 10% surcharge on Drapery Hardware (in place since 2019, remains in effect)
+  - Additional 6% price increase effective June 2, 2025 (to offset significant cost impact of new tariffs)
+- **Freight:** FOB Dallas, TX. Rowley Flat Rate Shipping Program (rates increased 10% eff. June 2, 2025). Visit paristexashardware.com/freightrate for current rates.
+- **Li-ion battery surcharge:** +$25 shipping surcharge on any order containing a Li-ion battery
+- **Packaging fees (net):** $10/order with pole, $10/order with traverse rod <16ft, $25 for traverse with returns, motorized traverse, or poles/rods ≥16ft
+- **All prices are Suggested Retail Prices subject to change without notice. Customer-facing pricing must be labeled as estimated MSRP, confirmed at quote.**
+
+### Bugs Fixed in paris-texas-rods.html (May 2026)
+| Bug | Fix | Source |
+|---|---|---|
+| QS Wood & Resin incorrectly dimmed for all baton draw | Fixed: QS Wood available for 1⅜" baton draw (not 1⅛") | PDF General Info + p.56 |
+| 2¼" incorrectly blocked for baton draw | Fixed: 2¼" blocked only for R-TEC (which is 1⅜" only) | PDF system table |
+| QS Metal not blocked for HD traverse | Fixed: QS Metal dimmed when type=HD | PDF: HD traverse = Portfolio/QS Wood/PTH only |
+| Wi-Fi Hub labeled "Automate Pulse 2 Hub" | Fixed: renamed to "R-TEC Hub RTMHUB2" | PDF p.63 |
+| Irismo 45 max listed as 33' | Fixed: corrected to 32' per motor weight chart | PDF bdd p.58 |
+| Somfy warn banner mentioned Kirsch tape compatibility | Fixed: removed Kirsch reference, added Somfy-specific specs | Audit |
+| PTH Perfect Match showed net dollar minimums ($100/$150) | Fixed: replaced with percentage upcharges only | Policy: no wholesale prices public |
+| Finial price estimates unlabeled | Fixed: labeled as "estimated MSRP, confirmed at quote" | Policy |
+| Price estimate box note unlabeled | Fixed: added tariff caveat | Policy |
+| 1⅜" QS Wood traverse always needs cuff | Fixed: added to cuff detection logic | PDF General Info |
+| HD description max width said 40' for all modes | Fixed: clarified per motor type | PDF spec |
+| Baton draw tag said "4-12' track" | Fixed: corrected to "up to 20' track" | PDF baton max 20' |
+
+### Needs Owner Confirmation
+- Exact Rowley Flat Rate Shipping Program rates (visit paristexashardware.com/freightrate for current rates)
+- Whether Glydea 35e and Irismo 35 are truly both 32' max or if one differs
+- Whether any finishes have been discontinued since June 2025 price list
+
+*Audit completed: Claude Code — May 2026*
