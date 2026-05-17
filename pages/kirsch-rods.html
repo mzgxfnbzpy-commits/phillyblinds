@@ -1277,12 +1277,20 @@ function updateStep6() {
   if (isTraverse) {
     show('amp-eligible');
     hide('amp-not-eligible');
-    // Architrac bend warning
     document.getElementById('amp-bend-warning').style.display = S.collection === 'arch' ? 'block' : 'none';
   } else {
     hide('amp-eligible');
     show('amp-not-eligible');
   }
+  document.getElementById('wt-accessories').style.display = S.collection === 'wt' ? 'block' : 'none';
+}
+
+const wtAccessories = [];
+function toggleWTAccessory(el, key) {
+  el.classList.toggle('sel');
+  const idx = wtAccessories.indexOf(key);
+  if (idx >= 0) wtAccessories.splice(idx, 1);
+  else wtAccessories.push(key);
 }
 
 function toggleAMP(row) {
@@ -1372,6 +1380,8 @@ function submitQuote() {
     'MOTORIZATION',
     'AMP™ Motor: ' + (S.motorized ? 'YES — Motor #62001300' : 'No'),
     'AMP™ Extras: ' + (S.ampExtras.length ? S.ampExtras.join(', ') : 'None'),
+    'Pole Style: ' + (S.poleStyle || 'N/A'),
+    'Accessories Requested: ' + (wtAccessories.length ? wtAccessories.join(', ') : 'None'),
     '',
     'DELIVERY / SERVICE',
     'Preference: ' + (S.delivery === 'install' ? 'Professional Installation' : S.delivery === 'ship' ? 'Ship to Customer' : 'Pick Up'),
