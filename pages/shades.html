@@ -2313,6 +2313,11 @@ window.addEventListener("load", function() {
   var product = params.get("product");
   var brand   = params.get("brand");
   if (!product) return;
+  // 'blinds' → open the Faux vs Real Wood type chooser directly
+  if (product === "blinds") {
+    setTimeout(function() { if(typeof selectBlindsType==="function") selectBlindsType(); }, 200);
+    return;
+  }
   var map = {
     "roller":     ["roller",    "Roller Shades",               true],
     "cellular":   ["cellular",  "Cellular / Honeycomb Shades", true, "norman"],
