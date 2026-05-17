@@ -392,10 +392,10 @@
             </div>
           </div>
 
-          <!-- Ball bearing carriers -->
+          <!-- Ball bearing / Ripplefold snap carriers -->
           <div style="background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-bottom:12px">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-              <div style="font-size:13px;font-weight:600;color:#1a1a1a">Ball bearing carriers</div>
+              <div id="arch-carrier-label" style="font-size:13px;font-weight:600;color:#1a1a1a">Ball bearing carriers</div>
               <div id="arch-carrier-count" style="font-size:16px;font-weight:700;color:var(--espresso)"></div>
             </div>
             <div id="arch-carrier-note" style="font-size:11px;color:#666;line-height:1.6;margin-bottom:10px"></div>
@@ -820,14 +820,26 @@ function archCalc() {
     if (mInp && parseInt(mInp.value) < 1) mInp.value = 1;
   }
 
-  // Ball bearing carriers: 25 per 50 inches (= 1 per 2 inches) — to be safe
-  var rawCarriers = Math.ceil(w / 50 * 25);
+  // Carriers: ball bearing (standard) or ripplefold snap carriers
+  var pleatSelNow = (document.querySelector('#grp-arch-pleat .opt-btn.sel') || {}).textContent || '';
+  var isRipple = pleatSelNow.toLowerCase().indexOf('ripple') !== -1;
+  var numRods = isSplit ? 2 : 1; // split draw = 2 rods, one-way = 1 rod
+  var calcWidth = isRipple ? (w + 10 * numRods) : w; // +10" per rod for ripplefold snap carriers
+  var rawCarriers = Math.ceil(calcWidth / 50 * 25);
+  var carrierLabel = document.getElementById('arch-carrier-label');
+  if (carrierLabel) carrierLabel.textContent = isRipple ? 'Ripplefold snap carriers' : 'Ball bearing carriers';
   var cInp = document.getElementById('arch-carriers-inp');
   if (cInp) cInp.value = rawCarriers;
   var cCount = document.getElementById('arch-carrier-count');
   if (cCount) cCount.textContent = rawCarriers + ' carriers';
   var cNote = document.getElementById('arch-carrier-note');
-  if (cNote) cNote.innerHTML = '<strong>25 carriers per 50"</strong> of track for ' + w + '" = <strong>' + rawCarriers + ' carriers</strong>. Edit below if needed.';
+  if (cNote) {
+    if (isRipple) {
+      cNote.innerHTML = 'Ripplefold: track ' + w + '″ + <strong>' + (10 * numRods) + '″ extra</strong> (' + numRods + ' rod × 10″) = <strong>' + calcWidth + '″</strong> → <strong>' + rawCarriers + ' snap carriers</strong>. Edit below if needed.';
+    } else {
+      cNote.innerHTML = '<strong>25 carriers per 50″</strong> of track for ' + w + '″ = <strong>' + rawCarriers + ' carriers</strong>. Edit below if needed.';
+    }
+  }
 
   // Batons: 1 per panel — sold individually, default 1 each
   var numPanels = isSplit ? 2 : 1;
