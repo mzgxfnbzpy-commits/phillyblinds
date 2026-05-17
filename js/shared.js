@@ -98,7 +98,7 @@ function renderNav(activePage) {
     { href: '../pages/measure.html', label: 'How to measure' },
     { href: '../pages/about.html', label: 'About' },
     { href: '../pages/fabric-calculator.html', label: 'Fabric calculator' },
-    { href: '../pages/catalogs.html', label: 'Catalogs' },
+    
   ];
   const isHome = activePage === 'home';
   const prefix = isHome ? 'pages/' : '../pages/';
@@ -1328,4 +1328,11 @@ function _initChatbot() {
 
   sendBtn.addEventListener('click', send);
   input.addEventListener('keydown', function(e) { if (e.key === 'Enter') send(); });
+}
+
+// ── Request more information ──────────────────────────────────────────────
+function reqMoreInfo(product) {
+  var subj = product ? 'Request for more information: ' + product : 'Request for more information';
+  var body = 'Hi, I would like to request more information about ' + (product || 'your products') + '.\n\nName:\nPhone:\nBest time to call:';
+  window.location.href = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
 }
