@@ -2783,11 +2783,18 @@ function configureForProduct(productId) {
   }
 
   // Show correct light control section
-  ['roller', 'cellular', 'zebra', 'woven'].forEach(function(p) {
-    document.getElementById('light-' + p).style.display = (p === productId) ? 'block' : 'none';
-  });
-  document.getElementById('light-step-title').textContent =
-    productId === 'woven' ? 'Liner / light control' : 'Light control';
+  // Cellular: fabric category in Step 3b already covers Sheer/LF/RD — hide this step entirely
+  var stepLight = document.getElementById('step-light');
+  if (productId === 'cellular') {
+    if (stepLight) stepLight.style.display = 'none';
+  } else {
+    if (stepLight) stepLight.style.display = 'block';
+    ['roller', 'cellular', 'zebra', 'woven'].forEach(function(p) {
+      document.getElementById('light-' + p).style.display = (p === productId) ? 'block' : 'none';
+    });
+    document.getElementById('light-step-title').textContent =
+      productId === 'woven' ? 'Liner / light control' : 'Light control';
+  }
 
   // Product-specific option blocks
   document.getElementById('cellular-opts').style.display =
