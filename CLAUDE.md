@@ -106,7 +106,7 @@ Every page MUST include:
 | pages/roman-shades.html | Roman Shades | REDIRECTS to soft-treatments.html?tab=roman |
 | pages/roman-shades.html | Custom Roman Shades | 3 styles, fabric paths, instant pricing; renamed to Custom Roman Shades; mailto + delivery |
 | pages/drapery.html | Custom drapery & hardware | 6 pleat styles, hardware selector (type/brand/diameter/finish/finial/rings), motorization â†’ notes only; mailto + delivery |
-| pages/shutters.html | Plantation shutters | Norman shutters: Normandy, Woodlore, Woodlore Plus (Brightwood removed); louver/frame options; mailto + delivery |
+| pages/shutters.html | **Plantation Shutters — Rebuilt May 2026** | 16-step configurator. Line first (Normandy/Woodlore/WLP). Per-opening W×H dims. Panel layout (L/R/LR/LLRR/bi-fold/bypass). T-posts (vertical + horizontal). SHUTTER_LINES JS object enforces line-specific louver maxes (ND: 30/36/42; WL: 24/30/36; WLP: 24/36). InvisibleTilt™ blocked for 1⅞″. Divider rail auto-warning over 74″(WL)/78″(ND/WLP). Normandy: Paint(24)/Stain(18)/OSMO(6) tabs with surcharge flags. WL: 6 colors. WLP: 24 colors. Specialty options toggles. Delivery + mailto. |
 | pages/measure-shutters.html | Measure guide (shutters) | 4 tabs: inside mount, outside mount, frame styles &amp; depth, tips. 3WÃ—3H rule explained with SVG diagrams |
 | pages/paris-texas-rods.html | **Paris Texas Hardware Configurator (NEW)** | 8-step configurator. Covers all 3 rod types (stationary, baton traverse, R-TEC motorized, heavy duty). All 35 Portfolio + 6 QS Metal + 5 QS Wood & Resin + PTH Perfect Match finishes. All 3 diameters (1⅛"/1⅜"/2¼"). Full finial catalog with compatibility rules (cuff requirements). R-TEC pricing estimator. Somfy motor options. All compatibility restrictions enforced (AGL only static, 1⅛" cuffs, 1⅜" TT/HC cuffs, 2¼" no metal traverse, Somfy 2¼" only, slim/flat/mitered no finials). Quote via mailto. Linked from hardware.html Paris Texas brand card. |
 | pages/kirsch-rods.html | **Kirsch Rod Selector (NEW)** | 7-step configurator for all Kirsch rod types. Covers Designer Metals (8 finishes, 27 finials, 1"/1⅜"/2"), Wood Trends (9 finishes, 18 finials, 1⅜"/2"), Wrought Iron (6 finishes, 18 finials, 1"/1⅜"), Architrac 94001, Basic hardware. AMP™ motorization step. Quote via mailto. Linked from hardware.html Kirsch brand card. |
@@ -372,3 +372,29 @@ No action required for Wallace honeycomb in our site code.
 
 *Last agent to work on this: Claude Code — May 16, 2026*
 *Last session: Norman motorization audit. Corrected soluna-roller-shades.html spec bar ("multiple brands" → "Norman-brand only"). Added nmGetMotorSummary() to Norman Roller and Norman Cellular quote emails. Added Norman Motorization Audit section to CLAUDE.md with product-by-product motor compatibility table. No Somfy/Lutron/Rollease/Automate-brand references found on any Norman product page. All rules in shared.js normanMotorSection() verified against PDF.*
+
+
+---
+
+## Norman Portrait Cellular / Honeycomb Audit
+
+Audit date: 2026-05-16
+
+### Discontinued color confirmed removed
+- Light Filtering C7018K Soft Stone removed from all 6 cell sizes per Wallace email 2026-04-23
+- Verified absent from CELL_COLLECTIONS and CELL_916S_LF
+- DO NOT re-add. C4011T Soft Stone RD is a different active color.
+
+### Bug fixed: 9/16" Room Darkening incorrectly blocked
+- CELL_COMPAT[rd] was [2,3,4,5] but CELL_916S_RD (16 colors) was defined and used
+- Fixed to [1,2,3,4,5] — RD correctly available in 9/16"S with limited 16-color palette
+- FABRIC_NOTES[rd] updated to reflect this
+
+### Motorization confirmed Norman-only for cellular
+- motor-sub-norman: Norman Smart, AutoWand, Automate Home (Norman products)
+- Non-Norman brands only appear in motor-sub-custom for non-Norman products
+
+### Owner confirmation still needed
+1. D&N cell sizes: HTML tooltip says 9/16"S, 3/4"S, 1.25"S only but CELL_COMPAT allows all 6
+2. Automate Home motor: confirm this is Norman product, not Automate Rollease Acmeda brand
+3. Windsong as D&N valid top: dn-note mentions it but D&N top picker only shows Sheer/LF
