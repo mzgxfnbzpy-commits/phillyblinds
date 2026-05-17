@@ -205,7 +205,7 @@ textarea.inp-field{resize:vertical;min-height:90px}
         <div class="choice-icon">↔️</div>
         <div class="choice-title">Traversing / Opening &amp; Closing</div>
         <div class="choice-desc">Drapery travels smoothly on a track with carriers. One-way or two-way draw. Manual or AMP™ motorized.</div>
-        <div class="choice-tag">Estate™ Traverse · Architrac® 94001</div>
+        <div class="choice-tag">Estate™ Traverse · Architrac® (7 models: 94001, 94003, 94004, 94005, 9046, 9600, K-Rail)</div>
       </div>
     </div>
     <div class="choice-grid">
@@ -315,10 +315,48 @@ textarea.inp-field{resize:vertical;min-height:90px}
         </div>
         <div class="choice-card" onclick="selectTraverseSystem('architrac')">
           <div class="choice-icon">🔧</div>
-          <div class="choice-title">Architrac® Series 94001</div>
-          <div class="choice-desc">Industrial-grade functional traverse track. Concealed behind drapery. Curved or straight. Wall, ceiling, or recessed mount. Up to 20ft manual (40ft two-way), 16ft motorized.</div>
-          <div class="choice-tag">White · Gray · Bronze · Black · AMP™ motorizable</div>
+          <div class="choice-title">Architrac® Functional Track</div>
+          <div class="choice-desc">Industrial-grade concealed traverse track. 7 models for residential, commercial, hospital, and bay/curved applications. Manual or AMP™ motorized (94001 only). Ceiling, wall, recessed, or suspension mount.</div>
+          <div class="choice-tag">7 models · 94001 (Best Seller) · 94004 (Best Seller) · Curved/Bent options</div>
           <div class="choice-badge">Commercial</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARCHITRAC MODEL PICKER (shown after selecting Architrac) -->
+    <div id="architrac-model-picker" style="display:none;margin-top:20px">
+      <div class="sec-label" style="margin-top:0">Select Architrac® Model</div>
+      <div class="sec-sub" style="font-size:13px;margin-bottom:14px">Each model has different mount options, bend/curve capability, and length limits. Choose the best fit for your project.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="choice-card" onclick="selectArchitracModel('94001')" style="padding:16px">
+          <div class="choice-badge" style="position:static;display:inline-block;margin-bottom:8px">Best Seller</div>
+          <div class="choice-title" style="font-size:14px">94001</div>
+          <div class="choice-desc" style="font-size:11px">Most versatile. Wall, ceiling, or recessed. Can be bent or curved (manual only). One-way: up to 20ft · Two-way: up to 40ft. <strong>AMP™ motorizable</strong> (max 16ft). Pleated &amp; Ripplefold™. Cord/Duplex draw available.</div>
+        </div>
+        <div class="choice-card" onclick="selectArchitracModel('94003')" style="padding:16px">
+          <div class="choice-title" style="font-size:14px">94003</div>
+          <div class="choice-desc" style="font-size:11px">Wall, ceiling, or recessed. Can be bent or curved. One-way: up to 20ft · Two-way: up to 20ft. Pleated &amp; Ripplefold™. Manual only. Good for medium-width openings.</div>
+        </div>
+        <div class="choice-card" onclick="selectArchitracModel('94004')" style="padding:16px">
+          <div class="choice-badge" style="position:static;display:inline-block;margin-bottom:8px">Best Seller</div>
+          <div class="choice-title" style="font-size:14px">94004</div>
+          <div class="choice-desc" style="font-size:11px">Ceiling or recessed only. <strong>Cannot be bent or curved.</strong> One-way: up to 16ft · Two-way: up to 32ft. Pleated &amp; Ripplefold™. Manual only. Streamlined profile.</div>
+        </div>
+        <div class="choice-card" onclick="selectArchitracModel('94005')" style="padding:16px">
+          <div class="choice-title" style="font-size:14px">94005</div>
+          <div class="choice-desc" style="font-size:11px">Ceiling or recessed only. Can be bent or curved. One-way: up to 16ft · Two-way: up to 32ft. Pleated &amp; Ripplefold™. Manual only.</div>
+        </div>
+        <div class="choice-card" onclick="selectArchitracModel('9046')" style="padding:16px">
+          <div class="choice-title" style="font-size:14px">9046</div>
+          <div class="choice-desc" style="font-size:11px">Ceiling or recessed only. Can be bent (8" or 12" radius) or curved. One-way: up to 16ft · Two-way: up to 32ft. Pleated only. Manual only. Hospital/cubicle grade.</div>
+        </div>
+        <div class="choice-card" onclick="selectArchitracModel('9600')" style="padding:16px">
+          <div class="choice-title" style="font-size:14px">9600</div>
+          <div class="choice-desc" style="font-size:11px">Ceiling, wall, recessed, or suspension mount. Can be bent (12" or 14" radius) or curved. One-way: up to 20ft · Two-way: up to 40ft. Pleated only. Manual only.</div>
+        </div>
+        <div class="choice-card" onclick="selectArchitracModel('K-Rail')" style="padding:16px">
+          <div class="choice-title" style="font-size:14px">K-Rail</div>
+          <div class="choice-desc" style="font-size:11px">Ceiling or wall. <strong>Cannot be bent or curved.</strong> One-way: up to 16ft · Two-way: up to 16ft. Pleated &amp; Ripplefold™. Manual only. Compatible with Wrought Iron and Wood Trends finials.</div>
         </div>
       </div>
     </div>
@@ -1102,6 +1140,7 @@ const S = {
   type: '',         // 'static'|'traverse'|'basic'|'unsure'
   collection: '',   // 'dm'|'wt'|'wi'|'arch'|'basic-sf'|'basic-ls'|'basic-tn'
   traverseSystem: '', // 'estate'|'architrac'
+  architracModel: '', // '94001'|'94003'|'94004'|'94005'|'9046'|'9600'|'K-Rail'
   finish: '',
   finial: '',
   poleDia: '',
@@ -1191,6 +1230,7 @@ function selectType(t) {
 // ── STEP 2 ──
 function updateStep2() {
   hide('decor-collections'); hide('traverse-systems'); hide('basic-options'); hide('unsure-options');
+  document.getElementById('architrac-model-picker').style.display = 'none';
 
   if (S.type === 'static') {
     show('decor-collections');
@@ -1226,7 +1266,11 @@ function selectTraverseSystem(sys) {
 
   if (sys === 'architrac') {
     S.collection = 'arch';
-    goStep(3);
+    // Show model picker — don't jump to step 3 yet
+    hide('decor-collections');
+    document.getElementById('architrac-model-picker').style.display = 'block';
+    document.getElementById('sec2-title').textContent = 'Choose Architrac® Model';
+    document.getElementById('sec2-sub').textContent = 'Select the track model that best fits your project requirements.';
   } else {
     // Show collection choices for Estate
     hide('traverse-systems');
@@ -1234,6 +1278,13 @@ function selectTraverseSystem(sys) {
     document.getElementById('sec2-title').textContent = 'Estate™ Collection';
     document.getElementById('sec2-sub').textContent = 'All three collections offer Estate™ traverse rods — choose your preferred finish family.';
   }
+}
+
+function selectArchitracModel(m) {
+  S.architracModel = m;
+  document.querySelectorAll('#architrac-model-picker .choice-card').forEach(c => c.classList.remove('sel'));
+  event.currentTarget.classList.add('sel');
+  goStep(3);
 }
 
 function selectBasic(sub) {
@@ -1347,7 +1398,17 @@ function updateStep5() {
       const dmED = document.getElementById('dm-estate-dia');
       if (dmED) dmED.style.display = S.collection === 'dm' ? '' : 'none';
     } else {
-      info.innerHTML = '<strong>Architrac® 94001:</strong> Manual: One-Way max 20ft (80 lbs); Two-Way max 40ft (160 lbs). Motorized: max 16ft (64 lbs). Can be curved/bent (manual only).';
+      const archLimits = {
+        '94001': 'One-Way max <strong>20ft / 80 lbs</strong> · Two-Way max <strong>40ft / 160 lbs</strong>. <strong>AMP™ motorized: max 16ft / 64 lbs.</strong> Can be bent or curved — manual only (AMP cannot be bent/curved). Wall, ceiling, or recessed. Pleated &amp; Ripplefold™. Cord &amp; Duplex draw available.',
+        '94003': 'One-Way max <strong>20ft / 80 lbs</strong> · Two-Way max <strong>20ft / 80 lbs</strong>. Manual only. Can be bent or curved. Wall, ceiling, or recessed. Pleated &amp; Ripplefold™.',
+        '94004': 'One-Way max <strong>16ft / 64 lbs</strong> · Two-Way max <strong>32ft / 128 lbs</strong>. Manual only. <strong>Cannot be bent or curved.</strong> Ceiling or recessed only. Pleated &amp; Ripplefold™.',
+        '94005': 'One-Way max <strong>16ft / 64 lbs</strong> · Two-Way max <strong>32ft / 128 lbs</strong>. Manual only. Can be bent or curved. Ceiling or recessed only. Pleated &amp; Ripplefold™.',
+        '9046':  'One-Way max <strong>16ft / 64 lbs</strong> · Two-Way max <strong>32ft / 128 lbs</strong>. Manual only. Can be bent (8" or 12" radius) or curved. Ceiling or recessed only. Pleated only. Hospital/cubicle curtain track.',
+        '9600':  'One-Way max <strong>20ft / 80 lbs</strong> · Two-Way max <strong>40ft / 160 lbs</strong>. Manual only. Can be bent (12" or 14" radius) or curved. Ceiling, wall, recessed, or suspension mount. Pleated only.',
+        'K-Rail': 'One-Way max <strong>16ft / 64 lbs</strong> · Two-Way max <strong>16ft / 64 lbs</strong>. Manual only. <strong>Cannot be bent or curved.</strong> Ceiling or wall. Pleated &amp; Ripplefold™. Compatible with Wrought Iron and Wood Trends finials.'
+      };
+      const m = S.architracModel || '94001';
+      info.innerHTML = '<strong>Architrac® ' + m + ':</strong> ' + (archLimits[m] || archLimits['94001']) + ' All models: max 4 lbs/ft drapery weight.';
     }
   } else if (S.type === 'basic') {
     show('sz-basic');
@@ -1401,14 +1462,31 @@ function selectLockseam(w) { S.lockseamWidth = w; }
 
 // ── STEP 6 ──
 function updateStep6() {
-  const isTraverse = S.type === 'traverse' || S.traverseSystem === 'estate' || S.collection === 'arch';
-  if (isTraverse) {
+  // AMP only available on Estate traverse or Architrac 94001
+  const isEstate = S.traverseSystem === 'estate';
+  const isArch94001 = S.collection === 'arch' && S.architracModel === '94001';
+  const ampEligible = isEstate || isArch94001;
+  if (ampEligible) {
     show('amp-eligible');
     hide('amp-not-eligible');
-    document.getElementById('amp-bend-warning').style.display = S.collection === 'arch' ? 'block' : 'none';
+    // Bend warning only for 94001 (AMP cannot be bent/curved)
+    document.getElementById('amp-bend-warning').style.display = isArch94001 ? 'block' : 'none';
+    // Update sub text for non-94001 Architrac that lands here (shouldn't normally)
+    const sub = document.getElementById('sec6-sub');
+    if (sub) sub.textContent = isArch94001
+      ? 'AMP™ motorization is available on Architrac® 94001. Max 16ft motorized. Track cannot be bent or curved when motorized.'
+      : 'AMP™ motorization is available on Estate™ traverse rods.';
   } else {
     hide('amp-eligible');
     show('amp-not-eligible');
+    const sub = document.getElementById('sec6-sub');
+    if (sub) {
+      if (S.collection === 'arch') {
+        sub.textContent = 'AMP™ motorization is only available on Architrac® 94001. Your selected model (' + (S.architracModel || 'N/A') + ') is manual-only.';
+      } else {
+        sub.textContent = 'AMP™ motorization is only available on Estate™ traverse rods and Architrac® 94001.';
+      }
+    }
   }
   document.getElementById('wt-accessories').style.display = S.collection === 'wt' ? 'block' : 'none';
 }
@@ -1442,6 +1520,7 @@ function updateStep7() {
   const rows = [
     ['Rod Type', S.type === 'static' ? 'Stationary / Decorative' : S.type === 'traverse' ? 'Traverse / Traversing' : S.type === 'basic' ? 'Basic Hardware' : 'Custom Quote'],
     ['Collection', collectionLabel()],
+    ['Architrac Model', S.architracModel || '—'],
     ['Finish', S.finish || '—'],
     ['Finial', S.finial || '—'],
     ['Pole Diameter', S.poleDia || S.dmEstateDia || '—'],
@@ -1463,7 +1542,8 @@ function updateStep7() {
 }
 
 function collectionLabel() {
-  const map = {dm:'Designer Metals™',wt:'Wood Trends™',wi:'Wrought Iron','basic-superfine':'Superfine Pro (Basic)','basic-lockseam':'Lockseam (Basic)','basic-tension':'Tension / Sash (Basic)',arch:'Architrac® 94001'};
+  const map = {dm:'Designer Metals™',wt:'Wood Trends™',wi:'Wrought Iron','basic-superfine':'Superfine Pro (Basic)','basic-lockseam':'Lockseam (Basic)','basic-tension':'Tension / Sash (Basic)'};
+  if (S.collection === 'arch') return 'Architrac® ' + (S.architracModel || '');
   return map[S.collection] || S.collection;
 }
 
@@ -1498,7 +1578,7 @@ function submitQuote() {
     '',
     'CONFIGURATION',
     'Rod Type: ' + (S.type === 'static' ? 'Stationary/Decorative' : S.type === 'traverse' ? 'Traverse Rod' : 'Basic Hardware'),
-    'System: ' + (S.traverseSystem === 'estate' ? 'Estate™ Traverse' : S.traverseSystem === 'architrac' ? 'Architrac® 94001' : ''),
+    'System: ' + (S.traverseSystem === 'estate' ? 'Estate™ Traverse' : S.traverseSystem === 'architrac' ? ('Architrac® ' + (S.architracModel || '94001')) : ''),
     'Collection: ' + collectionLabel(),
     'Finish/Color: ' + (S.finish || 'Not specified'),
     'Finial: ' + (S.finial || 'N/A'),
