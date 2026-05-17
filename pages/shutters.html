@@ -213,13 +213,14 @@
       <div class="config-section">
         <div class="config-step-heading">Louver size</div>
         <div class="opt-row" id="louver-size" style="flex-wrap:wrap">
-          <button class="opt-btn" onclick="selOpt(this,'louver-size');updateShutterQuote()">1⅞&Prime; Elliptical</button>
-          <button class="opt-btn" onclick="selOpt(this,'louver-size');updateShutterQuote()">2½&Prime;</button>
-          <button class="opt-btn" onclick="selOpt(this,'louver-size');updateShutterQuote()">3&Prime;</button>
-          <button class="opt-btn" onclick="selOpt(this,'louver-size');updateShutterQuote()">3½&Prime;</button>
-          <button class="opt-btn" onclick="selOpt(this,'louver-size');updateShutterQuote()">4½&Prime;</button>
+          <button class="opt-btn" onclick="selOpt(this,'louver-size');checkInvisibleTiltConflict();updateShutterQuote()">1⅞&Prime; Elliptical</button>
+          <button class="opt-btn" onclick="selOpt(this,'louver-size');checkInvisibleTiltConflict();updateShutterQuote()">2½&Prime;</button>
+          <button class="opt-btn" onclick="selOpt(this,'louver-size');checkInvisibleTiltConflict();updateShutterQuote()">3&Prime;</button>
+          <button class="opt-btn" onclick="selOpt(this,'louver-size');checkInvisibleTiltConflict();updateShutterQuote()">3½&Prime;</button>
+          <button class="opt-btn" onclick="selOpt(this,'louver-size');checkInvisibleTiltConflict();updateShutterQuote()">4½&Prime;</button>
         </div>
-        <div class="config-note">Larger louvers = bigger view-through and more contemporary look. 3½&Prime; is the most popular. 1⅞&Prime; elliptical is the slimmest option. Max single-panel width varies by louver size — confirmed at your measurement visit.</div>
+        <div class="config-note">Larger louvers = bigger view-through, more contemporary look. 3½&Prime; is most popular. Max single-panel width: <strong>1⅞&Prime; → 24&Prime;</strong> · <strong>2½&Prime; → 30&Prime;</strong> · <strong>3&Prime;/3½&Prime;/4½&Prime; → 36&Prime;</strong>. Note: 36&Prime; panels with 3&Prime;/3½&Prime;/4½&Prime; louvers cannot be double-hung without a horizontal T-post and must have bottom support.</div>
+        <div id="louver-clearview-warn" style="display:none;background:#FEE2E2;border:1px solid #EF4444;border-radius:8px;padding:10px 14px;font-size:12px;color:#7f1d1d;margin-top:6px">⚠ <strong>Hidden tilt (Clearview / InvisibleTilt) is not available with 1⅞&Prime; Elliptical louvers.</strong> Please select a different louver size or choose a different tilt rod option.</div>
       </div>
 
       <!-- STEP C: Panel configuration -->
@@ -469,6 +470,9 @@
       <!-- STEP G: Window details -->
       <div class="config-section">
         <div class="config-step-heading">Window details</div>
+        <div style="background:#FFF3CD;border:1px solid #FFC107;border-radius:8px;padding:10px 14px;font-size:12px;color:#7d5a00;margin-bottom:14px;line-height:1.6">
+          <strong>Norman spec reminders:</strong> Panels over <strong>74&Prime; tall</strong> require a divider rail (standard 3&Prime;). Max single-panel width: <strong>1⅞&Prime;→24&Prime;</strong> · <strong>2½&Prime;→30&Prime;</strong> · <strong>3&Prime;/3½&Prime;/4½&Prime;→36&Prime;</strong>. No bottom support = not available. All details confirmed at your in-home measurement.
+        </div>
         <div class="form-row">
           <div class="form-group">
             <label>Number of windows</label>
@@ -787,7 +791,25 @@ function handleSpecialShape(el) {
 function handleTiltRod(el) {
   const motorSel = document.getElementById('motor-tilt-brand');
   motorSel.style.display = el.textContent.trim().startsWith('Motorized') ? 'block' : 'none';
+  checkInvisibleTiltConflict();
   updateShutterQuote();
+}
+
+function checkInvisibleTiltConflict() {
+  const louverBtn = document.querySelector('#louver-size .opt-btn.sel');
+  const tiltBtn   = document.querySelector('#tilt-rod .opt-btn.sel');
+  const warn      = document.getElementById('louver-clearview-warn');
+  if (!warn) return;
+  const is187    = louverBtn && louverBtn.textContent.includes('1⅞');
+  const isHidden = tiltBtn   && tiltBtn.textContent.includes('Hidden');
+  warn.style.display = (is187 && isHidden) ? 'block' : 'none';
+  // If conflict: also auto-clear Hidden tilt selection and re-select Center
+  if (is187 && isHidden) {
+    document.querySelectorAll('#tilt-rod .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
+    const firstValid = document.querySelector('#tilt-rod .opt-btn');
+    if (firstValid) firstValid.classList.add('sel');
+    document.getElementById('motor-tilt-brand').style.display = 'none';
+  }
 }
 
 function handleCustomColor(el) {
