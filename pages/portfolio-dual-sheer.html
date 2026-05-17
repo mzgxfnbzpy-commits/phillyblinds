@@ -1055,9 +1055,9 @@ function buildMotorAccessories(){
     html+='<label class="check-row"><input type="checkbox" onchange="S.liPack=this.checked;updatePrice()"><div class="check-label">External LI Rechargeable Battery Pack <span class="check-price">+$160</span><div class="check-sub">5¼" lead wire · Requires recharging · Ships separately</div></div></label>';
     html+='<label class="check-row"><input type="checkbox" onchange="S.plugAdapter=this.checked;updatePrice()"><div class="check-label">Plug-In Power Adapter <span class="check-price">+$60</span><div class="check-sub">60" lead wire · Powers motor via standard outlet</div></div></label>';
     html+='<div class="step-sub" style="margin-top:12px;margin-bottom:8px;font-size:12px;font-weight:600;color:#555">Extension Cables</div>';
-    html+=extRow('ext6','6" Extension Cable (+$32 ea)','For LI battery pack',32,'S.ext6');
-    html+=extRow('ext48','48" Extension Cable (+$43 ea)','For LI battery pack or power adapter',43,'S.ext48');
-    html+=extRow('ext96','96" Extension Cable (+$60 ea)','For power adapter only',60,'S.ext96');
+    html+=extRow('ext6','6" Extension Cable (+$32 ea)','For LI battery pack',32,'ext6');
+    html+=extRow('ext48','48" Extension Cable (+$43 ea)','For LI battery pack or power adapter',43,'ext48');
+    html+=extRow('ext96','96" Extension Cable (+$60 ea)','For power adapter only',60,'ext96');
     html+='<label class="check-row"><input type="checkbox" onchange="S.charger=this.checked;updatePrice()"><div class="check-label">16½\' USB-C Charger <span class="check-price">+$83</span><div class="check-sub">For LI battery pack</div></div></label>';
   }
   html+='<button class="next-btn" onclick="confirmStep11()" style="margin-top:12px">Continue</button>';
@@ -1065,7 +1065,7 @@ function buildMotorAccessories(){
   showStep(11);
 }
 function extRow(id,label,sub,price,stateKey){
-  return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div class="qty-wrap"><button class="qty-btn" onclick="adjExt(\''+stateKey+'\',-1,\''+id+'\')">−</button><input class="qty-num" type="number" id="'+id+'" value="0" min="0" max="10" style="width:36px;height:30px" oninput="'+stateKey+'=parseInt(this.value)||0;updatePrice()"><button class="qty-btn" onclick="adjExt(\''+stateKey+'\',1,\''+id+'\')">+</button></div><div><div class="check-label" style="font-size:12px">'+label+'</div><div class="check-sub">'+sub+'</div></div></div>';
+  return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div class="qty-wrap"><button class="qty-btn" onclick="adjExt(\''+stateKey+'\',-1,\''+id+'\')">−</button><input class="qty-num" type="number" id="'+id+'" value="0" min="0" max="10" style="width:36px;height:30px" oninput="S[\''+stateKey+'\']=parseInt(this.value)||0;updatePrice()"><button class="qty-btn" onclick="adjExt(\''+stateKey+'\',1,\''+id+'\')">+</button></div><div><div class="check-label" style="font-size:12px">'+label+'</div><div class="check-sub">'+sub+'</div></div></div>';
 }
 function adjExt(key,delta,id){ const el=document.getElementById(id); if(!el) return; let v=parseInt(el.value)||0; v=Math.max(0,v+delta); el.value=v; S[key]=v; updatePrice(); }
 
