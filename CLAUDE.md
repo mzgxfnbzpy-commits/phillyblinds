@@ -268,3 +268,53 @@ User will provide updated discontinued fabric list. When received: remove from c
 *Last session summary: Full site audit â€” 0 broken links, 0 broken images, all 765 portfolio images verified, all nav/footer/meta/phone present on every page. Replaced 6 remaining SVG placeholders in soft-treatments.html with real photos (3-Prong Tack Bottom, Flat Roman, Hobbled Roman, Relaxed Roman, TDBU, Arch/Specialty). All pleat and roman style cards now use real photos. Chatbot needs ANTHROPIC_API_KEY set in Vercel env vars to go live.*
 
 
+
+---
+
+## Discontinued Fabric Updates
+
+### Portrait Honeycomb / Cellular — Wallace/Norman Email Chain 2025–2026
+
+Source files inspected:
+- C:\Users\Blind\PhillyBlinds Photos\fabrics\Honeycomb Shade Discontinued Colors.pdf
+- C:\Users\Blind\PhillyBlinds Photos\fabrics\portrait disc (1).pdf
+- C:\Users\Blind\PhillyBlinds Photos\fabrics\discontinued.png (email screenshot)
+- C:\Users\Blind\PhillyBlinds Photos\fabrics\HC Color Coordination (1).xlsx
+
+**IMPORTANT: Two product programs were audited separately:**
+
+#### Product 1: Norman Portrait Cellular (our active product in pages/shades.html)
+Uses 2025-2026 color codes with K-suffix (LF) and T-suffix (RD), e.g. C7015K, C4008T.
+
+**Known removed color:**
+- **Light Filtering C7018K Soft Stone** — removed from all cell sizes per Wallace email 2026-04-23
+  - Effective: 3/6/2026
+  - Affects: all 6 cell sizes (9/16"S, 3/8"S, 1/2"D, 3/4"S, 3/4"D, 1-1/4"S)
+  - Status: **Already removed** from CELL_COLLECTIONS in pages/shades.html as of the 2025-2026 data update
+  - ⚠️ DO NOT re-add C7018K Soft Stone to any active Portrait Honeycomb/Cellular color data
+
+**Note on "Soft Stone RD" (C4011T):**
+- C4011T is a DIFFERENT color (Room Darkening, different code)
+- C4011T Soft Stone RD is STILL ACTIVE — do not remove it
+
+**Other discontinued colors from 2025 rounds:**
+The 2025 discontinued lists (8/1/2025 and 4/30/2025) affected OLD-format codes (C7001, C7002, etc.)
+without K/T suffixes. These were NEVER in our active CELL_COLLECTIONS (which was rebuilt
+from scratch using the new 2025-2026 HC Color Coordination spreadsheet format).
+No additional removals required in site code.
+
+**Rustica Designer Fabric (discontinued 2/1/2026):**
+Rustica colors (C7004, C7409, C7610, C7113 LF + C4004, C4403, C4606, C4115 RD)
+were never in our CELL_COLLECTIONS. Already handled.
+
+#### Product 2: Wallace Honeycomb / HC Program
+Wallace does NOT have a separate honeycomb/cellular product on our website.
+Wallace appears in pages/product-specs.html for roller, roman, woven, and vertical products only.
+No action required for Wallace honeycomb in our site code.
+
+### Verification Completed 2026-05-16
+- C7018K: not present in active CELL_COLLECTIONS ✓
+- Soft Stone LF: not selectable by customer ✓
+- Soft Stone RD (C4011T): still active, correct ✓
+- All other discontinued codes from 2025: not in our data ✓
+- Wallace Honeycomb: not a separate product on our site ✓
