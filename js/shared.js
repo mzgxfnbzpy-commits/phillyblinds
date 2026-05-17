@@ -795,15 +795,16 @@ function _initInstallationAddons() {
     var id = 'inst-' + Math.random().toString(36).slice(2, 7);
     var wrap = document.createElement('div');
     wrap.className = 'pb-install-wrap';
-    wrap.style.cssText = 'border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-bottom:14px;background:#fafal8';
+    wrap.style.cssText = 'border:2px solid var(--gold);border-radius:12px;padding:16px 18px;margin-bottom:16px;background:#FBF7F0';
     wrap.innerHTML =
-      '<label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer">' +
+      '<div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">&#128295; Professional Installation</div>' +
+      '<label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer">' +
         '<input type="checkbox" id="' + id + '" class="pb-install-check" ' +
-          'style="margin-top:2px;flex-shrink:0;width:16px;height:16px;cursor:pointer" ' +
+          'style="margin-top:3px;flex-shrink:0;width:20px;height:20px;cursor:pointer;accent-color:var(--espresso)" ' +
           'onchange="pbToggleInstall(this)">' +
         '<div>' +
-          '<div style="font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:2px">Add professional installation</div>' +
-          '<div style="font-size:12px;color:#666;line-height:1.5">Installation is priced separately based on your location and product. Submit your quote — Justin will follow up with installation pricing via email.</div>' +
+          '<div style="font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:4px">Add professional installation</div>' +
+          '<div style="font-size:13px;color:#555;line-height:1.6">Installation is priced separately based on your location and product. Submit your quote — Justin will follow up with installation pricing via email.</div>' +
         '</div>' +
       '</label>' +
       '<div id="' + id + '-detail" style="display:none;margin-top:12px;padding:12px 14px;background:var(--espresso);border-radius:8px">' +
