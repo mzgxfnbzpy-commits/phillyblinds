@@ -773,6 +773,9 @@ function pick(key, val, el) {
   if(group) group.querySelectorAll('.choice-card').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   if(key==='type'&&val==='unsure'){goStep('unsure');return;}
+  // Auto-advance: step 1→2 (type), step 2→3 (finishType), step 3→4 (diameter)
+  const next = {type:2, finishType:3, diameter:4}[key];
+  if(next) setTimeout(function(){ goStep(next); }, 320);
 }
 
 /* ─── STEP 2 ─── */
@@ -826,6 +829,8 @@ function selectFinish(name, code, trackColor) {
   S.finish=name; S.finishCode=code; S.finishTrackColor=trackColor;
   document.querySelectorAll('.finish-card').forEach(c=>c.classList.remove('sel'));
   event.currentTarget.classList.add('sel');
+  // Auto-advance to step 5 (finials)
+  setTimeout(function(){ goStep(5); }, 320);
 }
 
 /* ─── STEP 5 — FINIALS ─── */
@@ -956,6 +961,8 @@ function pickFinial(name, el) {
     const needsCuff = !['Adair','Ainsley End Cap','Asher End Cap','Cohen','Exton','London — Crystal','Quinn','Remi — Crystal','Sterling — Crystal','Zara'].includes(name);
     cuffNote.style.display = needsCuff ? 'block' : 'none';
   }
+  // Auto-advance to step 6 (size & configuration)
+  setTimeout(function(){ goStep(6); }, 320);
 }
 
 /* ─── STEP 6 ─── */
