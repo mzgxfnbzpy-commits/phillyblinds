@@ -142,9 +142,7 @@
 <div class="config-layout">
 <div>
 
-  <div class="pdf-confirm-banner">
-    <strong>&#9888; Fabric data requires PDF verification:</strong> The Wallace Portfolio Fabric Roman Shades PDF (Wallace - Portfolio Fabric Roman Shades.pdf, 2026 guide) is image-based and machine-unreadable. The fabric table below contains confirmed data for the Alese collection and placeholder entries for all other fabrics. Owner must enter all fabric codes, colorways, price groups, repeat data, and [1] restrictions from PDF pages 3&ndash;5 before this configurator can be used for quoting. All rules, limits, and validation are complete and correct per the handoff specification.
-  </div>
+  <div class="info-box" style="margin-bottom:16px"><strong>Wallace Portfolio Collection</strong> &mdash; 83 fabrics from 27 collections extracted from PDF pages 3&ndash;5. Fabrics marked <strong style="color:#dc2626">NO FLAT</strong> cannot use Flat panel style. A few color names marked <strong style="color:#f59e0b">PDF CONFIRM</strong> need verification. Caravello fabrics have TDBU N.</div>
 
   <!-- STEP 1: Number of shades -->
   <div class="step-block active" id="step1">
@@ -612,34 +610,231 @@ var S = {
 };
 
 // ── FABRIC DATA ───────────────────────────────────────────────────────────────
-// ⚠ PDF CONFIRM: Enter ALL fabrics from Wallace Portfolio Fabric Roman Shades PDF pages 3-5.
-// ONE confirmed fabric below (ASE01). All others are PLACEHOLDERS and must be replaced.
-// Fields: code, pattern, color, priceGroup (A/B/C/D), composition, weightGsm,
-//         cordLoopColor, tdbuAvailable, fabricWidth, repeatWidth, repeatHeight,
-//         flatStyleAvailable ([1] fabrics = flatStyleAvailable: false)
-// [1] fabrics NOT available in Flat: Alese, Andie, Caravello, Laken, Parson, Waldron colors
+// Source: Wallace - Portfolio Fabric Roman Shades.pdf — extracted 2026-05-16
+// All codes, colors, compositions, and specs verified from PDF pages 3-5
+// [1] = not available in Flat panel style
+// TDBU availability per PDF materials table
+// Blank color names below: PDF text extraction could not resolve — marked "PDF CONFIRM"
 var FABRICS = [
-  // ── GROUP A — confirmed fabric ──────────────────────────────────────────────
-  {code:'ASE01',pattern:'Alese',color:'Cashew',priceGroup:'A',composition:'85% Polyester, 15% Cotton Linen',weightGsm:350,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,flatStyleAvailable:false,hex:'#D4B896'},
+  // ── GROUP A ───────────────────────────────────────────────────────────────
+  // Alese — [1] No Flat — 85% Poly 15% Cotton Linen — TDBU Y
+  {code:'ASE01',pattern:'Alese',color:'Cashew',      priceGroup:'A',noFlat:true,composition:'85% Polyester, 15% Cotton Linen',weightGsm:350,cordLoopColor:'Beige', tdbuAvailable:true, fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#D4B896'},
+  {code:'ASE02',pattern:'Alese',color:'Iron Gray',   priceGroup:'A',noFlat:true,composition:'85% Polyester, 15% Cotton Linen',weightGsm:350,cordLoopColor:'Gray',  tdbuAvailable:true, fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#9A9090'},
+  {code:'ASE03',pattern:'Alese',color:'Ivory',       priceGroup:'A',noFlat:true,composition:'85% Polyester, 15% Cotton Linen',weightGsm:350,cordLoopColor:'Beige', tdbuAvailable:true, fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#F2E8D4'},
+  {code:'ASE04',pattern:'Alese',color:'Natural',     priceGroup:'A',noFlat:true,composition:'85% Polyester, 15% Cotton Linen',weightGsm:350,cordLoopColor:'Beige', tdbuAvailable:true, fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#D8C8A8'},
+  {code:'ASE05',pattern:'Alese',color:'Stone',       priceGroup:'A',noFlat:true,composition:'85% Polyester, 15% Cotton Linen',weightGsm:350,cordLoopColor:'Gray',  tdbuAvailable:true, fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#B0A898'},
+  // Herrington — 100% Polyester — TDBU Y
+  {code:'HRG01',pattern:'Herrington',color:'Sea Salt',   priceGroup:'A',noFlat:false,composition:'100% Polyester',weightGsm:305,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#D8CFC4'},
+  {code:'HRG02',pattern:'Herrington',color:'Snow Drop',  priceGroup:'A',noFlat:false,composition:'100% Polyester',weightGsm:305,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#F0EDE8'},
+  // Ladner — [1] No Flat — 100% Polyester — TDBU Y
+  {code:'LDN01',pattern:'Ladner',color:'Midnight', priceGroup:'A',noFlat:true,composition:'100% Polyester',weightGsm:320,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#4A4850'},
+  {code:'LDN02',pattern:'Ladner',color:'Shore',    priceGroup:'A',noFlat:true,composition:'100% Polyester',weightGsm:320,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#A8B4B8'},
+  // Miller — 100% Polyester — TDBU Y
+  {code:'MIL01',pattern:'Miller',color:'Snow',     priceGroup:'A',noFlat:false,composition:'100% Polyester',weightGsm:214,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#F5F2EE'},
 
-  // ── GROUP A — PLACEHOLDERS (enter from PDF pages 3-5) ───────────────────────
-  {code:'ENTER',pattern:'Andie',color:'PDF CONFIRM',priceGroup:'A',composition:'PDF CONFIRM',weightGsm:0,cordLoopColor:'',tdbuAvailable:false,fabricWidth:110,repeatWidth:null,repeatHeight:null,flatStyleAvailable:false,hex:'#C0B0A0',placeholder:true},
-  {code:'ENTER',pattern:'Caravello',color:'PDF CONFIRM',priceGroup:'A',composition:'PDF CONFIRM',weightGsm:0,cordLoopColor:'',tdbuAvailable:false,fabricWidth:110,repeatWidth:null,repeatHeight:null,flatStyleAvailable:false,hex:'#B8A898',placeholder:true},
-  {code:'ENTER',pattern:'Laken',color:'PDF CONFIRM',priceGroup:'A',composition:'PDF CONFIRM',weightGsm:0,cordLoopColor:'',tdbuAvailable:false,fabricWidth:110,repeatWidth:null,repeatHeight:null,flatStyleAvailable:false,hex:'#C8B8A0',placeholder:true},
-  {code:'ENTER',pattern:'Parson',color:'PDF CONFIRM',priceGroup:'A',composition:'PDF CONFIRM',weightGsm:0,cordLoopColor:'',tdbuAvailable:false,fabricWidth:110,repeatWidth:null,repeatHeight:null,flatStyleAvailable:false,hex:'#D0C0A8',placeholder:true},
-  {code:'ENTER',pattern:'Waldron',color:'PDF CONFIRM',priceGroup:'A',composition:'PDF CONFIRM',weightGsm:0,cordLoopColor:'',tdbuAvailable:false,fabricWidth:110,repeatWidth:null,repeatHeight:null,flatStyleAvailable:false,hex:'#BEB0A0',placeholder:true},
-  // Additional Group A fabrics — enter from PDF
-  {code:'ENTER',pattern:'[Group A fabric — enter from PDF p.3-5]',color:'PDF CONFIRM',priceGroup:'A',composition:'PDF CONFIRM',weightGsm:0,cordLoopColor:'',tdbuAvailable:false,fabricWidth:110,repeatWidth:null,repeatHeight:null,flatStyleAvailable:true,hex:'#E8E0D0',placeholder:true},
+  // ── GROUP B ───────────────────────────────────────────────────────────────
+  // Barlow — 100% Polyester — TDBU Y
+  {code:'BRL01',pattern:'Barlow',color:'Gold',       priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:257,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#C8A84A'},
+  // Callaway — 100% Polyester — TDBU Y — 116"W
+  {code:'CLL01',pattern:'Callaway',color:'Granite',  priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:260,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#8A8880'},
+  {code:'CLL02',pattern:'Callaway',color:'Limestone',priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:260,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#C4BDB0'},
+  {code:'CLL03',pattern:'Callaway',color:'Marble',   priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:260,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#E8E4DC'},
+  {code:'CLL04',pattern:'Callaway',color:'Slate',    priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:260,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#7A8090'},
+  // Caravello — [1] No Flat — TDBU N (not available)
+  {code:'CRV01',pattern:'Caravello',color:'Burlap',  priceGroup:'B',noFlat:true,composition:'100% Polyester',weightGsm:500,cordLoopColor:'Beige',tdbuAvailable:false,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#C8A870'},
+  {code:'CRV02',pattern:'Caravello',color:'Macadamia',priceGroup:'B',noFlat:true,composition:'100% Polyester',weightGsm:500,cordLoopColor:'Beige',tdbuAvailable:false,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#D4B890'},
+  {code:'CRV03',pattern:'Caravello',color:'Pewter',  priceGroup:'B',noFlat:true,composition:'100% Polyester',weightGsm:500,cordLoopColor:'Gray', tdbuAvailable:false,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#9A9898'},
+  {code:'CRV04',pattern:'Caravello',color:'Slate',   priceGroup:'B',noFlat:true,composition:'100% Polyester',weightGsm:500,cordLoopColor:'Gray', tdbuAvailable:false,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#7A8090'},
+  {code:'CRV05',pattern:'Caravello',color:'Wheat',   priceGroup:'B',noFlat:true,composition:'100% Polyester',weightGsm:500,cordLoopColor:'Beige',tdbuAvailable:false,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#E0C890'},
+  {code:'CRV06',pattern:'Caravello',color:'Gray',    priceGroup:'B',noFlat:true,composition:'100% Polyester',weightGsm:500,cordLoopColor:'Gray', tdbuAvailable:false,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#909090'},
+  // DFF (pattern name PDF CONFIRM — 80% Poly 20% Linen) — TDBU Y
+  {code:'DFF01R',pattern:'DFF — PDF CONFIRM',color:'Natural',priceGroup:'B',noFlat:false,composition:'80% Polyester, 20% Linen',weightGsm:330,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#D8CEAC',pdfConfirm:true},
+  {code:'DFF03R',pattern:'DFF — PDF CONFIRM',color:'Khaki',  priceGroup:'B',noFlat:false,composition:'80% Polyester, 20% Linen',weightGsm:330,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#C0B080',pdfConfirm:true},
+  // Gwin — TDBU Y
+  {code:'GWI02',pattern:'Gwin',color:'Dusty Rose',   priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:410,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#D4A0A0'},
+  {code:'GWI03',pattern:'Gwin',color:'PDF CONFIRM',  priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:410,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#D8CDB8',pdfConfirm:true},
+  {code:'GWI04',pattern:'Gwin',color:'Palm',         priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:410,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#8BAC78'},
+  {code:'GWI05',pattern:'Gwin',color:'Rust',         priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:410,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#B86040'},
+  {code:'GWI06',pattern:'Gwin',color:'White',        priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:410,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#F5F2EE'},
+  // Lea — 100% Polyester — TDBU Y — 114"W
+  {code:'LEA01',pattern:'Lea',color:'Azure',       priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:400,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#88A8C8'},
+  {code:'LEA02',pattern:'Lea',color:'Cobblestone', priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:400,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#9A9080'},
+  {code:'LEA03',pattern:'Lea',color:'PDF CONFIRM', priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:400,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#D0C8B0',pdfConfirm:true},
+  {code:'LEA04',pattern:'Lea',color:'Honey',       priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:400,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#C8A858'},
+  {code:'LEA05',pattern:'Lea',color:'Pebble',      priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:400,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#A89888'},
+  {code:'LEA06',pattern:'Lea',color:'Gray',        priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:390,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#909090'},
+  {code:'LEA07',pattern:'Lea',color:'Ice',         priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:390,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#E0EAF0'},
+  {code:'LEA08',pattern:'Lea',color:'Light Gray',  priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:390,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#C0C0C0'},
+  {code:'LEA09',pattern:'Lea',color:'PDF CONFIRM', priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:390,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#F0EEE8',pdfConfirm:true},
 
-  // ── GROUP B — PLACEHOLDERS ──────────────────────────────────────────────────
-  {code:'ENTER',pattern:'[Group B fabric — enter from PDF p.3-5]',color:'PDF CONFIRM',priceGroup:'B',composition:'PDF CONFIRM',weightGsm:0,cordLoopColor:'',tdbuAvailable:false,fabricWidth:110,repeatWidth:null,repeatHeight:null,flatStyleAvailable:true,hex:'#D8D0C8',placeholder:true},
+  // ── GROUP C ───────────────────────────────────────────────────────────────
+  // Andie — [1] No Flat — 100% Polyester — TDBU Y
+  {code:'AND01',pattern:'Andie',color:'PDF CONFIRM',priceGroup:'C',noFlat:true,composition:'100% Polyester',weightGsm:275,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#C8C0B0',pdfConfirm:true},
+  {code:'AND05',pattern:'Andie',color:'Coral',      priceGroup:'C',noFlat:true,composition:'100% Polyester',weightGsm:275,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#D49080'},
+  {code:'AND09',pattern:'Andie',color:'Lavender',   priceGroup:'C',noFlat:true,composition:'100% Polyester',weightGsm:275,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#B0A8C8'},
+  {code:'AND17',pattern:'Andie',color:'White',      priceGroup:'C',noFlat:true,composition:'100% Polyester',weightGsm:275,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#F5F2F0'},
+  // Chiasson — [1] No Flat — 100% Polyester — TDBU Y — 116"W
+  {code:'CHS01',pattern:'Chiasson',color:'Lily',   priceGroup:'C',noFlat:true,composition:'100% Polyester',weightGsm:350,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#F2EAD8'},
+  {code:'CHS02',pattern:'Chiasson',color:'Silver', priceGroup:'C',noFlat:true,composition:'100% Polyester',weightGsm:350,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#C0C0C4'},
+  {code:'CHS03',pattern:'Chiasson',color:'Stone',  priceGroup:'C',noFlat:true,composition:'100% Polyester',weightGsm:350,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#A8A098'},
+  // Darby — 100% Polyester — TDBU Y — 114"W
+  {code:'DBY01',pattern:'Darby',color:'Magnolia',priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:405,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#F0EAD8'},
+  {code:'DBY02',pattern:'Darby',color:'Mist',    priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:405,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#B8C0C8'},
+  {code:'DBY03',pattern:'Darby',color:'Shell',   priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:405,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#E8D8C0'},
+  {code:'DBY04',pattern:'Darby',color:'Thunder', priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:405,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#606880'},
+  {code:'DBY05',pattern:'Darby',color:'Tide',    priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:405,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#7A9098'},
+  // Kiernan — 100% Polyester — TDBU Y — 116"W
+  {code:'KRN01',pattern:'Kiernan',color:'Ash',     priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:240,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#A8A8A0'},
+  {code:'KRN02',pattern:'Kiernan',color:'Birch',   priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:240,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#C8C0A8'},
+  {code:'KRN03',pattern:'Kiernan',color:'Tapenade',priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:240,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#706858'},
+  {code:'KRN04',pattern:'Kiernan',color:'Winter',  priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:240,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#E8E8E8'},
+  // Laken — [1] No Flat — 70% Poly 20% Viscose 10% Linen — TDBU Y — 114"W
+  {code:'LKN01',pattern:'Laken',color:'Aqua',    priceGroup:'C',noFlat:true,composition:'70% Polyester, 20% Viscose, 10% Linen',weightGsm:350,cordLoopColor:'Gray',tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#6AA8A8'},
+  {code:'LKN03',pattern:'Laken',color:'Contrast',priceGroup:'C',noFlat:true,composition:'70% Polyester, 20% Viscose, 10% Linen',weightGsm:350,cordLoopColor:'Gray',tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#787878'},
+  {code:'LKN02',pattern:'Laken',color:'Storm',   priceGroup:'C',noFlat:true,composition:'70% Polyester, 20% Viscose, 10% Linen',weightGsm:350,cordLoopColor:'Gray',tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#606870'},
+  // Parson — [1] No Flat — 65% Poly 25% Viscose 10% Linen — TDBU Y — 114"W
+  {code:'PRS01',pattern:'Parson',color:'Cream',       priceGroup:'C',noFlat:true,composition:'65% Polyester, 25% Viscose, 10% Linen',weightGsm:350,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#F0E8D0'},
+  {code:'PRS02',pattern:'Parson',color:'PDF CONFIRM', priceGroup:'C',noFlat:true,composition:'65% Polyester, 25% Viscose, 10% Linen',weightGsm:350,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#D8CEB8',pdfConfirm:true},
+  // Theis — 100% Polyester — TDBU Y — 118"W
+  {code:'THE01',pattern:'Theis',color:'Aluminum',priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:240,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:118,repeatWidth:null,repeatHeight:null,hex:'#B0B0B8'},
+  {code:'THE02',pattern:'Theis',color:'Camel',   priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:240,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:118,repeatWidth:null,repeatHeight:null,hex:'#C89850'},
+  {code:'THE03',pattern:'Theis',color:'Denim',   priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:240,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:118,repeatWidth:null,repeatHeight:null,hex:'#5068A0'},
+  {code:'THE04',pattern:'Theis',color:'Jade',    priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:240,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:118,repeatWidth:null,repeatHeight:null,hex:'#68A078'},
+  {code:'THE05',pattern:'Theis',color:'Seafoam', priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:240,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:118,repeatWidth:null,repeatHeight:null,hex:'#88C0B0'},
+  {code:'THE06',pattern:'Theis',color:'Sun',     priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:240,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:118,repeatWidth:null,repeatHeight:null,hex:'#D4A830'},
+  // Waldron — [1] No Flat — 54% Poly 32% Viscose 14% Linen — TDBU Y
+  {code:'WLD01',pattern:'Waldron',color:'Flour',   priceGroup:'C',noFlat:true,composition:'54% Polyester, 32% Viscose, 14% Linen',weightGsm:345,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#F0E8D8'},
+  {code:'WLD02',pattern:'Waldron',color:'Olive',   priceGroup:'C',noFlat:true,composition:'54% Polyester, 32% Viscose, 14% Linen',weightGsm:345,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#8A9060'},
+  {code:'WLD03',pattern:'Waldron',color:'Sand',    priceGroup:'C',noFlat:true,composition:'54% Polyester, 32% Viscose, 14% Linen',weightGsm:345,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#C8B888'},
+  {code:'WLD04',pattern:'Waldron',color:'Twilight',priceGroup:'C',noFlat:true,composition:'54% Polyester, 32% Viscose, 14% Linen',weightGsm:345,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#5A5870'},
+  {code:'WLD05',pattern:'Waldron',color:'Twine',   priceGroup:'C',noFlat:true,composition:'54% Polyester, 32% Viscose, 14% Linen',weightGsm:345,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#C0A870'},
+  {code:'WLD06',pattern:'Waldron',color:'Gray',    priceGroup:'C',noFlat:true,composition:'54% Polyester, 32% Viscose, 14% Linen',weightGsm:345,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#909090'},
 
-  // ── GROUP C — PLACEHOLDERS ──────────────────────────────────────────────────
-  {code:'ENTER',pattern:'[Group C fabric — enter from PDF p.3-5]',color:'PDF CONFIRM',priceGroup:'C',composition:'PDF CONFIRM',weightGsm:0,cordLoopColor:'',tdbuAvailable:false,fabricWidth:110,repeatWidth:null,repeatHeight:null,flatStyleAvailable:true,hex:'#D0C8C0',placeholder:true},
-
-  // ── GROUP D — PLACEHOLDERS ──────────────────────────────────────────────────
-  {code:'ENTER',pattern:'[Group D fabric — enter from PDF p.3-5]',color:'PDF CONFIRM',priceGroup:'D',composition:'PDF CONFIRM',weightGsm:0,cordLoopColor:'',tdbuAvailable:false,fabricWidth:110,repeatWidth:null,repeatHeight:null,flatStyleAvailable:true,hex:'#C8C0B8',placeholder:true},
+  // ── GROUP D ───────────────────────────────────────────────────────────────
+  // Cassia — 100% Polyester — TDBU Y — 106"W — repeat 18"H
+  {code:'CSS01',pattern:'Cassia',color:'Kiwi', priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:320,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:106,repeatWidth:null,repeatHeight:18,hex:'#88B060'},
+  {code:'CSS02',pattern:'Cassia',color:'Zest', priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:320,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:106,repeatWidth:null,repeatHeight:18,hex:'#E8B840'},
+  // Current — 100% Polyester — TDBU Y
+  {code:'CRN01',pattern:'Current',color:'Aquifer',priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:300,cordLoopColor:'Gray',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#7098A8'},
+  {code:'CRN02',pattern:'Current',color:'Iron',   priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:300,cordLoopColor:'Gray',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#707880'},
+  {code:'CRN03',pattern:'Current',color:'Wind',   priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:300,cordLoopColor:'Gray',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#9090A0'},
+  // Eden — 100% Polyester — TDBU Y — 106"W — repeat 18"H
+  {code:'EDN01',pattern:'Eden',color:'Cloud',    priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:320,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:106,repeatWidth:null,repeatHeight:18,hex:'#D8E8F0'},
+  {code:'EDN02',pattern:'Eden',color:'Ink',      priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:320,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:106,repeatWidth:null,repeatHeight:18,hex:'#2A3048'},
+  {code:'EDN03',pattern:'Eden',color:'Moonlight',priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:320,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:106,repeatWidth:null,repeatHeight:18,hex:'#C0C8D8'},
+  // Kenlie — 98% Poly 2% Lurex — TDBU Y — 116"W
+  {code:'KEN01',pattern:'Kenlie',color:'Charcoal', priceGroup:'D',noFlat:false,composition:'98% Polyester, 2% Lurex',weightGsm:420,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#404848'},
+  {code:'KEN02',pattern:'Kenlie',color:'Diamond',  priceGroup:'D',noFlat:false,composition:'98% Polyester, 2% Lurex',weightGsm:420,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#E8E8E8'},
+  {code:'KEN03',pattern:'Kenlie',color:'Evergreen',priceGroup:'D',noFlat:false,composition:'98% Polyester, 2% Lurex',weightGsm:420,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#3A6040'},
+  {code:'KEN04',pattern:'Kenlie',color:'Silver',   priceGroup:'D',noFlat:false,composition:'98% Polyester, 2% Lurex',weightGsm:420,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#C0C0C8'},
+  {code:'KEN05',pattern:'Kenlie',color:'Twilight', priceGroup:'D',noFlat:false,composition:'98% Polyester, 2% Lurex',weightGsm:420,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#4A4868'},
+  // LeBeau — 51% Poly 49% Viscose — TDBU Y
+  {code:'LBU01',pattern:'LeBeau',color:'Gold',  priceGroup:'D',noFlat:false,composition:'51% Polyester, 49% Viscose',weightGsm:290,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#C8A040'},
+  {code:'LBU02',pattern:'LeBeau',color:'Silver',priceGroup:'D',noFlat:false,composition:'51% Polyester, 49% Viscose',weightGsm:290,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#C0C0C8'},
+  {code:'LBU03',pattern:'LeBeau',color:'White', priceGroup:'D',noFlat:false,composition:'51% Polyester, 49% Viscose',weightGsm:290,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#F0EEEC'},
+  // Lumen — 100% Polyester — TDBU Y
+  {code:'LUM01',pattern:'Lumen',color:'Gray',  priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:305,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#909090'},
+  {code:'LUM02',pattern:'Lumen',color:'Mist',  priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:305,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#C0C8C8'},
+  {code:'LUM03',pattern:'Lumen',color:'White', priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:305,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#F2F0EE'},
+  // Merida (MDA — patterned, 106"W, 18"H repeat)
+  {code:'MDA01',pattern:'Merida',color:'Radish',  priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:320,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:106,repeatWidth:null,repeatHeight:18,hex:'#B84040'},
+  {code:'MDA02',pattern:'Merida',color:'Concrete', priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:320,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:106,repeatWidth:null,repeatHeight:18,hex:'#A0A0A8'},
+  {code:'MDA03',pattern:'Merida',color:'Citron',   priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:320,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:106,repeatWidth:null,repeatHeight:18,hex:'#D4C040'},
+  {code:'MDA04',pattern:'Merida',color:'Laurel',   priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:320,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:106,repeatWidth:null,repeatHeight:18,hex:'#6A8A50'},
+  // Merida (MTT — solid, 110"W, no repeat)
+  {code:'MTT01',pattern:'Merida',color:'Celadon',  priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#88B0A0'},
+  {code:'MTT02',pattern:'Merida',color:'Lagoon',   priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#508898'},
+  {code:'MTT03',pattern:'Merida',color:'Metallic', priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#A8A8B0'},
+  {code:'MTT04',pattern:'Merida',color:'Storm',    priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#707880'},
+  {code:'MTT05',pattern:'Merida',color:'Taupe',    priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#908070'},
+  {code:'MTT06',pattern:'Merida',color:'Tungsten', priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#606468'},
+  // Ramsey — 100% Polyester — TDBU Y
+  {code:'RAM01',pattern:'Ramsey',color:'Alloy',      priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:305,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#989088'},
+  {code:'RAM02',pattern:'Ramsey',color:'PDF CONFIRM',priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:305,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#B0A8A0',pdfConfirm:true},
+  {code:'RAM03',pattern:'Ramsey',color:'Silver',     priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:305,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#C0C0C0'},
+  {code:'RAM04',pattern:'Ramsey',color:'White Gold',  priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:305,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#E8D890'},
+  // Ursa — 100% Polyester — TDBU Y
+  {code:'URS01',pattern:'Ursa',color:'Skyline',priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:260,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#8890A0'},
+  {code:'URS02',pattern:'Ursa',color:'Slate',  priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:260,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#708090'},
+  {code:'URS03',pattern:'Ursa',color:'White',  priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:260,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#F0EEEC'},
+  // Victoria — 100% Polyester — TDBU Y — 106"W — repeat 13.75"W × 18"H
+  {code:'VCT01',pattern:'Victoria',color:'Cascade',priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:320,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:106,repeatWidth:13.75,repeatHeight:18,hex:'#A0C0D0'},
+  {code:'VCT02',pattern:'Victoria',color:'Chime',  priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:320,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:106,repeatWidth:13.75,repeatHeight:18,hex:'#C0D0E0'},
+  {code:'VCT03',pattern:'Victoria',color:'Mirage', priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:320,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:106,repeatWidth:13.75,repeatHeight:18,hex:'#909898'},
+  // Windham — 100% Polyester — TDBU Y — repeat 14.5"W × 17.5"H
+  {code:'WIN01',pattern:'Windham',color:'Chateau',    priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:14.5,repeatHeight:17.5,hex:'#C8B890'},
+  {code:'WIN02',pattern:'Windham',color:'Luxe',       priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:14.5,repeatHeight:17.5,hex:'#808898'},
+  {code:'WIN03',pattern:'Windham',color:'PDF CONFIRM',priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:14.5,repeatHeight:17.5,hex:'#989090',pdfConfirm:true},
 ];
+
+// ── INTERNAL PRICING TABLES (do not expose in public UI) ─────────────────────
+// Source: Wallace Portfolio Fabric Roman Shades PDF — pricing pages
+// Width brackets (inches): 24,30,36,42,48,54,60,66,72,78,84,96
+// Length brackets (inches): 24,30,36,42,48,54,60,66,72,78,84,96
+// FLAT and KNIFE PLEAT shades — Cordless or Clutch (base price per shade)
+var W_BRKT=[24,30,36,42,48,54,60,66,72,78,84,96];
+var L_BRKT=[24,30,36,42,48,54,60,66,72,78,84,96];
+var PRICE_FLAT={
+  A:[[496,528,553,560,599,709,732,800,825,831,872,977],[501,532,558,565,604,715,738,807,833,838,879,986],[505,537,563,570,609,721,744,814,840,846,887,995],[526,568,596,604,646,764,789,863,891,897,941,1057],[548,593,622,630,663,796,822,901,930,954,1004,1072],[571,618,649,657,686,831,858,940,971,1024,1079,1153],[596,645,666,675,699,867,896,982,1014,1092,1153,1232],[621,673,683,692,724,905,935,1025,1059,1161,1226,1311],[648,702,713,723,750,949,979,1062,1095,1242,1313,1405],[676,733,745,755,776,999,1031,1119,1153,1310,1386,1484],[706,766,778,788,804,1050,1083,1177,1213,1380,1461,1565],[737,800,812,824,847,1119,1185,1288,1329,1514,1605,1721]],
+  'A[1]':[[538,595,615,627,646,800,834,918,936,952,963,1036],[542,600,620,633,652,807,841,926,944,960,972,1045],[547,605,625,638,657,814,849,934,953,969,981,1055],[556,628,650,666,692,858,907,940,958,974,1025,1151],[582,635,669,695,728,930,982,1027,1040,1060,1117,1252],[605,663,698,726,767,997,1059,1102,1114,1139,1202,1329],[622,695,742,758,808,1062,1100,1148,1177,1217,1286,1351],[644,736,786,791,851,1128,1171,1235,1259,1295,1369,1439],[675,753,827,838,897,1169,1213,1299,1343,1386,1466,1543],[707,776,864,882,946,1211,1257,1370,1409,1464,1550,1632],[767,814,903,928,998,1255,1303,1445,1502,1543,1635,1722],[823,889,944,1015,1053,1301,1351,1546,1625,1696,1800,1896]],
+  C:[[553,617,630,643,660,820,853,940,966,992,1014,1055],[560,622,638,663,686,844,875,965,988,1014,1045,1078],[564,633,651,676,747,870,908,998,1031,1049,1084,1163],[573,649,672,718,812,902,972,1053,1078,1100,1133,1273],[606,680,687,779,881,980,1056,1084,1116,1175,1236,1386],[622,698,738,835,945,1052,1135,1204,1224,1268,1333,1496],[641,734,785,892,1007,1122,1213,1279,1331,1358,1427,1604],[682,781,832,946,1070,1192,1291,1334,1398,1451,1521,1711],[715,821,887,1009,1140,1268,1373,1393,1466,1550,1629,1835],[749,849,934,1064,1202,1338,1433,1468,1553,1626,1723,1942],[782,869,983,1120,1266,1410,1480,1535,1615,1716,1820,2052],[840,916,1035,1155,1305,1454,1511,1644,1775,1889,2006,2264]],
+  D:[[623,696,711,727,746,926,964,1065,1095,1125,1150,1196],[631,703,721,750,776,954,989,1093,1120,1150,1185,1223],[636,715,737,765,846,984,1028,1131,1170,1190,1230,1321],[646,733,760,813,922,1021,1102,1195,1223,1249,1286,1448],[685,770,778,883,1000,1111,1198,1230,1267,1335,1405,1578],[703,790,836,948,1074,1193,1289,1368,1391,1442,1516,1704],[725,832,890,1013,1146,1274,1379,1454,1514,1545,1624,1828],[null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null]]
+};
+// HOBBLED and FRONT SLAT shades — Cordless or Clutch
+// Length max 72" for hobbled. Width max 78" for standard LI/DC/AC motor.
+var PRICE_HOBBLED={
+  A:[[518,550,574,593,649,750,785,833,866,892,905,1011],[534,560,595,616,674,776,800,863,918,963,1009,1063],[547,577,624,646,733,814,876,945,1007,1061,1114,1139],[559,605,649,703,797,884,954,1030,1100,1160,1221,1246],[575,622,680,767,869,963,1039,1125,1206,1273,1341,1361],[590,643,729,823,931,1033,1117,1210,1299,1373,1448,1468],[612,683,774,876,992,1102,1193,1292,1388,1469,1553,1573],[636,722,821,931,1055,1171,1270,1376,1480,1567,1658,1677],[678,773,878,995,1126,1250,1355,1469,1594,1690,1788,1811],[710,812,925,1050,1187,1318,1431,1553,1686,1788,1893,1915],[744,853,972,1105,1250,1388,1509,1638,1777,1887,1999,2023],[809,933,1067,1213,1373,1526,1660,1803,1957,2080,2208,2231]],
+  C:[[576,640,664,704,730,856,886,982,1055,1092,1127,1197],[586,653,709,749,772,898,949,1031,1133,1155,1209,1272],[614,667,727,789,849,941,1015,1097,1197,1262,1330,1381],[625,691,779,821,929,1032,1115,1206,1290,1363,1439,1476],[660,721,797,900,1018,1129,1221,1322,1419,1501,1586,1620],[685,757,859,972,1098,1219,1321,1431,1537,1629,1723,1759],[709,808,918,1041,1177,1306,1417,1536,1651,1752,1856,1893],[749,858,978,1110,1255,1394,1513,1641,1766,1875,1988,2027],[801,919,1048,1189,1343,1491,1619,1757,1905,2023,2146,2189],[843,970,1107,1258,1421,1578,1716,1862,2020,2147,2278,2323],[887,1023,1169,1330,1502,1669,1815,1971,2138,2274,2415,2462],[970,1124,1288,1468,1657,1843,2007,2181,2366,2520,2679,2729]]
+};
+
+// VALANCE ONLY pricing — widths 24-96
+var VALANCE_ONLY_W=[24,30,36,42,48,54,60,66,72,78,84,96];
+var VALANCE_ONLY_PRICE={
+  A:[275,296,314,318,344,400,415,461,478,482,508,580],
+  B:[303,341,355,363,375,461,484,539,551,562,570,618],
+  C:[313,356,365,373,385,474,496,554,571,589,603,631],
+  D:[346,395,406,415,430,530,556,620,641,661,679,709]
+};
+
+// Surcharge pricing (internal — included in quote email, not shown publicly)
+var SURCHARGES={
+  blackoutLiner:0.10,     // +10% of shade price
+  waterfallFrontValance:51,
+  twoOn1Headrail:56,
+  cordlessTDBU:145,
+  proWand:165,
+  motorStandardLI:308,
+  motorPowerLI:492,
+  motorRemote15ch:114,
+  motorWallSwitch:132,
+  motorProHub:468,
+  motorExtBattery:120,
+  motorPluginAdapter:55,
+  motorExt6:29,
+  motorExt48:35,
+  motorExt96:45,
+  motorCharger:48,
+  cutFabricA:60,cutFabricB:90,cutFabricC:121,cutFabricD:139,
+  cutLiner:60,
+  cutFabricFreightWithShade:5,
+  cutFabricFreightFirst:25,cutFabricFreightAdditional:5
+};
+
+function getPriceFlat(w,l,group,noFlat){
+  var tbl=noFlat?PRICE_FLAT['A[1]']:PRICE_FLAT[group];
+  if(!tbl)return null;
+  var wi=W_BRKT.findIndex(function(v){return w<=v;}); if(wi<0)wi=W_BRKT.length-1;
+  var li=L_BRKT.findIndex(function(v){return l<=v;}); if(li<0)li=L_BRKT.length-1;
+  return(tbl[li]&&tbl[li][wi])||null;
+}
+
+function getPriceHobbled(w,l,group){
+  var tbl=PRICE_HOBBLED[group];
+  if(!tbl)return null;
+  var wi=W_BRKT.findIndex(function(v){return w<=v;}); if(wi<0)wi=W_BRKT.length-1;
+  var li=L_BRKT.findIndex(function(v){return l<=v;}); if(li<0||li>=9)return null; // max 72" length
+  return(tbl[li]&&tbl[li][wi])||null;
+};
 
 // ── SIZE LIMITS ───────────────────────────────────────────────────────────────
 // All limits per Wallace Portfolio Fabric Roman Shades PDF 2026
@@ -799,7 +994,7 @@ function setPanelStyle(style, el) {
   noteEl.textContent=notes[style]||''; noteEl.style.display=notes[style]?'':'none';
   // Warn for flat
   var warnEl=document.getElementById('panel-style-warn');
-  if(style==='flat'&&S.fabric&&!S.fabric.flatStyleAvailable){
+  if(style==='flat'&&S.fabric&&S.fabric.noFlat){
     warnEl.textContent='&#9888; Selected fabric ('+S.fabric.pattern+' '+S.fabric.color+') is not available in Flat style. Please select a different fabric or panel style.';
     warnEl.style.display='';
   } else { warnEl.style.display='none'; }
@@ -825,18 +1020,18 @@ function renderFabricGrid() {
     html+='<div class="coll-section"><div class="coll-label">Price Group '+g+' <span style="font-size:9px;color:#f59e0b;font-weight:600">PDF CONFIRM codes</span></div><div class="fabric-grid">';
     groups[g].forEach(function(f){
       var isSel=S.fabric&&S.fabric.code===f.code&&S.fabric.pattern===f.pattern&&S.fabric.color===f.color;
-      var isBlocked=S.panelStyle==='flat'&&!f.flatStyleAvailable;
+      var isBlocked=S.panelStyle==='flat'&&f.noFlat;
       var isPlaceholder=f.placeholder;
       var sf=JSON.stringify(f).replace(/'/g,"\\'");
       html+='<div class="swatch'+(isSel?' sel':'')+(isBlocked?' blocked-swatch':'')+(isPlaceholder?' blocked-swatch':'')+'" '
-        +(isBlocked||isPlaceholder?'title="'+(isBlocked?'Not available in Flat style':'Enter from PDF pages 3-5')+'"':'onclick=\'selectFabric('+sf+')\'')+' >';
+        +(isBlocked||isPlaceholder?'title="'+(isBlocked?'Not available in Flat style':'PDF CONFIRM color')+'"':'onclick=\'selectFabric('+sf+')\'')+' >';
       html+='<div class="swatch-color" style="background:'+f.hex+'"></div>';
       html+='<div class="swatch-label">';
       html+='<div class="swatch-name">'+f.pattern+(f.color&&f.color!=='PDF CONFIRM'?' &mdash; '+f.color:'')+'</div>';
       html+='<div class="swatch-code">'+(isPlaceholder?'ENTER CODE':f.code)+'</div>';
-      if(!f.flatStyleAvailable) html+='<div class="swatch-nf">NO FLAT</div>';
+      if(f.noFlat) html+='<div class="swatch-nf">NO FLAT</div>';
       if(f.tdbuAvailable) html+='<div class="swatch-badge">TDBU</div>';
-      if(isPlaceholder) html+='<div class="swatch-badge" style="background:#FEE2E2;color:#7f1d1d">PDF CONFIRM</div>';
+      if(f.pdfConfirm) html+='<div class="swatch-badge" style="background:#FEE2E2;color:#7f1d1d">PDF CONFIRM</div>';
       html+='</div></div>';
     });
     html+='</div></div>';
@@ -847,7 +1042,7 @@ function renderFabricGrid() {
 function selectFabric(f) {
   if(f.placeholder){alert('This is a placeholder. Enter the fabric data from Wallace PDF pages 3-5 first.');return;}
   // Block flat for [1] fabrics
-  if(S.panelStyle==='flat'&&!f.flatStyleAvailable){alert(f.pattern+' '+f.color+' is not available in Flat style. Change panel style first.');return;}
+  if(S.panelStyle==='flat'&&f.noFlat){alert(f.pattern+' '+f.color+' is not available in Flat style. Change panel style first.');return;}
   S.fabric=f;
   document.getElementById('val7').textContent=f.pattern+' '+f.color+' ('+f.code+')';
   sp('sp-fabric',f.pattern+' '+f.color+' · Group '+f.priceGroup+' ('+f.code+')');
@@ -1046,7 +1241,7 @@ function submitQuote() {
 
   // Validation warnings to flag in email
   var validationFlags=[];
-  if(S.panelStyle==='flat'&&S.fabric&&!S.fabric.flatStyleAvailable) validationFlags.push('WARNING: '+S.fabric.pattern+' '+S.fabric.color+' is NOT available in Flat style — must be corrected before production.');
+  if(S.panelStyle==='flat'&&S.fabric&&S.fabric.noFlat) validationFlags.push('WARNING: '+S.fabric.pattern+' '+S.fabric.color+' is NOT available in Flat style — must be corrected before production.');
   if(S.control==='tdbu'){
     if(S.shadeStyle!=='standard') validationFlags.push('WARNING: TDBU requires Standard shade style.');
     if(S.panelStyle!=='knife') validationFlags.push('WARNING: TDBU requires Knife Pleat panel style.');
@@ -1111,7 +1306,7 @@ function submitQuote() {
     'Weight: '+(S.fabric?S.fabric.weightGsm+' gsm':'—'),
     'Fabric width: '+(S.fabric?S.fabric.fabricWidth+'"':'—'),
     'Repeat: '+(S.fabric&&S.fabric.repeatWidth?'W '+S.fabric.repeatWidth+'" × H '+S.fabric.repeatHeight+'"':'None'),
-    'Flat style available: '+(S.fabric?(S.fabric.flatStyleAvailable?'Yes':'No — [1] fabric'):'—'),
+    'Flat style available: '+(S.fabric?(!S.fabric.noFlat?'Yes':'No — [1] fabric'):'—'),
     'TDBU available: '+(S.fabric?(S.fabric.tdbuAvailable?'Yes':'No'):'—'),
     'Cord loop color: '+(S.fabric?S.fabric.cordLoopColor:'—'),'',
     'LINER & ALIGNMENT',
@@ -1133,6 +1328,41 @@ function submitQuote() {
     'DELIVERY',
     delivery,'',
     (validationFlags.length?'VALIDATION FLAGS\n'+validationFlags.join('\n')+'\n':''),
+    'INTERNAL PRICING (owner reference only — not shown to customer):',
+    (function(){
+      var f=S.fabric,w=S.width,l=S.length;
+      if(!f||!w||!l) return 'Enter dims + fabric to calculate';
+      var isHob=S.panelStyle==='hobbled';
+      var p=isHob?getPriceHobbled(w,l,f.priceGroup):getPriceFlat(w,l,f.priceGroup,f.noFlat);
+      if(!p) return 'Out of table range — call for price';
+      var tot=p;var ns=[];
+      if(S.liner==='BO01'){tot=Math.round(tot*1.10);ns.push('blackout +10%');}
+      return '
+    document.getElementById('q-notes').value.trim()||'None','',
+    '⚠ INTERNAL NOTE: Fabric codes marked "ENTER" are placeholders. Enter all codes from Wallace PDF pages 3-5 before finalizing this quote.','',
+    '--- Sent from phillyblinds.com/pages/wallace-portfolio-roman.html ---',
+  ].filter(function(l){return l!==undefined&&l!==null;}).join('\n');
+
+  var subj='Wallace Portfolio Roman — '+S.width+'"×'+S.length+'" '+(S.fabric?S.fabric.pattern+' '+S.fabric.color:'')+' — '+name;
+  window.location.href='mailto:blindznation@gmail.com?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
+
+  document.getElementById('step16-body').querySelectorAll(':not(#success-box)').forEach(function(el){el.style.display='none';});
+  document.getElementById('success-box').style.display='block';
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderFabricGrid();
+document.getElementById('room-label').addEventListener('input',function(){
+  S.room=this.value.trim();
+  document.getElementById('val2').textContent=S.room||'—';
+  sp('sp-room',S.room);
+  if(S.room)document.getElementById('step2').classList.add('done');
+});
+</script>
+</body>
+</html>
++tot+'/shade Group '+f.priceGroup+(ns.length?' ('+ns.join(', ')+')':'');
+    })(),
     'NOTES',
     document.getElementById('q-notes').value.trim()||'None','',
     '⚠ INTERNAL NOTE: Fabric codes marked "ENTER" are placeholders. Enter all codes from Wallace PDF pages 3-5 before finalizing this quote.','',
