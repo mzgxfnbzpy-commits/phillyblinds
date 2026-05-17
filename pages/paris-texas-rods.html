@@ -346,14 +346,14 @@ textarea.inp-field{resize:vertical;min-height:90px}
 
     <!-- Quick Ship Metal finishes -->
     <div id="finish-qs-metal" style="display:none">
-      <div class="warn-banner" id="qs-metal-short-warn" style="display:none"><strong>Length limit on some finishes:</strong> Brushed Bronze (BZ) and Rose Gold (RGD) are limited to 8' maximum continuous length. Brushed Nickel (BN), Charcoal Zinc (CZ), Matte Black (MK), and Satin Gold (SG) support up to 12'.</div>
+      <div class="warn-banner" id="qs-metal-short-warn" style="display:none"><strong>Length limit on some QS Metal finishes:</strong> Brushed Bronze (BZ), Charcoal Zinc (CZ), Rose Gold (RGD), and Satin Gold (SG) are limited to <strong>8' maximum</strong> continuous length on poles and traverse tracks. Brushed Nickel (BN) and Matte Black (MK) support up to 12'.</div>
       <div class="finish-grid">
         <div class="finish-card" onclick="selectFinish('Brushed Bronze','BZ','bronze')"><div class="finish-swatch" style="background:linear-gradient(135deg,#8a6040,#6a4020)"></div><div class="finish-name">Brushed Bronze<br><span style="font-size:9px;color:#c00">8' max</span></div></div>
         <div class="finish-card" onclick="selectFinish('Brushed Nickel','BN','white')"><div class="finish-swatch" style="background:linear-gradient(135deg,#c8c0b0,#a0a090)"></div><div class="finish-name">Brushed Nickel</div></div>
-        <div class="finish-card" onclick="selectFinish('Charcoal Zinc','CZ','white')"><div class="finish-swatch" style="background:linear-gradient(135deg,#686870,#484850)"></div><div class="finish-name">Charcoal Zinc</div></div>
+        <div class="finish-card" onclick="selectFinish('Charcoal Zinc','CZ','white')"><div class="finish-swatch" style="background:linear-gradient(135deg,#686870,#484850)"></div><div class="finish-name">Charcoal Zinc<br><span style="font-size:9px;color:#c00">8' max</span></div></div>
         <div class="finish-card" onclick="selectFinish('Matte Black','MK','white')"><div class="finish-swatch" style="background:linear-gradient(135deg,#2a2828,#111)"></div><div class="finish-name">Matte Black</div></div>
         <div class="finish-card" onclick="selectFinish('Rose Gold','RGD','white')"><div class="finish-swatch" style="background:linear-gradient(135deg,#e0a898,#c08878)"></div><div class="finish-name">Rose Gold<br><span style="font-size:9px;color:#c00">8' max</span></div></div>
-        <div class="finish-card" onclick="selectFinish('Satin Gold','SG','white')"><div class="finish-swatch" style="background:linear-gradient(135deg,#d8c070,#b09040)"></div><div class="finish-name">Satin Gold</div></div>
+        <div class="finish-card" onclick="selectFinish('Satin Gold','SG','white')"><div class="finish-swatch" style="background:linear-gradient(135deg,#d8c070,#b09040)"></div><div class="finish-name">Satin Gold<br><span style="font-size:9px;color:#c00">8' max</span></div></div>
       </div>
     </div>
 
@@ -1001,11 +1001,11 @@ function prep6() {
 function buildLengthInfo() {
   const d = S.diameter, ft = S.finishType;
   if(d==='1⅛') {
-    if(ft==='qs-metal') return '<strong>1⅛" QS Metal Pole:</strong> Max 12ft (BN/CZ/MK/SG) or 8ft (BZ/RGD). Sold in 2ft increments, 2ft minimum.';
+    if(ft==='qs-metal') return '<strong>1⅛" QS Metal Pole:</strong> Max 12ft (BN/MK) or 8ft (BZ/CZ/RGD/SG). Sold in 2ft increments, 2ft minimum.';
     return '<strong>1⅛" Portfolio Metal Pole:</strong> Max 12ft continuous. Sold in 2ft increments, 2ft minimum.';
   } else if(d==='1⅜') {
     if(ft==='portfolio') return '<strong>1⅜" Portfolio Pole:</strong> Metal max 12ft; Wood max 16ft. Sold in 2ft increments.';
-    if(ft==='qs-metal') return '<strong>1⅜" QS Metal Pole:</strong> Max 12ft (BN/CZ/MK/SG) or 8ft (BZ/RGD). Sold in 2ft increments.';
+    if(ft==='qs-metal') return '<strong>1⅜" QS Metal Pole:</strong> Max 12ft (BN/MK) or 8ft (BZ/CZ/RGD/SG). Sold in 2ft increments.';
     if(ft==='qs-wood') return '<strong>1⅜" QS Wood &amp; Resin Pole:</strong> Max 12ft. Sold in 2ft increments.';
     return '<strong>1⅜" PTH Perfect Match Pole:</strong> Metal max 12ft; Wood max 16ft.';
   } else {
