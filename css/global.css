@@ -35,6 +35,10 @@ body {
   z-index: 100;
 }
 
+/* Compensate for sticky nav height (~86px) on all anchor targets */
+html { scroll-padding-top: 96px; }
+[id] { scroll-margin-top: 96px; }
+
 /* Identity bar — company name + both brands */
 .nav-identity {
   background: var(--espresso-deep);
