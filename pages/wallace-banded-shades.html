@@ -28,8 +28,7 @@
 .step-block.done .step-num{background:var(--gold);color:var(--espresso)}
 .step-head-title{font-size:14px;font-weight:500;color:#111;flex:1}
 .step-head-val{font-size:12px;color:var(--gold);font-weight:500;text-align:right;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.step-body{padding:0 20px 20px;display:none}
-.step-block.active .step-body{display:block}
+.step-body{padding:0 20px 20px;display:block}
 .step-sub{font-size:12px;font-weight:600;color:#333;margin-top:14px;margin-bottom:6px}
 .product-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}
 @media(max-width:500px){.product-grid{grid-template-columns:1fr}}
@@ -565,7 +564,10 @@ var WRAP_P=[31,38,47,54,61,69,77,84,92,108,123,138]; // by width bracket
 // ── HELPERS ───────────────────────────────────────────────────────────────────
 function selB(el,g){document.getElementById(g).querySelectorAll('.opt-btn').forEach(function(b){b.classList.remove('sel');});el.classList.add('sel');}
 function tog(id){var e=document.getElementById(id);e.classList.toggle('active');}
-function openNext(id){var e=document.getElementById(id);if(e&&e.style.display!=='none')e.classList.add('active');}
+function openNext(id){
+  var e=document.getElementById(id);
+  if(e){e.classList.add('active');setTimeout(function(){e.scrollIntoView({behavior:'smooth',block:'start'});},80);}
+}
 function spv(id,val){var e=document.getElementById(id);if(e){e.textContent=val||'—';e.classList.toggle('empty',!val||val==='—');}}
 function showR(id,s){var e=document.getElementById(id);if(e)e.style.display=s?'':'none';}
 function setV(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}

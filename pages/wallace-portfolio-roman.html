@@ -30,8 +30,7 @@
 .step-block.done .step-num{background:var(--gold);color:var(--espresso)}
 .step-head-title{font-size:14px;font-weight:500;color:#111;flex:1}
 .step-head-val{font-size:12px;color:var(--gold);font-weight:500;text-align:right;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.step-body{padding:0 20px 20px;display:none}
-.step-block.active .step-body,.step-block.open .step-body{display:block}
+.step-body{padding:0 20px 20px;display:block}
 .step-sub-head{font-size:12px;font-weight:600;color:#333;margin-top:14px;margin-bottom:6px}
 
 .opt-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
@@ -865,9 +864,8 @@ function selBtn(el, grpId) {
 }
 function toggleStep(id) {
   var el=document.getElementById(id);
-  var was=el.classList.contains('active');
-  el.classList.toggle('open',!was);
-  if(!was)el.classList.add('active');
+  el.classList.add('active');
+  setTimeout(function(){el.scrollIntoView({behavior:'smooth',block:'start'});},60);
 }
 function openNext(id) { var el=document.getElementById(id); if(el&&el.style.display!=='none')el.classList.add('active'); }
 function sp(id,val) { var el=document.getElementById(id); if(el){el.textContent=val||'—';el.classList.toggle('empty',!val||val==='—');} }
