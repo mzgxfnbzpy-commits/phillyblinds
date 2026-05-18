@@ -196,26 +196,30 @@ textarea.inp-field{resize:vertical;min-height:90px}
 
     <div class="choice-grid">
       <div class="choice-card" onclick="selectType('static', this)">
+        <span class="coll-type-badge coll-type-luxury">Decorative</span>
         <div class="choice-icon">🪞</div>
         <div class="choice-title">Stationary / Decorative Pole</div>
         <div class="choice-desc">Drapery hangs from rings that slide manually. Rod stays fixed. Ideal for panels that rarely open and close.</div>
-        <div class="choice-tag">Designer Metals · Wood Trends · Wrought Iron · Basic</div>
+        <div class="choice-tag">Designer Metals · Wood Trends · Wrought Iron · 1″ · 1⅜″ · 2″</div>
       </div>
       <div class="choice-card" onclick="selectType('traverse', this)">
+        <span class="coll-type-badge coll-type-modern">Functional</span>
         <div class="choice-icon">↔️</div>
-        <div class="choice-title">Traversing / Opening &amp; Closing</div>
-        <div class="choice-desc">Drapery travels smoothly on a track with carriers. One-way or two-way draw. Manual or AMP™ motorized.</div>
-        <div class="choice-tag">Estate™ Traverse · Architrac® (7 models: 94001, 94003, 94004, 94005, 9046, 9600, K-Rail)</div>
+        <div class="choice-title">Traversing / Opens &amp; Closes</div>
+        <div class="choice-desc">Drapery travels smoothly on a track with carriers. One-way or two-way draw. Manual or AMP™ motorized. Max 16 ft / 64 lbs.</div>
+        <div class="choice-tag">Estate™ Traverse · Architrac® (7 models) · AMP™ motorizable</div>
       </div>
     </div>
     <div class="choice-grid">
       <div class="choice-card" onclick="selectType('basic', this)">
+        <span class="coll-type-badge coll-type-neutral" style="background:#f0f0ee;color:#666">Value</span>
         <div class="choice-icon">💡</div>
         <div class="choice-title">Basic / Budget Traverse</div>
-        <div class="choice-desc">Telescoping Superfine Pro traverse rod or flat Lockseam rod. White finish only. Great value for bedrooms, rentals, or back rooms.</div>
+        <div class="choice-desc">Telescoping Superfine Pro or flat Lockseam rod. White finish only. Great for bedrooms, rentals, or back rooms.</div>
         <div class="choice-tag">Superfine Pro · Lockseam · Tension Rods</div>
       </div>
       <div class="choice-card" onclick="selectType('unsure', this)">
+        <span class="coll-type-badge coll-type-trad">Help me</span>
         <div class="choice-icon">💬</div>
         <div class="choice-title">Not Sure — Help Me Decide</div>
         <div class="choice-desc">Skip the configurator and send us a message. We'll recommend the right system based on your space and drapery.</div>
@@ -811,9 +815,12 @@ textarea.inp-field{resize:vertical;min-height:90px}
         <div id="dm-ring-1-opts" style="display:none">
           <div style="font-size:11px;color:#777;margin-bottom:8px">1" rings: int 1⅜", ext 1-11/16". Sold per finish. Lock Ring is for French return only.</div>
           <div class="opt-row" id="grp-dm-ring-1">
-            <div class="opt-pill" onclick="selectDMRing('Standard Rings (1&quot; int 1⅜&quot; / ext 1-11/16&quot;)',this)">Standard Rings <span style="font-size:10px;color:#888">pinch pleat / rod pocket</span></div>
-            <div class="opt-pill" onclick="selectDMRing('Bypass C-Rings (1&quot;)',this)">Bypass C-Rings <span style="font-size:10px;color:#888">bypass rods only</span></div>
-            <div class="opt-pill" onclick="selectDMRing('Lock Ring (1&quot;) — French return use only',this)">Lock Ring <span style="font-size:10px;color:#888">French return only</span></div>
+            <div class="opt-pill" onclick="selectDMRing('Standard Rings (1&quot; int 1⅜&quot; / ext 1-11/16&quot;)',this)">Standard Rings
+              <span style="font-size:10px;color:#888;display:block;margin-top:2px">Pinch pleat · Rod pocket · Tab top</span></div>
+            <div class="opt-pill" onclick="selectDMRing('Bypass C-Rings (1&quot;)',this)">Bypass C-Rings
+              <span style="font-size:10px;color:#888;display:block;margin-top:2px">Bypass rods only</span></div>
+            <div class="opt-pill" onclick="selectDMRing('Lock Ring (1&quot;) — French return use only',this)">Lock Ring
+              <span style="font-size:10px;color:#888;display:block;margin-top:2px">French return only</span></div>
           </div>
         </div>
 
@@ -821,10 +828,14 @@ textarea.inp-field{resize:vertical;min-height:90px}
         <div id="dm-ring-138-opts" style="display:none">
           <div style="font-size:11px;color:#777;margin-bottom:8px">1⅜" rings: int 1¾", ext 2⅛". Sold per finish. Lock Ring is for French return only.</div>
           <div class="opt-row" id="grp-dm-ring-138">
-            <div class="opt-pill" onclick="selectDMRing('Standard Rings (1⅜&quot; int 1¾&quot; / ext 2⅛&quot;)',this)">Standard Rings <span style="font-size:10px;color:#888">stationary use</span></div>
-            <div class="opt-pill" onclick="selectDMRing('Bypass C-Ring (1⅜&quot;)',this)">Bypass C-Ring <span style="font-size:10px;color:#888">bypass rods only</span></div>
-            <div class="opt-pill" onclick="selectDMRing('Transitional Ring (1⅜&quot; int 1⅝&quot;) — K-Rail compatible',this)">Transitional Ring <span style="font-size:10px;color:#888">1⅝" int · K-Rail</span></div>
-            <div class="opt-pill" onclick="selectDMRing('Lock Ring (1⅜&quot;) — French return only',this)">Lock Ring <span style="font-size:10px;color:#888">French return only</span></div>
+            <div class="opt-pill" onclick="selectDMRing('Standard Rings (1⅜&quot; int 1¾&quot; / ext 2⅛&quot;)',this)">Standard Rings
+              <span style="font-size:10px;color:#888;display:block;margin-top:2px">Pinch pleat · Goblet · Rod pocket</span></div>
+            <div class="opt-pill" onclick="selectDMRing('Bypass C-Ring (1⅜&quot;)',this)">Bypass C-Ring
+              <span style="font-size:10px;color:#888;display:block;margin-top:2px">Bypass rods only</span></div>
+            <div class="opt-pill" onclick="selectDMRing('Transitional Ring (1⅜&quot; int 1⅝&quot;) — K-Rail compatible',this)">Transitional Ring
+              <span style="font-size:10px;color:#888;display:block;margin-top:2px">Ripplefold · K-Rail</span></div>
+            <div class="opt-pill" onclick="selectDMRing('Lock Ring (1⅜&quot;) — French return only',this)">Lock Ring
+              <span style="font-size:10px;color:#888;display:block;margin-top:2px">French return only</span></div>
           </div>
         </div>
       </div>
@@ -1095,9 +1106,12 @@ textarea.inp-field{resize:vertical;min-height:90px}
 
     <div class="btn-row">
       <button class="btn-back" onclick="goStep(6)">← Back</button>
-      <button onclick="reqMoreInfo('Kirsch Drapery Hardware')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Kirsch hardware →</button>
-      <button class="btn-submit" onclick="submitQuote()">Send Quote Request →</button>
     </div>
+    <button onclick="reqMoreInfo('Kirsch Drapery Hardware')" class="req-info-link" style="display:block;margin-bottom:14px">Request more information about Kirsch hardware →</button>
+    <button class="btn-submit-cta" onclick="submitQuote()" style="font-family:var(--font)">
+      Get Custom Quote →
+      <span class="cta-sub">We'll follow up within a few hours · (609) 742-1720</span>
+    </button>
   </div>
 
   <!-- UNSURE / HELP FORM (separate flow) -->
