@@ -1106,14 +1106,14 @@ let state = {
 
 // ─── NAV FUNCTIONS ────────────────────────────────────────────
 function showChoice() {
-  document.getElementById('choice-section').style.display = '';
+  document.getElementById('choice-section').style.display = 'block';
   document.getElementById('roller-section').style.display = 'none';
   document.getElementById('roman-section').style.display = 'none';
   window.scrollTo({top: 0, behavior:'smooth'});
 }
 function showRoller() {
   document.getElementById('choice-section').style.display = 'none';
-  document.getElementById('roller-section').style.display = '';
+  document.getElementById('roller-section').style.display = 'block';
   document.getElementById('roman-section').style.display = 'none';
   buildFabricGrid('all');
   window.scrollTo({top: document.getElementById('roller-section').offsetTop - 80, behavior:'smooth'});
@@ -1121,7 +1121,7 @@ function showRoller() {
 function showRoman() {
   document.getElementById('choice-section').style.display = 'none';
   document.getElementById('roller-section').style.display = 'none';
-  document.getElementById('roman-section').style.display = '';
+  document.getElementById('roman-section').style.display = 'block';
   window.scrollTo({top: document.getElementById('roman-section').offsetTop - 80, behavior:'smooth'});
 }
 
