@@ -577,10 +577,10 @@
         <div class="form-group"><label>Email</label><input type="email" id="hw-email" placeholder="jane@example.com"></div>
         <div class="form-row">
           <div class="form-group"><label>Number of windows / rods</label><input type="number" id="hw-qty" min="1" value="1"></div>
-          <div class="form-group"><label>Approximate rod width</label>
-            <select id="hw-width">
-              <option>Not sure yet</option><option>Under 48"</option><option>48"–72"</option><option>72"–96"</option><option>96"–120"</option><option>120"–144"</option><option>144"+</option>
-            </select>
+          <div class="form-group">
+            <label>Exact rod width (inches) *</label>
+            <input type="number" id="hw-width" min="1" max="480" step="0.25" placeholder="e.g. 84" style="font-size:15px;padding:10px 12px">
+            <div style="font-size:11px;color:#888;margin-top:4px">Measure the finished rod length you need. For multiple windows, enter the widest — note others in the Notes field.</div>
           </div>
         </div>
         <div class="form-group"><label>Finish preference</label>
