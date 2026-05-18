@@ -910,7 +910,7 @@ const WS_PATTERNS = [
 /* ── Control size limits ── */
 const CTRL_LIMITS = {
   cordless: {minW:15, maxW:96, minH:18, maxH:96},
-  tdbu:     {minW:18, maxW_premier:60, maxW_select:70, minH:18, maxH:96},
+  tdbu:     {minW:18, maxW_premier:60, maxW_select:70, minH:18, maxH_premier:72, maxH_select:96},
   clutch:   {minW:14, maxW:96, minH:18, maxH:108},
   prowand:  {minW:23, maxW:96, minH:18, maxH:108},
   motorLI:  {minW:23, maxW:96, minH:18, maxH:108},
@@ -1296,17 +1296,21 @@ function pickControl(c, el) {
   el.classList.add('sel');
   var w=S.w, h=S.h, lm=CTRL_LIMITS[c]||{};
   var errs=[];
-  var maxW = c==='tdbu' ? (S.collection==='select'?lm.maxW_select:lm.maxW_premier) : lm.maxW;
+  var isTdbu = c==='tdbu';
+  var isPremier = S.collection==='premier';
+  var maxW = isTdbu ? (S.collection==='select'?lm.maxW_select:lm.maxW_premier) : lm.maxW;
+  var maxH = isTdbu ? (isPremier?lm.maxH_premier:lm.maxH_select) : lm.maxH;
   if(w&&lm.minW&&w<lm.minW) errs.push('Min width for '+c+' is '+lm.minW+'".');
   if(w&&maxW&&w>maxW) errs.push('Max width for '+c+' is '+maxW+'".');
   if(h&&lm.minH&&h<lm.minH) errs.push('Min height for '+c+' is '+lm.minH+'".');
-  if(h&&lm.maxH&&h>lm.maxH) errs.push('Max height for '+c+' is '+lm.maxH+'".');
+  if(h&&maxH&&h>maxH) errs.push('Max height for '+c+' is '+maxH+'" for '+S.collection+' TDBU.');
   var $ce=$('ctrl-err'); $ce.innerHTML=errs.join('<br>'); $ce.style.display=errs.length?'block':'none';
   // Limit info
   var $cli=$('ctrl-limit-info');
   if(c&&lm.minW){
-    var dispMaxW = c==='tdbu'?(S.collection==='select'?lm.maxW_select:lm.maxW_premier):lm.maxW;
-    $cli.innerHTML='<strong>'+c.replace('motor','Remote Motor — ')+':</strong> Min '+lm.minW+'"W × '+lm.minH+'"H &nbsp;|&nbsp; Max '+dispMaxW+'"W × '+lm.maxH+'"H.';
+    var dispMaxW = isTdbu?(S.collection==='select'?lm.maxW_select:lm.maxW_premier):lm.maxW;
+    var dispMaxH = isTdbu?(isPremier?lm.maxH_premier:lm.maxH_select):lm.maxH;
+    $cli.innerHTML='<strong>'+c.replace('motor','Remote Motor — ')+':</strong> Min '+lm.minW+'"W × '+lm.minH+'"H &nbsp;|&nbsp; Max '+dispMaxW+'"W × '+dispMaxH+'"H.';
     $cli.style.display='block';
   } else $cli.style.display='none';
   // Motor sqft warning (Premier pattern-specific)
