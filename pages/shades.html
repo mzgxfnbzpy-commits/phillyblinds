@@ -220,16 +220,6 @@
           </div>
         </div>
 
-        <a class="product-card" href="wallace-woven.html#roller-woven-choice">
-          <div class="product-img-photo" style="background:linear-gradient(135deg,#c8b89a 0%,#ddd0b8 50%,#b8a888 100%);display:flex;align-items:center;justify-content:center;padding:10px">
-            <div style="width:64px;height:80px;background:linear-gradient(180deg,rgba(180,160,130,.8) 0%,rgba(200,178,148,.9) 100%);border-radius:3px;border-top:4px solid rgba(80,60,40,.5)"></div>
-          </div>
-          <div class="product-body">
-            <div class="product-name">Woven Wood Roller Shades</div>
-            <div class="product-sub">Wallace · natural bamboo, grass &amp; jute on a roller</div>
-            <span class="badge badge-quote">Configure &amp; quote</span>
-          </div>
-        </a>
 
         <div class="product-card" id="card-cellular" onclick="selectProduct('cellular','Cellular / Honeycomb Shades',true);setTimeout(function(){selectBrand('norman');},150)">
           <div class="product-img-photo">
@@ -584,6 +574,35 @@
       <button class="config-back" onclick="clearProduct()">&#8592; Change product</button>
       <div class="config-title" id="config-product-name">Roller Shades</div>
       <span class="badge badge-instant" id="config-badge">Instant price</span>
+    </div>
+
+    <!-- ── ROLLER TYPE SUBSECTION ─────────────────────────────── -->
+    <div id="roller-types" style="display:none;margin-bottom:16px">
+      <div style="font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Select roller shade type</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
+
+        <div class="opt-card" id="rt-basic" onclick="rtSelect('basic')" style="text-align:left;padding:16px 16px 14px;cursor:pointer">
+          <div style="font-size:20px;margin-bottom:8px">🪟</div>
+          <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:4px">Basic Roller Shades</div>
+          <div style="font-size:11px;color:#666;line-height:1.5">Solar, light filtering &amp; blackout — instant online pricing</div>
+          <div style="margin-top:10px"><span class="badge badge-instant">Instant price</span></div>
+        </div>
+
+        <div class="opt-card" id="rt-norman" onclick="rtSelect('norman')" style="text-align:left;padding:16px 16px 14px;cursor:pointer">
+          <div style="font-size:9px;font-weight:700;background:var(--espresso);color:var(--gold);display:inline-block;padding:2px 8px;border-radius:5px;letter-spacing:0.5px;margin-bottom:8px">NORMAN®</div>
+          <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:4px">Norman Roller Shades</div>
+          <div style="font-size:11px;color:#666;line-height:1.5">Soluna collection — premium fabrics, 8-step configurator</div>
+          <div style="margin-top:10px"><span class="badge badge-quote">Configure &amp; quote</span></div>
+        </div>
+
+        <a class="opt-card" href="wallace-natural-roller-shades.html" style="text-align:left;padding:16px 16px 14px;cursor:pointer;text-decoration:none">
+          <div style="font-size:20px;margin-bottom:8px">🌿</div>
+          <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:4px">Woven Wood Roller Shades</div>
+          <div style="font-size:11px;color:#666;line-height:1.5">Wallace Portfolio — natural woven fabrics, single or double shade</div>
+          <div style="margin-top:10px"><span class="badge badge-quote">Configure &amp; quote</span></div>
+        </a>
+
+      </div>
     </div>
 
     <!-- ── BRAND / COMPANY CHOOSER ────────────────────────────── -->
@@ -2617,9 +2636,15 @@ function selectProduct(productId, productName, isInstant) {
       if (productId === 'roller') {
         pbBtn.classList.remove('disabled');
         document.getElementById('pb-only-note').style.display = 'none';
+        // Show roller type subsection; hide brand chooser until type is picked
+        document.getElementById('roller-types').style.display = 'block';
+        document.getElementById('brand-chooser').style.display = 'none';
+        // Scroll to roller-types anchor
+        setTimeout(function(){ var el=document.getElementById('roller-types'); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
       } else {
         pbBtn.classList.add('disabled');
         document.getElementById('pb-only-note').style.display = 'block';
+        document.getElementById('roller-types').style.display = 'none';
       }
     }
 
@@ -2694,6 +2719,7 @@ function selectBrand(brand) {
 function clearProduct() {
   document.querySelectorAll('.product-card').forEach(c => c.classList.remove('selected'));
   currentProduct = null;
+  document.getElementById('roller-types').style.display = 'none';
   document.getElementById('configurator-section').style.display = 'none';
   document.getElementById('instant-config').classList.remove('open');
   document.getElementById('hd-config').classList.remove('open');
@@ -2702,6 +2728,25 @@ function clearProduct() {
   document.getElementById('perfectsheer-config').classList.remove('open');
   // Scroll back to product grid
   document.getElementById('product-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── rtSelect — roller type subsection handler ───────────────
+function rtSelect(type) {
+  // Mark selected card
+  ['rt-basic','rt-norman'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.classList.toggle('sel', id === 'rt-' + type);
+  });
+  if (type === 'basic') {
+    // Show brand chooser with pb pre-selected
+    document.getElementById('brand-chooser').style.display = '';
+    selectBrand('pb');
+  } else if (type === 'norman') {
+    // Show brand chooser with Norman pre-selected
+    document.getElementById('brand-chooser').style.display = '';
+    selectBrand('norman');
+  }
+  // Woven Wood is an <a> tag — navigates directly, no JS needed
 }
 
 // ─── toggleMeasure ───────────────────────────────────────────
