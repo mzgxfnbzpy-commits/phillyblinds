@@ -1319,8 +1319,12 @@ function updateStep3() {
 }
 
 function selectFinish(f, el) {
+  // Block Unfinished on Estate Traverse — stationary poles only
+  if (f === 'Unfinished' && S.type === 'traverse') {
+    alert('Unfinished finish is not available on Estate™ Traverse Rods. Please choose a stained or painted finish.');
+    return;
+  }
   S.finish = f;
-  // Highlight selected
   (el || event.target).closest('.finish-grid, #finish-arch, #finish-basic')
     ?.querySelectorAll('.finish-card').forEach(c => c.classList.remove('sel'));
   (el || event.target).classList.add('sel');
@@ -1382,7 +1386,7 @@ function updateStep5() {
     let diameters = [];
     if (S.collection === 'dm') diameters = S.type === 'static' ? ['1"','1⅜"'] : ['1"','1⅜"','2"']; // 2" is Estate traverse only — no 2" stationary DM pole exists
     else if (S.collection === 'wt') diameters = ['1⅜"','2"'];
-    else if (S.collection === 'wi') diameters = ['1"','1⅜"'];
+    else if (S.collection === 'wi') diameters = S.type === 'static' ? ['1"','1⅜"'] : ['1⅜"']; // WI Estate traverse: 1⅜" ONLY
     opts.innerHTML = diameters.map(d =>
       `<div class="opt-pill" onclick="selectPoleDia('${d}', this)">${d}</div>`
     ).join('');
