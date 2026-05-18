@@ -221,13 +221,11 @@
           How many window openings?
         </div>
         <div class="cfg-subhead">Each opening gets its own dimensions and panel layout.</div>
-        <div class="opt-row">
-          <button class="opt-btn" onclick="selCount(1,this)">1</button>
-          <button class="opt-btn" onclick="selCount(2,this)">2</button>
-          <button class="opt-btn" onclick="selCount(3,this)">3</button>
-          <button class="opt-btn" onclick="selCount(4,this)">4</button>
-          <button class="opt-btn" onclick="selCount(5,this)">5</button>
-          <button class="opt-btn" onclick="selCount(6,this)">6+</button>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:10px">
+          <input type="number" id="count-input" min="1" max="30" value="" placeholder="e.g. 3"
+            style="width:110px;padding:10px 14px;border:1.5px solid #d8d8d4;border-radius:8px;font-size:18px;font-weight:600;color:#111;font-family:inherit;text-align:center"
+            oninput="selCountInput(this)">
+          <span style="font-size:13px;color:#666">openings</span>
         </div>
       </div>
 
@@ -775,9 +773,13 @@ function selLine(name, card){
 }
 
 /* ─── COUNT ─────────────────────────────────────────────── */
+function selCountInput(inp){
+  const n = parseInt(inp.value)||0;
+  if(n < 1) return;
+  inp.style.borderColor = 'var(--gold)';
+  selCount(n);
+}
 function selCount(n, btn){
-  document.querySelectorAll('#sec-count .opt-btn').forEach(b=>b.classList.remove('sel'));
-  btn.classList.add('sel');
   S.count = n;
   markDone(2);
   buildDims(n);
@@ -1061,7 +1063,7 @@ function selDelivery(type, card){
 /* ─── QUOTE SUMMARY ─────────────────────────────────────── */
 function updateQuote(){
   setText('qs-line', S.line || '—');
-  setText('qs-count', S.count ? S.count + (S.count===6?'+':'')+' opening'+(S.count!==1?'s':'') : '—');
+  setText('qs-count', S.count ? S.count + ' opening'+(S.count!==1?'s':'') : '—');
   setText('qs-opentype', S.opentype || '—');
   setText('qs-mount', S.mount || '—');
   setText('qs-layout', S.layout || '—');
