@@ -3454,37 +3454,7 @@ function submitPBForm() {
   document.getElementById('pb-success').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// ─── submitOtherForm ──────────────────────────────────────────
-function submitOtherForm() {
-  const name  = document.getElementById('oth-name').value.trim();
-  const phone = document.getElementById('oth-phone').value.trim();
-  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
-  const email    = document.getElementById('oth-email').value.trim();
-  const product  = document.getElementById('oth-product').value.trim();
-  const brand    = document.getElementById('oth-brand').value.trim();
-  const notes    = document.getElementById('oth-notes').value.trim();
-  const w        = document.getElementById('oth-width').value;
-  const h        = document.getElementById('oth-height').value;
-  const delBtn   = document.querySelector('#grp-del-oth .opt-btn.sel');
-  const delivery = delBtn ? delBtn.textContent.trim() : 'Ship to me';
-  const body =
-    'CUSTOM SHADE QUOTE REQUEST\n' +
-    '──────────────────────────\n' +
-    'Name:    ' + name  + '\n' +
-    'Phone:   ' + phone + '\n' +
-    'Email:   ' + (email || '—') + '\n\n' +
-    'Product: ' + (product || '—') + '\n' +
-    'Brand:   ' + (brand   || '—') + '\n' +
-    'Width:   ' + (w || '—') + '"\n' +
-    'Height:  ' + (h || '—') + '"\n\n' +
-    'Delivery: ' + delivery + '\n\n' +
-    'Notes:\n' + (notes || '(none)');
-  window.location.href = 'mailto:blindznation@gmail.com' +
-    '?subject=' + encodeURIComponent('Custom Shade Quote — ' + name) +
-    '&body='    + encodeURIComponent(body);
-  document.getElementById('oth-success').classList.add('show');
-  document.getElementById('oth-success').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
+// submitOtherForm removed — dead code, no HTML form references oth-* IDs
 
 // ─── submitQuoteForm (Hunter Douglas) ────────────────────────
 function submitQuoteForm() {
