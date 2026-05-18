@@ -195,13 +195,13 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <div class="sec-sub">This determines which Kirsch system fits your project.</div>
 
     <div class="choice-grid">
-      <div class="choice-card" onclick="selectType('static')">
+      <div class="choice-card" onclick="selectType('static', this)">
         <div class="choice-icon">🪞</div>
         <div class="choice-title">Stationary / Decorative Pole</div>
         <div class="choice-desc">Drapery hangs from rings that slide manually. Rod stays fixed. Ideal for panels that rarely open and close.</div>
         <div class="choice-tag">Designer Metals · Wood Trends · Wrought Iron · Basic</div>
       </div>
-      <div class="choice-card" onclick="selectType('traverse')">
+      <div class="choice-card" onclick="selectType('traverse', this)">
         <div class="choice-icon">↔️</div>
         <div class="choice-title">Traversing / Opening &amp; Closing</div>
         <div class="choice-desc">Drapery travels smoothly on a track with carriers. One-way or two-way draw. Manual or AMP™ motorized.</div>
@@ -209,13 +209,13 @@ textarea.inp-field{resize:vertical;min-height:90px}
       </div>
     </div>
     <div class="choice-grid">
-      <div class="choice-card" onclick="selectType('basic')">
+      <div class="choice-card" onclick="selectType('basic', this)">
         <div class="choice-icon">💡</div>
         <div class="choice-title">Basic / Budget Traverse</div>
         <div class="choice-desc">Telescoping Superfine Pro traverse rod or flat Lockseam rod. White finish only. Great value for bedrooms, rentals, or back rooms.</div>
         <div class="choice-tag">Superfine Pro · Lockseam · Tension Rods</div>
       </div>
-      <div class="choice-card" onclick="selectType('unsure')">
+      <div class="choice-card" onclick="selectType('unsure', this)">
         <div class="choice-icon">💬</div>
         <div class="choice-title">Not Sure — Help Me Decide</div>
         <div class="choice-desc">Skip the configurator and send us a message. We'll recommend the right system based on your space and drapery.</div>
@@ -236,7 +236,7 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <!-- DECORATIVE STATIC/TRAVERSE collections -->
     <div id="decor-collections">
       <div class="collection-grid">
-        <div class="coll-card" onclick="selectCollection('dm')">
+        <div class="coll-card" onclick="selectCollection('dm', this)">
           <div class="coll-swatch-strip">
             <span style="background:#b8a882"></span>
             <span style="background:#e8e0ce"></span>
@@ -258,7 +258,7 @@ textarea.inp-field{resize:vertical;min-height:90px}
             </div>
           </div>
         </div>
-        <div class="coll-card" onclick="selectCollection('wt')">
+        <div class="coll-card" onclick="selectCollection('wt', this)">
           <div class="coll-swatch-strip">
             <span style="background:#1a1a1a"></span>
             <span style="background:#4a2010"></span>
@@ -281,7 +281,7 @@ textarea.inp-field{resize:vertical;min-height:90px}
             </div>
           </div>
         </div>
-        <div class="coll-card" onclick="selectCollection('wi')">
+        <div class="coll-card" onclick="selectCollection('wi', this)">
           <div class="coll-swatch-strip">
             <span style="background:#111"></span>
             <span style="background:#5a3a28"></span>
@@ -307,13 +307,13 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <!-- TRAVERSE (Estate vs Architrac) -->
     <div id="traverse-systems" style="display:none">
       <div class="choice-grid">
-        <div class="choice-card" onclick="selectTraverseSystem('estate')">
+        <div class="choice-card" onclick="selectTraverseSystem('estate', this)">
           <div class="choice-icon">🪩</div>
           <div class="choice-title">Estate™ Traverse Rod</div>
           <div class="choice-desc">Decorative traverse with exposed finials and fascia. Available in Designer Metals™, Wood Trends™, and Wrought Iron collections. 18" min · 16ft max. Pleated or Ripplefold™.</div>
           <div class="choice-tag">Designer Metals · Wood Trends · Wrought Iron · AMP™ motorizable</div>
         </div>
-        <div class="choice-card" onclick="selectTraverseSystem('architrac')">
+        <div class="choice-card" onclick="selectTraverseSystem('architrac', this)">
           <div class="choice-icon">🔧</div>
           <div class="choice-title">Architrac® Functional Track</div>
           <div class="choice-desc">Industrial-grade concealed traverse track. 7 models for residential, commercial, hospital, and bay/curved applications. Manual or AMP™ motorized (94001 only). Ceiling, wall, recessed, or suspension mount.</div>
@@ -328,33 +328,33 @@ textarea.inp-field{resize:vertical;min-height:90px}
       <div class="sec-label" style="margin-top:0">Select Architrac® Model</div>
       <div class="sec-sub" style="font-size:13px;margin-bottom:14px">Each model has different mount options, bend/curve capability, and length limits. Choose the best fit for your project.</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div class="choice-card" onclick="selectArchitracModel('94001')" style="padding:16px">
+        <div class="choice-card" onclick="selectArchitracModel('94001', this)" style="padding:16px">
           <div class="choice-badge" style="position:static;display:inline-block;margin-bottom:8px">Best Seller</div>
           <div class="choice-title" style="font-size:14px">94001</div>
           <div class="choice-desc" style="font-size:11px">Most versatile. Wall, ceiling, or recessed. Can be bent or curved (manual only). One-way: up to 20ft · Two-way: up to 40ft. <strong>AMP™ motorizable</strong> (max 16ft). Pleated &amp; Ripplefold™. Cord/Duplex draw available.</div>
         </div>
-        <div class="choice-card" onclick="selectArchitracModel('94003')" style="padding:16px">
+        <div class="choice-card" onclick="selectArchitracModel('94003', this)" style="padding:16px">
           <div class="choice-title" style="font-size:14px">94003</div>
           <div class="choice-desc" style="font-size:11px">Wall, ceiling, or recessed. Can be bent or curved. One-way: up to 20ft · Two-way: up to 20ft. Pleated &amp; Ripplefold™. Manual only. Good for medium-width openings.</div>
         </div>
-        <div class="choice-card" onclick="selectArchitracModel('94004')" style="padding:16px">
+        <div class="choice-card" onclick="selectArchitracModel('94004', this)" style="padding:16px">
           <div class="choice-badge" style="position:static;display:inline-block;margin-bottom:8px">Best Seller</div>
           <div class="choice-title" style="font-size:14px">94004</div>
           <div class="choice-desc" style="font-size:11px">Ceiling or recessed only. <strong>Cannot be bent or curved.</strong> One-way: up to 16ft · Two-way: up to 32ft. Pleated &amp; Ripplefold™. Manual only. Streamlined profile.</div>
         </div>
-        <div class="choice-card" onclick="selectArchitracModel('94005')" style="padding:16px">
+        <div class="choice-card" onclick="selectArchitracModel('94005', this)" style="padding:16px">
           <div class="choice-title" style="font-size:14px">94005</div>
           <div class="choice-desc" style="font-size:11px">Ceiling or recessed only. Can be bent or curved. One-way: up to 16ft · Two-way: up to 32ft. Pleated &amp; Ripplefold™. Manual only.</div>
         </div>
-        <div class="choice-card" onclick="selectArchitracModel('9046')" style="padding:16px">
+        <div class="choice-card" onclick="selectArchitracModel('9046', this)" style="padding:16px">
           <div class="choice-title" style="font-size:14px">9046</div>
           <div class="choice-desc" style="font-size:11px">Ceiling or recessed only. Can be bent (8" or 12" radius) or curved. One-way: up to 16ft · Two-way: up to 32ft. Pleated only. Manual only. Hospital/cubicle grade.</div>
         </div>
-        <div class="choice-card" onclick="selectArchitracModel('9600')" style="padding:16px">
+        <div class="choice-card" onclick="selectArchitracModel('9600', this)" style="padding:16px">
           <div class="choice-title" style="font-size:14px">9600</div>
           <div class="choice-desc" style="font-size:11px">Ceiling, wall, recessed, or suspension mount. Can be bent (12" or 14" radius) or curved. One-way: up to 20ft · Two-way: up to 40ft. Pleated only. Manual only.</div>
         </div>
-        <div class="choice-card" onclick="selectArchitracModel('K-Rail')" style="padding:16px">
+        <div class="choice-card" onclick="selectArchitracModel('K-Rail', this)" style="padding:16px">
           <div class="choice-title" style="font-size:14px">K-Rail</div>
           <div class="choice-desc" style="font-size:11px">Ceiling or wall. <strong>Cannot be bent or curved.</strong> One-way: up to 16ft · Two-way: up to 16ft. Pleated &amp; Ripplefold™. Manual only. Compatible with Wrought Iron and Wood Trends finials.</div>
         </div>
@@ -365,13 +365,13 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <div id="basic-options" style="display:none">
       <div class="info-banner">All basic hardware is White finish only. Prices are lower than decorative collections — great for utility rooms, rentals, or any space where function matters more than aesthetics.</div>
       <div class="choice-grid">
-        <div class="choice-card" onclick="selectBasic('superfine')">
+        <div class="choice-card" onclick="selectBasic('superfine', this)">
           <div class="choice-icon">⇔</div>
           <div class="choice-title">Superfine Pro Traverse Rod</div>
           <div class="choice-desc">Telescoping traverse rod. Single split draw (30"–228"), one-way draw (30"–120"), or double split draw (48"–156"). Continuous loop, baton, or hand draw. White only.</div>
           <div class="choice-tag">Traversing · White only · Front return 2¾"–4½"</div>
         </div>
-        <div class="choice-card" onclick="selectBasic('lockseam')">
+        <div class="choice-card" onclick="selectBasic('lockseam', this)">
           <div class="choice-icon">≡</div>
           <div class="choice-title">Lockseam Rod</div>
           <div class="choice-desc">Flat-profile stationary curtain rods. ½" to 8½" face widths. Single, double (3½"+2½"), triple (5½"+3½"+2½"), or bay rod (78"–127"). White only.</div>
@@ -379,7 +379,7 @@ textarea.inp-field{resize:vertical;min-height:90px}
         </div>
       </div>
       <div class="choice-grid">
-        <div class="choice-card" onclick="selectBasic('tension')">
+        <div class="choice-card" onclick="selectBasic('tension', this)">
           <div class="choice-icon">↕</div>
           <div class="choice-title">Spring Tension / Sash Rod</div>
           <div class="choice-desc">No brackets needed. Spring tension rods (⅝" oval 8"–72", ⁷⁄₁₆" 18"–48"), door sash rods (⁵⁄₁₆" 11"–36", ⁷⁄₁₆" 18"–28"), or flat sash (¹¹⁄₁₆" 16"–50"). Mostly White; Zinc available on door sash.</div>
@@ -415,35 +415,35 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <!-- Designer Metals finishes -->
     <div id="finish-dm" style="display:none">
       <div class="finish-grid">
-        <div class="finish-card" onclick="selectFinish('Elegant Brass')">
+        <div class="finish-card" onclick="selectFinish('Elegant Brass', this)">
           <div class="finish-swatch" style="background:linear-gradient(135deg,#c8a850,#9a7828)"></div>
           <div class="finish-name">Elegant Brass</div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Antique Silver')">
+        <div class="finish-card" onclick="selectFinish('Antique Silver', this)">
           <div class="finish-swatch" style="background:linear-gradient(135deg,#c0b898,#8a8070)"></div>
           <div class="finish-name">Antique Silver</div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Polished Nickel')">
+        <div class="finish-card" onclick="selectFinish('Polished Nickel', this)">
           <div class="finish-swatch" style="background:linear-gradient(135deg,#e8e0d0,#c0b8a8)"></div>
           <div class="finish-name">Polished Nickel</div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Satin Nickel')">
+        <div class="finish-card" onclick="selectFinish('Satin Nickel', this)">
           <div class="finish-swatch" style="background:linear-gradient(135deg,#b0a898,#888078)"></div>
           <div class="finish-name">Satin Nickel</div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Brushed Bronze')">
+        <div class="finish-card" onclick="selectFinish('Brushed Bronze', this)">
           <div class="finish-swatch" style="background:linear-gradient(135deg,#7a6040,#5a4228)"></div>
           <div class="finish-name">Brushed Bronze</div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Gilded Bronze')">
+        <div class="finish-card" onclick="selectFinish('Gilded Bronze', this)">
           <div class="finish-swatch" style="background:linear-gradient(135deg,#c89840,#906820)"></div>
           <div class="finish-name">Gilded Bronze</div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Gunmetal')">
+        <div class="finish-card" onclick="selectFinish('Gunmetal', this)">
           <div class="finish-swatch" style="background:linear-gradient(135deg,#5a5850,#3a3830)"></div>
           <div class="finish-name">Gunmetal</div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Black')">
+        <div class="finish-card" onclick="selectFinish('Black', this)">
           <div class="finish-swatch" style="background:linear-gradient(135deg,#2a2828,#111)"></div>
           <div class="finish-name">Black</div>
         </div>
@@ -454,39 +454,39 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <div id="finish-wt" style="display:none">
       <div class="info-banner" style="margin-bottom:14px"><strong>Wood Trends™ — 9 Finishes:</strong> Wood stains and neutral paints. <strong>Note:</strong> Unfinished finish is not available on Estate™ Traverse Rods — stationary poles only. Rings, brackets, holdback medallions, and accessories are available in matching finishes.</div>
       <div class="finish-grid">
-        <div class="finish-card" onclick="selectFinish('Black')">
+        <div class="finish-card" onclick="selectFinish('Black', this)">
           <div class="finish-swatch" style="background:#1a1a1a"></div>
           <div class="finish-name">Black</div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Coffee')">
+        <div class="finish-card" onclick="selectFinish('Coffee', this)">
           <div class="finish-swatch" style="background:linear-gradient(135deg,#5a2808,#3a1808)"></div>
           <div class="finish-name">Coffee</div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Dark Chocolate')">
+        <div class="finish-card" onclick="selectFinish('Dark Chocolate', this)">
           <div class="finish-swatch" style="background:linear-gradient(135deg,#3a1a08,#200e04)"></div>
           <div class="finish-name">Dark Chocolate</div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Estate Oak')">
+        <div class="finish-card" onclick="selectFinish('Estate Oak', this)">
           <div class="finish-swatch" style="background:linear-gradient(135deg,#9a7040,#7a5020)"></div>
           <div class="finish-name">Estate Oak</div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Mahogany')">
+        <div class="finish-card" onclick="selectFinish('Mahogany', this)">
           <div class="finish-swatch" style="background:linear-gradient(135deg,#781808,#500808)"></div>
           <div class="finish-name">Mahogany</div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Marble')">
+        <div class="finish-card" onclick="selectFinish('Marble', this)">
           <div class="finish-swatch" style="background:linear-gradient(135deg,#e8e0d8,#c8c0b8)"></div>
           <div class="finish-name">Marble</div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Truffle')">
+        <div class="finish-card" onclick="selectFinish('Truffle', this)">
           <div class="finish-swatch" style="background:linear-gradient(135deg,#c8c0a8,#a8a090)"></div>
           <div class="finish-name">Truffle</div>
         </div>
-        <div class="finish-card" onclick="selectFinish('White')">
+        <div class="finish-card" onclick="selectFinish('White', this)">
           <div class="finish-swatch" style="background:#f5f0e8;border-bottom:1px solid #e0dbd2"></div>
           <div class="finish-name">White</div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Unfinished')">
+        <div class="finish-card" onclick="selectFinish('Unfinished', this)">
           <div class="finish-swatch" style="background:linear-gradient(135deg,#e8d8b8,#c8b898)"></div>
           <div class="finish-name">Unfinished</div>
         </div>
@@ -496,27 +496,27 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <!-- Wrought Iron finishes -->
     <div id="finish-wi" style="display:none">
       <div class="finish-grid">
-        <div class="finish-card" onclick="selectFinish('Black')">
+        <div class="finish-card" onclick="selectFinish('Black', this)">
           <div class="finish-swatch" style="background:radial-gradient(ellipse at 30% 30%,#3a3838,#111)"></div>
           <div class="finish-name">Black</div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Iron Oxide')">
+        <div class="finish-card" onclick="selectFinish('Iron Oxide', this)">
           <div class="finish-swatch" style="background:radial-gradient(ellipse at 30% 30%,#6a3a18,#381808)"></div>
           <div class="finish-name">Iron Oxide</div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Rust')">
+        <div class="finish-card" onclick="selectFinish('Rust', this)">
           <div class="finish-swatch" style="background:radial-gradient(ellipse at 30% 30%,#8a3a10,#601808)"></div>
           <div class="finish-name">Rust</div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Graphite')">
+        <div class="finish-card" onclick="selectFinish('Graphite', this)">
           <div class="finish-swatch" style="background:radial-gradient(ellipse at 30% 30%,#484040,#282020)"></div>
           <div class="finish-name">Graphite <span style="font-size:9px;color:var(--gold)">NEW</span></div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Chalk')">
+        <div class="finish-card" onclick="selectFinish('Chalk', this)">
           <div class="finish-swatch" style="background:radial-gradient(ellipse at 30% 30%,#e0d8d0,#c0b8b0)"></div>
           <div class="finish-name">Chalk <span style="font-size:9px;color:var(--gold)">NEW</span></div>
         </div>
-        <div class="finish-card" onclick="selectFinish('Heirloom Copper')">
+        <div class="finish-card" onclick="selectFinish('Heirloom Copper', this)">
           <div class="finish-swatch" style="background:radial-gradient(ellipse at 30% 30%,#8a5830,#604020)"></div>
           <div class="finish-name">Heirloom Copper <span style="font-size:9px;color:var(--gold)">NEW</span></div>
         </div>
@@ -557,13 +557,13 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <div id="finials-dm-1" style="display:none">
       <div class="sec-label" style="margin-top:0">1" Finials — Designer Metals™</div>
       <div class="finial-grid">
-        <div class="finial-card" onclick="selectFinial('Fitz')"><div class="finial-art">⬙</div><div class="finial-name">Fitz</div><div class="finial-desc">¾" deep · flat cap</div></div>
-        <div class="finial-card" onclick="selectFinial('Gavin')"><div class="finial-art">🔮</div><div class="finial-name">Gavin</div><div class="finial-desc">2-10/16" deep</div></div>
-        <div class="finial-card" onclick="selectFinial('Maxwell')"><div class="finial-art">●</div><div class="finial-name">Maxwell</div><div class="finial-desc">2" deep</div></div>
+        <div class="finial-card" onclick="selectFinial('Fitz', this)"><div class="finial-art">⬙</div><div class="finial-name">Fitz</div><div class="finial-desc">¾" deep · flat cap</div></div>
+        <div class="finial-card" onclick="selectFinial('Gavin', this)"><div class="finial-art">🔮</div><div class="finial-name">Gavin</div><div class="finial-desc">2-10/16" deep</div></div>
+        <div class="finial-card" onclick="selectFinial('Maxwell', this)"><div class="finial-art">●</div><div class="finial-name">Maxwell</div><div class="finial-desc">2" deep</div></div>
         <div class="finial-card" id="finial-maxwell-duotone" onclick="selectDMFinial('Maxwell Duotone',this)"><div class="finial-art">⬤</div><div class="finial-name">Maxwell Duotone</div><div class="finial-desc">2 combos only</div><div style="font-size:9px;color:var(--gold);font-weight:600;margin-top:3px">SPECIAL FINISH ↓</div></div>
-        <div class="finial-card" onclick="selectFinial('Milo')"><div class="finial-art">◍</div><div class="finial-name">Milo</div><div class="finial-desc">2-1/16" deep</div></div>
-        <div class="finial-card" onclick="selectFinial('Soren')"><div class="finial-art">⬡</div><div class="finial-name">Soren</div><div class="finial-desc">2½" deep</div></div>
-        <div class="finial-card" onclick="selectFinial('Turin')"><div class="finial-art">▸◂</div><div class="finial-name">Turin</div><div class="finial-desc">3½" deep · elongated</div></div>
+        <div class="finial-card" onclick="selectFinial('Milo', this)"><div class="finial-art">◍</div><div class="finial-name">Milo</div><div class="finial-desc">2-1/16" deep</div></div>
+        <div class="finial-card" onclick="selectFinial('Soren', this)"><div class="finial-art">⬡</div><div class="finial-name">Soren</div><div class="finial-desc">2½" deep</div></div>
+        <div class="finial-card" onclick="selectFinial('Turin', this)"><div class="finial-art">▸◂</div><div class="finial-name">Turin</div><div class="finial-desc">3½" deep · elongated</div></div>
       </div>
     </div>
 
@@ -571,21 +571,21 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <div id="finials-dm-138" style="display:none">
       <div class="sec-label" style="margin-top:0">1⅜" Finials — Designer Metals™</div>
       <div class="finial-grid">
-        <div class="finial-card" onclick="selectFinial('Archer')"><div class="finial-art">⊕</div><div class="finial-name">Archer</div><div class="finial-desc">4" deep · cage style</div></div>
-        <div class="finial-card" onclick="selectFinial('Briggs')"><div class="finial-art">◑</div><div class="finial-name">Briggs</div><div class="finial-desc">3-7/16" deep</div></div>
+        <div class="finial-card" onclick="selectFinial('Archer', this)"><div class="finial-art">⊕</div><div class="finial-name">Archer</div><div class="finial-desc">4" deep · cage style</div></div>
+        <div class="finial-card" onclick="selectFinial('Briggs', this)"><div class="finial-art">◑</div><div class="finial-name">Briggs</div><div class="finial-desc">3-7/16" deep</div></div>
         <div class="finial-card" id="finial-briggs-duotone" onclick="selectDMFinial('Briggs Duotone',this)"><div class="finial-art">◐</div><div class="finial-name">Briggs Duotone</div><div class="finial-desc">2 combos only</div><div style="font-size:9px;color:var(--gold);font-weight:600;margin-top:3px">SPECIAL FINISH ↓</div></div>
-        <div class="finial-card" onclick="selectFinial('Corsa')"><div class="finial-art">⬢</div><div class="finial-name">Corsa</div><div class="finial-desc">1⅝" deep · short cap</div></div>
-        <div class="finial-card" onclick="selectFinial('Elmore')"><div class="finial-art">⬟</div><div class="finial-name">Elmore</div><div class="finial-desc">3" deep</div></div>
-        <div class="finial-card" onclick="selectFinial('Emerson')"><div class="finial-art">⬠</div><div class="finial-name">Emerson</div><div class="finial-desc">2⅞" deep</div></div>
-        <div class="finial-card" onclick="selectFinial('Europa')"><div class="finial-art">💎</div><div class="finial-name">Europa</div><div class="finial-desc">3" deep · crystal accent</div></div>
-        <div class="finial-card" onclick="selectFinial('Harlow')"><div class="finial-art">⬕</div><div class="finial-name">Harlow</div><div class="finial-desc">4" deep · flat disc</div></div>
-        <div class="finial-card" onclick="selectFinial('Lenn')"><div class="finial-art">💠</div><div class="finial-name">Lenn</div><div class="finial-desc">1-15/16" deep · crystal</div></div>
-        <div class="finial-card" onclick="selectFinial('Odessa')"><div class="finial-art">⊛</div><div class="finial-name">Odessa</div><div class="finial-desc">3-7/32" deep · ribbed</div></div>
-        <div class="finial-card" onclick="selectFinial('Pandora')"><div class="finial-art">⬤</div><div class="finial-name">Pandora</div><div class="finial-desc">4" deep · ball</div></div>
-        <div class="finial-card" onclick="selectFinial('Quinn')"><div class="finial-art">◈</div><div class="finial-name">Quinn</div><div class="finial-desc">3-3/16" deep · faceted</div></div>
-        <div class="finial-card" onclick="selectFinial('Rao')"><div class="finial-art">⬙</div><div class="finial-name">Rao</div><div class="finial-desc">⅞" deep · low-profile</div></div>
-        <div class="finial-card" onclick="selectFinial('Stratta')"><div class="finial-art">▪</div><div class="finial-name">Stratta</div><div class="finial-desc">2¼" deep · square-ish</div></div>
-        <div class="finial-card" onclick="selectFinial('Vivien')"><div class="finial-art">⬥</div><div class="finial-name">Vivien</div><div class="finial-desc">3⅝" deep</div></div>
+        <div class="finial-card" onclick="selectFinial('Corsa', this)"><div class="finial-art">⬢</div><div class="finial-name">Corsa</div><div class="finial-desc">1⅝" deep · short cap</div></div>
+        <div class="finial-card" onclick="selectFinial('Elmore', this)"><div class="finial-art">⬟</div><div class="finial-name">Elmore</div><div class="finial-desc">3" deep</div></div>
+        <div class="finial-card" onclick="selectFinial('Emerson', this)"><div class="finial-art">⬠</div><div class="finial-name">Emerson</div><div class="finial-desc">2⅞" deep</div></div>
+        <div class="finial-card" onclick="selectFinial('Europa', this)"><div class="finial-art">💎</div><div class="finial-name">Europa</div><div class="finial-desc">3" deep · crystal accent</div></div>
+        <div class="finial-card" onclick="selectFinial('Harlow', this)"><div class="finial-art">⬕</div><div class="finial-name">Harlow</div><div class="finial-desc">4" deep · flat disc</div></div>
+        <div class="finial-card" onclick="selectFinial('Lenn', this)"><div class="finial-art">💠</div><div class="finial-name">Lenn</div><div class="finial-desc">1-15/16" deep · crystal</div></div>
+        <div class="finial-card" onclick="selectFinial('Odessa', this)"><div class="finial-art">⊛</div><div class="finial-name">Odessa</div><div class="finial-desc">3-7/32" deep · ribbed</div></div>
+        <div class="finial-card" onclick="selectFinial('Pandora', this)"><div class="finial-art">⬤</div><div class="finial-name">Pandora</div><div class="finial-desc">4" deep · ball</div></div>
+        <div class="finial-card" onclick="selectFinial('Quinn', this)"><div class="finial-art">◈</div><div class="finial-name">Quinn</div><div class="finial-desc">3-3/16" deep · faceted</div></div>
+        <div class="finial-card" onclick="selectFinial('Rao', this)"><div class="finial-art">⬙</div><div class="finial-name">Rao</div><div class="finial-desc">⅞" deep · low-profile</div></div>
+        <div class="finial-card" onclick="selectFinial('Stratta', this)"><div class="finial-art">▪</div><div class="finial-name">Stratta</div><div class="finial-desc">2¼" deep · square-ish</div></div>
+        <div class="finial-card" onclick="selectFinial('Vivien', this)"><div class="finial-art">⬥</div><div class="finial-name">Vivien</div><div class="finial-desc">3⅝" deep</div></div>
       </div>
       <div class="sec-label" style="margin-top:20px">Or choose an Endcap (no decorative projection)</div>
       <div class="opt-row">
@@ -598,11 +598,11 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <div id="finials-dm-2" style="display:none">
       <div class="sec-label" style="margin-top:0">2" Finials — Designer Metals™</div>
       <div class="finial-grid">
-        <div class="finial-card" onclick="selectFinial('Corsa')"><div class="finial-art">⬢</div><div class="finial-name">Corsa</div><div class="finial-desc">4¼" deep</div></div>
-        <div class="finial-card" onclick="selectFinial('Europa')"><div class="finial-art">💎</div><div class="finial-name">Europa</div><div class="finial-desc">2¼" deep · crystal</div></div>
-        <div class="finial-card" onclick="selectFinial('Pandora')"><div class="finial-art">⬤</div><div class="finial-name">Pandora</div><div class="finial-desc">5⅜" deep · ball</div></div>
-        <div class="finial-card" onclick="selectFinial('Rao')"><div class="finial-art">⬙</div><div class="finial-name">Rao</div><div class="finial-desc">1⅛" deep · low-profile</div></div>
-        <div class="finial-card" onclick="selectFinial('Stratta')"><div class="finial-art">▪</div><div class="finial-name">Stratta</div><div class="finial-desc">3⅛" deep · square-ish</div></div>
+        <div class="finial-card" onclick="selectFinial('Corsa', this)"><div class="finial-art">⬢</div><div class="finial-name">Corsa</div><div class="finial-desc">4¼" deep</div></div>
+        <div class="finial-card" onclick="selectFinial('Europa', this)"><div class="finial-art">💎</div><div class="finial-name">Europa</div><div class="finial-desc">2¼" deep · crystal</div></div>
+        <div class="finial-card" onclick="selectFinial('Pandora', this)"><div class="finial-art">⬤</div><div class="finial-name">Pandora</div><div class="finial-desc">5⅜" deep · ball</div></div>
+        <div class="finial-card" onclick="selectFinial('Rao', this)"><div class="finial-art">⬙</div><div class="finial-name">Rao</div><div class="finial-desc">1⅛" deep · low-profile</div></div>
+        <div class="finial-card" onclick="selectFinial('Stratta', this)"><div class="finial-art">▪</div><div class="finial-name">Stratta</div><div class="finial-desc">3⅛" deep · square-ish</div></div>
       </div>
     </div>
 
@@ -610,15 +610,15 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <div id="finials-wi-1" style="display:none">
       <div class="sec-label" style="margin-top:0">1" Finials — Wrought Iron</div>
       <div class="finial-grid">
-        <div class="finial-card" onclick="selectFinial('Axiom')"><div class="finial-art">⊕</div><div class="finial-name">Axiom</div><div class="finial-desc">3¼"D · cross-ring design</div></div>
-        <div class="finial-card" onclick="selectFinial('Darby')"><div class="finial-art">⧊</div><div class="finial-name">Darby</div><div class="finial-desc">2-7/16"D · ribbed cylinder</div></div>
-        <div class="finial-card" onclick="selectFinial('Lincoln')"><div class="finial-art">⬛</div><div class="finial-name">Lincoln</div><div class="finial-desc">2¼"D · flat block</div></div>
-        <div class="finial-card" onclick="selectFinial('Otto')"><div class="finial-art">●</div><div class="finial-name">Otto</div><div class="finial-desc">2-1/16"D · round knob</div></div>
-        <div class="finial-card" onclick="selectFinial('Pedestal Ball')"><div class="finial-art">⬤</div><div class="finial-name">Pedestal Ball</div><div class="finial-desc">3¼"D · ball on base</div></div>
-        <div class="finial-card" onclick="selectFinial('Petite Faucet')"><div class="finial-art">⬙</div><div class="finial-name">Petite Faucet</div><div class="finial-desc">1¾"D · small square</div></div>
-        <div class="finial-card" onclick="selectFinial('Petite Modern Ball')"><div class="finial-art">◉</div><div class="finial-name">Petite Modern Ball</div><div class="finial-desc">2"D · small ball</div></div>
-        <div class="finial-card" onclick="selectFinial('Ponce')"><div class="finial-art">▸</div><div class="finial-name">Ponce</div><div class="finial-desc">4-13/16"D · elongated spear</div></div>
-        <div class="finial-card" onclick="selectFinial('Endcap')"><div class="finial-art">⬙</div><div class="finial-name">Endcap</div><div class="finial-desc">⅞"D · flat disc</div></div>
+        <div class="finial-card" onclick="selectFinial('Axiom', this)"><div class="finial-art">⊕</div><div class="finial-name">Axiom</div><div class="finial-desc">3¼"D · cross-ring design</div></div>
+        <div class="finial-card" onclick="selectFinial('Darby', this)"><div class="finial-art">⧊</div><div class="finial-name">Darby</div><div class="finial-desc">2-7/16"D · ribbed cylinder</div></div>
+        <div class="finial-card" onclick="selectFinial('Lincoln', this)"><div class="finial-art">⬛</div><div class="finial-name">Lincoln</div><div class="finial-desc">2¼"D · flat block</div></div>
+        <div class="finial-card" onclick="selectFinial('Otto', this)"><div class="finial-art">●</div><div class="finial-name">Otto</div><div class="finial-desc">2-1/16"D · round knob</div></div>
+        <div class="finial-card" onclick="selectFinial('Pedestal Ball', this)"><div class="finial-art">⬤</div><div class="finial-name">Pedestal Ball</div><div class="finial-desc">3¼"D · ball on base</div></div>
+        <div class="finial-card" onclick="selectFinial('Petite Faucet', this)"><div class="finial-art">⬙</div><div class="finial-name">Petite Faucet</div><div class="finial-desc">1¾"D · small square</div></div>
+        <div class="finial-card" onclick="selectFinial('Petite Modern Ball', this)"><div class="finial-art">◉</div><div class="finial-name">Petite Modern Ball</div><div class="finial-desc">2"D · small ball</div></div>
+        <div class="finial-card" onclick="selectFinial('Ponce', this)"><div class="finial-art">▸</div><div class="finial-name">Ponce</div><div class="finial-desc">4-13/16"D · elongated spear</div></div>
+        <div class="finial-card" onclick="selectFinial('Endcap', this)"><div class="finial-art">⬙</div><div class="finial-name">Endcap</div><div class="finial-desc">⅞"D · flat disc</div></div>
       </div>
     </div>
 
@@ -626,15 +626,15 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <div id="finials-wi-138" style="display:none">
       <div class="sec-label" style="margin-top:0">1⅜" Finials — Wrought Iron</div>
       <div class="finial-grid">
-        <div class="finial-card" onclick="selectFinial('Axiom')"><div class="finial-art">⊕</div><div class="finial-name">Axiom</div><div class="finial-desc">3-13/16"D · cross-ring</div></div>
-        <div class="finial-card" onclick="selectFinial('Darby')"><div class="finial-art">⧊</div><div class="finial-name">Darby</div><div class="finial-desc">3¼"D · ribbed cylinder</div></div>
-        <div class="finial-card" onclick="selectFinial('Lincoln')"><div class="finial-art">⬛</div><div class="finial-name">Lincoln</div><div class="finial-desc">2⅝"D · flat block</div></div>
-        <div class="finial-card" onclick="selectFinial('Otto')"><div class="finial-art">●</div><div class="finial-name">Otto</div><div class="finial-desc">2-9/16"D · knob</div></div>
-        <div class="finial-card" onclick="selectFinial('Pedestal Ball')"><div class="finial-art">⬤</div><div class="finial-name">Pedestal Ball</div><div class="finial-desc">4⅞"D · ball on base</div></div>
-        <div class="finial-card" onclick="selectFinial('Petite Faucet')"><div class="finial-art">⬙</div><div class="finial-name">Petite Faucet</div><div class="finial-desc">2⅜"D · small square</div></div>
-        <div class="finial-card" onclick="selectFinial('Petite Modern Ball')"><div class="finial-art">◉</div><div class="finial-name">Petite Modern Ball</div><div class="finial-desc">3⅜"D · small ball</div></div>
-        <div class="finial-card" onclick="selectFinial('Ponce')"><div class="finial-art">▸</div><div class="finial-name">Ponce</div><div class="finial-desc">5½"D · elongated spear</div></div>
-        <div class="finial-card" onclick="selectFinial('Endcap')"><div class="finial-art">⬙</div><div class="finial-name">Endcap</div><div class="finial-desc">1⅛"D · flat disc</div></div>
+        <div class="finial-card" onclick="selectFinial('Axiom', this)"><div class="finial-art">⊕</div><div class="finial-name">Axiom</div><div class="finial-desc">3-13/16"D · cross-ring</div></div>
+        <div class="finial-card" onclick="selectFinial('Darby', this)"><div class="finial-art">⧊</div><div class="finial-name">Darby</div><div class="finial-desc">3¼"D · ribbed cylinder</div></div>
+        <div class="finial-card" onclick="selectFinial('Lincoln', this)"><div class="finial-art">⬛</div><div class="finial-name">Lincoln</div><div class="finial-desc">2⅝"D · flat block</div></div>
+        <div class="finial-card" onclick="selectFinial('Otto', this)"><div class="finial-art">●</div><div class="finial-name">Otto</div><div class="finial-desc">2-9/16"D · knob</div></div>
+        <div class="finial-card" onclick="selectFinial('Pedestal Ball', this)"><div class="finial-art">⬤</div><div class="finial-name">Pedestal Ball</div><div class="finial-desc">4⅞"D · ball on base</div></div>
+        <div class="finial-card" onclick="selectFinial('Petite Faucet', this)"><div class="finial-art">⬙</div><div class="finial-name">Petite Faucet</div><div class="finial-desc">2⅜"D · small square</div></div>
+        <div class="finial-card" onclick="selectFinial('Petite Modern Ball', this)"><div class="finial-art">◉</div><div class="finial-name">Petite Modern Ball</div><div class="finial-desc">3⅜"D · small ball</div></div>
+        <div class="finial-card" onclick="selectFinial('Ponce', this)"><div class="finial-art">▸</div><div class="finial-name">Ponce</div><div class="finial-desc">5½"D · elongated spear</div></div>
+        <div class="finial-card" onclick="selectFinial('Endcap', this)"><div class="finial-art">⬙</div><div class="finial-name">Endcap</div><div class="finial-desc">1⅛"D · flat disc</div></div>
       </div>
     </div>
 
@@ -643,14 +643,14 @@ textarea.inp-field{resize:vertical;min-height:90px}
       <div class="sec-label" style="margin-top:0">1⅜" Finials — Wood Trends™</div>
       <div class="info-banner" style="margin-bottom:14px"><strong>Sold as pairs · 10 pairs/box.</strong> Available in all 9 finishes. <strong>Note:</strong> Button Ball is not available in Unfinished finish.</div>
       <div class="finial-grid">
-        <div class="finial-card" onclick="selectFinial('Button Ball')"><div class="finial-art">●</div><div class="finial-name">Button Ball</div><div class="finial-desc">3½"D · 2½"H · 2½"W · Not in Unfinished</div></div>
-        <div class="finial-card" onclick="selectFinial('Chaucer')"><div class="finial-art">◍</div><div class="finial-name">Chaucer</div><div class="finial-desc">3¾"D · 3¼"H · 3¼"W · turned classic</div></div>
-        <div class="finial-card" onclick="selectFinial('Ethan')"><div class="finial-art">⬙</div><div class="finial-name">Ethan</div><div class="finial-desc">2¾"D · 3¼"H · 3¼"W · knob style</div></div>
-        <div class="finial-card" onclick="selectFinial('Hugo')"><div class="finial-art">⬤</div><div class="finial-name">Hugo</div><div class="finial-desc">2"D · 2½"H · 2½"W · barrel cap</div></div>
-        <div class="finial-card" onclick="selectFinial('Miller')"><div class="finial-art">◑</div><div class="finial-name">Miller</div><div class="finial-desc">2⅜"D · 3"H · 3"W · oval</div></div>
-        <div class="finial-card" onclick="selectFinial('Sherwood')"><div class="finial-art">⬡</div><div class="finial-name">Sherwood</div><div class="finial-desc">3¾"D · 2¾"H · 2¾"W · urn</div></div>
-        <div class="finial-card" onclick="selectFinial('Warren')"><div class="finial-art">⊕</div><div class="finial-name">Warren</div><div class="finial-desc">1¼"D · 2½"H · 2½"W · disc</div></div>
-        <div class="finial-card" onclick="selectFinial('Wood Ball')"><div class="finial-art">⬤</div><div class="finial-name">Wood Ball</div><div class="finial-desc">3½"D · 2½"H · 2½"W · classic ball</div></div>
+        <div class="finial-card" onclick="selectFinial('Button Ball', this)"><div class="finial-art">●</div><div class="finial-name">Button Ball</div><div class="finial-desc">3½"D · 2½"H · 2½"W · Not in Unfinished</div></div>
+        <div class="finial-card" onclick="selectFinial('Chaucer', this)"><div class="finial-art">◍</div><div class="finial-name">Chaucer</div><div class="finial-desc">3¾"D · 3¼"H · 3¼"W · turned classic</div></div>
+        <div class="finial-card" onclick="selectFinial('Ethan', this)"><div class="finial-art">⬙</div><div class="finial-name">Ethan</div><div class="finial-desc">2¾"D · 3¼"H · 3¼"W · knob style</div></div>
+        <div class="finial-card" onclick="selectFinial('Hugo', this)"><div class="finial-art">⬤</div><div class="finial-name">Hugo</div><div class="finial-desc">2"D · 2½"H · 2½"W · barrel cap</div></div>
+        <div class="finial-card" onclick="selectFinial('Miller', this)"><div class="finial-art">◑</div><div class="finial-name">Miller</div><div class="finial-desc">2⅜"D · 3"H · 3"W · oval</div></div>
+        <div class="finial-card" onclick="selectFinial('Sherwood', this)"><div class="finial-art">⬡</div><div class="finial-name">Sherwood</div><div class="finial-desc">3¾"D · 2¾"H · 2¾"W · urn</div></div>
+        <div class="finial-card" onclick="selectFinial('Warren', this)"><div class="finial-art">⊕</div><div class="finial-name">Warren</div><div class="finial-desc">1¼"D · 2½"H · 2½"W · disc</div></div>
+        <div class="finial-card" onclick="selectFinial('Wood Ball', this)"><div class="finial-art">⬤</div><div class="finial-name">Wood Ball</div><div class="finial-desc">3½"D · 2½"H · 2½"W · classic ball</div></div>
       </div>
       <div class="sec-label" style="margin-top:14px">Or choose an Endcap (flush, no projection)</div>
       <div class="opt-row">
@@ -663,14 +663,14 @@ textarea.inp-field{resize:vertical;min-height:90px}
       <div class="sec-label" style="margin-top:0">2" Finials — Wood Trends™</div>
       <div class="info-banner" style="margin-bottom:14px"><strong>Sold as pairs · 10 pairs/box.</strong> All 9 finishes including Unfinished available on all 2" styles.</div>
       <div class="finial-grid">
-        <div class="finial-card" onclick="selectFinial('Button Ball')"><div class="finial-art">●</div><div class="finial-name">Button Ball</div><div class="finial-desc">4⅝"D · 3½"H · 3½"W</div></div>
-        <div class="finial-card" onclick="selectFinial('Chaucer')"><div class="finial-art">◍</div><div class="finial-name">Chaucer</div><div class="finial-desc">4⅜"D · 3¾"H · 3¾"W · turned</div></div>
-        <div class="finial-card" onclick="selectFinial('Ethan')"><div class="finial-art">⬙</div><div class="finial-name">Ethan</div><div class="finial-desc">4"D · 4¾"H · 4¾"W · knob</div></div>
-        <div class="finial-card" onclick="selectFinial('Hugo')"><div class="finial-art">⬤</div><div class="finial-name">Hugo</div><div class="finial-desc">2⅞"D · 3¾"H · 3¾"W · barrel</div></div>
-        <div class="finial-card" onclick="selectFinial('Miller')"><div class="finial-art">◑</div><div class="finial-name">Miller</div><div class="finial-desc">3½"D · 4½"H · 4½"W · oval</div></div>
-        <div class="finial-card" onclick="selectFinial('Sherwood')"><div class="finial-art">⬡</div><div class="finial-name">Sherwood</div><div class="finial-desc">5"D · 3"H · 3"W · urn</div></div>
-        <div class="finial-card" onclick="selectFinial('Warren')"><div class="finial-art">⊕</div><div class="finial-name">Warren</div><div class="finial-desc">1⅞"D · 3¾"H · 3¾"W · disc</div></div>
-        <div class="finial-card" onclick="selectFinial('Wood Ball')"><div class="finial-art">⬤</div><div class="finial-name">Wood Ball</div><div class="finial-desc">5¼"D · 3¾"H · 3¾"W · ball</div></div>
+        <div class="finial-card" onclick="selectFinial('Button Ball', this)"><div class="finial-art">●</div><div class="finial-name">Button Ball</div><div class="finial-desc">4⅝"D · 3½"H · 3½"W</div></div>
+        <div class="finial-card" onclick="selectFinial('Chaucer', this)"><div class="finial-art">◍</div><div class="finial-name">Chaucer</div><div class="finial-desc">4⅜"D · 3¾"H · 3¾"W · turned</div></div>
+        <div class="finial-card" onclick="selectFinial('Ethan', this)"><div class="finial-art">⬙</div><div class="finial-name">Ethan</div><div class="finial-desc">4"D · 4¾"H · 4¾"W · knob</div></div>
+        <div class="finial-card" onclick="selectFinial('Hugo', this)"><div class="finial-art">⬤</div><div class="finial-name">Hugo</div><div class="finial-desc">2⅞"D · 3¾"H · 3¾"W · barrel</div></div>
+        <div class="finial-card" onclick="selectFinial('Miller', this)"><div class="finial-art">◑</div><div class="finial-name">Miller</div><div class="finial-desc">3½"D · 4½"H · 4½"W · oval</div></div>
+        <div class="finial-card" onclick="selectFinial('Sherwood', this)"><div class="finial-art">⬡</div><div class="finial-name">Sherwood</div><div class="finial-desc">5"D · 3"H · 3"W · urn</div></div>
+        <div class="finial-card" onclick="selectFinial('Warren', this)"><div class="finial-art">⊕</div><div class="finial-name">Warren</div><div class="finial-desc">1⅞"D · 3¾"H · 3¾"W · disc</div></div>
+        <div class="finial-card" onclick="selectFinial('Wood Ball', this)"><div class="finial-art">⬤</div><div class="finial-name">Wood Ball</div><div class="finial-desc">5¼"D · 3¾"H · 3¾"W · ball</div></div>
       </div>
       <div class="sec-label" style="margin-top:14px">Or choose an Endcap (flush, no projection)</div>
       <div class="opt-row">
@@ -1218,10 +1218,10 @@ function goSection(id) {
 }
 
 // ── STEP 1 ──
-function selectType(t) {
+function selectType(t, el) {
   S.type = t;
   document.querySelectorAll('#sec-1 .choice-card').forEach(c => c.classList.remove('sel'));
-  event.currentTarget.classList.add('sel');
+  (el || event.target).classList.add('sel');
 
   if (t === 'unsure') { goSection('unsure-form'); return; }
   goStep(2);
@@ -1247,10 +1247,10 @@ function updateStep2() {
   }
 }
 
-function selectCollection(c) {
+function selectCollection(c, el) {
   S.collection = c;
   document.querySelectorAll('.coll-card').forEach(el => el.classList.remove('sel'));
-  event.currentTarget.classList.add('sel');
+  (el || event.target).classList.add('sel');
 
   // For traverse type, collection implies Estate system
   if (S.type === 'traverse' && c !== 'arch') {
@@ -1259,10 +1259,10 @@ function selectCollection(c) {
   goStep(3);
 }
 
-function selectTraverseSystem(sys) {
+function selectTraverseSystem(sys, el) {
   S.traverseSystem = sys;
   document.querySelectorAll('#traverse-systems .choice-card').forEach(c => c.classList.remove('sel'));
-  event.currentTarget.classList.add('sel');
+  (el || event.target).classList.add('sel');
 
   if (sys === 'architrac') {
     S.collection = 'arch';
@@ -1280,18 +1280,18 @@ function selectTraverseSystem(sys) {
   }
 }
 
-function selectArchitracModel(m) {
+function selectArchitracModel(m, el) {
   S.architracModel = m;
   document.querySelectorAll('#architrac-model-picker .choice-card').forEach(c => c.classList.remove('sel'));
-  event.currentTarget.classList.add('sel');
+  (el || event.target).classList.add('sel');
   goStep(3);
 }
 
-function selectBasic(sub) {
+function selectBasic(sub, el) {
   S.basicSubtype = sub;
   S.collection = 'basic-' + sub;
   document.querySelectorAll('#basic-options .choice-card').forEach(c => c.classList.remove('sel'));
-  event.currentTarget.classList.add('sel');
+  (el || event.target).classList.add('sel');
   goStep(3);
 }
 
@@ -1307,12 +1307,12 @@ function updateStep3() {
   else show('finish-basic');
 }
 
-function selectFinish(f) {
+function selectFinish(f, el) {
   S.finish = f;
   // Highlight selected
-  event.currentTarget.closest('.finish-grid, #finish-arch, #finish-basic')
+  (el || event.target).closest('.finish-grid, #finish-arch, #finish-basic')
     ?.querySelectorAll('.finish-card').forEach(c => c.classList.remove('sel'));
-  event.currentTarget.classList.add('sel');
+  (el || event.target).classList.add('sel');
 }
 
 function clearFinishSel() {
@@ -1349,10 +1349,10 @@ function updateStep4() {
   }
 }
 
-function selectFinial(f) {
+function selectFinial(f, el) {
   S.finial = f;
   document.querySelectorAll('.finial-card').forEach(c => c.classList.remove('sel'));
-  event.currentTarget.classList.add('sel');
+  (el || event.target).classList.add('sel');
 }
 
 // ── STEP 5 ──
@@ -1373,7 +1373,7 @@ function updateStep5() {
     else if (S.collection === 'wt') diameters = ['1⅜"','2"'];
     else if (S.collection === 'wi') diameters = ['1"','1⅜"'];
     opts.innerHTML = diameters.map(d =>
-      `<div class="opt-pill" onclick="selectPoleDia('${d}');toggleOptPill(this,'dia')">${d}</div>`
+      `<div class="opt-pill" onclick="selectPoleDia('${d}', this)">${d}</div>`
     ).join('');
 
     // Pole length info
@@ -1418,7 +1418,7 @@ function updateStep5() {
   }
 }
 
-function selectPoleDia(d) {
+function selectPoleDia(d, el) {
   S.poleDia = d;
   ['finials-dm-1','finials-dm-138','finials-dm-2','finials-wi-1','finials-wi-138','finials-wt-138','finials-wt-2'].forEach(hide);
   if (S.collection === 'dm') {
