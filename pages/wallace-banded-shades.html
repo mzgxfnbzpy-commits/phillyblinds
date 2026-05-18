@@ -560,9 +560,7 @@ function setProd(p,el){
   el.classList.add('sel');
   document.getElementById('val1').textContent=p==='dual'?'Portfolio Dual Sheer':'Banded 2D Shades';
   document.getElementById('step1').classList.add('done');
-  ['step2-dual','step2-2d','ctrl-dual','ctrl-2d','step5-dual','step5-2d','opts-2d'].forEach(function(id){
-    var e=document.getElementById(id);if(e)e.style.display=(id.endsWith(p===\'dual\'?\'dual\':\'2d\')||id===\'opts-2d\'&&p===\'2d\')?\'\':\' none\';
-  });
+
   document.getElementById('step2-dual').style.display=p==='dual'?'':'none';
   document.getElementById('step2-2d').style.display=p==='2d'?'':'none';
   document.getElementById('ctrl-dual').style.display=p==='dual'?'':'none';

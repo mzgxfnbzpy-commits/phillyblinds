@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -141,6 +141,12 @@
 /* ---- BRAND CHOOSER ---- */
 .brand-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px}
 .brand-btn{flex:1;min-width:140px;background:#fff;border:1.5px solid #e8e8e4;border-radius:10px;padding:12px 14px;cursor:pointer;text-align:left;transition:border-color 0.15s,box-shadow 0.15s;font-family:var(--font)}
+.rt-card{background:#fff;border:1.5px solid #e8e8e4;border-radius:12px;padding:18px 16px;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s;text-decoration:none;display:block}
+.rt-card:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(45,224,193,.15);transform:translateY(-2px)}
+.rt-card.sel{border:2px solid var(--gold);background:var(--gold-mid)}
+.rt-card-icon{font-size:22px;margin-bottom:8px}
+.rt-card-name{font-size:14px;font-weight:600;color:#111;margin-bottom:4px}
+.rt-card-desc{font-size:11px;color:#666;line-height:1.5}
 .brand-btn:hover{border-color:var(--gold);box-shadow:0 2px 8px rgba(45,224,193,0.1)}
 .brand-btn.sel{border:2px solid var(--gold);background:var(--gold-mid);box-shadow:0 2px 12px rgba(45,224,193,0.18)}
 .brand-btn.disabled{opacity:0.4;pointer-events:none;cursor:not-allowed}
@@ -375,7 +381,7 @@
           </div>
         </div>
 
-        <div class="product-card" onclick="window.location='portfolio-dual-sheer.html'">
+        <div class="product-card" onclick="window.location='wallace-banded-shades.html'">
           <div class="product-img-photo" style="background:linear-gradient(135deg,#d4d0cc 0%,#eae6e0 50%,#b8b4b0 100%);display:flex;align-items:center;justify-content:center;padding:16px">
             <div style="display:flex;flex-direction:column;gap:4px;width:64px">
               <div style="height:4px;background:rgba(255,255,255,.9);border-radius:2px"></div>
@@ -446,30 +452,17 @@
           </div>
         </div>
 
-        <!-- Synchrony Vertical Blinds -->
-        <a class="product-card" href="synchrony-verticals.html">
+        <!-- Vertical Blinds — opens Norman vs Wallace chooser -->
+        <div class="product-card" id="card-verticals" onclick="selectVerticalsType()" style="cursor:pointer">
           <div class="product-img-photo" style="position:relative">
-            <img src="../images/thumbnails/verticals.png" alt="Vertical blinds installed" loading="lazy" style="object-position:center 25%">
-            <div style="position:absolute;bottom:8px;left:8px;background:var(--espresso);color:var(--gold);font-size:9px;padding:3px 7px;border-radius:6px;font-weight:600;letter-spacing:0.5px">NORMAN®</div>
+            <img src="../images/thumbnails/verticals.png" alt="Vertical blinds" loading="lazy" style="object-position:center 25%">
           </div>
           <div class="product-body">
-            <div class="product-name">Synchrony™ Vertical Blinds</div>
-            <div class="product-sub">Norman — valance-free, 4 fabric groups</div>
-            <span class="badge badge-instant">Instant price</span>
+            <div class="product-name">Vertical Blinds</div>
+            <div class="product-sub">Norman Synchrony™ or Wallace · PVC &amp; fabric</div>
+            <span class="badge badge-instant">Choose brand →</span>
           </div>
-        </a>
-
-        <!-- Wallace Vertical Blinds -->
-        <a class="product-card" href="wallace-verticals.html">
-          <div class="product-img-photo">
-            <img src="../images/thumbnails/verticals.png" alt="Wallace Vertical Blinds installed" loading="lazy" style="object-position:center 25%">
-          </div>
-          <div class="product-body">
-            <div class="product-name">Wallace Vertical Blinds</div>
-            <div class="product-sub">36 patterns · PVC, fabric &amp; channel panel</div>
-            <span class="badge badge-quote">Configure &amp; quote</span>
-          </div>
-        </a>
+        </div>
 
       </div><!-- /product-grid drapery-alt -->
     </section><!-- /drapery alternatives -->
@@ -579,26 +572,26 @@
     <!-- ── ROLLER TYPE SUBSECTION ─────────────────────────────── -->
     <div id="roller-types" style="display:none;margin-bottom:16px">
       <div style="font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Select roller shade type</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px">
 
-        <div class="opt-card" id="rt-basic" onclick="rtSelect('basic')" style="text-align:left;padding:16px 16px 14px;cursor:pointer">
-          <div style="font-size:20px;margin-bottom:8px">🪟</div>
-          <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:4px">Basic Roller Shades</div>
-          <div style="font-size:11px;color:#666;line-height:1.5">Solar, light filtering &amp; blackout — instant online pricing</div>
+        <div class="rt-card" id="rt-basic" onclick="rtSelect('basic')">
+          <div class="rt-card-icon">🪟</div>
+          <div class="rt-card-name">Basic Roller Shades</div>
+          <div class="rt-card-desc">Solar, light filtering &amp; blackout — instant online pricing</div>
           <div style="margin-top:10px"><span class="badge badge-instant">Instant price</span></div>
         </div>
 
-        <div class="opt-card" id="rt-norman" onclick="rtSelect('norman')" style="text-align:left;padding:16px 16px 14px;cursor:pointer">
+        <div class="rt-card" id="rt-norman" onclick="rtSelect('norman')">
           <div style="font-size:9px;font-weight:700;background:var(--espresso);color:var(--gold);display:inline-block;padding:2px 8px;border-radius:5px;letter-spacing:0.5px;margin-bottom:8px">NORMAN®</div>
-          <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:4px">Norman Roller Shades</div>
-          <div style="font-size:11px;color:#666;line-height:1.5">Soluna collection — premium fabrics, 8-step configurator</div>
+          <div class="rt-card-name">Norman Roller Shades</div>
+          <div class="rt-card-desc">Soluna collection — premium fabrics, 8-step configurator</div>
           <div style="margin-top:10px"><span class="badge badge-quote">Configure &amp; quote</span></div>
         </div>
 
-        <a class="opt-card" href="wallace-natural-roller-shades.html" style="text-align:left;padding:16px 16px 14px;cursor:pointer;text-decoration:none">
-          <div style="font-size:20px;margin-bottom:8px">🌿</div>
-          <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:4px">Woven Wood Roller Shades</div>
-          <div style="font-size:11px;color:#666;line-height:1.5">Wallace Portfolio — natural woven fabrics, single or double shade</div>
+        <a class="rt-card" href="wallace-natural-roller-shades.html">
+          <div class="rt-card-icon">🌿</div>
+          <div class="rt-card-name">Woven Wood Roller Shades</div>
+          <div class="rt-card-desc">Wallace Portfolio — natural woven fabrics, single or double shade</div>
           <div style="margin-top:10px"><span class="badge badge-quote">Configure &amp; quote</span></div>
         </a>
 
@@ -2416,6 +2409,10 @@ window.addEventListener("load", function() {
   var brand   = params.get("brand");
   if (!product) return;
   // 'blinds' → open the Faux vs Real Wood type chooser directly
+  if (product === "verticals") {
+    setTimeout(function() { if(typeof selectVerticalsType==="function") selectVerticalsType(); }, 200);
+    return;
+  }
   if (product === "blinds") {
     setTimeout(function() { if(typeof selectBlindsType==="function") selectBlindsType(); }, 200);
     return;
@@ -4205,6 +4202,7 @@ function selectBlindsType() {
 }
 function selectBlindsSubtype(type) {
   document.getElementById('blinds-type-config').classList.remove('open');
+  if (document.getElementById('verticals-type-config')) document.getElementById('verticals-type-config').classList.remove('open');
   if (type === 'fwb') {
     document.getElementById('fwb-config').classList.add('open');
     document.getElementById('rwb-config').classList.remove('open');
@@ -5762,4 +5760,5 @@ function submitPSForm() {
 </script>
 </body>
 </html>
+
 
