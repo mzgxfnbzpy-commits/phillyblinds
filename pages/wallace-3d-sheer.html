@@ -488,6 +488,7 @@ const COLLECTIONS = [
    colors:[{code:'SNY-1841',hw:'White',label:'White'},{code:'SNY-1842',hw:'Ivory',label:'Ivory'},{code:'SNY-1843',hw:'Beige',label:'Beige 1'},{code:'SNY-1844',hw:'Beige',label:'Beige 2'},{code:'SNY-1845',hw:'Grey',label:'Grey'}]},
   {name:'Sunlux',   group:'C', band:'2"',    lc:'Room Darkening', insert:false, rail:'Moon Shape', minW:12, maxW:100, minH:20, maxH:120,
    colors:[{code:'SLX-1861',hw:'White',label:'White'},{code:'SLX-1862',hw:'Grey',label:'Grey'},{code:'SLX-1863',hw:'Beige',label:'Beige'},{code:'SLX-1864',hw:'Brown',label:'Brown 1'},{code:'SLX-1865',hw:'Brown',label:'Brown 2'}]}
+];
 
 // ═══════════════════════════════════════════════════════════
 // PRICE MATRIX — Wallace 3D Dual Sheer / Sheer 3D Horizontals
@@ -568,8 +569,6 @@ function calcPrice(){
   if(qty>1) total+=(qty-1)*8;        //  handling each additional
   return{base,per,total,qty};
 }
-
-];
 
 // Hardware color swatches
 const HW_COLORS = [
