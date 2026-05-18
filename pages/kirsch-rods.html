@@ -641,7 +641,7 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <!-- Wood Trends 1⅜" finials -->
     <div id="finials-wt-138" style="display:none">
       <div class="sec-label" style="margin-top:0">1⅜" Finials — Wood Trends™</div>
-      <div class="info-banner" style="margin-bottom:14px"><strong>Sold as pairs · 10 pairs/box.</strong> Available in all 9 finishes. <strong>Note:</strong> Button Ball is not available in Unfinished finish.</div>
+      <div class="info-banner" style="margin-bottom:14px"><strong>Sold as pairs · 10 pairs/box.</strong> Available in all 9 finishes. <strong>Note:</strong> Button Ball is not available in Unfinished finish. <strong>K-Rail compatible:</strong> All 1⅜" Wood Trends™ finials also fit Kirsch Architrac® K-Rail Traverse Rods — note K-Rail compatibility in Step 7 if needed.</div>
       <div class="finial-grid">
         <div class="finial-card" onclick="selectFinial('Button Ball', this)"><div class="finial-art">●</div><div class="finial-name">Button Ball</div><div class="finial-desc">3½"D · 2½"H · 2½"W · Not in Unfinished</div></div>
         <div class="finial-card" onclick="selectFinial('Chaucer', this)"><div class="finial-art">◍</div><div class="finial-name">Chaucer</div><div class="finial-desc">3¾"D · 3¼"H · 3¼"W · turned classic</div></div>
@@ -661,7 +661,7 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <!-- Wood Trends 2" finials -->
     <div id="finials-wt-2" style="display:none">
       <div class="sec-label" style="margin-top:0">2" Finials — Wood Trends™</div>
-      <div class="info-banner" style="margin-bottom:14px"><strong>Sold as pairs · 10 pairs/box.</strong> All 9 finishes including Unfinished available on all 2" styles.</div>
+      <div class="info-banner" style="margin-bottom:14px"><strong>Sold as pairs · 10 pairs/box.</strong> All 9 finishes including Unfinished available on all 2" styles. <strong>Ceiling mount note:</strong> Finial choices may be limited for ceiling-mounted Estate™ rods — confirm availability when using a ceiling bracket.</div>
       <div class="finial-grid">
         <div class="finial-card" onclick="selectFinial('Button Ball', this)"><div class="finial-art">●</div><div class="finial-name">Button Ball</div><div class="finial-desc">4⅝"D · 3½"H · 3½"W</div></div>
         <div class="finial-card" onclick="selectFinial('Chaucer', this)"><div class="finial-art">◍</div><div class="finial-name">Chaucer</div><div class="finial-desc">4⅜"D · 3¾"H · 3¾"W · turned</div></div>
@@ -1009,17 +1009,28 @@ textarea.inp-field{resize:vertical;min-height:90px}
       <div class="divider"></div>
       <div class="sec-label" style="margin-top:0">Wood Trends™ Accessories — Add to Your Order?</div>
       <div class="sec-sub" style="font-size:12px;margin-bottom:14px">Check anything you'd like to include. We'll add pricing to your quote. All items available in your chosen finish.</div>
+      <div style="font-size:11px;color:#888;margin-bottom:10px;line-height:1.7;background:#fafaf8;border-radius:8px;padding:10px 12px;border:1px solid #e8e8e4">
+        <strong style="color:#111">Restriction notes:</strong>
+        Ceiling Mount bracket and Double Bracket are <strong>not available in Unfinished finish</strong> — specify a stained or painted finish when adding these.
+        The <strong>Double Bracket for 2" poles</strong> mounts a 2" front rod and a 1⅜" back rod simultaneously from one wall point — you must order both pole sizes.
+        Wood <strong>Elbows are Unfinished only</strong> (natural bare wood, paint/stain yourself to match).
+        The <strong>4¼" Return bracket is 1⅜" only</strong> — not available for 2" poles.
+        Holdback Medallions are not available in Unfinished.
+      </div>
       <div class="opt-row" style="flex-wrap:wrap">
-        <div class="opt-pill" onclick="toggleWTAccessory(this,'rings')">Rings with Eyelet <span style="font-size:10px;color:#888">1⅜"=$15.37 · 2"=$18.17/bag</span></div>
-        <div class="opt-pill" onclick="toggleWTAccessory(this,'bracket-3.5')">3½" Return Bracket <span style="font-size:10px;color:#888">$11.77 ea</span></div>
-        <div class="opt-pill" onclick="toggleWTAccessory(this,'bracket-4.25')">4¼" Return Bracket (1⅜" only) <span style="font-size:10px;color:#888">$12.44 ea</span></div>
-        <div class="opt-pill" onclick="toggleWTAccessory(this,'bracket-6')">6" Return Bracket <span style="font-size:10px;color:#888">$35.25/pair</span></div>
-        <div class="opt-pill" onclick="toggleWTAccessory(this,'ceiling-bracket')">Ceiling Mount Bracket <span style="font-size:10px;color:#888">$21.77 ea</span></div>
-        <div class="opt-pill" onclick="toggleWTAccessory(this,'double-bracket')">Double Bracket (layered rods) <span style="font-size:10px;color:#888">$24.86 ea</span></div>
-        <div class="opt-pill" onclick="toggleWTAccessory(this,'holdback')">3¾" Holdback Medallion <span style="font-size:10px;color:#888">$42.47/pair</span></div>
-        <div class="opt-pill" onclick="toggleWTAccessory(this,'swivel-socket')">Swivel Socket (bay window) <span style="font-size:10px;color:#888">1⅜"=$26.72 · 2"=$32.73</span></div>
-        <div class="opt-pill" onclick="toggleWTAccessory(this,'elbow')">Wood Elbow Kit (wrap-around) <span style="font-size:10px;color:#888">3½"–8" clearance</span></div>
-        <div class="opt-pill" onclick="toggleWTAccessory(this,'teflon')">Teflon Tape (smooth ring glide) <span style="font-size:10px;color:#888">$65.18/roll</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'rings')">Rings with Eyelet <span style="font-size:10px;color:#888">1⅜"=$15.37 · 2"=$18.17/bag · 7 rings/bag (1⅜") or 4 rings/bag (2")</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'metal-clip')">Metal Clip for Rings <span style="font-size:10px;color:#888">Brass · $16.05/50 pack · clips to eyelet for rod-pocket panels</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'bracket-3.5')">3½" Return Bracket <span style="font-size:10px;color:#888">1⅜"=$11.77 ea · 2"=$17.24 ea · 9 finishes</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'bracket-4.25')">4¼" Return Bracket <span style="font-size:10px;color:#888">1⅜" ONLY · $12.44 ea · 9 finishes</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'bracket-6')">6" Return Bracket <span style="font-size:10px;color:#888">1⅜"=$35.25/5-pair box · 2"=$18.04 ea · 9 finishes</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'ceiling-bracket')">Ceiling Mount Bracket <span style="font-size:10px;color:#888">1⅜"=$21.77 · 2"=$23.79 · 8 finishes (no Unfinished)</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'double-bracket')">Double Bracket — front 2" + back 1⅜" <span style="font-size:10px;color:#888">$24.86 ea · 8 finishes (no Unfinished) · requires 2 pole sizes</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'inside-socket')">Inside Mount Socket (1⅜" only) <span style="font-size:10px;color:#888">$9.89/pair · 9 finishes · rod seats inside window casing</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'swivel-socket')">Swivel Socket — angled / bay window <span style="font-size:10px;color:#888">1⅜"=$26.72 · 2"=$32.73 · 9 finishes</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'holdback')">3¾" Holdback Medallion <span style="font-size:10px;color:#888">$42.47/pair · 8 finishes (no Unfinished) · adj 3" or 5" clearance</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'elbow')">Wood Elbow Kit — wrap-around bay <span style="font-size:10px;color:#888">Unfinished only · 3½"–5½" or 6"–8" clearance · includes metal bracket &amp; hidden support</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'teflon')">Teflon Tape — smooth ring glide <span style="font-size:10px;color:#888">$65.18/roll · 54ft · stationary poles only</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'pole-connector')">Pole Connector #5610E061 <span style="font-size:10px;color:#888">$1.70 ea · Zinc Plated · for splicing poles · always support splice with a bracket</span></div>
       </div>
     </div>
 
@@ -1384,7 +1395,7 @@ function updateStep5() {
         : '<strong>Designer Metals™ 1⅜" poles:</strong> Fixed 4\'/6\'/8\' or Telescoping 36"–66", 66"–120", 120"–180". All 8 finishes. Splice with #73304061 for runs over 15\'.' ;
       if (S.poleDia) updateDMSubSections(S.poleDia);
     }
-    else if (S.collection === 'wt') info.innerHTML = '<strong>Wood Trends™ poles:</strong> Fixed 4\', 6\', 8\', 12\' — Smooth or Fluted. Can be spliced for longer runs using Pole Connector #5610E061 (always support splice with a bracket). <strong>1⅜" pricing:</strong> 4\'=$25.80 · 6\'=$38.61 · 8\'=$49.56 · 12\'=$77.32. <strong>2" pricing:</strong> 4\'=$58.52 · 6\'=$85.20 · 8\'=$112.97 · 12\'=$172.41 (per-piece pricing).';
+    else if (S.collection === 'wt') info.innerHTML = '<strong>Wood Trends™ poles:</strong> Fixed 4\', 6\', 8\', 12\' — Smooth or Fluted. Can be spliced for longer runs with Pole Connector #5610E061 — <strong>always support every splice with a bracket.</strong> To cut: wrap with painter\'s tape, cut with fine-tooth saw, drill new finial pilot hole. <strong>1⅜" broken-pack pricing/piece:</strong> 4\'=$25.80 · 6\'=$38.61 · 8\'=$49.56 · 12\'=$77.32 (6 pieces/box). <strong>2" broken-pack pricing/piece:</strong> 4\'=$58.52 · 6\'=$85.20 · 8\'=$112.97 · 12\'=$172.41 (2 pieces/box).';
     else if (S.collection === 'wi') info.innerHTML = '<strong>Wrought Iron poles:</strong> Fixed 6\' or 8\'. Can be spliced and spliced with internal rod splice for longer runs.';
     else info.innerHTML = '';
 
