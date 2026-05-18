@@ -4222,6 +4222,19 @@ function fwbAdjQty(delta) {
   inp.value = v;
 }
 // ─── Wood Blinds type selector ───────────────────────────────
+function selectVerticalsType() {
+  document.querySelectorAll('.product-card').forEach(function(c){c.classList.remove('selected');});
+  var card = document.getElementById('card-verticals');
+  if (card) card.classList.add('selected');
+  currentProduct = 'verticals';
+  var sec = document.getElementById('configurator-section');
+  sec.style.display = 'block';
+  ['instant-config','hd-config','fwb-config','rwb-config','blinds-type-config','exterior-config','perfectsheer-config'].forEach(function(id){
+    var e = document.getElementById(id); if (e) e.classList.remove('open');
+  });
+  document.getElementById('verticals-type-config').classList.add('open');
+  sec.scrollIntoView({behavior:'smooth',block:'start'});
+}
 function selectBlindsType() {
   document.querySelectorAll('.product-card').forEach(function(c){c.classList.remove('selected');});
   var card = document.getElementById('card-fwb');
@@ -5796,6 +5809,7 @@ function submitPSForm() {
 </script>
 </body>
 </html>
+
 
 
 
