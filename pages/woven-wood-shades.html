@@ -129,7 +129,7 @@
   background: none;
   border: none;
   padding: 0;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   text-decoration: none;
 }
 .back-btn:hover { opacity: 0.8; }
@@ -137,32 +137,33 @@
 /* ── Roller configurator wrapper ── */
 #roller-section {
   display: none;
-  background: var(--espresso-mid);
-  padding: 48px 28px;
+  background: var(--gold-mid);
+  padding: 36px 28px 56px;
   min-height: 400px;
 }
 .cfg-wrap {
-  max-width: 860px;
+  max-width: 900px;
   margin: 0 auto;
 }
 .cfg-section-title {
   font-size: 22px;
-  font-weight: 600;
-  color: var(--cream);
+  font-weight: 500;
+  color: #111;
   margin-bottom: 6px;
+  letter-spacing: -0.3px;
 }
 .cfg-section-sub {
   font-size: 13px;
-  color: var(--text-dark);
-  margin-bottom: 28px;
+  color: #666;
+  margin-bottom: 24px;
 }
 
 /* ── Steps ── */
 .step-block {
-  background: var(--espresso);
-  border: 1px solid rgba(45,224,193,0.1);
+  background: #fff;
+  border: 1px solid #e8e8e4;
   border-radius: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   overflow: hidden;
 }
 .step-header {
@@ -176,51 +177,50 @@
 .step-header-left { display: flex; align-items: center; gap: 12px; }
 .step-num {
   width: 28px; height: 28px;
-  background: rgba(45,224,193,0.12);
-  border: 1px solid rgba(45,224,193,0.25);
+  background: var(--espresso);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: 12px; font-weight: 600; color: var(--gold);
   flex-shrink: 0;
 }
-.step-label { font-size: 14px; font-weight: 600; color: var(--cream); }
+.step-label { font-size: 14px; font-weight: 500; color: #111; }
 .step-selection-preview { font-size: 12px; color: var(--gold); margin-left: 4px; }
-.step-chevron { font-size: 12px; color: var(--text-muted); transition: transform 0.2s; }
+.step-chevron { font-size: 12px; color: #aaa; transition: transform 0.2s; }
 .step-chevron.open { transform: rotate(180deg); }
 .step-body {
   display: none;
   padding: 0 20px 20px;
-  border-top: 1px solid rgba(45,224,193,0.07);
+  border-top: 1px solid #f0ede8;
 }
 .step-body.active { display: block; }
 
 /* ── Fabric cards ── */
 .fabric-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 10px;
   margin-top: 14px;
 }
 .fabric-card {
-  background: var(--espresso-mid);
-  border: 2px solid rgba(45,224,193,0.08);
-  border-radius: 9px;
+  background: #fff;
+  border: 1.5px solid #e8e8e4;
+  border-radius: 10px;
   padding: 12px 10px;
   cursor: pointer;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, box-shadow 0.15s;
   text-align: center;
 }
-.fabric-card:hover, .fabric-card.selected { border-color: var(--gold); }
-.fabric-card.selected { background: rgba(45,224,193,0.05); }
+.fabric-card:hover { border-color: var(--gold); }
+.fabric-card.selected { border: 2px solid var(--gold); background: var(--gold-mid); box-shadow: 0 2px 10px rgba(200,151,63,.12); }
 .fabric-swatch {
   width: 100%;
   height: 40px;
   border-radius: 6px;
   margin-bottom: 8px;
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid rgba(0,0,0,0.08);
 }
-.fabric-code { font-size: 10px; color: var(--text-muted); margin-bottom: 2px; }
-.fabric-name { font-size: 12px; color: var(--cream); font-weight: 500; line-height: 1.3; margin-bottom: 3px; }
+.fabric-code { font-size: 10px; color: #999; margin-bottom: 2px; }
+.fabric-name { font-size: 12px; color: #111; font-weight: 500; line-height: 1.3; margin-bottom: 3px; }
 .fabric-pg { font-size: 11px; color: var(--gold); }
 .fabric-mat { font-size: 10px; color: var(--text-faint); }
 
@@ -235,12 +235,13 @@
 .gf-btn {
   padding: 5px 14px;
   border-radius: 20px;
-  border: 1px solid rgba(45,224,193,0.2);
-  background: transparent;
-  color: var(--text-muted);
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #555;
   font-size: 12px;
   cursor: pointer;
   transition: all 0.15s;
+  font-family: inherit;
 }
 .gf-btn:hover, .gf-btn.active {
   background: var(--gold);
@@ -259,20 +260,18 @@
 .opt-chip {
   padding: 8px 16px;
   border-radius: 8px;
-  border: 2px solid rgba(45,224,193,0.1);
-  background: var(--espresso-mid);
-  color: var(--text-dark);
+  border: 1.5px solid #e8e8e4;
+  background: #fff;
+  color: #333;
   font-size: 13px;
   cursor: pointer;
   transition: all 0.15s;
   text-align: center;
+  font-family: inherit;
 }
-.opt-chip:hover, .opt-chip.selected {
-  border-color: var(--gold);
-  color: var(--cream);
-}
-.opt-chip.selected { background: rgba(45,224,193,0.06); }
-.opt-chip small { display: block; font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.opt-chip:hover { border-color: var(--gold); }
+.opt-chip.selected { border: 2px solid var(--gold); background: var(--gold-mid); color: var(--espresso); }
+.opt-chip small { display: block; font-size: 11px; color: #888; margin-top: 2px; }
 
 /* ── Form fields ── */
 .field-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 14px; }
@@ -280,19 +279,20 @@
 .field-group label {
   display: block;
   font-size: 12px;
-  color: var(--text-muted);
+  color: #444;
   margin-bottom: 5px;
   font-weight: 500;
 }
 .field-group input, .field-group select, .field-group textarea {
   width: 100%;
-  background: var(--espresso-mid);
-  border: 1px solid rgba(45,224,193,0.15);
+  background: #fff;
+  border: 1px solid #ddd;
   border-radius: 7px;
   padding: 9px 12px;
-  color: var(--cream);
+  color: #111;
   font-size: 13px;
-  font-family: var(--font);
+  font-family: inherit;
+  box-sizing: border-box;
 }
 .field-group input:focus, .field-group select:focus, .field-group textarea:focus {
   outline: none;
@@ -300,91 +300,91 @@
 }
 .field-note {
   font-size: 11px;
-  color: var(--text-faint);
+  color: #999;
   margin-top: 5px;
 }
 .field-error {
   font-size: 11px;
-  color: #e07070;
+  color: #c0392b;
   margin-top: 4px;
   display: none;
 }
 
-/* ── Price panel ── */
+/* ── Price panel — keep dark for contrast ── */
 #roller-price-panel {
   background: var(--espresso);
-  border: 1px solid rgba(45,224,193,0.18);
+  border: .5px solid var(--border-dark);
   border-radius: 12px;
   padding: 20px;
   margin-top: 20px;
   margin-bottom: 6px;
 }
 .pp-title {
-  font-size: 13px;
-  color: var(--text-muted);
+  font-size: 10px;
+  color: var(--gold);
   margin-bottom: 12px;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  font-size: 11px;
+  font-weight: 600;
 }
 .pp-row {
   display: flex;
   justify-content: space-between;
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-dark);
   padding: 5px 0;
-  border-bottom: 1px solid rgba(45,224,193,0.06);
+  border-bottom: .5px solid rgba(200,151,63,.08);
 }
 .pp-row:last-child { border-bottom: none; }
 .pp-row.total {
   color: var(--cream);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 16px;
   padding-top: 10px;
 }
 .pp-row span:last-child { color: var(--gold); }
 .pp-disclaimer {
   font-size: 11px;
-  color: var(--text-faint);
+  color: var(--text-muted);
   margin-top: 10px;
   line-height: 1.5;
 }
 
 /* ── Delivery section ── */
 .delivery-section {
-  background: var(--espresso);
-  border: 1px solid rgba(45,224,193,0.1);
+  background: #F9F7F4;
+  border: 1px solid #e8e4dc;
   border-radius: 12px;
-  padding: 20px;
+  padding: 18px 20px;
   margin-top: 16px;
 }
 .delivery-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--cream);
-  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #111;
+  margin-bottom: 12px;
 }
-.delivery-options { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.delivery-options { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
 .del-opt {
-  flex: 1; min-width: 200px;
-  background: var(--espresso-mid);
-  border: 2px solid rgba(45,224,193,0.1);
+  flex: 1; min-width: 180px;
+  background: #fff;
+  border: 1.5px solid #ddd;
   border-radius: 9px;
-  padding: 14px;
+  padding: 12px 14px;
   cursor: pointer;
   transition: border-color 0.15s;
 }
-.del-opt.selected { border-color: var(--gold); }
-.del-opt h4 { font-size: 13px; font-weight: 600; color: var(--cream); margin-bottom: 4px; }
-.del-opt p { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+.del-opt.selected { border: 2px solid var(--gold); }
+.del-opt h4 { font-size: 13px; font-weight: 600; color: #111; margin-bottom: 3px; }
+.del-opt p { font-size: 11px; color: #666; line-height: 1.4; }
 .tariff-note {
   font-size: 11px;
-  color: var(--text-faint);
+  color: #666;
   background: rgba(200,151,63,0.06);
   border: 1px solid rgba(200,151,63,0.15);
   border-radius: 6px;
   padding: 8px 12px;
-  margin-top: 10px;
+  margin-top: 8px;
   line-height: 1.5;
 }
 
@@ -409,32 +409,33 @@
 /* ── Roman section ── */
 #roman-section {
   display: none;
-  background: var(--espresso-mid);
-  padding: 48px 28px;
+  background: var(--gold-mid);
+  padding: 36px 28px 56px;
 }
-.roman-wrap { max-width: 860px; margin: 0 auto; }
+.roman-wrap { max-width: 900px; margin: 0 auto; }
 .roman-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 18px;
-  margin-top: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
 }
 .roman-card {
-  background: var(--espresso);
-  border: 1px solid rgba(45,224,193,0.1);
-  border-radius: 12px;
-  padding: 24px 20px;
+  background: #fff;
+  border: 1px solid #e8e8e4;
+  border-radius: 14px;
+  padding: 22px 18px;
   display: flex;
   flex-direction: column;
-  transition: border-color 0.18s, transform 0.15s;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
 }
 .roman-card:hover {
-  border-color: rgba(45,224,193,0.35);
+  border-color: var(--gold);
+  box-shadow: 0 4px 20px rgba(200,151,63,.12);
   transform: translateY(-2px);
 }
-.roman-card-icon { font-size: 28px; margin-bottom: 10px; }
-.roman-card h3 { font-size: 15px; font-weight: 600; color: var(--cream); margin-bottom: 6px; }
-.roman-card p { font-size: 12px; color: var(--text-dark); line-height: 1.5; margin-bottom: 16px; flex: 1; }
+.roman-card-icon { font-size: 26px; margin-bottom: 10px; }
+.roman-card h3 { font-size: 14px; font-weight: 600; color: #111; margin-bottom: 6px; }
+.roman-card p { font-size: 12px; color: #666; line-height: 1.55; margin-bottom: 16px; flex: 1; }
 .roman-configure-btn {
   display: inline-flex;
   align-items: center;
@@ -443,7 +444,7 @@
   color: var(--espresso);
   font-size: 13px;
   font-weight: 600;
-  padding: 10px 18px;
+  padding: 9px 16px;
   border-radius: 8px;
   text-decoration: none;
   border: none;
@@ -456,8 +457,8 @@
   display: inline-block;
   font-size: 10px;
   color: var(--gold);
-  background: rgba(45,224,193,0.08);
-  border: 1px solid rgba(45,224,193,0.18);
+  background: rgba(200,151,63,.08);
+  border: 1px solid rgba(200,151,63,.2);
   border-radius: 10px;
   padding: 2px 8px;
   margin-bottom: 10px;
@@ -465,31 +466,39 @@
 </style>
 </head>
 <body>
-<div id="nav-root"></div>
+<nav class="site-nav" id="site-nav"></nav>
 
 <!-- ── HERO ── -->
-<div class="ww-hero">
-  <div class="ww-hero-pill">Natural Woven Collection</div>
-  <h1>Woven Wood Shades</h1>
-  <p>Natural bamboo, jute, flax, and reed &mdash; as roller shades or roman shades. Six premium collections. Configure yours instantly below.</p>
+<div class="page-hero" style="background:var(--espresso);padding:44px 28px 40px">
+  <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <a href="shades.html">Shades &amp; Blinds</a> &rsaquo; Woven Wood Shades</div>
+  <h1 style="font-size:32px;font-weight:500;color:var(--cream);letter-spacing:-.5px;margin-bottom:10px;line-height:1.2">Woven Wood Shades</h1>
+  <p style="font-size:14px;color:var(--text-dark);line-height:1.7;max-width:520px;margin-bottom:20px">Natural bamboo, jute, flax, and reed — as roller shades or roman shades. Six premium collections. Instant pricing available.</p>
+  <div class="hero-badges">
+    <span class="badge badge-instant" style="font-size:11px">Instant pricing</span>
+    <span style="font-size:11px;padding:3px 10px;border-radius:6px;border:.5px solid var(--border-dark);color:var(--text-faint)">6 collections</span>
+    <span style="font-size:11px;padding:3px 10px;border-radius:6px;border:.5px solid var(--border-dark);color:var(--text-faint)">Roller &amp; Roman styles</span>
+    <span style="font-size:11px;padding:3px 10px;border-radius:6px;border:.5px solid var(--border-dark);color:var(--text-faint)">Custom fabricated</span>
+  </div>
 </div>
 
 <!-- ── CHOICE SECTION ── -->
-<div id="choice-section">
-  <div class="choice-title">Step 1</div>
-  <div class="choice-subtitle">Which style do you need?</div>
-  <div class="choice-grid">
-    <div class="choice-card" onclick="showRoller()">
-      <span class="choice-icon">&#x1F4DC;</span>
-      <h3>Roller Shade</h3>
-      <p>Clean roll-up operation. Natural woven fabric on a roller mechanism. Instant pricing from the Portfolio Natural Woven Rollers collection.</p>
-      <button class="choice-btn">Configure Roller &rarr;</button>
-    </div>
-    <div class="choice-card" onclick="showRoman()">
-      <span class="choice-icon">&#x1F3E0;</span>
-      <h3>Roman Shade</h3>
-      <p>Classic fold-up style. Five premium woven collections to choose from &mdash; Dynasty, Galaxy, Portfolio, Walden Premier, and Walden Select.</p>
-      <button class="choice-btn">Choose Collection &rarr;</button>
+<div id="choice-section" style="background:#fff;padding:36px 28px 40px;border-bottom:1px solid #e8e8e4">
+  <div style="max-width:760px;margin:0 auto">
+    <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:6px">Step 1</div>
+    <div style="font-size:20px;font-weight:500;color:#111;letter-spacing:-.3px;margin-bottom:20px">Which style do you need?</div>
+    <div class="choice-grid">
+      <div class="choice-card" onclick="showRoller()" id="choice-roller">
+        <div class="choice-icon">📜</div>
+        <div class="choice-title">Roller Shade</div>
+        <div class="choice-desc">Clean roll-up operation. Natural woven fabric on a roller — instant pricing from the Portfolio Natural Woven Rollers collection.</div>
+        <div class="choice-tag">Portfolio Woven Rollers &middot; Instant price</div>
+      </div>
+      <div class="choice-card" onclick="showRoman()" id="choice-roman">
+        <div class="choice-icon">🏠</div>
+        <div class="choice-title">Roman Shade</div>
+        <div class="choice-desc">Classic fold-up style. Five premium woven collections — Dynasty, Galaxy, Portfolio, Walden Premier, and Walden Select.</div>
+        <div class="choice-tag">5 collections &middot; Custom quote</div>
+      </div>
     </div>
   </div>
 </div>
@@ -853,8 +862,9 @@
 <div id="roman-section">
   <div class="roman-wrap">
     <button class="back-btn" onclick="showChoice()">&#8592; Back to style choice</button>
-    <div class="cfg-section-title">Roman Shade Collections</div>
-    <div class="cfg-section-sub">Five premium woven wood collections. Click a collection to configure and quote.</div>
+    <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:6px">Roman Shade Collections</div>
+    <div style="font-size:22px;font-weight:500;color:#111;letter-spacing:-.3px;margin-bottom:6px">Choose your woven wood collection</div>
+    <div style="font-size:13px;color:#666;margin-bottom:4px">Five premium collections. Click a collection to configure and get an instant or custom quote.</div>
 
     <div class="roman-grid">
 
@@ -907,7 +917,7 @@
   </div>
 </div>
 
-<div id="footer-root"></div>
+<footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script>
 renderNav('Woven Wood Shades');
