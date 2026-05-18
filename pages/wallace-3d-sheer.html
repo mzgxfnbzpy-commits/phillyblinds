@@ -962,7 +962,12 @@ function updateSpec(){
   const spPrice=document.getElementById('sp-price');
   const spBreak=document.getElementById('sp-price-breakdown');
   if(pr&&spPrice){
-    spPrice.textContent='~
+    spPrice.textContent='~$'+Math.round(pr.per).toLocaleString()+'/shade';
+    if(spBreak) spBreak.textContent='Base $'+pr.base+(pr.per>pr.base?' + surcharges $'+(pr.per-pr.base):'')+(pr.qty>1?' | '+pr.qty+' shades, total ~$'+Math.round(pr.total).toLocaleString():'');
+  } else if(spPrice){
+    spPrice.textContent='--';
+    if(spBreak) spBreak.textContent='';
+  }
 
   // Seam warning
   const raw=document.getElementById('f-sub-widths').value.trim();
@@ -1042,7 +1047,8 @@ function submitQuote(){
     '',
     'ESTIMATED PRICE (MSRP — confirmed at order):',
     (()=>{const pr=calcPrice();if(!pr)return 'Not calculated';
-      return 'Base: 
+      return 'Base: $'+pr.base+' (Group '+(coll?coll.group:'?')+') + surcharges $'+(pr.per-pr.base)+' = $'+pr.per+'/shade | '+pr.qty+' shade'+(pr.qty>1?'s':'')+' total: ~$'+Math.round(pr.total).toLocaleString();
+    })(),
   ].filter(l=>l!==null&&l!==undefined&&l!=='');
 
   window.location.href='mailto:blindznation@gmail.com?subject='+encodeURIComponent('Wallace 3D Sheer Quote — '+name)+'&body='+encodeURIComponent(lines.join('\n'));
