@@ -38,13 +38,20 @@
 .opt-card-desc{font-size:11px;color:#666;line-height:1.45}
 .opt-card.disabled{opacity:.35;cursor:not-allowed;pointer-events:none}
 /* Pattern grid */
-.pattern-search{width:100%;padding:9px 12px;border:1px solid #ddd;border-radius:8px;font-size:13px;font-family:var(--font);margin-bottom:8px;box-sizing:border-box}
-.pattern-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;max-height:340px;overflow-y:auto}
-.pattern-card{border:1.5px solid #e8e8e4;border-radius:9px;padding:10px 12px;cursor:pointer;transition:all .15s;background:#fff}
+.pg-filter-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;margin-top:8px}
+.pgf-btn{padding:5px 13px;border-radius:20px;border:1px solid #ddd;background:#fff;color:#555;font-size:12px;cursor:pointer;transition:all .15s;font-family:inherit}
+.pgf-btn:hover,.pgf-btn.active{background:var(--gold);color:var(--espresso);border-color:var(--gold);font-weight:600}
+.type-filter-row{display:flex;gap:6px;margin-bottom:14px}
+.typef-btn{padding:5px 14px;border-radius:20px;border:1px solid #ddd;background:#fff;color:#555;font-size:12px;cursor:pointer;transition:all .15s;font-family:inherit}
+.typef-btn:hover,.typef-btn.active{background:var(--espresso);color:var(--gold);border-color:var(--espresso);font-weight:600}
+.pattern-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.pattern-grid-header{grid-column:1/-1;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#888;margin:10px 0 4px;display:flex;align-items:center;gap:8px}
+.pattern-grid-header span{font-size:9px;padding:1px 6px;border-radius:4px;background:#f0ece4;color:#777;font-weight:500}
+.pattern-card{border:1.5px solid #e8e8e4;border-radius:9px;padding:11px 12px;cursor:pointer;transition:all .15s;background:#fff}
 .pattern-card:hover{border-color:var(--gold)}
 .pattern-card.sel{border:2px solid var(--gold);background:rgba(200,151,63,.06)}
 .pattern-card.hidden{display:none}
-.pattern-name{font-size:12px;font-weight:600;color:#111;margin-bottom:3px}
+.pattern-name{font-size:13px;font-weight:500;color:#111;margin-bottom:3px}
 .pattern-meta{font-size:10px;color:#888;line-height:1.4}
 .pg-badge{display:inline-block;font-size:9px;padding:1px 5px;border-radius:4px;background:#f0ece4;color:#555;font-weight:600;margin-right:3px}
 .type-badge-pvc{display:inline-block;font-size:9px;padding:1px 5px;border-radius:4px;background:#e0f0ff;color:#1a4a7f;font-weight:600}
@@ -137,7 +144,22 @@
     <div class="step-head-val" id="s1val">—</div>
   </div>
   <div class="step-body">
-    <input class="pattern-search" type="text" id="pattern-search" placeholder="Search patterns…" oninput="filterPatterns(this.value)">
+    <div class="type-filter-row" id="grp-type-filter">
+      <button class="typef-btn active" onclick="setTypeFilter('all',this)">All</button>
+      <button class="typef-btn" onclick="setTypeFilter('pvc',this)">PVC</button>
+      <button class="typef-btn" onclick="setTypeFilter('fhcp',this)">Fabric</button>
+    </div>
+    <div class="pg-filter-row" id="grp-pg-filter">
+      <button class="pgf-btn active" onclick="setPgFilter('all',this)">All Groups</button>
+      <button class="pgf-btn" onclick="setPgFilter(0,this)">Standard</button>
+      <button class="pgf-btn" onclick="setPgFilter(1,this)">Group 1</button>
+      <button class="pgf-btn" onclick="setPgFilter(2,this)">Group 2</button>
+      <button class="pgf-btn" onclick="setPgFilter(3,this)">Group 3</button>
+      <button class="pgf-btn" onclick="setPgFilter(4,this)">Group 4</button>
+      <button class="pgf-btn" onclick="setPgFilter(5,this)">Group 5</button>
+      <button class="pgf-btn" onclick="setPgFilter(6,this)">Group 6</button>
+      <button class="pgf-btn" onclick="setPgFilter(7,this)">Group 7</button>
+    </div>
     <div class="pattern-grid" id="pattern-grid"><!-- filled by JS --></div>
   </div>
 </div>
@@ -528,26 +550,71 @@ const S = {
   qty:1, del:'ship'
 };
 
-// ── BUILD PATTERN GRID ────────────────────────────────────────────────────
+// ── FILTER STATE ──────────────────────────────────────────────────────────
+let _typeFilter='all', _pgFilter='all';
+
+function setTypeFilter(t,btn){
+  _typeFilter=t;
+  document.querySelectorAll('#grp-type-filter .typef-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  buildPatternGrid();
+}
+function setPgFilter(pg,btn){
+  _pgFilter=pg;
+  document.querySelectorAll('#grp-pg-filter .pgf-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  buildPatternGrid();
+}
+
+// ── BUILD PATTERN GRID (grouped by price group) ───────────────────────────
 function buildPatternGrid(){
   const g=document.getElementById('pattern-grid');
-  g.innerHTML=PATTERNS.map((p,i)=>{
-    const tb=p.type==='pvc'?'type-badge-pvc':p.type==='fh'?'type-badge-fh':'type-badge-fhcp';
-    const tl=p.type==='pvc'?'PVC':p.type==='fh'?'Fabric FH':'Fabric FH/CP';
-    return `<div class="pattern-card" data-name="${p.name.toLowerCase()}" onclick="pickPattern(${i})">
-      <div class="pattern-name">${p.name}</div>
-      <div class="pattern-meta"><span class="pg-badge">Group ${p.pg}</span><span class="${tb}">${tl}</span>${p.notes?'<br><span style="color:#aaa;font-size:9px">'+p.notes+'</span>':''}</div>
-    </div>`;
-  }).join('');
+  // filter first
+  const visible=PATTERNS.map((p,i)=>({...p,idx:i})).filter(p=>{
+    if(_typeFilter!=='all'&&p.type!==_typeFilter)return false;
+    if(_pgFilter!=='all'&&p.pg!==_pgFilter)return false;
+    return true;
+  });
+  if(!visible.length){g.innerHTML='<div style="grid-column:1/-1;font-size:13px;color:#999;padding:12px 0">No patterns match the selected filters.</div>';return;}
+
+  // group by pg
+  const groups={};
+  visible.forEach(p=>{
+    if(!groups[p.pg])groups[p.pg]=[];
+    groups[p.pg].push(p);
+  });
+
+  const pgLabel=pg=>pg===0?'Standard — Group 0':'Price Group '+pg;
+  const typeCount=pg=>{
+    const arr=groups[pg];
+    const pvc=arr.filter(p=>p.type==='pvc').length;
+    const fab=arr.filter(p=>p.type==='fhcp'||p.type==='fh').length;
+    const parts=[];
+    if(pvc)parts.push(pvc+' PVC');
+    if(fab)parts.push(fab+' Fabric');
+    return parts.join(' · ');
+  };
+
+  let html='';
+  Object.keys(groups).sort((a,b)=>+a-+b).forEach(pg=>{
+    html+=`<div class="pattern-grid-header">${pgLabel(+pg)}<span>${typeCount(+pg)}</span></div>`;
+    groups[pg].forEach(p=>{
+      const tb=p.type==='pvc'?'type-badge-pvc':p.type==='fh'?'type-badge-fh':'type-badge-fhcp';
+      const tl=p.type==='pvc'?'PVC':p.type==='fh'?'Fabric':'Fabric';
+      html+=`<div class="pattern-card" data-idx="${p.idx}" onclick="pickPattern(${p.idx})">
+        <div class="pattern-name">${p.name}</div>
+        <div class="pattern-meta"><span class="${tb}">${tl}</span>${p.notes?'<br><span style="color:#aaa;font-size:9px">'+p.notes+'</span>':''}</div>
+      </div>`;
+    });
+  });
+  g.innerHTML=html;
+  // re-apply selected state
+  if(S.patternIdx!==null){
+    const sel=g.querySelector(`[data-idx="${S.patternIdx}"]`);
+    if(sel)sel.classList.add('sel');
+  }
 }
 buildPatternGrid();
-
-function filterPatterns(q){
-  q=q.toLowerCase().trim();
-  document.querySelectorAll('.pattern-card').forEach((c,i)=>{
-    c.classList.toggle('hidden',!!q&&!c.dataset.name.includes(q));
-  });
-}
 
 // ── STEP UTILS ─────────────────────────────────────────────────────────────
 function toggleStep(id){document.getElementById(id).classList.toggle('open');}
