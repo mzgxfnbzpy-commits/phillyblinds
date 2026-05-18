@@ -140,7 +140,7 @@ let currentList=[];let currentIdx=0;let currentType='photo';
 
 function buildPhotoGrid(containerId, files, imgPath){
   const g=document.getElementById(containerId);
-  g.innerHTML=files.map((f,i)=>`<div class="pcard" onclick="openPhoto(${i},'${containerId}')"><div class="pthumb"><img src="${imgPath}${f}" loading="lazy" alt=""></div></div>`).join('');
+  g.innerHTML=files.map((f,i)=>`<div class="pcard" data-idx="${i}" data-grid="${containerId}" onclick="openPhoto(${i},'${containerId}')"><div class="pthumb"><img src="${imgPath}${f}" loading="lazy" alt="" onerror="this.closest('.pcard').remove()"></div></div>`).join('');
 }
 
 function buildVideoGrid(){
