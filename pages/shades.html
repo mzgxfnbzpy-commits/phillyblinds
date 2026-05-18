@@ -381,7 +381,7 @@
           </div>
         </div>
 
-        <div class="product-card" onclick="window.location='wallace-banded-shades.html'">
+        <a class="product-card" href="portfolio-dual-sheer.html">
           <div class="product-img-photo" style="background:linear-gradient(135deg,#d4d0cc 0%,#eae6e0 50%,#b8b4b0 100%);display:flex;align-items:center;justify-content:center;padding:16px">
             <div style="display:flex;flex-direction:column;gap:4px;width:64px">
               <div style="height:4px;background:rgba(255,255,255,.9);border-radius:2px"></div>
@@ -395,9 +395,9 @@
           <div class="product-body">
             <div class="product-name">Portfolio Dual Sheer Shades</div>
             <div class="product-sub">Wallace · 95+ fabrics · LF &amp; RD · Bands 3"–4¾"</div>
-            <span class="badge badge-quote">Configure &amp; quote</span>
+            <span class="badge badge-instant">Full configurator</span>
           </div>
-        </div>
+        </a>
 
         <div class="product-card" onclick="window.location='wallace-3d-sheer.html'">
           <div class="product-img-photo" style="background:linear-gradient(135deg,#e8e4f0 0%,#f4f2f8 50%,#d0cce0 100%);display:flex;align-items:center;justify-content:center;padding:16px">
@@ -5806,6 +5806,21 @@ function submitPSForm() {
 
   document.getElementById('ps-success').style.display = 'block';
 }
+
+// ── AUTO-SELECT FROM URL PARAM ────────────────────────────────────────────────
+(function(){
+  var params=new URLSearchParams(window.location.search);
+  var t=params.get('type');
+  if(!t)return;
+  var map={
+    roller:function(){selectProduct('roller','Roller Shades',true);},
+    cellular:function(){selectProduct('cellular','Cellular Shades',true);},
+    zebra:function(){window.location.replace('wallace-banded-shades.html');},
+    woven:function(){selectProduct('woven','Woven Wood Shades',true);},
+    exterior:function(){selectProduct('exterior','Exterior Roller Shades',false);}
+  };
+  if(map[t]) setTimeout(map[t],120);
+})();
 </script>
 </body>
 </html>

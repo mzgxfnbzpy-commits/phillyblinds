@@ -178,7 +178,7 @@ function renderFooter(isHome) {
       </div>
       <div class="footer-col">
         <h4>Shades</h4>
-        <a href="${pre}shades.html">Roller shades</a>
+        <a href="${pre}shades.html?type=roller">Roller shades</a>
         <a href="${pre}shades.html">Cellular shades</a>
         <a href="${pre}shades.html">Zebra shades</a>
         <a href="${pre}shades.html">Woven wood</a>
