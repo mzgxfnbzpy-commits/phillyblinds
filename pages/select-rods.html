@@ -227,15 +227,18 @@
       </div>
     </div>
 
-    <!-- Rings per panel -->
+    <!-- Rings total -->
     <div id="ring-qty-wrap" style="margin-bottom:22px">
-      <div style="font-size:13px;font-weight:600;color:#222;margin-bottom:8px">Rings per panel</div>
-      <div class="opt-row" id="grp-ring-qty">
-        <button class="opt-btn" onclick="selOpt(this,'grp-ring-qty');sUpdate()">7 rings <span style="font-size:10px;color:#888">under 48"</span></button>
-        <button class="opt-btn sel" onclick="selOpt(this,'grp-ring-qty');sUpdate()">9 rings <span style="font-size:10px;color:#888">48"–72"</span></button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-ring-qty');sUpdate()">11 rings <span style="font-size:10px;color:#888">72"–96"</span></button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-ring-qty');sUpdate()">Custom — specify in notes</button>
+      <div style="font-size:13px;font-weight:600;color:#222;margin-bottom:4px">Total rings</div>
+      <div style="font-size:12px;color:#666;margin-bottom:10px">We estimate 5 rings per 15" of panel width. Enter your panel width and we'll calculate, or type a custom quantity.</div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <input type="number" id="ring-qty-input" min="1" max="99" placeholder="Total rings"
+          style="width:120px;padding:9px 12px;border:1.5px solid #d8d8d4;border-radius:8px;font-size:15px;font-weight:600;color:#111;font-family:inherit;text-align:center"
+          oninput="ringQtyChanged(this)">
+        <span id="ring-qty-estimate" style="font-size:12px;color:#888;line-height:1.4"></span>
       </div>
+      <!-- hidden field so getOpt('grp-ring-qty') still works -->
+      <div id="grp-ring-qty" style="display:none"></div>
     </div>
 
     <!-- Bracket style -->
@@ -815,13 +818,44 @@ function toggleRingQty(show){
   if(w) w.style.display=show?'':'none';
 }
 
+function ringQtyChanged(inp){
+  var qty = parseInt(inp.value)||0;
+  var est = document.getElementById('ring-qty-estimate');
+  if(qty > 0 && est){
+    // reverse-estimate what panel width this implies
+    var impliedWidth = Math.round(qty * 15 / 5);
+    est.textContent = '≈ ' + qty + ' rings for a ~' + impliedWidth + '" wide panel';
+    inp.style.borderColor = 'var(--gold,#C8973F)';
+  } else if(est){
+    est.textContent = '';
+    inp.style.borderColor = '#d8d8d4';
+  }
+  sUpdate();
+}
+
+// Auto-estimate rings from panel width if user already entered width
+function estimateRingsFromWidth(){
+  var widthSel = getOpt('grp-stat-width');
+  var inp = document.getElementById('ring-qty-input');
+  if(!inp || inp.value) return; // don't overwrite manual entry
+  // parse first number from width string like "48" or "48"–72""
+  var m = widthSel && widthSel.match(/(\d+)/);
+  if(m){
+    var w = parseInt(m[1]);
+    var est = Math.round(w / 15 * 5);
+    if(est > 0){ inp.value = est; ringQtyChanged(inp); }
+  }
+}
+
 // ── STATIONARY SUMMARY ────────────────────────────────────────────
 function sUpdate(){
   var width=getOpt('grp-stat-width');
   var shape=getOpt('grp-stat-shape');
   var config=getOpt('grp-stat-config');
   var ring=getOpt('grp-ring-type');
-  var ringQty=getOpt('grp-ring-qty');
+  var ringQtyInp=document.getElementById('ring-qty-input');
+  var ringQtyVal=ringQtyInp?parseInt(ringQtyInp.value)||0:0;
+  var ringQty=ringQtyVal>0?(ringQtyVal+' rings total (est. 5 per 15")'):'';
   var mount=getOpt('grp-stat-mount');
   var baton=getOpt('grp-stat-baton');
   var qty=parseInt(document.getElementById('stat-qty').value)||1;
