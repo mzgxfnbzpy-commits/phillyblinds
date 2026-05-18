@@ -192,8 +192,8 @@
       <div class="b2d-consult-box">
         <span style="font-size:18px;flex-shrink:0;margin-top:1px">&#127968;</span>
         <div>
-          <strong style="color:#111">Prefer to see samples in person?</strong><br>
-          Collections listed as <em>In-home consultation</em> require an appointment to view current samples — we bring everything to your window.
+          <strong style="color:#111">Want to see a sample before ordering?</strong><br>
+          Select any fabric and color above — if you'd like to view a physical sample first, mention it in your quote notes. We bring samples to your window at no charge.
           <a href="consult.html" style="color:var(--gold);font-weight:500;display:inline-block;margin-top:4px">Book a free in-home consultation &rarr;</a>
         </div>
       </div>
@@ -644,20 +644,35 @@ var COLL2D=[
 ];
 
 var COLOR2D_HEX={
-  'Ice White':'#F0EDE8','White':'#F5F2EE','Cloud White':'#F8F8F5',
-  'Ivory':'#F5EED8','Cream':'#EDE0C0','Pearl':'#E8E0D0',
-  'Beige':'#D8C8A0','Sand':'#C8B090','Khaki':'#B8A880','Latte':'#B08060',
-  'Mushroom':'#A09080','Reed':'#A09060','Pastel':'#D8C8B0',
-  'Light Grey':'#C0C0C0','Grey':'#909090','Dark Grey':'#606060',
-  'Charcoal':'#3A3A3A','Anthracite':'#303030','Black':'#1C1C1C',
-  'Black Brown':'#2C1A10','J-3':'#607080','B-1':'#B0B8C0',
-  'Brown':'#6B4423','Chocolate':'#4A2810','Teak':'#7A5230',
+  'Ice White':'#F0EDE8','White':'#F5F2EE','Cloud White':'#F8F8F5','Bright White':'#FAFAFA',
+  'Ivory':'#F5EED8','Cream':'#EDE0C0','Pearl':'#E8E0D0','Eggshell':'#EDE8D8',
+  'Beige':'#D8C8A0','Sand':'#C8B090','Khaki':'#B8A880','Linen':'#E8DCC8',
+  'Latte':'#B08060','Mushroom':'#A09080','Reed':'#A09060','Pastel':'#D8C8B0',
+  'Almond':'#E8DCC0','Natural':'#D0C8A0','Taupe':'#9A8878','Tan':'#C0A870',
+  'Caramel':'#B88040','Canyon':'#A86840','Clay':'#B07850','Ocher':'#C8A840',
+  'Bark':'#806040','Teak':'#7A5230','Walnut':'#7A5838','Brown':'#6B4423',
+  'Chocolate':'#4A2810','Espresso':'#3A2010',
+  'Light Grey':'#C0C0C0','Silver':'#C0C0C8','Storm':'#607080',
+  'Grey':'#909090','Dark Grey':'#606060','Charcoal':'#3A3A3A',
+  'Anthracite':'#303030','Black':'#1C1C1C',
+  'Black Brown':'#2C1A10',
   'Blue Grey':'#7890A8','Stone Blue':'#6080A0','Blue':'#6088C0',
   'Mint':'#90C8B0','Baby Pink':'#E8B8B8','Sky Blue':'#A8D8F0',
-  'Ocher':'#C8A840','Clay':'#B07850',
-  'L-45':'#D0C0A0','White (9-2)':'#F8F5F0','Ivory (7-4)':'#F5EED8',
+  'J-3':'#607080','B-1':'#B0B8C0','L-45':'#D0C0A0',
+  'White (9-2)':'#F8F5F0','Ivory (7-4)':'#F5EED8',
   '2-6':'#808080','3-4':'#A0A0A0'
 };
+
+/* Standard palette shown for patterns that have no specific color list.
+   Covers every color offered across the 2D banded shade range. */
+var DEFAULT_COLORS_2D=[
+  'Ice White','White','Cloud White','Bright White',
+  'Ivory','Cream','Pearl','Eggshell',
+  'Beige','Sand','Khaki','Linen','Mushroom','Almond','Natural','Taupe',
+  'Latte','Caramel','Clay','Ocher','Bark','Canyon',
+  'Teak','Walnut','Brown','Chocolate',
+  'Light Grey','Silver','Storm','Grey','Dark Grey','Charcoal','Anthracite','Black'
+];
 
 var b2dLight='T';
 
@@ -676,34 +691,47 @@ function escQ(s){return (s+'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");}
 
 function render2dGrid(){
   var colls=COLL2D.filter(function(c){return c.l===b2dLight;});
-  var html='';
+  var opLabel=b2dLight==='T'?'Light Filtering':'Room Darkening';
+  var html='';var hasAny=false;
   ['A','B','C','D','E','F'].forEach(function(grp){
-    colls.filter(function(c){return c.g===grp;}).forEach(function(coll){
-      html+='<div class="b2d-pattern-row"><div class="b2d-name-bar">';
-      html+=coll.n;
-      if(coll.note)html+=' <span class="b2d-note-tag">'+coll.note+'</span>';
-      html+='<span class="b2d-grp-badge">Group '+grp+'</span></div>';
-      html+='<div class="b2d-chips">';
-      if(coll.c&&coll.c.length){
-        coll.c.forEach(function(color){
-          var hex=COLOR2D_HEX[color]||'#C8C0B0';
-          var id='b2d-'+encodeURIComponent(coll.n+'-'+color);
-          html+='<button class="b2d-chip" id="'+id+'" onclick="pick2dFabric(\''+escQ(coll.n)+'\',\''+escQ(color)+'\',this)">';
-          html+='<span class="b2d-dot" style="background:'+hex+'"></span>'+color+'</button>';
-        });
-      }else{
-        html+='<button class="b2d-chip" onclick="pick2dFabric(\''+escQ(coll.n)+'\',\'Color confirmed at order\',this)">';
-        html+='<span class="b2d-dot" style="background:#C8B090"></span>Available &mdash; note color in quote</button>';
-      }
-      html+='</div></div>';
+    var grpColls=colls.filter(function(c){return c.g===grp;});
+    if(!grpColls.length)return;
+    hasAny=true;
+    html+='<div class="coll-head">Price Group '+grp+
+      ' <span class="coll-badge'+(b2dLight==='RD'?' coll-badge-rd':'')+'">'
+      +opLabel+'</span></div>';
+    html+='<div class="fabric-grid" style="margin-bottom:16px">';
+    grpColls.forEach(function(coll){
+      var colors=(coll.c&&coll.c.length)?coll.c:DEFAULT_COLORS_2D;
+      /* pattern header row */
+      html+='<div style="grid-column:1/-1;display:flex;align-items:center;gap:8px;margin-top:8px;margin-bottom:3px">';
+      html+='<span style="font-size:12px;font-weight:600;color:#333">'+coll.n+'</span>';
+      if(coll.note)html+='<span class="b2d-note-tag">'+coll.note+'</span>';
+      html+='</div>';
+      /* color swatches */
+      colors.forEach(function(color){
+        var hex=COLOR2D_HEX[color]||'#C8C0B0';
+        var id='b2d-'+encodeURIComponent(coll.n+'-'+color);
+        html+='<div class="swatch" id="'+id+'" onclick="pick2dFabric(\''+escQ(coll.n)+'\',\''+escQ(color)+'\',this)">';
+        html+='<div class="swatch-color" style="background:'+hex+'"></div>';
+        html+='<div class="swatch-label">';
+        html+='<div class="swatch-name">'+color+'</div>';
+        html+='<div class="swatch-code">'+coll.n+'</div>';
+        html+='</div></div>';
+      });
+      /* other/custom color always at end */
+      html+='<div class="swatch" onclick="pick2dFabric(\''+escQ(coll.n)+'\',\'Other — note color below\',this)" style="border-style:dashed">';
+      html+='<div class="swatch-color" style="background:linear-gradient(135deg,#f0ece4 50%,#e0d8cc 50%)"></div>';
+      html+='<div class="swatch-label"><div class="swatch-name" style="color:#888">Other color</div></div></div>';
     });
+    html+='</div>';
   });
   var el=document.getElementById('b2d-grid');
-  if(el)el.innerHTML=html||'<div class="info-box">No collections in this category.</div>';
+  if(el)el.innerHTML=hasAny?html:'<div class="info-box">No collections in this category.</div>';
 }
 
 function pick2dFabric(collName,colorName,btn){
-  document.querySelectorAll('.b2d-chip').forEach(function(b){b.classList.remove('sel');});
+  document.querySelectorAll('#b2d-grid .swatch').forEach(function(b){b.classList.remove('sel');});
   if(btn)btn.classList.add('sel');
   var label=collName+' — '+colorName;
   S.fabric={name:label,type:'2d'};
