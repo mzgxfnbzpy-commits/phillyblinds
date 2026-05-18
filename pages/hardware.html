@@ -71,6 +71,14 @@
 .drape-crosssell-text{font-size:13px;color:var(--cream)}
 .drape-crosssell-text strong{color:var(--gold)}
 
+/* ── QTY CONTROLS ── */
+.qty-btns{display:flex;align-items:center;gap:0;border:1px solid #ddd;border-radius:8px;overflow:hidden;width:fit-content}
+.qty-btn{width:36px;height:36px;border:none;background:#f5f5f3;color:#333;font-size:18px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .12s;flex-shrink:0}
+.qty-btn:hover{background:#e8e4de}
+.qty-num{width:52px;height:36px;border:none;border-left:1px solid #ddd;border-right:1px solid #ddd;text-align:center;font-size:15px;font-weight:600;color:#1a1a1a;font-family:var(--font);-moz-appearance:textfield}
+.qty-num::-webkit-inner-spin-button,.qty-num::-webkit-outer-spin-button{-webkit-appearance:none}
+/* ── TOOLTIP NOTE ── */
+.tooltip-note{font-size:11px;color:#666;line-height:1.6;background:#fafaf8;border:1px solid #e8e4de;border-radius:8px;padding:8px 12px}
 /* ── SUCCESS ── */
 .success-box{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:10px;padding:20px;color:#2e7d32;font-size:14px;line-height:1.7;display:none}
 </style>
@@ -697,7 +705,8 @@ function kfSetType(type, el) {
   var mountGroup = document.getElementById('kf-mount-group');
   if (mountGroup) mountGroup.style.display = type === 'traverse' ? 'none' : '';
   kfUpdate();
-  hwReveal('sec-quote');
+  // Traverse: wait until user enters a width before showing the quote form (archCalc reveals it)
+  if (type !== 'traverse') hwReveal('sec-quote');
   setTimeout(function() {
     var s = document.getElementById('kf-step2');
     if (s) { var nav = document.getElementById('site-nav'); var off = nav ? nav.offsetHeight + 12 : 86; window.scrollTo({ top: s.getBoundingClientRect().top + window.scrollY - off, behavior: 'smooth' }); }
@@ -710,18 +719,9 @@ function kfUpdate() {
   var lines = [];
 
   if (kfType === 'traverse') {
-    var tracks = (document.querySelector('#grp-kf-tracks .opt-btn.sel') || {}).textContent || '—';
-    var draw   = (document.querySelector('#grp-kf-draw .opt-btn.sel') || {}).textContent || '—';
-    var width  = (document.querySelector('#grp-kf-trav-width .opt-btn.sel') || {}).textContent || '—';
-    lines = [
-      {l:'System', v:'Kirsch Superfine® Pro Traverse'},
-      {l:'Configuration', v:tracks},
-      {l:'Draw type', v:draw},
-      {l:'Width range', v:width},
-      {l:'Mount', v:mount},
-      {l:'Quantity', v:qty + ' rod(s)'},
-      {l:'Finish', v:'White · Safety tensioner included'}
-    ];
+    // Traverse uses the Architrac sub-configurator — its own summary (archCalc) handles the spec
+    // panel and email. Do not duplicate here.
+    return;
   } else if (kfType === 'lockseam') {
     var config = (document.querySelector('#grp-kf-rconfig .opt-btn.sel') || {}).textContent || '—';
     var diam   = (document.querySelector('#grp-kf-diam .opt-btn.sel') || {}).textContent || '—';
@@ -773,13 +773,15 @@ function kfUpdate() {
 }
 
 function kfGetSummary() {
+  if (kfType === 'traverse') {
+    // Architrac configurator — use its dedicated summary only
+    return (window._archSummary || []).join('\n');
+  }
   var lines = [];
   document.querySelectorAll('#kf-summary-lines > div').forEach(function(d) {
     var spans = d.querySelectorAll('span');
     if (spans.length >= 2) lines.push(spans[0].textContent + ': ' + spans[1].textContent);
   });
-  // Also grab Architrac summary if traverse
-  if (window._archSummary) lines = lines.concat(window._archSummary);
   return lines.join('\n');
 }
 
@@ -834,6 +836,7 @@ function archCalc() {
   var acc = document.getElementById('arch-accessories');
   if (!w) { if (acc) acc.style.display = 'none'; return; }
   if (acc) acc.style.display = 'block';
+  hwReveal('sec-quote');
 
   // Brackets: 1 per foot (every 12") + 2 extra
   var feetBrackets = Math.ceil(w / 12);
