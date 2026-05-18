@@ -572,7 +572,6 @@ function setV(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
 
 // ── STEP 1 ────────────────────────────────────────────────────────────────────
 function setProd(p,el){
-  if(p==='dual'){window.location.href='portfolio-dual-sheer.html';return;}
   S.prod=p;
   document.querySelectorAll('#step1 .product-card').forEach(function(c){c.classList.remove('sel');});
   el.classList.add('sel');
@@ -585,6 +584,7 @@ function setProd(p,el){
   document.getElementById('ctrl-2d').style.display=p==='2d'?'':'none';
   document.getElementById('step5-dual').style.display=p==='dual'?'':'none';
   document.getElementById('step5-2d').style.display=p==='2d'?'':'none';
+  document.getElementById('opts-2d').style.display=p==='2d'?'':'none';
   document.getElementById('s2title').textContent=p==='dual'?'Fabric':'Fabric Preferences';
   spv('sp-prod',p==='dual'?'Portfolio Dual Sheer':'Banded 2D Shades');
   if(p==='2d'){render2dGrid();}
