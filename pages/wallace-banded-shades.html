@@ -100,6 +100,19 @@
 .submit-btn:hover{background:#2c221a}
 .success-box{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:12px;padding:24px;color:#2e7d32;font-size:14px;line-height:1.8;display:none;text-align:center}
 .success-box h3{font-size:20px;margin-bottom:8px}
+/* ── Banded 2D fabric picker ── */
+.b2d-pattern-row{margin-bottom:12px}
+.b2d-name-bar{background:#f7f4ef;padding:8px 14px;font-size:12px;font-weight:600;color:#444;border-radius:8px 8px 0 0;display:flex;align-items:center;justify-content:space-between;border:1px solid #e8e4de;gap:8px}
+.b2d-grp-badge{font-size:10px;font-weight:600;background:var(--espresso);color:var(--gold);border-radius:5px;padding:2px 7px;flex-shrink:0}
+.b2d-note-tag{font-size:10px;color:#aaa;font-weight:400;font-style:italic}
+.b2d-chips{display:flex;flex-wrap:wrap;gap:6px;padding:10px 14px;background:#fff;border:1px solid #e8e4de;border-top:none;border-radius:0 0 8px 8px}
+.b2d-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1.5px solid #e0e0db;border-radius:8px;padding:5px 10px;font-size:12px;font-weight:500;color:#333;cursor:pointer;transition:border-color .12s;font-family:inherit;white-space:nowrap}
+.b2d-chip:hover{border-color:var(--gold)}
+.b2d-chip.sel{border:2px solid var(--gold);background:#fef9ef;color:var(--espresso)}
+.b2d-chip.consult{border-style:dashed;border-color:#bbb;color:#999;font-style:italic}
+.b2d-chip.consult:hover{border-color:var(--gold);color:#555;font-style:normal}
+.b2d-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;border:1px solid rgba(0,0,0,.12)}
+.b2d-consult-box{background:#f7f4ef;border:1px solid #d4c8b0;border-radius:10px;padding:14px 18px;margin-top:18px;display:flex;gap:12px;align-items:flex-start;font-size:12px;color:#555;line-height:1.6}
 </style>
 </head>
 <body>
@@ -108,13 +121,12 @@
 <div class="page-hero">
   <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <a href="shades.html">Shades &amp; Blinds</a> &rsaquo; Zebra &amp; Banded Shades</div>
   <h1>Wallace Zebra &amp; Banded Shades</h1>
-  <p class="sub">Dual-fabric alternating bands &mdash; sheer when open for light and view, solid when closed for privacy. Two collections: Portfolio Dual Sheer and Banded 2D. Instant pricing on all options.</p>
+  <p class="sub">Dual-fabric alternating bands &mdash; sheer when open for light and view, solid when closed for privacy. Choose below: <strong>Portfolio Dual Sheer</strong> (full online configurator with live pricing) or <strong>Banded 2D</strong> (custom quote).</p>
   <div class="hero-pills">
     <span class="hero-pill hero-pill-gold">Wallace&reg;</span>
-    <span class="hero-pill">Portfolio Dual Sheer</span>
-    <span class="hero-pill">Banded 2D</span>
+    <span class="hero-pill">Banded 2D &mdash; custom quote</span>
+    <span class="hero-pill">Portfolio Dual Sheer &mdash; instant pricing</span>
     <span class="hero-pill">Cordless &middot; Pro Wand &middot; Motorized</span>
-    <span class="hero-pill">Instant Estimate</span>
     <span class="hero-pill">Lifetime Warranty</span>
   </div>
 </div>
@@ -134,9 +146,9 @@
   <div class="step-body">
     <div class="product-grid">
       <div class="product-card" id="prod-dual" onclick="setProd('dual',this)">
-        <h3>Portfolio Dual Sheer</h3>
-        <p>Classic zebra/dual-sheer. Horizontal bands open for light, close for privacy. 5 price groups, 80+ colors, up to 110&Prime; wide. Light filtering and room darkening fabrics.</p>
-        <span class="product-badge">Instant price estimate</span>
+        <h3>Portfolio Dual Sheer <span style="font-size:10px;font-weight:500;color:var(--gold);margin-left:6px">Full configurator →</span></h3>
+        <p>Classic zebra/dual-sheer. Horizontal bands open for light, close for privacy. 5 price groups, 95 fabrics, up to 110&Prime; wide. Light filtering and room darkening. Live pricing estimate.</p>
+        <span class="product-badge" style="background:rgba(200,151,63,.15);color:#7a5020">Opens full configurator →</span>
       </div>
       <div class="product-card" id="prod-2d" onclick="setProd('2d',this)">
         <h3>Banded 2D Shades</h3>
