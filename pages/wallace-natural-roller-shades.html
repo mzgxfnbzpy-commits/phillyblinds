@@ -28,8 +28,7 @@
 .step-block.done .step-num-circle{background:var(--gold);color:var(--espresso)}
 .step-head-title{font-size:14px;font-weight:500;color:#111;flex:1}
 .step-head-val{font-size:12px;color:var(--gold);font-weight:500;text-align:right}
-.step-body{padding:0 20px 20px;display:none}
-.step-block.active .step-body,.step-block.open .step-body{display:block}
+.step-body{padding:0 20px 20px;display:block}
 
 /* Big type-selector cards */
 .type-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}
@@ -1085,7 +1084,8 @@ function selectDelivery(mode) {
 // STEP HELPERS
 // ═══════════════════════════════════════════════════════════════
 function activateStep(id) { document.getElementById(id).classList.add('active','open'); }
-function toggleStep(id) { document.getElementById(id).classList.toggle('open'); }
+function toggleStep(id){const el=document.getElementById(id);el.classList.add('active');setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),60);}
+function openStep(id){const el=document.getElementById(id);el.classList.add('active');setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),80);}
 function completeStep(id, val) {
   var el = document.getElementById(id);
   el.classList.add('done'); el.classList.remove('active');

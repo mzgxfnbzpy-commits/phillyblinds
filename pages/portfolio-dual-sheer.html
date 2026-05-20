@@ -18,11 +18,11 @@
 
 /* STEP CARDS */
 .cfg-wrap{max-width:860px;margin:0 auto;padding:32px 20px 60px}
-.step-card{background:#fff;border:1px solid #e8e8e4;border-radius:14px;padding:22px 24px;margin-bottom:16px;display:none}
-.step-card.active{display:block}
-.step-card.done{display:block;opacity:0.6}
-.step-card.done .step-body{display:none}
-.step-card.done .step-done-row{display:flex}
+.step-card{background:#fff;border:1px solid #e8e8e4;border-radius:14px;padding:22px 24px;margin-bottom:16px;display:block}
+.step-card.active{border-color:rgba(200,151,63,.35);box-shadow:0 2px 18px rgba(200,151,63,.1)}
+.step-card.done{border-color:#e8e8e4}
+.step-card.done .step-body{display:block}
+.step-card.done .step-done-row{display:none}
 .step-done-row{display:none;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .step-done-val{font-size:13px;color:#444;font-weight:500}
 .step-edit-btn{font-size:11px;color:var(--gold);background:none;border:none;cursor:pointer;font-family:var(--font);padding:0;text-decoration:underline}

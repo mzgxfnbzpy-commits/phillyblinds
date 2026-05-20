@@ -24,8 +24,7 @@
 .step-block.done .step-num{background:var(--gold);color:var(--espresso)}
 .step-head-title{font-size:14px;font-weight:500;color:#111;flex:1}
 .step-head-val{font-size:12px;color:var(--gold);font-weight:500;max-width:200px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.step-body{padding:4px 20px 20px;display:none}
-.step-block.active .step-body,.step-block.open .step-body{display:block}
+.step-body{padding:4px 20px 20px;display:block}
 .opt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:10px}
 .opt-card{background:#fff;border:1.5px solid #e8e8e4;border-radius:10px;padding:13px 11px;cursor:pointer;text-align:center;transition:all .15s}
 .opt-card:hover{border-color:var(--gold)}
@@ -628,15 +627,8 @@ function buildHWColors(suggested){
 }
 
 // ── STEP TOGGLES ──────────────────────────────────────────────────────────
-function toggleStep(id){
-  const b=document.getElementById(id);
-  const isOpen=b.classList.contains('open');
-  b.classList.toggle('open',!isOpen);
-}
-function openStep(id){
-  const b=document.getElementById(id);
-  b.classList.add('active','open');
-}
+function toggleStep(id){const el=document.getElementById(id);el.classList.add('active');setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),60);}
+function openStep(id){const el=document.getElementById(id);el.classList.add('active');setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),80);}
 function markDone(id){document.getElementById(id).classList.add('done');}
 
 // ── STEP 1: COLLECTION ────────────────────────────────────────────────────
