@@ -292,6 +292,15 @@ function pbCloseCart() {
   document.getElementById('pb-cart-overlay').classList.remove('open');
   document.getElementById('pb-cart-drawer').classList.remove('open');
 }
+function _pbEsc(s) {
+  return String(s)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
+}
+
 function _renderCartBody() {
   var cart = pbGetCart();
   var body = document.getElementById('pb-cart-body');
@@ -316,12 +325,12 @@ function _renderCartBody() {
       }
       if (mo.remote === 'Yes') lines.push('Remote: ' + mo.channel + ' × ' + mo.remotes);
       else lines.push('Remote: No');
-      motorHtml = '<div class="pb-ci-motor">⚡ ' + lines.join(' · ') + '</div>';
+      motorHtml = '<div class="pb-ci-motor">⚡ ' + lines.map(_pbEsc).join(' · ') + '</div>';
     }
     return '<div class="pb-ci">' +
-      '<button class="pb-ci-remove" onclick="pbRemoveCartItem(\'' + item.cartId + '\')" aria-label="Remove">×</button>' +
-      '<div class="pb-ci-name">' + (item.product || 'Item') + (item.qty > 1 ? ' ×' + item.qty : '') + '</div>' +
-      (item.specs ? '<div class="pb-ci-specs">' + item.specs + '</div>' : '') +
+      '<button class="pb-ci-remove" onclick="pbRemoveCartItem(\'' + _pbEsc(item.cartId) + '\')" aria-label="Remove">×</button>' +
+      '<div class="pb-ci-name">' + _pbEsc(item.product || 'Item') + (item.qty > 1 ? ' ×' + item.qty : '') + '</div>' +
+      (item.specs ? '<div class="pb-ci-specs">' + _pbEsc(item.specs) + '</div>' : '') +
       motorHtml +
       '</div>';
   }).join('');
