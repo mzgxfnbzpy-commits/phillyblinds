@@ -574,6 +574,7 @@ function setV(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
 
 // ── STEP 1 ────────────────────────────────────────────────────────────────────
 function setProd(p,el){
+  if(p==='dual'){window.location.href='portfolio-dual-sheer.html';return;}
   S.prod=p;
   document.querySelectorAll('#step1 .product-card').forEach(function(c){c.classList.remove('sel');});
   el.classList.add('sel');

@@ -314,9 +314,21 @@
             <div class="motor-chip">+ motorized</div>
           </div>
           <div class="product-body">
-            <div class="product-name">Zebra &amp; Dual Sheer Shades</div>
-            <div class="product-sub">Wallace · Banded 2D or Portfolio Dual Sheer</div>
+            <div class="product-name">Banded 2D Shades</div>
+            <div class="product-sub">Wallace · Custom quote</div>
             <span class="badge badge-quote">Configure &amp; quote</span>
+          </div>
+        </a>
+
+        <a class="product-card" id="card-portfolio-dual" href="portfolio-dual-sheer.html">
+          <div class="product-img-photo">
+            <img src="../images/thumbnails/ZEBRA SHADES.JPEG" alt="Portfolio Dual Sheer Shades" loading="lazy">
+            <div class="motor-chip">+ motorized</div>
+          </div>
+          <div class="product-body">
+            <div class="product-name">Portfolio Dual Sheer</div>
+            <div class="product-sub">Wallace · 95 fabrics · 5 price groups</div>
+            <span class="badge badge-instant">Full configurator →</span>
           </div>
         </a>
 
@@ -381,7 +393,7 @@
           </div>
         </div>
 
-        <div class="product-card" id="card-woven" onclick="window.location='wallace-woven.html'">
+        <a class="product-card" id="card-woven" href="soft-treatments.html?tab=woven">
           <div class="product-img-photo">
             <img src="../images/thumbnails/woven-wood-shades.png" alt="Natural Woven Wood Shades" loading="lazy">
             <div class="motor-chip">+ motorized</div>
@@ -391,7 +403,7 @@
             <div class="product-sub">Roller &amp; Roman · Portfolio · Galaxy · Dynasty · Walden Premier &amp; Select</div>
             <span class="badge badge-quote">Configure &amp; quote</span>
           </div>
-        </div>
+        </a>
 
 
 
@@ -580,7 +592,7 @@
     <!-- ── BRAND / COMPANY CHOOSER ────────────────────────────── -->
     <div class="step-block" id="brand-chooser">
       <div class="step-hd"><div class="step-num-circle">1</div><div class="step-title">Who is making your shade?</div></div>
-      <div class="brand-row" id="grp-brand">
+      <div class="brand-row" id="grp-brand" data-goto="measure-inputs">
         <button class="brand-btn" id="btn-brand-norman" onclick="selectBrand('norman')">
           <span class="brand-btn-name">Norman</span>
           <span class="brand-btn-sub">Premium manufacturer · full options</span>
@@ -1128,7 +1140,7 @@
 
           <!-- ROLLER: Sheer · LF · RD · LightGuard 360 · Solar -->
           <div id="light-roller" style="display:none">
-            <div class="opt-row" id="grp-light-roller">
+            <div class="opt-row" id="grp-light-roller" data-goto="rn-single-fabric-block">
               <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);toggleLightGuardNote(false);updatePrice()">Sheer</button>
               <button class="opt-btn sel" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);toggleLightGuardNote(false);updatePrice()">Light Filtering</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);toggleLightGuardNote(true);updatePrice()">Room Darkening</button>
@@ -1150,7 +1162,7 @@
 
           <!-- CELLULAR: Sheer · LF · Room Darkening -->
           <div id="light-cellular" style="display:none">
-            <div class="opt-row" id="grp-light-cellular">
+            <div class="opt-row" id="grp-light-cellular" data-goto="cellular-opts">
               <button class="opt-btn sel" onclick="selOpt(this,'grp-light-cellular');updatePrice()">Sheer</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-light-cellular');updatePrice()">Light Filtering</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-light-cellular');updatePrice()">Room Darkening</button>
@@ -1185,7 +1197,7 @@
           <!-- ① Cell size — pick this first -->
           <div style="margin-bottom:16px">
             <div class="step-title" style="font-size:12px;margin-bottom:6px">① Cell size</div>
-            <div class="opt-row" id="grp-cell-size" style="flex-wrap:wrap">
+            <div class="opt-row" id="grp-cell-size" style="flex-wrap:wrap" data-goto="cell-fabric-section">
               <button class="opt-btn" onclick="selOpt(this,'grp-cell-size');selectCellSz('38s')">3&#8260;8&rdquo;&nbsp;S</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-cell-size');selectCellSz('916s')">9&#8260;16&rdquo;&nbsp;S</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-cell-size');selectCellSz('12d')">1&#8260;2&rdquo;&nbsp;D</button>
@@ -1200,7 +1212,7 @@
           <!-- ② Fabric category -->
           <div id="cell-fabric-section">
             <div class="step-title" style="font-size:12px;margin-bottom:6px">② Fabric category</div>
-            <div class="opt-row" id="grp-cell-fabric">
+            <div class="opt-row" id="grp-cell-fabric" data-goto="cell-fabric-inline">
               <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('lf');cellCheckConflict('fab-clear')">Light Filtering</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('rd');cellCheckConflict('fab-clear')">Room Darkening</button>
               <button class="opt-btn" id="cell-fab-sheer-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('sheer');cellCheckConflict('fab-clear')">Sheer</button>
@@ -5769,6 +5781,24 @@ function submitPSForm() {
     exterior:function(){selectProduct('exterior','Exterior Roller Shades',false);}
   };
   if(map[t]) setTimeout(map[t],120);
+})();
+
+// ── AUTO-ADVANCE: click any opt-btn inside a [data-goto] row → smooth-scroll to next section ──
+(function(){
+  function scrollTo(id){
+    var el=document.getElementById(id); if(!el) return;
+    var nav=document.getElementById('site-nav');
+    var off=nav?nav.offsetHeight+20:76;
+    setTimeout(function(){
+      window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-off,behavior:'smooth'});
+    },90);
+  }
+  document.addEventListener('click',function(e){
+    var btn=e.target.closest('.opt-btn,.brand-btn');
+    if(!btn) return;
+    var row=btn.closest('[data-goto]');
+    if(row) scrollTo(row.dataset.goto);
+  });
 })();
 </script>
 </body>
