@@ -907,7 +907,7 @@ function submitQuote(){
     document.getElementById('q-notes').value.trim()||'None'
   ].filter(function(l){return l!==undefined&&l!==null;}).join('\n');
 
-  window.location.href='mailto:blindznation@gmail.com'
+  window.location.href='mailto:justin@phillyblinds.com'
     +'?subject='+encodeURIComponent('Norman SmartDrape™ Spec — '+name)
     +'&body='+encodeURIComponent(body);
   document.getElementById('quote-success').style.display='block';

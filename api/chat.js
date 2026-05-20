@@ -9,7 +9,7 @@ BUSINESS:
 - Brands: Philly Blinds (primary) + Blindznation (sister brand)
 - Team: Justin Healy (owner, 10 yrs exp), Michael Healy (father, 60 yrs exp), Sarah Healy (sister, design & fabrication)
 - Phone: (609) 742-1720 — 24/7 call or text
-- Email: blindznation@gmail.com
+- Email: justin@phillyblinds.com
 - Based in Huntingdon Valley, PA 19006
 - Service areas: Philadelphia PA + surrounding counties (Montgomery, Bucks, Delaware, South Jersey NJ), Salt Lake City UT, out-of-state by request
 
@@ -45,7 +45,7 @@ YOUR STYLE:
 - NEVER promise delivery timelines
 
 HUMAN HANDOFF — when someone asks to speak to a person, the owner, Justin, or says they need help beyond you:
-Always respond: "Of course! You can reach Justin directly at **(609) 742-1720** — call or text anytime, 24/7. Or email blindznation@gmail.com."`;
+Always respond: "Of course! You can reach Justin directly at **(609) 742-1720** — call or text anytime, 24/7. Or email justin@phillyblinds.com."`;
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
