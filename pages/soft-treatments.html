@@ -819,7 +819,17 @@
 
     <!-- Motorized sub-options -->
     <div id="roman-motor-opts" style="display:none;margin-top:12px">
-      <div id="roman-motor-norman-section"></div>
+      <div style="padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:6px">Motor brand preference</div>
+        <div style="font-size:11px;color:#666;margin-bottom:10px">We install all major brands. Final motor brand and cost confirmed at measurement visit.</div>
+        <div class="opt-row" id="grp-roman-motor-brand">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-motor-brand')">Lutron Serena</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-roman-motor-brand')">Somfy</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-roman-motor-brand')">Automate</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-roman-motor-brand')">Rollease Acmeda</button>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:8px">Motor cost approx. $95–$150/shade depending on brand and power type. Finalized at order.</div>
+      </div>
     </div>
 
     <!-- Control side — applies to both manual chain and motorized -->
@@ -1468,9 +1478,6 @@ function romanChainCheck() {
 function romanToggleOp(type) {
   document.getElementById('roman-manual-opts').style.display = type === 'manual'    ? 'block' : 'none';
   document.getElementById('roman-motor-opts').style.display  = type === 'motorized' ? 'block' : 'none';
-  if (type === 'motorized' && typeof normanMotorSection === 'function') {
-    normanMotorSection('roman-motor-norman-section', 'Roman Shade');
-  }
 }
 function selectFabric(tab, el, val) {
   var container = tab === 'drape' ? '#drape-fabric-cards' : '#roman-fabric-cards';
@@ -1609,13 +1616,13 @@ function calcRoman() {
     { label: 'Operation',      value: (getOpt('grp-roman-op') || '—') },
     { label: 'Mounting',       value: (getOpt('grp-roman-mount-style') || '—') }
   ];
+  if (getOpt('grp-roman-op') === 'Motorized') rnLines.push({ label: 'Motor brand', value: getOpt('grp-roman-motor-brand') || 'TBD at order' });
   if (trimTotal) rnLines.push({ label: 'Trim', value: '$' + trimTotal.toFixed(0) });
   pbRenderEstimate('roman-pricebox', rnLines, grandTotal, '', function(checkout) {
     pbCollectItem(romanState.style || 'Roman Shade', rnLines, grandTotal, getOpt('grp-roman-op')==='Motorized');
     pbOpenCart();
     if (checkout) setTimeout(function(){
       var f=document.getElementById('pb-cart-foot'); if(f) f.style.display='block';
-      var q=document.getElementById('pb-cart-quote-form'); if(q) q.classList.add('open');
     }, 150);
   });
 }
@@ -1839,7 +1846,6 @@ function calcDrapePrice() {
     pbOpenCart();
     if (checkout) setTimeout(function(){
       var f=document.getElementById('pb-cart-foot'); if(f) f.style.display='block';
-      var q=document.getElementById('pb-cart-quote-form'); if(q) q.classList.add('open');
     }, 150);
   });
 }

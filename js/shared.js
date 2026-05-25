@@ -336,38 +336,27 @@ function _renderCartBody() {
   }).join('');
 }
 
-// ── Quote submit from cart ───────────────────────────────────
-function pbSubmitCartQuote() {
-  var name  = (document.getElementById('pb-cq-name')  || {}).value || '';
-  var phone = (document.getElementById('pb-cq-phone') || {}).value || '';
-  var email = (document.getElementById('pb-cq-email') || {}).value || '';
-  if (!name.trim() || !phone.trim()) { alert('Please enter your name and phone number.'); return; }
-  var cart = pbGetCart();
-  var lines = cart.map(function(item, i) {
-    var s = (i+1) + '. ' + (item.product || 'Item');
-    if (item.qty > 1) s += ' ×' + item.qty;
-    if (item.specs) s += '\n   ' + item.specs;
-    if (item.motorized && item.motorOptions) {
-      var mo = item.motorOptions;
-      s += '\n   Motorized: Power=' + mo.power;
-      if (mo.chargers) s += ', Chargers=' + mo.chargers;
-      if (mo.wiring)   s += ', Wiring=' + mo.wiring;
-      if (mo.cord)     s += ', Cord=' + mo.cord;
-      if (mo.remote === 'Yes') s += ', Remote=' + mo.channel + ' ×' + mo.remotes;
-      else s += ', Remote=No';
-    }
-    return s;
-  }).join('\n\n');
-  var body = 'CART QUOTE REQUEST\n' +
-    '==================================\n' +
-    'Name:  ' + name + '\nPhone: ' + phone + '\nEmail: ' + (email || '—') + '\n\n' +
-    'ITEMS:\n\n' + lines + '\n\n' +
-    'Notes:\n' + ((document.getElementById('pb-cq-notes') || {}).value || 'None');
-  window.location.href = 'mailto:justin@phillyblinds.com' +
-    '?subject=' + encodeURIComponent('Quote Request — ' + name) +
-    '&body=' + encodeURIComponent(body);
-  document.getElementById('pb-cart-quote-form').classList.remove('open');
-  document.getElementById('pb-cart-quote-sent').style.display = 'block';
+// ── Checkout from cart ───────────────────────────────────────
+// TODO: replace PB_CHECKOUT_URL with the real Stripe / checkout link when ready
+var PB_CHECKOUT_URL = '#checkout';
+
+function pbGoCheckout() {
+  if (PB_CHECKOUT_URL === '#checkout') {
+    var cart = pbGetCart();
+    if (!cart.length) return;
+    var lines = cart.map(function(item, i) {
+      var s = (i+1) + '. ' + (item.product || 'Item');
+      if (item.qty > 1) s += ' \xd7' + item.qty;
+      if (item.specs) s += ' — ' + item.specs;
+      return s;
+    }).join('\n');
+    window.location.href = 'mailto:blindznation@gmail.com' +
+      '?subject=' + encodeURIComponent('Order Inquiry') +
+      '&body=' + encodeURIComponent('Hi, I\'d like to place an order for:\n\n' + lines + '\n\nPlease contact me to complete my purchase.');
+    return;
+  }
+  sessionStorage.setItem('pb_checkout_cart', JSON.stringify(pbGetCart()));
+  window.location.href = PB_CHECKOUT_URL;
 }
 
 // ── Inject cart DOM ─────────────────────────────────────────
@@ -395,26 +384,10 @@ function _initCart() {
     '</div>' +
     '<div class="pb-cart-body" id="pb-cart-body"></div>' +
     '<div id="pb-cart-foot" style="padding:16px;border-top:1px solid #e8e8e4;display:none">' +
-      '<button class="btn-gold" style="width:100%;padding:12px;font-size:14px;margin-bottom:10px" ' +
-        'onclick="document.getElementById(\'pb-cart-quote-form\').classList.toggle(\'open\')">Request quote for all items →</button>' +
-      '<div class="pb-cart-quote-form" id="pb-cart-quote-form">' +
-        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">' +
-          '<div><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Name *</label>' +
-            '<input id="pb-cq-name" type="text" placeholder="Jane Smith" style="width:100%;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit"></div>' +
-          '<div><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Phone *</label>' +
-            '<input id="pb-cq-phone" type="tel" placeholder="(215) 555-0100" style="width:100%;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit"></div>' +
-        '</div>' +
-        '<div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Email</label>' +
-          '<input id="pb-cq-email" type="email" placeholder="jane@example.com" style="width:100%;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit"></div>' +
-        '<div style="margin-bottom:12px"><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Notes</label>' +
-          '<textarea id="pb-cq-notes" placeholder="Room names, timeline, questions..." rows="2" style="width:100%;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit;resize:vertical"></textarea></div>' +
-        '<button class="btn-gold" onclick="pbSubmitCartQuote()" style="width:100%;padding:12px;font-size:14px">Send quote →</button>' +
-      '</div>' +
-      '<div id="pb-cart-quote-sent" style="display:none;text-align:center;padding:16px;background:#EAF3DE;border-radius:10px;font-size:13px;color:#27500A">' +
-        '<strong>Quote sent!</strong><br>Justin will follow up shortly.<br>' +
-        '<a href="tel:6097421720" style="color:#27500A;font-weight:600">(609) 742-1720</a>' +
-      '</div>' +
-      '<button onclick="pbClearCart()" style="display:block;width:100%;margin-top:8px;background:none;border:none;font-size:11px;color:#ccc;cursor:pointer;font-family:inherit">Clear cart</button>' +
+      '<button class="btn-gold" style="width:100%;padding:13px;font-size:15px;font-weight:600;margin-bottom:8px" ' +
+        'onclick="pbGoCheckout()">Check out now →</button>' +
+      '<div style="text-align:center;font-size:11px;color:#aaa;margin-bottom:12px">Secure checkout &bull; All major cards accepted</div>' +
+      '<button onclick="pbClearCart()" style="display:block;width:100%;background:none;border:none;font-size:11px;color:#ccc;cursor:pointer;font-family:inherit">Clear cart</button>' +
     '</div>';
   document.body.appendChild(drawer);
 
