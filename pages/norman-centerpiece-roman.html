@@ -179,20 +179,17 @@
     <div class="step-block" id="step2">
       <div class="step-head" onclick="toggleStep('step2')">
         <div class="step-num">2</div>
-        <div class="step-head-title">Number of Shades</div>
-        <div class="step-head-val" id="val2">&mdash;</div>
+        <div class="step-head-title">Quantity</div>
+        <div class="step-head-val" id="val2">1 shade</div>
       </div>
       <div class="step-body">
         <div class="form-row" style="margin-top:8px">
           <div class="form-group">
-            <label>Quantity of shades</label>
-            <div class="opt-row" id="grp-qty">
-              <button class="opt-btn sel" onclick="setQty(1,this)">1</button>
-              <button class="opt-btn" onclick="setQty(2,this)">2</button>
-              <button class="opt-btn" onclick="setQty(3,this)">3</button>
-              <button class="opt-btn" onclick="setQty(4,this)">4</button>
-              <button class="opt-btn" onclick="setQty(5,this)">5</button>
-              <button class="opt-btn" onclick="setQty(6,this)">6+</button>
+            <label>Number of shades</label>
+            <div style="display:flex;align-items:center;gap:0">
+              <button onclick="adjQty(-1)" style="width:36px;height:36px;border:1.5px solid #ddd;border-radius:8px 0 0 8px;background:#fff;font-size:20px;cursor:pointer;color:#333;font-family:inherit">−</button>
+              <input type="number" id="qty-inp" value="1" min="1" max="50" oninput="setQtyVal(parseInt(this.value)||1)" style="width:52px;height:36px;text-align:center;border-top:1.5px solid #ddd;border-bottom:1.5px solid #ddd;border-left:none;border-right:none;font-size:14px;font-weight:500;font-family:inherit;background:#fff">
+              <button onclick="adjQty(1)" style="width:36px;height:36px;border:1.5px solid #ddd;border-radius:0 8px 8px 0;background:#fff;font-size:20px;cursor:pointer;color:#333;font-family:inherit">+</button>
             </div>
           </div>
           <div class="form-group">
@@ -748,12 +745,17 @@ function setType(type, el) {
 }
 
 // ── STEP 2 ────────────────────────────────────────────────────────────────────
-function setQty(n, el) {
+function setQtyVal(n) {
+  n = Math.max(1, Math.min(50, n||1));
   S.qty = n;
-  selBtn(el, 'grp-qty');
-  document.getElementById('val2').textContent = n + (n===6?' shades (6+)' : n===1?' shade':' shades');
+  document.getElementById('val2').textContent = n + (n===1?' shade':' shades');
   document.getElementById('step2').classList.add('done');
   updateSpec(); updateCalc(); openNext('step3');
+}
+function adjQty(d) {
+  var el = document.getElementById('qty-inp');
+  el.value = Math.max(1, Math.min(50, (parseInt(el.value)||1)+d));
+  setQtyVal(parseInt(el.value));
 }
 
 // ── STEP 3 ────────────────────────────────────────────────────────────────────
@@ -1178,6 +1180,7 @@ function submitQuote() {
 // ── INIT ──────────────────────────────────────────────────────────────────────
 renderFabricGrid();
 renderRollerGrid();
+setQtyVal(1);
 document.getElementById('room-label').addEventListener('input', updateSpec);
 document.querySelectorAll('#grp-mount .opt-btn').forEach(function(b){b.addEventListener('click',function(){sp('sp-mount',this.textContent.trim());});});
 </script>

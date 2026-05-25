@@ -331,13 +331,10 @@
   <div class="step-head" onclick="tog('step6')"><div class="step-num">6</div><div class="step-head-title">Options</div><div class="step-head-val" id="val6">1 shade</div></div>
   <div class="step-body">
     <div class="step-sub" style="margin-top:0">Quantity</div>
-    <div class="opt-row" id="grp-qty">
-      <button class="opt-btn sel" onclick="setQty(1,this)">1</button>
-      <button class="opt-btn" onclick="setQty(2,this)">2</button>
-      <button class="opt-btn" onclick="setQty(3,this)">3</button>
-      <button class="opt-btn" onclick="setQty(4,this)">4</button>
-      <button class="opt-btn" onclick="setQty(5,this)">5</button>
-      <button class="opt-btn" onclick="setQty(6,this)">6+</button>
+    <div style="display:flex;align-items:center;gap:0;margin-bottom:12px">
+      <button onclick="adjQty(-1)" style="width:36px;height:36px;border:1.5px solid #ddd;border-radius:8px 0 0 8px;background:#fff;font-size:20px;cursor:pointer;color:#333;font-family:inherit">−</button>
+      <input type="number" id="qty-inp" value="1" min="1" max="50" oninput="setQtyInp(this.value)" style="width:52px;height:36px;text-align:center;border-top:1.5px solid #ddd;border-bottom:1.5px solid #ddd;border-left:none;border-right:none;font-size:14px;font-weight:500;font-family:inherit;background:#fff">
+      <button onclick="adjQty(1)" style="width:36px;height:36px;border:1.5px solid #ddd;border-radius:0 8px 8px 0;background:#fff;font-size:20px;cursor:pointer;color:#333;font-family:inherit">+</button>
     </div>
     <div class="step-sub">Room / window label</div>
     <input type="text" id="room-lbl" placeholder="e.g. Living room &mdash; east window" style="width:100%;padding:9px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box" oninput="updateSpec()">
@@ -887,12 +884,18 @@ function setCass(c,el){
 }
 
 // ── STEP 6 ────────────────────────────────────────────────────────────────────
-function setQty(n,el){
-  S.qty=n;selB(el,'grp-qty');
-  spv('sp-qty',n+(n===6?' (6+)':n===1?' shade':' shades'));
+function setQtyInp(v){
+  var n=Math.max(1,Math.min(50,parseInt(v)||1));
+  S.qty=n;
+  spv('sp-qty',n+(n===1?' shade':' shades'));
   document.getElementById('step6').classList.add('done');
-  document.getElementById('val6').textContent=n+(n===6?'+':'')+' shade'+(n===1?'':'s');
+  document.getElementById('val6').textContent=n+' shade'+(n===1?'':'s');
   updateCalc();
+}
+function adjQty(d){
+  var el=document.getElementById('qty-inp');
+  el.value=Math.max(1,Math.min(50,(parseInt(el.value)||1)+d));
+  setQtyInp(el.value);
 }
 document.getElementById('room-lbl').addEventListener('input',function(){S.room=this.value.trim();updateSpec();});
 

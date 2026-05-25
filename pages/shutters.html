@@ -218,14 +218,16 @@
       <div class="cfg-section locked" id="sec-count">
         <div class="cfg-heading">
           <span class="step-badge" id="badge-2">2</span>
-          How many window openings?
+          Number of openings
         </div>
         <div class="cfg-subhead">Each opening gets its own dimensions and panel layout.</div>
-        <div style="display:flex;align-items:center;gap:12px;margin-top:10px">
-          <input type="number" id="count-input" min="1" max="30" value="" placeholder="e.g. 3"
-            style="width:110px;padding:10px 14px;border:1.5px solid #d8d8d4;border-radius:8px;font-size:18px;font-weight:600;color:#111;font-family:inherit;text-align:center"
+        <div style="display:flex;align-items:center;gap:8px;margin-top:10px">
+          <button onclick="adjCount(-1)" style="width:38px;height:38px;border:1.5px solid #d8d8d4;border-radius:8px 0 0 8px;background:#fff;font-size:22px;font-weight:400;cursor:pointer;color:#333;font-family:inherit;display:flex;align-items:center;justify-content:center">−</button>
+          <input type="number" id="count-input" min="1" max="30" value="1"
+            style="width:62px;height:38px;border-top:1.5px solid #d8d8d4;border-bottom:1.5px solid #d8d8d4;border-left:none;border-right:none;font-size:18px;font-weight:600;color:#111;font-family:inherit;text-align:center;background:#fff"
             oninput="selCountInput(this)">
-          <span style="font-size:13px;color:#666">openings</span>
+          <button onclick="adjCount(1)" style="width:38px;height:38px;border:1.5px solid #d8d8d4;border-radius:0 8px 8px 0;background:#fff;font-size:22px;font-weight:400;cursor:pointer;color:#333;font-family:inherit;display:flex;align-items:center;justify-content:center">+</button>
+          <span style="font-size:13px;color:#666;margin-left:6px">opening(s)</span>
         </div>
       </div>
 
@@ -773,6 +775,7 @@ function selLine(name, card){
 }
 
 /* ─── COUNT ─────────────────────────────────────────────── */
+function adjCount(d){ var el=document.getElementById('count-input'); el.value=Math.max(1,Math.min(30,(parseInt(el.value)||1)+d)); selCountInput(el); }
 function selCountInput(inp){
   const n = parseInt(inp.value)||0;
   if(n < 1) return;

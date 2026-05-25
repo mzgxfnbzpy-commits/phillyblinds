@@ -147,18 +147,16 @@
   <div class="step-block active" id="step1">
     <div class="step-head" onclick="toggleStep('step1')">
       <div class="step-num">1</div>
-      <div class="step-head-title">Number of Shades / Openings</div>
-      <div class="step-head-val" id="val1">&mdash;</div>
+      <div class="step-head-title">Quantity</div>
+      <div class="step-head-val" id="val1">1 shade</div>
     </div>
     <div class="step-body">
-      <div class="opt-row" id="grp-qty">
-        <button class="opt-btn sel" onclick="setQty(1,this)">1</button>
-        <button class="opt-btn" onclick="setQty(2,this)">2</button>
-        <button class="opt-btn" onclick="setQty(3,this)">3</button>
-        <button class="opt-btn" onclick="setQty(4,this)">4</button>
-        <button class="opt-btn" onclick="setQty(5,this)">5</button>
-        <button class="opt-btn" onclick="setQty(6,this)">6+</button>
+      <div style="display:flex;align-items:center;gap:0;margin-bottom:4px">
+        <button onclick="adjQty(-1)" style="width:36px;height:36px;border:1.5px solid #ddd;border-radius:8px 0 0 8px;background:#fff;font-size:20px;cursor:pointer;color:#333;font-family:inherit">−</button>
+        <input type="number" id="qty-inp" value="1" min="1" max="50" oninput="setQtyVal(parseInt(this.value)||1)" style="width:52px;height:36px;text-align:center;border-top:1.5px solid #ddd;border-bottom:1.5px solid #ddd;border-left:none;border-right:none;font-size:14px;font-weight:500;font-family:inherit;background:#fff">
+        <button onclick="adjQty(1)" style="width:36px;height:36px;border:1.5px solid #ddd;border-radius:0 8px 8px 0;background:#fff;font-size:20px;cursor:pointer;color:#333;font-family:inherit">+</button>
       </div>
+      <div style="font-size:11px;color:#888;margin-top:6px">Need different sizes per shade? Each shade is quoted at the same size — note any size differences in the notes field.</div>
     </div>
   </div>
 
@@ -871,12 +869,18 @@ function openNext(id) { var el=document.getElementById(id); if(el&&el.style.disp
 function sp(id,val) { var el=document.getElementById(id); if(el){el.textContent=val||'—';el.classList.toggle('empty',!val||val==='—');} }
 
 // ── STEP 1 ────────────────────────────────────────────────────────────────────
-function setQty(n, el) {
-  S.qty=n; selBtn(el,'grp-qty');
-  document.getElementById('val1').textContent=n+(n===6?' (6+)':n===1?' shade':' shades');
+function setQtyVal(n) {
+  n = Math.max(1, Math.min(50, n||1));
+  S.qty = n;
+  document.getElementById('val1').textContent = n + (n===1?' shade':' shades');
   document.getElementById('step1').classList.add('done');
-  sp('sp-qty',n+(n===6?' shades (6+)':n===1?' shade':' shades'));
+  sp('sp-qty', n + (n===1?' shade':' shades'));
   openNext('step2');
+}
+function adjQty(d) {
+  var el = document.getElementById('qty-inp');
+  el.value = Math.max(1, Math.min(50, (parseInt(el.value)||1)+d));
+  setQtyVal(parseInt(el.value));
 }
 
 // ── STEP 2 ────────────────────────────────────────────────────────────────────
@@ -1397,6 +1401,8 @@ var p=isHob?getPriceHobbled(w,l,f.priceGroup):getPriceFlat(w,l,f.priceGroup,f.no
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 renderFabricGrid();
+// Auto-advance step 1 since qty defaults to 1 (valid)
+setQtyVal(1);
 document.getElementById('room-label').addEventListener('input',function(){
   S.room=this.value.trim();
   document.getElementById('val2').textContent=S.room||'—';
