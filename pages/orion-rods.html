@@ -580,7 +580,8 @@ function $(id){return document.getElementById(id);}
 function show(id){var e=$(id);if(e)e.style.display='';}
 function hide(id){var e=$(id);if(e)e.style.display='none';}
 function togglePill(el, grp){
-  el.closest('.opt-row,.section').querySelectorAll('.opt-pill').forEach(p=>p.classList.remove('sel'));
+  var row=el.closest('.opt-row');
+  if(row) row.querySelectorAll('.opt-pill').forEach(p=>p.classList.remove('sel'));
   el.classList.add('sel');
 }
 function toggleMotorAcc(el, key){
@@ -787,8 +788,8 @@ function buildRingStep(){
       <div class="opt-pill" onclick="S.ring='354';togglePill(this,'rng')">354 — Hook Ring</div>
       <div class="opt-pill" onclick="S.ring='355';togglePill(this,'rng')">355 — Round with Clip</div>
       <div class="opt-pill" onclick="S.ring='356';togglePill(this,'rng')">356 — Round Hammered</div>
-      ${!isHammered&&isRoundHollow?'<div class="opt-pill" onclick="S.ring=\'330C\';togglePill(this,\'rng\');$(\'warn-bypass\').style.display=\'block\'">330C — Bypass C Ring (iron)</div>':''}
-      ${!isHammered&&isRoundHollow?'<div class="opt-pill" onclick="S.ring=\'7330C\';togglePill(this,\'rng\');$(\'warn-bypass\').style.display=\'block\'">7330C — Bypass C Ring (Italian)</div>':''}
+      ${!isHammered&&isRoundHollow?'<div class="opt-pill" onclick="S.ring=\'330C\';togglePill(this,\'rng\');document.getElementById(\'warn-bypass\').style.display=\'block\'">330C — Bypass C Ring (iron)</div>':''}
+      ${!isHammered&&isRoundHollow?'<div class="opt-pill" onclick="S.ring=\'7330C\';togglePill(this,\'rng\');document.getElementById(\'warn-bypass\').style.display=\'block\'">7330C — Bypass C Ring (Italian)</div>':''}
       <div class="opt-pill" onclick="S.ring='none';togglePill(this,'rng')">No rings (grommet / rod pocket)</div>
     </div>
     <div class="sec-label" style="margin-top:14px">Batons / Accessories</div>
