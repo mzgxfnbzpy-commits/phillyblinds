@@ -174,7 +174,8 @@ function renderFooter(isHome) {
         <div class="footer-tagline">Serving Philadelphia, South Jersey, Salt Lake City &amp; surrounding areas. Out-of-state available — product ships nationwide.</div>
         <a href="tel:6097421720" style="display:block;font-size:15px;font-weight:600;color:var(--gold);text-decoration:none;margin-bottom:2px">(609) 742-1720</a>
         <div style="font-size:11px;color:var(--text-faint);margin-bottom:6px">Justin Healy &mdash; call or text 24/7</div>
-        <a href="mailto:justin@phillyblinds.com" style="font-size:12px;color:var(--text-muted);text-decoration:none">justin@phillyblinds.com</a>
+        <a href="mailto:justin@phillyblinds.com" style="font-size:12px;color:var(--text-muted);text-decoration:none;display:block;margin-bottom:4px">justin@phillyblinds.com</a>
+        <a href="mailto:sarah@phillyblinds.com" style="font-size:12px;color:var(--text-muted);text-decoration:none;display:block">sarah@phillyblinds.com</a>
       </div>
       <div class="footer-col">
         <h4>Shades</h4>

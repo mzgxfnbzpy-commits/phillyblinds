@@ -27,7 +27,8 @@ Blindznation is a separate sister-brand project that copies this site's structur
 
 ### Contact info (always use exactly)
 - **Phone:** (609) 742-1720 — call or text 24/7
-- **Email (PhillyBlinds):** justin@phillyblinds.com
+- **Email (PhillyBlinds — Justin):** justin@phillyblinds.com
+- **Email (PhillyBlinds — Sarah):** sarah@phillyblinds.com
 - **Email (Blindznation):** justin@blindznation.com
 
 ### Branch structure
