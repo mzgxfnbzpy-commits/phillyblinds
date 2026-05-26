@@ -23,12 +23,53 @@ Blindznation is a separate sister-brand project that copies this site's structur
 
 ---
 
+## LIVE LAUNCH RULES — READ FIRST
+
+### Contact info (always use exactly)
+- **Phone:** (609) 742-1720 — call or text 24/7
+- **Email (PhillyBlinds):** justin@phillyblinds.com
+- **Email (Blindznation):** justin@blindznation.com
+
+### Branch structure
+```
+dev    → all work happens here. Safe to push anytime.
+master → LIVE website. Only merge from dev when user says “confirmed push to live”.
+```
+
+### ⚠️ NEVER auto-push to master. Always ask first.
+Claude Code must say: **”Ready to push to live — confirm?”**
+User must reply: “confirmed” or “yes push live”
+
+```powershell
+# Start every session:
+git checkout dev
+git pull
+
+# End of session (safe, not live):
+git add . && git commit -m “what changed” && git push origin dev
+
+# Merge to LIVE (only after confirmation):
+git checkout master && git merge dev && git push origin master && git checkout dev
+```
+
+### LIVE vs TEST behavior
+| Feature | TEST (dev) | LIVE (master) |
+|---------|-----------|---------------|
+| Configurators | Full | Contact popup only |
+| Pricing | Visible | Hidden |
+| Gallery, About, Measure guides | Full | Full |
+| Phone number | Everywhere | Everywhere |
+
+On LIVE — ALL product card clicks and configure buttons must call `pbShowContact()` instead of opening configurators. **This feature is still to be built.**
+
+---
+
 ## CRITICAL â€” HOW ALL AGENTS STAY IN SYNC
 
 ### The three agents on this project:
-1. **Claude.ai chat** â€” Design decisions, new page specs, content, review
-2. **Claude Code (PowerShell)** â€” Builds and edits actual files on the computer
-3. **GitHub** â€” The single source of truth. Master copy of all files.
+1. **Claude.ai chat** — Design decisions, new page specs, content, review
+2. **Claude Code (PowerShell)** — Builds and edits actual files on the computer
+3. **GitHub** — The single source of truth. Master copy of all files.
 
 ### The golden rules:
 - **GitHub is always the master.** Before starting any work, pull latest: `git pull`
