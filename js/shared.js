@@ -2,18 +2,6 @@
 // Philly Blinds — Shared Components
 // ============================================================
 
-// LIVE MODE — intercept all product/configurator clicks site-wide → contact popup
-window.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll(
-    '.product-card, .btn-configure, .btn-price, .opt-btn, [onclick*="setProd"], [onclick*="selSystem"], [onclick*="pickType"], .configure-btn, .price-btn, .check-out-btn, .btn-gold:not(.pb-cp-action)'
-  ).forEach(function(el) {
-    el.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      pbShowContact('Get a custom quote — call, text, or email us');
-    }, true);
-  });
-});
 
 function _injectHead(isHome) {
   const prefix = isHome ? '' : '../';
@@ -1158,15 +1146,27 @@ function _initContactPanel() {
     '</div>';
   document.body.appendChild(ov);
 }
-function pbShowContact(productHint) {
-  _initContactPanel();
-  var hint = document.getElementById('pb-cp-hint');
-  var prod = document.getElementById('pb-cp-product');
-  var sent = document.getElementById('pb-cp-sent');
-  if (productHint && hint) hint.textContent = productHint + ' — we\'ll measure, advise, and quote at no charge.';
-  if (productHint && prod)  prod.value = productHint;
-  if (sent) sent.style.display = 'none';
-  document.getElementById('pb-contact-overlay').classList.add('open');
+function pbShowContact(title) {
+  var t = title || 'Get a Quote';
+  var html = '<div style="position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px" onclick="if(event.target===this)this.remove()">' +
+    '<div style="background:#fff;border-radius:16px;max-width:420px;width:100%;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.3)">' +
+    '<div style="background:#1C1510;padding:20px 24px;display:flex;justify-content:space-between;align-items:center">' +
+    '<div style="color:#F5ECD7;font-size:16px;font-weight:500">' + t + '</div>' +
+    '<button onclick="this.closest(\'[style*=fixed]\').remove()" style="background:none;border:none;color:#A89880;font-size:22px;cursor:pointer;line-height:1">×</button>' +
+    '</div>' +
+    '<div style="padding:24px">' +
+    '<div style="font-size:14px;color:#555;margin-bottom:20px;line-height:1.6">We handle every order personally. Call or text Justin directly for pricing, samples, and installation.</div>' +
+    '<a href="tel:6097421720" style="display:flex;align-items:center;gap:12px;background:#1C1510;color:#C8973F;padding:14px 18px;border-radius:10px;text-decoration:none;margin-bottom:10px;font-weight:500">' +
+    '<span style="font-size:20px">📞</span><div><div style="font-size:15px">(609) 742-1720</div><div style="font-size:11px;color:#A89880">Call or text — 24/7</div></div></a>' +
+    '<a href="sms:6097421720" style="display:flex;align-items:center;gap:12px;background:#FBF7F0;border:1px solid #C8973F;color:#1C1510;padding:14px 18px;border-radius:10px;text-decoration:none;margin-bottom:10px;font-weight:500">' +
+    '<span style="font-size:20px">💬</span><div><div style="font-size:15px">Text Justin</div><div style="font-size:11px;color:#888">Quick questions welcome</div></div></a>' +
+    '<a href="mailto:justin@phillyblinds.com" style="display:flex;align-items:center;gap:12px;background:#FBF7F0;border:1px solid #e8e4de;color:#1C1510;padding:14px 18px;border-radius:10px;text-decoration:none;font-weight:500">' +
+    '<span style="font-size:20px">✉️</span><div><div style="font-size:15px">justin@phillyblinds.com</div><div style="font-size:11px;color:#888">We reply same day</div></div></a>' +
+    '<div style="text-align:center;font-size:11px;color:#aaa;margin-top:16px">Free in-home consultations · Philadelphia + Salt Lake City</div>' +
+    '</div></div></div>';
+  var el = document.createElement('div');
+  el.innerHTML = html;
+  document.body.appendChild(el.firstChild);
 }
 function pbCloseContact() {
   var ov = document.getElementById('pb-contact-overlay');
@@ -1372,3 +1372,30 @@ function reqMoreInfo(product) {
   var body = 'Hi, I would like to request more information about ' + (product || 'your products') + '.\n\nName:\nPhone:\nBest time to call:';
   window.location.href = 'mailto:justin@phillyblinds.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
 }
+
+// LIVE MODE — block all product/configurator clicks site-wide → contact popup
+document.addEventListener('DOMContentLoaded', function() {
+  var BLOCK = [
+    '.product-card', 'a.product-card', '[onclick*="setProd"]',
+    '[onclick*="selSystem"]', '[onclick*="pickType"]', '[onclick*="selLine"]',
+    '[onclick*="pbShowContact"]', '.configure-btn', '.btn-configure',
+    '[onclick*="setType"]', '[onclick*="selCollection"]',
+    '[onclick*="selProduct"]', '[onclick*="openConfig"]',
+    'a[href*="shades.html"]', 'a[href*="roman-shades.html"]',
+    'a[href*="drapery.html"]', 'a[href*="shutters.html"]',
+    'a[href*="soft-treatments.html"]', 'a[href*="hardware.html"]',
+    'a[href*="woven"]', 'a[href*="zebra"]', 'a[href*="cellular"]',
+    'a[href*="roller"]', 'a[href*="norman"]', 'a[href*="wallace"]',
+    'a[href*="galaxy"]', 'a[href*="kirsch"]', 'a[href*="select-rods"]',
+    'a[href*="orion-rods"]', 'a[href*="portfolio"]'
+  ];
+  BLOCK.forEach(function(sel) {
+    document.querySelectorAll(sel).forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        pbShowContact('Get a Quote — ' + (el.querySelector('.product-name, h3, h4') || el).textContent.trim().split('\n')[0] || 'Contact Us');
+      }, true);
+    });
+  });
+});
