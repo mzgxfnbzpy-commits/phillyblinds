@@ -5,6 +5,24 @@
 
 ---
 
+## ⚠️ SISTER PROJECT — BLINDZNATION
+
+Blindznation is a separate sister-brand project that copies this site's structure with different branding.
+
+**phillyblinds is the MASTER.** All product specs, business rules, motorization rules, and configurator data originate HERE first, then get ported to blindznation.
+
+| Rule | What it means |
+|------|--------------|
+| Do NOT edit blindznation files from a phillyblinds session | Open a separate Claude Code session from the blindznation folder |
+| When you change a product spec here, flag it | Note in the commit message: “→ also apply to blindznation” |
+| When you change a business rule here, flag it | Same — blindznation must stay in sync |
+| Never push phillyblinds changes to blindznation's GitHub repo | Each project has its own separate repo |
+
+**Blindznation project location:**
+`C:\Users\Blind\Desktop\BUSINESS\Important PB\AI claude\blindznation\`
+
+---
+
 ## CRITICAL â€” HOW ALL AGENTS STAY IN SYNC
 
 ### The three agents on this project:
