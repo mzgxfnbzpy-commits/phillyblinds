@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Philly Blinds — Master Developer Handoff</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8f6f2;color:#1a1a1a;font-size:14px;line-height:1.6}
+.hero{background:#1C1510;padding:36px 32px;border-bottom:3px solid #C8973F}
+.hero h1{font-size:28px;font-weight:500;color:#F5ECD7;margin-bottom:6px;letter-spacing:-0.5px}
+.hero h1 em{color:#C8973F;font-style:normal}
+.hero p{font-size:13px;color:#A89880}
+.wrap{max-width:960px;margin:0 auto;padding:32px 24px 60px}
+h2{font-size:18px;font-weight:600;color:#1C1510;margin:36px 0 14px;padding-bottom:8px;border-bottom:2px solid #C8973F}
+h3{font-size:14px;font-weight:600;color:#1C1510;margin:20px 0 8px}
+p{margin-bottom:10px;color:#333}
+ul,ol{margin:0 0 12px 20px;color:#333}
+li{margin-bottom:4px}
+code{background:#1C1510;color:#C8973F;padding:2px 7px;border-radius:4px;font-size:12px;font-family:'Courier New',monospace}
+pre{background:#1C1510;color:#F5ECD7;padding:16px;border-radius:8px;overflow-x:auto;margin-bottom:14px;font-size:12px;line-height:1.7;border-left:3px solid #C8973F}
+pre code{background:none;color:#F5ECD7;padding:0}
+.rule{background:#fff;border:1px solid #e8e4de;border-radius:10px;padding:18px 20px;margin-bottom:14px}
+.rule-title{font-size:13px;font-weight:700;color:#1C1510;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.rule-title span{background:#C8973F;color:#fff;font-size:10px;padding:2px 7px;border-radius:4px;font-weight:600}
+.rule p,.rule li{font-size:13px}
+.warn{background:#FFF4F4;border:1px solid #e8a0a0;border-radius:8px;padding:12px 14px;margin-bottom:12px;font-size:13px;color:#8B0000}
+.gold{background:#FBF7F0;border:1px solid #C8973F;border-radius:8px;padding:12px 14px;margin-bottom:12px;font-size:13px;color:#5C3D0A}
+.green{background:#F0FDF4;border:1px solid #86EFAC;border-radius:8px;padding:12px 14px;margin-bottom:12px;font-size:13px;color:#14532D}
+table{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:13px}
+th{background:#1C1510;color:#C8973F;padding:9px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+td{padding:9px 12px;border-bottom:1px solid #e8e4de;color:#333}
+tr:nth-child(even) td{background:#fafaf8}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:600}
+.pill-gold{background:#FBF7F0;color:#854F0B;border:1px solid #C8973F}
+.pill-red{background:#FEF2F2;color:#991B1B;border:1px solid #FECACA}
+.pill-green{background:#F0FDF4;color:#14532D;border:1px solid #86EFAC}
+.pill-gray{background:#f5f5f3;color:#555;border:1px solid #ddd}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px}
+.card{background:#fff;border:1px solid #e8e4de;border-radius:10px;padding:16px}
+.card h4{font-size:13px;font-weight:600;color:#1C1510;margin-bottom:6px}
+.card p{font-size:12px;color:#666;margin:0}
+.tier{border-radius:10px;padding:14px 16px;margin-bottom:10px}
+.tier-basic{background:#F0F9FF;border:1px solid #BAE6FD}
+.tier-premier{background:#FBF7F0;border:1px solid #C8973F}
+.tier-hd{background:#1C1510;border:1px solid #C8973F}
+.tier-hd h4,.tier-hd p,.tier-hd li{color:#F5ECD7}
+.tier h4{font-size:13px;font-weight:700;margin-bottom:4px}
+.tier-basic h4{color:#0369A1}
+.tier-premier h4{color:#854F0B}
+.tier-hd h4{color:#C8973F}
+.tier p,.tier li{font-size:12px}
+.checklist{list-style:none;margin-left:0}
+.checklist li::before{content:"☐ ";color:#C8973F;font-weight:bold}
+.checklist li.done::before{content:"✓ ";color:#16A34A}
+@media(max-width:640px){.grid2,.grid3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Philly Blinds · <em>Master Developer Handoff</em></h1>
+  <p>Blindznation · Michael J. Healy Installations · Est. 2014 · May 2026 · Read this entire file before touching anything.</p>
+</div>
+
+<div class="wrap">
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 1 — INFRASTRUCTURE
+     ═══════════════════════════════════════════════════════ -->
+<h2>1 · Infrastructure &amp; Setup</h2>
+
+<table>
+  <tr><th>Item</th><th>Philly Blinds</th><th>Blindznation</th></tr>
+  <tr><td>Domain</td><td>phillyblinds.com (GoDaddy)</td><td>blindznation.com (GoDaddy)</td></tr>
+  <tr><td>Email</td><td>justin@phillyblinds.com</td><td>justin@blindznation.com</td></tr>
+  <tr><td>GitHub</td><td>mzgxfnbzpy-commits/phillyblinds</td><td>mzgxfnbzpy-commits/blindznation</td></tr>
+  <tr><td>Vercel</td><td>phillyblinds.vercel.app</td><td>blindznation.vercel.app</td></tr>
+  <tr><td>Local files</td><td>Desktop\BUSINESS\Important PB\AI claude\phillyblinds</td><td>Desktop\BUSINESS\Important PB\AI claude\blindznation</td></tr>
+</table>
+
+<h3>Contact Info — use exactly everywhere</h3>
+<div class="gold">
+  Justin Healy · (609) 742-1720 call or text 24/7<br>
+  justin@phillyblinds.com · justin@blindznation.com<br>
+  Philadelphia, PA + Salt Lake City, UT · Est. 2014
+</div>
+
+<h3>GoDaddy DNS — when ready to go live</h3>
+<pre><code># Both phillyblinds.com and blindznation.com get identical records:
+Type: A      Name: @    Value: 76.76.21.21          TTL: 600
+Type: CNAME  Name: www  Value: cname.vercel-dns.com  TTL: 600
+
+# Then in Vercel: Settings → Domains → Add domain</code></pre>
+
+<h3>Desktop Shortcuts — create all 4</h3>
+<pre><code>$WS = New-Object -ComObject WScript.Shell
+
+$S = $WS.CreateShortcut("$env:USERPROFILE\Desktop\PhillyBlinds — LIVE.url")
+$S.TargetPath = "https://phillyblinds.com"; $S.Save()
+
+$S = $WS.CreateShortcut("$env:USERPROFILE\Desktop\PhillyBlinds — TEST.lnk")
+$S.TargetPath = "C:\Users\Blind\Desktop\BUSINESS\Important PB\AI claude\phillyblinds\index.html"; $S.Save()
+
+$S = $WS.CreateShortcut("$env:USERPROFILE\Desktop\Blindznation — LIVE.url")
+$S.TargetPath = "https://blindznation.com"; $S.Save()
+
+$S = $WS.CreateShortcut("$env:USERPROFILE\Desktop\Blindznation — TEST.lnk")
+$S.TargetPath = "C:\Users\Blind\Desktop\BUSINESS\Important PB\AI claude\blindznation\index.html"; $S.Save()</code></pre>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 2 — BRANCH RULES
+     ═══════════════════════════════════════════════════════ -->
+<h2>2 · Branch Rules — Live vs Test</h2>
+
+<div class="warn">⚠ NOTHING goes to the live branch without Justin typing "confirmed". No exceptions.</div>
+
+<pre><code># Always start here
+git checkout dev
+git pull
+
+# All work goes to dev (safe — not live)
+git add . &amp;&amp; git commit -m "what changed" &amp;&amp; git push origin dev
+
+# Only after Justin says "confirmed" — push to live
+git checkout main
+git merge dev
+git push origin main
+git checkout dev</code></pre>
+
+<table>
+  <tr><th>Feature</th><th>TEST (dev branch)</th><th>LIVE (main branch)</th></tr>
+  <tr><td>Configurators</td><td><span class="pill pill-green">Full</span></td><td><span class="pill pill-red">Contact popup only</span></td></tr>
+  <tr><td>Pricing</td><td><span class="pill pill-green">Visible</span></td><td><span class="pill pill-red">Hidden</span></td></tr>
+  <tr><td>Online checkout</td><td><span class="pill pill-green">Build &amp; test</span></td><td><span class="pill pill-gold">Standard products only</span></td></tr>
+  <tr><td>Hunter Douglas</td><td><span class="pill pill-green">Full detail</span></td><td><span class="pill pill-red">Consultation only</span></td></tr>
+  <tr><td>Gallery</td><td><span class="pill pill-green">Full</span></td><td><span class="pill pill-green">Full</span></td></tr>
+  <tr><td>Contact info</td><td><span class="pill pill-green">Everywhere</span></td><td><span class="pill pill-green">Everywhere</span></td></tr>
+  <tr><td>Phone number</td><td><span class="pill pill-green">Every page</span></td><td><span class="pill pill-green">Every page</span></td></tr>
+</table>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 3 — PRODUCT TIERS
+     ═══════════════════════════════════════════════════════ -->
+<h2>3 · Product Tier Structure</h2>
+
+<p>Every product follows one of three tiers. Keep it simple — customers pick a tier, not a catalog.</p>
+
+<div class="tier tier-basic">
+  <h4>GOOD — Basic</h4>
+  <p>Standard options, popular colors, common sizes. Online pricing and purchase. Fast turnaround.</p>
+</div>
+<div class="tier tier-premier">
+  <h4>BETTER — Premier</h4>
+  <p>Wider selection, specialty materials, more colors. Online pricing or contact us. Some need consultation.</p>
+</div>
+<div class="tier tier-hd">
+  <h4>BEST — Hunter Douglas / Luxury</h4>
+  <p>Hunter Douglas products only. Always consultation. Never instant price. White glove in-home service.</p>
+</div>
+
+<h3>Hunter Douglas — separate section on every page</h3>
+<div class="gold">
+  Hunter Douglas gets its own prominent button/card on the shades page.<br>
+  Clicking it shows: Silhouette, Pirouette, Luminette, Vignette, Duette, Sonnette, Skyline.<br>
+  Every HD product → "Request consultation" only. No pricing. Ever.<br>
+  Copy: <em>"Hunter Douglas is our luxury line. Every product is custom quoted with an in-home consultation."</em>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 4 — PRODUCT BY PRODUCT
+     ═══════════════════════════════════════════════════════ -->
+<h2>4 · Product Simplification</h2>
+
+<h3>Zebra / Banded Shades</h3>
+<div class="grid2">
+  <div class="card">
+    <h4>Basic Zebra <span class="pill pill-green">Online price</span></h4>
+    <p>Standard alternating sheer/solid bands. Light filtering. White, Off-White, Gray, Beige, Black. Manual or motorized.</p>
+  </div>
+  <div class="card">
+    <h4>Premier Dual Sheer <span class="pill pill-gold">Contact or online</span></h4>
+    <p>Portfolio Dual Sheer — sheer + sheer bands. Wider fabric selection. Better light diffusion.</p>
+  </div>
+</div>
+<p style="font-size:12px;color:#666">Note on page: "Dozens of fabric colors and textures available — call or visit to see samples"</p>
+
+<h3>Woven Wood Shades</h3>
+<p style="font-size:12px;color:#888;margin-bottom:8px">Read PDFs in pdfs/ folder first — extract actual collection names, colors, and differences before writing descriptions.</p>
+<div class="grid3">
+  <div class="card">
+    <h4>Natural <span class="pill pill-green">Online price</span></h4>
+    <p>Light natural tones. Bamboo, grass, reeds. Standard sizes.</p>
+  </div>
+  <div class="card">
+    <h4>Textured <span class="pill pill-gold">Online or contact</span></h4>
+    <p>Darker, richer tones. Chunky weaves, mixed materials. Custom sizing.</p>
+  </div>
+  <div class="card">
+    <h4>Color / Pattern <span class="pill pill-gold">Contact us</span></h4>
+    <p>Printed or colored woven. Custom sizing. Contact for pricing.</p>
+  </div>
+</div>
+<p style="font-size:12px;color:#666">Note: "Each woven wood shade is a natural material — slight color and texture variations are expected"</p>
+
+<h3>Roller Shades</h3>
+<div class="grid2">
+  <div class="card">
+    <h4>Basic Roller <span class="pill pill-green">Online price</span></h4>
+    <p>Solar, light filtering, blackout. Standard colors. Manual or motorized.</p>
+  </div>
+  <div class="card">
+    <h4>Premier Roller <span class="pill pill-gold">Online or contact</span></h4>
+    <p>Designer fabrics, specialty textures, wide widths. Motorization packages.</p>
+  </div>
+</div>
+
+<h3>Cellular Shades</h3>
+<div class="grid3">
+  <div class="card">
+    <h4>Single Cell <span class="pill pill-green">Online price</span></h4>
+    <p>Budget-friendly insulation. Standard colors.</p>
+  </div>
+  <div class="card">
+    <h4>Double Cell <span class="pill pill-gold">Online or contact</span></h4>
+    <p>Better insulation, quieter operation. More colors.</p>
+  </div>
+  <div class="card">
+    <h4>Specialty Cell <span class="pill pill-gold">Contact us</span></h4>
+    <p>Top-down/bottom-up, cordless, specialty sizes.</p>
+  </div>
+</div>
+
+<h3>Drapery &amp; Soft Treatments</h3>
+<div class="grid2">
+  <div class="card">
+    <h4>Standard Drapes <span class="pill pill-green">Online price</span></h4>
+    <p>Pinch pleat in standard widths and lengths. Basic and Premier fabric tiers. Ships in 2–3 weeks.</p>
+  </div>
+  <div class="card">
+    <h4>Custom Drapes <span class="pill pill-gold">Contact us</span></h4>
+    <p>Non-standard sizes, customer fabric, specialty headings, multi-panel rooms, floor-to-ceiling.</p>
+  </div>
+</div>
+<div class="gold">
+  Add to drapery page: "Not sure? Call Justin at (609) 742-1720 — we'll tell you in 2 minutes whether your project is a standard order or needs a custom quote."<br><br>
+  Also link: "Use our fabric calculator to estimate yardage → pages/fabric-calculator.html"
+</div>
+
+<h3>Roman Shades</h3>
+<div class="card" style="margin-bottom:12px">
+  <h4>Custom Roman <span class="pill pill-gold">Contact us</span></h4>
+  <p>We fabricate in-house. Customer fabric or our fabric. Always contact us for quote. Never instant price — custom work only.</p>
+</div>
+
+<h3>Plantation Shutters</h3>
+<div class="green">✓ Keep shutters.html exactly as is — the 16-step configurator stays. Shutters are always custom quoted. The complexity is appropriate and expected.</div>
+
+<h3>Cornices / Valances</h3>
+<div class="grid2">
+  <div class="card">
+    <h4>Standard Cornice <span class="pill pill-green">Online price</span></h4>
+    <p>Standard sizes, basic upholstery. Use fabric calculator for yardage.</p>
+  </div>
+  <div class="card">
+    <h4>Custom Cornice <span class="pill pill-gold">Contact us</span></h4>
+    <p>Shaped, arched, banded, nailheads, unusual returns.</p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 5 — PURCHASE FLOWS
+     ═══════════════════════════════════════════════════════ -->
+<h2>5 · Purchase &amp; Contact Flows</h2>
+
+<h3>Online Purchase Flow (Basic + standard Premier)</h3>
+<ol>
+  <li>Customer selects product type</li>
+  <li>Selects Basic / Premier tier</li>
+  <li>Enters measurements</li>
+  <li>Sees instant price</li>
+  <li>"Add to cart" or "Check out now" → payment processor (Stripe — to be connected)</li>
+  <li>Always show: "Prefer to talk? (609) 742-1720"</li>
+</ol>
+<div class="gold">Payment placeholder for now: "Secure checkout coming soon — call Justin to order: (609) 742-1720"</div>
+
+<h3>Consultation Flow (Hunter Douglas + custom)</h3>
+<ol>
+  <li>Customer clicks product</li>
+  <li>Contact popup immediately — no pricing shown</li>
+  <li>Popup shows: Call · Text · Email · Book appointment</li>
+  <li>Phone (609) 742-1720 prominent</li>
+</ol>
+
+<h3>Appointment Section — add to every product page</h3>
+<div class="card" style="margin-bottom:14px">
+  <h4>Want us to come to you?</h4>
+  <p>Free in-home measurement and consultation. We bring samples. Philadelphia area + Salt Lake City. Out of state available.<br>
+  [Book appointment] → consult.html</p>
+</div>
+
+<h3>Contact Popup — must show</h3>
+<pre><code>Justin Healy — Philly Blinds / Blindznation / MJH Installations
+📞 (609) 742-1720 — call or text 24/7
+📧 justin@phillyblinds.com
+[Call now]  [Text now]  [Send email]  [Book consultation]</code></pre>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 6 — PDF READING INSTRUCTIONS
+     ═══════════════════════════════════════════════════════ -->
+<h2>6 · PDF Reading Instructions</h2>
+
+<div class="gold">Read all PDFs in the pdfs/ folder BEFORE simplifying any product pages. Use the content to write accurate descriptions — not generic copy.</div>
+
+<p>From each PDF extract:</p>
+<ul>
+  <li>Collection and product names</li>
+  <li>Key differences between tiers or collections</li>
+  <li>Available colors, textures, materials</li>
+  <li>Size limitations and maximums</li>
+  <li>Special features and options</li>
+</ul>
+
+<div class="warn">⚠ NEVER copy pricing from PDFs onto any page. PDFs in pdfs/wholesale-pricing/ are internal reference only — never link publicly.</div>
+
+<p>Use extracted info to populate the Basic vs Premier descriptions accurately. For example — if woven woods PDF shows "Galaxy Collection" and "Bali Collection" with specific color families, use those actual names.</p>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 7 — BLINDZNATION SETUP
+     ═══════════════════════════════════════════════════════ -->
+<h2>7 · Blindznation Setup</h2>
+
+<p>Blindznation is a copy of Philly Blinds. Only these things change:</p>
+
+<table>
+  <tr><th>Item</th><th>Philly Blinds</th><th>Blindznation</th></tr>
+  <tr><td>Brand name</td><td>Philly Blinds</td><td>Blindznation</td></tr>
+  <tr><td>Domain</td><td>phillyblinds.com</td><td>blindznation.com</td></tr>
+  <tr><td>Email</td><td>justin@phillyblinds.com</td><td>justin@blindznation.com</td></tr>
+  <tr><td>GitHub repo</td><td>phillyblinds</td><td>blindznation</td></tr>
+  <tr><td>Vercel project</td><td>phillyblinds</td><td>blindznation</td></tr>
+</table>
+
+<pre><code># Create blindznation from phillyblinds
+cd "C:\Users\Blind\Desktop\BUSINESS\Important PB\AI claude"
+xcopy phillyblinds blindznation /E /I /H /Y
+cd blindznation
+
+# Replace brand references — search and replace in all HTML/JS files:
+# "Philly Blinds" → "Blindznation"
+# "phillyblinds.com" → "blindznation.com"
+# "justin@phillyblinds.com" → "justin@blindznation.com"
+
+# Init new git repo
+git init
+git checkout -b dev
+git add .
+git commit -m "Blindznation initial — branched from PhillyBlinds"
+gh repo create blindznation --public --source=. --remote=origin --push</code></pre>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 8 — LAUNCH CHECKLIST
+     ═══════════════════════════════════════════════════════ -->
+<h2>8 · Launch Checklist</h2>
+
+<h3>Before going live — confirm all of these</h3>
+<ul class="checklist">
+  <li>All product clicks show contact popup (no pricing on live)</li>
+  <li>Standard products have online purchase flow</li>
+  <li>Hunter Douglas section separate — consultation only</li>
+  <li>Justin's phone (609) 742-1720 on every single page</li>
+  <li>Correct email per brand (PB vs BZ)</li>
+  <li>Gallery loading correctly</li>
+  <li>No placeholder or test content visible</li>
+  <li>Privacy policy accurate</li>
+  <li>No broken links</li>
+  <li>Mobile tested at 375px</li>
+  <li>DNS pointed to Vercel for both domains</li>
+  <li>SSL active (Vercel auto-generates)</li>
+  <li>PDFs not publicly linked</li>
+  <li>GoDaddy hosting cancelled (keep domain only)</li>
+  <li>4 desktop shortcuts created and working</li>
+  <li>Dev branch and main branch set up correctly</li>
+  <li>Justin confirmed all content</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 9 — WORKFLOW
+     ═══════════════════════════════════════════════════════ -->
+<h2>9 · Workflow Going Forward</h2>
+
+<div class="grid2">
+  <div class="card">
+    <h4>This Chat (Claude.ai)</h4>
+    <p>Design decisions, new page specs, content review, strategy, handoffs. Come here to plan and decide.</p>
+  </div>
+  <div class="card">
+    <h4>Terminal (Claude Code)</h4>
+    <p>Actually builds and edits files. Always reads CLAUDE.md first. Always on dev branch. Pushes to GitHub when done.</p>
+  </div>
+</div>
+
+<pre><code>Design here (Claude.ai)
+      ↓
+Claude Code builds on dev branch
+      ↓
+Justin opens TEST shortcut → reviews locally
+      ↓
+Justin says "confirmed"
+      ↓
+Claude Code merges dev → main → pushes
+      ↓
+Vercel auto-deploys in ~30 seconds
+      ↓
+Justin opens LIVE shortcut → confirms</code></pre>
+
+<div class="green">✓ GitHub is the single source of truth. Always git pull before starting. Always git push when done.</div>
+
+<h3>Implementation Order for Claude Code</h3>
+<ol>
+  <li>Create dev branch on both repos</li>
+  <li>Create 4 desktop shortcuts</li>
+  <li>Read all PDFs — extract product info</li>
+  <li>Simplify shades.html — 3-tier structure</li>
+  <li>Add Hunter Douglas dedicated section</li>
+  <li>Simplify zebra → Basic / Premier</li>
+  <li>Simplify woven wood → Natural / Textured / Color</li>
+  <li>Add online purchase flow to drapery + cornices</li>
+  <li>Add appointment booking section to all product pages</li>
+  <li>Update contact popup with full info</li>
+  <li>Create blindznation repo and swap brand references</li>
+  <li>Test everything locally</li>
+  <li>Report back — DO NOT push to live yet</li>
+</ol>
+
+</div><!-- /wrap -->
+</body>
+</html>
