@@ -1400,32 +1400,3 @@ function reqMoreInfo(product) {
   window.location.href = 'mailto:justin@phillyblinds.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
 }
 
-// LIVE MODE — intercept product selections site-wide → contact form popup
-// Pages themselves are navigable; only product-selection interactions are intercepted.
-document.addEventListener('DOMContentLoaded', function() {
-  var BLOCK = [
-    // Product cards (shades.html, index, any page)
-    '.product-card', 'a.product-card',
-    // Shades page product selection
-    '[onclick*="selectProduct"]', '[onclick*="selectBlindsType"]', '[onclick*="selectVerticalsType"]',
-    // Soft-treatments: drape pleat selection, roman style selection
-    '[onclick*="selectPleat"]', '[onclick*="selectRomanStyle"]', '[onclick*="selectPinchDetail"]',
-    // Shutters: line selection
-    '[onclick*="selLine"]',
-    // Generic configurator openers
-    '[onclick*="setProd"]', '[onclick*="selSystem"]', '[onclick*="pickType"]',
-    '[onclick*="setType"]', '[onclick*="selCollection"]', '[onclick*="selProduct"]',
-    '[onclick*="openConfig"]', '.configure-btn', '.btn-configure'
-  ];
-  BLOCK.forEach(function(sel) {
-    document.querySelectorAll(sel).forEach(function(el) {
-      el.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        var nameEl = el.querySelector('.product-name, .opt-name, h3, h4');
-        var label = nameEl ? nameEl.textContent.trim() : el.textContent.trim().split('\n')[0].trim();
-        pbShowContact(label ? 'Get a Quote — ' + label : 'Get a Free Quote');
-      }, true);
-    });
-  });
-});
