@@ -16,4 +16,4 @@ Disallow: /pdfs/wholesale-pricing/
 Disallow: /pdfs/scan/
 Disallow: /pdfs/scan2/
 
-Sitemap: https://phillyblinds.com/sitemap.xml
+Sitemap: https://www.phillyblinds.com/sitemap.xml

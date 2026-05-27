@@ -6,12 +6,13 @@
 function _injectHead(isHome) {
   const prefix = isHome ? '' : '../';
 
-  // Canonical — derived from og:url already set per-page
+  // Canonical — derived from og:url, normalized to www.phillyblinds.com
   if (!document.querySelector('link[rel="canonical"]')) {
     const og = document.querySelector('meta[property="og:url"]');
     if (og) {
       const c = document.createElement('link');
-      c.rel = 'canonical'; c.href = og.content;
+      c.rel = 'canonical';
+      c.href = og.content.replace('://phillyblinds.com', '://www.phillyblinds.com');
       document.head.appendChild(c);
     }
   }
@@ -39,11 +40,11 @@ function _injectHead(isHome) {
     s.textContent = JSON.stringify({
       "@context": "https://schema.org",
       "@type": ["LocalBusiness", "HomeAndConstructionBusiness"],
-      "@id": "https://phillyblinds.com/#business",
+      "@id": "https://www.phillyblinds.com/#business",
       "name": "Philly Blinds",
       "alternateName": "Michael J. Healy Installations LLC",
       "description": "Custom window treatments — roller shades, cellular shades, roman shades, drapery, and plantation shutters. Fabrication and installation serving Philadelphia and surrounding area.",
-      "url": "https://phillyblinds.com",
+      "url": "https://www.phillyblinds.com",
       "telephone": "+16097421720",
       "email": "justin@phillyblinds.com",
       "address": {
