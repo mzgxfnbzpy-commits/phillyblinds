@@ -789,3 +789,23 @@ html, body { overflow-x: hidden; }
   border: 1px solid rgba(200,151,63,0.4);
   color: var(--gold);
 }
+
+/* ============================================================
+   LIVE MODE — hide all public pricing displays
+   ============================================================ */
+.addon-price, .mo-price, .opt-card-price,
+.qtotal, .price-box, .price-pending,
+.price-estimate, .price-est-label,
+.price-line, .price-total-line, .price-note,
+.calc-price, .price-result, .price-display,
+.price-row, .price-summary, .price-breakdown,
+.price-out, .step-price, .configurator-price,
+#price-box, #price-pending, #qr-total, #q-total,
+#inline-total, #cv-pricesize, #pr-total,
+[class*="price-val"], [class*="qtotal-val"],
+[id^="pr-base"], [id^="pr-lining"], [id^="pr-soft"],
+[id^="pr-banding"], [id^="pr-sr"], [id^="pr-dn"],
+[id^="pr-valance"], [id^="pr-acc"], [id^="pr-freight"],
+[id^="pr-rd"], [id^="pr-motor"], [id^="pr-cargo"] {
+  display: none !important;
+}
