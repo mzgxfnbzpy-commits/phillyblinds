@@ -1,4 +1,18 @@
 {
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{"type": "host", "value": "phillyshades.com"}],
+      "destination": "https://phillyblinds.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [{"type": "host", "value": "www.phillyshades.com"}],
+      "destination": "https://phillyblinds.com/$1",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
