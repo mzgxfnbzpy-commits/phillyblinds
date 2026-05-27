@@ -86,6 +86,93 @@ function _injectHead(isHome) {
     });
     document.head.appendChild(s);
   }
+
+  // Default og:image / twitter:image
+  if (!document.querySelector('meta[property="og:image"]')) {
+    const i = document.createElement('meta');
+    i.setAttribute('property', 'og:image');
+    i.content = 'https://www.phillyblinds.com/img/social-preview.jpg';
+    document.head.appendChild(i);
+  }
+  if (!document.querySelector('meta[name="twitter:image"]')) {
+    const i = document.createElement('meta');
+    i.name = 'twitter:image';
+    i.content = 'https://www.phillyblinds.com/img/social-preview.jpg';
+    document.head.appendChild(i);
+  }
+  if (!document.querySelector('meta[property="og:image:width"]')) {
+    const iw = document.createElement('meta'); iw.setAttribute('property','og:image:width'); iw.content = '1200';
+    const ih = document.createElement('meta'); ih.setAttribute('property','og:image:height'); ih.content = '630';
+    document.head.appendChild(iw); document.head.appendChild(ih);
+  }
+
+  // Organization schema
+  if (!document.querySelector('script[data-pb-org-schema]')) {
+    const o = document.createElement('script');
+    o.type = 'application/ld+json';
+    o.setAttribute('data-pb-org-schema', '1');
+    o.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://www.phillyblinds.com/#organization",
+      "name": "Philly Blinds",
+      "legalName": "Michael J. Healy Installations LLC",
+      "url": "https://www.phillyblinds.com",
+      "logo": "https://www.phillyblinds.com/img/social-preview.jpg",
+      "telephone": "+16097421720",
+      "email": "justin@phillyblinds.com",
+      "foundingDate": "2014",
+      "areaServed": [
+        {"@type":"State","name":"Pennsylvania"},
+        {"@type":"State","name":"New Jersey"},
+        {"@type":"State","name":"Utah"},
+        {"@type":"Country","name":"United States"}
+      ],
+      "knowsAbout": ["Custom Window Treatments","Roller Shades","Cellular Shades","Roman Shades","Plantation Shutters","Custom Drapery","Woven Wood Shades","Motorized Window Treatments","Drapery Hardware"]
+    });
+    document.head.appendChild(o);
+  }
+
+  // Service schema
+  if (!document.querySelector('script[data-pb-service-schema]')) {
+    const sv = document.createElement('script');
+    sv.type = 'application/ld+json';
+    sv.setAttribute('data-pb-service-schema', '1');
+    sv.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "@id": "https://www.phillyblinds.com/#service",
+      "name": "Custom Window Treatment Fabrication and Installation",
+      "provider": {"@id": "https://www.phillyblinds.com/#business"},
+      "areaServed": [
+        {"@type":"City","name":"Philadelphia"},
+        {"@type":"City","name":"Huntingdon Valley"},
+        {"@type":"City","name":"Bryn Mawr"},
+        {"@type":"City","name":"Wayne"},
+        {"@type":"City","name":"Ardmore"},
+        {"@type":"City","name":"Cherry Hill"},
+        {"@type":"City","name":"Moorestown"},
+        {"@type":"City","name":"Voorhees"},
+        {"@type":"City","name":"Blue Bell"},
+        {"@type":"City","name":"Lansdale"},
+        {"@type":"City","name":"Doylestown"},
+        {"@type":"City","name":"Media"},
+        {"@type":"City","name":"Salt Lake City"}
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Custom Window Treatments",
+        "itemListElement": [
+          {"@type":"Offer","itemOffered":{"@type":"Service","name":"Custom Roller Shade Installation — Philadelphia Area"}},
+          {"@type":"Offer","itemOffered":{"@type":"Service","name":"Plantation Shutter Installation — Main Line & South Jersey"}},
+          {"@type":"Offer","itemOffered":{"@type":"Service","name":"Custom Drapery Fabrication — Philadelphia & Surrounding Counties"}},
+          {"@type":"Offer","itemOffered":{"@type":"Service","name":"Roman Shade Fabrication — Montgomery County PA"}},
+          {"@type":"Offer","itemOffered":{"@type":"Service","name":"Free In-Home Consultation — Philadelphia, Bucks & Delaware County"}}
+        ]
+      }
+    });
+    document.head.appendChild(sv);
+  }
 }
 
 function renderNav(activePage) {
