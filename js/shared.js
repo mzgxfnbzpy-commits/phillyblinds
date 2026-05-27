@@ -91,13 +91,13 @@ function _injectHead(isHome) {
   if (!document.querySelector('meta[property="og:image"]')) {
     const i = document.createElement('meta');
     i.setAttribute('property', 'og:image');
-    i.content = 'https://www.phillyblinds.com/img/social-preview.svg';
+    i.content = 'https://www.phillyblinds.com/img/social-preview.png';
     document.head.appendChild(i);
   }
   if (!document.querySelector('meta[name="twitter:image"]')) {
     const i = document.createElement('meta');
     i.name = 'twitter:image';
-    i.content = 'https://www.phillyblinds.com/img/social-preview.svg';
+    i.content = 'https://www.phillyblinds.com/img/social-preview.png';
     document.head.appendChild(i);
   }
   if (!document.querySelector('meta[property="og:image:width"]')) {
@@ -118,7 +118,7 @@ function _injectHead(isHome) {
       "name": "Philly Blinds",
       "legalName": "Michael J. Healy Installations LLC",
       "url": "https://www.phillyblinds.com",
-      "logo": "https://www.phillyblinds.com/img/social-preview.svg",
+      "logo": "https://www.phillyblinds.com/img/social-preview.png",
       "telephone": "+16097421720",
       "email": "justin@phillyblinds.com",
       "foundingDate": "2014",
@@ -1487,5 +1487,6 @@ function reqMoreInfo(product) {
   var body = 'Hi, I would like to request more information about ' + (product || 'your products') + '.\n\nName:\nPhone:\nBest time to call:';
   window.location.href = 'mailto:justin@phillyblinds.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
 }
+
 
 
