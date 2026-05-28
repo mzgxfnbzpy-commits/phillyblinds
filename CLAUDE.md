@@ -114,10 +114,12 @@ then push to GitHub. Do NOT unzip and overwrite the whole folder.
 | Vercel | phillyblinds.vercel.app | âœ… Live, auto-deploys from GitHub |
 | Vercel account | vercel.com/phillyblinds | âœ… |
 | Local files | C:\Users\Blind\Desktop\BUSINESS\Important PB\AI claude\phillyblinds | âœ… |
-| Domain | phillyblinds.com | âŒ Not purchased yet |
-| Business email | Not set up | âŒ |
-| Form backend | Not set up (use formspree.io) | âŒ |
-| Payment | Not set up (use Stripe) | âŒ |
+| Domain | phillyblinds.com → 308 → www.phillyblinds.com (canonical) | ✅ Live |
+| www domain | www.phillyblinds.com (canonical serving domain) | ✅ Live |
+| Google Search Console | phillyblinds.com verified (HTML file method) | ✅ Verified |
+| Business email | justin@phillyblinds.com · sarah@phillyblinds.com | ✅ Set |
+| Form backend | All quote forms: mailto:blindznation@gmail.com | ✅ Active |
+| Payment | Not set up (use Stripe when ready) | ❌ |
 
 ## DESKTOP SHORTCUTS (on Windows desktop)
 - **PhillyBlinds â€” Site** â†’ opens phillyblinds\index.html locally
@@ -331,8 +333,22 @@ Norman no longer offers Brightwood. Removed from product-specs.html (May 2026). 
 User will provide updated discontinued fabric list. When received: remove from configurators, update this section with date and affected files.
 
 *This file is the single source of truth. If you change anything on the project, update this file.*
-*Last agent to work on this: Claude Code — May 16, 2026*
-*Last session summary: Full site audit â€” 0 broken links, 0 broken images, all 765 portfolio images verified, all nav/footer/meta/phone present on every page. Replaced 6 remaining SVG placeholders in soft-treatments.html with real photos (3-Prong Tack Bottom, Flat Roman, Hobbled Roman, Relaxed Roman, TDBU, Arch/Specialty). All pleat and roman style cards now use real photos. Chatbot needs ANTHROPIC_API_KEY set in Vercel env vars to go live.*
+
+
+---
+
+## SEO STATUS (May 2026)
+
+- ✅ Google Search Console verified — phillyblinds.com (HTML file method)
+- ✅ Canonical domain: www.phillyblinds.com (apex 308 → www)
+- ✅ sitemap.xml at www.phillyblinds.com/sitemap.xml — all URLs use www.phillyblinds.com
+- ✅ robots.txt with correct sitemap pointer
+- ✅ All 48+ pages have og:url, og:title, og:description tags pointing to www.phillyblinds.com
+- ✅ JSON-LD LocalBusiness schema in shared.js with @id/url pointing to www.phillyblinds.com
+- ✅ canonical link injected by shared.js (normalizes to www.phillyblinds.com)
+- ⬜ Sitemaps not yet submitted to Google Search Console (must be done manually)
+*Last agent to work on this: Claude Code — May 27, 2026*
+*Last session: SEO production launch — both domains live, Google Search Console verified, all og:url/canonical tags fixed to use www.phillyblinds.com on all 48+ pages, OG tags added to 18 newer product pages.*
 
 
 
