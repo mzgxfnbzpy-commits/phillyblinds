@@ -369,7 +369,7 @@
 
     <!-- Fabric color + liner picker (shown when we supply fabric) -->
     <div id="drape-fabric-detail" style="display:none;margin-top:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
-      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px">Choose a fabric color <span style="font-weight:400;color:#999;text-transform:none">— est. $25/yard · swatches brought to your consultation</span></div>
+      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px">Choose a fabric color <span style="font-weight:400;color:#999;text-transform:none">— swatches brought to your free consultation</span></div>
       <div class="opt-row" id="grp-drape-color" style="flex-wrap:wrap">
         <button class="opt-btn" onclick="selOpt(this,'grp-drape-color');calcDrapePrice()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#FAFAFA;border:1px solid #ccc;flex-shrink:0"></span>White</button>
         <button class="opt-btn" onclick="selOpt(this,'grp-drape-color');calcDrapePrice()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#FFF3DC;border:1px solid #ddd;flex-shrink:0"></span>Ivory</button>
@@ -380,15 +380,15 @@
         <button class="opt-btn" onclick="selOpt(this,'grp-drape-color');calcDrapePrice()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#1A2744;flex-shrink:0"></span>Navy</button>
         <button class="opt-btn" onclick="selOpt(this,'grp-drape-color');calcDrapePrice()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#1A1A1A;flex-shrink:0"></span>Black</button>
       </div>
-      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin:12px 0 8px">Lining <span style="font-weight:400;color:#999;text-transform:none">— est. $7/yard</span></div>
+      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin:12px 0 8px">Lining</div>
       <div class="opt-row" id="grp-drape-liner">
         <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-liner');calcDrapePrice()">No liner</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');calcDrapePrice()">Standard liner (+$9.25/yd)</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');calcDrapePrice()">Blackout liner (+$9.25/yd)</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');calcDrapePrice()">Standard liner</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');calcDrapePrice()">Blackout liner</button>
       </div>
       <div style="margin-top:8px;display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid #e8e4dc;border-radius:8px;background:#f9f7f4">
         <input type="checkbox" id="d-interlining-check" onchange="calcDrapePrice()" style="width:16px;height:16px;cursor:pointer;flex-shrink:0">
-        <label for="d-interlining-check" style="font-size:12px;font-weight:500;color:#444;cursor:pointer;line-height:1.4">Add interlining <span style="color:#888;font-weight:400">(+$7/yd — adds body, weight &amp; insulation; works with any liner)</span></label>
+        <label for="d-interlining-check" style="font-size:12px;font-weight:500;color:#444;cursor:pointer;line-height:1.4">Add interlining <span style="color:#888;font-weight:400">(adds body, weight &amp; insulation; works with any liner)</span></label>
       </div>
       <div style="font-size:11px;color:#aaa;margin-top:7px;line-height:1.5">Colors and exact fabric options confirmed during your free in-home consultation. Final pricing confirmed at order.</div>
     </div>
