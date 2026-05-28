@@ -2,6 +2,15 @@
 // Philly Blinds — Shared Components
 // ============================================================
 
+// ─── GOOGLE BUSINESS PROFILE ─────────────────────────────────
+// To connect your site to your Google Business listing:
+// 1. Go to business.google.com → find your listing → click Share → copy the link
+// 2. Paste that link as _PB_GBP_URL below (looks like: https://g.page/r/xxxxxx)
+// 3. For _PB_REVIEW_URL: append "/review" to that link
+// This unlocks: schema sameAs, review button in footer, and rich results in Google.
+var _PB_GBP_URL    = '';  // TODO: paste your Google Business Profile URL here
+var _PB_REVIEW_URL = '';  // TODO: paste your Google review link here (GBP URL + /review)
+
 
 function _injectHead(isHome) {
   const prefix = isHome ? '' : '../';
@@ -82,7 +91,7 @@ function _injectHead(isHome) {
         {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Motorized Window Treatment Installation"}},
         {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Free In-Home Window Treatment Consultation"}}
       ],
-      "sameAs": []
+      "sameAs": (_PB_GBP_URL ? [_PB_GBP_URL] : [])
     });
     document.head.appendChild(s);
   }
@@ -172,6 +181,27 @@ function _injectHead(isHome) {
       }
     });
     document.head.appendChild(sv);
+  }
+
+  // Breadcrumb schema — auto-generated from og:url on every inner page
+  if (!document.querySelector('script[data-pb-breadcrumb]')) {
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogUrl && ogTitle && ogUrl.content !== 'https://www.phillyblinds.com/') {
+      const pageTitle = ogTitle.content.replace(/\s*[—–-]\s*Philly Blinds\s*$/i, '').trim();
+      const bc = document.createElement('script');
+      bc.type = 'application/ld+json';
+      bc.setAttribute('data-pb-breadcrumb', '1');
+      bc.textContent = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type":"ListItem","position":1,"name":"Philly Blinds","item":"https://www.phillyblinds.com/"},
+          {"@type":"ListItem","position":2,"name":pageTitle,"item":ogUrl.content}
+        ]
+      });
+      document.head.appendChild(bc);
+    }
   }
 }
 
@@ -264,37 +294,36 @@ function renderFooter(isHome) {
         <a href="tel:6097421720" style="display:block;font-size:15px;font-weight:600;color:var(--gold);text-decoration:none;margin-bottom:2px">(609) 742-1720</a>
         <div style="font-size:11px;color:var(--text-faint);margin-bottom:6px">Justin Healy &mdash; call or text 24/7</div>
         <a href="mailto:justin@phillyblinds.com" style="font-size:12px;color:var(--text-muted);text-decoration:none;display:block;margin-bottom:4px">justin@phillyblinds.com</a>
-        <a href="mailto:sarah@phillyblinds.com" style="font-size:12px;color:var(--text-muted);text-decoration:none;display:block">sarah@phillyblinds.com</a>
+        <a href="mailto:sarah@phillyblinds.com" style="font-size:12px;color:var(--text-muted);text-decoration:none;display:block;margin-bottom:14px">sarah@phillyblinds.com</a>
+        ${(_PB_REVIEW_URL || true) ? `<a href="${_PB_REVIEW_URL || 'https://www.google.com/search?q=Philly+Blinds+Huntingdon+Valley+PA+window+treatments'}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#fbbc04;text-decoration:none;background:rgba(251,188,4,0.10);border:1px solid rgba(251,188,4,0.25);border-radius:6px;padding:6px 12px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Leave us a Google review</a>` : ''}
       </div>
       <div class="footer-col">
-        <h4>Shades</h4>
-        <a href="${pre}shades.html?type=roller">Roller shades</a>
+        <h4>Shades &amp; Blinds</h4>
+        <a href="${pre}roller-shades.html">Roller shades</a>
         <a href="${pre}shades.html">Cellular shades</a>
-        <a href="${pre}shades.html">Zebra shades</a>
-        <a href="${pre}shades.html">Woven wood</a>
-        <a href="${pre}shades.html">Faux wood blinds</a>
-        <a href="${pre}shades.html">Silhouette / Pirouette / Luminette</a>
+        <a href="${pre}zebra-shades.html">Zebra shades</a>
+        <a href="${pre}woven-wood-shades.html">Woven wood shades</a>
+        <a href="${pre}wood-blinds.html">Wood blinds</a>
+        <a href="${pre}sheer-shades.html">Sheer shades</a>
+        <a href="${pre}synchrony-verticals.html">Vertical blinds</a>
       </div>
       <div class="footer-col">
-        <h4>Soft treatments</h4>
+        <h4>Soft Treatments</h4>
         <a href="${pre}soft-treatments.html">Custom drapery</a>
-        <a href="${pre}soft-treatments.html">Roman shades</a>
-        <a href="${pre}hardware.html">Drapery hardware</a>
-      </div>
-      <div class="footer-col">
-        <h4>Premium</h4>
+        <a href="${pre}soft-treatments.html?tab=roman">Roman shades</a>
         <a href="${pre}shutters.html">Plantation shutters</a>
-        <a href="${pre}shades.html">Hunter Douglas</a>
+        <a href="${pre}hardware.html">Drapery hardware</a>
+        <a href="${pre}upholstery.html">Custom upholstery</a>
       </div>
       <div class="footer-col">
         <h4>Help</h4>
-        <a href="${pre}upholstery.html">Custom upholstery</a>
+        <a href="${pre}consult.html">Free consultation</a>
         <a href="${pre}installation.html">Installation services</a>
-        <a href="${pre}measure.html">Measure: shades &amp; blinds</a>
-        <a href="${pre}measure-shutters.html">Measure: shutters</a>
-        <a href="${pre}measure-drapes.html">Measure: drapery</a>
+        <a href="${pre}measure.html">How to measure: shades</a>
+        <a href="${pre}measure-shutters.html">How to measure: shutters</a>
+        <a href="${pre}measure-drapes.html">How to measure: drapery</a>
         <a href="${pre}gallery.html">Our work</a>
-        <a href="${pre}consult.html">Book consultation</a>
         <a href="${pre}about.html">About us</a>
         <a href="${pre}privacy.html">Privacy policy</a>
       </div>
