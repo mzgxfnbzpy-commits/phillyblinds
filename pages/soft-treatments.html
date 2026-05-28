@@ -9,6 +9,10 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.phillyblinds.com/pages/soft-treatments.html">
 <meta property="og:site_name" content="Philly Blinds">
+<meta property="og:image" content="https://www.phillyblinds.com/img/social-preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://www.phillyblinds.com/img/social-preview.png">
 <meta name="twitter:card" content="summary_large_image">
 <title>Soft Treatments — Custom Drapery &amp; Roman Shades | Philly Blinds</title>
 <link rel="stylesheet" href="../css/global.css">
@@ -1294,7 +1298,7 @@
     <div class="section-label">Get a quote</div>
     <div class="section-title" style="margin-bottom:6px">Request a drapery or roman shade quote</div>
     <div class="section-sub" style="margin-bottom:24px">All soft treatments are custom — no two alike. Tell Justin what you need and he'll follow up with pricing. Or call: <a href="tel:6097421720" style="color:var(--gold);text-decoration:none;font-weight:500">(609) 742-1720</a></div>
-    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="soft-quote-form" onsubmit="handleSoftQuote(event)">
+    <form id="soft-quote-form" onsubmit="handleSoftQuote(event)">
       <div class="form-row">
         <div class="form-group"><label>Your name *</label><input type="text" name="name" placeholder="Jane Smith" required></div>
         <div class="form-group"><label>Phone *</label><input type="tel" name="phone" placeholder="(215) 555-0100" required></div>
@@ -2238,24 +2242,30 @@ function submitRoman() {
   document.getElementById('roman-success').style.display = 'block';
 }
 
-async function handleSoftQuote(e) {
+function handleSoftQuote(e) {
   e.preventDefault();
   const form = document.getElementById('soft-quote-form');
-  const btn = form.querySelector('button[type="submit"]');
-  btn.disabled = true; btn.textContent = 'Sending…';
-  try {
-    const resp = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
-    if (resp.ok) {
-      form.style.display = 'none';
-      document.getElementById('soft-quote-success').style.display = 'block';
-    } else {
-      btn.disabled = false; btn.textContent = 'Send quote request →';
-      alert('Something went wrong. Please call (609) 742-1720 or email justin@phillyblinds.com');
-    }
-  } catch(err) {
-    btn.disabled = false; btn.textContent = 'Send quote request →';
-    alert('Connection error. Please call Justin at (609) 742-1720 — available 24/7.');
-  }
+  const data = new FormData(form);
+  const name     = data.get('name') || '';
+  const phone    = data.get('phone') || '';
+  const email    = data.get('email') || '';
+  const product  = data.get('product') || '';
+  const windows  = data.get('window_count') || '';
+  const timeline = data.get('timeline') || '';
+  const notes    = data.get('notes') || '';
+  const subject  = 'Quote Request — Soft Treatments' + (product ? ': ' + product : '');
+  const body     = [
+    'Name: ' + name,
+    'Phone: ' + phone,
+    'Email: ' + email,
+    'Product: ' + (product || 'Not specified'),
+    'Number of windows: ' + (windows || 'Not specified'),
+    'Timeline: ' + (timeline || 'Not specified'),
+    'Notes: ' + (notes || 'None')
+  ].join('\n');
+  window.location.href = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  form.style.display = 'none';
+  document.getElementById('soft-quote-success').style.display = 'block';
 }
 </script>
 </body>
