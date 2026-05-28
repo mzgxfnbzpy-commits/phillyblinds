@@ -367,7 +367,7 @@ function _updateCartBadge() {
 function _pbCartToast(name) {
   var t = document.getElementById('pb-cart-toast');
   if (!t) return;
-  t.textContent = '✓ ' + name + ' added to cart';
+  t.textContent = '✓ ' + name + ' added to quote list';
   t.classList.add('show');
   setTimeout(function(){ t.classList.remove('show'); }, 2600);
 }
@@ -398,7 +398,7 @@ function _renderCartBody() {
   _updateCartBadge();
   var foot = document.getElementById('pb-cart-foot');
   if (!cart.length) {
-    body.innerHTML = '<div class="pb-cart-empty"><div class="pb-cart-empty-icon">🛍️</div>Your cart is empty.<br><span style="font-size:12px">Configure a product and click Add to Cart.</span></div>';
+    body.innerHTML = '<div class="pb-cart-empty"><div class="pb-cart-empty-icon">📋</div>Your quote list is empty.<br><span style="font-size:12px">Configure a product and click "Add to Quote List."</span></div>';
     if (foot) foot.style.display = 'none';
     return;
   }
@@ -431,22 +431,16 @@ function _renderCartBody() {
 var PB_CHECKOUT_URL = '#checkout';
 
 function pbGoCheckout() {
-  if (PB_CHECKOUT_URL === '#checkout') {
-    var cart = pbGetCart();
-    if (!cart.length) return;
-    var lines = cart.map(function(item, i) {
-      var s = (i+1) + '. ' + (item.product || 'Item');
-      if (item.qty > 1) s += ' \xd7' + item.qty;
-      if (item.specs) s += ' — ' + item.specs;
-      return s;
-    }).join('\n');
-    window.location.href = 'mailto:blindznation@gmail.com' +
-      '?subject=' + encodeURIComponent('Order Inquiry') +
-      '&body=' + encodeURIComponent('Hi, I\'d like to place an order for:\n\n' + lines + '\n\nPlease contact me to complete my purchase.');
-    return;
-  }
-  sessionStorage.setItem('pb_checkout_cart', JSON.stringify(pbGetCart()));
-  window.location.href = PB_CHECKOUT_URL;
+  var cart = pbGetCart();
+  if (!cart.length) return;
+  var lines = cart.map(function(item, i) {
+    var label = 'Item ' + (i + 1) + (item.product ? ': ' + item.product : '');
+    if (item.qty > 1) label += ' \xd7' + item.qty;
+    return { label: label, value: item.specs || '' };
+  });
+  var productName = cart.length === 1 ? (cart[0].product || 'Custom Window Treatment') : cart.length + ' items';
+  pbCloseCart();
+  pbShowQuoteModal(lines, productName);
 }
 
 // ── Inject cart DOM ─────────────────────────────────────────
@@ -469,15 +463,15 @@ function _initCart() {
   drawer.id = 'pb-cart-drawer'; drawer.className = 'pb-cart-drawer';
   drawer.innerHTML =
     '<div class="pb-cart-drawer-head">' +
-      '<div><div class="pb-cart-drawer-title">Your cart</div></div>' +
+      '<div><div class="pb-cart-drawer-title">Your quote list</div></div>' +
       '<button class="pb-cart-close" onclick="pbCloseCart()">×</button>' +
     '</div>' +
     '<div class="pb-cart-body" id="pb-cart-body"></div>' +
     '<div id="pb-cart-foot" style="padding:16px;border-top:1px solid #e8e8e4;display:none">' +
       '<button class="btn-gold" style="width:100%;padding:13px;font-size:15px;font-weight:600;margin-bottom:8px" ' +
-        'onclick="pbGoCheckout()">Check out now →</button>' +
-      '<div style="text-align:center;font-size:11px;color:#aaa;margin-bottom:12px">Secure checkout &bull; All major cards accepted</div>' +
-      '<button onclick="pbClearCart()" style="display:block;width:100%;background:none;border:none;font-size:11px;color:#ccc;cursor:pointer;font-family:inherit">Clear cart</button>' +
+        'onclick="pbGoCheckout()">Request Quotes for All Items →</button>' +
+      '<div style="text-align:center;font-size:11px;color:#aaa;margin-bottom:12px">We\'ll reply by email &bull; No payment required now</div>' +
+      '<button onclick="pbClearCart()" style="display:block;width:100%;background:none;border:none;font-size:11px;color:#ccc;cursor:pointer;font-family:inherit">Clear quote list</button>' +
     '</div>';
   document.body.appendChild(drawer);
 
