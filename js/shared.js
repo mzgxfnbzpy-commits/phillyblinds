@@ -8,8 +8,8 @@
 // 2. Paste that link as _PB_GBP_URL below (looks like: https://g.page/r/xxxxxx)
 // 3. For _PB_REVIEW_URL: append "/review" to that link
 // This unlocks: schema sameAs, review button in footer, and rich results in Google.
-var _PB_GBP_URL    = '';  // TODO: paste your Google Business Profile URL here
-var _PB_REVIEW_URL = '';  // TODO: paste your Google review link here (GBP URL + /review)
+var _PB_GBP_URL    = 'https://maps.app.goo.gl/TRZfYtEAUqKpHvQL7';
+var _PB_REVIEW_URL = 'https://maps.app.goo.gl/TRZfYtEAUqKpHvQL7';
 
 
 function _injectHead(isHome) {
