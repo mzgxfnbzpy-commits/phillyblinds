@@ -1094,7 +1094,7 @@ function renderFabricGrid() {
 }
 
 function selectFabric(f) {
-  if(f.placeholder){alert('This is a placeholder. Enter the fabric data from Wallace PDF pages 3-5 first.');return;}
+  if(f.placeholder){return;}
   // Block flat for [1] fabrics
   if(S.panelStyle==='flat'&&f.noFlat){alert(f.pattern+' '+f.color+' is not available in Flat style. Change panel style first.');return;}
   S.fabric=f;

@@ -231,7 +231,7 @@ function renderNav(activePage) {
       <div class="nav-brand-row">
         <a class="nav-brand-active" href="${root}">Philly Blinds</a>
         <span class="nav-brand-sep">·</span>
-        <span class="nav-brand-other">Blindznation</span>
+        <a class="nav-brand-other" href="https://www.blindznation.com" target="_blank" rel="noopener">Blindznation</a>
       </div>
     </div>
     <div class="nav-main">
