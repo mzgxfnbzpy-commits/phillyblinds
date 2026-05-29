@@ -1,8 +1,11 @@
 // Philly Blinds — Quote Request API
 // POST /api/quote
-// Setup: add RESEND_API_KEY to Vercel env vars.
-// Resend domain verification required for noreply@phillyblinds.com:
-//   resend.com → Domains → Add phillyblinds.com → add the DNS records shown.
+// Required Vercel env vars:
+//   RESEND_API_KEY  — from resend.com (free account)
+//   RESEND_FROM     — verified sender, e.g. "Philly Blinds <noreply@phillyblinds.com>"
+//                     If domain not yet verified, use any @resend.dev address as temp:
+//                     "Philly Blinds <onboarding@resend.dev>"
+// Domain verification: resend.com → Domains → Add phillyblinds.com → add the DNS records.
 
 const TEAM_EMAILS = [
   'justin@phillyblinds.com',
@@ -10,8 +13,8 @@ const TEAM_EMAILS = [
   'mike@phillyblinds.com',
   'tarin@phillyblinds.com'
 ];
-const FROM_QUOTES  = 'Philly Blinds Quotes <noreply@phillyblinds.com>';
-const FROM_CONFIRM = 'Philly Blinds <noreply@phillyblinds.com>';
+const FROM_QUOTES  = process.env.RESEND_FROM || 'Philly Blinds Quotes <noreply@phillyblinds.com>';
+const FROM_CONFIRM = process.env.RESEND_FROM || 'Philly Blinds <noreply@phillyblinds.com>';
 const PHONE        = '(609) 742-1720';
 const BRAND        = 'Philly Blinds';
 const SITE_URL     = 'phillyblinds.com';
