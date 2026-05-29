@@ -9,7 +9,7 @@
 // 3. For _PB_REVIEW_URL: append "/review" to that link
 // This unlocks: schema sameAs, review button in footer, and rich results in Google.
 var _PB_GBP_URL    = 'https://maps.app.goo.gl/TRZfYtEAUqKpHvQL7';
-var _PB_REVIEW_URL = 'https://maps.app.goo.gl/TRZfYtEAUqKpHvQL7';
+var _PB_REVIEW_URL = 'https://maps.app.goo.gl/TRZfYtEAUqKpHvQL7/review';
 
 
 function _injectHead(isHome) {
@@ -332,6 +332,46 @@ function renderFooter(isHome) {
   `;
   setTimeout(function(){ _initShippingEstimators(); _initFileUploads(); _initInstallationAddons(); }, 0);
 }
+
+// ── STEP AUTO-ADVANCE (accordion + wizard) ───────────────────────────────────
+// Single-choice cards auto-advance to the next step — no "Next" button needed.
+// Accordion pages: uses .step-block siblings.
+// Wizard pages:    uses .section containers with sec-N IDs and a goStep() function.
+// Mark multi-select sections with data-multi to keep the manual Continue button.
+(function () {
+  document.addEventListener('click', function (e) {
+    var card = e.target.closest(
+      '.opt-card, .color-card, .pat-card, .liner-card, .type-card, .coll-card, ' +
+      '.finish-card, .sys-card, .diam-card, .finial-card, .rod-card'
+    );
+    if (!card) return;
+    if (card.classList.contains('sel')) return; // already selected — don't re-advance
+
+    // ── Accordion style (.step-block) ──────────────────────────────────────
+    var block = card.closest('.step-block');
+    if (block) {
+      if (block.classList.contains('done')) return;
+      setTimeout(function () {
+        var next = block.nextElementSibling;
+        while (next && !next.classList.contains('step-block')) next = next.nextElementSibling;
+        if (!next) return;
+        next.classList.add('active');
+        next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+      return;
+    }
+
+    // ── Wizard style (.section with sec-N id) ──────────────────────────────
+    var section = card.closest('.section');
+    if (!section || section.hasAttribute('data-multi')) return;
+    var m = section.id.match(/sec-(\d+)/);
+    if (!m) return;
+    var nextN = parseInt(m[1]) + 1;
+    setTimeout(function () {
+      if (typeof goStep === 'function') goStep(nextN);
+    }, 300);
+  }, false);
+})();
 
 function _toggleDrawer() {
   var btn    = document.getElementById('nav-hamburger');

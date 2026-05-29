@@ -27,7 +27,7 @@
 .page-hero .sub{font-size:14px;color:rgba(255,255,255,.8);line-height:1.7;max-width:520px;margin-bottom:20px}
 .hero-pills{display:flex;gap:8px;flex-wrap:wrap}
 .hero-pill{font-size:11px;padding:4px 12px;border-radius:20px;border:.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7)}
-.hero-pill-gold{background:rgba(200,151,63,.12);border-color:rgba(200,151,63,.3);color:var(--gold)}
+.hero-pill-gold{background:rgba(45,224,193,.12);border-color:rgba(45,224,193,.35);color:var(--gold)}
 
 .config-wrap{max-width:860px;margin:0 auto;padding:32px 20px 72px}
 
@@ -99,7 +99,7 @@ textarea.inp-field{resize:vertical;min-height:80px}
 .inp-hint{font-size:11px;color:#888;line-height:1.4}
 
 /* Banners */
-.info-box{background:var(--gold-mid);border:1px solid rgba(200,151,63,.25);border-radius:8px;padding:11px 14px;font-size:12px;color:#555;line-height:1.6;margin-bottom:14px}
+.info-box{background:var(--gold-mid);border:1px solid rgba(45,224,193,.25);border-radius:8px;padding:11px 14px;font-size:12px;color:#555;line-height:1.6;margin-bottom:14px}
 .info-box strong{color:var(--espresso)}
 .warn-box{background:#fff8e8;border:1px solid #f0d070;border-radius:8px;padding:11px 14px;font-size:12px;color:#7a5a00;line-height:1.6;margin-bottom:12px;display:none}
 .warn-box.show{display:block}
@@ -200,7 +200,7 @@ textarea.inp-field{resize:vertical;min-height:80px}
     </div>
   </div>
 
-  <!-- ── STEP 2: COLLECTION ── -->
+  <!-- ── STEP 2: COLLECTION ── auto-advances on collection pick -->
   <div class="section" id="sec-2">
     <div class="sec-label">Step 2 of 8</div>
     <div class="sec-title">Choose a Collection</div>
@@ -209,12 +209,11 @@ textarea.inp-field{resize:vertical;min-height:80px}
     <div class="coll-grid" id="coll-grid"></div>
     <div class="btn-row">
       <button class="btn-back" onclick="goStep(1)">← Back</button>
-      <button class="btn-next" onclick="goStep(3)">Next →</button>
     </div>
   </div>
 
-  <!-- ── STEP 3: ROD / POLE TYPE + SIZE ── -->
-  <div class="section" id="sec-3">
+  <!-- ── STEP 3: ROD / POLE TYPE + SIZE — multi-choice, keep Continue -->
+  <div class="section" id="sec-3" data-multi>
     <div class="sec-label">Step 3 of 8</div>
     <div class="sec-title" id="s3-title">Rod / Pole Type &amp; Size</div>
     <div class="sec-sub" id="s3-sub">Choose the rod profile and diameter. Restrictions apply per collection.</div>
@@ -223,11 +222,11 @@ textarea.inp-field{resize:vertical;min-height:80px}
     <div class="warn-box" id="warn-3d-rod">3D hardware requires 1" round hollow rod (smooth or hammered). Smooth rod supports bypass rings; hammered does not.</div>
     <div class="btn-row">
       <button class="btn-back" onclick="goStep(2)">← Back</button>
-      <button class="btn-next" onclick="goStep(4)">Next →</button>
+      <button class="btn-next" onclick="goStep(4)">Continue →</button>
     </div>
   </div>
 
-  <!-- ── STEP 4: FINIAL / END CAP ── -->
+  <!-- ── STEP 4: FINIAL / END CAP — auto-advances on finial pick -->
   <div class="section" id="sec-4">
     <div class="sec-label">Step 4 of 8</div>
     <div class="sec-title">Finial / End Cap</div>
@@ -236,24 +235,23 @@ textarea.inp-field{resize:vertical;min-height:80px}
     <div id="s4-content"></div>
     <div class="btn-row">
       <button class="btn-back" onclick="goStep(3)">← Back</button>
-      <button class="btn-next" onclick="goStep(5)">Next →</button>
     </div>
   </div>
 
-  <!-- ── STEP 5: MOUNT & BRACKETS ── -->
-  <div class="section" id="sec-5">
+  <!-- ── STEP 5: MOUNT & BRACKETS — multi-choice, keep Continue -->
+  <div class="section" id="sec-5" data-multi>
     <div class="sec-label">Step 5 of 8</div>
     <div class="sec-title">Mount &amp; Brackets</div>
     <div class="sec-sub">Orion recommends brackets every 48". Double systems require a center support bracket.</div>
     <div id="s5-content"></div>
     <div class="btn-row">
       <button class="btn-back" onclick="goStep(4)">← Back</button>
-      <button class="btn-next" onclick="goStep(6)">Next →</button>
+      <button class="btn-next" onclick="goStep(6)">Continue →</button>
     </div>
   </div>
 
-  <!-- ── STEP 6: RINGS / ACCESSORIES ── -->
-  <div class="section" id="sec-6">
+  <!-- ── STEP 6: RINGS / ACCESSORIES — multi-choice, keep Continue -->
+  <div class="section" id="sec-6" data-multi>
     <div class="sec-label">Step 6 of 8</div>
     <div class="sec-title">Rings &amp; Accessories</div>
     <div class="sec-sub">Choose rings, glides, batons, tiebacks, or motor controls as needed.</div>
@@ -262,11 +260,11 @@ textarea.inp-field{resize:vertical;min-height:80px}
     <div id="s6-content"></div>
     <div class="btn-row">
       <button class="btn-back" onclick="goStep(5)">← Back</button>
-      <button class="btn-next" onclick="goStep(7)">Next →</button>
+      <button class="btn-next" onclick="goStep(7)">Continue →</button>
     </div>
   </div>
 
-  <!-- ── STEP 7: FINISH ── -->
+  <!-- ── STEP 7: FINISH — auto-advances on finish pick -->
   <div class="section" id="sec-7">
     <div class="sec-label">Step 7 of 8</div>
     <div class="sec-title">Finish</div>
@@ -279,7 +277,6 @@ textarea.inp-field{resize:vertical;min-height:80px}
     </div>
     <div class="btn-row">
       <button class="btn-back" onclick="goStep(6)">← Back</button>
-      <button class="btn-next" onclick="goStep(8)">Next →</button>
     </div>
   </div>
 
@@ -845,6 +842,7 @@ function pickGloss(g, el){
   ['pill-semi','pill-high','pill-custom-finish'].forEach(function(id){ var e=$(id); if(e) e.classList.remove('sel'); });
   el.classList.add('sel');
   S.gloss=g;
+  setTimeout(function(){ goStep(8); }, 300);
 }
 
 /* ── STEP 8: SUMMARY ── */

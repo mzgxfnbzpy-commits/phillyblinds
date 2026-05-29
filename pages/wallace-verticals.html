@@ -26,13 +26,13 @@
 .page-hero .sub{font-size:14px;color:var(--text-dark);line-height:1.7;max-width:520px;margin-bottom:18px}
 .hero-pills{display:flex;gap:8px;flex-wrap:wrap}
 .hero-pill{font-size:11px;padding:4px 12px;border-radius:20px;border:.5px solid var(--border-dark);color:var(--text-faint)}
-.hero-pill-gold{background:rgba(200,151,63,.12);border-color:rgba(200,151,63,.3);color:var(--gold)}
+.hero-pill-gold{background:rgba(45,224,193,.12);border-color:rgba(45,224,193,.35);color:var(--gold)}
 /* Layout */
 .config-layout{display:grid;grid-template-columns:1fr 300px;gap:24px;max-width:1100px;margin:0 auto;padding:28px 28px 60px;align-items:start}
 @media(max-width:880px){.config-layout{grid-template-columns:1fr;padding:20px 16px 48px}}
 /* Step blocks */
 .step-block{background:#fff;border:1px solid #e8e8e4;border-radius:14px;margin-bottom:14px;overflow:hidden}
-.step-block.active{box-shadow:0 2px 18px rgba(200,151,63,.1);border-color:rgba(200,151,63,.3)}
+.step-block.active{box-shadow:0 2px 18px rgba(45,224,193,.1);border-color:rgba(45,224,193,.35)}
 .step-head{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;user-select:none}
 .step-num{width:28px;height:28px;border-radius:50%;background:var(--espresso);color:var(--gold);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .step-block.done .step-num{background:var(--gold);color:var(--espresso)}
@@ -43,9 +43,9 @@
 .opt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:10px}
 .opt-card{background:#fff;border:1.5px solid #e8e8e4;border-radius:10px;padding:13px 11px;cursor:pointer;text-align:center;transition:all .15s}
 .opt-card:hover{border-color:var(--gold)}
-.opt-card.sel{border:2px solid var(--gold);background:rgba(200,151,63,.06)}
+.opt-card.sel{border:2px solid var(--gold);background:var(--gold-mid)}
 .opt-card-title{font-size:13px;font-weight:500;color:#111;margin-bottom:3px}
-.opt-card.sel .opt-card-title{color:#7A4F00}
+.opt-card.sel .opt-card-title{color:#0A4A42}
 .opt-card-desc{font-size:11px;color:#666;line-height:1.45}
 .opt-card.disabled{opacity:.35;cursor:not-allowed;pointer-events:none}
 /* Pattern grid */
@@ -60,7 +60,7 @@
 .pattern-grid-header span{font-size:9px;padding:1px 6px;border-radius:4px;background:#f0ece4;color:#777;font-weight:500}
 .pattern-card{border:1.5px solid #e8e8e4;border-radius:9px;padding:11px 12px;cursor:pointer;transition:all .15s;background:#fff}
 .pattern-card:hover{border-color:var(--gold)}
-.pattern-card.sel{border:2px solid var(--gold);background:rgba(200,151,63,.06)}
+.pattern-card.sel{border:2px solid var(--gold);background:var(--gold-mid)}
 .pattern-card.hidden{display:none}
 .pattern-name{font-size:13px;font-weight:500;color:#111;margin-bottom:3px}
 .pattern-meta{font-size:10px;color:#888;line-height:1.4}
@@ -78,7 +78,7 @@
 /* Addon rows */
 .addon-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border:1.5px solid #e8e8e4;border-radius:9px;margin-top:7px;cursor:pointer;transition:all .15s;gap:10px}
 .addon-row:hover{border-color:var(--gold)}
-.addon-row.sel{border:2px solid var(--gold);background:rgba(200,151,63,.05)}
+.addon-row.sel{border:2px solid var(--gold);background:var(--gold-mid)}
 .addon-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
 .addon-check{width:18px;height:18px;border:2px solid #ccc;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;flex-shrink:0;transition:all .15s}
 .addon-row.sel .addon-check{background:var(--gold);border-color:var(--gold);color:#1C1510}
@@ -89,18 +89,18 @@
 .radio-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .radio-chip{padding:7px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;background:#fff;color:#444}
 .radio-chip:hover{border-color:var(--gold)}
-.radio-chip.sel{border-color:var(--gold);background:rgba(200,151,63,.06);color:#7A4F00}
+.radio-chip.sel{border-color:var(--gold);background:var(--gold-mid);color:#0A4A42}
 /* Messages */
 .msg-box{border-radius:8px;padding:9px 13px;font-size:12px;margin-top:8px;line-height:1.5}
 .msg-err{background:#FEE2E2;border:1px solid #EF4444;color:#7f1d1d}
 .msg-warn{background:#FFF3CD;border:1px solid #FFC107;color:#7d5a00}
-.msg-info{background:rgba(200,151,63,.08);border:1px solid rgba(200,151,63,.25);color:#7A4F00}
+.msg-info{background:var(--gold-mid);border:1px solid rgba(45,224,193,.25);color:#0A4A42}
 .sub-label{font-size:12px;font-weight:500;color:#444;margin:14px 0 5px}
 .step-note{font-size:11px;color:#999;line-height:1.6;margin-top:6px}
 /* Del */
 .del-btns{display:flex;gap:8px;margin:8px 0 10px}
 .del-btn{flex:1;padding:8px;border:1.5px solid #ddd;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;background:#fff;transition:all .15s}
-.del-btn.sel{border-color:var(--gold);color:var(--gold);background:rgba(200,151,63,.05)}
+.del-btn.sel{border-color:var(--gold);color:var(--gold);background:var(--gold-mid)}
 .del-note{font-size:11px;color:#555;line-height:1.6}
 /* Qty addon */
 .qty-input{width:70px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px;text-align:center;display:inline-block}
@@ -123,7 +123,7 @@
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:480px){.form-row{grid-template-columns:1fr}}
 .success-box{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:12px;padding:24px;color:#2e7d32;font-size:14px;line-height:1.8;display:none;text-align:center;margin-top:12px}
-.split-info{background:rgba(200,151,63,.08);border:1px solid rgba(200,151,63,.2);border-radius:8px;padding:12px 14px;font-size:11px;color:#7A4F00;line-height:1.6;margin-top:8px}
+.split-info{background:var(--gold-mid);border:1px solid rgba(200,151,63,.2);border-radius:8px;padding:12px 14px;font-size:11px;color:#0A4A42;line-height:1.6;margin-top:8px}
 .qty-row-inline{display:flex;align-items:center;gap:10px;margin-top:6px}
 .qty-row-inline label{font-size:12px;color:#444;font-weight:500}
 </style>
