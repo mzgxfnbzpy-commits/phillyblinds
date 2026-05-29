@@ -41,14 +41,8 @@
 .config-layout{display:grid;grid-template-columns:1fr 300px;gap:24px;max-width:1140px;margin:0 auto;padding:28px 28px 60px;align-items:start}
 @media(max-width:880px){.config-layout{grid-template-columns:1fr;padding:20px 16px 48px}}
 
-.step-block{background:#fff;border:1px solid #e8e8e4;border-radius:14px;margin-bottom:16px;overflow:hidden;transition:box-shadow .15s}
-.step-block.active{box-shadow:0 2px 20px rgba(45,224,193,.1);border-color:rgba(45,224,193,.3)}
-.step-head{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;background:#fff}
 .step-num-circle{width:28px;height:28px;border-radius:50%;background:var(--espresso);color:var(--gold);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .step-block.done .step-num-circle{background:var(--gold);color:var(--espresso)}
-.step-head-title{font-size:14px;font-weight:500;color:#111;flex:1}
-.step-head-val{font-size:12px;color:var(--gold);font-weight:500;text-align:right}
-.step-body{padding:0 20px 20px;display:block}
 
 /* Big type-selector cards */
 .type-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}
@@ -1207,4 +1201,3 @@ buildControlStep();
 </script>
 </body>
 </html>
-

@@ -31,14 +31,6 @@
 .config-layout{display:grid;grid-template-columns:1fr 300px;gap:24px;max-width:1100px;margin:0 auto;padding:28px 28px 60px;align-items:start}
 @media(max-width:880px){.config-layout{grid-template-columns:1fr;padding:20px 16px 48px}}
 /* Step blocks */
-.step-block{background:#fff;border:1px solid #e8e8e4;border-radius:14px;margin-bottom:14px;overflow:hidden}
-.step-block.active{box-shadow:0 2px 18px rgba(45,224,193,.1);border-color:rgba(45,224,193,.35)}
-.step-head{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;user-select:none}
-.step-num{width:28px;height:28px;border-radius:50%;background:var(--espresso);color:var(--gold);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.step-block.done .step-num{background:var(--gold);color:var(--espresso)}
-.step-head-title{font-size:14px;font-weight:500;color:#111;flex:1}
-.step-head-val{font-size:12px;color:var(--gold);font-weight:500;max-width:200px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.step-body{padding:4px 20px 20px;display:block}
 /* Opt cards */
 .opt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:10px}
 .opt-card{background:#fff;border:1.5px solid #e8e8e4;border-radius:10px;padding:13px 11px;cursor:pointer;text-align:center;transition:all .15s}
@@ -824,7 +816,7 @@ function updateSpec(){
   document.getElementById('sp-ctrl').textContent=S.ctrlSide?S.ctrlSide.charAt(0).toUpperCase()+S.ctrlSide.slice(1):'—';
   document.getElementById('sp-stack').textContent=S.draw==='split'?'Split (both sides)':S.stackSide?(S.stackSide.charAt(0).toUpperCase()+S.stackSide.slice(1)):'—';
   document.getElementById('sp-chain').textContent=({vinyl:'Vinyl / plastic',metal:'Metal'})[S.tiltChain]||'—';
-  document.getElementById('sp-track').textContent=({regular:'Regular (Decomatic 3.5″)',replacement:'Replacement track only',topbottom:'Top &amp; bottom track (rotate &amp; traverse)'})[S.track]||'Regular';
+  document.getElementById('sp-track').textContent=({regular:'Regular (Decomatic 3.5″)',replacement:'Replacement track only',topbottom:'Top & bottom track (rotate & traverse)'})[S.track]||'Regular';
   document.getElementById('sp-valance').textContent=({regular:'Regular',deluxe:'Deluxe',single:'Single',laser:'Laser trim',none:'No valance'})[S.valance]||'—';
   const qty=parseInt(document.getElementById('qty').value)||1;
   S.qty=qty;
