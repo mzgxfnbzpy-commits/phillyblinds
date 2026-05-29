@@ -30,11 +30,9 @@
 
 /* STEP CARDS */
 .cfg-wrap{max-width:860px;margin:0 auto;padding:32px 20px 60px}
-.step-card{background:#fff;border:1px solid #e8e8e4;border-radius:14px;padding:22px 24px;margin-bottom:16px;display:block}
-.step-card.active{border-color:rgba(45,224,193,.35);box-shadow:0 2px 18px rgba(45,224,193,.1)}
-.step-card.done{border-color:#e8e8e4}
-.step-card.done .step-body{display:block}
-.step-card.done .step-done-row{display:none}
+.step-block.done{border-color:#e8e8e4}
+.step-block.done:not(.active) .step-body{display:none}
+.step-block.done .step-done-row{display:flex}
 .step-done-row{display:none;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .step-done-val{font-size:13px;color:#444;font-weight:500}
 .step-edit-btn{font-size:11px;color:var(--gold);background:none;border:none;cursor:pointer;font-family:var(--font);padding:0;text-decoration:underline}
@@ -135,16 +133,6 @@
 .form-input:focus{outline:none;border-color:var(--gold)}
 textarea.form-input{resize:vertical;min-height:80px}
 
-/* DELIVERY */
-.delivery-block{background:#f7f4ef;border-radius:10px;padding:16px;margin-bottom:16px}
-.delivery-title{font-size:12px;font-weight:700;color:#333;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px}
-.delivery-opts{display:flex;flex-direction:column;gap:8px}
-.delivery-opt{display:flex;align-items:flex-start;gap:10px;cursor:pointer}
-.delivery-opt input[type=radio]{margin-top:3px;flex-shrink:0;accent-color:var(--gold)}
-.delivery-opt-body{font-size:12px;color:#444;line-height:1.6}
-.delivery-opt-body strong{display:block;font-size:13px;color:#111;margin-bottom:2px}
-.tariff-note{font-size:10px;color:#888;margin-top:4px;padding:6px 8px;background:#fff;border-radius:6px;border:1px solid #e8e8e4}
-
 /* SUBMIT */
 .submit-btn{display:block;width:100%;background:var(--gold);color:var(--espresso);font-size:15px;font-weight:700;padding:14px 20px;border:none;border-radius:10px;cursor:pointer;font-family:var(--font);letter-spacing:0.2px;transition:opacity .15s}
 .submit-btn:hover{opacity:.88}
@@ -179,7 +167,7 @@ textarea.form-input{resize:vertical;min-height:80px}
 <div class="cfg-wrap">
 
   <!-- STEP 1: Fabric Type -->
-  <div class="step-card active" id="s1">
+  <div class="step-block active" id="s1">
     <div class="step-hd">
       <div class="step-num">1</div>
       <div><div class="step-title">Fabric Type</div><div class="step-sub">Choose light-filtering or room-darkening</div></div>
@@ -200,7 +188,7 @@ textarea.form-input{resize:vertical;min-height:80px}
   </div>
 
   <!-- STEP 2: Fabric Pattern -->
-  <div class="step-card" id="s2">
+  <div class="step-block" id="s2">
     <div class="step-hd">
       <div class="step-num">2</div>
       <div><div class="step-title">Select Fabric &amp; Color</div><div class="step-sub">Group A is best value · Group E is premium</div></div>
@@ -212,7 +200,7 @@ textarea.form-input{resize:vertical;min-height:80px}
   </div>
 
   <!-- STEP 3: Mount Type -->
-  <div class="step-card" id="s3">
+  <div class="step-block" id="s3">
     <div class="step-hd">
       <div class="step-num">3</div>
       <div><div class="step-title">Mount Type</div></div>
@@ -228,7 +216,7 @@ textarea.form-input{resize:vertical;min-height:80px}
   </div>
 
   <!-- STEP 4: Dimensions -->
-  <div class="step-card" id="s4">
+  <div class="step-block" id="s4">
     <div class="step-hd">
       <div class="step-num">4</div>
       <div><div class="step-title">Dimensions</div><div class="step-sub">Enter your window size — order to the nearest 1/8"</div></div>
@@ -256,7 +244,7 @@ textarea.form-input{resize:vertical;min-height:80px}
   </div>
 
   <!-- STEP 5: Cassette Profile -->
-  <div class="step-card" id="s5">
+  <div class="step-block" id="s5">
     <div class="step-hd">
       <div class="step-num">5</div>
       <div><div class="step-title">Cassette Profile</div></div>
@@ -272,7 +260,7 @@ textarea.form-input{resize:vertical;min-height:80px}
   </div>
 
   <!-- STEP 6: Cassette Color -->
-  <div class="step-card" id="s6">
+  <div class="step-block" id="s6">
     <div class="step-hd">
       <div class="step-num">6</div>
       <div><div class="step-title">Cassette &amp; Hardware Color</div><div class="step-sub">Bottom bar and cord color will match</div></div>
@@ -293,7 +281,7 @@ textarea.form-input{resize:vertical;min-height:80px}
   </div>
 
   <!-- STEP 7: Cassette Wrap (Square only) -->
-  <div class="step-card" id="s7">
+  <div class="step-block" id="s7">
     <div class="step-hd">
       <div class="step-num">7</div>
       <div><div class="step-title">Square Cassette — Fabric Wrap</div></div>
@@ -309,7 +297,7 @@ textarea.form-input{resize:vertical;min-height:80px}
   </div>
 
   <!-- STEP 8: Bottom Bar -->
-  <div class="step-card" id="s8">
+  <div class="step-block" id="s8">
     <div class="step-hd">
       <div class="step-num">8</div>
       <div><div class="step-title">Bottom Bar</div></div>
@@ -336,7 +324,7 @@ textarea.form-input{resize:vertical;min-height:80px}
   </div>
 
   <!-- STEP 9: Control Type -->
-  <div class="step-card" id="s9">
+  <div class="step-block" id="s9">
     <div class="step-hd">
       <div class="step-num">9</div>
       <div><div class="step-title">Control Type</div></div>
@@ -366,7 +354,7 @@ textarea.form-input{resize:vertical;min-height:80px}
   </div>
 
   <!-- STEP 10: Control Accessories -->
-  <div class="step-card" id="s10">
+  <div class="step-block" id="s10">
     <div class="step-hd">
       <div class="step-num">10</div>
       <div><div class="step-title" id="s10-title">Control Options</div></div>
@@ -378,7 +366,7 @@ textarea.form-input{resize:vertical;min-height:80px}
   </div>
 
   <!-- STEP 11: Remote Motor Accessories -->
-  <div class="step-card" id="s11">
+  <div class="step-block" id="s11">
     <div class="step-hd">
       <div class="step-num">11</div>
       <div><div class="step-title">Motor Accessories</div><div class="step-sub">Add remotes, hubs, power supplies &amp; extensions</div></div>
@@ -390,7 +378,7 @@ textarea.form-input{resize:vertical;min-height:80px}
   </div>
 
   <!-- STEP 12: Side-by-Side -->
-  <div class="step-card" id="s12">
+  <div class="step-block" id="s12">
     <div class="step-hd">
       <div class="step-num">12</div>
       <div><div class="step-title">Side-by-Side Ordering</div></div>
@@ -414,7 +402,7 @@ textarea.form-input{resize:vertical;min-height:80px}
   </div>
 
   <!-- STEP 13: Quantity -->
-  <div class="step-card" id="s13">
+  <div class="step-block" id="s13">
     <div class="step-hd">
       <div class="step-num">13</div>
       <div><div class="step-title">Quantity</div></div>
@@ -432,7 +420,7 @@ textarea.form-input{resize:vertical;min-height:80px}
   </div>
 
   <!-- STEP 14: Price + Quote -->
-  <div class="step-card" id="s14">
+  <div class="step-block" id="s14">
     <div class="step-hd">
       <div class="step-num">14</div>
       <div><div class="step-title">Price Estimate &amp; Quote Request</div></div>
@@ -461,24 +449,14 @@ textarea.form-input{resize:vertical;min-height:80px}
         <textarea class="form-input" id="inp-notes" placeholder="Room, window name, installation notes, questions..." oninput="S.notes=this.value"></textarea>
       </div>
 
-      <div class="delivery-block">
-        <div class="delivery-title">Delivery / Pickup</div>
-        <div class="delivery-opts">
-          <label class="delivery-opt">
-            <input type="radio" name="delivery" value="ship" checked onchange="S.delivery=this.value">
-            <div class="delivery-opt-body">
-              <strong>Ship to me — UPS / FedEx</strong>
-              Ships from Huntingdon Valley, PA. We'll confirm shipping cost with your quote.
-              <div class="tariff-note">Note: Prices subject to change due to tariffs or duties. Any applicable tariffs will be disclosed before your order is finalized.</div>
-            </div>
-          </label>
-          <label class="delivery-opt">
-            <input type="radio" name="delivery" value="pickup" onchange="S.delivery=this.value">
-            <div class="delivery-opt-body">
-              <strong>I'll pick up</strong>
-              Location provided after order is placed (Huntingdon Valley, PA 19006).
-            </div>
-          </label>
+      <div class="delivery-opt-grid" id="delivery-grid">
+        <div class="delivery-opt-card sel" onclick="pickDelivery('ship',this)">
+          <div class="delivery-opt-title">Ship to me</div>
+          <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA. We'll confirm shipping cost with your quote. Tariffs may apply.</div>
+        </div>
+        <div class="delivery-opt-card" onclick="pickDelivery('pickup',this)">
+          <div class="delivery-opt-title">I'll pick up</div>
+          <div class="delivery-opt-body">Pickup in Huntingdon Valley, PA 19006. Location provided after order is placed.</div>
         </div>
       </div>
 
@@ -702,7 +680,7 @@ const S = {
   ext6:0, ext48:0, ext96:0, charger:false,
   sbs:false, sideCount:2,
   qty:1, name:'', phone:'', notes:'',
-  delivery:'ship',
+  delivery:'Ship (UPS/FedEx from Huntingdon Valley PA)',
   maxStep:1
 };
 
@@ -795,6 +773,11 @@ function editStep(n){
     else { el.classList.remove('active','done'); }
   }
   S.maxStep=n;
+}
+function pickDelivery(v,card){
+  document.querySelectorAll('.delivery-opt-card').forEach(function(c){c.classList.remove('sel');});
+  card.classList.add('sel');
+  S.delivery=v==='ship'?'Ship (UPS/FedEx from Huntingdon Valley PA)':'Pickup (Huntingdon Valley PA 19006)';
 }
 function advance(fromStep, label){
   doneStep(fromStep, label);

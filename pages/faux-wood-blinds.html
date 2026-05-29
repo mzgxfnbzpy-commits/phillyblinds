@@ -45,7 +45,7 @@
 .color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:7px;margin-top:10px}
 .color-card{border:1.5px solid #e8e8e4;border-radius:9px;overflow:hidden;cursor:pointer;transition:all .15s}
 .color-card:hover{border-color:var(--gold);transform:translateY(-1px)}
-.color-card.sel{border:2px solid var(--gold);box-shadow:0 2px 10px rgba(200,151,63,.2)}
+.color-card.sel{border:2px solid var(--gold);box-shadow:0 2px 10px rgba(45,224,193,.2)}
 .color-swatch{height:44px;width:100%}
 .color-label{padding:5px 6px;background:#fff}
 .color-name{font-size:10px;font-weight:600;color:#222;line-height:1.3}
@@ -112,11 +112,6 @@
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:480px){.form-row{grid-template-columns:1fr}}
 .delivery-wrap{background:#F9F7F4;border:1px solid #e8e4dc;border-radius:10px;padding:14px 16px;margin-bottom:14px}
-.del-btns{display:flex;gap:8px;margin:8px 0 10px}
-.del-btn{flex:1;padding:8px;border:1.5px solid #ddd;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;background:#fff;transition:all .15s}
-.del-btn.sel{border-color:var(--gold);color:var(--gold);background:var(--gold-mid)}
-.del-note{font-size:11px;color:#555;line-height:1.6}
-.del-tariff{font-size:10px;color:#888;margin-top:4px;font-style:italic}
 .submit-btn{width:100%;padding:14px;background:var(--gold);color:#1C1510;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .15s;margin-top:2px}
 .submit-btn:hover{opacity:.88}
 .form-err{background:#FEE2E2;border:1px solid #EF4444;border-radius:8px;padding:9px 13px;font-size:12px;color:#7f1d1d;margin-bottom:10px;display:none}
@@ -125,7 +120,7 @@
 .success-box p{font-size:13px;color:#166534;line-height:1.6}
 .custom-notice{background:#FBF7F0;border:1px solid #D4B47A;border-radius:10px;padding:16px 18px;margin-bottom:14px}
 .custom-notice-head{font-size:13px;font-weight:600;color:#0A4A42;margin-bottom:5px}
-.custom-notice-body{font-size:12px;color:#8A6020;line-height:1.7}
+.custom-notice-body{font-size:12px;color:#0A4A42;line-height:1.7}
 .warn-banner{background:#FFF3CD;border:1px solid #FFC107;border-radius:8px;padding:10px 14px;font-size:12px;color:#7d5a00;line-height:1.6;margin-top:8px}
 
 /* Custom quote blocker overlay */
@@ -475,14 +470,16 @@
 
       <div class="delivery-wrap">
         <div style="font-size:13px;font-weight:500;color:#333;margin-bottom:8px">Delivery or pickup?</div>
-        <div class="del-btns">
-          <button class="del-btn sel" id="del-ship" onclick="pickDel('ship')">Ship to me</button>
-          <button class="del-btn" id="del-pickup" onclick="pickDel('pickup')">I&rsquo;ll pick up</button>
+        <div class="delivery-opt-grid">
+          <div class="delivery-opt-card sel" id="del-ship" onclick="pickDel('ship',this)">
+            <div class="delivery-opt-title">Ship to me</div>
+            <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA. Shipping estimated in your quote. Tariffs and import fees additional.</div>
+          </div>
+          <div class="delivery-opt-card" id="del-pickup" onclick="pickDel('pickup',this)">
+            <div class="delivery-opt-title">I'll pick up</div>
+            <div class="delivery-opt-body">Pickup available in Huntingdon Valley, PA. Exact address disclosed after order confirmation.</div>
+          </div>
         </div>
-        <div class="del-note" id="del-ship-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA. Shipping estimate included in your quote.
-          <div class="del-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately.</div>
-        </div>
-        <div class="del-note" id="del-pickup-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address disclosed after order confirmation.</div>
       </div>
 
       <div class="custom-notice">
@@ -776,10 +773,8 @@ function updateQty(){
 // ── DELIVERY ──────────────────────────────────────────────────────────────────
 function pickDel(v){
   S.delivery=v;
-  $('del-ship').classList.toggle('sel',v==='ship');
-  $('del-pickup').classList.toggle('sel',v==='pickup');
-  $('del-ship-note').style.display=v==='ship'?'block':'none';
-  $('del-pickup-note').style.display=v==='pickup'?'block':'none';
+  document.querySelectorAll('.delivery-opt-card').forEach(function(c){c.classList.remove('sel');});
+  $('del-'+v).classList.add('sel');
 }
 
 // ── PRICE CALC ────────────────────────────────────────────────────────────────

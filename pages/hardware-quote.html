@@ -75,7 +75,7 @@
 .qtotal-label{color:var(--cream)}
 .qtotal-val{color:var(--gold)}
 .qnote{font-size:10px;color:var(--text-dark);margin-top:8px;line-height:1.5}
-.qbrand{font-size:10px;background:rgba(200,151,63,.15);color:var(--gold);padding:1px 6px;border-radius:3px;margin-left:4px}
+.qbrand{font-size:10px;background:rgba(45,224,193,.15);color:var(--gold);padding:1px 6px;border-radius:3px;margin-left:4px}
 
 /* Form */
 .form-group{margin-bottom:14px}
@@ -85,11 +85,6 @@
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:480px){.form-row{grid-template-columns:1fr}}
 .delivery-wrap{background:#F9F7F4;border:1px solid #e8e4dc;border-radius:10px;padding:14px 16px;margin-bottom:14px}
-.del-btns{display:flex;gap:8px;margin:8px 0 10px}
-.del-btn{flex:1;padding:8px;border:1.5px solid #ddd;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;background:#fff;transition:all .15s}
-.del-btn.sel{border-color:var(--gold);color:var(--gold);background:var(--gold-mid)}
-.del-note{font-size:11px;color:#555;line-height:1.6}
-.del-tariff{font-size:10px;color:#888;margin-top:4px;font-style:italic}
 .submit-btn{width:100%;padding:14px;background:var(--gold);color:#1C1510;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .15s;margin-top:2px}
 .submit-btn:hover{opacity:.88}
 .form-err{background:#FEE2E2;border:1px solid #EF4444;border-radius:8px;padding:9px 13px;font-size:12px;color:#7f1d1d;margin-bottom:10px;display:none}
@@ -268,14 +263,16 @@
       <div class="form-group"><label>Notes <span style="font-weight:400;color:#999">(room, fabric weight, existing hardware, etc.)</span></label><textarea id="f-notes" placeholder="e.g. master bedroom, 96&quot; panels, replacing brass rods…"></textarea></div>
       <div class="delivery-wrap">
         <div style="font-size:13px;font-weight:500;color:#333;margin-bottom:8px">Delivery or pickup?</div>
-        <div class="del-btns">
-          <button class="del-btn sel" id="del-ship" onclick="pickDel('ship')">Ship to me</button>
-          <button class="del-btn" id="del-pickup" onclick="pickDel('pickup')">I&rsquo;ll pick up</button>
+        <div class="delivery-opt-grid">
+          <div class="delivery-opt-card sel" id="del-ship" onclick="pickDel('ship',this)">
+            <div class="delivery-opt-title">Ship to me</div>
+            <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA. Tariffs and import fees additional.</div>
+          </div>
+          <div class="delivery-opt-card" id="del-pickup" onclick="pickDel('pickup',this)">
+            <div class="delivery-opt-title">I'll pick up</div>
+            <div class="delivery-opt-body">Pickup available in Huntingdon Valley, PA. Address disclosed after order.</div>
+          </div>
         </div>
-        <div class="del-note" id="del-ship-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.
-          <div class="del-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately.</div>
-        </div>
-        <div class="del-note" id="del-pickup-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Address disclosed after order.</div>
       </div>
       <div class="form-err" id="form-err"></div>
       <button class="submit-btn" id="submit-btn" onclick="submitForm()" style="opacity:.45;cursor:not-allowed" disabled>Complete required fields to submit &rarr;</button>
@@ -795,10 +792,8 @@ function pickMotor(el,key,price){
 // ── DELIVERY ──────────────────────────────────────────────────────────────────
 function pickDel(v){
   S.delivery=v;
-  $('del-ship').classList.toggle('sel',v==='ship');
-  $('del-pickup').classList.toggle('sel',v==='pickup');
-  $('del-ship-note').style.display=v==='ship'?'block':'none';
-  $('del-pickup-note').style.display=v==='pickup'?'block':'none';
+  document.querySelectorAll('.delivery-opt-card').forEach(function(c){c.classList.remove('sel');});
+  $('del-'+v).classList.add('sel');
 }
 
 // ── PRICE CALC ────────────────────────────────────────────────────────────────

@@ -90,10 +90,6 @@
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:480px){.form-row{grid-template-columns:1fr}}
 .delivery-wrap{background:#F9F7F4;border:1px solid #e8e4dc;border-radius:10px;padding:14px 16px;margin-bottom:14px}
-.del-btns{display:flex;gap:8px;margin:8px 0 10px}
-.del-btn{flex:1;padding:8px;border:1.5px solid #ddd;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;background:#fff;transition:all .15s}
-.del-btn.sel{border-color:var(--gold);color:var(--gold);background:var(--gold-mid)}
-.del-note{font-size:11px;color:#555;line-height:1.6}
 .submit-btn{width:100%;padding:14px;background:var(--gold);color:#1C1510;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-top:2px}
 .submit-btn:hover{opacity:.88}
 .form-err{background:#FEE2E2;border:1px solid #EF4444;border-radius:8px;padding:9px 13px;font-size:12px;color:#7f1d1d;margin-bottom:10px;display:none}
@@ -512,18 +508,15 @@
   </div>
   <div class="step-body">
     <div class="delivery-wrap">
-      <div class="del-btns">
-        <button class="del-btn" onclick="pickDel(this,'ship')">Ship to me</button>
-        <button class="del-btn" onclick="pickDel(this,'pickup')">I'll pick up</button>
-      </div>
-      <div id="del-ship" class="del-note" style="display:none">
-        Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<br>
-        Freight: <strong>$25 first shade + $8 each additional</strong>.<br>
-        Shades 90&Prime; or greater in any dimension: <strong>$80 oversize surcharge per shade</strong>.
-        <div style="font-size:10px;color:#888;margin-top:4px;font-style:italic">Note: tariffs, duties, and applicable import fees are additional and will be disclosed in your final quote.</div>
-      </div>
-      <div id="del-pickup" class="del-note" style="display:none">
-        Pickup at <strong>527 Hoyt Rd, Huntingdon Valley PA 19006</strong> after order confirmation. We'll contact you with a ready date.
+      <div class="delivery-opt-grid">
+        <div class="delivery-opt-card sel" onclick="pickDel(this,'ship')">
+          <div class="delivery-opt-title">Ship to me</div>
+          <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA. Freight: $25 first shade + $8 each additional. Tariffs additional.</div>
+        </div>
+        <div class="delivery-opt-card" onclick="pickDel(this,'pickup')">
+          <div class="delivery-opt-title">I'll pick up</div>
+          <div class="delivery-opt-body">Pickup at 527 Hoyt Rd, Huntingdon Valley PA 19006 after order confirmation.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1102,7 +1095,7 @@ function adjQty(d){
 }
 
 function pickDel(btn,key){
-  document.querySelectorAll('.del-btn').forEach(b=>b.classList.remove('sel'));
+  document.querySelectorAll('.delivery-opt-card').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');
   S.del=key;
   showEl('del-ship',key==='ship');

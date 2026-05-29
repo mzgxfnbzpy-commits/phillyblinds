@@ -96,10 +96,6 @@
 .liner-card.sel{border:2px solid var(--gold);background:var(--gold-mid)}
 .liner-card-name{font-size:11px;font-weight:600;color:#111;margin-bottom:2px}
 .liner-card-code{font-size:9px;color:#aaa}
-.del-btns{display:flex;gap:8px;margin:8px 0 10px}
-.del-btn{flex:1;padding:8px;border:1.5px solid #ddd;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;background:#fff;transition:all .15s}
-.del-btn.sel{border-color:var(--gold);color:var(--gold);background:var(--gold-mid)}
-.del-note{font-size:11px;color:#555;line-height:1.6}
 .success-box{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:12px;padding:24px;color:#2e7d32;font-size:14px;line-height:1.8;display:none;text-align:center;margin-top:12px}
 .estimate-notice{background:#FFF3CD;border:1px solid #FFC107;border-radius:8px;padding:10px 14px;font-size:11px;color:#7d5a00;line-height:1.6;margin-top:10px}
 </style>
@@ -380,12 +376,16 @@
     </div>
     <div style="margin-top:8px">
       <div class="dim-label" style="margin-bottom:6px">Delivery or pickup?</div>
-      <div class="del-btns">
-        <button class="del-btn sel" onclick="pickDel(this,'ship')">Ship to me</button>
-        <button class="del-btn" onclick="pickDel(this,'pickup')">I'll pick up</button>
+      <div class="delivery-opt-grid">
+        <div class="delivery-opt-card sel" onclick="pickDel(this,'ship')">
+          <div class="delivery-opt-title">Ship to me</div>
+          <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA. Shades 90&#x2033;+ carry $80 oversize surcharge. Tariffs additional.</div>
+        </div>
+        <div class="delivery-opt-card" onclick="pickDel(this,'pickup')">
+          <div class="delivery-opt-title">I'll pick up</div>
+          <div class="delivery-opt-body">Pickup in Huntingdon Valley, PA 19006. Address confirmed after order.</div>
+        </div>
       </div>
-      <div id="del-ship" class="del-note">Shipped via UPS/FedEx from Huntingdon Valley, PA. Tariffs additional. Shades 90″+ carry $80 oversize surcharge each.</div>
-      <div id="del-pickup" class="del-note" style="display:none">Pickup in Huntingdon Valley, PA. Address confirmed after order.</div>
     </div>
   </div>
 </div>
@@ -846,12 +846,10 @@ function toggleAddon(el,key){
 
 // ── STEP 9 ────────────────────────────────────────────────────────────────────
 function pickDel(btn,key){
-  document.querySelectorAll('.del-btn').forEach(b=>b.classList.remove('sel'));
+  document.querySelectorAll('.delivery-opt-card').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');
   S.del=key;
-  document.getElementById('del-ship').style.display=key==='ship'?'block':'none';
-  document.getElementById('del-pickup').style.display=key==='pickup'?'block':'none';
-  calcPrice();
+      calcPrice();
 }
 
 // ── PRICE LOOKUP HELPERS ──────────────────────────────────────────────────────
