@@ -58,6 +58,23 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid request' });
   }
 
+  // Guard against oversized payloads
+  const bodyStr = JSON.stringify(req.body || {});
+  if (bodyStr.length > 32000) {
+    return res.status(413).json({ content: 'Message too long. Please call (609) 742-1720 — Justin is available 24/7!' });
+  }
+
+  // Validate each message has valid role and string content
+  const validRoles = new Set(['user', 'assistant']);
+  const sanitized = messages
+    .filter(m => m && validRoles.has(m.role) && typeof m.content === 'string')
+    .map(m => ({ role: m.role, content: String(m.content).slice(0, 2000) }))
+    .slice(-12);
+
+  if (sanitized.length === 0 || sanitized[sanitized.length - 1].role !== 'user') {
+    return res.status(400).json({ error: 'Invalid request' });
+  }
+
   try {
     const response = await client.messages.create({
       model: 'claude-haiku-4-5-20251001',
@@ -69,7 +86,7 @@ module.exports = async function handler(req, res) {
           cache_control: { type: 'ephemeral' }
         }
       ],
-      messages: messages.slice(-12)
+      messages: sanitized
     });
 
     const text = response.content[0]?.text || 'Sorry, I had a hiccup. Please call (609) 742-1720 — Justin is available 24/7!';

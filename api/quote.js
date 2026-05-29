@@ -20,14 +20,27 @@ const BRAND        = 'Philly Blinds';
 const SITE_URL     = 'phillyblinds.com';
 const EMAIL_DIRECT = 'justin@phillyblinds.com';
 
+const ALLOWED_ORIGINS = [
+  'https://www.phillyblinds.com',
+  'https://phillyblinds.com',
+  'https://phillyblinds.vercel.app'
+];
+
 module.exports = async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  const origin = req.headers.origin || '';
+  const corsOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  res.setHeader('Access-Control-Allow-Origin', corsOrigin);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Vary', 'Origin');
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const { name, email, phone, product, selections, notes } = req.body || {};
+
+  // Basic payload size guard
+  const bodyStr = JSON.stringify(req.body || {});
+  if (bodyStr.length > 20000) return res.status(413).json({ error: 'Request too large.' });
 
   if (!name || !name.trim()) return res.status(400).json({ error: 'Name is required.' });
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
@@ -43,7 +56,7 @@ module.exports = async function handler(req, res) {
   }
 
   const safeName    = String(name).trim().replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  const safeEmail   = String(email).trim();
+  const safeEmail   = String(email).trim().replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const safePhone   = phone ? String(phone).trim().replace(/</g,'&lt;') : null;
   const safeProduct = product ? String(product).trim().replace(/</g,'&lt;') : 'Custom Window Treatment';
   const safeNotes   = notes ? String(notes).trim().replace(/</g,'&lt;').replace(/\n/g,'<br>') : null;
