@@ -193,7 +193,7 @@
   </div>
   <div class="step-body">
     <div class="msg-info" style="margin-top:4px;margin-bottom:10px">SmartDrape™ is <strong>Outside Mount only</strong> — no inside mount. No deductions are taken. Order your desired finished track width.</div>
-    <div class="opt-grid-3">
+    <div class="opt-grid-2">
       <div class="opt-card sel" id="mc-wall" onclick="pickMount(this,'wall')">
         <div class="opt-card-icon">🔲</div>
         <div class="opt-card-title">Wall Mount</div>
@@ -203,11 +203,6 @@
         <div class="opt-card-icon">⬆</div>
         <div class="opt-card-title">Ceiling Mount</div>
         <div class="opt-card-desc">Direct mount or C clip.</div>
-      </div>
-      <div class="opt-card" id="mc-pocket" onclick="pickMount(this,'pocket')">
-        <div class="opt-card-icon">▫</div>
-        <div class="opt-card-title">Ceiling Pocket</div>
-        <div class="opt-card-desc">Recessed. Min pocket depth 4⅞″.</div>
       </div>
     </div>
     <div style="margin-top:12px;display:flex;align-items:center;gap:10px">
@@ -649,11 +644,11 @@ function onSBSChange(){calcDims();}
 // ═══════════════════════════════════════════════════════════
 function pickMount(el,m){
   S.mount=m;
-  ['mc-wall','mc-ceiling','mc-pocket'].forEach(function(id){
+  ['mc-wall','mc-ceiling'].forEach(function(id){
     var e=document.getElementById(id); if(e) e.classList.remove('sel');
   });
   el.classList.add('sel');
-  var lbl={'wall':'Wall Mount (L bracket)','ceiling':'Ceiling Mount','pocket':'Ceiling Pocket Mount'}[m]||'Outside Mount';
+  var lbl={'wall':'Wall Mount (L bracket)','ceiling':'Ceiling Mount'}[m]||'Wall Mount (L bracket)';
   markDone('step3',lbl); sp('sp-mount',lbl);
   openStep('step4');
 }
@@ -870,7 +865,7 @@ async function submitQuote(){
   if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent='Please enter a valid email address.';err.style.display='block';return;}
   err.style.display='none';
   var stackLabels={'left':'Left Stack','right':'Right Stack','center':'Traveling Center Stack','copen':'Center Opening'};
-  var mountLabels={'wall':'Wall Mount (L bracket)','ceiling':'Ceiling Mount','pocket':'Ceiling Pocket Mount'};
+  var mountLabels={'wall':'Wall Mount (L bracket)','ceiling':'Ceiling Mount'};
   var isSBS=document.getElementById('sbs-check')&&document.getElementById('sbs-check').checked;
   var joints=S.w<=97.625?0:S.w<=189.625?1:2;
   var selections=[
