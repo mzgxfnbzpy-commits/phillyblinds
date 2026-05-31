@@ -2,7 +2,7 @@
 // POST /api/quote
 // Required Vercel env vars:
 //   RESEND_API_KEY  — from resend.com (free account)
-//   RESEND_FROM     — verified sender, e.g. "Philly Blinds <noreply@phillyblinds.com>"
+// RESEND_FROM is now hardcoded — no env var needed
 //                     If domain not yet verified, use any @resend.dev address as temp:
 //                     "Philly Blinds <onboarding@resend.dev>"
 // Domain verification: resend.com → Domains → Add phillyblinds.com → add the DNS records.
