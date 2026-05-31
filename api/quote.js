@@ -36,7 +36,7 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { name, email, phone, product, selections, notes } = req.body || {};
+  const { name, email, phone, product, selections, notes, sourceUrl } = req.body || {};
 
   // Basic payload size guard
   const bodyStr = JSON.stringify(req.body || {});
@@ -105,6 +105,7 @@ module.exports = async function handler(req, res) {
 
     <div style="border-top:1px solid #e8e8e4;padding-top:14px;font-size:11px;color:#bbb">
       Submitted via ${SITE_URL} &nbsp;·&nbsp; Reply-To: <a href="mailto:${safeEmail}" style="color:#bbb">${safeEmail}</a>
+      ${sourceUrl ? `&nbsp;·&nbsp; Page: <a href="${sourceUrl}" style="color:#bbb">${sourceUrl}</a>` : ''}
     </div>
   </div>
 </div></body></html>`;
