@@ -13,8 +13,10 @@ const TEAM_EMAILS = [
   'mike@phillyblinds.com',
   'tarin@phillyblinds.com'
 ];
-const FROM_QUOTES  = process.env.RESEND_FROM || 'Philly Blinds Quotes <noreply@phillyblinds.com>';
-const FROM_CONFIRM = process.env.RESEND_FROM || 'Philly Blinds <noreply@phillyblinds.com>';
+// Strip any accidental surrounding quotes Vercel may store (e.g. "Name <email>" → Name <email>)
+const _rawFrom    = (process.env.RESEND_FROM || 'Philly Blinds <noreply@phillyblinds.com>').trim().replace(/^["']|["']$/g, '');
+const FROM_QUOTES  = _rawFrom;
+const FROM_CONFIRM = _rawFrom;
 const PHONE        = '(609) 742-1720';
 const BRAND        = 'Philly Blinds';
 const SITE_URL     = 'phillyblinds.com';
