@@ -13,9 +13,10 @@ Blindznation is a separate sister-brand project that copies this site's structur
 
 | Rule | What it means |
 |------|--------------|
+| **EVERY change applies to both sites** | Whatever is built or fixed here MUST also be applied to blindznation — same session or immediately after. This is a standing instruction from Justin. |
+| Only swap brand-specific values | Email, domain, brand name/logo, CSS color tokens. Everything else is identical. |
 | Do NOT edit blindznation files from a phillyblinds session | Open a separate Claude Code session from the blindznation folder |
-| When you change a product spec here, flag it | Note in the commit message: “→ also apply to blindznation” |
-| When you change a business rule here, flag it | Same — blindznation must stay in sync |
+| Flag every commit | Add “→ also apply to blindznation” in commit messages as a reminder |
 | Never push phillyblinds changes to blindznation's GitHub repo | Each project has its own separate repo |
 
 **Blindznation project location:**
