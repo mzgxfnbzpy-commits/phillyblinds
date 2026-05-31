@@ -1012,14 +1012,15 @@
             </div>
             <div class="form-group"><label>Email</label><input type="email" id="rn-sf-email" placeholder="jane@example.com"></div>
             <div class="form-group"><label>Notes / fabric preference</label><textarea id="rn-sf-notes" placeholder="e.g. prefer neutral tone, looking for blackout, interested in motorization"></textarea></div>
-            <div class="delivery-section">
-              <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
-              <div class="opt-row" id="grp-del-rn">
-                <button class="opt-btn sel" onclick="selOpt(this,'grp-del-rn');document.getElementById('del-rn-s').style.display='block';document.getElementById('del-rn-p').style.display='none'">Ship to me</button>
-                <button class="opt-btn" onclick="selOpt(this,'grp-del-rn');document.getElementById('del-rn-s').style.display='none';document.getElementById('del-rn-p').style.display='block'">I'll pick up</button>
+            <div class="delivery-opt-grid" id="grp-del-rn">
+              <div class="delivery-opt-card sel" onclick="pickDelCard(this)">
+                <div class="delivery-opt-title">Ship to me</div>
+                <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
               </div>
-              <div id="del-rn-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately in your quote.</div></div>
-              <div id="del-rn-p" class="delivery-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.</div>
+              <div class="delivery-opt-card" onclick="pickDelCard(this)">
+                <div class="delivery-opt-title">I'll pick up</div>
+                <div class="delivery-opt-body">Pickup in Huntingdon Valley, PA. Address confirmed after order.</div>
+              </div>
             </div>
             <button onclick="reqMoreInfo('Norman Roller Shades')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Norman Roller Shades →</button>
         <button class="btn-gold" onclick="rnSubmitForm(this)" style="width:100%;padding:13px">Send quote request</button>
@@ -1381,18 +1382,14 @@
           </div>
           <div class="form-group"><label>Email</label><input type="email" id="sf-email" placeholder="jane@example.com"></div>
           <div class="form-group"><label>Any notes?</label><textarea id="sf-notes" placeholder="e.g. looking for blackout in bedroom, open to fabric samples"></textarea></div>
-          <div class="delivery-section">
-            <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
-            <div class="opt-row" id="grp-del-sf">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-del-sf');document.getElementById('del-sf-s').style.display='block';document.getElementById('del-sf-p').style.display='none'">Ship to me</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-del-sf');document.getElementById('del-sf-s').style.display='none';document.getElementById('del-sf-p').style.display='block'">I'll pick up</button>
+          <div class="delivery-opt-grid" id="grp-del-sf">
+            <div class="delivery-opt-card sel" onclick="pickDelCard(this)">
+              <div class="delivery-opt-title">Ship to me</div>
+              <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
             </div>
-            <div id="del-sf-s" class="delivery-note">
-              Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.
-              <div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately in your quote.</div>
-            </div>
-            <div id="del-sf-p" class="delivery-note" style="display:none">
-              Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.
+            <div class="delivery-opt-card" onclick="pickDelCard(this)">
+              <div class="delivery-opt-title">I'll pick up</div>
+              <div class="delivery-opt-body">Pickup in Huntingdon Valley, PA. Address confirmed after order.</div>
             </div>
           </div>
           <button onclick="reqMoreInfo('Norman Cellular / Zebra / Woven Wood Shades')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Norman Cellular / Zebra / Woven Wood Shades →</button>
@@ -1570,14 +1567,15 @@
         <div class="form-group"><label>Phone *</label><input type="tel" id="pb-phone" placeholder="(215) 555-0100"></div>
       </div>
       <div class="form-group"><label>Email</label><input type="email" id="pb-email" placeholder="jane@example.com"></div>
-      <div class="delivery-section">
-        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
-        <div class="opt-row" id="grp-del-pb">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-pb');document.getElementById('del-pb-s').style.display='block';document.getElementById('del-pb-p').style.display='none'">Ship to me</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-del-pb');document.getElementById('del-pb-s').style.display='none';document.getElementById('del-pb-p').style.display='block'">I'll pick up</button>
+      <div class="delivery-opt-grid" id="grp-del-pb">
+        <div class="delivery-opt-card sel" onclick="pickDelCard(this)">
+          <div class="delivery-opt-title">Ship to me</div>
+          <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
         </div>
-        <div id="del-pb-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately.</div></div>
-        <div id="del-pb-p" class="delivery-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.</div>
+        <div class="delivery-opt-card" onclick="pickDelCard(this)">
+          <div class="delivery-opt-title">I'll pick up</div>
+          <div class="delivery-opt-body">Pickup in Huntingdon Valley, PA. Address confirmed after order.</div>
+        </div>
       </div>
       <button onclick="reqMoreInfo('Custom Roller Shades')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Custom Roller Shades →</button>
         <button class="btn-gold" onclick="submitPBForm(this)" style="width:100%;padding:13px;margin-top:4px">Send custom fabrication request &rarr;</button>
@@ -1639,18 +1637,14 @@
       <label>Notes / questions</label>
       <textarea id="hd-notes" placeholder="e.g. interested in PowerView motorization, have 3 large arch windows in living room"></textarea>
     </div>
-    <div class="delivery-section">
-      <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
-      <div class="opt-row" id="grp-del-hd">
-        <button class="opt-btn sel" onclick="selOpt(this,'grp-del-hd');document.getElementById('del-hd-s').style.display='block';document.getElementById('del-hd-p').style.display='none'">Ship to me</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-del-hd');document.getElementById('del-hd-s').style.display='none';document.getElementById('del-hd-p').style.display='block'">I'll pick up</button>
+    <div class="delivery-opt-grid" id="grp-del-hd">
+      <div class="delivery-opt-card sel" onclick="pickDelCard(this)">
+        <div class="delivery-opt-title">Ship to me</div>
+        <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
       </div>
-      <div id="del-hd-s" class="delivery-note">
-        Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.
-        <div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately in your quote.</div>
-      </div>
-      <div id="del-hd-p" class="delivery-note" style="display:none">
-        Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.
+      <div class="delivery-opt-card" onclick="pickDelCard(this)">
+        <div class="delivery-opt-title">I'll pick up</div>
+        <div class="delivery-opt-body">Pickup in Huntingdon Valley, PA. Address confirmed after order.</div>
       </div>
     </div>
     <button onclick="reqMoreInfo('Hunter Douglas Silhouette / Pirouette Shadings')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Hunter Douglas Silhouette / Pirouette Shadings →</button>
@@ -1790,14 +1784,15 @@
     <div class="form-group"><label>Notes</label><textarea id="ext-notes" placeholder="Deck, patio, porch, pergola — any special mounting requirements..."></textarea></div>
 
     <!-- Delivery -->
-    <div class="delivery-section">
-      <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
-      <div class="opt-row" id="grp-del-ext">
-        <button class="opt-btn sel" onclick="selOpt(this,'grp-del-ext');document.getElementById('del-ext-s').style.display='block';document.getElementById('del-ext-p').style.display='none'">Ship to me</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-del-ext');document.getElementById('del-ext-s').style.display='none';document.getElementById('del-ext-p').style.display='block'">I'll pick up</button>
+    <div class="delivery-opt-grid" id="grp-del-ext">
+      <div class="delivery-opt-card sel" onclick="pickDelCard(this)">
+        <div class="delivery-opt-title">Ship to me</div>
+        <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
       </div>
-      <div id="del-ext-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional.</div></div>
-      <div id="del-ext-p" class="delivery-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Address provided after order confirmation.</div>
+      <div class="delivery-opt-card" onclick="pickDelCard(this)">
+        <div class="delivery-opt-title">I'll pick up</div>
+        <div class="delivery-opt-body">Pickup in Huntingdon Valley, PA. Address confirmed after order.</div>
+      </div>
     </div>
 
     <button class="btn-gold" onclick="submitExteriorForm(this)" style="width:100%;padding:13px;margin-top:4px">Request exterior shade quote &rarr;</button>
@@ -1952,14 +1947,15 @@
       </div>
       <div class="form-group"><label>Email</label><input type="email" id="fwb-email" placeholder="jane@example.com"></div>
       <div class="form-group"><label>Notes</label><textarea id="fwb-notes" placeholder="e.g. specific color, existing hardware to reuse, special installation requirements"></textarea></div>
-      <div class="delivery-section">
-        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
-        <div class="opt-row" id="grp-del-fwb">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-fwb');document.getElementById('del-fwb-s').style.display='block';document.getElementById('del-fwb-p').style.display='none'">Ship to me</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-del-fwb');document.getElementById('del-fwb-s').style.display='none';document.getElementById('del-fwb-p').style.display='block'">I'll pick up</button>
+      <div class="delivery-opt-grid" id="grp-del-fwb">
+        <div class="delivery-opt-card sel" onclick="pickDelCard(this)">
+          <div class="delivery-opt-title">Ship to me</div>
+          <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
         </div>
-        <div id="del-fwb-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional.</div></div>
-        <div id="del-fwb-p" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>
+        <div class="delivery-opt-card" onclick="pickDelCard(this)">
+          <div class="delivery-opt-title">I'll pick up</div>
+          <div class="delivery-opt-body">Pickup in Huntingdon Valley, PA. Address confirmed after order.</div>
+        </div>
       </div>
       <button class="btn-gold" onclick="submitFWBForm(this)" style="width:100%;padding:13px;margin-top:12px">Request faux wood blinds quote &rarr;</button>
     </div>
@@ -2041,14 +2037,15 @@
       </div>
       <div class="form-group"><label>Email</label><input type="email" id="rwb-email" placeholder="jane@example.com"></div>
       <div class="form-group"><label>Notes</label><textarea id="rwb-notes" placeholder="e.g. specific finish, existing hardware, special requirements"></textarea></div>
-      <div class="delivery-section">
-        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
-        <div class="opt-row" id="grp-del-rwb">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-rwb');document.getElementById('del-rwb-s').style.display='block';document.getElementById('del-rwb-p').style.display='none'">Ship to me</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-del-rwb');document.getElementById('del-rwb-s').style.display='none';document.getElementById('del-rwb-p').style.display='block'">I'll pick up</button>
+      <div class="delivery-opt-grid" id="grp-del-rwb">
+        <div class="delivery-opt-card sel" onclick="pickDelCard(this)">
+          <div class="delivery-opt-title">Ship to me</div>
+          <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
         </div>
-        <div id="del-rwb-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional.</div></div>
-        <div id="del-rwb-p" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>
+        <div class="delivery-opt-card" onclick="pickDelCard(this)">
+          <div class="delivery-opt-title">I'll pick up</div>
+          <div class="delivery-opt-body">Pickup in Huntingdon Valley, PA. Address confirmed after order.</div>
+        </div>
       </div>
       <button class="btn-gold" onclick="submitRWBForm(this)" style="width:100%;padding:13px;margin-top:12px">Request real wood blinds quote &rarr;</button>
     </div>
@@ -2257,18 +2254,14 @@
       <label>Notes / questions</label>
       <textarea id="ps-notes" placeholder="e.g. three windows side by side, open to common valance, prefer right cord side"></textarea>
     </div>
-    <div class="delivery-section">
-      <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
-      <div class="opt-row" id="grp-del-ps">
-        <button class="opt-btn sel" onclick="selOpt(this,'grp-del-ps');document.getElementById('del-ps-s').style.display='block';document.getElementById('del-ps-p').style.display='none'">Ship to me</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-del-ps');document.getElementById('del-ps-s').style.display='none';document.getElementById('del-ps-p').style.display='block'">I'll pick up</button>
+    <div class="delivery-opt-grid" id="grp-del-ps">
+      <div class="delivery-opt-card sel" onclick="pickDelCard(this)">
+        <div class="delivery-opt-title">Ship to me</div>
+        <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA. Freight: $25 first + $11 ea (90″+: $80 min + $50 ea).<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
       </div>
-      <div id="del-ps-s" class="delivery-note">
-        Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA. Freight: $25 first shade + $11 each additional (90&Prime;+ width: $80 min + $50 each).
-        <div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately in your quote.</div>
-      </div>
-      <div id="del-ps-p" class="delivery-note" style="display:none">
-        Pickup available in <strong>Huntingdon Valley, PA 19006</strong>. Address provided after order confirmation.
+      <div class="delivery-opt-card" onclick="pickDelCard(this)">
+        <div class="delivery-opt-title">I'll pick up</div>
+        <div class="delivery-opt-body">Pickup in Huntingdon Valley, PA. Address confirmed after order.</div>
       </div>
     </div>
     <button onclick="reqMoreInfo('Norman PerfectSheer™ Shades')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Norman PerfectSheer™ Shades →</button>
@@ -3341,6 +3334,11 @@ function showShadeForm() {
   f.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+function pickDelCard(card) {
+  card.closest('.delivery-opt-grid').querySelectorAll('.delivery-opt-card').forEach(function(c){c.classList.remove('sel');});
+  card.classList.add('sel');
+}
+
 // ─── submitShadeForm ─────────────────────────────────────────
 async function submitShadeForm(btn) {
   const name = document.getElementById('sf-name').value.trim();
@@ -3349,8 +3347,8 @@ async function submitShadeForm(btn) {
 
   const email    = document.getElementById('sf-email').value.trim();
   const notes    = document.getElementById('sf-notes').value.trim();
-  const delBtn   = document.querySelector('#grp-del-sf .opt-btn.sel');
-  const delivery = delBtn ? delBtn.textContent.trim() : 'Ship to me';
+  const delBtn   = document.querySelector('#grp-del-sf .delivery-opt-card.sel');
+  const delivery = delBtn ? delBtn.querySelector('.delivery-opt-title').textContent.trim() : 'Ship to me';
   const pname    = (document.getElementById('config-product-name') || {}).textContent || currentProduct;
   const w = document.getElementById('inp-width').value;
   const h = document.getElementById('inp-height').value;
@@ -3404,8 +3402,8 @@ async function submitPBForm(btn) {
   const phone = document.getElementById('pb-phone').value.trim();
   if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
   const email    = document.getElementById('pb-email').value.trim();
-  const delBtn   = document.querySelector('#grp-del-pb .opt-btn.sel');
-  const delivery = delBtn ? delBtn.textContent.trim() : 'Ship to me';
+  const delBtn   = document.querySelector('#grp-del-pb .delivery-opt-card.sel');
+  const delivery = delBtn ? delBtn.querySelector('.delivery-opt-title').textContent.trim() : 'Ship to me';
   const w     = document.getElementById('pb-width').value;   // fixed: was inp-width
   const h     = document.getElementById('pb-height').value;  // fixed: was inp-height
   const gPB   = function(id) { const b = document.querySelector('#' + id + ' .opt-btn.sel'); return b ? b.textContent.trim() : '—'; };
@@ -3447,8 +3445,8 @@ async function submitQuoteForm(btn) {
   const product  = document.getElementById('hd-product-sel').value;
   const wincount = document.getElementById('hd-wincount').value;
   const notes    = document.getElementById('hd-notes').value.trim();
-  const delBtn   = document.querySelector('#grp-del-hd .opt-btn.sel');
-  const delivery = delBtn ? delBtn.textContent.trim() : 'Ship to me';
+  const delBtn   = document.querySelector('#grp-del-hd .delivery-opt-card.sel');
+  const delivery = delBtn ? delBtn.querySelector('.delivery-opt-title').textContent.trim() : 'Ship to me';
   const body =
     'HUNTER DOUGLAS QUOTE REQUEST\n' +
     '─────────────────────────────\n' +
@@ -4268,7 +4266,7 @@ async function submitRWBForm(btn) {
   var w      = document.getElementById('rwb-width').value;
   var h      = document.getElementById('rwb-height').value;
   var qty    = document.getElementById('rwb-qty').value;
-  var del    = document.querySelector('#grp-del-rwb .opt-btn.sel')?.textContent.trim() || '';
+  var del    = document.querySelector('#grp-del-rwb .delivery-opt-card.sel')?.querySelector('.delivery-opt-title')?.textContent.trim() || '';
   var notes  = document.getElementById('rwb-notes').value.trim();
   var email  = document.getElementById('rwb-email').value.trim();
   var body = 'Real Wood Blinds Quote Request\n\n'
@@ -4289,7 +4287,7 @@ async function submitFWBForm(btn) {
   var w     = document.getElementById('fwb-width').value;
   var h     = document.getElementById('fwb-height').value;
   var qty   = document.getElementById('fwb-qty').value;
-  var del   = document.querySelector('#grp-del-fwb .opt-btn.sel')?.textContent.trim() || '';
+  var del   = document.querySelector('#grp-del-fwb .delivery-opt-card.sel')?.querySelector('.delivery-opt-title')?.textContent.trim() || '';
   var notes = document.getElementById('fwb-notes').value.trim();
   var email = document.getElementById('fwb-email').value.trim();
   var body  = 'Norman Faux Wood Blinds Quote Request\n\n'
@@ -5401,8 +5399,8 @@ async function rnSubmitForm(btn) {
   const w       = (document.getElementById('rn-width')    || {}).value;
   const h       = (document.getElementById('rn-height')   || {}).value;
   const qty     = (document.getElementById('rn-qty')      || {}).value || 1;
-  const delBtn  = document.querySelector('#grp-del-rn .opt-btn.sel');
-  const delivery = delBtn ? delBtn.textContent.trim() : 'Ship to me';
+  const delBtn  = document.querySelector('#grp-del-rn .delivery-opt-card.sel');
+  const delivery = delBtn ? delBtn.querySelector('.delivery-opt-title').textContent.trim() : 'Ship to me';
 
   const g = function(id) { const b = document.querySelector('#' + id + ' .opt-btn.sel'); return b ? b.textContent.trim() : '—'; };
 
@@ -5508,7 +5506,7 @@ async function submitExteriorForm(btn) {
   var h       = document.getElementById('ext-height').value;
   var qty     = document.getElementById('ext-qty').value;
   var motorReq= document.getElementById('ext-motor-req').value.trim();
-  var delivery= gExt('grp-del-ext');
+  var delivery= (document.querySelector('#grp-del-ext .delivery-opt-card.sel')?.querySelector('.delivery-opt-title')?.textContent.trim()) || 'Ship to me';
   var body = 'EXTERIOR ROLLER SHADE QUOTE\n' +
     '=====================================\n' +
     'Name:  ' + name + '\nPhone: ' + phone +
@@ -5706,7 +5704,7 @@ async function submitPSForm(btn) {
   var loc    = document.getElementById('ps-location').value;
   var notes  = document.getElementById('ps-notes').value;
   var email  = document.getElementById('ps-email').value;
-  var delBtn = (document.querySelector('#grp-del-ps .opt-btn.sel')||{}).textContent || '';
+  var delBtn = document.querySelector('#grp-del-ps .delivery-opt-card.sel')?.querySelector('.delivery-opt-title')?.textContent.trim() || '';
   var price  = document.getElementById('ps-price-num').textContent;
   var lg     = document.getElementById('ps-lightguard-basic').checked ? 'Basic light guard' :
                document.getElementById('ps-lightguard-premium').checked ? 'Premium wood light guard' : 'None';
