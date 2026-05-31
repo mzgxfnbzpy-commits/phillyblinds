@@ -1,4 +1,4 @@
-// Philly Blinds — Quote Request API
+﻿// Philly Blinds — Quote Request API
 // POST /api/quote
 // Required Vercel env vars:
 //   RESEND_API_KEY  — from resend.com (free account)
@@ -79,14 +79,14 @@ module.exports = async function handler(req, res) {
   const teamHtml = `<!DOCTYPE html><html><body style="margin:0;padding:0;font-family:system-ui,sans-serif;background:#f5f4f1">
 <div style="max-width:600px;margin:24px auto">
   <div style="background:#1C1510;padding:20px 26px;border-radius:10px 10px 0 0">
-    <div style="color:#C8973F;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">New Quote Request</div>
+    <div style="color:#2DE0C1;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">New Quote Request</div>
     <div style="color:#F5ECD7;font-size:21px;font-weight:700">${BRAND}</div>
     <div style="color:#9A8570;font-size:12px;margin-top:2px">${dateStr}</div>
   </div>
   <div style="background:#fff;padding:26px;border:1px solid #e5e5e3;border-top:none">
 
-    <div style="background:#FBF7F0;border-left:4px solid #C8973F;padding:16px 18px;border-radius:0 8px 8px 0;margin-bottom:22px">
-      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#C8973F;margin-bottom:12px">Customer Information</div>
+    <div style="background:#E8FDFB;border-left:4px solid #2DE0C1;padding:16px 18px;border-radius:0 8px 8px 0;margin-bottom:22px">
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#2DE0C1;margin-bottom:12px">Customer Information</div>
       <table style="border-collapse:collapse">
         <tr><td style="padding:4px 14px 4px 0;color:#888;font-size:13px;white-space:nowrap">Name</td>   <td style="font-size:15px;font-weight:700;color:#1C1510">${safeName}</td></tr>
         <tr><td style="padding:4px 14px 4px 0;color:#888;font-size:13px;white-space:nowrap">Email</td>  <td><a href="mailto:${safeEmail}" style="font-size:14px;color:#1C1510">${safeEmail}</a></td></tr>
@@ -114,14 +114,14 @@ module.exports = async function handler(req, res) {
   const customerHtml = `<!DOCTYPE html><html><body style="margin:0;padding:0;font-family:system-ui,sans-serif;background:#f5f4f1">
 <div style="max-width:580px;margin:24px auto">
   <div style="background:#1C1510;padding:20px 26px;border-radius:10px 10px 0 0">
-    <div style="color:#C8973F;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">Quote Request Received</div>
+    <div style="color:#2DE0C1;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">Quote Request Received</div>
     <div style="color:#F5ECD7;font-size:21px;font-weight:700">${BRAND}</div>
   </div>
   <div style="background:#fff;padding:26px;border:1px solid #e5e5e3;border-top:none">
     <p style="font-size:17px;font-weight:600;color:#1C1510;margin:0 0 14px">Hi ${firstName}, we received your quote request!</p>
     <p style="font-size:14px;color:#444;line-height:1.7;margin:0 0 20px">Our team has your full configuration for <strong>${safeProduct}</strong> and we're preparing your custom quote now.</p>
 
-    <div style="background:#FBF7F0;border-left:4px solid #C8973F;padding:16px 18px;border-radius:0 8px 8px 0;margin-bottom:22px">
+    <div style="background:#E8FDFB;border-left:4px solid #2DE0C1;padding:16px 18px;border-radius:0 8px 8px 0;margin-bottom:22px">
       <div style="font-size:13px;font-weight:700;color:#1C1510;margin-bottom:10px">What happens next:</div>
       <ul style="margin:0;padding-left:18px;font-size:13px;color:#555;line-height:2.1">
         <li>We review your specifications and build your custom quote</li>
@@ -133,8 +133,8 @@ module.exports = async function handler(req, res) {
     <div style="background:#f9f9f7;border-radius:8px;padding:14px 16px;margin-bottom:22px">
       <div style="font-size:12px;font-weight:700;color:#1C1510;margin-bottom:6px">Need to reach us sooner?</div>
       <div style="font-size:13px;color:#444;line-height:1.8">
-        Call or text Justin: <a href="tel:6097421720" style="color:#C8973F;font-weight:700">${PHONE}</a> — 24/7<br>
-        Email: <a href="mailto:${EMAIL_DIRECT}" style="color:#C8973F">${EMAIL_DIRECT}</a>
+        Call or text Justin: <a href="tel:6097421720" style="color:#2DE0C1;font-weight:700">${PHONE}</a> — 24/7<br>
+        Email: <a href="mailto:${EMAIL_DIRECT}" style="color:#2DE0C1">${EMAIL_DIRECT}</a>
       </div>
     </div>
 

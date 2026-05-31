@@ -323,33 +323,7 @@
   line-height: 1.5;
 }
 
-/* ── Delivery section ── */
-.delivery-section {
-  background: #F9F7F4;
-  border: 1px solid #e8e4dc;
-  border-radius: 12px;
-  padding: 18px 20px;
-  margin-top: 16px;
-}
-.delivery-title {
-  font-size: 13px;
-  font-weight: 500;
-  color: #111;
-  margin-bottom: 12px;
-}
-.delivery-options { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
-.del-opt {
-  flex: 1; min-width: 180px;
-  background: #fff;
-  border: 1.5px solid #ddd;
-  border-radius: 9px;
-  padding: 12px 14px;
-  cursor: pointer;
-  transition: border-color 0.15s;
-}
-.del-opt.selected { border: 2px solid var(--gold); }
-.del-opt h4 { font-size: 13px; font-weight: 600; color: #111; margin-bottom: 3px; }
-.del-opt p { font-size: 11px; color: #666; line-height: 1.4; }
+/* ── DELIVERY — using global.css delivery-opt-card ── */
 .tariff-note {
   font-size: 11px;
   color: #666;
@@ -770,20 +744,14 @@
         <div class="step-chevron" id="step9-chev">&#9660;</div>
       </div>
       <div class="step-body" id="step9-body">
-        <div class="delivery-section">
-          <div class="delivery-title">How would you like to receive your order?</div>
-          <div class="delivery-options">
-            <div class="del-opt selected" id="del-ship" onclick="selectDelivery('ship')">
-              <h4>&#x1F4E6; Ship to me</h4>
-              <p>UPS or FedEx from Huntingdon Valley, PA. Shipping cost calculated at order. Typically 5&ndash;10 business days after production.</p>
-            </div>
-            <div class="del-opt" id="del-pickup" onclick="selectDelivery('pickup')">
-              <h4>&#x1F3E0; I'll pick up</h4>
-              <p>Pick up at our Huntingdon Valley, PA location (address confirmed after order placement).</p>
-            </div>
+        <div class="delivery-opt-grid">
+          <div class="delivery-opt-card sel" onclick="selectDelivery('ship',this)">
+            <div class="delivery-opt-title">Ship to me</div>
+            <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
           </div>
-          <div class="tariff-note">
-            <strong>Tariff notice:</strong> Products may be subject to U.S. government import tariffs and duties. Any applicable surcharges will be disclosed at the time of order confirmation. We are committed to full transparency on pricing.
+          <div class="delivery-opt-card" onclick="selectDelivery('pickup',this)">
+            <div class="delivery-opt-title">I'll pick up</div>
+            <div class="delivery-opt-body">Pick up at our Huntingdon Valley, PA location. Address confirmed after order.</div>
           </div>
         </div>
       </div>
@@ -1241,10 +1209,10 @@ function selectRollDir(el) {
 }
 
 // ─── DELIVERY ────────────────────────────────────────────────
-function selectDelivery(val) {
+function selectDelivery(val, card) {
   state.delivery = val;
-  document.getElementById('del-ship').classList.toggle('selected', val === 'ship');
-  document.getElementById('del-pickup').classList.toggle('selected', val === 'pickup');
+  document.querySelectorAll('.delivery-opt-card').forEach(function(c){c.classList.remove('sel');});
+  card.classList.add('sel');
   document.getElementById('s9-preview').textContent = val === 'ship' ? ' — Ship to me' : ' — Pick up';
 }
 

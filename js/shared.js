@@ -1092,7 +1092,7 @@ function _initInstallationAddons() {
     var id = 'inst-' + Math.random().toString(36).slice(2, 7);
     var wrap = document.createElement('div');
     wrap.className = 'pb-install-wrap';
-    wrap.style.cssText = 'border:2px solid var(--gold);border-radius:12px;padding:16px 18px;margin-bottom:16px;background:#FBF7F0';
+    wrap.style.cssText = 'border:2px solid var(--gold);border-radius:12px;padding:16px 18px;margin-bottom:16px;background:var(--gold-mid)';
     wrap.innerHTML =
       '<div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">&#128295; Professional Installation</div>' +
       '<label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer">' +
@@ -1325,9 +1325,9 @@ function pbShowContact(title) {
         '<div style="padding:22px">' +
           '<p style="font-size:13px;color:#666;margin:0 0 16px;line-height:1.6">We handle every order personally — call or text Justin for pricing, samples, and installation.</p>' +
           '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px">' +
-            '<a href="tel:6097421720" style="display:flex;flex-direction:column;align-items:center;gap:4px;background:#1C1510;color:#C8973F;padding:12px 6px;border-radius:10px;text-decoration:none;font-size:12px;font-weight:700;text-align:center">📞<span>Call now</span><span style="font-size:10px;font-weight:400;color:#A89880">(609) 742-1720</span></a>' +
-            '<a href="sms:6097421720" style="display:flex;flex-direction:column;align-items:center;gap:4px;background:#1C1510;color:#C8973F;padding:12px 6px;border-radius:10px;text-decoration:none;font-size:12px;font-weight:700;text-align:center">💬<span>Text us</span><span style="font-size:10px;font-weight:400;color:#A89880">24/7</span></a>' +
-            '<a href="mailto:justin@phillyblinds.com" style="display:flex;flex-direction:column;align-items:center;gap:4px;background:#1C1510;color:#C8973F;padding:12px 6px;border-radius:10px;text-decoration:none;font-size:12px;font-weight:700;text-align:center">✉️<span>Email</span><span style="font-size:10px;font-weight:400;color:#A89880">Same day reply</span></a>' +
+            '<a href="tel:6097421720" style="display:flex;flex-direction:column;align-items:center;gap:4px;background:#1C1510;color:var(--gold);padding:12px 6px;border-radius:10px;text-decoration:none;font-size:12px;font-weight:700;text-align:center">📞<span>Call now</span><span style="font-size:10px;font-weight:400;color:#A89880">(609) 742-1720</span></a>' +
+            '<a href="sms:6097421720" style="display:flex;flex-direction:column;align-items:center;gap:4px;background:#1C1510;color:var(--gold);padding:12px 6px;border-radius:10px;text-decoration:none;font-size:12px;font-weight:700;text-align:center">💬<span>Text us</span><span style="font-size:10px;font-weight:400;color:#A89880">24/7</span></a>' +
+            '<a href="mailto:justin@phillyblinds.com" style="display:flex;flex-direction:column;align-items:center;gap:4px;background:#1C1510;color:var(--gold);padding:12px 6px;border-radius:10px;text-decoration:none;font-size:12px;font-weight:700;text-align:center">✉️<span>Email</span><span style="font-size:10px;font-weight:400;color:#A89880">Same day reply</span></a>' +
           '</div>' +
           '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><div style="flex:1;height:1px;background:#eee"></div><span style="font-size:11px;color:#bbb">or send us a message</span><div style="flex:1;height:1px;background:#eee"></div></div>' +
           '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">' +
@@ -1335,7 +1335,7 @@ function pbShowContact(title) {
             '<div><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Phone *</label><input id="' + uid + '-phone" type="tel" placeholder="(215) 555-0100" style="width:100%;padding:9px 11px;border:1px solid #e0e0e0;border-radius:7px;font-size:13px;font-family:inherit;box-sizing:border-box"></div>' +
           '</div>' +
           '<div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Message / notes</label><textarea id="' + uid + '-msg" rows="3" placeholder="What are you looking for? Window sizes, room, timeline, questions..." style="width:100%;padding:9px 11px;border:1px solid #e0e0e0;border-radius:7px;font-size:13px;font-family:inherit;resize:vertical;box-sizing:border-box"></textarea></div>' +
-          '<div style="border:1.5px dashed #C8973F;border-radius:9px;padding:12px 14px;margin-bottom:14px;background:#FBF7F0">' +
+          '<div style="border:1.5px dashed var(--gold);border-radius:9px;padding:12px 14px;margin-bottom:14px;background:var(--gold-mid)">' +
             '<div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px">📎 Attach photos, PDFs, or measurements <span style="font-weight:400;color:#999">(optional)</span></div>' +
             '<input type="file" id="' + uid + '-files" multiple accept="image/*,.pdf,.heic,.png,.jpg,.jpeg" style="width:100%;font-size:12px;color:#555;font-family:inherit;cursor:pointer" onchange="(function(i,d){var n=Array.from(i.files).map(function(f){return\'📄 \'+f.name}).join(\'<br>\');d.innerHTML=n})(this,document.getElementById(\'' + uid + '-fnames\'))">' +
             '<div id="' + uid + '-fnames" style="font-size:11px;color:#666;margin-top:5px;line-height:1.7"></div>' +
@@ -1352,7 +1352,7 @@ function pbShowContact(title) {
             'var body=\'QUOTE REQUEST\\n\\nName: \'+n+\'\\nPhone: \'+p+\'\\n\\nMessage:\\n\'+(m||\'(none)\')+fn;' +
             'window.location.href=\'mailto:justin@phillyblinds.com?subject=\'+encodeURIComponent(subj)+\'&body=\'+encodeURIComponent(body);' +
             'document.getElementById(\'' + uid + '\').remove();' +
-          '})()" style="width:100%;background:#1C1510;color:#C8973F;border:none;border-radius:8px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">Send request →</button>' +
+          '})()" style="width:100%;background:#1C1510;color:var(--gold);border:none;border-radius:8px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">Send request →</button>' +
         '</div>' +
       '</div>' +
     '</div>';
@@ -1412,7 +1412,7 @@ function _initMeasureHelp(htmlContent, measurePageUrl) {
     .pb-help-section{margin-bottom:18px}
     .pb-help-section h4{font-size:13px;font-weight:600;color:var(--espresso);margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #f0f0ec}
     .pb-help-section ol,.pb-help-section ul{padding-left:18px;font-size:13px;color:#444;line-height:1.8}
-    .pb-help-tip{background:#FBF7F0;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 13px;font-size:12px;color:#555;line-height:1.6;margin-top:10px}
+    .pb-help-tip{background:var(--gold-mid);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 13px;font-size:12px;color:#555;line-height:1.6;margin-top:10px}
     .pb-help-full-link{display:block;text-align:center;margin-top:16px;font-size:13px;color:var(--gold);text-decoration:none;font-weight:500}
     .pb-help-full-link:hover{text-decoration:underline}
     .pb-help-call{display:flex;align-items:center;gap:10px;background:var(--espresso);border-radius:10px;padding:14px 16px;margin-top:16px}

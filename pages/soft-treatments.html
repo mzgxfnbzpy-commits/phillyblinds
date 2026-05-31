@@ -714,7 +714,7 @@
         <div class="form-group"><label>Number of folds</label><input type="number" id="val-folds" placeholder="e.g. 3" min="1" max="20" style="font-size:14px"></div>
         <div class="form-group"><label>Fold section size (inches)</label><input type="number" id="val-fold-size" placeholder="e.g. 4" min="1" max="24" style="font-size:14px"></div>
       </div>
-      <div style="background:#FBF7F0;border-radius:8px;padding:10px 13px;font-size:11px;color:#888;margin-bottom:16px">Fold section dimensions will be confirmed and refined during your consultation.</div>
+      <div style="background:var(--gold-mid);border-radius:8px;padding:10px 13px;font-size:11px;color:#888;margin-bottom:16px">Fold section dimensions will be confirmed and refined during your consultation.</div>
       <div class="form-row">
         <div class="form-group"><label>Your name *</label><input type="text" id="val-name" placeholder="Jane Smith"></div>
         <div class="form-group"><label>Phone *</label><input type="tel" id="val-phone" placeholder="(215) 555-0100"></div>
@@ -1094,7 +1094,7 @@
     </div>
 
     <!-- Fabric yardage estimate — standalone display -->
-    <div id="corn-yardage-display" style="display:none;margin-bottom:14px;padding:14px 16px;background:#FBF7F0;border:1.5px solid var(--gold);border-radius:10px">
+    <div id="corn-yardage-display" style="display:none;margin-bottom:14px;padding:14px 16px;background:var(--gold-mid);border:1.5px solid var(--gold);border-radius:10px">
       <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;color:var(--gold);margin-bottom:6px">&#129514; Estimated fabric needed</div>
       <div id="corn-yardage-text" style="font-size:18px;font-weight:700;color:#1C1510;margin-bottom:4px"></div>
       <div id="corn-yardage-sub" style="font-size:11px;color:#666;line-height:1.5"></div>
@@ -1309,7 +1309,7 @@
         <div class="form-group"><label>Timeline</label><input type="text" name="timeline" placeholder="e.g. within 2 weeks"></div>
       </div>
       <div class="form-group"><label>Notes</label><textarea name="notes" placeholder="Fabric preferences, room description, motorization interest..." rows="3"></textarea></div>
-      <div style="background:#FBF7F0;border:1px solid #e8e8e4;border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:#888">
+      <div style="background:var(--gold-mid);border:1px solid #e8e8e4;border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:#888">
         <strong style="color:#555">Secure checkout coming soon</strong> — soft treatments are ordered after a free in-home consult and fabric selection.<br>
         Call Justin: <a href="tel:6097421720" style="color:var(--gold);font-weight:500;text-decoration:none">(609) 742-1720</a> &mdash; 24/7
       </div>
@@ -1416,7 +1416,7 @@ function drapeFullnessHint(val) {
     rec.style.cssText = 'display:block;margin-top:8px;font-size:12px;padding:8px 12px;border-radius:7px;background:#EAF3DE;color:#27500A';
     rec.textContent = '✓ We recommend 2-prong tack top for ' + val + '× fullness.';
   } else {
-    rec.style.cssText = 'display:block;margin-top:8px;font-size:12px;padding:8px 12px;border-radius:7px;background:#FBF7F0;color:#0A4A42';
+    rec.style.cssText = 'display:block;margin-top:8px;font-size:12px;padding:8px 12px;border-radius:7px;background:var(--gold-mid);color:#0A4A42';
     rec.textContent = '✓ We recommend 3-prong tack top for ' + val + '× fullness — rich, full look.';
   }
 }

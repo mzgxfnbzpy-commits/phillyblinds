@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -10,10 +10,10 @@ h1 { color: #ccc; font-size: 16px; font-weight: 400; margin-bottom: 16px; }
 canvas { box-shadow: 0 8px 40px rgba(0,0,0,0.6); max-width: 100%; }
 .actions { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
 button { padding: 12px 28px; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
-.btn-dl { background: #C8973F; color: #1C1510; }
+.btn-dl { background: var(--gold); color: #1C1510; }
 .btn-dl:hover { opacity: 0.88; }
 .note { color: #888; font-size: 12px; margin-top: 14px; text-align: center; line-height: 1.7; max-width: 620px; }
-em { color: #C8973F; font-style: normal; }
+em { color: var(--gold); font-style: normal; }
 </style>
 </head>
 <body>
@@ -59,7 +59,7 @@ function render() {
   ctx.fillRect(0, 0, W, H);
 
   // Left gold bar
-  ctx.fillStyle = '#C8973F';
+  ctx.fillStyle = 'var(--gold)';
   ctx.fillRect(0, 0, 8, H);
 
   // Decorative teal curves
@@ -72,12 +72,12 @@ function render() {
   ctx.fillText('Philly', 80, 218);
 
   // "Blinds" — gold italic serif
-  ctx.fillStyle = '#C8973F';
+  ctx.fillStyle = 'var(--gold)';
   ctx.font = 'italic 400 100px Georgia,"Times New Roman",serif';
   ctx.fillText('Blinds', 80, 318);
 
   // Gold rule
-  ctx.fillStyle = '#C8973F';
+  ctx.fillStyle = 'var(--gold)';
   ctx.fillRect(80, 348, 280, 4);
 
   // Subtitle
@@ -96,7 +96,7 @@ function render() {
   ctx.fillText('Michael J. Healy Installations LLC', 80, 494);
 
   // Phone
-  ctx.fillStyle = '#C8973F';
+  ctx.fillStyle = 'var(--gold)';
   ctx.font = '600 30px system-ui,-apple-system,Arial,sans-serif';
   ctx.fillText('(609) 742-1720  ·  24/7', 80, 550);
 
@@ -107,7 +107,7 @@ function render() {
 
   // Bottom gradient bar
   const grad = ctx.createLinearGradient(0, 0, W, 0);
-  grad.addColorStop(0,    '#C8973F');
+  grad.addColorStop(0,    'var(--gold)');
   grad.addColorStop(0.55, 'rgba(45,224,193,0.5)');
   grad.addColorStop(1,    'rgba(28,21,16,0)');
   ctx.fillStyle = grad;

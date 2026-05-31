@@ -1085,7 +1085,7 @@ function ringQtyChanged(inp){
   if(qty>0&&est){
     var impliedWidth=Math.round(qty*15/5);
     est.textContent='≈ '+qty+' rings for a ~'+impliedWidth+'" wide panel';
-    inp.style.borderColor='var(--gold,#C8973F)';
+    inp.style.borderColor='var(--gold)';
   } else if(est){
     est.textContent='';
     inp.style.borderColor='#d8d8d4';

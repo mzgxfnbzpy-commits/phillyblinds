@@ -869,8 +869,8 @@ html, body { overflow-x: hidden; }
   font-weight: 500;
   padding: 4px 12px;
   border-radius: 999px;
-  background: rgba(200,151,63,0.15);
-  border: 1px solid rgba(200,151,63,0.4);
+  background: rgba(45,224,193,0.12);
+  border: 1px solid rgba(45,224,193,0.35);
   color: var(--gold);
 }
 

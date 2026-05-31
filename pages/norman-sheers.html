@@ -114,12 +114,7 @@
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:480px){.form-row{grid-template-columns:1fr}.opt-grid-2{grid-template-columns:1fr}}
 
-/* ── DELIVERY ── */
-.del-opt{background:#fff;border:1.5px solid #e0dbd2;border-radius:9px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:.15s}
-.del-opt:hover{border-color:var(--gold)}
-.del-opt.sel{border:2px solid var(--gold);background:var(--gold-mid)}
-.del-opt-title{font-size:13px;font-weight:500;color:#111;margin-bottom:2px}
-.del-opt-sub{font-size:11px;color:#777;line-height:1.5}
+/* ── DELIVERY — using global.css delivery-opt-card ── */
 
 /* ── DISCLAIMER ── */
 .disclaimer-toggle{background:none;border:none;font-size:12px;color:var(--gold);cursor:pointer;padding:0;font-family:var(--font);display:flex;align-items:center;gap:6px;margin-top:16px}
@@ -369,14 +364,14 @@
     <div class="step-head-title">Delivery &amp; quote</div>
   </div>
   <div class="step-body">
-    <div class="form-row" style="margin-bottom:12px">
-      <div class="del-opt sel" id="del-ship" onclick="pickDel('ship')">
-        <div class="del-opt-title">📦 Ship to me</div>
-        <div class="del-opt-sub">UPS or FedEx from Huntingdon Valley, PA. Tariffs additional.</div>
+    <div class="delivery-opt-grid" style="margin-bottom:12px">
+      <div class="delivery-opt-card sel" onclick="pickDel('ship',this)">
+        <div class="delivery-opt-title">Ship to me</div>
+        <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
       </div>
-      <div class="del-opt" id="del-pickup" onclick="pickDel('pickup')">
-        <div class="del-opt-title">🏠 I'll pick up</div>
-        <div class="del-opt-sub">Pickup in Huntingdon Valley, PA. Address confirmed after order.</div>
+      <div class="delivery-opt-card" onclick="pickDel('pickup',this)">
+        <div class="delivery-opt-title">I'll pick up</div>
+        <div class="delivery-opt-body">Pickup in Huntingdon Valley, PA. Address confirmed after order.</div>
       </div>
     </div>
     <div class="form-row">
@@ -814,10 +809,10 @@ function updateAcc(){
 // ═══════════════════════════════════════════════════════════
 // STEP 9: DELIVERY
 // ═══════════════════════════════════════════════════════════
-function pickDel(d){
+function pickDel(d,card){
   S.delivery=d;
-  document.getElementById('del-ship').classList.toggle('sel',d==='ship');
-  document.getElementById('del-pickup').classList.toggle('sel',d==='pickup');
+  document.querySelectorAll('.delivery-opt-card').forEach(function(c){c.classList.remove('sel');});
+  card.classList.add('sel');
 }
 
 // ═══════════════════════════════════════════════════════════

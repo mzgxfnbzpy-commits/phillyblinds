@@ -1098,8 +1098,6 @@ function pickDel(btn,key){
   document.querySelectorAll('.delivery-opt-card').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');
   S.del=key;
-  showEl('del-ship',key==='ship');
-  showEl('del-pickup',key==='pickup');
   document.getElementById('s8val').textContent=key==='ship'?'Ship to me':'Pick up';
   markDone('step8');
   updateQuote();

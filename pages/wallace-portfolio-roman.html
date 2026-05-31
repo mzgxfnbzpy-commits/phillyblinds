@@ -102,13 +102,7 @@
 
 .pdf-confirm-banner{background:#FFF3CD;border:1px solid #FFC107;border-radius:10px;padding:14px 16px;font-size:12px;color:#7d5a00;margin-bottom:20px;line-height:1.7}
 
-.delivery-section{background:#f0ece4;border-radius:10px;padding:16px}
-.delivery-title{font-size:13px;font-weight:600;color:#111;margin-bottom:10px}
-.del-opt{background:#fff;border:1.5px solid #e0dbd2;border-radius:9px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:.15s}
-.del-opt:hover{border-color:var(--gold)}
-.del-opt.sel{border:2px solid var(--gold);background:var(--gold-mid)}
-.del-opt-title{font-size:13px;font-weight:500;color:#111;margin-bottom:2px}
-.del-opt-sub{font-size:11px;color:#777;line-height:1.5}
+/* ── DELIVERY — using global.css delivery-opt-card ── */
 
 .acc-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:.5px solid #f0f0ee}
 .acc-item:last-child{border-bottom:none}
@@ -510,19 +504,20 @@
       <div class="step-head-val" id="val15">Ship to me</div>
     </div>
     <div class="step-body">
-      <div class="delivery-section" style="margin-top:12px">
-        <div class="delivery-title">How would you like to receive your order?</div>
-        <div class="del-opt sel" id="del-ship" onclick="setDelivery('ship')">
-          <div class="del-opt-title">Ship to me</div>
-          <div class="del-opt-sub">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs, duties, and import fees additional.</em></div>
-        </div>
-        <div class="del-opt" id="del-pickup" onclick="setDelivery('pickup')">
-          <div class="del-opt-title">Pick up (Huntingdon Valley, PA)</div>
-          <div class="del-opt-sub">Address confirmed after order.</div>
-        </div>
-        <div class="del-opt" id="del-install" onclick="setDelivery('install')">
-          <div class="del-opt-title">Professional installation (Philadelphia / South Jersey)</div>
-          <div class="del-opt-sub">We supply and install. Measurement visit included.</div>
+      <div style="margin-top:12px">
+        <div class="delivery-opt-grid">
+          <div class="delivery-opt-card sel" onclick="setDelivery('ship',this)">
+            <div class="delivery-opt-title">Ship to me</div>
+            <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs, duties, and import fees additional.</em></div>
+          </div>
+          <div class="delivery-opt-card" onclick="setDelivery('pickup',this)">
+            <div class="delivery-opt-title">Pick up (Huntingdon Valley, PA)</div>
+            <div class="delivery-opt-body">Address confirmed after order.</div>
+          </div>
+          <div class="delivery-opt-card" style="grid-column:1/-1" onclick="setDelivery('install',this)">
+            <div class="delivery-opt-title">Professional installation (Philadelphia / South Jersey)</div>
+            <div class="delivery-opt-body">We supply and install. Measurement visit included.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1257,9 +1252,10 @@ function setCutFabric(on) {
 }
 
 // ── STEP 15: DELIVERY ─────────────────────────────────────────────────────────
-function setDelivery(opt) {
+function setDelivery(opt,card) {
   S.delivery=opt;
-  ['ship','pickup','install'].forEach(function(o){var e=document.getElementById('del-'+o);if(e)e.classList.toggle('sel',o===opt);});
+  document.querySelectorAll('.delivery-opt-card').forEach(function(c){c.classList.remove('sel');});
+  card.classList.add('sel');
   var labels={ship:'Ship to me',pickup:'Pick up',install:'Professional installation'};
   document.getElementById('val15').textContent=labels[opt]||opt;
   sp('sp-delivery',labels[opt]||opt);
