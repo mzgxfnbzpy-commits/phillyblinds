@@ -63,7 +63,7 @@ module.exports = async function handler(req, res) {
   }
 
   const safeName    = String(name).trim().replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  const safeEmail   = String(email).trim().replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const safeEmail   = String(email || '').trim().replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const safePhone   = phone ? String(phone).trim().replace(/</g,'&lt;') : null;
   const safeProduct = product ? String(product).trim().replace(/</g,'&lt;') : 'Custom Window Treatment';
   const safeNotes   = notes ? String(notes).trim().replace(/</g,'&lt;').replace(/\n/g,'<br>') : null;
@@ -114,7 +114,7 @@ module.exports = async function handler(req, res) {
 
     <div style="border-top:1px solid #e8e8e4;padding-top:14px;font-size:11px;color:#bbb">
       Submitted via ${SITE_URL} &nbsp;·&nbsp; Reply-To: <a href="mailto:${safeEmail}" style="color:#bbb">${safeEmail}</a>
-      ${sourceUrl ? `&nbsp;·&nbsp; Page: <a href="${sourceUrl}" style="color:#bbb">${sourceUrl}</a>` : ''}
+      ${sourceUrl ? `&nbsp;·&nbsp; Page: <a href="${String(sourceUrl).replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}" style="color:#bbb">${String(sourceUrl).replace(/</g,'&lt;').replace(/>/g,'&gt;')}</a>` : ''}
     </div>
   </div>
 </div></body></html>`;

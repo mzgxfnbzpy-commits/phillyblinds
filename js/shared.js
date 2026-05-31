@@ -1348,7 +1348,7 @@ function pbShowContact(title) {
             'if(!n||!p){alert(\'Please enter your name and phone number.\');return;}' +
             'var m=document.getElementById(\'' + uid + '-msg\').value;' +
             'var fi=document.getElementById(\'' + uid + '-files\');' +
-            'var fn=fi&&fi.files.length?\'\\n\\nFiles: \'+Array.from(fi.files).map(function(f){return f.name}).join(\', \')+\'\\n(Please email to justin@phillyblinds.com)\':\'\';\'' +
+            'var fn=fi&&fi.files.length?\'\\n\\nFiles: \'+Array.from(fi.files).map(function(f){return f.name}).join(\', \')+\'\\n(Please email to justin@phillyblinds.com)\':\'\';' +
             'var subj=\'Quote Request — \'+n;' +
             'var body=\'QUOTE REQUEST\\n\\nName: \'+n+\'\\nPhone: \'+p+\'\\n\\nMessage:\\n\'+(m||\'(none)\')+fn;' +
             'window.location.href=\'mailto:justin@phillyblinds.com?subject=\'+encodeURIComponent(subj)+\'&body=\'+encodeURIComponent(body);' +
