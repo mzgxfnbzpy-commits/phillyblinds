@@ -211,7 +211,7 @@
     </div>
     <div id="dim-msg" class="msg-box" style="display:none"></div>
     <div id="size-info" class="msg-info" style="display:none;margin-top:8px"></div>
-    <div class="step-note" style="margin-top:8px">Min 18″W × 24″H · Max 96″W × 96″H (style and pattern limits apply). Final deductions confirmed at order.</div>
+    <div class="step-note" style="margin-top:8px">Min 18″W × 24″H · Max 96″W × 120″H (TDBU max 72″W × 72″H · style and pattern limits apply). Final deductions confirmed at order.</div>
   </div>
 </div>
 
@@ -257,6 +257,10 @@
       <div class="addon-row" id="acc-solar" onclick="toggleAddon(this,'accSolar')">
         <div class="addon-left"><div class="addon-check">✓</div><div><div class="addon-name">Solar Panel V1</div><div class="addon-sub">Continuous charging option</div></div></div>
         <div class="addon-price">+$130</div>
+      </div>
+      <div class="addon-row" id="acc-ext" onclick="toggleAddon(this,'accExt')">
+        <div class="addon-left"><div class="addon-check">✓</div><div><div class="addon-name">Extension Cable 1.2M</div><div class="addon-sub">For charging in hard-to-reach locations</div></div></div>
+        <div class="addon-price">+$21</div>
       </div>
     </div>
   </div>
@@ -455,7 +459,7 @@
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script>
-renderNav('Soft treatments');
+renderNav('Shades & blinds');
 renderFooter(false);
 
 // ═══════════════════════════════════════════════════════════
@@ -663,7 +667,7 @@ const S = {
   control:null, liner:'none', linerType:'P', linerColor:'White', linerCode:'2294',
   edge:'none', valance:'standard', qty:1, del:'ship',
   holdDown:false, sideReturn:false, cutOut:false, twoOn1:false,
-  accHub:false, accRemote:false, accCharger:false, accSolar:false
+  accHub:false, accRemote:false, accCharger:false, accSolar:false, accExt:false
 };
 
 // ── BUILD PATTERN GRID ────────────────────────────────────────────────────────
@@ -998,6 +1002,7 @@ function updateQuote(){
   if(S.accRemote) motorAccAdd+=68;
   if(S.accCharger) motorAccAdd+=52;
   if(S.accSolar) motorAccAdd+=130;
+  if(S.accExt) motorAccAdd+=21;
   total+=motorAccAdd;
 
   // freight
@@ -1056,6 +1061,7 @@ function submitQuote(){
   if(S.accRemote) motorAccs.push('15-Ch RF Remote ($68)');
   if(S.accCharger) motorAccs.push('Li-Ion Charger ($52)');
   if(S.accSolar) motorAccs.push('Solar Panel ($130)');
+  if(S.accExt) motorAccs.push('Extension Cable 1.2M ($21)');
 
   const lines=[
     'WALLACE GALAXY WOVEN WOODS QUOTE REQUEST',
