@@ -22,7 +22,7 @@
 
 body {
   font-family: var(--font);
-  font-size: 18px;
+  font-size: 16px;
   color: #1a1a1a;
   background: #fff;
   line-height: 1.6;
@@ -773,7 +773,7 @@ html, body { overflow-x: hidden; }
   transition: background .15s, color .15s;
 }
 .step-head-title {
-  font-size: 14px; font-weight: 500; color: #111;
+  font-size: 15px; font-weight: 500; color: #111;
   flex: 1; line-height: 1.3;
 }
 .step-head-val {
@@ -893,3 +893,11 @@ html, body { overflow-x: hidden; }
 [id^="pr-rd"], [id^="pr-motor"], [id^="pr-cargo"] {
   display: none !important;
 }
+
+/* ============================================================
+   CANONICAL TYPOGRAPHY — three consistent levels site-wide
+   !important on page-hero h1 overrides per-page inline styles
+   ============================================================ */
+.page-hero h1 { font-size: 36px !important; }
+.opt-card-title { font-size: 14px !important; font-weight: 500; }
+.brand-name { font-size: 18px !important; }
