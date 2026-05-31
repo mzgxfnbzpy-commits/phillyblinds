@@ -7,11 +7,10 @@
 //                     "Philly Blinds <onboarding@resend.dev>"
 // Domain verification: resend.com → Domains → Add phillyblinds.com → add the DNS records.
 
+// TEMP: Resend free plan only allows sending to the account email (blindznation@gmail.com)
+// until a domain is verified. Switch back to full team list once domain verification completes.
 const TEAM_EMAILS = [
-  'justin@phillyblinds.com',
-  'sarah@phillyblinds.com',
-  'mike@phillyblinds.com',
-  'tarin@phillyblinds.com'
+  'blindznation@gmail.com'
 ];
 const FROM_QUOTES  = process.env.RESEND_FROM || 'Philly Blinds Quotes <noreply@phillyblinds.com>';
 const FROM_CONFIRM = process.env.RESEND_FROM || 'Philly Blinds <noreply@phillyblinds.com>';
