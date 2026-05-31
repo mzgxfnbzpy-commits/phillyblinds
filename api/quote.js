@@ -43,9 +43,7 @@ module.exports = async function handler(req, res) {
   if (bodyStr.length > 20000) return res.status(413).json({ error: 'Request too large.' });
 
   if (!name || !name.trim()) return res.status(400).json({ error: 'Name is required.' });
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-    return res.status(400).json({ error: 'A valid email address is required.' });
-  }
+  const hasValidEmail = email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
@@ -166,17 +164,19 @@ module.exports = async function handler(req, res) {
     await sendEmail({
       from: FROM_QUOTES,
       to: TEAM_EMAILS,
-      reply_to: safeEmail,
+      reply_to: hasValidEmail ? safeEmail : undefined,
       subject: `📋 Quote Request — ${safeName} — ${safeProduct} — ${dateStr}`,
       html: teamHtml
     });
 
-    await sendEmail({
-      from: FROM_CONFIRM,
-      to: [safeEmail],
-      subject: `We received your quote request — ${BRAND}`,
-      html: customerHtml
-    });
+    if (hasValidEmail) {
+      await sendEmail({
+        from: FROM_CONFIRM,
+        to: [safeEmail],
+        subject: `We received your quote request — ${BRAND}`,
+        html: customerHtml
+      });
+    }
 
     return res.status(200).json({ ok: true });
   } catch (err) {
