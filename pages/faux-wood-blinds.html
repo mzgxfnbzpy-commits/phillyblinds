@@ -233,10 +233,10 @@
           <div class="color-swatch" style="background:#8E969C;border-bottom:1px solid #aaa"></div>
           <div class="color-label"><div class="color-name">Storm Gray</div><div class="color-code">P075</div><div class="color-finish">Embossed &mdash; 2½″ only</div></div>
         </div>
-        <!-- Printed colors — +20% surcharge · 2" slat only -->
-        <div class="color-card" data-slat="2in" onclick="pickColor(this,'Mist &mdash; Embossed','6957',true)">
+        <!-- Printed colors — +20% surcharge -->
+        <div class="color-card" data-slat="both" onclick="pickColor(this,'Mist &mdash; Embossed','6957',true)">
           <div class="color-swatch" style="background:#C5CBD0;border-bottom:1px solid #bbb"></div>
-          <div class="color-label"><div class="color-name">Mist</div><div class="color-code">6957</div><div class="color-finish">Printed Embossed &mdash; 2″ only</div><span class="color-printed-badge">+20%</span></div>
+          <div class="color-label"><div class="color-name">Mist</div><div class="color-code">6957</div><div class="color-finish">Printed Embossed</div><span class="color-printed-badge">+20%</span></div>
         </div>
         <div class="color-card" data-slat="2in" onclick="pickColor(this,'Old Teak &mdash; Embossed','P230',true)">
           <div class="color-swatch" style="background:#8B6840;border-bottom:1px solid #7a5c38"></div>
@@ -252,7 +252,7 @@
         </div>
       </div>
       <div id="color-slat-note" class="step-note" style="display:none"></div>
-      <div class="step-note">Colors marked <strong>+20%</strong> are printed finishes with a 20% surcharge. Storm Gray and printed colors have slat-size restrictions — select your slat size first to see what's available. Colors may vary from digital images — request a physical swatch at your consultation. Valance color always matches slat color.</div>
+      <div class="step-note">Colors marked <strong>+20%</strong> are printed finishes with a 20% surcharge. Storm Gray has slat-size restrictions — select your slat size first to see available options. Colors may vary from digital images — request a physical swatch at your consultation. Valance color always matches slat color.</div>
     </div>
   </div>
 
@@ -586,8 +586,8 @@ function pickSlat(el,label){
   const note = $('color-slat-note');
   if (note) {
     note.textContent = S.slat==='2in'
-      ? '2″ slat: Storm Gray Smooth and all printed colors available. Storm Gray Embossed not available in 2″.'
-      : '2½″ slat: Storm Gray Embossed available. Storm Gray Smooth and printed colors (Mist, Old Teak, Granite, Chestnut) not available in 2½″.';
+      ? '2″ slat: All colors available including Storm Gray Smooth and all printed colors. Storm Gray Embossed not available in 2″.'
+      : '2½″ slat: Storm Gray Embossed and Mist available. Storm Gray Smooth and other printed colors (Old Teak, Granite, Chestnut) not available in 2½″.';
     note.style.display='block';
   }
   calcPrice();
@@ -645,9 +645,9 @@ function calcSize(){
   if(!w&&!h){ cbox.style.display='none'; $('s4val').textContent='—'; updateWandUI(); calcPrice(); return; }
 
   const errs=[];
-  if(w>0&&w<6.5)  errs.push('Minimum width is 6½″.');
-  if(w>96)        errs.push('Maximum width is 96″.');
-  if(h>0&&h<16)   errs.push('Minimum height is 16″.');
+  if(w>0&&w<16.5) errs.push('Minimum width is 16½″.');
+  if(w>72)        errs.push('Maximum width is 72″ (inside/outside mount). Side mount brackets available — max 37″ wide. Call for anything wider.');
+  if(h>0&&h<24)   errs.push('Minimum height is 24″.');
   if(h>96)        errs.push('Maximum height is 96″.');
   const area=(w*h)/144;
 
@@ -924,7 +924,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     card.style.display=(!ds||ds==='both'||ds==='2in')?'':'none';
   });
   var note=$('color-slat-note');
-  if(note){note.textContent='2″ slat: Storm Gray Smooth and all printed colors available. Storm Gray Embossed is only available in 2½″.';note.style.display='block';}
+  if(note){note.textContent='2″ slat: All colors available including Storm Gray Smooth and all printed colors. Storm Gray Embossed is only available in 2½″.';note.style.display='block';}
 });
 </script>
 </body>
