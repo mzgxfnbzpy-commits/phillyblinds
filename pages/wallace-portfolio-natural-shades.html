@@ -228,7 +228,7 @@
       </div>
     </div>
     <div class="dim-note" id="dim-note">
-      Natural shades: width 12″–96″ · height 12″–108″ (cordless max 72″W × 84″H). Exact limits depend on control and fabric selected.
+      Natural shades: width 14″–96″ · height 18″–120″. TDBU max 60″W × 72″H. Sliding panels: 48″–192″ wide · up to 120″ tall. Exact limits depend on control selected.
     </div>
     <div class="warn-box" id="warn-dims"></div>
     <!-- Panel auto-config info -->
@@ -762,16 +762,16 @@ const DRAPE_STACK = [
   [120,32.5],[132,35.75],[144,39],[156,42.25],[168,45.5],[180,48.75],[192,52]
 ];
 
-// ── Control size limits ─────────────────────────────────────
+// ── Control size limits (verified against wwnw PDF p.15) ────
 const CTRL_LIMITS = {
-  'cordless':    {minW:12, maxW:72,  minH:12, maxH:84},
-  'tdbu':        {minW:12, maxW:72,  minH:24, maxH:84},
-  'clutch':      {minW:12, maxW:96,  minH:12, maxH:108},
-  'prowand':     {minW:12, maxW:84,  minH:12, maxH:96},
-  'motor-li':    {minW:12, maxW:96,  minH:12, maxH:108},
-  'motor-dc':    {minW:12, maxW:96,  minH:12, maxH:108},
-  'motor-ac':    {minW:12, maxW:96,  minH:12, maxH:108},
-  'motor-pl':    {minW:12, maxW:120, minH:12, maxH:120}
+  'cordless':   {minW:15,     maxW:96, minH:18, maxH:95},
+  'tdbu':       {minW:15,     maxW:60, minH:18, maxH:72},
+  'clutch':     {minW:14,     maxW:96, minH:18, maxH:120},
+  'prowand':    {minW:25,     maxW:96, minH:18, maxH:120},
+  'motor-li':   {minW:29,     maxW:96, minH:18, maxH:120},
+  'motor-dc':   {minW:17.125, maxW:96, minH:18, maxH:120},
+  'motor-ac':   {minW:20,     maxW:96, minH:18, maxH:120},
+  'motor-pl':   {minW:29,     maxW:96, minH:18, maxH:120}
 };
 
 // ── Helpers ─────────────────────────────────────────────────
@@ -898,7 +898,7 @@ function pickMount(m, btn) {
   if(btn) { selOpt(btn, 'grp-mount'); }
 
   const notes = {
-    inside:  'Inside mount: minimum 2″ depth required. Shade width = ordered width − 3/8″.',
+    inside:  'Inside mount: minimum 2¼″ depth (cordless) to 4¼″ (clutch/motor). Shade width = ordered width − 3/8″.',
     outside: 'Outside mount: measure the width and height you want the shade to cover. Allow overlap on all sides.',
     ceiling: 'Ceiling mount: measured and installed from the ceiling. Requires minimum clearance from ceiling to sill.'
   };
@@ -929,6 +929,13 @@ function updateDims() {
         else if(h < lim.minH) msg = `⚠ Height too small. Min: ${lim.minH}″ for ${W.control}.`;
         else if(h > lim.maxH) msg = `⚠ Height too large. Max: ${lim.maxH}″ for ${W.control}.`;
       }
+    }
+
+    // Panel size validation (PDF p.25: min 48", max 192"W × 120"H)
+    if(W.type === 'panel') {
+      if(w < 48) msg = '⚠ Sliding panels require minimum 48″ total width.';
+      else if(w > 192) msg = '⚠ Maximum sliding panel width is 192″.';
+      else if(h > 120) msg = '⚠ Maximum sliding panel height is 120″.';
     }
 
     // Panel track info
@@ -1079,9 +1086,14 @@ function validateControl() {
 }
 
 function checkMotorSqFt() {
-  // TODO: When PDF motor sq ft limits are confirmed, validate here
-  // W.pattern.motorSqFtLiner / motorSqFtNoLiner vs (W.width * W.height / 144)
-  warn('warn-motor-sqft', false);
+  if(!W.pattern || !W.control || !W.control.startsWith('motor') || W.type !== 'shade') {
+    warn('warn-motor-sqft', false);
+    return;
+  }
+  if(W.width <= 0 || W.height <= 0) { warn('warn-motor-sqft', false); return; }
+  const sqFt = (W.width * W.height) / 144;
+  const limit = W.linerCode ? W.pattern.motorSqFtLiner : W.pattern.motorSqFtNoLiner;
+  warn('warn-motor-sqft', sqFt > limit);
 }
 
 // ── Step 7: Liner ───────────────────────────────────────────
