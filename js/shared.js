@@ -1200,7 +1200,7 @@ function _initFileUploads() {
 // ---- SHIPPING ESTIMATOR ----
 function _calcShipping(zip, opts) {
   opts = opts || {};
-  var p = parseInt(String(zip).replace(/D/g,"").padStart(5,"0").substring(0,3));
+  var p = parseInt(String(zip).replace(/\D/g,"").padStart(5,"0").substring(0,3));
   if (isNaN(p)) return null;
   var zone = 6;
   if      ((p>=70&&p<=89)||(p>=190&&p<=199))                              zone=1;
@@ -1388,26 +1388,36 @@ function pbCpShowFiles() {
   var names = Array.from(inp.files).map(function(f){ return '📄 '+f.name; }).join('<br>');
   disp.innerHTML = names;
 }
-function pbSubmitContact() {
-  var name  = (document.getElementById('pb-cp-name')      || {}).value || '';
-  var phone = (document.getElementById('pb-cp-phone-inp') || {}).value || '';
+async function pbSubmitContact() {
+  var name    = (document.getElementById('pb-cp-name') || {}).value || '';
+  var phone   = (document.getElementById('pb-cp-phone-inp') || {}).value || '';
   if (!name.trim() || !phone.trim()) { alert('Please enter your name and phone number.'); return; }
-  var email = (document.getElementById('pb-cp-email') || {}).value || '';
-  var prod  = (document.getElementById('pb-cp-product') || {}).value || '';
-  var notes = (document.getElementById('pb-cp-notes')   || {}).value || '';
-  var filesEl = document.getElementById('pb-cp-files');
-  var fileNames = filesEl && filesEl.files.length ?
-    '\n\nFiles to send: '+Array.from(filesEl.files).map(function(f){return f.name;}).join(', ')+
-    '\n(Please email these to justin@phillyblinds.com)' : '';
-  var w = (document.getElementById('pb-cp-width')  || {}).value || '';
-  var h = (document.getElementById('pb-cp-height') || {}).value || '';
-  var dims = (w || h) ? '\nApprox. size: '+(w?w+'"W ':'')+' '+(h?h+'"H':'') : '';
-  var body  = 'CONSULTATION REQUEST\n\nName: '+name+'\nPhone: '+phone+
-    (email ? '\nEmail: '+email : '')+
-    '\n\nInterested in: '+(prod||'—')+dims+'\n\nNotes:\n'+(notes||'None')+fileNames;
-  window.location.href='mailto:justin@phillyblinds.com?subject='+
-    encodeURIComponent('Free Consultation — '+name)+'&body='+encodeURIComponent(body);
-  document.getElementById('pb-cp-sent').style.display='block';
+  var email   = (document.getElementById('pb-cp-email') || {}).value || '';
+  var product = (document.getElementById('pb-cp-product') || {}).value || '';
+  var width   = (document.getElementById('pb-cp-width') || {}).value || '';
+  var height  = (document.getElementById('pb-cp-height') || {}).value || '';
+  var notes   = (document.getElementById('pb-cp-notes') || {}).value || '';
+  var btn     = document.querySelector('[onclick="pbSubmitContact()"]');
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+  var selections = [];
+  if (product) selections.push({ label: 'Interested in', value: product });
+  if (width || height) selections.push({ label: 'Approx. dimensions', value: (width ? width + '″W' : '') + (width && height ? ' × ' : '') + (height ? height + '″H' : '') });
+  try {
+    var resp = await fetch('/api/quote', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name.trim(), email: email.trim() || undefined, phone: phone.trim(), product: product || 'Free Consultation Request', selections: selections, notes: notes.trim(), sourceUrl: window.location.href })
+    });
+    var data = {};
+    try { data = await resp.json(); } catch(ex) {}
+    if (!resp.ok) throw new Error(data.error || 'Server error');
+    var sent = document.getElementById('pb-cp-sent');
+    if (sent) sent.style.display = 'block';
+    if (btn) btn.style.display = 'none';
+  } catch(err) {
+    if (btn) { btn.disabled = false; btn.textContent = 'Request free consultation →'; }
+    alert('Something went wrong. Please call (609) 742-1720 or email justin@phillyblinds.com');
+  }
 }
 
 // ---- MEASURE HELP MODAL ----

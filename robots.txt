@@ -10,6 +10,8 @@ Disallow: /scripts/
 Disallow: /api/
 Disallow: /admin/
 Disallow: /dashboard/
+Disallow: /HANDOFF.html
+Disallow: /AGENT_LOG.md
 
 # PDF scan images and internal pricing docs (not deployed, but block as defense-in-depth)
 Disallow: /pdfs/wholesale-pricing/
