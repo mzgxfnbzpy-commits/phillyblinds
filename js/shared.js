@@ -2,6 +2,9 @@
 // Philly Blinds — Shared Components
 // ============================================================
 
+// ─── SECURITY — form load timestamp (used for bot timing check) ──────────────
+var _formLoadTime = Date.now();
+
 // ─── GOOGLE BUSINESS PROFILE ─────────────────────────────────
 // To connect your site to your Google Business listing:
 // 1. Go to business.google.com → find your listing → click Share → copy the link
@@ -895,7 +898,9 @@ async function pbSubmitQuote() {
         product: _pbQuoteProduct,
         selections: _pbQuoteLines,
         notes: notes.trim(),
-        sourceUrl: window.location.href
+        sourceUrl: window.location.href,
+        _hp: '',
+        _t: Date.now() - _formLoadTime
       })
     });
     var data = {};
