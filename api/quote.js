@@ -35,6 +35,19 @@ function isAllowedOrigin(origin) {
   return false;
 }
 
+// ── Rate limiting (in-memory, per IP, 5 requests / 10 min) ──────────────────
+const _rateMap = new Map();
+function _checkRate(ip) {
+  const now = Date.now();
+  const WINDOW = 10 * 60 * 1000;
+  const LIMIT  = 5;
+  const entry  = _rateMap.get(ip);
+  if (!entry || now - entry.t > WINDOW) { _rateMap.set(ip, { t: now, n: 1 }); return true; }
+  if (entry.n >= LIMIT) return false;
+  entry.n++;
+  return true;
+}
+
 module.exports = async function handler(req, res) {
   const origin = req.headers.origin || '';
   const corsOrigin = isAllowedOrigin(origin) ? (origin || ALLOWED_ORIGINS[0]) : ALLOWED_ORIGINS[0];
@@ -45,7 +58,17 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { name, email, phone, product, selections, notes, sourceUrl } = req.body || {};
+  // Rate limit by IP
+  const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
+  if (!_checkRate(ip)) return res.status(429).json({ error: 'Too many requests. Please wait a few minutes.' });
+
+  const { name, email, phone, product, selections, notes, sourceUrl, _hp, _t } = req.body || {};
+
+  // Honeypot — bots fill hidden fields, humans don't
+  if (_hp && _hp.trim().length > 0) return res.status(200).json({ ok: true }); // silent reject
+
+  // Timing check — reject if form submitted in under 2 seconds (bot speed)
+  if (typeof _t === 'number' && _t < 2000) return res.status(200).json({ ok: true }); // silent reject
 
   // Basic payload size guard
   const bodyStr = JSON.stringify(req.body || {});
@@ -77,8 +100,8 @@ module.exports = async function handler(req, res) {
   });
 
   const rows = (Array.isArray(selections) ? selections : []).map(function(s) {
-    var lbl = String(s.label || '').replace(/</g,'&lt;');
-    var val = String(s.value || '').replace(/</g,'&lt;');
+    var lbl = String(s.label || '').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    var val = String(s.value || '').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     return '<tr><td style="padding:6px 14px 6px 0;color:#666;font-size:13px;white-space:nowrap;vertical-align:top">' + lbl + '</td>' +
             '<td style="padding:6px 0;font-weight:600;font-size:13px;color:#1a1a1a">' + val + '</td></tr>';
   }).join('');
