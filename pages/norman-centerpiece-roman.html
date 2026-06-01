@@ -491,7 +491,7 @@
           <div class="delivery-opt-grid">
             <div class="delivery-opt-card sel" onclick="setDelivery('ship',this)">
               <div class="delivery-opt-title">Ship to me</div>
-              <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
+              <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA. Freight: $25 first shade + $11 each additional. Shades 90″+ carry $80 oversize surcharge. Tariffs additional.</div>
             </div>
             <div class="delivery-opt-card" onclick="setDelivery('pickup',this)">
               <div class="delivery-opt-title">Pick up (Huntingdon Valley, PA)</div>
@@ -589,7 +589,7 @@
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script>
-renderNav('Roman Shades');
+renderNav('Soft treatments');
 renderFooter(false);
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
@@ -608,18 +608,18 @@ var S = {
 // Discontinued: F1052 Silver 8045, AA0901 Libeco Belgian Linen, AB0203 Old Gold,
 // F0407 Oyster/Pewter, F0396 Charcoal — excluded below.
 var FABRICS = [
-  {g:1,coll:'Lakeside',code:'F1642',name:'Natural Gray',    w:98, seam:true, hex:'#B8B4AA'},
-  {g:1,coll:'Francis', code:'F0876',name:'Pearl',           w:118,seam:true, hex:'#F0ECE0'},
-  {g:1,coll:'Francis', code:'F0877',name:'Barley',          w:118,seam:true, hex:'#E8DEC0'},
-  {g:1,coll:'Francis', code:'F0878',name:'Sandstone',       w:118,seam:true, hex:'#D8C8A0'},
-  {g:1,coll:'Francis', code:'F0879',name:'Toast',           w:118,seam:true, hex:'#C8A870'},
-  {g:1,coll:'Francis', code:'F0882',name:'Espresso',        w:118,seam:true, hex:'#3A2410'},
-  {g:1,coll:'Francis', code:'F0883',name:'Brownie',         w:118,seam:true, hex:'#7A4820'},
-  {g:1,coll:'Francis', code:'F0884',name:'Oatmeal',         w:118,seam:true, hex:'#E8D8B8'},
-  {g:1,coll:'Francis', code:'F0885',name:'Doe',             w:118,seam:true, hex:'#C8A890'},
-  {g:1,coll:'Francis', code:'F0886',name:'Shale',           w:118,seam:true, hex:'#8A8078'},
-  {g:1,coll:'Francis', code:'F0888',name:'Black',           w:118,seam:true, hex:'#1C1C1C'},
-  {g:1,coll:'Francis', code:'F0889',name:'Denim',           w:118,seam:true, hex:'#4A6080'},
+  {g:2,coll:'Lakeside',code:'F1642',name:'Natural Gray',    w:98, seam:true, hex:'#B8B4AA'},
+  {g:2,coll:'Francis', code:'F0876',name:'Pearl',           w:118,seam:true, hex:'#F0ECE0'},
+  {g:2,coll:'Francis', code:'F0877',name:'Barley',          w:118,seam:true, hex:'#E8DEC0'},
+  {g:2,coll:'Francis', code:'F0878',name:'Sandstone',       w:118,seam:true, hex:'#D8C8A0'},
+  {g:2,coll:'Francis', code:'F0879',name:'Toast',           w:118,seam:true, hex:'#C8A870'},
+  {g:2,coll:'Francis', code:'F0882',name:'Espresso',        w:118,seam:true, hex:'#3A2410'},
+  {g:2,coll:'Francis', code:'F0883',name:'Brownie',         w:118,seam:true, hex:'#7A4820'},
+  {g:2,coll:'Francis', code:'F0884',name:'Oatmeal',         w:118,seam:true, hex:'#E8D8B8'},
+  {g:2,coll:'Francis', code:'F0885',name:'Doe',             w:118,seam:true, hex:'#C8A890'},
+  {g:2,coll:'Francis', code:'F0886',name:'Shale',           w:118,seam:true, hex:'#8A8078'},
+  {g:2,coll:'Francis', code:'F0888',name:'Black',           w:118,seam:true, hex:'#1C1C1C'},
+  {g:2,coll:'Francis', code:'F0889',name:'Denim',           w:118,seam:true, hex:'#4A6080'},
   {g:1,coll:'Emery',   code:'F0753',name:'Creamy',          w:118,seam:true, hex:'#F5F0E4'},
   {g:1,coll:'Emery',   code:'F0754',name:'Khaki',           w:118,seam:true, hex:'#BFB08A'},
   {g:1,coll:'Emery',   code:'F1560',name:'Chiffon',         w:118,seam:true, hex:'#F0E8D8'},
@@ -1106,9 +1106,10 @@ function updateCalc() {
   var isDN=S.type==='dn'; showRow('pr-dn-row',isDN); var dnAdd=isDN?425:0;
   var hasV=S.valance; var vSur=hasV?getValanceSurcharge(w):0;
   showRow('pr-valance-row',hasV); if(hasV)setVal('pr-valance','+$'+vSur);
-  var accT=(S.holddown?28:0)+(S.pole?40:0)+(S.cordlessPole?89:0)+((S.shims||0)*7);
+  var accT=(S.holddown?28:0)+(S.pole?89:0)+(S.cordlessPole?89:0)+((S.shims||0)*7);
   showRow('pr-acc-row',accT>0); if(accT>0)setVal('pr-acc','+$'+accT+'/shade');
-  var freight=S.delivery==='pickup'||S.delivery==='install'?0:25+(qty>1?(qty-1)*11:0);
+  var isOversized=w>=90;
+  var freight=S.delivery==='pickup'||S.delivery==='install'?0:isOversized?(80+(qty>1?(qty-1)*50:0)):(25+(qty>1?(qty-1)*11:0));
   showRow('pr-freight-row',freight>0); if(freight>0)setVal('pr-freight','$'+freight);
   var total=(per*qty)+(srAdd*qty)+(dnAdd*qty)+(vSur*qty)+(accT*qty)+freight;
   setVal('pr-total','~$'+Math.round(total).toLocaleString());
