@@ -62,7 +62,7 @@ module.exports = async function handler(req, res) {
   const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
   if (!_checkRate(ip)) return res.status(429).json({ error: 'Too many requests. Please wait a few minutes.' });
 
-  const { name, email, phone, product, selections, notes, sourceUrl, _hp, _t } = req.body || {};
+  const { name, email, phone, product, selections, notes, sourceUrl, estimate, _hp, _t } = req.body || {};
 
   // Honeypot — bots fill hidden fields, humans don't
   if (_hp && _hp.trim().length > 0) return res.status(200).json({ ok: true }); // silent reject
@@ -132,6 +132,12 @@ module.exports = async function handler(req, res) {
       <table style="border-collapse:collapse;width:100%">${rows}</table>
     </div>` : ''}
 
+    ${estimate ? `<div style="background:#FBF7F0;border:1.5px solid #C8973F;border-radius:10px;padding:16px 18px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center">
+      <div><div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#C8973F">Customer's Estimate</div>
+      <div style="font-size:11px;color:#aaa;margin-top:3px">Estimate only — confirm final price before invoicing</div></div>
+      <div style="font-size:26px;font-weight:700;color:#1C1510">${String(estimate).replace(/</g,'&lt;')}</div>
+    </div>` : ''}
+
     ${safeNotes ? `<div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#888;margin-bottom:8px">Customer Notes</div>
     <div style="background:#f9f9f7;padding:12px 16px;border-radius:8px;font-size:13px;color:#333;line-height:1.7;margin-bottom:18px">${safeNotes}</div>` : ''}
 
@@ -151,6 +157,11 @@ module.exports = async function handler(req, res) {
   <div style="background:#fff;padding:26px;border:1px solid #e5e5e3;border-top:none">
     <p style="font-size:17px;font-weight:600;color:#1C1510;margin:0 0 14px">Hi ${firstName}, we received your quote request!</p>
     <p style="font-size:14px;color:#444;line-height:1.7;margin:0 0 20px">Our team has your full configuration for <strong>${safeProduct}</strong> and we're preparing your custom quote now.</p>
+    ${estimate ? `<div style="background:#FBF7F0;border-radius:10px;padding:14px 18px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center">
+      <div><div style="font-size:11px;font-weight:700;color:#C8973F;text-transform:uppercase;letter-spacing:1px">Your Estimate</div>
+      <div style="font-size:11px;color:#aaa;margin-top:2px">Estimate only — subject to final measurement</div></div>
+      <div style="font-size:22px;font-weight:700;color:#1C1510">${String(estimate).replace(/</g,'&lt;')}</div>
+    </div>` : ''}
 
     <div style="background:#E8FDFB;border-left:4px solid #2DE0C1;padding:16px 18px;border-radius:0 8px 8px 0;margin-bottom:22px">
       <div style="font-size:13px;font-weight:700;color:#1C1510;margin-bottom:10px">What happens next:</div>
