@@ -1200,7 +1200,7 @@ function _initFileUploads() {
 // ---- SHIPPING ESTIMATOR ----
 function _calcShipping(zip, opts) {
   opts = opts || {};
-  var p = parseInt(String(zip).replace(/D/g,"").padStart(5,"0").substring(0,3));
+  var p = parseInt(String(zip).replace(/\D/g,"").padStart(5,"0").substring(0,3));
   if (isNaN(p)) return null;
   var zone = 6;
   if      ((p>=70&&p<=89)||(p>=190&&p<=199))                              zone=1;
