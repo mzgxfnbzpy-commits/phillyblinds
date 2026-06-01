@@ -48,7 +48,20 @@ YOUR STYLE:
 HUMAN HANDOFF — when someone asks to speak to a person, the owner, Justin, or says they need help beyond you:
 Always respond: "Of course! You can reach Justin directly at **(609) 742-1720** — call or text anytime, 24/7. Or email justin@phillyblinds.com."`;
 
+const CHAT_ALLOWED_ORIGINS = [
+  'https://www.phillyblinds.com',
+  'https://phillyblinds.com',
+  'https://phillyblinds.vercel.app'
+];
+
 module.exports = async function handler(req, res) {
+  const origin = req.headers.origin || '';
+  const corsOk = CHAT_ALLOWED_ORIGINS.includes(origin) || /^https:\/\/[a-z0-9-]+-[a-z0-9]+-[a-z0-9]+\.vercel\.app$/.test(origin);
+  res.setHeader('Access-Control-Allow-Origin', corsOk ? origin || CHAT_ALLOWED_ORIGINS[0] : CHAT_ALLOWED_ORIGINS[0]);
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Vary', 'Origin');
+  if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
