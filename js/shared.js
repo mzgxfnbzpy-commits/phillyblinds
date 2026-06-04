@@ -1758,18 +1758,14 @@ function reqMoreInfo(product) {
     });
   }
 
-  // ── 2. Intercept product card / configure-btn clicks on landing pages ────────
-  // a.pcard: homepage product grid cards (href="pages/xxx.html")
-  // .brand-card, .product-card: configurator internal cards
-  // a.configure-btn: explicit configure buttons
+  // ── 2. Intercept ALL links to configurator pages (nav, footer, cards, etc.) ─
   document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('a.pcard, .brand-card, .product-card, a.configure-btn').forEach(function (el) {
+    document.querySelectorAll('a[href]').forEach(function (el) {
       var href = (el.getAttribute('href') || '').split('/').pop().replace(/\.html.*/i, '').toLowerCase();
       if (CONF_PAGES.indexOf(href) === -1) return;
       el.addEventListener('click', function (e) {
         e.preventDefault();
-        var title = (el.querySelector('.pcard-name,.pc-name,.brand-name') || {}).textContent || 'Get a Free Quote';
-        pbShowContact(title.trim());
+        pbShowContact('Get a Free Quote');
       });
     });
   });
