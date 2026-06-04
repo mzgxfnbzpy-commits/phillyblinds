@@ -179,7 +179,7 @@
 .rn-fw-pill.unavail{background:#f5f5f5;border-color:#e0e0e0;color:#aaa;text-decoration:line-through}
 </style>
 </head>
-<body>
+<body data-page="Shades & blinds">
 
 <nav class="site-nav" id="site-nav"></nav>
 
@@ -764,10 +764,10 @@
             <div class="opt-row" id="rn-grp-lift">
               <button class="opt-btn" onclick="selOpt(this,'rn-grp-lift');rnSetLift('cordless')">PrecisionLift™ Cordless</button>
               <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-lift');rnSetLift('cord')">Continuous Cord Loop</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-lift');rnSetLift('smart')">SmartRelease™</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-lift');rnSetLift('smart')">AutoLift™</button>
               <button class="opt-btn" onclick="selOpt(this,'rn-grp-lift');rnSetLift('motor')">Motorized</button>
             </div>
-            <div id="rn-lift-note" class="tooltip-note" style="margin-top:5px">Continuous Cord Loop handles large widths &amp; heavy fabrics — child-safe tensioner required. Cordless max width varies by fabric weight. SmartRelease adds controlled descent.</div>
+            <div id="rn-lift-note" class="tooltip-note" style="margin-top:5px">Continuous Cord Loop handles large widths &amp; heavy fabrics — child-safe tensioner required. Cordless max width varies by fabric weight. AutoLift™ is Norman's spring-tension pull system (+$89 AutoLift™ upgrade available for controlled descent).</div>
             <div id="rn-motor-wrap" style="display:none;margin-top:8px">
               <div class="tooltip-note" style="color:var(--gold)">&#9889; Motorization added — we'll confirm battery or hardwired options at measurement visit.</div>
             </div>
@@ -777,11 +777,12 @@
           <div class="step-block">
             <div class="step-hd"><div class="step-num-circle">5</div><div class="step-title">Mount type</div></div>
             <div class="opt-row" id="rn-grp-mount">
-              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-mount')">Inside mount</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-mount')">Outside mount</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-mount')">Door application</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-mount');document.getElementById('ps-door-warn').style.display='none'">Inside mount</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-mount');document.getElementById('ps-door-warn').style.display='none'">Outside mount</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-mount');document.getElementById('ps-door-warn').style.display='block'">Door application</button>
             </div>
-            <div class="tooltip-note" style="margin-top:4px">Inside mount requires min 2¾″ depth. Cassette and dual shades require more — confirmed at order. Door installs use magnetic hold-downs.</div>
+            <div class="tooltip-note" style="margin-top:4px">Inside mount requires min 2¾″ depth. Cassette and dual shades require more — confirmed at order.</div>
+            <div id="ps-door-warn" class="tooltip-note" style="display:none;margin-top:6px;background:#FFF3CD;border:1px solid #FFC107;border-radius:8px;padding:8px 12px;color:#7d5a00">⚠ <strong>PerfectSheer door application requirements:</strong> Magnetic hold-down brackets required (+$28 each). An extra 1/16″ fabric deduction per side is applied. Valances are <strong>NOT recommended</strong> for door applications.</div>
           </div>
 
           <!-- Step 6: Headrail & Top Treatment — corrected structure -->
@@ -893,9 +894,6 @@
                   <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Cottage White</button>
                   <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Black</button>
                   <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Silver</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Nature</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Terra</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Sahara</button>
                   <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Chocolate</button>
                 </div>
               </div>
@@ -1158,7 +1156,7 @@
                 <button class="opt-btn sel" onclick="selOpt(this,'grp-solar');updatePrice()">1% — max privacy</button>
                 <button class="opt-btn" onclick="selOpt(this,'grp-solar');updatePrice()">3% — standard</button>
                 <button class="opt-btn" onclick="selOpt(this,'grp-solar');updatePrice()">5% — balanced</button>
-                <button class="opt-btn" onclick="selOpt(this,'grp-solar');updatePrice()">7–10% — high visibility</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-solar');updatePrice()">10% — high visibility</button>
               </div>
               <div class="tooltip-note" style="margin-top:4px">±10% openness tolerance is normal and not a defect.</div>
             </div>
@@ -1817,7 +1815,7 @@
             <img loading="lazy" src="../images/thumbnails/faux-blinds.png" alt="Faux Wood Blinds" style="width:100%;height:100%;object-fit:cover;object-position:center 30%">
           </div>
           <span class="brand-btn-name">Faux Wood Blinds</span>
-          <span class="brand-btn-sub">Norman SmartPrivacy® · 16 colors · instant pricing</span>
+          <span class="brand-btn-sub">Norman SmartPrivacy® · 6 colors · cordless only</span>
         </button>
         <button class="brand-btn" onclick="selectBlindsSubtype('rwb')" style="flex:1;min-width:0">
           <div class="product-img-photo" style="height:140px;border-radius:8px;overflow:hidden;margin-bottom:10px">
@@ -1874,7 +1872,7 @@
       <button onclick="switchBlindsType('rwb')" style="background:var(--espresso);color:var(--gold);border:none;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap">Switch to Real Wood &#8594;</button>
     </div>
     <div style="background:var(--gold-mid);border:1px solid #E8DCC8;border-radius:10px;padding:12px 16px;margin-bottom:18px;font-size:12px;color:#0D4A42;line-height:1.6">
-      <strong>Norman SmartPrivacy® Faux Wood Blinds</strong> — moisture-resistant PVC, SmartPrivacy® pivoting bottom rail. 2″ and 2½″ slats, 16 colors.
+      <strong>Norman SmartPrivacy® Faux Wood Blinds</strong> — moisture-resistant PVC, SmartPrivacy® pivoting bottom rail. 2″ and 2½″ slats, 6 colors. <strong>Cordless only — no cord or motor option.</strong> Max 72″W × 96″H.
     </div>
 
     <!-- Step 1: Slat size -->
@@ -1904,12 +1902,10 @@
     <div class="step-block">
       <div class="step-hd"><div class="step-num-circle">3</div><div class="step-title">Operating system</div></div>
       <div class="opt-row" id="fwb-grp-op">
-        <button class="opt-btn sel" onclick="selOpt(this,'fwb-grp-op')">Standard cord</button>
-        <button class="opt-btn" onclick="selOpt(this,'fwb-grp-op')">Cordless</button>
-        <button class="opt-btn" onclick="selOpt(this,'fwb-grp-op')">SofTilt&trade; (spring wand)</button>
-        <button class="opt-btn" onclick="selOpt(this,'fwb-grp-op')">Motorized — Norman only</button>
+        <button class="opt-btn sel" onclick="selOpt(this,'fwb-grp-op')">Cordless push-lift</button>
+        <button class="opt-btn" onclick="selOpt(this,'fwb-grp-op')">SofTilt&trade; (wand tilt)</button>
       </div>
-      <div class="tooltip-note" id="fwb-op-note" style="margin-top:6px">Cordless lift is child &amp; pet safe — cord-free operation with a push or pull.</div>
+      <div class="tooltip-note" id="fwb-op-note" style="margin-top:6px">Norman SmartPrivacy® is <strong>cordless only</strong> — no corded or motorized option. Child &amp; pet safe. Wand tilt adjusts slat angle independently.</div>
     </div>
 
     <!-- Step 4: Mount type -->
@@ -1925,8 +1921,8 @@
     <div class="step-block">
       <div class="step-hd"><div class="step-num-circle">5</div><div class="step-title">Measurements &amp; quantity</div></div>
       <div class="dim-row">
-        <div class="form-group"><label>Width (inches)</label><input type="number" id="fwb-width" min="10" max="96" step="0.5" placeholder="e.g. 36"></div>
-        <div class="form-group"><label>Height (inches)</label><input type="number" id="fwb-height" min="12" max="120" step="0.5" placeholder="e.g. 48"></div>
+        <div class="form-group"><label>Width (inches)</label><input type="number" id="fwb-width" min="10" max="72" step="0.5" placeholder="e.g. 36"></div>
+        <div class="form-group"><label>Height (inches)</label><input type="number" id="fwb-height" min="12" max="96" step="0.5" placeholder="e.g. 48"></div>
       </div>
       <div style="margin-top:10px">
         <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Quantity</div>
@@ -2421,9 +2417,6 @@
 
 <script src="../js/shared.js"></script>
 <script>
-renderNav('Shades & blinds');
-renderFooter(false);
-
 // Auto-open product configurator from URL ?product=xxx parameter
 window.addEventListener("load", function() {
   var params = new URLSearchParams(window.location.search);
@@ -2910,7 +2903,7 @@ function cellularOpChange(type) {
     else cellMotorWrap.innerHTML = '<div style="background:var(--espresso-mid);border-radius:8px;padding:12px 14px;margin-top:10px;font-size:12px;color:var(--text-dark)">Norman Smart Motorization: power source (battery/hardwired), remote, and smart home options confirmed at measurement visit.</div>';
   } else {
     if (motorOn) toggleMotor(false);
-    note.textContent = 'Cord Loop: handles larger windows up to 120″ W × 144″ H (80 sq ft max area). Available in Bottom Up, TDBU, and Day & Night. SmartRelease™ upgrade available.';
+    note.textContent = 'Cord Loop: handles larger windows up to 120″ W × 144″ H (80 sq ft max area). Available in Bottom Up, TDBU, and Day & Night.';
   }
 }
 
@@ -4829,7 +4822,7 @@ function rnSetLift(type) {
   const liftNotes = {
     cordless: 'PrecisionLift™ Cordless: child & pet safe, no exposed chain. Max width varies by fabric weight — not recommended for oversized or very heavy shades.',
     cord:     'Continuous Cord Loop: handles large widths & heavy fabrics. Child-safe tensioner required. Choose chain or cord control below.',
-    smart:    'SmartRelease™: controlled soft descent. Requires compatible raceway/cassette. Has surcharge.',
+    smart:    'AutoLift™: Norman spring-tension pull system. Pull down to lower, release to raise. SmartRelease™ controlled-descent upgrade available (+$89). Best for smaller windows.',
     motor:    'Motorized: required for large shades, hard-to-reach windows, dual & coupled systems. Battery or hardwired options available.'
   };
   const note = document.getElementById('rn-lift-note');
@@ -4844,11 +4837,11 @@ function rnSetLift(type) {
 
 const COLOR_OPTIONS = {
   standardHardware:      ["White", "Cottage White", "Black", "Silver"],
-  beadChain:             ["White", "Cottage White", "Black", "Silver", "Nature", "Terra", "Sahara", "Chocolate", "Stainless Steel"],
+  beadChain:             ["White", "Cottage White", "Black", "Silver", "Chocolate", "Stainless Steel"],
   fasciaPlain:           ["White", "Cottage White", "Black", "Anodized Silver"],
   plainHemBar:           ["White", "Cottage White", "Black", "Anodized Silver"],
-  fabricWrappedEndCaps:  ["White", "Cottage White", "Black", "Silver", "Nature", "Terra", "Sahara", "Chocolate"],
-  chargingPort:          ["White", "Cottage White", "Black", "Silver", "Nature", "Terra", "Sahara", "Chocolate"],
+  fabricWrappedEndCaps:  ["White", "Cottage White", "Black", "Silver", "Chocolate"],
+  chargingPort:          ["White", "Cottage White", "Black", "Silver", "Chocolate"],
   lightGuard360:         ["White", "Cottage White", "Black", "Silver", "Bronze"],
   cassette:              ["White", "Cottage White", "Black", "Silver"]
 };
@@ -5300,13 +5293,13 @@ function rnUpdatePrice() {
   // ── Lift system surcharge (SmartRelease only) ──────────────
   var liftBtn2  = document.querySelector('#rn-grp-lift .opt-btn.sel');
   var liftText2 = liftBtn2 ? liftBtn2.textContent.trim() : '';
-  var liftSur   = liftText2.includes('SmartRelease') ? 89 : 0;
+  var liftSur   = liftText2.includes('AutoLift') ? 89 : 0;
   var liftRow   = document.getElementById('rn-pb-liftsur-row');
   var liftSurEl = document.getElementById('rn-pb-liftsur');
   var liftLblEl = document.getElementById('rn-pb-liftsur-label');
   if (liftSur > 0 && liftRow) {
     liftRow.style.display = 'flex';
-    if (liftLblEl) liftLblEl.textContent = 'SmartRelease™';
+    if (liftLblEl) liftLblEl.textContent = 'AutoLift™';
     if (liftSurEl) liftSurEl.textContent = '+$89';
   } else if (liftRow) { liftRow.style.display = 'none'; }
 
