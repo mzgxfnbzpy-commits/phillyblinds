@@ -2176,12 +2176,35 @@
     <!-- STEP 7: VALANCE -->
     <div class="step-hd"><div class="step-num-circle">7</div><div class="step-title" style="margin-bottom:0">Valance / headrail cover</div></div>
     <div class="opt-row" id="grp-ps-valance">
-      <button class="opt-btn sel" onclick="selOpt(this,'grp-ps-valance');psCalc()">Curved fascia (free)</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-ps-valance');psCalc()">Fabric valance 3&#189;&Prime;</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-ps-valance');psCalc()">Fabric valance 4&#189;&Prime;</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-ps-valance');psCalc()">Wood valance 4&#189;&Prime;</button>
+      <button class="opt-btn sel" onclick="selOpt(this,'grp-ps-valance');document.getElementById('ps-wood-val-wrap').style.display='none';psCalc()">Curved fascia (free)</button>
+      <button class="opt-btn" id="ps-val-fab35" onclick="selOpt(this,'grp-ps-valance');document.getElementById('ps-wood-val-wrap').style.display='none';psCalc()">Fabric valance 3&#189;&Prime;</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-ps-valance');document.getElementById('ps-wood-val-wrap').style.display='none';psCalc()">Fabric valance 4&#189;&Prime;</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-ps-valance');document.getElementById('ps-wood-val-wrap').style.display='block';psCalc()">Wood valance 4&#189;&Prime;</button>
     </div>
-    <div class="tooltip-note" style="margin-bottom:16px">Curved fascia with matching fabric is included at no charge. Fabric valance adds a flat front panel; wood valance is painted or stained hardwood.</div>
+    <div id="ps-val-size-warn" class="tooltip-note" style="display:none;color:#dc2626;margin-top:4px">⚠ Height over 72″ — 3½″ valance not available. Only 4½″ options can be ordered.</div>
+    <div id="ps-wood-val-wrap" style="display:none;margin-top:8px">
+      <div class="tooltip-note" style="margin-bottom:5px">Wood valance color — select paint or stain finish:</div>
+      <select id="ps-wood-val-color" onchange="psCalc()" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;font-family:inherit">
+        <optgroup label="Paint">
+          <option value="001 Pure White">001 Pure White</option>
+          <option value="003 Silk White">003 Silk White</option>
+          <option value="006 Pearl">006 Pearl</option>
+          <option value="012 Crisp Linen">012 Crisp Linen</option>
+          <option value="049 Stone Grey">049 Stone Grey</option>
+          <option value="053 Clay">053 Clay</option>
+        </optgroup>
+        <optgroup label="Stain">
+          <option value="109 Weathered Teak">109 Weathered Teak</option>
+          <option value="110 Lined White">110 Lined White</option>
+          <option value="212 Dark Teak">212 Dark Teak</option>
+          <option value="221 Black Walnut">221 Black Walnut</option>
+          <option value="237 Wenge">237 Wenge</option>
+          <option value="246 Matte Black">246 Matte Black</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="tooltip-note" style="margin-bottom:4px;margin-top:6px">Curved fascia with matching fabric is included at no charge. Fabric valance adds a flat front panel; wood valance is painted or stained hardwood — 12 color options.</div>
+    <div class="tooltip-note" style="margin-bottom:16px;color:#888">⚠ Valances are <strong>NOT recommended for door applications.</strong> Fabric valance 3½″ requires shade height ≤72″; over 72″ select 4½″ only. Max single valance width 93″ (spliced for wider shades).</div>
 
     <!-- STEP 8: ADD-ONS -->
     <div class="step-hd"><div class="step-num-circle">8</div><div class="step-title" style="margin-bottom:0">Accessories</div></div>
@@ -5338,9 +5361,13 @@ function rnUpdatePrice() {
     if (freightEl) freightEl.textContent = '$' + freightAmt + (oversize ? ' (90″+ oversize rate)' : '');
   }
 
-  // ── Grand total ───────────────────────────────────────────
-  const allSurcharges = hrSurcharge + sysSur + liftSur + lgSur + hdSur + freightAmt;
-  const total = perShade ? (perShade * qty) + motorCost + allSurcharges : null;
+
+  // ── Grand total with 15% Norman discount on product subtotal only ──
+  const NORMAN_DISC_RN = 0.15;
+  const productSubtotalRN = perShade ? (perShade * qty) + motorCost + hrSurcharge + sysSur + liftSur + lgSur + hdSur : null;
+  const discountAmtRN = productSubtotalRN ? Math.round(productSubtotalRN * NORMAN_DISC_RN) : 0;
+  const yourPriceRN = productSubtotalRN ? productSubtotalRN - discountAmtRN : null;
+  const total = yourPriceRN !== null ? yourPriceRN + freightAmt : null;
 
   // Update standard chain label (75% of height)
   updateChainStdLabel('rn-clen-std-label', 'rn-height');
@@ -5348,13 +5375,33 @@ function rnUpdatePrice() {
   document.getElementById('rn-pb-dims').textContent  = w + '″ W × ' + h + '″ H';
   document.getElementById('rn-pb-sqft').textContent  = lookup ? lookup.pricedAt : '—';
   document.getElementById('rn-pb-base').textContent  = perShade
-    ? '$' + perShade.toFixed(0) + '/shade (PG' + (lookup ? lookup.group : '?') + ')'
+    ? '\$' + perShade.toFixed(0) + '/shade retail (PG' + (lookup ? lookup.group : '?') + ')'
     : 'Size out of range — call for quote';
-  document.getElementById('rn-pb-total').textContent = total ? '$' + total.toFixed(0) + ' est.' : '—';
+
+  // Inject discount rows once
+  if (!document.getElementById('rn-pb-disc-row')) {
+    var rnDivider2 = document.querySelector('#rn-price-box .price-divider');
+    if (rnDivider2) {
+      var dr2 = document.createElement('div'); dr2.className='price-line'; dr2.id='rn-pb-disc-row';
+      dr2.innerHTML='<span style="color:#2DE0C1">15% Norman discount</span><span style="color:#2DE0C1" id="rn-pb-disc-val">—</span>';
+      rnDivider2.parentNode.insertBefore(dr2, rnDivider2);
+      var yr2 = document.createElement('div'); yr2.className='price-line'; yr2.id='rn-pb-your-row';
+      yr2.innerHTML='<span style="font-weight:600;color:#fff">Your price (before shipping)</span><span style="font-weight:600;color:#fff" id="rn-pb-your-val">—</span>';
+      rnDivider2.parentNode.insertBefore(yr2, rnDivider2);
+    }
+  }
+  if (productSubtotalRN) {
+    var rnDiscEl = document.getElementById('rn-pb-disc-val');
+    var rnYourEl = document.getElementById('rn-pb-your-val');
+    if (rnDiscEl) rnDiscEl.textContent = '-\$' + discountAmtRN.toLocaleString();
+    if (rnYourEl) rnYourEl.textContent = '\$' + yourPriceRN.toLocaleString();
+  }
+
+  document.getElementById('rn-pb-total').textContent = total ? '\$' + total.toFixed(0) + ' est.' : '—';
   document.getElementById('rn-pb-min-note').style.display = (perShade === RN_MIN) ? 'block' : 'none';
   if (isMotor) {
     document.getElementById('rn-pb-motor-row').style.display = 'flex';
-    document.getElementById('rn-pb-motor').textContent = '+$' + RN_MOTOR_UP + ' × ' + qty + ' = $' + (RN_MOTOR_UP * qty).toFixed(0);
+    document.getElementById('rn-pb-motor').textContent = '+\$' + RN_MOTOR_UP + ' × ' + qty + ' = \$' + (RN_MOTOR_UP * qty).toFixed(0);
   } else {
     document.getElementById('rn-pb-motor-row').style.display = 'none';
   }
@@ -5615,6 +5662,28 @@ function psCalc() {
   if (isCCL && h > 98) { pn.style.display='block'; pn.textContent='Continuous Cord Loop max height is 98″ (Norman spec). For 98″–120″ height, motorization is required — select "Norman motorization" above.'; return; }
   if (h > 4*w) { pn.style.display='block'; pn.textContent='Height cannot exceed 4× the width (ratio limit). Adjust your dimensions.'; return; }
 
+  // Valance size rule: 3½" valance requires height ≤72"; over 72" only 4½" available
+  var valSizeWarn = document.getElementById('ps-val-size-warn');
+  var val35Btn    = document.getElementById('ps-val-fab35');
+  if (valSizeWarn && val35Btn) {
+    if (h > 72) {
+      valSizeWarn.style.display = 'block';
+      val35Btn.disabled = true;
+      val35Btn.style.opacity = '0.4';
+      // If 3½" is selected, auto-switch to curved fascia
+      var curVal = document.querySelector('#grp-ps-valance .opt-btn.sel');
+      if (curVal === val35Btn) {
+        curVal.classList.remove('sel');
+        document.querySelector('#grp-ps-valance .opt-btn').classList.add('sel');
+        document.getElementById('ps-wood-val-wrap').style.display = 'none';
+      }
+    } else {
+      valSizeWarn.style.display = 'none';
+      val35Btn.disabled = false;
+      val35Btn.style.opacity = '';
+    }
+  }
+
   var wi = psGetIdx(PS_WIDTHS,  w);
   var hi = psGetIdx(PS_HEIGHTS, h);
   if (wi<0) wi = PS_WIDTHS.length-1;
@@ -5689,6 +5758,11 @@ async function submitPSForm(btn) {
   var lift   = (document.querySelector('#grp-ps-lift .opt-btn.sel')||{}).textContent || '';
   var cord   = (document.querySelector('#grp-ps-cord .opt-btn.sel')||{}).textContent || '';
   var valance= (document.querySelector('#grp-ps-valance .opt-btn.sel')||{}).textContent || '';
+  var woodValColor = '';
+  if (valance.indexOf('Wood') >= 0) {
+    var wvc = document.getElementById('ps-wood-val-color');
+    if (wvc) woodValColor = ' — Color: ' + wvc.value;
+  }
   var qty    = document.getElementById('ps-qty').value;
   var loc    = document.getElementById('ps-location').value;
   var notes  = document.getElementById('ps-notes').value;
@@ -5709,7 +5783,7 @@ async function submitPSForm(btn) {
     + 'Color: ' + color + '\n'
     + 'Operation: ' + lift + '\n'
     + 'Cord side: ' + cord + '\n'
-    + 'Valance: ' + valance + '\n'
+    + 'Valance: ' + valance + woodValColor + '\n'
     + 'Light guard: ' + lg + '\n'
     + 'Magnetic hold-down: ' + hd + '\n'
     + 'Shims: ' + shims + '\n\n'
@@ -5784,7 +5858,6 @@ async function _apiSubmit(name, email, phone, productName, configText, successId
 </script>
 </body>
 </html>
-
 
 
 
