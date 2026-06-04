@@ -206,7 +206,7 @@ Every page MUST include:
 All quote forms submit via `mailto:blindznation@gmail.com`. They open the user's email client with a pre-filled body containing all form data. No backend/Formspree needed for now.
 
 ### Delivery section rule
-Every quote form on every page MUST include the delivery/pickup section above the submit button. Options: "Ship to me" (UPS/FedEx from Huntingdon Valley PA, tariff disclosure) or "I'll pick up" (location: 527 Hoyt Rd, Huntingdon Valley PA 19006 â€” disclosed after order). Always include the tariff/duties warning note in the shipping option.
+Every quote form on every page MUST include the delivery/pickup section above the submit button. Options: “Ship to me” (UPS/FedEx from Huntingdon Valley PA, tariff disclosure) or “I'll pick up” (Huntingdon Valley, PA — team provides exact address to customer after order, never include street address in code). Always include the tariff/duties warning note in the shipping option.
 
 ### Drapery hardware motorization rule
 Motor brand for drapery hardware goes in the customer notes â€” there is NO motor brand dropdown on the drapery page. Each hardware manufacturer supports different motor systems so compatibility must be confirmed per order. Customer can specify preference (Somfy, Lutron Sivoia, Rollease Acmeda, etc.) in the notes field.
