@@ -1758,17 +1758,23 @@ function reqMoreInfo(product) {
     });
   }
 
-  // ── 2. Intercept ALL links to configurator pages (nav, footer, cards, etc.) ─
-  document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('a[href]').forEach(function (el) {
-      var href = (el.getAttribute('href') || '').split('/').pop().replace(/\.html.*/i, '').toLowerCase();
-      if (CONF_PAGES.indexOf(href) === -1) return;
-      el.addEventListener('click', function (e) {
-        e.preventDefault();
-        pbShowContact('Get a Free Quote');
-      });
-    });
-  });
+  // ── 2. Intercept ALL anchor clicks to configurator pages ──────────────────────
+  // Event delegation catches every anchor type: a.pcard, a.opt-card-b, nav tabs,
+  // inline text links — without needing to enumerate selectors or wait for DOM.
+  // Skips: site nav, footer, breadcrumbs, in-page hash links.
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a[href]');
+    if (!link) return;
+    if (link.closest('#site-nav, #site-footer, .breadcrumb')) return;
+    var raw  = link.getAttribute('href') || '';
+    if (raw.charAt(0) === '#') return;
+    var slug = raw.split('/').pop().replace(/\.html.*/i, '').toLowerCase();
+    if (CONF_PAGES.indexOf(slug) === -1) return;
+    e.preventDefault();
+    var nameEl = link.querySelector('.pcard-name,.pc-name,.brand-name,.opt-card-b-name');
+    var title  = nameEl ? nameEl.textContent.trim() : (link.textContent.trim().slice(0, 60) || 'Get a Free Quote');
+    pbShowContact(title || 'Get a Free Quote');
+  }, true);
 }());
 
 
