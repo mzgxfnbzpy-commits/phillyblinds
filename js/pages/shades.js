@@ -1,4 +1,4 @@
-﻿// Auto-open product configurator from URL ?product=xxx parameter
+// Auto-open product configurator from URL ?product=xxx parameter
 window.addEventListener("load", function() {
   var params = new URLSearchParams(window.location.search);
   var product = params.get("product");
@@ -859,11 +859,15 @@ function updatePrice() {
     const perShadeAll = tableBase + rdAdd + opAdd + liftAdd;
     const activeMotorUp = cellMotorUpcharge;
     const motorCost = motorOn ? activeMotorUp * qty : 0;
-    const total = (perShadeAll * qty) + motorCost + cellFreight;
+    const NORMAN_DISC_CELL = 0.15;
+    const cellProductSub = (perShadeAll * qty) + motorCost;
+    const cellDiscountAmt = Math.round(cellProductSub * NORMAN_DISC_CELL);
+    const cellYourPrice = cellProductSub - cellDiscountAmt;
+    const total = cellYourPrice + cellFreight;
 
     document.getElementById('pb-dims').textContent = w + '" W × ' + h + '" H';
     document.getElementById('pb-sqft').textContent = res.name + '  ·  table: ' + res.pricedAt;
-    document.getElementById('pb-base').textContent = '$' + tableBase + '/shade (Norman Portrait™ MSRP)';
+    document.getElementById('pb-base').textContent = '$' + tableBase + '/shade retail (Norman Portrait' + String.fromCharCode(0x2122) + ' MSRP)';
     if (motorOn) {
       document.getElementById('pb-motor-row').style.display = 'flex';
       document.getElementById('pb-motor').textContent = '+$' + activeMotorUp + ' × ' + qty + ' = $' + (activeMotorUp * qty);
@@ -3281,7 +3285,11 @@ function psCalc() {
   var liftBtn = document.querySelector('#grp-ps-lift .opt-btn.sel');
   if (liftBtn && liftBtn.textContent.indexOf('motor') >= 0) lines.push('Motorization surcharge: added to final quote');
 
-  document.getElementById('ps-price-num').textContent = '$' + total.toLocaleString();
+  const NORMAN_DISC_PS = 0.15;
+  const psDiscountAmt = Math.round(total * NORMAN_DISC_PS);
+  const psYourPrice = total - psDiscountAmt;
+  lines.push('<span style="color:#2DE0C1;font-weight:500">Retail: $' + total.toLocaleString() + ' &rarr; 15% Norman discount: -$' + psDiscountAmt.toLocaleString() + ' &rarr; Your price: $' + psYourPrice.toLocaleString() + '</span>');
+  document.getElementById('ps-price-num').textContent = '$' + psYourPrice.toLocaleString();
   document.getElementById('ps-price-breakdown').innerHTML = lines.join('<br>');
   pb.style.display = 'block';
 }
@@ -3412,4 +3420,4 @@ async function _apiSubmit(name, email, phone, productName, configText, successId
     var row=btn.closest('[data-goto]');
     if(row) scrollTo(row.dataset.goto);
   });
-})();
+})();
