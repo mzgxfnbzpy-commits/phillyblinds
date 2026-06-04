@@ -131,7 +131,7 @@
 .custom-quote-block-phone a{color:var(--gold);font-weight:600;text-decoration:none}
 </style>
 </head>
-<body>
+<body data-page="Shades & blinds">
 <nav class="site-nav" id="site-nav"></nav>
 
 <div class="page-hero">
@@ -290,7 +290,7 @@
         <div>
           <div class="dim-label">Width (inches)</div>
           <div class="dim-inputs">
-            <input class="dim-whole" type="number" id="w-whole" min="6" max="96" placeholder="36" oninput="calcSize()">
+            <input class="dim-whole" type="number" id="w-whole" min="6" max="72" placeholder="36" oninput="calcSize()">
             <select class="dim-frac" id="w-frac" onchange="calcSize()">
               <option value="0">0</option>
               <option value="0.125">1/8</option>
@@ -526,28 +526,9 @@
 
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
-<script>renderNav('Shades & blinds'); renderFooter(false);</script>
 
-<script>
-// ── PRICING DATA ──────────────────────────────────────────────────────────────
-const W_COLS = [24,28,32,36,42,48,54,60,66,72,78,84,96];
-const H_ROWS = [30,36,42,48,54,60,66,73,78,84,90,96];
-const MATRIX = {
-  30:[169,185,200,223,238,256,280,326,347,373,400,421,454],
-  36:[180,194,210,236,254,273,304,347,371,408,421,454,494],
-  42:[193,210,228,252,272,298,329,372,403,438,462,498,535],
-  48:[206,223,239,267,289,319,350,397,431,471,494,528,571],
-  54:[223,249,259,296,321,350,384,438,471,509,543,577,620],
-  60:[238,255,278,314,340,368,407,467,500,544,574,620,673],
-  66:[252,270,293,331,357,394,432,497,531,591,614,660,715],
-  73:[265,288,312,355,383,420,462,531,571,620,660,711,769],
-  78:[273,302,329,365,400,438,482,559,598,659,696,742,812],
-  84:[288,314,342,388,420,462,512,585,632,701,730,771,854],
-  90:[302,329,357,407,439,482,533,609,660,725,761,805,null],
-  96:[312,346,373,421,462,512,569,641,695,764,791,null,null]
-};
-const VALANCE_PRICE = {24:28,28:28,32:34,36:40,42:51,48:56,54:61,60:73,66:78,72:84,78:94,84:100,96:106};
 
+<<<<<<< HEAD
 // ── STATE ─────────────────────────────────────────────────────────────────────
 const S = {
   slat:'2in', color:null, isPrinted:false,
@@ -956,5 +937,8 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(note){note.textContent='2″ slat: All colors available including Storm Gray Smooth and all printed colors. Storm Gray Embossed is only available in 2½″.';note.style.display='block';}
 });
 </script>
+=======
+<script src="../js/pages/faux-wood-blinds.js"></script>
+>>>>>>> dev
 </body>
 </html>

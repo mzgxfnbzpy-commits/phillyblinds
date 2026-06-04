@@ -3,14 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-CBQP5S8CN6"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-CBQP5S8CN6');
-</script>
 <meta name="description" content="Custom roller shades, cellular shades, roman shades, drapery &amp; plantation shutters. Fabricated and installed by Philly Blinds — serving Philadelphia, South Jersey &amp; the surrounding area. Instant online pricing.">
 <meta property="og:title" content="Philly Blinds — Custom Window Treatments | Philadelphia">
 <meta property="og:description" content="Custom roller shades, cellular shades, roman shades, drapery &amp; plantation shutters. Fabricated and installed by Philly Blinds — serving Philadelphia, South Jersey &amp; the surrounding area. Instant online pricing.">
@@ -191,9 +183,36 @@
 .tcard-name{font-size:11px;color:var(--text-faint);font-weight:500}
 .tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
 
+/* ── PRODUCT OPTION SECTIONS ── */
+html{scroll-behavior:smooth}
+.ptype-section{background:#f7f4ef;border-top:3px solid var(--gold);scroll-margin-top:72px}
+.ptype-hd{background:var(--espresso);padding:20px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.ptype-lbl{font-size:18px;font-weight:500;color:var(--cream);letter-spacing:-0.2px}
+.ptype-desc{font-size:12px;color:var(--text-dark);margin-top:3px}
+.ptype-back{font-size:12px;color:var(--gold);text-decoration:none;font-weight:500;white-space:nowrap}
+.ptype-back:hover{text-decoration:underline}
+.ptype-body{padding:28px 28px 40px}
+.opt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+@media(max-width:580px){.opt-grid{grid-template-columns:1fr}}
+.opt-card-b{background:#fff;border:1.5px solid #e8e4de;border-radius:14px;overflow:hidden;cursor:pointer;transition:border-color .18s,box-shadow .18s,transform .15s;text-decoration:none;display:block}
+.opt-card-b:hover{border-color:var(--gold);box-shadow:0 6px 24px rgba(200,151,63,.14);transform:translateY(-2px)}
+.opt-img{height:180px;overflow:hidden;position:relative}
+.opt-img img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.opt-card-b:hover .opt-img img{transform:scale(1.04)}
+.opt-bdg{position:absolute;bottom:10px;left:12px;font-size:10px;font-weight:700;padding:3px 10px;border-radius:8px;letter-spacing:.4px;text-transform:uppercase}
+.ob-basic{background:#e8f5e9;color:#2e7d32}
+.ob-premium{background:rgba(200,151,63,.9);color:#1C1510}
+.ob-instant{background:var(--gold);color:#1C1510}
+.ob-consult{background:rgba(28,21,16,.85);color:var(--gold)}
+.ob-natural{background:#d4edda;color:#155724}
+.opt-body2{padding:18px 18px 20px}
+.opt-name{font-size:16px;font-weight:600;color:#111;margin-bottom:5px;letter-spacing:-0.2px}
+.opt-desc{font-size:12px;color:#666;line-height:1.6;margin-bottom:12px}
+.opt-cta{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--gold)}
+
 </style>
 </head>
-<body>
+<body data-page="home">
 
 <nav class="site-nav" id="site-nav"></nav>
 
@@ -207,7 +226,7 @@
       <h1>Window treatments<br>crafted for<br><em>your</em> home</h1>
       <p>Window treatments, wall upholstery, custom pillows and furniture — manual or fully motorized. Every product designed, fabricated, and installed by one expert family team.</p>
       <div class="hero-btns">
-        <a class="btn-gold" href="pages/shades.html#select-product">Shop all products</a>
+        <a class="btn-gold" href="#section-hard">Shop all products</a>
         <a class="btn-ghost-light" href="pages/consult.html">Book free in-home visit</a>
       </div>
       <div class="trust-row">
@@ -229,7 +248,7 @@
 <!-- ── CATEGORY QUICK-NAV ── -->
 <div style="background:#fff;border-bottom:1px solid #e8e8e4;padding:0 20px;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch">
   <div style="display:inline-flex;gap:0;min-width:100%">
-    <a href="pages/shades.html" style="display:inline-flex;align-items:center;gap:6px;padding:13px 20px;font-size:13px;font-weight:500;color:#555;text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s" onmouseover="this.style.color='#111';this.style.borderColor='#2DE0C1'" onmouseout="this.style.color='#555';this.style.borderColor='transparent'">
+    <a href="#section-hard" style="display:inline-flex;align-items:center;gap:6px;padding:13px 20px;font-size:13px;font-weight:500;color:#555;text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s" onmouseover="this.style.color='#111';this.style.borderColor='#2DE0C1'" onmouseout="this.style.color='#555';this.style.borderColor='transparent'">
       <span style="font-size:15px">🪟</span> Shades &amp; Blinds
     </a>
     <a href="pages/soft-treatments.html" style="display:inline-flex;align-items:center;gap:6px;padding:13px 20px;font-size:13px;font-weight:500;color:#555;text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s" onmouseover="this.style.color='#111';this.style.borderColor='#2DE0C1'" onmouseout="this.style.color='#555';this.style.borderColor='transparent'">
@@ -265,10 +284,10 @@
     <div class="motor-note"><div class="motor-dot"></div>Motorization available on every product below</div>
     <div class="pcard-grid">
 
-      <!-- Roller Shades — direct to configurator with type sub-selection -->
-      <a class="pcard" href="pages/shades.html?type=roller">
+      <!-- Roller Shades -->
+      <a class="pcard" href="#roller">
         <div class="pcard-thumb" style="position:relative;overflow:hidden">
-          <img loading="lazy" src="images/thumbnails/roller-shades-commercial.JPEG" alt="Roller shades — basic, Norman premium, or woven wood" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block">
+          <img loading="lazy" src="images/thumbnails/roller-shades-commercial.JPEG" alt="Roller shades" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block">
           <div class="motor-chip">+ motorized</div>
         </div>
         <div class="pcard-body">
@@ -278,68 +297,28 @@
         </div>
       </a>
 
-      <!-- Cellular Shades — Norman Portrait Cellular only, direct to configurator -->
+      <!-- Norman Cellular Shades — direct to configurator, one click -->
       <a class="pcard" href="pages/shades.html?type=cellular">
         <div class="pcard-thumb" style="position:relative;overflow:hidden">
-          <img loading="lazy" src="images/thumbnails/cellular-shades-new.png" alt="Cellular honeycomb shades" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block">
+          <img loading="lazy" src="images/thumbnails/cellular-shades-new.png" alt="Norman Portrait Cellular honeycomb shades" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block">
           <div class="motor-chip">+ motorized</div>
         </div>
         <div class="pcard-body">
-          <div class="pcard-name">Cellular Shades</div>
-          <div class="pcard-sub">Norman Portrait Cellular</div>
+          <div class="pcard-name">Norman Cellular Shades</div>
+          <div class="pcard-sub">Norman Portrait Cellular — instant price</div>
           <span class="badge badge-instant">Instant price</span>
         </div>
       </a>
 
-      <!-- Zebra / Banded Shades — direct to Portfolio Dual Sheer configurator -->
-      <a class="pcard" href="pages/portfolio-dual-sheer.html">
-        <div class="pcard-thumb" style="position:relative;overflow:hidden">
-          <img loading="lazy" src="images/thumbnails/ZEBRA SHADE MORIZED.JPEG" alt="Zebra dual sheer banded shades" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block">
-          <div class="motor-chip">+ motorized</div>
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-name">Zebra &amp; Banded Shades</div>
-          <div class="pcard-sub">Portfolio Dual Sheer &middot; Banded 2D</div>
-          <span class="badge badge-instant">Instant estimate</span>
-        </div>
-      </a>
-
-
-      <!-- Wood Blinds — direct to Norman faux wood configurator -->
-      <a class="pcard" href="pages/faux-wood-blinds.html">
+      <!-- Wood Blinds -->
+      <a class="pcard" href="#wood-blinds">
         <div class="pcard-thumb" style="position:relative;overflow:hidden">
           <img loading="lazy" src="images/thumbnails/faux-blinds.png" alt="Wood blinds" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block">
-          <div class="motor-chip">+ motorized</div>
         </div>
         <div class="pcard-body">
           <div class="pcard-name">Wood Blinds</div>
           <div class="pcard-sub">Faux wood or real wood — instant quote</div>
           <span class="badge badge-instant">Instant price</span>
-        </div>
-      </a>
-
-      <!-- Sheer Shades — choice page (Hunter Douglas or Wallace 3D) -->
-      <a class="pcard" href="pages/sheer-shades.html">
-        <div class="pcard-thumb" style="position:relative;overflow:hidden">
-          <img loading="lazy" src="images/thumbnails/PIROUTTES.JPEG" alt="Sheer shades — Hunter Douglas or Wallace 3D" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block">
-          <div class="motor-chip">+ motorized</div>
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-name">Sheer Shades</div>
-          <div class="pcard-sub">Hunter Douglas · Wallace 3D Dual Sheer</div>
-          <span class="badge badge-instant">Choose brand →</span>
-        </div>
-      </a>
-
-      <!-- Vertical Blinds — direct to Wallace Verticals configurator -->
-      <a class="pcard" href="pages/wallace-verticals.html">
-        <div class="pcard-thumb" style="position:relative;overflow:hidden">
-          <img loading="lazy" src="images/thumbnails/verticals.png" alt="Vertical Blinds" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-name">Vertical Blinds</div>
-          <div class="pcard-sub">Wallace Basic · Norman Synchrony™</div>
-          <span class="badge badge-instant">Instant quote</span>
         </div>
       </a>
 
@@ -352,6 +331,31 @@
           <div class="pcard-name">Plantation Shutters</div>
           <div class="pcard-sub">Norman — wood &amp; composite</div>
           <span class="badge badge-quote">Custom quote</span>
+        </div>
+      </a>
+
+      <!-- Sheer Shading -->
+      <a class="pcard" href="#sheer-shading">
+        <div class="pcard-thumb" style="position:relative;overflow:hidden">
+          <img loading="lazy" src="images/thumbnails/SILOUETTE.JPEG" alt="Sheer shading — Hunter Douglas, Wallace 3D, Zebra Banded" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block">
+          <div class="motor-chip">+ motorized</div>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-name">Sheer Shading</div>
+          <div class="pcard-sub">Hunter Douglas · Wallace 3D · Zebra &amp; Banded</div>
+          <span class="badge badge-instant">See options →</span>
+        </div>
+      </a>
+
+      <!-- Vertical Blinds -->
+      <a class="pcard" href="#verticals">
+        <div class="pcard-thumb" style="position:relative;overflow:hidden">
+          <img loading="lazy" src="images/thumbnails/VERTICALS.JPEG" alt="Vertical Blinds — Wallace basic or Norman Synchrony premium" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-name">Vertical Blinds</div>
+          <div class="pcard-sub">Wallace Basic · Norman Synchrony™</div>
+          <span class="badge badge-instant">Basic or Premium</span>
         </div>
       </a>
 
@@ -388,7 +392,7 @@
         <div class="pcard-body">
           <div class="pcard-name">Custom Drapery</div>
           <div class="pcard-sub">Pinch pleat, ripple fold &amp; more</div>
-          <span class="badge badge-instant">Instant price</span>
+          <span class="badge badge-quote">Custom quote</span>
         </div>
       </a>
 
@@ -401,67 +405,43 @@
         <div class="pcard-body">
           <div class="pcard-name">Roman Shades</div>
           <div class="pcard-sub">Flat, permanent pleated &amp; relaxed</div>
-          <span class="badge badge-instant">Instant price</span>
+          <span class="badge badge-quote">Custom quote</span>
         </div>
       </a>
 
-      <!-- Roman Shade Woven Woods -->
-      <a class="pcard" href="pages/dynasty-woven-woods.html">
-        <div class="pcard-thumb" style="position:relative;overflow:hidden">
-          <img loading="lazy" src="images/thumbnails/woven-wood-shades.png" alt="Natural woven Roman shades bamboo grass jute" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-name">Roman Shade Woven Woods</div>
-          <div class="pcard-sub">Natural woven bamboo, grass &amp; jute &middot; 5 collections</div>
-          <span class="badge badge-instant">Instant quote</span>
-        </div>
-      </a>
-
-      <!-- Specialty Roman Shade -->
-      <a class="pcard" href="pages/soft-treatments.html?tab=roman">
-        <div class="pcard-thumb" style="position:relative;overflow:hidden">
-          <img loading="lazy" src="images/thumbnails/specialty-roman-shade.jpg" alt="Specialty arch roman shade" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-name">Specialty Roman Shade</div>
-          <div class="pcard-sub">Arch, oval &amp; custom shapes</div>
-          <span class="badge badge-quote">Free consultation</span>
-        </div>
-      </a>
-
-      <!-- Cornices -->
+      <!-- Cornices & Valances (combined) -->
       <a class="pcard" href="pages/soft-treatments.html?tab=cornval">
         <div class="pcard-thumb" style="position:relative;overflow:hidden">
-          <img loading="lazy" src="images/thumbnails/custom cornice.JPG" alt="Custom upholstered cornice" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block">
+          <img loading="lazy" src="images/thumbnails/custom cornice.JPG" alt="Custom cornice and valance" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block">
         </div>
         <div class="pcard-body">
-          <div class="pcard-name">Cornices</div>
-          <div class="pcard-sub">Fabric-wrapped box valances</div>
+          <div class="pcard-name">Cornices &amp; Valances</div>
+          <div class="pcard-sub">Box valances, swags &amp; fabric top treatments</div>
           <span class="badge badge-instant">Instant price</span>
         </div>
       </a>
 
-      <!-- Valances -->
-      <a class="pcard" href="pages/soft-treatments.html?tab=cornval">
-        <div class="pcard-thumb" style="position:relative;overflow:hidden">
-          <img loading="lazy" src="images/thumbnails/specialty-valance.JPEG" alt="Custom swag valance" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-name">Valances &amp; Top Treatments</div>
-          <div class="pcard-sub">Swags, jabots &amp; fabric tops</div>
-          <span class="badge badge-instant">Instant price</span>
-        </div>
-      </a>
-
-      <!-- Specialty Drapery -->
+      <!-- Specialty Treatments -->
       <a class="pcard" href="pages/soft-treatments.html">
         <div class="pcard-thumb" style="position:relative;overflow:hidden">
           <img loading="lazy" src="images/thumbnails/specialty-drape.JPG" alt="Specialty luxury drapery" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block">
         </div>
         <div class="pcard-body">
-          <div class="pcard-name">Specialty Drapery</div>
-          <div class="pcard-sub">Event, commercial &amp; custom fabrication</div>
+          <div class="pcard-name">Specialty Treatments</div>
+          <div class="pcard-sub">Arch, oval, event &amp; custom shapes</div>
           <span class="badge badge-quote">Free consultation</span>
+        </div>
+      </a>
+
+      <!-- Woven Woods -->
+      <a class="pcard" href="pages/dynasty-woven-woods.html">
+        <div class="pcard-thumb" style="position:relative;overflow:hidden">
+          <img loading="lazy" src="images/thumbnails/woven-wood-shades.png" alt="Natural woven bamboo grass jute shades" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-name">Woven Woods</div>
+          <div class="pcard-sub">Natural bamboo, grass &amp; jute · 5 collections</div>
+          <span class="badge badge-instant">Instant quote</span>
         </div>
       </a>
 
@@ -541,6 +521,180 @@
   </div><!-- /cat-grid-wrap -->
 
 </div><!-- /cat-section UPHOLSTERY -->
+
+<!-- ═══════════════════════════════════════════
+     PRODUCT OPTION SECTIONS (scroll targets)
+════════════════════════════════════════════ -->
+
+<!-- ── ROLLER SHADES ── -->
+<div id="roller" class="ptype-section">
+  <div class="ptype-hd">
+    <div>
+      <div class="ptype-lbl">Roller Shades</div>
+      <div class="ptype-desc">Custom-fabricated, Norman Soluna premium, or natural woven wood</div>
+    </div>
+    <a href="#section-hard" class="ptype-back">↑ Back to products</a>
+  </div>
+  <div class="ptype-body">
+    <div class="opt-grid">
+      <a class="opt-card-b" href="pages/wallace-natural-roller-shades.html">
+        <div class="opt-img">
+          <img loading="lazy" src="images/thumbnails/roller-shade-bedroom.JPEG" alt="Custom roller shades">
+          <span class="opt-bdg ob-instant">Instant quote</span>
+        </div>
+        <div class="opt-body2">
+          <div class="opt-name">Basic Custom Roller</div>
+          <div class="opt-desc">Philly Blinds in-house fabrication — sheer, light filtering, or room darkening. Any motor brand: Lutron, Somfy, Automate. Customer-supplied fabric accepted.</div>
+          <span class="opt-cta">Configure &amp; get a quote →</span>
+        </div>
+      </a>
+      <a class="opt-card-b" href="pages/soluna-roller-shades.html">
+        <div class="opt-img">
+          <img loading="lazy" src="images/thumbnails/CUSTOM LARGE ROLLER SHADES.JPEG" alt="Norman Soluna roller shades">
+          <span class="opt-bdg ob-premium">Norman Premium</span>
+        </div>
+        <div class="opt-body2">
+          <div class="opt-name">Norman Soluna™</div>
+          <div class="opt-desc">7 price groups, 30+ fabrics — solar screen, sheer, room darkening. Cassette, fascia &amp; cassette-free headrail options. Norman motorization only.</div>
+          <span class="opt-cta">View Norman Soluna specs →</span>
+        </div>
+      </a>
+      <a class="opt-card-b" href="pages/dynasty-woven-woods.html">
+        <div class="opt-img">
+          <img loading="lazy" src="images/thumbnails/WOOVEN WOOD.JPEG" alt="Woven wood roller shades">
+          <span class="opt-bdg ob-natural">Natural material</span>
+        </div>
+        <div class="opt-body2">
+          <div class="opt-name">Woven Wood Shades</div>
+          <div class="opt-desc">Bamboo, jute, grass &amp; reed — roller or roman shade style. 5 Wallace collections. Privacy &amp; blackout liner options. Instant pricing estimate.</div>
+          <span class="opt-cta">Configure &amp; get an instant quote →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ── WOOD BLINDS ── -->
+<div id="wood-blinds" class="ptype-section">
+  <div class="ptype-hd">
+    <div>
+      <div class="ptype-lbl">Wood Blinds</div>
+      <div class="ptype-desc">Faux wood or genuine hardwood — classic horizontal slat look, cordless</div>
+    </div>
+    <a href="#section-hard" class="ptype-back">↑ Back to products</a>
+  </div>
+  <div class="ptype-body">
+    <div class="opt-grid">
+      <a class="opt-card-b" href="pages/faux-wood-blinds.html">
+        <div class="opt-img">
+          <img loading="lazy" src="images/thumbnails/faux-blinds-bay-window.JPEG" alt="Faux wood blinds">
+          <span class="opt-bdg ob-instant">Instant price</span>
+        </div>
+        <div class="opt-body2">
+          <div class="opt-name">Faux Wood Blinds</div>
+          <div class="opt-desc">Norman SmartPrivacy® — 16 colors, 2″ &amp; 2.5″ slats. Moisture resistant — perfect for kitchens, baths &amp; humid rooms. Cordless, child-safe.</div>
+          <span class="opt-cta">Configure &amp; get an instant price →</span>
+        </div>
+      </a>
+      <div class="opt-card-b" onclick="pbShowContact('Real Wood Blinds — custom quote')">
+        <div class="opt-img">
+          <img loading="lazy" src="images/thumbnails/real wood blinds.JPEG" alt="Real wood blinds">
+          <span class="opt-bdg ob-consult">Custom quote</span>
+        </div>
+        <div class="opt-body2">
+          <div class="opt-name">Real Wood Blinds</div>
+          <div class="opt-desc">Genuine hardwood — rich stained &amp; painted finishes, natural grain. Classic horizontal slat look. Cordless. Ideal for living rooms, offices &amp; traditional interiors.</div>
+          <span class="opt-cta">Request a custom quote →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── VERTICAL BLINDS ── -->
+<div id="verticals" class="ptype-section">
+  <div class="ptype-hd">
+    <div>
+      <div class="ptype-lbl">Vertical Blinds</div>
+      <div class="ptype-desc">Value or premium — great for sliding doors and large windows</div>
+    </div>
+    <a href="#section-hard" class="ptype-back">↑ Back to products</a>
+  </div>
+  <div class="ptype-body">
+    <div class="opt-grid">
+      <a class="opt-card-b" href="pages/wallace-verticals.html">
+        <div class="opt-img">
+          <img loading="lazy" src="images/thumbnails/VERTICAL.JPEG" alt="Wallace vertical blinds">
+          <span class="opt-bdg ob-basic">Basic</span>
+        </div>
+        <div class="opt-body2">
+          <div class="opt-name">Wallace Verticals</div>
+          <div class="opt-desc">36+ PVC &amp; fabric patterns — value price point. One-way or split draw. Cordless wand tilt, child-safe. Max width 240″ (splits over 193″).</div>
+          <span class="opt-cta">Configure &amp; get a quote →</span>
+        </div>
+      </a>
+      <a class="opt-card-b" href="pages/synchrony-verticals.html">
+        <div class="opt-img">
+          <img loading="lazy" src="images/thumbnails/verticals.png" alt="Norman Synchrony vertical blinds">
+          <span class="opt-bdg ob-premium">Norman Premium</span>
+        </div>
+        <div class="opt-body2">
+          <div class="opt-name">Norman Synchrony™</div>
+          <div class="opt-desc">10 designer collections, 4 price groups — Classic, Sandblasted, Shantung, Linen, Faux Wood &amp; more. Valance-free headrail. Instant pricing estimate.</div>
+          <span class="opt-cta">Configure &amp; get an instant price →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ── SHEER SHADING (includes Zebra/Banded) ── -->
+<div id="sheer-shading" class="ptype-section">
+  <div class="ptype-hd">
+    <div>
+      <div class="ptype-lbl">Sheer Shading</div>
+      <div class="ptype-desc">Specialty sheers, 3D dual sheers &amp; zebra/banded shades</div>
+    </div>
+    <a href="#section-hard" class="ptype-back">↑ Back to products</a>
+  </div>
+  <div class="ptype-body">
+    <div class="opt-grid">
+      <div class="opt-card-b" onclick="pbShowContact('Hunter Douglas Specialty Sheer Shades — Silhouette, Pirouette, Luminette, Vignette — free consultation')">
+        <div class="opt-img">
+          <img loading="lazy" src="images/thumbnails/SILOUETTE.JPEG" alt="Hunter Douglas specialty sheer shades">
+          <span class="opt-bdg ob-consult">Free consultation</span>
+        </div>
+        <div class="opt-body2">
+          <div class="opt-name">Hunter Douglas Specialty</div>
+          <div class="opt-desc"><strong>Silhouette®</strong> · <strong>Pirouette®</strong> · <strong>Luminette®</strong> · <strong>Vignette®</strong><br>Industry-leading sheer systems. Soft light control &amp; motorization. Always custom quote — we bring samples to your window.</div>
+          <span class="opt-cta">Request a free consultation →</span>
+        </div>
+      </div>
+      <a class="opt-card-b" href="pages/wallace-3d-sheer.html">
+        <div class="opt-img">
+          <img loading="lazy" src="images/thumbnails/SHEERS.JPEG" alt="Wallace 3D Dual Sheer shades" style="object-position:center 60%">
+          <span class="opt-bdg ob-instant">Instant quote</span>
+        </div>
+        <div class="opt-body2">
+          <div class="opt-name">Wallace 3D Dual Sheer</div>
+          <div class="opt-desc">13 fabric collections — 2″ &amp; 3″ vanes, translucent or room darkening. Continuous cord loop or battery motor. Fabric headrail insert available.</div>
+          <span class="opt-cta">Configure &amp; get an instant quote →</span>
+        </div>
+      </a>
+      <a class="opt-card-b" href="pages/wallace-banded-shades.html">
+        <div class="opt-img">
+          <img loading="lazy" src="images/thumbnails/ZEBRA SHADE MORIZED.JPEG" alt="Zebra and banded shades">
+          <span class="opt-bdg ob-instant">Instant estimate</span>
+        </div>
+        <div class="opt-body2">
+          <div class="opt-name">Zebra &amp; Banded Shades</div>
+          <div class="opt-desc">Alternating sheer &amp; solid bands — open for light and view, close for privacy. Portfolio Dual Sheer (95 fabrics, live pricing) or Banded 2D (woven texture).</div>
+          <span class="opt-cta">Configure &amp; get a quote →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
 
 <div class="teal-divider"></div>
 
@@ -661,7 +815,6 @@
 <footer class="site-footer" id="site-footer"></footer>
 
 <script src="js/shared.js"></script>
-<script>renderNav('home'); renderFooter(true);</script>
 </body>
 </html>
 

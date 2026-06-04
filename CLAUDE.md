@@ -206,7 +206,7 @@ Every page MUST include:
 All quote forms submit via `mailto:blindznation@gmail.com`. They open the user's email client with a pre-filled body containing all form data. No backend/Formspree needed for now.
 
 ### Delivery section rule
-Every quote form on every page MUST include the delivery/pickup section above the submit button. Options: "Ship to me" (UPS/FedEx from Huntingdon Valley PA, tariff disclosure) or "I'll pick up" (location: 527 Hoyt Rd, Huntingdon Valley PA 19006 â€” disclosed after order). Always include the tariff/duties warning note in the shipping option.
+Every quote form on every page MUST include the delivery/pickup section above the submit button. Options: “Ship to me” (UPS/FedEx from Huntingdon Valley PA, tariff disclosure) or “I'll pick up” (Huntingdon Valley, PA — team provides exact address to customer after order, never include street address in code). Always include the tariff/duties warning note in the shipping option.
 
 ### Drapery hardware motorization rule
 Motor brand for drapery hardware goes in the customer notes â€” there is NO motor brand dropdown on the drapery page. Each hardware manufacturer supports different motor systems so compatibility must be confirmed per order. Customer can specify preference (Somfy, Lutron Sivoia, Rollease Acmeda, etc.) in the notes field.
@@ -229,14 +229,16 @@ Motor brand for drapery hardware goes in the customer notes â€” there is NO
 **Motorization is ALWAYS a sub-option inside each product configurator.**
 NEVER a separate top-level page, product, or nav item.
 
-### Motorization brand compatibility â€” CRITICAL
+### Motorization brand compatibility — CRITICAL
 | Product | Motor options |
 |---------|--------------|
-| Norman brand shades (roller, cellular, zebra, woven) | **Norman Motorization only** â€” no Lutron/Somfy/etc. |
-| Custom Roller Shades (Philly Blinds custom fab) | Any brand: Lutron Serena, Somfy, Automate, Rollease Acmeda |
-| Custom Roman Shades (Philly Blinds custom fab) | Any brand: Lutron Serena, Somfy, Automate, Rollease Acmeda |
-| Drapery hardware (Kirsch, Paris Texas, Orion, Forest, Select) | **Brand-specific** â€” each manufacturer only supports certain motors/track systems. Do NOT show a generic motor list for drapery hardware â€” verify per brand before adding motor options. |
-| Hunter Douglas (Silhouette, Pirouette) | PowerView â€” always custom quote, no instant pricing |
+| Norman Soluna Roller + Portrait Cellular | **Norman Smart (default/recommended)** OR **Rollease Acmeda Automate** (for existing Rollease systems, custom priced). These are the ONLY two options. No AutoWand, no Automate Home branding, no Lutron/Somfy. |
+| Norman PerfectSheer + SmartDrape + Centerpiece Roman | **Norman Smart only.** Rollease Acmeda Automate NOT available for these products. |
+| Norman Synchrony Verticals, City Lights, SmartPrivacy Faux Wood | No motorization — cordless only. |
+| Custom Roller Shades (Philly Blinds custom fab) | Lutron, Somfy, or Rollease Acmeda Automate — custom priced. Customer can note other brand preference. |
+| Custom Roman Shades (Philly Blinds custom fab) | Lutron, Somfy, or Rollease Acmeda Automate — custom priced. Customer can note other brand preference. |
+| Custom Drapery + hardware (Kirsch, Paris Texas, Orion, etc.) | Lutron, Somfy, or Rollease Acmeda Automate — custom priced. Customer notes brand preference. |
+| Hunter Douglas (Silhouette, Pirouette) | PowerView — always custom quote, no instant pricing. |
 
 ### Product naming rules
 - Non-Norman custom fabricated roller shades â†’ **"Custom Roller Shades"** (not just "Roller Shades")
@@ -312,13 +314,22 @@ Update it when completing tasks â€” mark items done.
 
 ## PRODUCT DATA INTEGRITY NOTES (Updated May 2026)
 
-### Norman motorization — DO NOT mix brands
-Norman-branded product pages (Soluna, Portrait Cellular, Synchrony Verticals, City Lights, SmartPrivacy Faux Wood) must use ONLY Norman-brand motors:
-- Norman Smart ($482/shade)
-- AutoWand ($166/shade)
-- Automate Home™ ($682/shade)
-Do NOT list Somfy, Lutron, Automate (the separate brand), or Rollease on these pages.
-Custom non-Norman roller/roman shades CAN offer any brand in notes.
+### Norman motorization — UPDATED JUNE 2026
+Two motor options total for Norman products. No exceptions.
+
+**Option 1 — Norman Smart** ($482/shade) — default, always recommended first.
+App, voice (Alexa/Google/HomeKit), remote, rechargeable battery or hardwired.
+Available on: Soluna Roller, Portrait Cellular, PerfectSheer, SmartDrape, Centerpiece Roman.
+
+**Option 2 — Rollease Acmeda Automate** — custom priced (was previously labeled "Automate Home™ by Norman" — Norman resells the Rollease Acmeda Automate system under that name).
+For customers integrating with an existing Rollease Acmeda smart home system.
+Available on: Soluna Roller and Portrait Cellular ONLY. NOT available for PerfectSheer, SmartDrape, or Centerpiece Roman.
+
+**Removed from all pages: AutoWand** (no longer offered).
+**Removed from all pages: "Automate Home" branding** (replaced with "Rollease Acmeda Automate").
+
+Do NOT add Lutron, Somfy, or any other third-party motor to Norman product pages.
+Custom non-Norman roller/roman shades offer Lutron, Somfy, or Rollease Acmeda Automate at custom pricing.
 
 ### Brightwood shutters — removed
 Norman no longer offers Brightwood. Removed from product-specs.html (May 2026). If user adds it back, verify against current Norman shutter PDF catalog first.

@@ -124,7 +124,7 @@
 }
 </style>
 </head>
-<body>
+<body data-page="How to measure">
 <nav class="site-nav" id="site-nav"></nav>
 
 <div class="page-hero">
@@ -533,15 +533,6 @@
 
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
-<script>
-renderNav('How to measure');
-renderFooter(false);
-function showTab(id) {
-  document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
-  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
-  document.getElementById('tab-' + id).classList.add('active');
-  event.currentTarget.classList.add('active');
-}
-</script>
+<script src="../js/pages/measure.js"></script>
 </body>
 </html>

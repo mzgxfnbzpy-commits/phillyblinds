@@ -29,6 +29,14 @@ pdfs/scan/
 pdfs/scan2/
 pdfs/*.png
 
+# ── Environment / secrets (never commit) ──────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Internal developer files (never deploy) ───────────────────────────────────
+HANDOFF.html
+
 # ── OS files ───────────────────────────────────────────────────────────────────
 .DS_Store
 Thumbs.db

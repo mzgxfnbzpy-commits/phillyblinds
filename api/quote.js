@@ -41,12 +41,20 @@ function _checkRate(ip) {
   const now = Date.now();
   const WINDOW = 10 * 60 * 1000;
   const LIMIT  = 5;
-  const entry  = _rateMap.get(ip);
+  // Purge entries older than 2× the window to prevent unbounded growth
+  if (_rateMap.size > 500) {
+    for (const [k, v] of _rateMap) { if (now - v.t > WINDOW * 2) _rateMap.delete(k); }
+  }
+  const entry = _rateMap.get(ip);
   if (!entry || now - entry.t > WINDOW) { _rateMap.set(ip, { t: now, n: 1 }); return true; }
   if (entry.n >= LIMIT) return false;
   entry.n++;
   return true;
 }
+
+// ── Per-field length limits ───────────────────────────────────────────────────
+const FIELD_LIMITS = { name: 200, email: 254, phone: 30, product: 200, notes: 5000, sourceUrl: 500 };
+function _truncate(val, key) { return val ? String(val).slice(0, FIELD_LIMITS[key]) : val; }
 
 module.exports = async function handler(req, res) {
   const origin = req.headers.origin || '';
@@ -62,13 +70,24 @@ module.exports = async function handler(req, res) {
   const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
   if (!_checkRate(ip)) return res.status(429).json({ error: 'Too many requests. Please wait a few minutes.' });
 
-  const { name, email, phone, product, selections, notes, sourceUrl, estimate, _hp, _t } = req.body || {};
+  const _b = req.body || {};
+  const name       = _truncate(_b.name,      'name');
+  const email      = _truncate(_b.email,     'email');
+  const phone      = _truncate(_b.phone,     'phone');
+  const product    = _truncate(_b.product,   'product');
+  const notes      = _truncate(_b.notes,     'notes');
+  const _rawSourceUrl = _truncate(_b.sourceUrl, 'sourceUrl');
+  // Only allow http/https URLs — blocks javascript: scheme injection in email hrefs
+  const sourceUrl = (_rawSourceUrl && /^https?:\/\//i.test(_rawSourceUrl.trim())) ? _rawSourceUrl : null;
+  const selections = Array.isArray(_b.selections) ? _b.selections.slice(0, 60) : [];
+  const estimate   = _b.estimate;
+  const { _hp, _t } = _b;
 
   // Honeypot — bots fill hidden fields, humans don't
   if (_hp && _hp.trim().length > 0) return res.status(200).json({ ok: true }); // silent reject
 
-  // Timing check — reject if form submitted in under 2 seconds (bot speed)
-  if (typeof _t === 'number' && _t < 2000) return res.status(200).json({ ok: true }); // silent reject
+  // Timing check — reject if _t missing or form submitted in under 2 seconds (bot speed)
+  if (typeof _t !== 'number' || _t < 2000) return res.status(200).json({ ok: true }); // silent reject
 
   // Basic payload size guard
   const bodyStr = JSON.stringify(req.body || {});
@@ -99,9 +118,9 @@ module.exports = async function handler(req, res) {
     hour: 'numeric', minute: '2-digit', hour12: true
   });
 
-  const rows = (Array.isArray(selections) ? selections : []).map(function(s) {
-    var lbl = String(s.label || '').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    var val = String(s.value || '').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const rows = selections.map(function(s) {
+    var lbl = String(s.label || '').slice(0, 100).replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    var val = String(s.value || '').slice(0, 500).replace(/</g,'&lt;').replace(/>/g,'&gt;');
     return '<tr><td style="padding:6px 14px 6px 0;color:#666;font-size:13px;white-space:nowrap;vertical-align:top">' + lbl + '</td>' +
             '<td style="padding:6px 0;font-weight:600;font-size:13px;color:#1a1a1a">' + val + '</td></tr>';
   }).join('');
@@ -225,10 +244,8 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({ ok: true });
   } catch (err) {
     console.error('[quote] Send error:', err.message);
-    // Include Resend's exact error in the response so it surfaces in the browser during debugging
-    const resendDetail = err.message && err.message.length < 400 ? err.message : '';
     return res.status(500).json({
-      error: `Email send failed. ${resendDetail}`,
+      error: 'Email send failed.',
       fallback: `Please email ${EMAIL_DIRECT} or call ${PHONE}.`
     });
   }

@@ -159,7 +159,7 @@
 }
 </style>
 </head>
-<body>
+<body data-page="Shades & blinds">
 <nav class="site-nav" id="site-nav"></nav>
 
 <!-- ═══ HERO ════════════════════════════════════════════════════ -->
@@ -301,9 +301,9 @@
             <path d="M50 50 L50 58 M46 54 L50 58 L54 54" stroke="#8B6914" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <div class="op-name">Spring Roller</div>
+        <div class="op-name">AutoLift™</div>
         <span class="op-tag op-tag-pro">Pull-to-operate</span>
-        <p class="op-desc">Traditional spring-tension mechanism. Pull down to lower, pull again to raise. Best for smaller windows with infrequent operation.</p>
+        <p class="op-desc">Norman's spring-tension AutoLift™ system. Pull down to lower, pull again to raise. Best for smaller windows with infrequent operation.</p>
         <ul class="op-specs">
           <li>Max width <span>72″</span></li>
           <li>Max height <span>96″</span></li>
@@ -333,7 +333,7 @@
         <ul class="op-specs">
           <li>Max width <span>144″</span></li>
           <li>Max height <span>132″</span></li>
-          <li>Motor brands <span>Norman Smart · AutoWand · Automate Home&trade;</span></li>
+          <li>Motor brands <span>Norman Smart (recommended) · Rollease Acmeda Automate</span></li>
           <li>Smart home <span>Yes</span></li>
         </ul>
       </div>
@@ -371,7 +371,7 @@
         <div class="lc-body">
           <div class="lc-name">Solar / Screen</div>
           <p class="lc-desc">Woven mesh fabric. Reduces glare and UV while maintaining your view. You see out — people cannot easily see in during daylight hours.</p>
-          <div class="lc-collections">Openness: 1% · 3% · 5% · 10% · 14%</div>
+          <div class="lc-collections">Openness: 1% · 3% · 5% · 10% (residential) · 14% (commercial NA series)</div>
         </div>
       </div>
 
@@ -508,8 +508,8 @@
       </div>
       <div class="upgrade-card">
         <div class="upgrade-icon">🪟</div>
-        <div class="upgrade-name">Fascia / Valance Board</div>
-        <div class="upgrade-desc">A flat valance board conceals the entire headrail and hardware. Painted to match your trim or wrapped in fabric. Very clean look.</div>
+        <div class="upgrade-name">Fascia / Valance</div>
+        <div class="upgrade-desc">Norman Soluna fascia options: Square Fascia (metal), Curved Fascia with Fabric wrap, or Fabric Valance. Conceals the headrail for a clean, finished look.</div>
       </div>
       <div class="upgrade-card">
         <div class="upgrade-icon">🔲</div>
@@ -524,7 +524,7 @@
       <div class="upgrade-card">
         <div class="upgrade-icon">⚡</div>
         <div class="upgrade-name">Motorization Upgrade</div>
-        <div class="upgrade-desc">Add a motor to any Soluna. Battery motors require no wiring. Hardwired motors available for new construction or renovation. Norman Smart, AutoWand, or Automate Home&trade; — Norman-brand motorization exclusively.</div>
+        <div class="upgrade-desc">Add a motor to any Soluna. Battery motors require no wiring. Hardwired motors available for new construction or renovation. Norman Smart is our default recommendation; Rollease Acmeda Automate available for existing Rollease systems.</div>
       </div>
       <div class="upgrade-card">
         <div class="upgrade-icon">🔗</div>
@@ -558,7 +558,7 @@
         </thead>
         <tbody>
           <tr>
-            <td><strong>Spring Roller</strong></td>
+            <td><strong>AutoLift™</strong></td>
             <td>12″</td><td>72″</td><td>12″</td><td>96″</td>
             <td>Yes</td><td>No</td>
           </tr>
@@ -614,21 +614,20 @@
             <div class="step-label">Step 2</div>
             <div class="step-title">Operating system</div>
             <div class="opt-row" id="grp-op">
-              <button class="opt-btn" onclick="selOpt(this,'grp-op');toggleMotor(false);updateSummary()">Spring roller</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op');toggleMotor(false);updateSummary()">AutoLift™</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-op');toggleMotor(false);updateSummary()">Cordless</button>
               <button class="opt-btn sel" onclick="selOpt(this,'grp-op');toggleMotor(false);updateSummary()">Continuous loop</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-op');toggleMotor(true);updateSummary()">Motorized</button>
             </div>
             <div class="motor-sub" id="motor-sub">
               <div class="form-group" style="margin-bottom:8px">
-                <label style="font-size:12px;font-weight:500;color:#555;margin-bottom:5px;display:block">Norman motorization system</label>
+                <label style="font-size:12px;font-weight:500;color:#555;margin-bottom:5px;display:block">Motor system</label>
                 <select id="sel-motor" onchange="updateSummary()" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;font-family:var(--font)">
-                  <option value="Norman Smart">Norman Smart (app, voice, remote; rechargeable or hardwired)</option>
-                  <option value="AutoWand">AutoWand (wand-controlled, rechargeable, no remote needed)</option>
-                  <option value="Automate Home">Automate Home (15-ch remote, wall switch, rechargeable or DC)</option>
+                  <option value="Norman Smart">Norman Smart — Recommended (app, voice, remote; rechargeable or hardwired)</option>
+                  <option value="Rollease Acmeda Automate">Rollease Acmeda Automate — custom priced (for existing Rollease Acmeda systems)</option>
                 </select>
               </div>
-              <div class="tooltip-note">Norman Soluna uses Norman-brand motorization exclusively. Motor surcharge is per shade. Power source (rechargeable battery, plug-in, or hardwired) confirmed at measurement visit. All Norman Smart shades support app control, Alexa, Apple HomeKit, and Google Home via the ShadeAuto™ hub.</div>
+              <div class="tooltip-note">Motor surcharge per shade. Power source (rechargeable battery, plug-in, or hardwired) confirmed at measurement visit. Norman Smart supports app control, Alexa, Apple HomeKit, and Google Home via the Norman Smart Hub. Rollease Acmeda Automate uses the Automate Pulse 2 hub.</div>
             </div>
           </div>
 
@@ -728,7 +727,7 @@
           <div class="summary-row"><span class="sr-key">Size</span><span class="sr-val" id="s-size">—</span></div>
           <div class="summary-row"><span class="sr-key">Qty</span><span class="sr-val" id="s-qty">1</span></div>
           <div class="summary-row"><span class="sr-key">Add-ons</span><span class="sr-val" id="s-addons">None</span></div>
-          <div class="summary-note">Custom quoted per project. We'll confirm exact pricing once we assess your windows. No obligation until you approve the quote.</div>
+          <div class="summary-note">Norman retail pricing with 15% off — shipping at retail rate. Final price confirmed at quote.</div>
         </div>
 
       </div>
@@ -799,108 +798,6 @@
 <footer class="site-footer" id="site-footer"></footer>
 
 <script src="../js/shared.js"></script>
-<script>
-renderNav('Shades & blinds');
-renderFooter(false);
-
-var solDelivery = 'ship';
-
-function solPickDel(v, card) {
-  solDelivery = v;
-  document.querySelectorAll('.delivery-opt-card').forEach(function(c){c.classList.remove('sel');});
-  card.classList.add('sel');
-}
-
-function toggleMotor(on) {
-  document.getElementById('motor-sub').classList.toggle('show', on);
-  document.getElementById('s-motor-row').style.display = on ? 'flex' : 'none';
-  updateSummary();
-}
-
-function adjustQty(d) {
-  const el = document.getElementById('inp-qty');
-  el.value = Math.min(20, Math.max(1, (parseInt(el.value) || 1) + d));
-  updateSummary();
-}
-
-function updateSummary() {
-  const light  = getOpt('grp-light');
-  const op     = getOpt('grp-op');
-  const mount  = getOpt('grp-mount');
-  const w      = document.getElementById('inp-width').value;
-  const h      = document.getElementById('inp-height').value;
-  const qty    = document.getElementById('inp-qty').value || 1;
-  const mBrand = document.getElementById('sel-motor').value;
-
-  document.getElementById('s-light').textContent = light;
-  document.getElementById('s-op').textContent    = op;
-  document.getElementById('s-mount').textContent = mount;
-  document.getElementById('s-qty').textContent   = qty;
-  document.getElementById('s-size').textContent  = (w && h) ? `${w}″ W × ${h}″ H` : '—';
-
-  if (mBrand) {
-    document.getElementById('s-motor-brand').textContent = mBrand;
-  }
-
-  const addons = [...document.querySelectorAll('#grp-addons .opt-btn.sel')].map(b => b.textContent.trim());
-  document.getElementById('s-addons').textContent = addons.length ? addons.join(', ') : 'None';
-}
-
-function submitQuote() {
-  const name  = document.getElementById('cf-name').value.trim();
-  const phone = document.getElementById('cf-phone').value.trim();
-  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
-
-  const light  = getOpt('grp-light') || '—';
-  const op     = getOpt('grp-op') || '—';
-  const mount  = getOpt('grp-mount') || '—';
-  const w      = document.getElementById('inp-width').value || '—';
-  const h      = document.getElementById('inp-height').value || '—';
-  const qty    = document.getElementById('inp-qty').value || 1;
-  const email  = document.getElementById('cf-email').value.trim();
-  const notes  = document.getElementById('cf-notes').value.trim();
-  const motorSub = document.getElementById('motor-sub');
-  const motorOn  = motorSub && motorSub.classList.contains('show');
-  const motorVal = motorOn ? (document.getElementById('sel-motor').value || '—') : 'None';
-  const addons   = [...document.querySelectorAll('#grp-addons .opt-btn.sel')].map(b => b.textContent.trim());
-  const deliveryLabel = solDelivery === 'pickup'
-    ? "I'll pick up (Huntingdon Valley, PA 19006 — address confirmed after order)"
-    : 'Ship to me — UPS / FedEx from Huntingdon Valley, PA (freight TBD)';
-
-  const body = [
-    '=== NORMAN SOLUNA ROLLER SHADE QUOTE REQUEST ===',
-    '',
-    'PRODUCT: Norman Soluna Roller Shades',
-    '',
-    'CONFIGURATION',
-    'Light control: ' + light,
-    'Operating system: ' + op,
-    'Motorization: ' + motorVal,
-    'Mount type: ' + mount,
-    'Width: ' + w + '"',
-    'Height: ' + h + '"',
-    'Quantity: ' + qty,
-    'Add-ons: ' + (addons.length ? addons.join(', ') : 'None'),
-    '',
-    'DELIVERY',
-    deliveryLabel,
-    '',
-    'CUSTOMER',
-    'Name: ' + name,
-    'Phone: ' + phone,
-    (email ? 'Email: ' + email : ''),
-    (notes ? 'Notes: ' + notes : ''),
-    '',
-    '=== END QUOTE REQUEST ===',
-    'Sent from phillyblinds.com/pages/soluna-roller-shades.html'
-  ].filter(l => l !== undefined && l !== null).join('\n');
-
-  const subj = 'Soluna Roller Quote — ' + w + '"×' + h + '" ' + light + ' — ' + name;
-  window.location.href = 'mailto:justin@phillyblinds.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
-
-  document.getElementById('quote-success').classList.add('show');
-  document.getElementById('quote-success').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-</script>
+<script src="../js/pages/soluna-roller-shades.js"></script>
 </body>
 </html>
