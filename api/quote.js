@@ -76,15 +76,17 @@ module.exports = async function handler(req, res) {
   const phone      = _truncate(_b.phone,     'phone');
   const product    = _truncate(_b.product,   'product');
   const notes      = _truncate(_b.notes,     'notes');
-  const sourceUrl  = _truncate(_b.sourceUrl, 'sourceUrl');
+  const _rawSourceUrl = _truncate(_b.sourceUrl, 'sourceUrl');
+  // Only allow http/https URLs — blocks javascript: scheme injection in email hrefs
+  const sourceUrl = (_rawSourceUrl && /^https?:\/\//i.test(_rawSourceUrl.trim())) ? _rawSourceUrl : null;
   const selections = Array.isArray(_b.selections) ? _b.selections.slice(0, 60) : [];
   const { _hp, _t } = _b;
 
   // Honeypot — bots fill hidden fields, humans don't
   if (_hp && _hp.trim().length > 0) return res.status(200).json({ ok: true }); // silent reject
 
-  // Timing check — reject if form submitted in under 2 seconds (bot speed)
-  if (typeof _t === 'number' && _t < 2000) return res.status(200).json({ ok: true }); // silent reject
+  // Timing check — reject if _t missing or form submitted in under 2 seconds (bot speed)
+  if (typeof _t !== 'number' || _t < 2000) return res.status(200).json({ ok: true }); // silent reject
 
   // Basic payload size guard
   const bodyStr = JSON.stringify(req.body || {});
