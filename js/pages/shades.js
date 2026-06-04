@@ -1121,7 +1121,7 @@ function removeFromCart(id) {
 }
 
 function clearCart() {
-  if (!cart.length || confirm('Remove all items from your quote list?')) {
+  if (!cart.length || confirm('Remove all items from your cart?')) {
     cart = [];
     renderCart();
   }

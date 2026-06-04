@@ -577,7 +577,7 @@ function _initCart() {
       '<button class="btn-gold" style="width:100%;padding:13px;font-size:15px;font-weight:600;margin-bottom:8px" ' +
         'onclick="pbGoCheckout()">Request Quotes for All Items →</button>' +
       '<div style="text-align:center;font-size:11px;color:#aaa;margin-bottom:12px">We\'ll reply by email &bull; No payment required now</div>' +
-      '<button onclick="pbClearCart()" style="display:block;width:100%;background:none;border:none;font-size:11px;color:#ccc;cursor:pointer;font-family:inherit">Clear quote list</button>' +
+      '<button onclick="pbClearCart()" style="display:block;width:100%;background:none;border:none;font-size:11px;color:#ccc;cursor:pointer;font-family:inherit">Clear cart</button>' +
     '</div>';
   document.body.appendChild(drawer);
 
