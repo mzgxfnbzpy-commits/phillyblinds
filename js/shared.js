@@ -473,7 +473,7 @@ function _updateCartBadge() {
 function _pbCartToast(name) {
   var t = document.getElementById('pb-cart-toast');
   if (!t) return;
-  t.textContent = '✓ ' + name + ' added to quote list';
+  t.textContent = '✓ ' + name + ' added to cart';
   t.classList.add('show');
   setTimeout(function(){ t.classList.remove('show'); }, 2600);
 }
@@ -504,7 +504,7 @@ function _renderCartBody() {
   _updateCartBadge();
   var foot = document.getElementById('pb-cart-foot');
   if (!cart.length) {
-    body.innerHTML = '<div class="pb-cart-empty"><div class="pb-cart-empty-icon">📋</div>Your quote list is empty.<br><span style="font-size:12px">Configure a product and click "Add to Quote List."</span></div>';
+    body.innerHTML = '<div class="pb-cart-empty"><div class="pb-cart-empty-icon">📋</div>Your cart is empty.<br><span style="font-size:12px">Configure a product and click "Add to cart."</span></div>';
     if (foot) foot.style.display = 'none';
     return;
   }
@@ -569,7 +569,7 @@ function _initCart() {
   drawer.id = 'pb-cart-drawer'; drawer.className = 'pb-cart-drawer';
   drawer.innerHTML =
     '<div class="pb-cart-drawer-head">' +
-      '<div><div class="pb-cart-drawer-title">Your quote list</div></div>' +
+      '<div><div class="pb-cart-drawer-title">Your cart</div></div>' +
       '<button class="pb-cart-close" onclick="pbCloseCart()">×</button>' +
     '</div>' +
     '<div class="pb-cart-body" id="pb-cart-body"></div>' +
