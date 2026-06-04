@@ -118,7 +118,7 @@
 }
 </style>
 </head>
-<body>
+<body data-page="Fabric calculator">
 
 <nav class="site-nav" id="site-nav"></nav>
 
@@ -600,9 +600,6 @@
 
 <script src="../js/shared.js"></script>
 <script>
-renderNav('Fabric calculator');
-renderFooter(false);
-
 // ── Tab switching ──────────────────────────────────────────────
 function switchTab(id, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));

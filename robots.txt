@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-# Internal / developer folders
+# Internal / developer folders and files
 Disallow: /.claude/
 Disallow: /.vercel/
 Disallow: /.well-known/
@@ -10,6 +10,7 @@ Disallow: /scripts/
 Disallow: /api/
 Disallow: /admin/
 Disallow: /dashboard/
+Disallow: /HANDOFF.html
 
 # PDF scan images and internal pricing docs (not deployed, but block as defense-in-depth)
 Disallow: /pdfs/wholesale-pricing/

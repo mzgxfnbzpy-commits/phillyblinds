@@ -223,13 +223,11 @@ function _injectHead(isHome) {
 
 function renderNav(activePage) {
   const pages = [
-    { href: '../pages/shades.html', label: 'Shades & blinds' },
     { href: '../pages/soft-treatments.html', label: 'Soft treatments' },
     { href: '../pages/hardware.html', label: 'Hardware' },
     { href: '../pages/shutters.html', label: 'Shutters' },
     { href: '../pages/gallery.html', label: 'Our work' },
     { href: '../pages/upholstery.html', label: 'Custom upholstery' },
-    { href: '../pages/installation.html', label: 'Installation' },
     { href: '../pages/measure.html', label: 'How to measure' },
     { href: '../pages/about.html', label: 'About' },
     { href: '../pages/fabric-calculator.html', label: 'Fabric calculator' },
@@ -240,6 +238,7 @@ function renderNav(activePage) {
 
   const root = isHome ? 'index.html' : '../index.html';
   const consultHref = isHome ? 'pages/consult.html' : '../pages/consult.html';
+  const installHref = isHome ? 'pages/installation.html' : '../pages/installation.html';
 
   document.getElementById('site-nav').innerHTML = `
     <div class="nav-identity">
@@ -270,6 +269,7 @@ function renderNav(activePage) {
         <a class="nav-phone" href="tel:6097421720">
           📞 (609) 742-1720 <span class="badge-24">24/7</span>
         </a>
+        <a class="nav-cta nav-cta-install" href="${installHref}">Book Installation</a>
         <a class="nav-cta" href="${consultHref}">Free consultation</a>
         <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" onclick="_toggleDrawer()">
           <span></span><span></span><span></span>
@@ -283,6 +283,7 @@ function renderNav(activePage) {
         return `<a href="${href}" class="${active}">${p.label}</a>`;
       }).join('')}
       <a class="nav-drawer-phone-link" href="tel:6097421720">&#128222;&nbsp;&nbsp;(609) 742-1720 &mdash; call or text 24/7</a>
+      <a class="nav-drawer-cta" style="background:var(--gold);color:var(--espresso)" href="${installHref}">Book Installation</a>
       <a class="nav-drawer-cta" href="${consultHref}">Free consultation</a>
     </div>
   `;
@@ -323,7 +324,7 @@ function renderFooter(isHome) {
         <a href="${pre}woven-wood-shades.html">Woven wood shades</a>
         <a href="${pre}wood-blinds.html">Wood blinds</a>
         <a href="${pre}sheer-shades.html">Sheer shades</a>
-        <a href="${pre}synchrony-verticals.html">Vertical blinds</a>
+        <a href="${pre}vertical-shades.html">Vertical blinds</a>
       </div>
       <div class="footer-col">
         <h4>Soft Treatments</h4>
@@ -841,8 +842,8 @@ function pbShowQuoteModal(lines, productName, estimate) {
 
   var selectionsHtml = _pbQuoteLines.map(function(l) {
     return '<div style="display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px solid #f0f0ec;font-size:12px">' +
-      '<span style="color:#888;flex-shrink:0">' + l.label + '</span>' +
-      '<span style="font-weight:500;color:#333;text-align:right;max-width:60%">' + l.value + '</span>' +
+      '<span style="color:#888;flex-shrink:0">' + _pbEsc(l.label) + '</span>' +
+      '<span style="font-weight:500;color:#333;text-align:right;max-width:60%">' + _pbEsc(l.value) + '</span>' +
       '</div>';
   }).join('');
 
@@ -1182,7 +1183,7 @@ function pbGetFileNames(inputId) {
 function pbShowFileNames(input, displayId) {
   var el = document.getElementById(displayId);
   if (!el) return;
-  var names = Array.from(input.files).map(function(f){ return '📄 ' + f.name; }).join('<br>');
+  var names = Array.from(input.files).map(function(f){ return '📄 ' + _pbEsc(f.name); }).join('<br>');
   el.innerHTML = names;
 }
 function _initFileUploads() {
@@ -1385,7 +1386,7 @@ function pbShowContact(title) {
           '<div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:4px">Message / notes</label><textarea id="' + uid + '-msg" rows="3" placeholder="What are you looking for? Window sizes, room, timeline, questions..." style="width:100%;padding:9px 11px;border:1px solid #e0e0e0;border-radius:7px;font-size:13px;font-family:inherit;resize:vertical;box-sizing:border-box"></textarea></div>' +
           '<div style="border:1.5px dashed var(--gold);border-radius:9px;padding:12px 14px;margin-bottom:14px;background:var(--gold-mid)">' +
             '<div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px">📎 Attach photos, PDFs, or measurements <span style="font-weight:400;color:#999">(optional)</span></div>' +
-            '<input type="file" id="' + uid + '-files" multiple accept="image/*,.pdf,.heic,.png,.jpg,.jpeg" style="width:100%;font-size:12px;color:#555;font-family:inherit;cursor:pointer" onchange="(function(i,d){var n=Array.from(i.files).map(function(f){return\'📄 \'+f.name}).join(\'<br>\');d.innerHTML=n})(this,document.getElementById(\'' + uid + '-fnames\'))">' +
+            '<input type="file" id="' + uid + '-files" multiple accept="image/*,.pdf,.heic,.png,.jpg,.jpeg" style="width:100%;font-size:12px;color:#555;font-family:inherit;cursor:pointer" onchange="pbShowFileNames(this,\'' + uid + '-fnames\')">' +
             '<div id="' + uid + '-fnames" style="font-size:11px;color:#666;margin-top:5px;line-height:1.7"></div>' +
             '<div style="font-size:10px;color:#aaa;margin-top:4px">Window photos, room photos, inspiration images — email to justin@phillyblinds.com or attach here.</div>' +
           '</div>' +
@@ -1416,7 +1417,7 @@ function pbCpShowFiles() {
   var inp = document.getElementById('pb-cp-files');
   var disp = document.getElementById('pb-cp-file-names');
   if (!inp || !disp) return;
-  var names = Array.from(inp.files).map(function(f){ return '📄 '+f.name; }).join('<br>');
+  var names = Array.from(inp.files).map(function(f){ return '📄 '+_pbEsc(f.name); }).join('<br>');
   disp.innerHTML = names;
 }
 function pbSubmitContact() {
@@ -1614,6 +1615,18 @@ function reqMoreInfo(product) {
   var body = 'Hi, I would like to request more information about ' + (product || 'your products') + '.\n\nName:\nPhone:\nBest time to call:';
   window.location.href = 'mailto:justin@phillyblinds.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
 }
+
+// ── Auto-init nav/footer from data-page body attribute ────────────────────
+// Pages declare: <body data-page="Page Name">
+// shared.js then calls renderNav + renderFooter automatically,
+// eliminating the need for an inline <script> block on every page.
+(function() {
+  var pg = document.body && document.body.getAttribute('data-page');
+  if (pg !== null) {
+    renderNav(pg);
+    renderFooter(pg === 'home');
+  }
+})();
 
 
 

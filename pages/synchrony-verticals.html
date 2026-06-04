@@ -101,14 +101,23 @@
 .success-box{background:#EEFBE8;border:1px solid #86EFAC;border-radius:12px;padding:22px;text-align:center;display:none}
 .success-box h3{font-size:15px;font-weight:600;color:#14532d;margin-bottom:6px}
 .success-box p{font-size:13px;color:#166534;line-height:1.6}
+.tier-bar{background:#f7f4ef;border-bottom:1px solid #e8e4de;padding:11px 28px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tier-bar-label{font-size:11px;font-weight:600;color:#888;letter-spacing:.5px;text-transform:uppercase;margin-right:4px}
+.tier-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:24px;border:1.5px solid #e0e0db;background:#fff;color:#555;font-size:12px;font-weight:500;text-decoration:none;cursor:pointer;transition:border-color .15s,background .15s,color .15s}
+.tier-btn:hover{border-color:var(--gold)}
+.tier-btn.tier-active{background:var(--espresso);color:var(--cream);border-color:var(--espresso)}
+.tier-badge{font-size:10px;padding:1px 7px;border-radius:5px;font-weight:600}
+.tier-badge-basic{background:#e8f5e9;color:#2e7d32}
+.tier-badge-premium{background:rgba(200,151,63,.15);color:#7a5a00}
+.tier-btn.tier-active .tier-badge-premium{background:rgba(255,255,255,.18);color:var(--gold)}
 </style>
 </head>
-<body>
+<body data-page="Shades & blinds">
 <nav class="site-nav" id="site-nav"></nav>
 
 <div class="page-hero">
   <div class="hero-inner">
-    <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <a href="shades.html">Shades &amp; Blinds</a> &rsaquo; Synchrony™ Vertical Blinds</div>
+    <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <a href="vertical-shades.html">Vertical Blinds</a> &rsaquo; Norman Synchrony™ · Premium</div>
     <h1>Synchrony™<br>Vertical Blinds</h1>
     <p class="sub">Norman's sleek, valance-free vertical blind. Cordless wand tilt, reversible PolyDeco headrail, and 10 fabric collections from classic whites to woven textures. Perfect for sliding doors and wide windows.</p>
     <div class="hero-pills">
@@ -119,6 +128,16 @@
       <span class="hero-pill">NORMAN®</span>
     </div>
   </div>
+</div>
+
+<div class="tier-bar">
+  <span class="tier-bar-label">Tier</span>
+  <a class="tier-btn" href="wallace-verticals.html">
+    <span class="tier-badge tier-badge-basic">Basic</span> Wallace Verticals
+  </a>
+  <span class="tier-btn tier-active">
+    <span class="tier-badge tier-badge-premium">Premium</span> Norman Synchrony™
+  </span>
 </div>
 
 <div class="config-layout">
@@ -589,7 +608,7 @@
       <div class="qrow qrow-surcharge" id="qr-freight-row" style="display:none"><span class="qrow-label">Freight</span><span class="qrow-val" id="qr-freight-s">—</span></div>
       <div class="qdiv"></div>
       <div class="qtotal"><span class="qtotal-label">Estimated Total</span><span class="qtotal-val" id="qr-total">—</span></div>
-      <div class="qnote">Suggested retail pricing from Norman February 2026 price book. Final price confirmed at order. Fabric availability and lead time confirmed at your measurement visit.</div>
+      <div class="qnote">Norman retail pricing — 15% discount applied to subtotal. Shipping at retail rate. Final price confirmed at order.</div>
     </div>
   </div>
 </div>
@@ -598,7 +617,7 @@
 
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
-<script>renderNav('Shades & blinds'); renderFooter(false);</script>
+
 
 <script>
 // ── PRICING DATA ──────────────────────────────────────────────────────────────
@@ -736,6 +755,8 @@ function pickDel(btn,key){
   calcPrice();
 }
 
+const NORMAN_DISC = 0.15; // 15% off retail subtotal — not applied to shipping
+
 function updateQuote(){
   const qty=parseInt(document.getElementById('qty').value)||1;
   state.qty=qty;
@@ -749,13 +770,15 @@ function updateQuote(){
   if(!wCol||!hRow){document.getElementById('qp-pending').style.display='block';document.getElementById('qp-detail').style.display='none';return;}
   const pricePerBlind=MATRICES[state.group][hRow][W_COLS.indexOf(wCol)];
   const shimTotal=state.shim?(state.shimQty*7):0;
-  const subtotal=pricePerBlind*qty+shimTotal;
+  const retailSub=pricePerBlind*qty+shimTotal;
+  const discountAmt=Math.round(retailSub*NORMAN_DISC);
+  const yourPrice=retailSub-discountAmt;
   let freight=0;
   if(state.del==='ship'){
     const oversized=state.w>=90||state.h>=90;
     freight=oversized?(80+(qty-1)*50):(25+(qty-1)*11);
   }
-  const total=subtotal+freight;
+  const total=yourPrice+freight;
 
   document.getElementById('qp-pending').style.display='none';
   document.getElementById('qp-detail').style.display='block';
@@ -764,9 +787,27 @@ function updateQuote(){
   document.getElementById('qr-mount').textContent=state.mount==='inside'?'Inside Mount':state.mount==='semi'?'Semi-Inside Mount':'Outside Mount';
   document.getElementById('qr-dims').textContent=state.w+'″ × '+state.h+'″';
   document.getElementById('qr-qty').textContent=qty+(qty>1?' blinds':' blind');
-  document.getElementById('qr-price').textContent='$'+pricePerBlind+' each';
+  document.getElementById('qr-price').innerHTML='<s style="color:var(--text-dark);font-weight:400">$'+pricePerBlind+' retail</s> &rarr; $'+Math.round(pricePerBlind*0.85)+' your price';
   const showRow=(id,show,val)=>{document.getElementById(id).style.display=show?'flex':'none';if(val)document.getElementById(id.replace('-row','-s')).textContent=val;};
   showRow('qr-shim-row',state.shim,'$'+(state.shimQty*7));
+
+  // Add discount rows if not already present
+  let discRow=document.getElementById('qr-disc-row');
+  let yourPriceRow=document.getElementById('qr-yourprice-row');
+  const qdiv=document.querySelector('#qp-detail .qdiv:last-of-type');
+  if(!discRow){
+    discRow=document.createElement('div');
+    discRow.className='qrow';discRow.id='qr-disc-row';
+    discRow.innerHTML='<span class="qrow-label" style="color:#2DE0C1">15% Norman discount</span><span class="qrow-val" style="color:#2DE0C1" id="qr-disc-s">—</span>';
+    qdiv.parentNode.insertBefore(discRow,qdiv);
+    yourPriceRow=document.createElement('div');
+    yourPriceRow.className='qrow';yourPriceRow.id='qr-yourprice-row';
+    yourPriceRow.innerHTML='<span class="qrow-label" style="font-weight:600;color:var(--cream)">Your price (before shipping)</span><span class="qrow-val" style="color:var(--cream);font-weight:600" id="qr-yourprice-s">—</span>';
+    qdiv.parentNode.insertBefore(yourPriceRow,qdiv);
+  }
+  document.getElementById('qr-disc-s').textContent='-$'+discountAmt;
+  document.getElementById('qr-yourprice-s').textContent='$'+yourPrice.toLocaleString();
+
   showRow('qr-freight-row',state.del==='ship','$'+freight);
   document.getElementById('qr-total').textContent='$'+Math.round(total).toLocaleString();
 }

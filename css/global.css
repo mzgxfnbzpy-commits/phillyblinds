@@ -82,6 +82,8 @@ html { scroll-padding-top: 96px; }
 .badge-24 { background: var(--gold); color: var(--espresso); font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 8px; }
 .nav-cta { background: var(--gold); color: var(--espresso); border: none; padding: 9px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; white-space: nowrap; transition: opacity 0.15s; }
 .nav-cta:hover { opacity: 0.88; }
+.nav-cta-install { background: var(--espresso); color: var(--gold); border: 1.5px solid var(--gold); }
+.nav-cta-install:hover { opacity: 1; background: #251E16; }
 
 /* ---- BUTTONS ---- */
 .btn-gold { background: var(--gold); color: var(--espresso); border: none; padding: 12px 22px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block; }

@@ -1,5 +1,11 @@
 {
+  "rewrites": [
+    { "source": "/HANDOFF.html", "destination": "/404.html" }
+  ],
   "redirects": [
+    { "source": "/pages/drapery.html",              "destination": "/pages/soft-treatments.html",          "permanent": true },
+    { "source": "/pages/roman-shades.html",         "destination": "/pages/soft-treatments.html?tab=roman", "permanent": true },
+    { "source": "/pages/wallace-dynasty-woven.html", "destination": "/pages/dynasty-woven-woods.html",      "permanent": true },
     {
       "source": "/(.*)",
       "has": [{"type": "host", "value": "phillyshades.com"}],
@@ -40,6 +46,14 @@
         {
           "key": "Strict-Transport-Security",
           "value": "max-age=63072000; includeSubDomains"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin"
+        },
+        {
+          "key": "X-DNS-Prefetch-Control",
+          "value": "off"
         },
         {
           "key": "Content-Security-Policy",

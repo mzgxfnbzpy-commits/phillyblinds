@@ -105,7 +105,7 @@
 .success-box p{font-size:13px;color:#166534;line-height:1.6}
 </style>
 </head>
-<body>
+<body data-page="Shades & blinds">
 <nav class="site-nav" id="site-nav"></nav>
 
 <div class="page-hero">
@@ -540,7 +540,7 @@
       <div class="qrow qrow-surcharge" id="qr-freight-row" style="display:none"><span class="qrow-label">Freight</span><span class="qrow-val" id="qr-freight-s">—</span></div>
       <div class="qdiv"></div>
       <div class="qtotal"><span class="qtotal-label">Estimated Total</span><span class="qtotal-val" id="qr-total">—</span></div>
-      <div class="qnote">Suggested retail pricing from Norman price book. Final price confirmed at order. Exact color, lead time, and install confirmed at your measurement visit.</div>
+      <div class="qnote">Norman retail pricing — 15% discount applied to subtotal. Shipping at retail rate. Final price confirmed at order.</div>
     </div>
   </div>
 </div>
@@ -549,7 +549,7 @@
 
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
-<script>renderNav('Shades & blinds'); renderFooter(false);</script>
+
 
 <script>
 // ── PRICING DATA ──────────────────────────────────────────────────────────────
@@ -781,6 +781,8 @@ function updateQuote(){
   const basePrice=MATRIX[hRow][W_COLS.indexOf(wCol)];
   if(!basePrice){document.getElementById('qp-pending').style.display='block';document.getElementById('qp-detail').style.display='none';return;}
 
+  const NORMAN_DISC = 0.15; // 15% off retail subtotal — not applied to shipping
+
   // slat multiplier + color finish surcharge + optional privacy
   const slatMult={half:1.10,one:1.00,two:1.20}[state.slat];
   const colorMult=1+(state.colorSurcharge/100);
@@ -789,15 +791,17 @@ function updateQuote(){
   let pricePerBlind=basePrice*slatMult*colorMult*privMult;
   let shimTotal=state.shim?(state.shimQty*7):0;
   let sideTotal=state.sidemount?25:0;
-  let subtotal=pricePerBlind*qty+shimTotal+sideTotal;
+  let retailSub=pricePerBlind*qty+shimTotal+sideTotal;
+  const discountAmt=Math.round(retailSub*NORMAN_DISC);
+  const yourPrice=retailSub-discountAmt;
 
-  // freight
+  // freight — no discount
   let freight=0;
   if(state.del==='ship'){
     if(state.w>=90) freight=80+(qty-1)*50;
     else freight=25+(qty-1)*11;
   }
-  const total=subtotal+freight;
+  const total=yourPrice+freight;
 
   // show detail
   document.getElementById('qp-pending').style.display='none';
@@ -817,6 +821,30 @@ function updateQuote(){
   showRow('qr-privacy-row',state.privacy,'+10%');
   showRow('qr-sm-row',state.sidemount,'+$25');
   showRow('qr-shim-row',state.shim,'$'+(state.shimQty*7));
+
+  // Retail subtotal row
+  let retailRow=document.getElementById('qr-retail-row');
+  let discRow=document.getElementById('qr-disc-row');
+  let yourPriceRow=document.getElementById('qr-yourprice-row');
+  const firstDiv=document.querySelector('#qp-detail .qdiv:last-of-type');
+  if(!retailRow){
+    retailRow=document.createElement('div');
+    retailRow.className='qrow';retailRow.id='qr-retail-row';
+    retailRow.innerHTML='<span class="qrow-label"><s style="color:var(--text-dark)">Retail subtotal</s></span><span class="qrow-val" style="text-decoration:line-through;color:var(--text-dark)" id="qr-retail-s">—</span>';
+    firstDiv.parentNode.insertBefore(retailRow,firstDiv);
+    discRow=document.createElement('div');
+    discRow.className='qrow';discRow.id='qr-disc-row';
+    discRow.innerHTML='<span class="qrow-label" style="color:#2DE0C1">15% Norman discount</span><span class="qrow-val" style="color:#2DE0C1" id="qr-disc-s">—</span>';
+    firstDiv.parentNode.insertBefore(discRow,firstDiv);
+    yourPriceRow=document.createElement('div');
+    yourPriceRow.className='qrow';yourPriceRow.id='qr-yourprice-row';
+    yourPriceRow.innerHTML='<span class="qrow-label" style="font-weight:600;color:var(--cream)">Your price (before shipping)</span><span class="qrow-val" style="color:var(--cream);font-weight:600" id="qr-yourprice-s">—</span>';
+    firstDiv.parentNode.insertBefore(yourPriceRow,firstDiv);
+  }
+  document.getElementById('qr-retail-s').textContent='$'+Math.round(retailSub).toLocaleString();
+  document.getElementById('qr-disc-s').textContent='-$'+discountAmt;
+  document.getElementById('qr-yourprice-s').textContent='$'+yourPrice.toLocaleString();
+
   showRow('qr-freight-row',state.del==='ship','$'+freight);
 
   document.getElementById('qr-total').textContent='$'+Math.round(total).toLocaleString();

@@ -141,7 +141,7 @@ textarea.inp-field{resize:vertical;min-height:90px}
 .price-est-note{font-size:11px;color:#888;margin-top:4px;line-height:1.4}
 </style>
 </head>
-<body>
+<body data-page="Hardware">
 <nav class="site-nav" id="site-nav"></nav>
 
 <section class="page-hero">
@@ -709,9 +709,6 @@ textarea.inp-field{resize:vertical;min-height:90px}
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script>
-renderNav('Hardware');
-renderFooter(false);
-
 /* ─── STATE ─── */
 const S = {
   type:'', finishType:'', diameter:'', finish:'', finishCode:'', finishTrackColor:'',
