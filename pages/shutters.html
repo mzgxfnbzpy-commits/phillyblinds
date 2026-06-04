@@ -189,25 +189,22 @@
         </div>
       </div>
 
-      <!-- ── STEP 2: NUMBER OF OPENINGS ── -->
+      <!-- ── STEP 2: QUANTITY ── -->
       <div class="step-block" id="sec-count">
         <div class="step-head" onclick="pbToggleStep('sec-count')">
           <span class="step-num" id="badge-2">2</span>
-          <span class="step-head-title">Number of openings</span>
+          <span class="step-head-title">Quantity</span>
           <span class="step-head-val" id="shv-2"></span>
         </div>
         <div class="step-body" style="display:none">
-          <p class="step-subhead">Each opening gets its own dimensions and panel layout.</p>
+          <p class="step-subhead">Each window opening gets its own dimensions and panel layout below.</p>
           <div style="display:flex;align-items:center;gap:8px;margin-top:10px">
             <button onclick="adjCount(-1)" style="width:38px;height:38px;border:1.5px solid #e8e8e4;border-radius:8px 0 0 8px;background:#fff;font-size:22px;cursor:pointer;color:#333;font-family:inherit;display:flex;align-items:center;justify-content:center;transition:border-color .12s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='#e8e8e4'">−</button>
             <input type="number" id="count-input" min="1" max="30" value="1"
               style="width:62px;height:38px;border-top:1.5px solid #e8e8e4;border-bottom:1.5px solid #e8e8e4;border-left:none;border-right:none;font-size:18px;font-weight:600;color:#111;font-family:inherit;text-align:center;background:#fff"
-              oninput="S.count=parseInt(this.value)||1;updateQuote()">
+              oninput="S.count=parseInt(this.value)||1;updateQuote();if(S.count>=1){clearTimeout(window._qtyTimer);window._qtyTimer=setTimeout(continueStep2,700)}">
             <button onclick="adjCount(1)" style="width:38px;height:38px;border:1.5px solid #e8e8e4;border-radius:0 8px 8px 0;background:#fff;font-size:22px;cursor:pointer;color:#333;font-family:inherit;display:flex;align-items:center;justify-content:center;transition:border-color .12s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='#e8e8e4'">+</button>
-            <span style="font-size:13px;color:#666;margin-left:6px">opening(s)</span>
-          </div>
-          <div class="step-continue-wrap">
-            <button class="btn-step-continue" onclick="continueStep2()">Continue →</button>
+            <span style="font-size:13px;color:#666;margin-left:6px">window(s)</span>
           </div>
         </div>
       </div>

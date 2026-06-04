@@ -209,6 +209,8 @@ function adjCount(d) {
   el.value = Math.max(1, Math.min(30, (parseInt(el.value) || 1) + d));
   S.count = parseInt(el.value);
   updateQuote();
+  clearTimeout(window._qtyTimer);
+  window._qtyTimer = setTimeout(continueStep2, 500);
 }
 function selOpt(btn, group) {
   var row = btn.parentElement;

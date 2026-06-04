@@ -318,9 +318,14 @@ var D_CORNICE_MIN_FT = 4;
 var D_VALANCE_PER_FT = 38.50; // same as cornice
 var D_TRIM_PER_FT   = 15;
 
+function _getDim(wholeId, fracId) {
+  var whole = parseFloat(document.getElementById(wholeId).value) || 0;
+  var frac  = parseFloat((document.getElementById(fracId) || {}).value) || 0;
+  return whole + frac;
+}
 function calcDrapePrice() {
-  var w = parseFloat(document.getElementById('d-exact-width').value);
-  var h = parseFloat(document.getElementById('d-exact-length').value);
+  var w = _getDim('d-exact-width',  'd-exact-width-frac');
+  var h = _getDim('d-exact-length', 'd-exact-length-frac');
   var box = document.getElementById('drape-price-box');
   if (!box) return;
   if (!w || !h) { box.style.display = 'none'; return; }
