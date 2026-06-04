@@ -333,7 +333,7 @@
         <ul class="op-specs">
           <li>Max width <span>144″</span></li>
           <li>Max height <span>132″</span></li>
-          <li>Motor brands <span>Norman Smart · AutoWand · Automate Home&trade;</span></li>
+          <li>Motor brands <span>Norman Smart (recommended) · Rollease Acmeda Automate</span></li>
           <li>Smart home <span>Yes</span></li>
         </ul>
       </div>
@@ -524,7 +524,7 @@
       <div class="upgrade-card">
         <div class="upgrade-icon">⚡</div>
         <div class="upgrade-name">Motorization Upgrade</div>
-        <div class="upgrade-desc">Add a motor to any Soluna. Battery motors require no wiring. Hardwired motors available for new construction or renovation. Norman Smart, AutoWand, or Automate Home&trade; — Norman-brand motorization exclusively.</div>
+        <div class="upgrade-desc">Add a motor to any Soluna. Battery motors require no wiring. Hardwired motors available for new construction or renovation. Norman Smart is our default recommendation; Rollease Acmeda Automate available for existing Rollease systems.</div>
       </div>
       <div class="upgrade-card">
         <div class="upgrade-icon">🔗</div>
@@ -621,14 +621,13 @@
             </div>
             <div class="motor-sub" id="motor-sub">
               <div class="form-group" style="margin-bottom:8px">
-                <label style="font-size:12px;font-weight:500;color:#555;margin-bottom:5px;display:block">Norman motorization system</label>
+                <label style="font-size:12px;font-weight:500;color:#555;margin-bottom:5px;display:block">Motor system</label>
                 <select id="sel-motor" onchange="updateSummary()" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;font-family:var(--font)">
-                  <option value="Norman Smart">Norman Smart (app, voice, remote; rechargeable or hardwired)</option>
-                  <option value="AutoWand">AutoWand (wand-controlled, rechargeable, no remote needed)</option>
-                  <option value="Automate Home">Automate Home (15-ch remote, wall switch, rechargeable or DC)</option>
+                  <option value="Norman Smart">Norman Smart — Recommended (app, voice, remote; rechargeable or hardwired)</option>
+                  <option value="Rollease Acmeda Automate">Rollease Acmeda Automate — custom priced (for existing Rollease Acmeda systems)</option>
                 </select>
               </div>
-              <div class="tooltip-note">Norman Soluna uses Norman-brand motorization exclusively. Motor surcharge is per shade. Power source (rechargeable battery, plug-in, or hardwired) confirmed at measurement visit. All Norman Smart shades support app control, Alexa, Apple HomeKit, and Google Home via the Norman Smart Hub.</div>
+              <div class="tooltip-note">Motor surcharge per shade. Power source (rechargeable battery, plug-in, or hardwired) confirmed at measurement visit. Norman Smart supports app control, Alexa, Apple HomeKit, and Google Home via the Norman Smart Hub. Rollease Acmeda Automate uses the Automate Pulse 2 hub.</div>
             </div>
           </div>
 
@@ -799,105 +798,6 @@
 <footer class="site-footer" id="site-footer"></footer>
 
 <script src="../js/shared.js"></script>
-<script>
-var solDelivery = 'ship';
-
-function solPickDel(v, card) {
-  solDelivery = v;
-  document.querySelectorAll('.delivery-opt-card').forEach(function(c){c.classList.remove('sel');});
-  card.classList.add('sel');
-}
-
-function toggleMotor(on) {
-  document.getElementById('motor-sub').classList.toggle('show', on);
-  document.getElementById('s-motor-row').style.display = on ? 'flex' : 'none';
-  updateSummary();
-}
-
-function adjustQty(d) {
-  const el = document.getElementById('inp-qty');
-  el.value = Math.min(20, Math.max(1, (parseInt(el.value) || 1) + d));
-  updateSummary();
-}
-
-function updateSummary() {
-  const light  = getOpt('grp-light');
-  const op     = getOpt('grp-op');
-  const mount  = getOpt('grp-mount');
-  const w      = document.getElementById('inp-width').value;
-  const h      = document.getElementById('inp-height').value;
-  const qty    = document.getElementById('inp-qty').value || 1;
-  const mBrand = document.getElementById('sel-motor').value;
-
-  document.getElementById('s-light').textContent = light;
-  document.getElementById('s-op').textContent    = op;
-  document.getElementById('s-mount').textContent = mount;
-  document.getElementById('s-qty').textContent   = qty;
-  document.getElementById('s-size').textContent  = (w && h) ? `${w}″ W × ${h}″ H` : '—';
-
-  if (mBrand) {
-    document.getElementById('s-motor-brand').textContent = mBrand;
-  }
-
-  const addons = [...document.querySelectorAll('#grp-addons .opt-btn.sel')].map(b => b.textContent.trim());
-  document.getElementById('s-addons').textContent = addons.length ? addons.join(', ') : 'None';
-}
-
-function submitQuote() {
-  const name  = document.getElementById('cf-name').value.trim();
-  const phone = document.getElementById('cf-phone').value.trim();
-  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
-
-  const light  = getOpt('grp-light') || '—';
-  const op     = getOpt('grp-op') || '—';
-  const mount  = getOpt('grp-mount') || '—';
-  const w      = document.getElementById('inp-width').value || '—';
-  const h      = document.getElementById('inp-height').value || '—';
-  const qty    = document.getElementById('inp-qty').value || 1;
-  const email  = document.getElementById('cf-email').value.trim();
-  const notes  = document.getElementById('cf-notes').value.trim();
-  const motorSub = document.getElementById('motor-sub');
-  const motorOn  = motorSub && motorSub.classList.contains('show');
-  const motorVal = motorOn ? (document.getElementById('sel-motor').value || '—') : 'None';
-  const addons   = [...document.querySelectorAll('#grp-addons .opt-btn.sel')].map(b => b.textContent.trim());
-  const deliveryLabel = solDelivery === 'pickup'
-    ? "I'll pick up (Huntingdon Valley, PA 19006 — address confirmed after order)"
-    : 'Ship to me — UPS / FedEx from Huntingdon Valley, PA (freight TBD)';
-
-  const body = [
-    '=== NORMAN SOLUNA ROLLER SHADE QUOTE REQUEST ===',
-    '',
-    'PRODUCT: Norman Soluna Roller Shades',
-    '',
-    'CONFIGURATION',
-    'Light control: ' + light,
-    'Operating system: ' + op,
-    'Motorization: ' + motorVal,
-    'Mount type: ' + mount,
-    'Width: ' + w + '"',
-    'Height: ' + h + '"',
-    'Quantity: ' + qty,
-    'Add-ons: ' + (addons.length ? addons.join(', ') : 'None'),
-    '',
-    'DELIVERY',
-    deliveryLabel,
-    '',
-    'CUSTOMER',
-    'Name: ' + name,
-    'Phone: ' + phone,
-    (email ? 'Email: ' + email : ''),
-    (notes ? 'Notes: ' + notes : ''),
-    '',
-    '=== END QUOTE REQUEST ===',
-    'Sent from phillyblinds.com/pages/soluna-roller-shades.html'
-  ].filter(l => l !== undefined && l !== null).join('\n');
-
-  const subj = 'Soluna Roller Quote — ' + w + '"×' + h + '" ' + light + ' — ' + name;
-  window.location.href = 'mailto:justin@phillyblinds.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
-
-  document.getElementById('quote-success').classList.add('show');
-  document.getElementById('quote-success').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-</script>
+<script src="../js/pages/soluna-roller-shades.js"></script>
 </body>
 </html>

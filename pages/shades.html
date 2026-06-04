@@ -3299,11 +3299,15 @@ function updatePrice() {
     const perShadeAll = tableBase + rdAdd + opAdd + liftAdd;
     const activeMotorUp = cellMotorUpcharge;
     const motorCost = motorOn ? activeMotorUp * qty : 0;
-    const total = (perShadeAll * qty) + motorCost + cellFreight;
+    const NORMAN_DISC_CELL = 0.15;
+    const cellProductSub = (perShadeAll * qty) + motorCost;
+    const cellDiscountAmt = Math.round(cellProductSub * NORMAN_DISC_CELL);
+    const cellYourPrice = cellProductSub - cellDiscountAmt;
+    const total = cellYourPrice + cellFreight;
 
     document.getElementById('pb-dims').textContent = w + '" W × ' + h + '" H';
     document.getElementById('pb-sqft').textContent = res.name + '  ·  table: ' + res.pricedAt;
-    document.getElementById('pb-base').textContent = '$' + tableBase + '/shade (Norman Portrait™ MSRP)';
+    document.getElementById('pb-base').textContent = '$' + tableBase + '/shade retail (Norman Portrait' + String.fromCharCode(0x2122) + ' MSRP)';
     if (motorOn) {
       document.getElementById('pb-motor-row').style.display = 'flex';
       document.getElementById('pb-motor').textContent = '+$' + activeMotorUp + ' × ' + qty + ' = $' + (activeMotorUp * qty);
@@ -5856,6 +5860,5 @@ async function _apiSubmit(name, email, phone, productName, configText, successId
 </script>
 </body>
 </html>
-
 
 

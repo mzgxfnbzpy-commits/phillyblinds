@@ -991,35 +991,44 @@ function pbCloseCheckout() {
  * @param {Function} onChange   — called when any option changes
  */
 function normanMotorSection(containerId, productName, onChange) {
-  // Per Norman April 2026 price book:
-  // - Charging Wand only available on Honeycomb and Roller (not Roman, PerfectSheer, SmartDrape, SmartFold)
-  // - SmartDrape: DC Low Voltage NOT available
-  // - Max 2 remotes (Basic or SmartDial G2) per Norman Smart system
-  var isSmartDrape  = (productName || '').toLowerCase().indexOf('smartdrape') !== -1 ||
-                      (productName || '').toLowerCase().indexOf('smart drape') !== -1;
-  var wandAllowed   = !isSmartDrape &&
-                      (productName || '').toLowerCase().indexOf('roman') === -1 &&
-                      (productName || '').toLowerCase().indexOf('smartfold') === -1 &&
-                      (productName || '').toLowerCase().indexOf('perfectsheer') === -1;
+  // Norman motor options (2026):
+  //   Norman Smart — default/recommended for all motorizable Norman products
+  //   Rollease Acmeda Automate — available on Roller + Cellular only (Norman's rebranded Rollease offering)
+  //   No AutoWand, no Automate Home branding
+  // Charging Wand (battery charging method, not a motor type) still applies to Roller + Cellular with Norman Smart
+  var pn = (productName || '').toLowerCase();
+  var isSmartDrape       = pn.indexOf('smartdrape') !== -1 || pn.indexOf('smart drape') !== -1;
+  var isRolleaseCompat   = pn.indexOf('roller') !== -1 || pn.indexOf('cellular') !== -1;
+  var wandAllowed        = isRolleaseCompat && !isSmartDrape;
 
   var batteryDetail = wandAllowed
-    ? '<div style="font-size:11px;color:var(--text-dark);line-height:1.6;margin-bottom:6px">Battery options:</div>' +
+    ? '<div style="font-size:11px;color:var(--text-dark);line-height:1.6;margin-bottom:6px">Battery charging method:</div>' +
       '<div class="opt-row" id="nm-grp-battery-type">' +
         '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">Charging Wand</button>' +
         '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">AC Adapter Charger</button>' +
       '</div>' +
       '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">Charging Wand: NOT available with Cassette headrail or Dual shades. Use AC Adapter Charger for those configurations.</div>'
-    : '<div style="font-size:11px;color:var(--text-dark);line-height:1.6">Rechargeable battery with AC Adapter Charger. No wiring required — ideal for retrofit installations. ' +
-      (isSmartDrape ? '' : '') +
-      'Charging Wand is not available for this product type.</div>';
+    : '<div style="font-size:11px;color:var(--text-dark);line-height:1.6">Rechargeable battery with AC Adapter Charger. No wiring required — ideal for retrofit installations.' +
+      (isSmartDrape ? ' Charging Wand is not available for SmartDrape.' : ' Charging Wand is not available for this product type.') + '</div>';
 
   var dcLowVoltageBtn = isSmartDrape
     ? '<button class="opt-btn" style="color:#aaa;text-decoration:line-through;cursor:not-allowed" disabled title="DC Low Voltage not available for SmartDrape">DC Low Voltage ⚠</button>'
     : '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-wire\')" style="color:#333">24V DC (low voltage)</button>';
 
-  var html =
-    '<div class="pb-norman-motor" style="margin-top:12px;padding:16px 18px;background:var(--espresso-mid);border-radius:12px;border:0.5px solid var(--border-dark)">' +
-      '<div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px">&#9889; Norman Smart Motorization</div>' +
+  // Brand picker — only for Roller + Cellular (Rollease compatible)
+  var brandPicker = isRolleaseCompat
+    ? '<div style="margin-bottom:14px">' +
+        '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">&#9889; Motor system</div>' +
+        '<div class="opt-row" id="nm-grp-brand">' +
+          '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-brand\');nmShowBrand(\'smart\')" style="color:#333">Norman Smart &nbsp;<span style="font-size:9px;background:var(--gold);color:var(--espresso);padding:1px 6px;border-radius:4px;font-weight:700">Recommended</span></button>' +
+          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-brand\');nmShowBrand(\'rollease\')" style="color:#333">Rollease Acmeda Automate</button>' +
+        '</div>' +
+        '<div style="font-size:10px;color:var(--text-faint);margin-top:4px;line-height:1.5">Rollease Acmeda Automate is available for customers integrating with an existing Rollease Acmeda smart home system.</div>' +
+      '</div>'
+    : '<div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px">&#9889; Norman Smart Motorization</div>';
+
+  var normanSmartSection =
+    '<div id="nm-smart-section">' +
       (isSmartDrape ? '<div style="font-size:11px;background:#2a1c0e;border:1px solid #7a5020;border-radius:7px;padding:8px 12px;color:#e8b060;margin-bottom:12px;line-height:1.5">SmartDrape: Norman Smart motorization only. DC Low Voltage is not available for SmartDrape.</div>' : '') +
 
       // Power source
@@ -1095,6 +1104,21 @@ function normanMotorSection(containerId, productName, onChange) {
       '</div>' +
     '</div>';
 
+  // Rollease info section (only rendered for compatible products)
+  var rolleaseSection = isRolleaseCompat
+    ? '<div id="nm-rollease-section" style="display:none;padding:14px 16px;background:rgba(255,255,255,.06);border-radius:8px;margin-top:4px">' +
+        '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:6px">Rollease Acmeda Automate</div>' +
+        '<div style="font-size:11px;color:var(--text-dark);line-height:1.7">Custom priced — for customers integrating with an existing Rollease Acmeda smart home system. Compatible with the Automate Pulse 2 hub, the Automate app, and voice assistants (Alexa, Google Home, Apple HomeKit). Power source and accessories confirmed at your measurement visit.</div>' +
+      '</div>'
+    : '';
+
+  var html =
+    '<div class="pb-norman-motor" style="margin-top:12px;padding:16px 18px;background:var(--espresso-mid);border-radius:12px;border:0.5px solid var(--border-dark)">' +
+      brandPicker +
+      normanSmartSection +
+      rolleaseSection +
+    '</div>';
+
   if (containerId) {
     var el = document.getElementById(containerId);
     if (el) el.innerHTML = html;
@@ -1102,26 +1126,35 @@ function normanMotorSection(containerId, productName, onChange) {
   return html;
 }
 
+function nmShowBrand(brand) {
+  var s = document.getElementById('nm-smart-section');
+  var r = document.getElementById('nm-rollease-section');
+  if (s) s.style.display = brand === 'smart'   ? 'block' : 'none';
+  if (r) r.style.display = brand === 'rollease' ? 'block' : 'none';
+}
 function nmTogglePower(type) {
   var bat = document.getElementById('nm-battery-opts');
   var ac  = document.getElementById('nm-ac-opts');
   var hw  = document.getElementById('nm-hardwire-opts');
-  if (bat) bat.style.display = type === 'battery'   ? 'block' : 'none';
-  if (ac)  ac.style.display  = type === 'ac'        ? 'block' : 'none';
-  if (hw)  hw.style.display  = type === 'hardwire'  ? 'block' : 'none';
+  if (bat) bat.style.display = type === 'battery'  ? 'block' : 'none';
+  if (ac)  ac.style.display  = type === 'ac'       ? 'block' : 'none';
+  if (hw)  hw.style.display  = type === 'hardwire' ? 'block' : 'none';
 }
 function nmToggleRemote(show) {
   var el = document.getElementById('nm-remote-detail');
   if (el) el.style.display = show ? 'block' : 'none';
 }
 function nmGetMotorSummary() {
+  var brandBtn = document.querySelector('#nm-grp-brand .opt-btn.sel');
+  var isRollease = brandBtn && brandBtn.textContent.toLowerCase().indexOf('rollease') !== -1;
+  if (isRollease) return 'Rollease Acmeda Automate — custom priced (for existing Rollease Acmeda system integration)';
   var power   = (document.querySelector('#nm-grp-power .opt-btn.sel') || {}).textContent || '—';
   var wire    = (document.querySelector('#nm-grp-wire .opt-btn.sel') || {}).textContent || '';
   var remote  = (document.querySelector('#nm-grp-remote .opt-btn.sel') || {}).textContent || '—';
   var remotes = (document.querySelector('#nm-grp-remotes .opt-btn.sel') || {}).textContent || '';
   var channel = (document.querySelector('#nm-grp-channel .opt-btn.sel') || {}).textContent || '';
   var smart   = (document.querySelector('#nm-grp-smart .opt-btn.sel') || {}).textContent || 'None';
-  return 'Power: ' + power.replace(/[^\w\s]/g,'').trim() +
+  return 'Norman Smart — Power: ' + power.replace(/[^\w\s]/g,'').trim() +
     (wire ? ' — ' + wire : '') +
     ' | Remote: ' + remote.replace(/[^\w\s\-]/g,'').trim() +
     (remotes ? ' × ' + remotes + ' (' + channel + ')' : '') +
