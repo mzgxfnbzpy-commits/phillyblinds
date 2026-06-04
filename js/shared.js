@@ -1707,7 +1707,8 @@ function reqMoreInfo(product) {
     'wallace-portfolio-natural-shades','wallace-natural-roller-shades',
     'wallace-banded-shades','wallace-woven','wallace-verticals',
     'kirsch-spec-complete','kirsch-estate-traverse','kirsch-2in-estate-traverse',
-    'walden-premier-woven','walden-select-woven','wallace-dynasty-woven'
+    'walden-premier-woven','walden-select-woven','wallace-dynasty-woven',
+    'woven-wood-shades','sheer-shades','upholstery'
   ];
 
   var slug = window.location.pathname.split('/').pop().replace(/\.html$/i, '').toLowerCase();
@@ -1757,14 +1758,18 @@ function reqMoreInfo(product) {
     });
   }
 
-  // ── 2. Intercept configure/brand-card clicks on landing pages ─────────────
+  // ── 2. Intercept product card / configure-btn clicks on landing pages ────────
+  // a.pcard: homepage product grid cards (href="pages/xxx.html")
+  // .brand-card, .product-card: configurator internal cards
+  // a.configure-btn: explicit configure buttons
   document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.brand-card, .product-card, a.configure-btn').forEach(function (el) {
+    document.querySelectorAll('a.pcard, .brand-card, .product-card, a.configure-btn').forEach(function (el) {
       var href = (el.getAttribute('href') || '').split('/').pop().replace(/\.html.*/i, '').toLowerCase();
       if (CONF_PAGES.indexOf(href) === -1) return;
       el.addEventListener('click', function (e) {
         e.preventDefault();
-        pbShowContact('Get a Free Quote');
+        var title = (el.querySelector('.pcard-name,.pc-name,.brand-name') || {}).textContent || 'Get a Free Quote';
+        pbShowContact(title.trim());
       });
     });
   });
