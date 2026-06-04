@@ -115,7 +115,7 @@
 .mo-price{font-size:11px;color:var(--gold);font-weight:600}
 </style>
 </head>
-<body>
+<body data-page="Shades & blinds">
 <nav class="site-nav" id="site-nav"></nav>
 
 <div class="page-hero">
@@ -515,7 +515,7 @@
         </div>
         <div class="delivery-opt-card" onclick="pickDel(this,'pickup')">
           <div class="delivery-opt-title">I'll pick up</div>
-          <div class="delivery-opt-body">Pickup at 527 Hoyt Rd, Huntingdon Valley PA 19006 after order confirmation.</div>
+          <div class="delivery-opt-body">Pickup in Huntingdon Valley, PA — address provided after order confirmation.</div>
         </div>
       </div>
     </div>
@@ -585,9 +585,6 @@
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script>
-renderNav('Shades & blinds');
-renderFooter(false);
-
 // ── PRICING DATA ─────────────────────────────────────────────────────────────
 const W=[24,30,36,42,48,60,72,84,96];
 const H=[36,42,48,54,60,66,72,78,84,90,96,102,108,114,120];
@@ -1173,7 +1170,7 @@ function submitQuote(){
     '  ESTIMATED TOTAL: $'+Math.round(total).toLocaleString(),
     '',
     'DELIVERY',
-    '  '+(S.del==='ship'?'Ship to me (UPS/FedEx from Huntingdon Valley PA)':'Pickup at 527 Hoyt Rd, Huntingdon Valley PA 19006'),
+    '  '+(S.del==='ship'?'Ship to me (UPS/FedEx from Huntingdon Valley PA)':'Pickup (Huntingdon Valley PA — address provided after order confirmation)'),
     '',
     'CUSTOMER',
     '  Name: '+name,

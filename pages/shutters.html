@@ -121,7 +121,7 @@
 .step-group-label:first-child{margin-top:0}
 </style>
 </head>
-<body>
+<body data-page="Shutters">
 
 <nav class="site-nav" id="site-nav"></nav>
 
@@ -226,7 +226,7 @@
           <p class="step-subhead">Applies to all openings in this order. If you have mixed types, note differences in the notes step.</p>
           <div class="opt-row">
             <button class="opt-btn" onclick="selOpt(this,'opentype');updateQuote()" data-val="Standard window">Standard window</button>
-            <button class="opt-btn" onclick="selOpt(this,'opentype');updateQuote()" data-val="Double-hung window">Double-hung window</button>
+            <button class="opt-btn" onclick="selOpt(this,'opentype');updateQuote()" data-val="Double-hung window">Double-hung window <span style="font-size:9px;color:var(--gold)">+10%</span></button>
             <button class="opt-btn" onclick="checkOpenType(this)" data-val="Slider / bypass door">Slider / bypass door</button>
             <button class="opt-btn" onclick="checkOpenType(this)" data-val="Bi-fold door">Bi-fold door</button>
             <button class="opt-btn" onclick="checkOpenType(this)" data-val="French door">French door</button>
@@ -338,9 +338,9 @@
           </div>
           <div class="opt-row" style="margin-top:4px">
             <button class="opt-btn" onclick="selOpt(this,'tpostH');updateQuote()" data-val="No horizontal T-post">No horizontal T-post</button>
-            <button class="opt-btn" onclick="selOpt(this,'tpostH');updateQuote()" data-val="Horizontal T-post (double-hung)">Horizontal T-post (double-hung)</button>
+            <button class="opt-btn" onclick="selOpt(this,'tpostH');updateQuote()" data-val="Horizontal T-post (double-hung)">Horizontal T-post (double-hung) <span style="font-size:9px;color:var(--gold)">+10%</span></button>
           </div>
-          <p class="t-post-note">Horizontal T-post default type: Chamfer T-post unless otherwise specified. Custom T-post width up to 7½″ available (surcharge applies). Section length per T-post ≤48″.</p>
+          <p class="t-post-note">Horizontal T-post: 10% surcharge applies. Default type: Chamfer T-post unless otherwise specified. Custom T-post width up to 7½″ available (additional surcharge). Section length per T-post ≤48″.</p>
           <div class="step-continue-wrap">
             <button class="btn-step-continue" onclick="continueStep7()">Continue →</button>
           </div>
@@ -481,9 +481,10 @@
           <div id="wlp-waterproof" style="display:none">
             <div class="step-group-label">Woodlore Plus only</div>
             <div class="opt-row">
-              <button class="opt-btn toggle-btn" onclick="toggleSpec(this,'Waterproof option (full ABS + stainless hinges)')">Waterproof option</button>
+              <button class="opt-btn toggle-btn" onclick="toggleSpec(this,'Waterproof option (full ABS + stainless hinges, 30% surcharge)')">Waterproof option <span style="font-size:9px;color:var(--gold)">+30%</span></button>
               <button class="opt-btn toggle-btn" onclick="toggleSpec(this,'Custom color (provide sample — surcharge)')">Custom color</button>
             </div>
+            <div id="wlp-waterproof-arch-warn" class="warn-note" style="display:none">⚠ <strong>Continuous Arch is NOT available with the Waterproof option.</strong> If you need a specialty arch shape, the waterproof option cannot be used.</div>
           </div>
           <div id="spec-note-1625" class="spec-note" style="display:none;margin-top:10px">
             <strong>Note:</strong> Panel lock, ring pull, and handles are <strong>not available with the 1⅝″ stile</strong>. Verify stile size selection.
@@ -616,9 +617,6 @@
 <div id="site-footer"></div>
 <script src="../js/shared.js"></script>
 <script>
-renderNav('Shutters');
-renderFooter(false);
-
 /* ─── DATA ──────────────────────────────────────────────── */
 const SHUTTER_LINES = {
   'Normandy': {
@@ -1047,6 +1045,13 @@ function toggleSpec(btn, val) {
   } else {
     S.specs = S.specs.filter(function(v) { return v !== val; });
   }
+  // Warn if Woodlore Plus waterproof + specialty shape (continuous arch not available)
+  var archWarn = document.getElementById('wlp-waterproof-arch-warn');
+  if (archWarn) {
+    var hasWaterproof = S.specs.some(function(v) { return v.indexOf('Waterproof') >= 0; });
+    var hasSpecialty  = S.specs.some(function(v) { return v.indexOf('Specialty shape') >= 0; });
+    archWarn.style.display = (hasWaterproof && hasSpecialty) ? 'block' : 'none';
+  }
   updateQuote();
 }
 
@@ -1054,7 +1059,7 @@ function toggleSpec(btn, val) {
 function selDelivery(type, card) {
   document.querySelectorAll('.delivery-opt-card').forEach(function(c) { c.classList.remove('sel'); });
   card.classList.add('sel');
-  S.delivery = type === 'ship' ? 'Ship (UPS/FedEx from Huntingdon Valley PA)' : 'Pickup at 527 Hoyt Rd, Huntingdon Valley PA 19006';
+  S.delivery = type === 'ship' ? 'Ship (UPS/FedEx from Huntingdon Valley PA)' : 'Pickup (Huntingdon Valley PA — address provided after order confirmation)';
   qs('ship-note').style.display = type === 'ship' ? 'block' : 'none';
   updateQuote();
 }

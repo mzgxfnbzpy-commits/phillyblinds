@@ -87,7 +87,7 @@
 .success-box{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:10px;padding:20px;color:#2e7d32;font-size:14px;line-height:1.7;display:none}
 </style>
 </head>
-<body>
+<body data-page="Soft treatments">
 <nav class="site-nav" id="site-nav"></nav>
 
 <!-- HERO -->
@@ -358,8 +358,8 @@
         <p>Choose from our fabric library. Pick a color below for your estimate — we'll bring samples to confirm.</p>
       </div>
       <div class="fabric-card" onclick="selectFabric('drape',this,'Customer supplies fabric')">
-        <h3>I have my own fabric</h3>
-        <p>Ship your fabric to us in Huntingdon Valley, PA. We'll confirm yardage requirements before you order.</p>
+        <h3>I supply my own fabric</h3>
+        <p>After submitting, we'll contact you with our shipping address. Payment is not collected until your fabric arrives at our shop.</p>
       </div>
       <div class="fabric-card" onclick="selectFabric('drape',this,'Not sure — needs consultation')">
         <h3>Not sure yet</h3>
@@ -367,7 +367,7 @@
       </div>
     </div>
 
-    <!-- Fabric color + liner picker (shown when we supply fabric) -->
+    <!-- Fabric color picker (shown when we supply fabric) -->
     <div id="drape-fabric-detail" style="display:none;margin-top:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
       <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px">Choose a fabric color <span style="font-weight:400;color:#999;text-transform:none">— swatches brought to your free consultation</span></div>
       <div class="opt-row" id="grp-drape-color" style="flex-wrap:wrap">
@@ -380,17 +380,34 @@
         <button class="opt-btn" onclick="selOpt(this,'grp-drape-color');calcDrapePrice()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#1A2744;flex-shrink:0"></span>Navy</button>
         <button class="opt-btn" onclick="selOpt(this,'grp-drape-color');calcDrapePrice()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#1A1A1A;flex-shrink:0"></span>Black</button>
       </div>
-      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin:12px 0 8px">Lining</div>
+      <div style="font-size:11px;color:#aaa;margin-top:10px;line-height:1.5">Colors confirmed during your free in-home consultation. Final pricing confirmed at order.</div>
+    </div>
+
+    <!-- Customer-supplied fabric notice -->
+    <div id="drape-cust-fabric-notice" style="display:none;margin-top:14px;background:#fef9ec;border:1px solid #f0d070;border-radius:10px;padding:14px 16px">
+      <div style="font-size:13px;font-weight:600;color:#7d5a00;margin-bottom:6px">Shipping your fabric to us</div>
+      <div style="font-size:12px;color:#7d5a00;line-height:1.7">
+        After you submit your order details, we will contact you with our shop address to ship your fabric to.<br>
+        <strong>Payment is not collected until your fabric arrives and is inspected.</strong><br>
+        Please label your package with your name and the product you ordered.
+      </div>
+    </div>
+
+    <!-- LINING — shown when any fabric path is selected -->
+    <div id="drape-lining-section" style="display:none;margin-top:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
+      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Lining</div>
       <div class="opt-row" id="grp-drape-liner">
-        <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-liner');calcDrapePrice()">No liner</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');calcDrapePrice()">Standard liner</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');calcDrapePrice()">Blackout liner</button>
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-liner');drapeLinerToggle();calcDrapePrice()">No liner</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');drapeLinerToggle();calcDrapePrice()">White liner</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');drapeLinerToggle();calcDrapePrice()">Cream liner</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');drapeLinerToggle();calcDrapePrice()">Specific — see notes</button>
       </div>
-      <div style="margin-top:8px;display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid #e8e4dc;border-radius:8px;background:#f9f7f4">
+      <div id="drape-liner-supply-note" style="display:none;margin-top:7px;font-size:11px;color:#555;background:#fff;border:1px solid #e8e4dc;border-radius:7px;padding:7px 10px;line-height:1.5">We supply this lining — <strong>$10/yd</strong>. Same yardage as your face fabric. Amount confirmed at order.</div>
+      <div style="margin-top:12px;display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid #e8e4dc;border-radius:8px;background:#f9f7f4">
         <input type="checkbox" id="d-interlining-check" onchange="calcDrapePrice()" style="width:16px;height:16px;cursor:pointer;flex-shrink:0">
-        <label for="d-interlining-check" style="font-size:12px;font-weight:500;color:#444;cursor:pointer;line-height:1.4">Add interlining <span style="color:#888;font-weight:400">(adds body, weight &amp; insulation; works with any liner)</span></label>
+        <label for="d-interlining-check" style="font-size:12px;font-weight:500;color:#444;cursor:pointer;line-height:1.4">Add interlining <span style="color:#888;font-weight:400">(adds body, weight &amp; insulation — +$10/width)</span></label>
       </div>
-      <div style="font-size:11px;color:#aaa;margin-top:7px;line-height:1.5">Colors and exact fabric options confirmed during your free in-home consultation. Final pricing confirmed at order.</div>
+      <div style="font-size:11px;color:#aaa;margin-top:7px;line-height:1.5">For a specific lining not listed, describe it in the notes field below.</div>
     </div>
   </div>
 
@@ -704,6 +721,7 @@
 
     <!-- VALANCE CONFIG (shows when Roman Valance selected) -->
     <div id="valance-config" style="display:none;margin-top:18px;background:#fff;border:1px solid #e8e8e4;border-radius:12px;padding:22px">
+      <div id="valance-form-fields">
       <div style="font-size:14px;font-weight:600;color:#1a1a1a;margin-bottom:4px">Roman Valance</div>
       <div style="font-size:12px;color:#888;margin-bottom:18px">Custom decorative top treatment — tell us your specs and we'll quote it.</div>
       <div class="form-row">
@@ -723,6 +741,7 @@
       <div class="form-group"><label>Notes</label><textarea id="val-notes" placeholder="Fabric preference, room details, timeline..." style="min-height:60px"></textarea></div>
       <button onclick="reqMoreInfo('Custom Valance')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Custom Valance →</button>
         <button class="btn-gold" onclick="submitValance()" style="width:100%;padding:13px;font-size:14px;margin-top:4px">Request Valance Quote &rarr;</button>
+      </div>
       <div id="valance-success" style="display:none;background:#EAF3DE;border-radius:10px;padding:18px;text-align:center;margin-top:10px">
         <strong>Quote request sent!</strong><br><span style="font-size:13px;color:#3B6D11">We'll follow up with pricing. Urgent? <a href="tel:6097421720" style="color:#3B6D11">(609) 742-1720</a></span>
       </div>
@@ -762,13 +781,14 @@
         <button class="opt-btn" onclick="selOpt(this,'grp-roman-color');calcRoman()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#1A2744;flex-shrink:0"></span>Navy</button>
         <button class="opt-btn" onclick="selOpt(this,'grp-roman-color');calcRoman()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#1A1A1A;flex-shrink:0"></span>Black</button>
       </div>
-      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin:12px 0 8px">Lining</div>
+      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin:12px 0 8px">Lining (if we supply)</div>
       <div class="opt-row" id="grp-roman-liner">
         <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-liner');calcRoman()">No liner</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-roman-liner');calcRoman()">Standard liner</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-roman-liner');calcRoman()">Blackout liner</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-liner');calcRoman()">White liner</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-liner');calcRoman()">Cream liner</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-liner');calcRoman()">Specific — see notes</button>
       </div>
-      <div style="font-size:11px;color:#aaa;margin-top:7px;line-height:1.5">Colors confirmed during consultation. Final pricing at order.</div>
+      <div style="font-size:11px;color:#aaa;margin-top:7px;line-height:1.5">White or Cream lining: $10/yd. Same yardage as face fabric. Confirmed at order.</div>
     </div>
   </div>
 
@@ -778,9 +798,11 @@
     <div class="step-title">Lining</div>
     <div class="opt-row" id="grp-roman-lining" style="margin-top:12px">
       <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-lining');calcRoman()">Unlined</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining');calcRoman()">Lined</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining');calcRoman()">Blackout lined</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining');calcRoman()">White liner</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining');calcRoman()">Cream liner</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining');calcRoman()">Specific — see notes</button>
     </div>
+    <div style="font-size:11px;color:#888;margin-top:6px;line-height:1.5">White or Cream: we supply lining at $10/yd. For a specific liner, describe in notes below.</div>
   </div>
 
   <!-- STEP 4: OPERATION -->
@@ -1326,7 +1348,7 @@
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script>
-renderNav('Soft treatments'); renderFooter(false);
+
 _initMeasureHelp(`
   <div class="pb-help-heading">Drapery &amp; roman shade measuring</div>
   <div class="pb-help-sub">Rod placement and panel sizing tips</div>
@@ -1478,10 +1500,15 @@ function selectFabric(tab, el, val) {
   document.querySelectorAll(container + ' .fabric-card').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
   var weSupply = val === 'We supply the fabric';
+  var custSupply = val === 'Customer supplies fabric';
   if (tab === 'drape') {
     drapeState.fabric = val;
     var dp = document.getElementById('drape-fabric-detail');
     if (dp) dp.style.display = weSupply ? 'block' : 'none';
+    var cn = document.getElementById('drape-cust-fabric-notice');
+    if (cn) cn.style.display = custSupply ? 'block' : 'none';
+    var ls = document.getElementById('drape-lining-section');
+    if (ls) ls.style.display = (weSupply || custSupply) ? 'block' : 'none';
     calcDrapePrice();
   } else {
     romanState.fabric = val;
@@ -1489,6 +1516,12 @@ function selectFabric(tab, el, val) {
     if (rp) rp.style.display = weSupply ? 'block' : 'none';
     calcRoman();
   }
+}
+
+function drapeLinerToggle() {
+  var lining = getOpt('grp-drape-liner');
+  var note = document.getElementById('drape-liner-supply-note');
+  if (note) note.style.display = (lining === 'White liner' || lining === 'Cream liner') ? 'block' : 'none';
 }
 
 // Helper: read shipping estimate from nearest delivery section ZIP input
@@ -1503,21 +1536,18 @@ function _getShippingEst(containerEl) {
 var RN_MIN       = 85;       // minimum per shade regardless of sq ft
 var RN_TRIM_PER_FT = 15;
 
-// $40/sqft = cost $26 ÷ 0.65 margin. Same rate all styles — liner included in labor.
+// Flat/Relaxed: $40/sqft. Permanently Pleated: $50/sqft (extra fabric + labor).
+// Permanently Pleated yardage uses height × 3 before calculation.
 var RN_RATES = {
-  'Flat Roman':               { unlined: 40, lined: 40 },
-  'Permanently Pleated Roman':{ unlined: 40, lined: 40 },
-  'Relaxed Roman':            { unlined: 40, lined: 40 },
-  'Roman Valance':            { unlined: 40, lined: 40 }
+  'Flat Roman':               40,
+  'Permanently Pleated Roman':50,
+  'Relaxed Roman':            40,
+  'Roman Valance':            40
 };
 
 function rnGetRate() {
-  var style   = romanState.style || 'Flat Roman';
-  var lBtn    = document.querySelector('#grp-roman-lining .opt-btn.sel');
-  var lining  = lBtn ? lBtn.textContent.trim() : 'Unlined';
-  var isLined = lining !== 'Unlined';
-  var rates   = RN_RATES[style] || { unlined: 35, lined: 38 };
-  return isLined ? rates.lined : rates.unlined;
+  var style = romanState.style || 'Flat Roman';
+  return RN_RATES[style] || 40;
 }
 
 function adjRomanQty(d) {
@@ -1534,9 +1564,12 @@ function calcRoman() {
   if (!w || !h) { if(box) box.style.display = 'none'; return; }
 
   var rate     = rnGetRate();
+  var isPleated = romanState.style === 'Permanently Pleated Roman';
   var sqft     = (w / 12) * (h / 12);
   var perShade = Math.max(RN_MIN, sqft * rate);
   var laborTotal = perShade * qty;
+  // Permanently pleated yardage uses 3× height (extra fabric for folds)
+  var rnFabricH = isPleated ? h * 3 : h;
 
   // Trim
   var trimTotal = 0;
@@ -1552,18 +1585,21 @@ function calcRoman() {
     trimTotal = Math.ceil(trimFt) * RN_TRIM_PER_FT;
   }
 
-  // Fabric yardage estimate
+  // Fabric yardage — permanently pleated uses 3× height for folds
   var cutsPerShade = Math.max(1, Math.ceil(w / 54));
-  var yardsPerCut  = Math.ceil((h + 16) / 36 * 4) / 4;
+  var yardsPerCut  = Math.ceil((rnFabricH + 16) / 36 * 4) / 4;
   var fabricYds    = cutsPerShade * yardsPerCut * qty;
+  // Lining yardage = same as face fabric yardage
+  var liningYdsRn  = fabricYds;
 
   // Fabric & liner cost if we supply
   var fabricCost = 0; var linerCost = 0;
   if (romanState.fabric === 'We supply the fabric') {
     fabricCost = fabricYds * 25;
     var linerBtn = document.querySelector('#grp-roman-liner .opt-btn.sel');
-    if (linerBtn && linerBtn.textContent.indexOf('liner') !== -1) {
-      linerCost = fabricYds * 7;
+    var linerVal = linerBtn ? linerBtn.textContent.trim() : '';
+    if (linerVal === 'White liner' || linerVal === 'Cream liner') {
+      linerCost = liningYdsRn * D_LINING_PER_YD;
     }
   }
 
@@ -1617,15 +1653,17 @@ function calcRoman() {
 }
 
 // ── DRAPERY PRICING CALCULATOR ───────────────────────────────
-// Cost basis: unlined $80/width, lined $90/width. Margin: 35%. Tariff: none.
-// Formula: customer price = cost ÷ 0.65
-var D_RATE_UNLINED = 123;   // per cut/width (cost $80 ÷ 0.65)
-var D_RATE_LINED   = 138;   // per cut/width (cost $90 ÷ 0.65)
+// Rates (Justin confirmed): $120/width unlined · $130/width lined (liner included, BO=LF same price)
+// Goblet/Barrel: +$20/width · Interlining: +$10/width · Height >100": +$10/width per 10"
+// Width = ceil((rod width × fullness) ÷ 54), min 2
+var D_RATE_UNLINED = 120;   // per cut/width — unlined
+var D_RATE_LINED   = 130;   // per cut/width — liner included (BO or LF, same price)
 var D_MIN_WIDTHS   = 2;
 var D_FABRIC_WIDTH = 54;    // standard fabric width (inches)
-var D_LEN_SURCHARGE = 15;   // per width per 10" over 100" (cost $10 ÷ 0.65 ≈ $15)
-var D_FABRIC_PER_YD = 25;   // placeholder — fabric is custom per spec
-var D_LINING_PER_YD = 9.25; // cost $6/yd ÷ 0.65 margin. Note: +$75/bolt ship charged separately.
+var D_LEN_SURCHARGE = 10;   // per width per 10" over 100"
+var D_INTERLINING_PER_WIDTH = 10; // interlining surcharge per width (on top of lined rate)
+var D_LINING_PER_YD = 10;   // when we supply lining (White or Cream) — same yardage as face fabric
+var D_FABRIC_PER_YD = 25;   // placeholder — face fabric custom per spec
 var D_CORNICE_PER_FT = 38.50; // per linear ft (cost $25 ÷ 0.65)
 var D_CORNICE_MIN_FT = 4;
 var D_VALANCE_PER_FT = 38.50; // same as cornice
@@ -1682,25 +1720,28 @@ function calcDrapePrice() {
   var isLined = lining !== 'No liner';
   var interCheck = document.getElementById('d-interlining-check');
   var isInterlining = interCheck ? interCheck.checked : false;
-  // Goblet and Barrel pleat carry a premium — $130/width unlined, $140/width lined
+  // Goblet and Barrel pleat: +$20/width over base rate
   var isSpecialtyPleat = drapeState.pleat === 'Goblet Pleat' || drapeState.pleat === 'Barrel Pleat';
   var ratePerWidth = isSpecialtyPleat
-    ? (isLined ? 140 : 130)
+    ? (isLined ? 150 : 140)
     : (isLined ? D_RATE_LINED : D_RATE_UNLINED);
 
   // Length surcharge (over 100")
   var lenSurcharge = h > 100 ? Math.ceil((h - 100) / 10) * D_LEN_SURCHARGE : 0;
   var effectiveRate = ratePerWidth + lenSurcharge;
   var laborTotal = numWidths * effectiveRate;
+  var interlineTotal = isInterlining ? numWidths * D_INTERLINING_PER_WIDTH : 0;
 
-  // Fabric & lining (if we supply)
-  var fabricCost = 0; var liningCost = 0; var yardsTotal = 0;
+  // Face fabric (when we supply)
+  var fabricCost = 0; var yardsTotal = 0;
   if (drapeState.fabric === 'We supply the fabric') {
     yardsTotal = Math.ceil(((h + 16) / 36) * numWidths * 10) / 10;
     fabricCost = yardsTotal * D_FABRIC_PER_YD;
-    if (isLined) liningCost = yardsTotal * D_LINING_PER_YD;
-    if (isInterlining) liningCost += yardsTotal * D_LINING_PER_YD; // interlining same rate as lining
   }
+  // Lining fabric — $10/yd when we supply White or Cream; same yardage as face fabric
+  var liningYards = Math.ceil(((h + 16) / 36) * numWidths * 10) / 10;
+  var weSupplyLiner = (lining === 'White liner' || lining === 'Cream liner');
+  var liningCost = (isLined && weSupplyLiner) ? liningYards * D_LINING_PER_YD : 0;
 
   // Cornice
   var corniceTotal = 0;
@@ -1747,21 +1788,10 @@ function calcDrapePrice() {
     trimTotal = Math.ceil(trimFt) * D_TRIM_PER_FT;
   }
 
-  // Liner from drape liner picker (when we supply fabric)
-  var linerCost2 = 0;
-  if (drapeState.fabric === 'We supply the fabric') {
-    var dlBtn = document.querySelector('#grp-drape-liner .opt-btn.sel');
-    if (dlBtn && dlBtn.textContent.indexOf('liner') !== -1) {
-      linerCost2 = yardsTotal * D_LINING_PER_YD;
-    }
-    // Override liningCost with picker value (not from lining step)
-    liningCost = linerCost2;
-  }
-
   // Shipping estimate
   var dShipEst = _getShippingEst(document.getElementById('drape-form'));
 
-  var grandTotal = laborTotal + fabricCost + liningCost + corniceTotal + valanceTotal + trimTotal + dShipEst;
+  var grandTotal = laborTotal + interlineTotal + fabricCost + liningCost + corniceTotal + valanceTotal + trimTotal + dShipEst;
 
   // Render
   var rows = '';
@@ -1770,8 +1800,9 @@ function calcDrapePrice() {
       '<span>' + lbl + '</span><span style="color:var(--cream);font-weight:500">$' + val.toFixed(0) + '</span></div>';
   };
   row('Labor — ' + numWidths + ' widths × $' + effectiveRate + (lenSurcharge ? ' (incl. +$' + lenSurcharge + ' length)' : ''), laborTotal);
-  if (fabricCost)  row('Fabric est. (' + yardsTotal + ' yd × $25/yd)', fabricCost);
-  if (liningCost)  row('Liner est. (' + yardsTotal + ' yd × $'+D_LINING_PER_YD+'/yd)', liningCost);
+  if (fabricCost)     row('Fabric est. (' + yardsTotal + ' yd × $25/yd)', fabricCost);
+  if (liningCost)     row('Lining — ' + lining + ' (' + liningYards + ' yd × $10/yd)', liningCost);
+  if (interlineTotal) row('Interlining (' + numWidths + ' widths × $10)', interlineTotal);
   if (trimTotal)   row('Trim', trimTotal);
   if (corniceTotal)row('Cornice', corniceTotal);
   if (valanceTotal)row('Valance', valanceTotal);
@@ -2096,7 +2127,10 @@ async function submitDrape() {
   var hwNeed     = getOpt('grp-drape-hardware');
   var hwType     = hwNeed === 'I need hardware' ? getOpt('grp-drape-hw-type') : 'N/A';
   var delivery   = getOpt('grp-del-drape');
-  var body = 'DRAPERY QUOTE REQUEST\n\n'
+  var custFabricFlag = fabric === 'Customer supplies fabric'
+    ? '*** CUSTOMER SUPPLYING FABRIC ***\nDO NOT PROCESS PAYMENT UNTIL FABRIC RECEIVED AT SHOP.\nContact customer with shipping address before fabrication begins.\n\n'
+    : '';
+  var body = custFabricFlag + 'DRAPERY QUOTE REQUEST\n\n'
     + 'Name: ' + name + '\nPhone: ' + phone
     + '\nEmail: ' + (document.getElementById('d-email').value.trim() || '—')
     + '\nAddress: ' + (document.getElementById('d-address').value.trim() || '—') + '\n\n'
@@ -2141,6 +2175,13 @@ async function submitDrape() {
     + (function(){ var fu = document.querySelector('#drape-form .pb-fu-wrap input[type="file"]'); var n = fu && fu.files.length ? '\n\nFiles to send: ' + Array.from(fu.files).map(function(f){return f.name;}).join(', ') + '\n(Customer will email these to justin@phillyblinds.com)' : ''; return n; }());
   var email = document.getElementById('d-email').value.trim();
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email address.'); return; }
+  if (fabric === 'Customer supplies fabric') {
+    var sbox = document.getElementById('drape-success');
+    if (sbox) sbox.innerHTML = '<strong>Order details received!</strong><br>'
+      + 'Since you\'re supplying your own fabric, we will contact you shortly with our shop\'s shipping address. '
+      + '<strong>Payment will not be collected until your fabric arrives and is inspected.</strong><br><br>'
+      + 'Questions? <a href="tel:6097421720" style="color:#2e7d32">(609) 742-1720</a> &middot; 24/7 call or text.';
+  }
   var drapeSelections = [
     { label: 'Pleat style', value: drapeState.pleat || '—' },
     { label: 'Fabric', value: drapeState.fabric || '—' },
@@ -2169,7 +2210,7 @@ async function submitValance() {
     { label: 'Number of folds',   value: document.getElementById('val-folds').value || '—' },
     { label: 'Fold section size', value: (document.getElementById('val-fold-size').value || '—') + '"' }
   ];
-  await _stApiSubmit(null, 'valance-success', name, email, phone, 'Roman Valance',
+  await _stApiSubmit('valance-form-fields', 'valance-success', name, email, phone, 'Roman Valance',
     selections, document.getElementById('val-notes').value.trim());
 }
 
