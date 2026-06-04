@@ -963,3 +963,15 @@ html, body { overflow-x: hidden; }
   box-sizing: border-box;
 }
 .form-group textarea { resize: vertical; min-height: 72px; }
+
+/* ── Tier/Variant Switcher Bar — shared across roller, verticals, wood blinds ── */
+.tier-bar{background:#f7f4ef;border-bottom:1px solid #e8e4de;padding:11px 28px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tier-bar-label{font-size:11px;font-weight:600;color:#888;letter-spacing:.5px;text-transform:uppercase;margin-right:4px;white-space:nowrap}
+.tier-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:24px;border:1.5px solid #e0e0db;background:#fff;color:#555;font-size:12px;font-weight:500;text-decoration:none;cursor:pointer;transition:border-color .15s,background .15s,color .15s;white-space:nowrap}
+.tier-btn:hover{border-color:var(--gold)}
+.tier-btn.tier-active{background:var(--espresso);color:var(--cream);border-color:var(--espresso)}
+.tier-badge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;letter-spacing:.3px;text-transform:uppercase;flex-shrink:0}
+.tier-badge-basic{background:#2DE0C1;color:#0A4A42}
+.tier-badge-premium{background:#C8973F;color:#1C1510}
+.tier-badge-natural{background:#7CB87C;color:#0F3010}
+@media(max-width:600px){.tier-bar{padding:9px 16px;gap:6px}.tier-btn{font-size:11px;padding:6px 12px}}
