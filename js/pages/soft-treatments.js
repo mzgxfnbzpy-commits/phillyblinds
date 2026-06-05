@@ -221,12 +221,25 @@ function romanRingsToggle() {
   if (opts) opts.style.display = (choice === 'We supply rings') ? 'block' : 'none';
   if (custNote) custNote.style.display = (choice === 'I supply rings') ? 'block' : 'none';
 }
+function _motorCustomMsg(box, label) {
+  if (!box) return;
+  box.style.display = 'block';
+  box.innerHTML =
+    '<div style="padding:2px 0">' +
+      '<div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px">' + label + ' — Custom Quote</div>' +
+      '<div style="font-size:12px;color:var(--text-dark);line-height:1.7">Motorized installation pricing varies by motor brand, wiring, and integration. We\'ll include the full price in your custom quote after review.</div>' +
+    '</div>';
+}
+
 function calcRoman() {
   var w   = _getDim('rn-w', 'rn-w-frac');
   var h   = _getDim('rn-h', 'rn-h-frac');
   var qty = parseInt(document.getElementById('rn-qty').value) || 1;
   var box = document.getElementById('roman-pricebox');
   if (!w || !h) { if(box) box.style.display = 'none'; return; }
+
+  // Motorized operation → no customer-facing estimate
+  if (getOpt('grp-roman-op') === 'Motorized') { _motorCustomMsg(box, 'Motorized Roman Shade'); return; }
 
   var rate     = rnGetRate();
   var isPleated = romanState.style === 'Permanently Pleated Roman';
@@ -345,6 +358,13 @@ function calcDrapePrice() {
   var box = document.getElementById('drape-price-box');
   if (!box) return;
   if (!w || !h) { box.style.display = 'none'; return; }
+
+  // Motorized track hardware → no customer-facing estimate
+  var hwNeedBtn = document.querySelector('#grp-drape-hw-need .opt-btn.sel');
+  var hwTypeBtn = document.querySelector('#grp-drape-hw-type .opt-btn.sel');
+  var hwNeed = hwNeedBtn ? hwNeedBtn.textContent.trim() : '';
+  var hwType = hwTypeBtn ? hwTypeBtn.textContent.trim() : '';
+  if (hwNeed === 'I need hardware' && hwType === 'Motorized track') { _motorCustomMsg(box, 'Motorized Drapery'); return; }
 
   // Minimum dimension guard
   var minWarn = document.getElementById('d-min-warn');
