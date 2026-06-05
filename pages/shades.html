@@ -2438,6 +2438,20 @@
 
 <script src="../js/shared.js"></script>
 <script src="../js/pages/shades.js"></script>
+<script>
+(function() {
+  // Pre-fill all dimension fields from shared context (carries over from
+  // soluna-roller-shades.html, faux-wood-blinds.html, zebra pages, etc.)
+  var fields = [
+    ['rn-width','w'],['rn-height','h'],['rn-qty','qty'],
+    ['inp-width','w'],['inp-height','h'],['inp-qty','qty'],
+    ['pb-width','w'],['pb-height','h'],['pb-qty-inp','qty'],
+    ['fwb-width','w'],['fwb-height','h'],['fwb-qty','qty'],
+    ['rwb-width','w'],['rwb-height','h'],['rwb-qty','qty']
+  ];
+  fields.forEach(function(f) { pbCtx.prefill(f[0], f[1], null); });
+})();
+</script>
 </body>
 </html>
 
