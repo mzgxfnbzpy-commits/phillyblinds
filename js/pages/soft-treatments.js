@@ -129,7 +129,7 @@ function selectRomanStyle(el, val) {
 
 function romanChainCheck() {
   var len  = parseFloat(document.getElementById('roman-clen-in').value) || 0;
-  var h    = parseFloat(document.getElementById('rn-h').value) || 0;
+  var h    = _getDim('rn-h', 'rn-h-frac') || 0;
   var warn = document.getElementById('roman-clen-warn');
   if (!warn) return;
   if (!len || !h) { warn.style.display = 'none'; return; }
@@ -169,8 +169,10 @@ function selectFabric(tab, el, val) {
 
 function drapeLinerToggle() {
   var lining = getOpt('grp-drape-liner');
-  var note = document.getElementById('drape-liner-supply-note');
-  if (note) note.style.display = (lining === 'White liner' || lining === 'Cream liner') ? 'block' : 'none';
+  var weSupply = document.getElementById('drape-liner-supply-note');
+  var custSupply = document.getElementById('drape-liner-customer-note');
+  if (weSupply) weSupply.style.display = (lining === 'White liner' || lining === 'Cream liner') ? 'block' : 'none';
+  if (custSupply) custSupply.style.display = (lining === 'I supply lining') ? 'block' : 'none';
 }
 
 // Helper: read shipping estimate from nearest delivery section ZIP input
@@ -205,9 +207,23 @@ function adjRomanQty(d) {
   calcRoman();
 }
 
+function romanLinerToggle() {
+  var lining = getOpt('grp-roman-lining');
+  var weNote = document.getElementById('roman-liner-supply-note');
+  var custNote = document.getElementById('roman-liner-customer-note');
+  if (weNote) weNote.style.display = (lining === 'White liner' || lining === 'Cream liner') ? 'block' : 'none';
+  if (custNote) custNote.style.display = (lining === 'I supply lining') ? 'block' : 'none';
+}
+function romanRingsToggle() {
+  var choice = getOpt('grp-roman-rings');
+  var opts = document.getElementById('roman-ring-opts');
+  var custNote = document.getElementById('roman-ring-customer-note');
+  if (opts) opts.style.display = (choice === 'We supply rings') ? 'block' : 'none';
+  if (custNote) custNote.style.display = (choice === 'I supply rings') ? 'block' : 'none';
+}
 function calcRoman() {
-  var w   = parseFloat(document.getElementById('rn-w').value);
-  var h   = parseFloat(document.getElementById('rn-h').value);
+  var w   = _getDim('rn-w', 'rn-w-frac');
+  var h   = _getDim('rn-h', 'rn-h-frac');
   var qty = parseInt(document.getElementById('rn-qty').value) || 1;
   var box = document.getElementById('roman-pricebox');
   if (!w || !h) { if(box) box.style.display = 'none'; return; }
@@ -875,8 +891,8 @@ async function submitRoman() {
   var phone = document.getElementById('rn-phone').value.trim();
   if (!name) { alert('Please enter your name.'); return; }
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email address.'); return; }
-  var w        = document.getElementById('rn-w').value;
-  var h        = document.getElementById('rn-h').value;
+  var w        = String(_getDim('rn-w', 'rn-w-frac') || '');
+  var h        = String(_getDim('rn-h', 'rn-h-frac') || '');
   var qty      = document.getElementById('rn-qty').value;
   var tdbu        = getOpt('grp-roman-tdbu');
   var op          = getOpt('grp-roman-op');
@@ -930,8 +946,9 @@ async function submitRoman() {
     { label: 'Control side', value: controlSide },
     { label: 'Mounting',     value: mountStyle },
     { label: 'Quantity',     value: qty },
-    { label: 'Width',        value: (document.getElementById('rn-w').value||'—') + '"' },
-    { label: 'Finished length', value: (document.getElementById('rn-h').value||'—') + '"' },
+    { label: 'Width',        value: (_getDim('rn-w','rn-w-frac')||'—') + '"' },
+    { label: 'Finished length', value: (_getDim('rn-h','rn-h-frac')||'—') + '"' },
+    { label: 'Rings',        value: (getOpt('grp-roman-rings')||'—') + (getOpt('grp-roman-rings')==='We supply rings' ? ' · ' + ((document.getElementById('roman-ring-size')||{}).value||'¾"') + ' · ' + ((document.getElementById('roman-ring-color')||{}).value||'White') : '') },
     { label: 'Delivery',     value: delivery }
   ];
   if (pbInstallRequested(document.getElementById('roman-form'))) romanSelections.push({ label: 'Installation', value: 'Requested' });

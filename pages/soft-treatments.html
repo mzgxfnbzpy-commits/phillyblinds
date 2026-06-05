@@ -401,8 +401,10 @@
         <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');drapeLinerToggle();calcDrapePrice()">White liner</button>
         <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');drapeLinerToggle();calcDrapePrice()">Cream liner</button>
         <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');drapeLinerToggle();calcDrapePrice()">Specific — see notes</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');drapeLinerToggle();calcDrapePrice()" style="font-size:11px">I supply lining</button>
       </div>
       <div id="drape-liner-supply-note" style="display:none;margin-top:7px;font-size:11px;color:#555;background:#fff;border:1px solid #e8e4dc;border-radius:7px;padding:7px 10px;line-height:1.5">We supply this lining — <strong>$10/yd</strong>. Same yardage as your face fabric. Amount confirmed at order.</div>
+      <div id="drape-liner-customer-note" style="display:none;margin-top:7px;font-size:11px;color:#555;background:#f0f7f4;border:1px solid #c8e6d8;border-radius:7px;padding:7px 10px;line-height:1.5">You're supplying your own lining — please describe the material in the <strong>notes</strong> field below.</div>
       <div style="margin-top:12px;display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid #e8e4dc;border-radius:8px;background:#f9f7f4">
         <input type="checkbox" id="d-interlining-check" onchange="calcDrapePrice()" style="width:16px;height:16px;cursor:pointer;flex-shrink:0">
         <label for="d-interlining-check" style="font-size:12px;font-weight:500;color:#444;cursor:pointer;line-height:1.4">Add interlining <span style="color:#888;font-weight:400">(adds body, weight &amp; insulation — +$10/width)</span></label>
@@ -809,12 +811,46 @@
     <div class="step-label">Step 3</div>
     <div class="step-title">Lining</div>
     <div class="opt-row" id="grp-roman-lining" style="margin-top:12px">
-      <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-lining');calcRoman()">Unlined</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining');calcRoman()">White liner</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining');calcRoman()">Cream liner</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining');calcRoman()">Specific — see notes</button>
+      <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-lining');romanLinerToggle();calcRoman()">Unlined</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining');romanLinerToggle();calcRoman()">White liner</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining');romanLinerToggle();calcRoman()">Cream liner</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining');romanLinerToggle();calcRoman()">Specific — see notes</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining');romanLinerToggle();calcRoman()" style="font-size:11px">I supply lining</button>
     </div>
-    <div style="font-size:11px;color:#888;margin-top:6px;line-height:1.5">White or Cream: we supply lining at $10/yd. For a specific liner, describe in notes below.</div>
+    <div id="roman-liner-supply-note" style="display:none;margin-top:7px;font-size:11px;color:#555;background:#fff;border:1px solid #e8e4dc;border-radius:7px;padding:7px 10px;line-height:1.5">We supply this lining — <strong>$10/yd</strong>. Same yardage as your face fabric. Amount confirmed at order.</div>
+    <div id="roman-liner-customer-note" style="display:none;margin-top:7px;font-size:11px;color:#555;background:#f0f7f4;border:1px solid #c8e6d8;border-radius:7px;padding:7px 10px;line-height:1.5">You're supplying your own lining — please describe the material in the <strong>notes</strong> field below.</div>
+
+    <!-- Ring supply section -->
+    <div style="margin-top:16px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:9px">
+      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Lift rings</div>
+      <div class="opt-row" id="grp-roman-rings" style="margin-bottom:8px">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-rings');romanRingsToggle()">We supply rings</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-rings');romanRingsToggle()">I supply rings</button>
+      </div>
+      <div id="roman-ring-opts" style="margin-top:8px">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <div>
+            <div style="font-size:11px;color:#888;margin-bottom:4px">Ring size</div>
+            <select id="roman-ring-size" style="padding:7px 10px;border:1px solid #ddd;border-radius:7px;font-size:12px;background:#fff">
+              <option value="3/4&quot;">¾" (standard)</option>
+              <option value="1&quot;">1"</option>
+              <option value="1.5&quot;">1½"</option>
+            </select>
+          </div>
+          <div>
+            <div style="font-size:11px;color:#888;margin-bottom:4px">Ring color</div>
+            <select id="roman-ring-color" style="padding:7px 10px;border:1px solid #ddd;border-radius:7px;font-size:12px;background:#fff">
+              <option>White</option>
+              <option>Cream</option>
+              <option>Brass</option>
+              <option>Bronze</option>
+              <option>Clear</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div id="roman-ring-customer-note" style="display:none;font-size:11px;color:#555;background:#f0f7f4;border:1px solid #c8e6d8;border-radius:7px;padding:7px 10px;line-height:1.5">You're supplying rings — describe size and color in the <strong>notes</strong> field below.</div>
+    </div>
   </div>
 
   <!-- STEP 4: OPERATION -->
@@ -896,13 +932,25 @@
           <div class="form-row">
             <div class="form-group">
               <label>Width</label>
-              <input type="number" id="rn-w" placeholder="36" oninput="calcRoman()">
-              <div class="dim-unit">inches</div>
+              <div style="display:flex;align-items:center;gap:6px">
+                <input type="number" id="rn-w" placeholder="36" oninput="calcRoman()" style="width:70px">
+                <select id="rn-w-frac" onchange="calcRoman()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
+                  <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
+                  <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
+                </select>
+                <span style="font-size:12px;color:#666">in</span>
+              </div>
             </div>
             <div class="form-group">
               <label>Finished length</label>
-              <input type="number" id="rn-h" placeholder="48" oninput="calcRoman()">
-              <div class="dim-unit">inches</div>
+              <div style="display:flex;align-items:center;gap:6px">
+                <input type="number" id="rn-h" placeholder="48" oninput="calcRoman()" style="width:70px">
+                <select id="rn-h-frac" onchange="calcRoman()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
+                  <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
+                  <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
+                </select>
+                <span style="font-size:12px;color:#666">in</span>
+              </div>
             </div>
           </div>
         </div>
