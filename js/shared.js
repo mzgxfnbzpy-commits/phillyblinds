@@ -1698,7 +1698,7 @@ function reqMoreInfo(product) {
   if (window.location.hostname !== 'www.phillyblinds.com') return;
 
   var CONF_PAGES = [
-    'shades','shutters','soft-treatments','hardware','norman-sheers',
+    'shades','hardware','norman-sheers',
     'faux-wood-blinds','soluna-roller-shades','norman-centerpiece-roman',
     'select-rods','kirsch-rods','paris-texas-rods','orion-rods','finial-company',
     'hardware-quote','synchrony-verticals','city-lights-aluminum-blinds',
@@ -1708,8 +1708,8 @@ function reqMoreInfo(product) {
     'wallace-banded-shades','wallace-woven','wallace-verticals',
     'kirsch-spec-complete','kirsch-estate-traverse','kirsch-2in-estate-traverse',
     'walden-premier-woven','walden-select-woven','wallace-dynasty-woven',
-    'woven-wood-shades','sheer-shades','upholstery'
-  ];
+    'woven-wood-shades','sheer-shades'
+  ]; // shutters, soft-treatments, upholstery removed — open for real quotes
 
   var slug = window.location.pathname.split('/').pop().replace(/\.html$/i, '').toLowerCase();
   var isConfPage = CONF_PAGES.indexOf(slug) !== -1;
