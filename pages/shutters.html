@@ -267,9 +267,6 @@
           <div class="info-note" style="margin-top:8px">
             <strong>Not sure of exact measurements?</strong> Provide your best estimate — a measuring visit is included before ordering. Include fractions (e.g., 24¼, 36⅝).
           </div>
-          <div class="step-continue-wrap">
-            <button class="btn-step-continue" onclick="continueStep5()">Continue →</button>
-          </div>
         </div>
       </div>
 
@@ -322,13 +319,10 @@
             <button class="opt-btn" onclick="selOpt(this,'tpostV');updateQuote()" data-val="3+ vertical T-posts">3+ vertical T-posts</button>
           </div>
           <div class="opt-row" style="margin-top:4px">
-            <button class="opt-btn" onclick="selOpt(this,'tpostH');updateQuote()" data-val="No horizontal T-post">No horizontal T-post</button>
-            <button class="opt-btn" onclick="selOpt(this,'tpostH');updateQuote()" data-val="Horizontal T-post (double-hung)">Horizontal T-post (double-hung) <span style="font-size:9px;color:var(--gold)">+10%</span></button>
+            <button class="opt-btn" onclick="selOpt(this,'tpostH');updateQuote();clearTimeout(window._tpostTimer);window._tpostTimer=setTimeout(continueStep7,400)" data-val="No horizontal T-post">No horizontal T-post</button>
+            <button class="opt-btn" onclick="selOpt(this,'tpostH');updateQuote();clearTimeout(window._tpostTimer);window._tpostTimer=setTimeout(continueStep7,400)" data-val="Horizontal T-post (double-hung)">Horizontal T-post (double-hung) <span style="font-size:9px;color:var(--gold)">+10%</span></button>
           </div>
           <p class="t-post-note">Horizontal T-post: 10% surcharge applies. Default type: Chamfer T-post unless otherwise specified. Custom T-post width up to 7½″ available (additional surcharge). Section length per T-post ≤48″.</p>
-          <div class="step-continue-wrap">
-            <button class="btn-step-continue" onclick="continueStep7()">Continue →</button>
-          </div>
         </div>
       </div>
 

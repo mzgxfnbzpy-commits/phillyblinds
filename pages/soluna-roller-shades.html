@@ -157,6 +157,12 @@
   .spec-bar{padding:10px 16px}
   .section{padding:32px 16px}
 }
+/* Spec detail sections hidden by default — revealed via accordion toggle */
+.snl-spec-wrap{display:none}
+.snl-spec-wrap.open{display:block}
+.snl-spec-toggle{width:100%;background:#f2efe9;border:none;border-top:1px solid #e0ddd6;padding:13px 28px;display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.8px;cursor:pointer;text-align:left}
+.snl-spec-toggle:hover{background:#ebe8e1;color:#333}
+.snl-spec-chev{font-size:10px}
 </style>
 </head>
 <body data-page="Shades & blinds">
@@ -252,6 +258,7 @@
 </div>
 
 
+<div class="snl-spec-wrap" id="snl-spec-wrap">
 <!-- ═══ OPERATING SYSTEMS ════════════════════════════════════════ -->
 <section class="section section-white">
   <div class="content-wrap">
@@ -605,6 +612,8 @@
 </section>
 
 
+</div><!-- /snl-spec-wrap -->
+
 <!-- ═══ CONFIGURATOR ═════════════════════════════════════════════ -->
 <section class="section section-warm" id="configure">
   <div class="content-wrap">
@@ -754,6 +763,11 @@
   </div>
 </section>
 
+
+<!-- ═══ PRODUCT SPEC ACCORDION ════════════════════════════════════ -->
+<button class="snl-spec-toggle" onclick="var w=document.getElementById('snl-spec-wrap');w.classList.toggle('open');this.querySelector('.snl-spec-chev').textContent=w.classList.contains('open')?'▲':'▼'">
+  <span class="snl-spec-chev">▼</span> Product specifications
+</button>
 
 <!-- ═══ RELATED PRODUCTS ══════════════════════════════════════════ -->
 <section class="section section-white">
