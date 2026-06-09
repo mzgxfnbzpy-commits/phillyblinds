@@ -1,4 +1,4 @@
-﻿// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════
 // FABRIC DATA — patterns from PDF pages 4-5
 // maxH = single shade max height; double shades always capped at 96"
 // rhea = true → no cassette fabric wrap, no fabric-wrapped box valance
@@ -254,7 +254,7 @@ function buildBackGrids() {
   BACK_RD.forEach(function(b,i) {
     document.getElementById('back-rd-grid').innerHTML +=
       '<div class="back-card" id="backc-' + b.code + '" onclick="selectBack(\'' + b.code + '\',\'' + b.name + '\',\'RD\')">' +
-      '<div class="back-name">Room Darkening ' + b.name + '</div><div class="back-code">' + b.code + '</div></div>';
+      '<div class="back-name">Blackout ' + b.name + '</div><div class="back-code">' + b.code + '</div></div>';
   });
 }
 
@@ -263,7 +263,7 @@ function selectBack(code, name, type) {
   document.querySelectorAll('.back-card').forEach(function(el){ el.classList.remove('sel'); });
   var el = document.getElementById('backc-' + code);
   if (el) el.classList.add('sel');
-  var label = (type === 'RD' ? 'Room Darkening ' : 'Light Filtering ') + name + ' · ' + code;
+  var label = (type === 'RD' ? 'Blackout ' : 'Light Filtering ') + name + ' · ' + code;
   completeStep('step-5', label);
   updateSpec('sp-back', label);
   activateStep('step-6');
@@ -659,7 +659,7 @@ function submitQuote() {
   if (fab && S.width > fab.maxW) warns.push('Width exceeds fabric max (' + fab.maxW + '")');
   if (S.shadeType === 'double' && S.height > 96) warns.push('Double shade height exceeds 96" maximum');
   if (S.motorType === 'ac-100') warns.push('AC hardwired motor requires a licensed electrician');
-  if (S.backFabric && S.backFabric.type === 'RD') warns.push('Room-darkening back fabric is not total blackout — light may pass through side gaps');
+  if (S.backFabric && S.backFabric.type === 'RD') warns.push('Blackout back fabric is not total blackout — light may pass through side gaps');
   if (fab && fab.rhea && (tt === 'cassette' || tt === 'box-valance')) warns.push('Rhea fabric selected with incompatible top treatment — please review');
 
   var im = S.mount === 'inside' ? 0.125 : 0;
@@ -689,7 +689,7 @@ function submitQuote() {
     + (fab && fab.rhea ? 'NOTE: Rhea fabric — no cassette wrap, no box valance\n' : '')
     + (S.shadeType === 'double'
       ? '\n── BACK FABRIC ──\n'
-        + 'Back fabric: ' + (S.backFabric ? (S.backFabric.type === 'RD' ? 'Room Darkening' : 'Light Filtering') + ' ' + S.backFabric.name + ' · ' + S.backFabric.code : '—') + '\n'
+        + 'Back fabric: ' + (S.backFabric ? (S.backFabric.type === 'RD' ? 'Blackout' : 'Light Filtering') + ' ' + S.backFabric.name + ' · ' + S.backFabric.code : '—') + '\n'
       : '')
     + '\n── TOP TREATMENT / BRACKET ──\n'
     + 'Top treatment: ' + (ttlabels[tt] || '—') + '\n'

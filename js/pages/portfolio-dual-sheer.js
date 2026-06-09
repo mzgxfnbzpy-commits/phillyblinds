@@ -1,4 +1,4 @@
-﻿/* ── FABRIC DATA ── */
+/* ── FABRIC DATA ── */
 const FABRICS = [
   // LF
   {code:'AS04',name:'Addison',color:'Ivory',type:'LF',grp:'E',maxW:108,maxH:108,band:'4¾"',sheer:'3"',comp:'Beige'},
@@ -315,7 +315,7 @@ function pickType(t,el){
   document.querySelectorAll('.type-card').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   buildFabricGrid(t);
-  advance(1, t==='LF'?'Light-Filtering':'Room-Darkening');
+  advance(1, t==='LF'?'Light-Filtering':'Blackout');
 }
 
 /* ── STEP 2: Fabric Grid ── */
@@ -342,7 +342,7 @@ function buildFabricGrid(type){
     if(isTory) html+='<div class="tory-note">* Tory requires a large bottom bar. Not available with cordless or square bottom bar.</div>';
     html+='</div>';
   });
-  if(type==='RD') html+='<div class="step-note" style="margin-top:8px">All room-darkening fabrics include a large bottom bar.</div>';
+  if(type==='RD') html+='<div class="step-note" style="margin-top:8px">All Blackout fabrics include a large bottom bar.</div>';
   grid.innerHTML=html;
 }
 function pickFabric(code){
@@ -452,7 +452,7 @@ function applyBBRules(){
   const isTory=!!f.tory;
   S.bbLarge = isRD || isTory;
   const warn=document.getElementById('bb-large-warn');
-  if(S.bbLarge){ warn.style.display='block'; warn.textContent=(isRD?'Room-darkening fabrics':'Tory fabrics')+' require a large bottom bar. It is automatically included.'; }
+  if(S.bbLarge){ warn.style.display='block'; warn.textContent=(isRD?'Blackout fabrics':'Tory fabrics')+' require a large bottom bar. It is automatically included.'; }
   else warn.style.display='none';
   // If cordless selected later, square BB not available
   const sqBtn=document.getElementById('bb-sq-btn');
@@ -651,7 +651,7 @@ function submitQuote(){
     '=== PORTFOLIO COLLECTION™ DUAL SHEER SHADE QUOTE REQUEST ===',
     '',
     'FABRIC',
-    'Type: '+(f.type==='LF'?'Light-Filtering':'Room-Darkening'),
+    'Type: '+(f.type==='LF'?'Light-Filtering':'Blackout'),
     'Pattern: '+f.name,
     'Color: '+f.color,
     'Code: '+f.code,

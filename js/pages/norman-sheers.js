@@ -1,4 +1,4 @@
-﻿// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 // STATE — initialized before any function calls
 // ═══════════════════════════════════════════════════════════
 var S = {
@@ -282,7 +282,7 @@ function pickOpacity(o){
   document.getElementById('oc-lf').classList.toggle('sel',o==='lf');
   document.getElementById('oc-rd').classList.toggle('sel',o==='rd');
   document.getElementById('rd-warn').style.display=o==='rd'?'block':'none';
-  var lbl=o==='lf'?'Light Filtering':'Room Darkening (+20%)';
+  var lbl=o==='lf'?'Light Filtering':'Blackout (+20%)';
   markDone('step5',lbl); sp('sp-opacity',lbl);
   sp('sp-fabric','—');
   document.getElementById('s6val').textContent='—';
@@ -455,7 +455,7 @@ async function submitQuote(){
     {label:'Height',value:(S.h||'—')+'″'},
     {label:'SmartJoints',value:joints===0?'None':joints===1?'1 SmartJoint™':'2 SmartJoints™'},
     {label:'Quantity',value:String(S.qty)},
-    {label:'Light control',value:S.opacity==='lf'?'Light Filtering':'Room Darkening'},
+    {label:'Light control',value:S.opacity==='lf'?'Light Filtering':'Blackout'},
     {label:'Collection',value:S.fabric?S.fabric.coll:'—'},
     {label:'Color',value:S.fabric?S.fabric.name:'—'},
     {label:'Fabric code',value:S.fabric?S.fabric.code:'—'},

@@ -231,7 +231,7 @@ function crsPickDelivery(val) {
 // ── PANEL SUMMARY ────────────────────────────────────────────
 function crsUpdatePanel() {
   var rows = [];
-  var typeMap = { lf: 'Light Filtering', rd: 'Room Darkening', bk: 'Blackout', solar: 'Solar Screening', exterior: 'Exterior Roller' };
+  var typeMap = { lf: 'Light Filtering', rd: 'Blackout', bk: 'Blackout', solar: 'Solar Screening', exterior: 'Exterior Roller' };
   if (CRS.type) {
     var tl = typeMap[CRS.type] || CRS.type;
     if (CRS.type === 'solar' && CRS.openness) tl += ' · ' + CRS.openness + '% open';
@@ -290,7 +290,7 @@ function crsSubmit() {
   if (!name)              { alert('Please enter your name.'); return; }
   if (!email && !phone)   { alert('Please enter an email address or phone number.'); return; }
 
-  var typeMap = { lf: 'Light Filtering', rd: 'Room Darkening', bk: 'Blackout', solar: 'Solar Screening', exterior: 'Exterior Roller (outdoor)' };
+  var typeMap = { lf: 'Light Filtering', rd: 'Blackout', bk: 'Blackout', solar: 'Solar Screening', exterior: 'Exterior Roller (outdoor)' };
   var hMap    = { open: 'Open roll (no valance)', cassette: 'Cassette headrail', fascia: 'Fascia valance', valance: 'Wood valance box' };
   var mMap    = { cord: 'Manual — continuous cord loop', cordless: 'Manual — cordless lift', lutron: 'Motorized — Lutron Serena', somfy: 'Motorized — Somfy', rollease: 'Motorized — Rollease Acmeda / Automate', other: 'Other / not sure — see notes' };
   var fMap    = { we: 'We supply the fabric', customer: 'Customer supplies fabric (ships to shop — do NOT ship until confirmed)', consult: 'Consult — fabric TBD' };

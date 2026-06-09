@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -658,7 +658,7 @@
                 <div class="rn-fc-desc">Bamboo, jute, paper blends · organic look · light filtering · max 96″W or 78″W by collection</div>
               </button>
               <button class="rn-fabric-card" onclick="selRnFabric(this,'rd')">
-                <div class="rn-fc-name">Room Darkening</div>
+                <div class="rn-fc-name">Blackout</div>
                 <div class="rn-fc-desc">High privacy · coated backing · blocks most light — add LightGuard 360™ for true blackout</div>
               </button>
               <button class="rn-fabric-card" onclick="selRnFabric(this,'solar')">
@@ -681,7 +681,7 @@
                 <button class="opt-btn" onclick="selOpt(this,'rn-grp-solar');rnUpdatePrice()">7–10% — high visibility</button>
               </div>
             </div>
-            <div id="rn-rd-note" class="tooltip-note" style="display:none;margin-top:8px;color:var(--gold)">⚠ Room Darkening alone still allows edge light gaps. Add <strong>LightGuard 360™</strong> in Step 7 for true blackout.</div>
+            <div id="rn-rd-note" class="tooltip-note" style="display:none;margin-top:8px;color:var(--gold)">⚠ Blackout alone still allows edge light gaps. Add <strong>LightGuard 360™</strong> in Step 7 for true blackout.</div>
             <div id="rn-fabric-note" class="tooltip-note" style="margin-top:6px;color:#666"></div>
           </div>
 
@@ -736,7 +736,7 @@
                 <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-bo-pos')">Back roll (faces glass)</button>
                 <button class="opt-btn" onclick="selOpt(this,'rn-grp-bo-pos')">Front roll (faces room)</button>
               </div>
-              <div class="tooltip-note" style="margin-top:4px">Back roll is closest to the glass; front roll faces the room. Choose which position receives the room darkening fabric.</div>
+              <div class="tooltip-note" style="margin-top:4px">Back roll is closest to the glass; front roll faces the room. Choose which position receives the Blackout fabric.</div>
             </div>
 
             <!-- Day roll: Sheer or LF -->
@@ -750,9 +750,9 @@
               <div id="rn-day-grid" style="display:flex;flex-wrap:wrap;gap:6px"></div>
             </div>
 
-            <!-- Night roll: Room Darkening -->
+            <!-- Night roll: Blackout -->
             <div>
-              <div class="step-title" style="font-size:12px;margin-bottom:6px">Night roll &mdash; Room Darkening</div>
+              <div class="step-title" style="font-size:12px;margin-bottom:6px">Night roll &mdash; Blackout</div>
               <div id="rn-night-summary" style="font-size:11px;color:#888;margin-bottom:6px;line-height:1.5"></div>
               <div id="rn-night-grid" style="display:flex;flex-wrap:wrap;gap:6px"></div>
             </div>
@@ -819,7 +819,7 @@
               <div class="opt-row" id="rn-grp-cassette">
                 <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-cassette')">Full cassette</button>
               </div>
-              <div class="tooltip-note" style="margin-top:5px">Full cassette encloses the tube completely — required for LightGuard 360™ and room-darkening / blackout systems. Larger sizes may need an upgraded tube diameter.</div>
+              <div class="tooltip-note" style="margin-top:5px">Full cassette encloses the tube completely — required for LightGuard 360™ and Blackout / blackout systems. Larger sizes may need an upgraded tube diameter.</div>
             </div>
 
             <!-- Side channels / LightGuard -->
@@ -829,7 +829,7 @@
               <button class="opt-btn" onclick="selOpt(this,'rn-grp-lg');rnSetLG('basic')">LightGap channels</button>
               <button class="opt-btn" onclick="selOpt(this,'rn-grp-lg');rnSetLG('360')">LightGuard 360™</button>
             </div>
-            <div id="rn-lg-note" class="tooltip-note" style="display:none;margin-top:5px;margin-bottom:4px;color:var(--gold)">LightGuard 360™ = true blackout (full side channels + top seal). <strong>Requires:</strong> Room Darkening fabric + Cassette System. Not compatible with Open Roll or Fascia System.</div>
+            <div id="rn-lg-note" class="tooltip-note" style="display:none;margin-top:5px;margin-bottom:4px;color:var(--gold)">LightGuard 360™ = true blackout (full side channels + top seal). <strong>Requires:</strong> Blackout fabric + Cassette System. Not compatible with Open Roll or Fascia System.</div>
             <div style="margin-bottom:12px"></div>
 
             <!-- Hem bar — fabric wrapped or sealed pocket only (no exposed aluminum in this system) -->
@@ -1145,11 +1145,11 @@
             <div class="opt-row" id="grp-light-roller" data-goto="rn-single-fabric-block">
               <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);toggleLightGuardNote(false);updatePrice()">Sheer</button>
               <button class="opt-btn sel" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);toggleLightGuardNote(false);updatePrice()">Light Filtering</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);toggleLightGuardNote(true);updatePrice()">Room Darkening</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);toggleLightGuardNote(true);updatePrice()">Blackout</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);toggleLightGuardNote(false);updatePrice()">LightGuard 360™</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(true);toggleLightGuardNote(false);updatePrice()">Solar Screen</button>
             </div>
-            <div id="lightguard-note" class="tooltip-note" style="display:none;margin-top:6px">Room Darkening fabric alone reduces but does not eliminate light. For true blackout add <strong>LightGuard 360™</strong> — full side channels + top seal. Select "LightGuard 360™" above to include it.</div>
+            <div id="lightguard-note" class="tooltip-note" style="display:none;margin-top:6px">Blackout fabric alone reduces but does not eliminate light. For true blackout add <strong>LightGuard 360™</strong> — full side channels + top seal. Select "LightGuard 360™" above to include it.</div>
             <div id="solar-openness" style="display:none;margin-top:10px">
               <div class="tooltip-note" style="margin-bottom:6px">Openness factor — lower % = less light &amp; more privacy:</div>
               <div class="opt-row" id="grp-solar">
@@ -1162,28 +1162,28 @@
             </div>
           </div>
 
-          <!-- CELLULAR: Sheer · LF · Room Darkening -->
+          <!-- CELLULAR: Sheer · LF · Blackout -->
           <div id="light-cellular" style="display:none">
             <div class="opt-row" id="grp-light-cellular" data-goto="cellular-opts">
               <button class="opt-btn sel" onclick="selOpt(this,'grp-light-cellular');updatePrice()">Sheer</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-light-cellular');updatePrice()">Light Filtering</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-light-cellular');updatePrice()">Room Darkening</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light-cellular');updatePrice()">Blackout</button>
             </div>
-            <div class="tooltip-note" style="margin-top:4px">Cellular shades use honeycomb cell construction for insulation and privacy. Room Darkening cells block most light — ideal for bedrooms and media rooms.</div>
+            <div class="tooltip-note" style="margin-top:4px">Cellular shades use honeycomb cell construction for insulation and privacy. Blackout cells block most light — ideal for bedrooms and media rooms.</div>
           </div>
 
-          <!-- ZEBRA: Translucent · Room Darkening only — no blackout in this style -->
+          <!-- ZEBRA: Translucent · Blackout only — no blackout in this style -->
           <div id="light-zebra" style="display:none">
             <div class="opt-row" id="grp-light-zebra">
               <button class="opt-btn sel" onclick="selOpt(this,'grp-light-zebra');updatePrice()">Translucent</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-light-zebra');updatePrice()">Room Darkening</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light-zebra');updatePrice()">Blackout</button>
             </div>
-            <div class="tooltip-note" style="margin-top:4px">Zebra/banded shades come in translucent or room-darkening only — full blackout is not available in this style.</div>
+            <div class="tooltip-note" style="margin-top:4px">Zebra/banded shades come in translucent or Blackout only — full blackout is not available in this style.</div>
           </div>
 
           <!-- WOVEN WOOD: natural light filtering + liner choice -->
           <div id="light-woven" style="display:none">
-            <div class="tooltip-note" style="margin-bottom:8px">Natural woven shades filter light through the weave. Add a liner for extra privacy or room-darkening:</div>
+            <div class="tooltip-note" style="margin-bottom:8px">Natural woven shades filter light through the weave. Add a liner for extra privacy or Blackout:</div>
             <div class="opt-row" id="grp-light-woven">
               <button class="opt-btn sel" onclick="selOpt(this,'grp-light-woven');updatePrice()">No liner</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-light-woven');updatePrice()">Privacy liner</button>
@@ -1216,7 +1216,7 @@
             <div class="step-title" style="font-size:12px;margin-bottom:6px">② Fabric category</div>
             <div class="opt-row" id="grp-cell-fabric" data-goto="cell-fabric-inline">
               <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('lf');cellCheckConflict('fab-clear')">Light Filtering</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('rd');cellCheckConflict('fab-clear')">Room Darkening</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('rd');cellCheckConflict('fab-clear')">Blackout</button>
               <button class="opt-btn" id="cell-fab-sheer-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('sheer');cellCheckConflict('fab-clear')">Sheer</button>
               <button class="opt-btn" id="cell-fab-dn-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('dn');cellCheckConflict('fab-dn')">Day &amp; Night</button>
             </div>
@@ -1244,7 +1244,7 @@
                 <div>
                   <div class="step-title" style="font-size:12px;margin-bottom:6px">Bottom fabric (Night side)</div>
                   <div class="opt-row" id="grp-cell-dn-bottom">
-                    <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-dn-bottom');cellDnRender('bottom','rd')">Room Darkening</button>
+                    <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-dn-bottom');cellDnRender('bottom','rd')">Blackout</button>
                     <button class="opt-btn" onclick="selOpt(this,'grp-cell-dn-bottom');cellDnRender('bottom','lf')">Light Filtering</button>
                   </div>
                   <div id="cell-dn-bottom-grid" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px"></div>
@@ -1539,19 +1539,11 @@
       <div id="pb-fabric-picker" style="margin-top:12px;padding:14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
         <div style="font-size:11px;font-weight:600;letter-spacing:0.5px;color:#444;text-transform:uppercase;margin-bottom:10px">Fabric type</div>
         <div class="opt-row" id="pb-grp-fabric-type">
-          <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors();pbToggleSolarOpts(false);pbCalcPrice()">Blackout</button>
-          <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors();pbToggleSolarOpts(true);pbCalcPrice()">Solar Screen</button>
+          <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors();pbCalcPrice()">Light Filtering</button>
+          <button class="opt-btn" onclick="selOpt(this,'pb-grp-fabric-type');pbRenderFabricColors();pbCalcPrice()">Blackout</button>
         </div>
-        <!-- Solar openness sub-option -->
-        <div id="pb-solar-opts" style="display:none;margin-top:10px;padding:10px 12px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
-          <div style="font-size:11px;font-weight:600;color:#444;margin-bottom:6px">Openness factor</div>
-          <div class="opt-row" id="pb-grp-solar">
-            <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-solar')">1%</button>
-            <button class="opt-btn" onclick="selOpt(this,'pb-grp-solar')">3%</button>
-            <button class="opt-btn" onclick="selOpt(this,'pb-grp-solar')">5%</button>
-            <button class="opt-btn" onclick="selOpt(this,'pb-grp-solar')">10%</button>
-          </div>
-          <div style="font-size:11px;color:#888;margin-top:5px;line-height:1.5">1% = max privacy, 10% = most view-through. ±10% tolerance is industry standard.</div>
+        <div id="pb-blackout-note" style="display:none;margin-top:8px;padding:8px 12px;background:#fff3cd;border:1px solid #ffc107;border-radius:7px;font-size:11px;color:#7d5a00;line-height:1.5">
+          ⚠ <strong>99% blackout.</strong> No window covering provides 100% blackout — small amounts of light may pass around the edges of the shade. For near-total darkness, ensure the shade overlaps your window frame by at least 2″ on each side.
         </div>
         <div id="pb-fabric-colors" style="margin-top:10px"></div>
         <div style="font-size:10px;color:#999;margin-top:8px;line-height:1.5">Colors are approximate — exact swatches brought to your consultation. Final availability confirmed at order.</div>
@@ -2061,7 +2053,7 @@
       <span style="font-size:10px;font-weight:600;color:var(--gold);letter-spacing:1px">NORMAN®</span>
       <span style="font-size:11px;color:rgba(255,255,255,0.6)">Made in USA &middot; Lifetime Warranty &middot; Norman Motorization only</span>
     </div>
-    <p style="font-size:13px;color:#555;margin-bottom:20px;line-height:1.6">Soft horizontal vanes that tilt open and closed like blinds while riding on sheer fabric — diffusing light beautifully. 100% polyester, 32 fabric colors in light filtering or room darkening.</p>
+    <p style="font-size:13px;color:#555;margin-bottom:20px;line-height:1.6">Soft horizontal vanes that tilt open and closed like blinds while riding on sheer fabric — diffusing light beautifully. 100% polyester, 32 fabric colors in light filtering or Blackout.</p>
 
     <!-- STEP 1: DIMENSIONS -->
     <div class="step-hd"><div class="step-num-circle">1</div><div class="step-title" style="margin-bottom:0">Dimensions</div></div>
@@ -2094,9 +2086,9 @@
     <div class="step-hd"><div class="step-num-circle">3</div><div class="step-title" style="margin-bottom:0">Light control</div></div>
     <div class="opt-row" id="grp-ps-opacity">
       <button class="opt-btn sel" onclick="selOpt(this,'grp-ps-opacity');psUpdateColors('lf');psCalc()">Light filtering &mdash; 22 colors</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-ps-opacity');psUpdateColors('rd');psCalc()">Room darkening &mdash; 10 colors <span style="font-size:10px;opacity:.7">+20%</span></button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-ps-opacity');psUpdateColors('rd');psCalc()">Blackout &mdash; 10 colors <span style="font-size:10px;opacity:.7">+20%</span></button>
     </div>
-    <div class="tooltip-note" style="margin-bottom:16px">Room darkening provides more privacy when closed but is not a true blackout.</div>
+    <div class="tooltip-note" style="margin-bottom:16px">Blackout provides more privacy when closed but is not a true blackout.</div>
 
     <!-- STEP 4: FABRIC COLOR -->
     <div class="step-hd"><div class="step-num-circle">4</div><div class="step-title" style="margin-bottom:0">Fabric color</div></div>
@@ -2126,7 +2118,7 @@
           <option value="Frosty Asphalt">Frosty Asphalt (F1194) — sheer dark</option>
           <option value="Nightfall">Nightfall (F1191) — deep charcoal</option>
         </optgroup>
-        <optgroup label="Room Darkening (10 colors — +20%)" id="ps-rd-group" style="display:none">
+        <optgroup label="Blackout (10 colors — +20%)" id="ps-rd-group" style="display:none">
           <option value="Moon">Moon (F1200) — white</option>
           <option value="Silk">Silk (F1201) — warm white</option>
           <option value="Chai Latte">Chai Latte (F1202) — blush cream</option>
