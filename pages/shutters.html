@@ -189,61 +189,41 @@
         </div>
       </div>
 
-      <!-- ── STEP 2: QUANTITY ── -->
-      <div class="step-block" id="sec-count">
-        <div class="step-head" onclick="pbToggleStep('sec-count')">
-          <span class="step-num" id="badge-2">2</span>
-          <span class="step-head-title">Quantity</span>
-          <span class="step-head-val" id="shv-2"></span>
-        </div>
-        <div class="step-body" style="display:none">
-          <p class="step-subhead">Each window opening gets its own dimensions and panel layout below.</p>
-          <div style="display:flex;align-items:center;gap:8px;margin-top:10px">
-            <button onclick="adjCount(-1)" style="width:38px;height:38px;border:1.5px solid #e8e8e4;border-radius:8px 0 0 8px;background:#fff;font-size:22px;cursor:pointer;color:#333;font-family:inherit;display:flex;align-items:center;justify-content:center;transition:border-color .12s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='#e8e8e4'">−</button>
-            <input type="number" id="count-input" min="1" max="30" value="1"
-              style="width:62px;height:38px;border-top:1.5px solid #e8e8e4;border-bottom:1.5px solid #e8e8e4;border-left:none;border-right:none;font-size:18px;font-weight:600;color:#111;font-family:inherit;text-align:center;background:#fff"
-              oninput="S.count=parseInt(this.value)||1;updateQuote();if(S.count>=1){clearTimeout(window._qtyTimer);window._qtyTimer=setTimeout(continueStep2,700)}">
-            <button onclick="adjCount(1)" style="width:38px;height:38px;border:1.5px solid #e8e8e4;border-radius:0 8px 8px 0;background:#fff;font-size:22px;cursor:pointer;color:#333;font-family:inherit;display:flex;align-items:center;justify-content:center;transition:border-color .12s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='#e8e8e4'">+</button>
-            <span style="font-size:13px;color:#666;margin-left:6px">window(s)</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── STEP 3: OPENING TYPE ── -->
+      <!-- ── STEP 2: OPENING TYPE ── -->
       <div class="step-block" id="sec-opentype">
         <div class="step-head" onclick="pbToggleStep('sec-opentype')">
-          <span class="step-num" id="badge-3">3</span>
+          <span class="step-num" id="badge-2">2</span>
           <span class="step-head-title">What type of opening?</span>
-          <span class="step-head-val" id="shv-3"></span>
+          <span class="step-head-val" id="shv-2"></span>
         </div>
         <div class="step-body" style="display:none">
           <p class="step-subhead">Applies to all openings in this order. If you have mixed types, note differences in the notes step.</p>
           <div class="opt-row">
-            <button class="opt-btn" onclick="selOpt(this,'opentype');updateQuote();setTimeout(continueStep3,400)" data-val="Standard window">Standard window</button>
+            <button class="opt-btn" onclick="selOpt(this,'opentype');updateQuote();setTimeout(continueStep2,400)" data-val="Standard window">Standard window</button>
             <button class="opt-btn" onclick="selOpt(this,'opentype');updateQuote()" data-val="Double-hung window">Double-hung window <span style="font-size:9px;color:var(--gold)">+10%</span></button>
             <button class="opt-btn" onclick="checkOpenType(this)" data-val="Slider / bypass door">Slider / bypass door</button>
             <button class="opt-btn" onclick="checkOpenType(this)" data-val="Bi-fold door">Bi-fold door</button>
             <button class="opt-btn" onclick="checkOpenType(this)" data-val="French door">French door</button>
             <button class="opt-btn" onclick="checkOpenType(this)" data-val="Bay / corner window">Bay / corner window</button>
             <button class="opt-btn" onclick="checkOpenType(this)" data-val="Specialty shape (arch, circle, etc.)">Specialty shape</button>
-            <button class="opt-btn" onclick="selOpt(this,'opentype');updateQuote();setTimeout(continueStep3,400)" data-val="Café (bottom half only)">Café (lower half only)</button>
+            <button class="opt-btn" onclick="selOpt(this,'opentype');updateQuote();setTimeout(continueStep2,400)" data-val="Café (bottom half only)">Café (lower half only)</button>
           </div>
           <div id="opentype-note" class="warn-note"></div>
         </div>
       </div>
 
-      <!-- ── STEP 4: MOUNT ── -->
+      <!-- ── STEP 3: MOUNT ── -->
       <div class="step-block" id="sec-mount">
         <div class="step-head" onclick="pbToggleStep('sec-mount')">
-          <span class="step-num" id="badge-4">4</span>
+          <span class="step-num" id="badge-3">3</span>
           <span class="step-head-title">Mount &amp; frame situation</span>
-          <span class="step-head-val" id="shv-4"></span>
+          <span class="step-head-val" id="shv-3"></span>
         </div>
         <div class="step-body" style="display:none">
           <p class="step-subhead">Inside mount sits within the window opening. Outside mount covers the full opening or wall area. Direct mount hinges directly to the window frame — not for drywall.</p>
           <div class="opt-row">
-            <button class="opt-btn" onclick="selOpt(this,'mount');updateQuote();setTimeout(continueStep4,400)" data-val="Inside mount">Inside mount <span style="font-size:10px;color:#999">(most common)</span></button>
-            <button class="opt-btn" onclick="selOpt(this,'mount');updateQuote();setTimeout(continueStep4,400)" data-val="Outside mount">Outside mount</button>
+            <button class="opt-btn" onclick="selOpt(this,'mount');updateQuote();setTimeout(continueStep3,400)" data-val="Inside mount">Inside mount <span style="font-size:10px;color:#999">(most common)</span></button>
+            <button class="opt-btn" onclick="selOpt(this,'mount');updateQuote();setTimeout(continueStep3,400)" data-val="Outside mount">Outside mount</button>
             <button class="opt-btn" onclick="checkMount(this)" data-val="Direct mount (hinged to window frame)">Direct mount</button>
           </div>
           <div id="mount-note" class="warn-note"></div>
@@ -254,28 +234,34 @@
         </div>
       </div>
 
-      <!-- ── STEP 5: DIMENSIONS ── -->
+      <!-- ── STEP 4: DIMENSIONS ── -->
       <div class="step-block" id="sec-dims">
         <div class="step-head" onclick="pbToggleStep('sec-dims')">
-          <span class="step-num" id="badge-5">5</span>
+          <span class="step-num" id="badge-4">4</span>
           <span class="step-head-title">Dimensions</span>
-          <span class="step-head-val" id="shv-5"></span>
+          <span class="step-head-val" id="shv-4"></span>
         </div>
         <div class="step-body" style="display:none">
-          <p class="step-subhead">Enter width × height for each opening in inches (e.g., 36⅛). Measure to 1/8″ precision. We take 3W × 3H — the installer records final measurements at the home visit.</p>
-          <div id="dim-openings"></div>
+          <p class="step-subhead">Enter width × height in inches (e.g., 36⅛). Measure to 1/8″ precision. We take 3W × 3H — the installer records final measurements at the home visit.</p>
+          <div class="opening-card">
+            <div class="dim-row">
+              <div class="form-group" style="margin:0"><label>Width (inches)</label><input type="text" placeholder='e.g. 36⅛"' id="dim-w-0" oninput="S.dims[0].w=this.value;updateQuote();checkDimWarn(0,this.value)"></div>
+              <div class="form-group" style="margin:0"><label>Height (inches)</label><input type="text" placeholder='e.g. 60½"' id="dim-h-0" oninput="S.dims[0].h=this.value;updateQuote();checkDimHWarn(0,this.value)"></div>
+            </div>
+            <div id="dim-warn-0" class="warn-note"></div>
+          </div>
           <div class="info-note" style="margin-top:8px">
-            <strong>Not sure of exact measurements?</strong> Provide your best estimate — a measuring visit is included before ordering. Include fractions (e.g., 24¼, 36⅝).
+            <strong>Multiple windows with different sizes?</strong> Add each set of measurements in the Notes step below.
           </div>
         </div>
       </div>
 
-      <!-- ── STEP 6: PANEL LAYOUT ── -->
+      <!-- ── STEP 5: PANEL LAYOUT ── -->
       <div class="step-block" id="sec-layout">
         <div class="step-head" onclick="pbToggleStep('sec-layout')">
-          <span class="step-num" id="badge-6">6</span>
+          <span class="step-num" id="badge-5">5</span>
           <span class="step-head-title">Panel layout / orientation</span>
-          <span class="step-head-val" id="shv-6"></span>
+          <span class="step-head-val" id="shv-5"></span>
         </div>
         <div class="step-body" style="display:none">
           <p class="step-subhead">L = hinges on left, opens right. R = hinges on right, opens left. T = T-post (stationary center divider). Select the layout for your openings.</p>
@@ -303,12 +289,12 @@
         </div>
       </div>
 
-      <!-- ── STEP 7: T-POSTS ── -->
+      <!-- ── STEP 6: T-POSTS ── -->
       <div class="step-block" id="sec-tpost">
         <div class="step-head" onclick="pbToggleStep('sec-tpost')">
-          <span class="step-num" id="badge-7">7</span>
+          <span class="step-num" id="badge-6">6</span>
           <span class="step-head-title">T-Posts</span>
-          <span class="step-head-val" id="shv-7"></span>
+          <span class="step-head-val" id="shv-6"></span>
         </div>
         <div class="step-body" style="display:none">
           <p class="step-subhead">T-posts are stationary center dividers. Vertical T-posts split the shutter width. Horizontal T-posts split double-hung panels. Required when your layout includes "T".</p>
@@ -319,19 +305,19 @@
             <button class="opt-btn" onclick="selOpt(this,'tpostV');updateQuote()" data-val="3+ vertical T-posts">3+ vertical T-posts</button>
           </div>
           <div class="opt-row" style="margin-top:4px">
-            <button class="opt-btn" onclick="selOpt(this,'tpostH');updateQuote();clearTimeout(window._tpostTimer);window._tpostTimer=setTimeout(continueStep7,400)" data-val="No horizontal T-post">No horizontal T-post</button>
-            <button class="opt-btn" onclick="selOpt(this,'tpostH');updateQuote();clearTimeout(window._tpostTimer);window._tpostTimer=setTimeout(continueStep7,400)" data-val="Horizontal T-post (double-hung)">Horizontal T-post (double-hung) <span style="font-size:9px;color:var(--gold)">+10%</span></button>
+            <button class="opt-btn" onclick="selOpt(this,'tpostH');updateQuote();clearTimeout(window._tpostTimer);window._tpostTimer=setTimeout(continueStep6,400)" data-val="No horizontal T-post">No horizontal T-post</button>
+            <button class="opt-btn" onclick="selOpt(this,'tpostH');updateQuote();clearTimeout(window._tpostTimer);window._tpostTimer=setTimeout(continueStep6,400)" data-val="Horizontal T-post (double-hung)">Horizontal T-post (double-hung) <span style="font-size:9px;color:var(--gold)">+10%</span></button>
           </div>
           <p class="t-post-note">Horizontal T-post: 10% surcharge applies. Default type: Chamfer T-post unless otherwise specified. Custom T-post width up to 7½″ available (additional surcharge). Section length per T-post ≤48″.</p>
         </div>
       </div>
 
-      <!-- ── STEP 8: LOUVER SIZE ── -->
+      <!-- ── STEP 7: LOUVER SIZE ── -->
       <div class="step-block" id="sec-louver">
         <div class="step-head" onclick="pbToggleStep('sec-louver')">
-          <span class="step-num" id="badge-8">8</span>
+          <span class="step-num" id="badge-7">7</span>
           <span class="step-head-title">Louver size</span>
-          <span class="step-head-val" id="shv-8"></span>
+          <span class="step-head-val" id="shv-7"></span>
         </div>
         <div class="step-body" style="display:none">
           <p class="step-subhead">Larger louvers mean a clearer view when open and a bolder look. Smaller louvers offer a traditional style.</p>
@@ -341,17 +327,17 @@
         </div>
       </div>
 
-      <!-- ── STEP 9: TILT TYPE ── -->
+      <!-- ── STEP 8: TILT TYPE ── -->
       <div class="step-block" id="sec-tilt">
         <div class="step-head" onclick="pbToggleStep('sec-tilt')">
-          <span class="step-num" id="badge-9">9</span>
+          <span class="step-num" id="badge-8">8</span>
           <span class="step-head-title">Tilt rod / louver control</span>
-          <span class="step-head-val" id="shv-9"></span>
+          <span class="step-head-val" id="shv-8"></span>
         </div>
         <div class="step-body" style="display:none">
           <div class="opt-row">
-            <button class="opt-btn" onclick="selOpt(this,'tilt');updateQuote();setTimeout(continueStep9,400)" data-val="Standard tilt rod (center front)">Standard tilt rod <span style="font-size:10px;color:#999">(center, front)</span></button>
-            <button class="opt-btn" onclick="selOpt(this,'tilt');updateQuote();setTimeout(continueStep9,400)" data-val="Offset tilt rod (near hinge side)">Offset tilt rod <span style="font-size:10px;color:#999">(near hinge)</span></button>
+            <button class="opt-btn" onclick="selOpt(this,'tilt');updateQuote();setTimeout(continueStep8,400)" data-val="Standard tilt rod (center front)">Standard tilt rod <span style="font-size:10px;color:#999">(center, front)</span></button>
+            <button class="opt-btn" onclick="selOpt(this,'tilt');updateQuote();setTimeout(continueStep8,400)" data-val="Offset tilt rod (near hinge side)">Offset tilt rod <span style="font-size:10px;color:#999">(near hinge)</span></button>
             <button class="opt-btn" onclick="selTilt(this)" data-val="InvisibleTilt™ (hidden in stile)">InvisibleTilt™ <span style="font-size:10px;color:#999">(hidden)</span></button>
           </div>
           <div id="tilt-warn" class="warn-note">⚠ <strong>InvisibleTilt™ is not available with 1⅞″ louvers.</strong> Please select a larger louver size or choose a different tilt type.</div>
@@ -359,70 +345,70 @@
         </div>
       </div>
 
-      <!-- ── STEP 10: FRAME STYLE ── -->
+      <!-- ── STEP 9: FRAME STYLE ── -->
       <div class="step-block" id="sec-frame">
         <div class="step-head" onclick="pbToggleStep('sec-frame')">
-          <span class="step-num" id="badge-10">10</span>
+          <span class="step-num" id="badge-9">9</span>
           <span class="step-head-title">Frame style</span>
-          <span class="step-head-val" id="shv-10"></span>
+          <span class="step-head-val" id="shv-9"></span>
         </div>
         <div class="step-body" style="display:none">
           <p class="step-subhead">The frame surrounds the shutter panel. Most inside-mount orders use an L Frame. Z frames work for window casings with specific depth. Hang strips are low-profile.</p>
           <div class="opt-row">
-            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep10,400)" data-val="Beaded L Frame (standard)">Beaded L Frame <span style="font-size:10px;color:#999">(standard)</span></button>
-            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep10,400)" data-val="Vintage L Frame">Vintage L Frame</button>
-            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep10,400)" data-val="2″ Camber Deco Frame">2″ Camber Deco Frame</button>
-            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep10,400)" data-val="2″ Classic Deco Frame">2″ Classic Deco Frame</button>
-            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep10,400)" data-val="3″ Ridge Deco Frame">3″ Ridge Deco Frame</button>
-            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep10,400)" data-val="Z Frame (specify type in notes)">Z Frame</button>
-            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep10,400)" data-val="Hang strip (beside panel)">Hang strip (beside)</button>
-            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep10,400)" data-val="Hang strip (behind panel)">Hang strip (behind)</button>
-            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep10,400)" data-val="No frame / direct mount">No frame (direct mount)</button>
-            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep10,400)" data-val="Not sure — confirm at measurement">Not sure</button>
+            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep9,400)" data-val="Beaded L Frame (standard)">Beaded L Frame <span style="font-size:10px;color:#999">(standard)</span></button>
+            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep9,400)" data-val="Vintage L Frame">Vintage L Frame</button>
+            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep9,400)" data-val="2″ Camber Deco Frame">2″ Camber Deco Frame</button>
+            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep9,400)" data-val="2″ Classic Deco Frame">2″ Classic Deco Frame</button>
+            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep9,400)" data-val="3″ Ridge Deco Frame">3″ Ridge Deco Frame</button>
+            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep9,400)" data-val="Z Frame (specify type in notes)">Z Frame</button>
+            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep9,400)" data-val="Hang strip (beside panel)">Hang strip (beside)</button>
+            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep9,400)" data-val="Hang strip (behind panel)">Hang strip (behind)</button>
+            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep9,400)" data-val="No frame / direct mount">No frame (direct mount)</button>
+            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep9,400)" data-val="Not sure — confirm at measurement">Not sure</button>
           </div>
         </div>
       </div>
 
-      <!-- ── STEP 11: DIVIDER RAILS ── -->
+      <!-- ── STEP 10: DIVIDER RAILS ── -->
       <div class="step-block" id="sec-divider">
         <div class="step-head" onclick="pbToggleStep('sec-divider')">
-          <span class="step-num" id="badge-11">11</span>
+          <span class="step-num" id="badge-10">10</span>
           <span class="step-head-title">Divider rails</span>
-          <span class="step-head-val" id="shv-11"></span>
+          <span class="step-head-val" id="shv-10"></span>
         </div>
         <div class="step-body" style="display:none">
           <p class="step-subhead">A divider rail adds a horizontal mid-panel rail so louvers can be controlled independently above and below. Required on tall panels.</p>
           <div id="divider-req-note" class="spec-note" style="display:none"></div>
           <div class="opt-row">
-            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep11,400)" data-val="None">None needed</button>
-            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep11,400)" data-val="Standard 3″ divider rail (required or requested)">Standard 3″ divider rail</button>
-            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep11,400)" data-val="Custom divider rail size (specify in notes)">Custom size (notes)</button>
-            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep11,400)" data-val="Not sure — confirm at measurement">Not sure</button>
+            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep10,400)" data-val="None">None needed</button>
+            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep10,400)" data-val="Standard 3″ divider rail (required or requested)">Standard 3″ divider rail</button>
+            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep10,400)" data-val="Custom divider rail size (specify in notes)">Custom size (notes)</button>
+            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep10,400)" data-val="Not sure — confirm at measurement">Not sure</button>
           </div>
         </div>
       </div>
 
-      <!-- ── STEP 12: FINISH / COLOR ── -->
+      <!-- ── STEP 11: FINISH / COLOR ── -->
       <div class="step-block" id="sec-color">
         <div class="step-head" onclick="pbToggleStep('sec-color')">
-          <span class="step-num" id="badge-12">12</span>
+          <span class="step-num" id="badge-11">11</span>
           <span class="step-head-title">Finish &amp; color</span>
-          <span class="step-head-val" id="shv-12"></span>
+          <span class="step-head-val" id="shv-11"></span>
         </div>
         <div class="step-body" style="display:none">
           <div id="color-inner"></div>
           <div class="step-continue-wrap">
-            <button class="btn-step-continue" onclick="continueStep12()">Continue →</button>
+            <button class="btn-step-continue" onclick="continueStep11()">Continue →</button>
           </div>
         </div>
       </div>
 
-      <!-- ── STEP 13: SPECIALTY OPTIONS ── -->
+      <!-- ── STEP 12: SPECIALTY OPTIONS ── -->
       <div class="step-block" id="sec-special">
         <div class="step-head" onclick="pbToggleStep('sec-special')">
-          <span class="step-num" id="badge-13">13</span>
+          <span class="step-num" id="badge-12">12</span>
           <span class="step-head-title">Specialty options</span>
-          <span class="step-head-val" id="shv-13"></span>
+          <span class="step-head-val" id="shv-12"></span>
         </div>
         <div class="step-body" style="display:none">
           <p class="step-subhead">Select any add-ons. All items are optional.</p>
@@ -457,17 +443,17 @@
             <strong>Note:</strong> Panel lock, ring pull, and handles are <strong>not available with the 1⅝″ stile</strong>. Verify stile size selection.
           </div>
           <div class="step-continue-wrap">
-            <button class="btn-step-continue" onclick="continueStep13()">Continue →</button>
+            <button class="btn-step-continue" onclick="continueStep12()">Continue →</button>
           </div>
         </div>
       </div>
 
-      <!-- ── STEP 14: ROOM / NOTES ── -->
+      <!-- ── STEP 13: ROOM / NOTES ── -->
       <div class="step-block" id="sec-notes">
         <div class="step-head" onclick="pbToggleStep('sec-notes')">
-          <span class="step-num" id="badge-14">14</span>
+          <span class="step-num" id="badge-13">13</span>
           <span class="step-head-title">Room &amp; special notes</span>
-          <span class="step-head-val" id="shv-14"></span>
+          <span class="step-head-val" id="shv-13"></span>
         </div>
         <div class="step-body" style="display:none">
           <div class="form-group">
@@ -477,6 +463,29 @@
           <div class="form-group">
             <label>Special instructions or questions</label>
             <textarea id="field-notes" placeholder="Any per-opening differences, stile preferences, obstructions (handles, cranks), match to existing shutters, or questions for the installer..."></textarea>
+          </div>
+          <div class="step-continue-wrap">
+            <button class="btn-step-continue" onclick="continueStep13()">Continue →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STEP 14: QUANTITY ── -->
+      <div class="step-block" id="sec-qty">
+        <div class="step-head" onclick="pbToggleStep('sec-qty')">
+          <span class="step-num" id="badge-14">14</span>
+          <span class="step-head-title">Quantity</span>
+          <span class="step-head-val" id="shv-14"></span>
+        </div>
+        <div class="step-body" style="display:none">
+          <p class="step-subhead">How many windows or openings are you ordering shutters for?</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:10px">
+            <button onclick="adjQty(-1)" style="width:38px;height:38px;border:1.5px solid #e8e8e4;border-radius:8px 0 0 8px;background:#fff;font-size:22px;cursor:pointer;color:#333;font-family:inherit;display:flex;align-items:center;justify-content:center;transition:border-color .12s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='#e8e8e4'">−</button>
+            <input type="number" id="qty-input" min="1" max="50" value="1"
+              style="width:62px;height:38px;border-top:1.5px solid #e8e8e4;border-bottom:1.5px solid #e8e8e4;border-left:none;border-right:none;font-size:18px;font-weight:600;color:#111;font-family:inherit;text-align:center;background:#fff"
+              oninput="S.count=parseInt(this.value)||1;updateQuote()">
+            <button onclick="adjQty(1)" style="width:38px;height:38px;border:1.5px solid #e8e8e4;border-radius:0 8px 8px 0;background:#fff;font-size:22px;cursor:pointer;color:#333;font-family:inherit;display:flex;align-items:center;justify-content:center;transition:border-color .12s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='#e8e8e4'">+</button>
+            <span style="font-size:13px;color:#666;margin-left:6px">window(s)</span>
           </div>
           <div class="step-continue-wrap">
             <button class="btn-step-continue" onclick="continueStep14()">Continue →</button>
@@ -556,11 +565,11 @@
       <div class="quote-box" id="quote-box">
         <div class="quote-box-title">Cart</div>
         <div class="q-row"><span class="q-lbl">Line</span><span class="q-val" id="qs-line">—</span></div>
-        <div class="q-row"><span class="q-lbl">Openings</span><span class="q-val" id="qs-count">—</span></div>
+        <div class="q-row"><span class="q-lbl">Quantity</span><span class="q-val" id="qs-count">—</span></div>
         <div class="q-row"><span class="q-lbl">Type</span><span class="q-val" id="qs-opentype">—</span></div>
         <div class="q-row"><span class="q-lbl">Mount</span><span class="q-val" id="qs-mount">—</span></div>
         <hr class="q-divider">
-        <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px">Openings</div>
+        <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px">Dimensions</div>
         <ul class="q-opening-list" id="qs-openings"></ul>
         <hr class="q-divider">
         <div class="q-row"><span class="q-lbl">Layout</span><span class="q-val" id="qs-layout">—</span></div>

@@ -90,8 +90,8 @@ const LAYOUTS = {
 
 /* ─── STATE ─────────────────────────────────────────────── */
 const S = {
-  line:'', count:0,
-  opentype:'', mount:'', dims:[],
+  line:'', count:1,
+  opentype:'', mount:'', dims:[{w:'',h:'',label:''}],
   layout:'', tpostV:'', tpostH:'',
   louver:'', tilt:'', frame:'', divider:'',
   colorType:'', color:'',
@@ -138,63 +138,59 @@ function pbToggleStep(secId) {
 /* ─── CONTINUE FUNCTIONS ────────────────────────────────── */
 function continueStep1() {
   if (!S.line) { alert('Please select a shutter line.'); return; }
-  pbAdv('sec-line', 1, 'sec-count', S.line);
+  pbAdv('sec-line', 1, 'sec-opentype', S.line);
 }
 function continueStep2() {
-  var n = parseInt(document.getElementById('count-input').value) || 0;
-  if (n < 1) { alert('Please enter at least 1 opening.'); return; }
-  S.count = n;
-  buildDims(n);
-  updateQuote();
-  pbAdv('sec-count', 2, 'sec-opentype', n + ' opening' + (n !== 1 ? 's' : ''));
+  if (!S.opentype) { alert('Please select an opening type.'); return; }
+  pbAdv('sec-opentype', 2, 'sec-mount', S.opentype.split(' (')[0].split(',')[0]);
 }
 function continueStep3() {
-  if (!S.opentype) { alert('Please select an opening type.'); return; }
-  pbAdv('sec-opentype', 3, 'sec-mount', S.opentype.split(' (')[0].split(',')[0]);
+  if (!S.mount) { alert('Please select a mount type.'); return; }
+  pbAdv('sec-mount', 3, 'sec-dims', S.mount.split(' (')[0]);
 }
 function continueStep4() {
-  if (!S.mount) { alert('Please select a mount type.'); return; }
-  pbAdv('sec-mount', 4, 'sec-dims', S.mount.split(' (')[0]);
+  pbAdv('sec-dims', 4, 'sec-layout', (S.dims[0].w || '?') + '″W × ' + (S.dims[0].h || '?') + '″H');
 }
 function continueStep5() {
-  pbAdv('sec-dims', 5, 'sec-layout', S.count + ' opening' + (S.count !== 1 ? 's' : ''));
+  if (!S.layout) { alert('Please select a panel layout.'); return; }
+  pbAdv('sec-layout', 5, 'sec-tpost', S.layout);
 }
 function continueStep6() {
-  if (!S.layout) { alert('Please select a panel layout.'); return; }
-  pbAdv('sec-layout', 6, 'sec-tpost', S.layout);
-}
-function continueStep7() {
   var v = S.tpostV || 'None', h = S.tpostH || 'None';
   var sum = (v === 'None' && h === 'None') ? 'None' : (v !== 'None' ? v.split(' (')[0] : '') + (h !== 'None' ? (v !== 'None' ? ', H-post' : 'H-post') : '');
-  pbAdv('sec-tpost', 7, 'sec-louver', sum);
+  pbAdv('sec-tpost', 6, 'sec-louver', sum);
+}
+function continueStep7() {
+  if (!S.louver) { alert('Please select a louver size.'); return; }
+  pbAdv('sec-louver', 7, 'sec-tilt', S.louver);
 }
 function continueStep8() {
-  if (!S.louver) { alert('Please select a louver size.'); return; }
-  pbAdv('sec-louver', 8, 'sec-tilt', S.louver);
-}
-function continueStep9() {
   if (!S.tilt) { alert('Please select a tilt type.'); return; }
   var short = S.tilt.split(' (')[0];
-  pbAdv('sec-tilt', 9, 'sec-frame', short);
+  pbAdv('sec-tilt', 8, 'sec-frame', short);
+}
+function continueStep9() {
+  if (!S.frame) { alert('Please select a frame style.'); return; }
+  pbAdv('sec-frame', 9, 'sec-divider', S.frame.split(' (')[0].substring(0, 22));
 }
 function continueStep10() {
-  if (!S.frame) { alert('Please select a frame style.'); return; }
-  pbAdv('sec-frame', 10, 'sec-divider', S.frame.split(' (')[0].substring(0, 22));
+  if (!S.divider) { alert('Please select a divider rail option.'); return; }
+  pbAdv('sec-divider', 10, 'sec-color', S.divider.split(' (')[0].substring(0, 20));
 }
 function continueStep11() {
-  if (!S.divider) { alert('Please select a divider rail option.'); return; }
-  pbAdv('sec-divider', 11, 'sec-color', S.divider.split(' (')[0].substring(0, 20));
+  if (!S.color) { alert('Please choose a color.'); return; }
+  pbAdv('sec-color', 11, 'sec-special', (S.colorType ? S.colorType + ': ' : '') + S.color.split(' (')[0].substring(0, 18));
 }
 function continueStep12() {
-  if (!S.color) { alert('Please choose a color.'); return; }
-  pbAdv('sec-color', 12, 'sec-special', (S.colorType ? S.colorType + ': ' : '') + S.color.split(' (')[0].substring(0, 18));
+  pbAdv('sec-special', 12, 'sec-notes', S.specs.length ? S.specs.length + ' add-on' + (S.specs.length !== 1 ? 's' : '') : 'None');
 }
 function continueStep13() {
-  pbAdv('sec-special', 13, 'sec-notes', S.specs.length ? S.specs.length + ' add-on' + (S.specs.length !== 1 ? 's' : '') : 'None');
+  var room = (document.getElementById('field-room').value || '').trim();
+  pbAdv('sec-notes', 13, 'sec-qty', room || 'No room entered');
 }
 function continueStep14() {
-  var room = (document.getElementById('field-room').value || '').trim();
-  pbAdv('sec-notes', 14, 'sec-delivery', room || 'No room entered');
+  if (!S.count || S.count < 1) S.count = 1;
+  pbAdv('sec-qty', 14, 'sec-delivery', S.count + ' window' + (S.count !== 1 ? 's' : ''));
 }
 function continueStep15() {
   if (!S.delivery) { alert('Please select delivery or pickup.'); return; }
@@ -204,13 +200,11 @@ function continueStep15() {
 /* ─── HELPERS ───────────────────────────────────────────── */
 function qs(id) { return document.getElementById(id); }
 function setText(id, v) { var e = qs(id); if (e) e.textContent = v || '—'; }
-function adjCount(d) {
-  var el = qs('count-input');
-  el.value = Math.max(1, Math.min(30, (parseInt(el.value) || 1) + d));
+function adjQty(d) {
+  var el = qs('qty-input');
+  el.value = Math.max(1, Math.min(50, (parseInt(el.value) || 1) + d));
   S.count = parseInt(el.value);
   updateQuote();
-  clearTimeout(window._qtyTimer);
-  window._qtyTimer = setTimeout(continueStep2, 500);
 }
 function selOpt(btn, group) {
   var row = btn.parentElement;
@@ -238,27 +232,6 @@ function selLine(name, card) {
 }
 
 /* ─── DIMS ──────────────────────────────────────────────── */
-function buildDims(n) {
-  var container = qs('dim-openings');
-  container.innerHTML = '';
-  S.dims = Array.from({length: n}, function(_, i) { return {w:'', h:'', label:'Opening '+(i+1)}; });
-  for (var i = 0; i < n; i++) {
-    (function(idx) {
-      var div = document.createElement('div');
-      div.className = 'opening-card';
-      div.innerHTML = '<div class="opening-title"><span class="opening-num">' + (idx+1) + '</span>Opening ' + (idx+1) + '</div>' +
-        '<div class="dim-row">' +
-        '<div class="form-group" style="margin:0"><label>Width (inches)</label>' +
-        '<input type="text" placeholder=\'e.g. 36⅛"\' id="dim-w-' + idx + '" oninput="S.dims[' + idx + '].w=this.value;updateQuote();checkDimWarn(' + idx + ',this.value)"></div>' +
-        '<div class="form-group" style="margin:0"><label>Height (inches)</label>' +
-        '<input type="text" placeholder=\'e.g. 60½"\' id="dim-h-' + idx + '" oninput="S.dims[' + idx + '].h=this.value;updateQuote();checkDimHWarn(' + idx + ',this.value)"></div>' +
-        '</div><div id="dim-warn-' + idx + '" class="warn-note"></div>' +
-        '<div class="form-group" style="margin:6px 0 0"><label>Opening label (optional)</label>' +
-        '<input type="text" placeholder="e.g. Master bedroom left" oninput="S.dims[' + idx + '].label=this.value;updateQuote()"></div>';
-      container.appendChild(div);
-    })(i);
-  }
-}
 function checkDimWarn(i, val) {
   var w = parseFloat(val), warn = qs('dim-warn-'+i);
   if (!S.line || !S.louver || isNaN(w)) { warn.classList.remove('show'); return; }
@@ -305,7 +278,7 @@ function selLayout(code, btn) {
     note.style.display = 'block';
   } else { note.style.display = 'none'; }
   updateQuote();
-  setTimeout(continueStep6, 400);
+  setTimeout(continueStep5, 400);
 }
 
 /* ─── LOUVER OPTS ───────────────────────────────────────── */
@@ -335,7 +308,7 @@ function selLouver(size, btn) {
   note.textContent = 'Max single-panel width for ' + size + ' louver on ' + S.line + ': ' + maxW + '″. For wider openings, T-posts or additional panels are required.';
   note.style.display = 'block';
   updateQuote();
-  setTimeout(continueStep8, 400);
+  setTimeout(continueStep7, 400);
 }
 
 /* ─── TILT ──────────────────────────────────────────────── */
@@ -348,7 +321,7 @@ function selTilt(btn) {
     warn.classList.add('show');
   } else { warn.classList.remove('show'); }
   updateQuote();
-  setTimeout(continueStep9, 400);
+  setTimeout(continueStep8, 400);
 }
 
 /* ─── OPEN TYPE CHECK ───────────────────────────────────── */
@@ -365,7 +338,7 @@ function checkOpenType(btn) {
   };
   if (msgs[val]) { note.textContent = msgs[val]; note.classList.add('show'); }
   else { note.classList.remove('show'); }
-  setTimeout(continueStep3, 500);
+  setTimeout(continueStep2, 500);
 }
 
 /* ─── MOUNT CHECK ───────────────────────────────────────── */
@@ -374,7 +347,7 @@ function checkMount(btn) {
   var note = qs('mount-note');
   note.textContent = '⚠ Direct mount hinges directly to the existing window frame and is NOT suitable for drywall installations.';
   note.classList.add('show');
-  setTimeout(continueStep4, 500);
+  setTimeout(continueStep3, 500);
 }
 
 /* ─── COLOR SECTION ─────────────────────────────────────── */
@@ -413,7 +386,7 @@ function selColor(id, name, el, group) {
   el.classList.add('sel');
   S.color = name + ' (' + id + ')';
   updateQuote();
-  setTimeout(continueStep12, 400);
+  setTimeout(continueStep11, 400);
 }
 function switchFinish(type, tab) {
   document.querySelectorAll('.finish-tab').forEach(function(t) { t.classList.remove('active'); });
@@ -458,7 +431,7 @@ function selDelivery(type, card) {
 /* ─── QUOTE SUMMARY ─────────────────────────────────────── */
 function updateQuote() {
   setText('qs-line', S.line || '—');
-  setText('qs-count', S.count ? S.count + ' opening' + (S.count !== 1 ? 's' : '') : '—');
+  setText('qs-count', S.count ? S.count + ' window' + (S.count !== 1 ? 's' : '') : '—');
   setText('qs-opentype', S.opentype || '—');
   setText('qs-mount', S.mount || '—');
   setText('qs-layout', S.layout || '—');
@@ -495,7 +468,7 @@ async function submitQuote() {
   }).join('; ');
   var selections = [
     { label: 'Line', value: S.line },
-    { label: 'Openings', value: S.count+' opening'+(S.count!==1?'s':'') },
+    { label: 'Quantity', value: S.count+' window'+(S.count!==1?'s':'') },
     { label: 'Opening type', value: S.opentype||'—' },
     { label: 'Mount', value: S.mount||'—' },
     { label: 'Dimensions', value: dimsText||'—' },
