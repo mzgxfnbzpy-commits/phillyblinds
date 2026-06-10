@@ -47,29 +47,22 @@ function crsDone(stepId, val) {
 // ── STEP 1: SHADE TYPE ───────────────────────────────────────
 function crsPickType(val, label) {
   CRS.type = val;
+  CRS.color = '';
   document.querySelectorAll('.type-card').forEach(function(c) { c.classList.remove('sel'); });
   var card = _crsEl('tc-' + val);
   if (card) card.classList.add('sel');
 
   var solarOpts = _crsEl('solar-opts');
-  var extNote   = _crsEl('exterior-note');
+  var colorOpts = _crsEl('color-opts');
   if (solarOpts) solarOpts.classList.toggle('show', val === 'solar');
-  if (extNote)   extNote.style.display = val === 'exterior' ? 'block' : 'none';
+  // Blackout shows color immediately; solar shows color after openness picked
+  if (colorOpts) colorOpts.classList.toggle('show', val === 'blackout');
 
-  // Exterior blocks open roll
-  var openCard = _crsEl('hc-open');
-  if (openCard) openCard.classList.toggle('disabled', val === 'exterior');
-  if (val === 'exterior' && CRS.headrail === 'open') {
-    CRS.headrail = '';
-    if (openCard) openCard.classList.remove('sel');
-    crsDone('step-3', '');
-    _crsEl('step-3').classList.remove('done');
-  }
+  // Reset color selection
+  document.querySelectorAll('#crs-grp-color .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
 
-  if (val === 'solar') return; // wait for openness selection before advancing
-  crsDone('step-1', label);
-  crsUpdatePanel();
-  setTimeout(function() { crsOpen('step-2'); }, 350);
+  if (val === 'solar') return; // wait for openness + color before advancing
+  // Blackout: wait for color pick before advancing
 }
 
 function crsPickOpenness(val, label) {
@@ -77,7 +70,20 @@ function crsPickOpenness(val, label) {
   document.querySelectorAll('.openness-btn').forEach(function(b) { b.classList.remove('sel'); });
   var btn = _crsEl('ob-' + val);
   if (btn) btn.classList.add('sel');
-  crsDone('step-1', 'Solar · ' + label + ' open');
+  // Show color options after openness selected
+  var colorOpts = _crsEl('color-opts');
+  if (colorOpts) colorOpts.classList.add('show');
+  setTimeout(function() { if (colorOpts) colorOpts.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 100);
+}
+
+function crsPickColor(btn, color) {
+  CRS.color = color;
+  document.querySelectorAll('#crs-grp-color .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
+  btn.classList.add('sel');
+  var label = CRS.type === 'solar'
+    ? 'Solar · ' + CRS.openness + '% · ' + color
+    : 'Blackout · ' + color;
+  crsDone('step-1', label);
   crsUpdatePanel();
   setTimeout(function() { crsOpen('step-2'); }, 350);
 }
@@ -231,10 +237,10 @@ function crsPickDelivery(val) {
 // ── PANEL SUMMARY ────────────────────────────────────────────
 function crsUpdatePanel() {
   var rows = [];
-  var typeMap = { lf: 'Light Filtering', rd: 'Blackout', bk: 'Blackout', solar: 'Solar Screening', exterior: 'Exterior Roller' };
   if (CRS.type) {
-    var tl = typeMap[CRS.type] || CRS.type;
-    if (CRS.type === 'solar' && CRS.openness) tl += ' · ' + CRS.openness + '% open';
+    var tl = CRS.type === 'solar' ? 'Solar Screen' : 'Blackout';
+    if (CRS.type === 'solar' && CRS.openness) tl += ' · ' + CRS.openness + '%';
+    if (CRS.color) tl += ' · ' + CRS.color;
     rows.push(['Type', tl]);
   }
   if (CRS.mount) rows.push(['Mount', CRS.mount === 'inside' ? 'Inside' : 'Outside']);
