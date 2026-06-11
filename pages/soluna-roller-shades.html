@@ -630,13 +630,18 @@
             <div class="step-label">Step 1</div>
             <div class="step-title">Fabric type</div>
             <div class="opt-row" id="grp-light">
-              <button class="opt-btn" onclick="selOpt(this,'grp-light');updateSummary()">Solar Screen</button>
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-light');updateSummary()">Light Filtering</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-light');updateSummary()">Sheer / Naturals</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-light');updateSummary()">Room Darkening</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light');showFabricColls('solar');updateSummary()">Solar Screen</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-light');showFabricColls('lf');updateSummary()">Light Filtering</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light');showFabricColls('sheer');updateSummary()">Sheer / Naturals</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light');showFabricColls('rd');updateSummary()">Room Darkening</button>
               <button class="opt-btn" onclick="pbShowContact('Norman Soluna — Designer Fabrics')">Designer</button>
             </div>
             <div class="tooltip-note">Room Darkening blocks most light — pair with LightGuard 360™ cassette for true blackout. Designer fabrics require a custom quote.</div>
+            <!-- Fabric collection picker — populated dynamically by showFabricColls() -->
+            <div id="fabric-coll-wrap" style="display:none;margin-top:12px;border:1px solid #e8e4de;border-radius:8px;overflow:hidden">
+              <div style="background:#f5f2ed;padding:7px 12px;font-size:10px;font-weight:600;color:#666;letter-spacing:.8px;text-transform:uppercase">Fabric Collection &amp; Color <span style="font-weight:400;color:#aaa;text-transform:none;letter-spacing:0">(optional — select or skip)</span></div>
+              <div id="fabric-coll-inner" style="padding:10px 12px;max-height:280px;overflow-y:auto"></div>
+            </div>
           </div>
 
           <!-- Step 2: Operating system -->
@@ -713,10 +718,11 @@
             <div class="step-label">Step 6</div>
             <div class="step-title">Add-ons <span style="font-weight:400;color:#888">(optional)</span></div>
             <div class="opt-row" id="grp-addons" style="flex-wrap:wrap">
-              <button class="opt-btn" onclick="this.classList.toggle('sel');updateSummary()">Cassette headrail</button>
-              <button class="opt-btn" onclick="this.classList.toggle('sel');updateSummary()">Fascia / valance</button>
-              <button class="opt-btn" onclick="this.classList.toggle('sel');updateSummary()">LightGuard 360™ (blackout)</button>
+              <button class="opt-btn" onclick="selOrToggle(this,'grp-addons');updateSummary()">Cassette headrail</button>
+              <button class="opt-btn" onclick="selOrToggle(this,'grp-addons');updateSummary()">Fascia / valance</button>
+              <button class="opt-btn" onclick="selOrToggle(this,'grp-addons');updateSummary()">LightGuard 360™ (blackout)</button>
             </div>
+            <div class="tooltip-note">Headrail options are mutually exclusive — select one or none.</div>
           </div>
 
           <!-- Step 7: Delivery -->
@@ -760,6 +766,7 @@
           <div class="summary-head">Your configuration</div>
           <div class="summary-row"><span class="sr-key">Product</span><span class="sr-val">Norman Soluna Roller</span></div>
           <div class="summary-row"><span class="sr-key">Light control</span><span class="sr-val" id="s-light">Light Filtering</span></div>
+          <div class="summary-row" id="s-fabric-row" style="display:none"><span class="sr-key">Fabric</span><span class="sr-val" id="s-fabric">—</span></div>
           <div class="summary-row"><span class="sr-key">Operation</span><span class="sr-val" id="s-op">Continuous loop</span></div>
           <div class="summary-row"><span class="sr-key">Motor</span><span class="sr-val" id="s-motor" style="display:none">—</span></div>
           <div class="summary-row" id="s-motor-row" style="display:none"><span class="sr-key">Motor brand</span><span class="sr-val" id="s-motor-brand">—</span></div>
