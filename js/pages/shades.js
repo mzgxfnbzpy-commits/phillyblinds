@@ -18,7 +18,7 @@ window.addEventListener("load", function() {
     "cellular":   ["cellular",  "Cellular / Honeycomb Shades", true, "norman"],
     "fwb":        ["fwb",       "Wood Blinds",                 false],
     "exterior":   ["exterior",  "Exterior Roller Shades",      false],
-    "pb":         ["roller",    "Custom Roller Shades",        true, "pb"]
+    "pb":         ["roller",    "Basic Roller Shades",         true, "pb"]
   };
   var args = map[product];
   if (!args) return;
@@ -295,7 +295,7 @@ function selectBrand(brand) {
 
   // Update config title
   if (brand === 'pb') {
-    document.getElementById('config-product-name').textContent = 'Custom Roller Shades';
+    document.getElementById('config-product-name').textContent = 'Basic Roller Shades';
   } else if (brand === 'norman' && currentProduct) {
     const card = document.getElementById('card-' + currentProduct);
     const pname = card ? card.querySelector('.product-name').textContent : 'Shade';
@@ -1026,7 +1026,7 @@ async function submitPBForm(btn) {
     'Fabric notes:\n' + (notes || '(none)') +
     pbInstallLine(document.getElementById('brand-pb-content')) +
     (function(){ var fu = document.querySelector('#brand-pb-content .pb-fu-wrap input[type="file"]'); return fu && fu.files.length ? '\n\nFiles to send: ' + Array.from(fu.files).map(function(f){return f.name;}).join(', ') + '\n(Customer will email these to justin@phillyblinds.com)' : ''; }());
-  await _apiSubmit(name, email, phone, 'Custom Roller Shade', body, 'pb-success', null, btn);
+  await _apiSubmit(name, email, phone, 'Basic Roller Shade', body, 'pb-success', null, btn);
 }
 
 // submitOtherForm removed — dead code, no HTML form references oth-* IDs
@@ -1850,26 +1850,113 @@ function showBlindsTypeSelector() {
   document.getElementById('rwb-config').classList.remove('open');
   document.getElementById('blinds-type-config').classList.add('open');
 }
+// ── Norman Normandy® Wood Blinds price matrix (MSRP, Feb 2026) ──
+const NNRM_W = [24,28,32,36,42,48,54,60,66,72,78,84,90,96];
+const NNRM_H = [30,36,42,48,54,60,66,73,78,84,90,96];
+const NNRM_PRICES = {
+  30: [297,318,339,364,394,425,472,526,563,609,655,709,748,796],
+  36: [327,343,361,389,429,461,501,574,612,664,714,775,816,876],
+  42: [345,369,389,421,464,501,557,627,678,735,788,864,913,982],
+  48: [376,389,418,451,500,536,598,680,732,794,856,938,994,1063],
+  54: [390,424,448,505,557,604,666,760,815,888,956,1053,1111,1191],
+  60: [420,464,494,535,598,641,714,813,875,956,1035,1133,1191,1289],
+  66: [448,493,523,568,633,691,767,870,937,1020,1111,1223,1289,1407],
+  73: [479,522,560,604,682,739,822,939,1022,1115,1218,1329,1412,1531],
+  78: [487,542,581,635,709,769,884,1008,1084,1167,1261,1433,1515,1655],
+  84: [522,561,621,673,751,820,943,1050,1147,1223,1342,1505,1619,1698],
+  90: [548,585,649,704,788,862,986,1106,1187,1307,1378,1578,1667,1774],
+  96: [561,616,684,746,834,913,1035,1156,1266,1369,1414,1600,1703,1799]
+};
+const NNRM_VAL_CROWN    = [50,56,62,75,87,93,106,118,130,143,155,161,174,186];
+const NNRM_VAL_CONTEMPO = [62,68,81,87,99,118,124,143,155,167,180,198,211,223];
+function rwbLookup(w, h) {
+  var wi = NNRM_W.findIndex(function(v){ return v >= w; });
+  var hi = NNRM_H.findIndex(function(v){ return v >= h; });
+  if (wi < 0 || hi < 0) return null;
+  return NNRM_PRICES[NNRM_H[hi]][wi];
+}
+function rwbValanceLookup(w, type) {
+  var wi = NNRM_W.findIndex(function(v){ return v >= w; });
+  if (wi < 0) return 0;
+  return type === 'crown' ? NNRM_VAL_CROWN[wi] : NNRM_VAL_CONTEMPO[wi];
+}
+function rwbPickColorGroup(group) {
+  ['paint','stain','premium'].forEach(function(g) {
+    var el = document.getElementById('rwb-grp-' + g + 'col');
+    if (el) el.style.display = g === group ? '' : 'none';
+  });
+  var grpId = 'rwb-grp-' + group + 'col';
+  document.querySelectorAll('#' + grpId + ' .opt-btn').forEach(function(b, i){ b.classList.toggle('sel', i === 0); });
+}
+function rwbAdjQty(delta) {
+  var inp = document.getElementById('rwb-qty');
+  var v = parseInt(inp.value) || 1;
+  v = Math.min(20, Math.max(1, v + delta));
+  inp.value = v;
+  rwbCalc();
+}
+function rwbCalc() {
+  var w   = parseFloat(document.getElementById('rwb-width').value);
+  var h   = parseFloat(document.getElementById('rwb-height').value);
+  var qty = parseInt(document.getElementById('rwb-qty').value) || 1;
+  var box = document.getElementById('rwb-price-box');
+  if (!w || !h || w < 6.5 || h < 16 || w > 96 || h > 96 || (w * h / 144) > 64) {
+    box.style.display = 'none'; return;
+  }
+  var baseRetail = rwbLookup(w, h);
+  if (!baseRetail) { box.style.display = 'none'; return; }
+  var colorType = document.querySelector('#rwb-grp-colortype .opt-btn.sel')?.textContent.trim() || '';
+  var colorMult = 1;
+  if (colorType.includes('Premium')) {
+    colorMult = 1.50;
+  } else {
+    var activeGrp = colorType.includes('Stain') ? 'rwb-grp-staincol' : 'rwb-grp-paintcol';
+    var selBtn = document.querySelector('#' + activeGrp + ' .opt-btn.sel');
+    if (selBtn && selBtn.dataset.des === '1') colorMult = 1.10;
+  }
+  var colorRetail = Math.round(baseRetail * colorMult);
+  var valance = document.querySelector('#rwb-grp-valance .opt-btn.sel')?.textContent.trim() || '';
+  var valRetail = 0;
+  if (valance.includes('Designer Crown')) valRetail = rwbValanceLookup(w, 'crown');
+  else if (valance.includes('Contempo')) valRetail = rwbValanceLookup(w, 'contempo');
+  var totalRetail = colorRetail + valRetail;
+  var customerEach = Math.round(totalRetail * 0.85);
+  var totalCustomer = customerEach * qty;
+  var lines = '<div class="price-line"><span>Retail (1 blind)</span><span>$' + totalRetail.toLocaleString() + '</span></div>';
+  if (colorMult > 1) lines += '<div class="price-line"><span>Color surcharge</span><span>' + (colorMult === 1.5 ? '+50%' : '+10%') + ' included</span></div>';
+  if (valRetail > 0) lines += '<div class="price-line"><span>Valance surcharge</span><span>+$' + valRetail + '</span></div>';
+  lines += '<div class="price-line"><span>Your price (15% off)</span><span style="color:var(--gold)">$' + customerEach.toLocaleString() + ' / blind</span></div>';
+  if (qty > 1) lines += '<div class="price-line"><span>Quantity</span><span>&times; ' + qty + '</span></div>';
+  document.getElementById('rwb-price-lines').innerHTML = lines;
+  document.getElementById('rwb-price-total').textContent = '$' + totalCustomer.toLocaleString();
+  box.style.display = 'block';
+}
 async function submitRWBForm(btn) {
   var name  = document.getElementById('rwb-name').value.trim();
   var phone = document.getElementById('rwb-phone').value.trim();
   if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
-  var slat   = document.querySelector('#rwb-grp-slat .opt-btn.sel')?.textContent.trim() || '';
-  var finish = document.querySelector('#rwb-grp-finish .opt-btn.sel')?.textContent.trim() || '';
-  var op     = document.querySelector('#rwb-grp-op .opt-btn.sel')?.textContent.trim() || '';
-  var mount  = document.querySelector('#rwb-grp-mount .opt-btn.sel')?.textContent.trim() || '';
-  var w      = document.getElementById('rwb-width').value;
-  var h      = document.getElementById('rwb-height').value;
-  var qty    = document.getElementById('rwb-qty').value;
-  var del    = document.querySelector('#grp-del-rwb .delivery-opt-card.sel')?.querySelector('.delivery-opt-title')?.textContent.trim() || '';
-  var notes  = document.getElementById('rwb-notes').value.trim();
-  var email  = document.getElementById('rwb-email').value.trim();
-  var body = 'Real Wood Blinds Quote Request\n\n'
+  var slat      = document.querySelector('#rwb-grp-slat .opt-btn.sel')?.textContent.trim() || '';
+  var colorType = document.querySelector('#rwb-grp-colortype .opt-btn.sel')?.textContent.trim() || '';
+  var activeGrpId = colorType.includes('Premium') ? 'rwb-grp-premcol' : colorType.includes('Stain') ? 'rwb-grp-staincol' : 'rwb-grp-paintcol';
+  var color     = document.querySelector('#' + activeGrpId + ' .opt-btn.sel')?.textContent.trim() || '';
+  var wand      = document.querySelector('#rwb-grp-wand .opt-btn.sel')?.textContent.trim() || '';
+  var mount     = document.querySelector('#rwb-grp-mount .opt-btn.sel')?.textContent.trim() || '';
+  var valance   = document.querySelector('#rwb-grp-valance .opt-btn.sel')?.textContent.trim() || '';
+  var w         = document.getElementById('rwb-width').value;
+  var h         = document.getElementById('rwb-height').value;
+  var qty       = document.getElementById('rwb-qty').value;
+  var del       = document.querySelector('#grp-del-rwb .delivery-opt-card.sel')?.querySelector('.delivery-opt-title')?.textContent.trim() || '';
+  var notes     = document.getElementById('rwb-notes').value.trim();
+  var email     = document.getElementById('rwb-email').value.trim();
+  var estEl     = document.getElementById('rwb-price-total');
+  var estLine   = (estEl && estEl.textContent !== '—') ? '\nEst. price: ' + estEl.textContent + ' (15% off MSRP — unconfirmed)' : '';
+  var body = 'Norman Normandy® Real Wood Blinds Quote Request\n\n'
     + 'Name: ' + name + '\nPhone: ' + phone + '\nEmail: ' + (email||'—') + '\n\n'
-    + 'Slat size: ' + slat + '\nFinish: ' + finish + '\nOperating system: ' + op
-    + '\nMount: ' + mount + '\nWidth: ' + (w||'—') + '"\nHeight: ' + (h||'—') + '"\nQty: ' + qty
-    + '\nDelivery: ' + del + '\n\nNotes: ' + (notes||'None');
-  await _apiSubmit(name, email, phone, 'Real Wood Blinds', body, 'rwb-success', null, btn);
+    + 'Slat size: ' + slat + '\nColor type: ' + colorType + '\nColor: ' + color
+    + '\nWand side: ' + wand + '\nMount: ' + mount + '\nValance: ' + valance
+    + '\nWidth: ' + (w||'—') + '"\nHeight: ' + (h||'—') + '"\nQty: ' + qty
+    + estLine + '\nDelivery: ' + del + '\n\nNotes: ' + (notes||'None');
+  await _apiSubmit(name, email, phone, 'Norman Real Wood Blinds', body, 'rwb-success', null, btn);
 }
 async function submitFWBForm(btn) {
   var name  = document.getElementById('fwb-name').value.trim();
@@ -2003,7 +2090,7 @@ function pbCalcPrice() {
   // Line-by-line estimate panel
   var gPBs = function(id){ var b=document.querySelector('#'+id+' .pmm-opt.sel'); return b?b.textContent.trim():''; };
   var selLines = [
-    { label:'Product',     value:'Custom Roller Shade' },
+    { label:'Product',     value:'Basic Roller Shade' },
     { label:'Fabric type', value: fabType },
     { label:'Size',        value: w+'″ W × '+h+'″ H → '+result.rw+'″ × '+result.rh+'"' },
     { label:'Operation',   value: gPB('pb-grp-operation') || '—' },
@@ -2014,7 +2101,7 @@ function pbCalcPrice() {
     { label:'Freight',     value: isOversized ? 'Oversized rate ($80 first + $50 ea.)' : 'Standard ($25 first + $11 ea.)' }
   ];
   pbRenderEstimate('pb-price-box', selLines, grandTotal, '', function(checkout) {
-    pbCollectItem('Custom Roller Shade', selLines, grandTotal, gPB('pb-grp-operation')==='Motorized');
+    pbCollectItem('Basic Roller Shade', selLines, grandTotal, gPB('pb-grp-operation')==='Motorized');
     pbOpenCart();
     if (checkout) {
       setTimeout(function(){
@@ -3091,7 +3178,7 @@ async function rnSubmitForm(btn) {
     'Delivery:       ' + delivery             + '\n\n' +
     'Notes:\n' + (notes || '(none)');
 
-  await _apiSubmit(name, email, phone, 'Norman Soluna Roller Shade', body, 'rn-success', 'rn-submit-form', btn);
+  await _apiSubmit(name, email, phone, 'Premier Norman Roller Shade', body, 'rn-success', 'rn-submit-form', btn);
 }
 
 // ─── showCellularLiftNote (already defined above, referenced here for context)
