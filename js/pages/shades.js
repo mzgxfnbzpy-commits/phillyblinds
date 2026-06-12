@@ -1965,6 +1965,7 @@ async function submitFWBForm(btn) {
   var slat  = document.querySelector('#fwb-grp-slat .opt-btn.sel')?.textContent.trim() || '';
   var color = document.querySelector('#fwb-grp-color .opt-btn.sel')?.textContent.trim() || '';
   var op    = document.querySelector('#fwb-grp-op .opt-btn.sel')?.textContent.trim() || '';
+  var wand  = op.toLowerCase().includes('wand') ? (document.querySelector('#fwb-grp-wand .opt-btn.sel')?.textContent.trim() || '') : '';
   var mount = document.querySelector('#fwb-grp-mount .opt-btn.sel')?.textContent.trim() || '';
   var w     = document.getElementById('fwb-width').value;
   var h     = document.getElementById('fwb-height').value;
@@ -1975,6 +1976,7 @@ async function submitFWBForm(btn) {
   var body  = 'Norman Faux Wood Blinds Quote Request\n\n'
     + 'Name: ' + name + '\nPhone: ' + phone + '\nEmail: ' + (email||'—') + '\n\n'
     + 'Slat size: ' + slat + '\nColor family: ' + color + '\nOperating system: ' + op
+    + (wand ? '\nWand side: ' + wand : '')
     + '\nMount: ' + mount + '\nWidth: ' + (w||'—') + '"\nHeight: ' + (h||'—') + '"\nQty: ' + qty
     + '\nDelivery: ' + del + '\n\nNotes: ' + (notes||'None');
   await _apiSubmit(name, email, phone, 'Norman Faux Wood Blinds', body, 'fwb-success', null, btn);
