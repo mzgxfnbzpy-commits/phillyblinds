@@ -246,7 +246,7 @@ function pickDel(v){
   $('del-'+v).classList.add('sel');
 }
 
-const NORMAN_DISC = 0.15; // 15% off retail subtotal — not applied to shipping
+const NORMAN_DISC = 0.35; // 35% off retail subtotal — not applied to shipping
 
 // ── PRICE CALC ────────────────────────────────────────────────────────────────
 function calcPrice(){

@@ -1920,12 +1920,12 @@ function rwbCalc() {
   if (valance.includes('Designer Crown')) valRetail = rwbValanceLookup(w, 'crown');
   else if (valance.includes('Contempo')) valRetail = rwbValanceLookup(w, 'contempo');
   var totalRetail = colorRetail + valRetail;
-  var customerEach = Math.round(totalRetail * 0.85);
+  var customerEach = Math.round(totalRetail * 0.65);
   var totalCustomer = customerEach * qty;
   var lines = '<div class="price-line"><span>Retail (1 blind)</span><span>$' + totalRetail.toLocaleString() + '</span></div>';
   if (colorMult > 1) lines += '<div class="price-line"><span>Color surcharge</span><span>' + (colorMult === 1.5 ? '+50%' : '+10%') + ' included</span></div>';
   if (valRetail > 0) lines += '<div class="price-line"><span>Valance surcharge</span><span>+$' + valRetail + '</span></div>';
-  lines += '<div class="price-line"><span>Your price (15% off)</span><span style="color:var(--gold)">$' + customerEach.toLocaleString() + ' / blind</span></div>';
+  lines += '<div class="price-line"><span>Your price (35% off)</span><span style="color:var(--gold)">$' + customerEach.toLocaleString() + ' / blind</span></div>';
   if (qty > 1) lines += '<div class="price-line"><span>Quantity</span><span>&times; ' + qty + '</span></div>';
   document.getElementById('rwb-price-lines').innerHTML = lines;
   document.getElementById('rwb-price-total').textContent = '$' + totalCustomer.toLocaleString();
@@ -1949,7 +1949,7 @@ async function submitRWBForm(btn) {
   var notes     = document.getElementById('rwb-notes').value.trim();
   var email     = document.getElementById('rwb-email').value.trim();
   var estEl     = document.getElementById('rwb-price-total');
-  var estLine   = (estEl && estEl.textContent !== '—') ? '\nEst. price: ' + estEl.textContent + ' (15% off MSRP — unconfirmed)' : '';
+  var estLine   = (estEl && estEl.textContent !== '—') ? '\nEst. price: ' + estEl.textContent + ' (35% off MSRP — unconfirmed)' : '';
   var body = 'Norman Normandy® Real Wood Blinds Quote Request\n\n'
     + 'Name: ' + name + '\nPhone: ' + phone + '\nEmail: ' + (email||'—') + '\n\n'
     + 'Slat size: ' + slat + '\nColor type: ' + colorType + '\nColor: ' + color
@@ -3394,10 +3394,10 @@ function psCalc() {
   var liftBtn = document.querySelector('#grp-ps-lift .opt-btn.sel');
   if (liftBtn && liftBtn.textContent.indexOf('motor') >= 0) lines.push('Motorization surcharge: added to final quote');
 
-  const NORMAN_DISC_PS = 0.15;
+  const NORMAN_DISC_PS = 0.35;
   const psDiscountAmt = Math.round(total * NORMAN_DISC_PS);
   const psYourPrice = total - psDiscountAmt;
-  lines.push('<span style="color:#2DE0C1;font-weight:500">Retail: $' + total.toLocaleString() + ' &rarr; 15% Norman discount: -$' + psDiscountAmt.toLocaleString() + ' &rarr; Your price: $' + psYourPrice.toLocaleString() + '</span>');
+  lines.push('<span style="color:#2DE0C1;font-weight:500">Retail: $' + total.toLocaleString() + ' &rarr; 35% Norman discount: -$' + psDiscountAmt.toLocaleString() + ' &rarr; Your price: $' + psYourPrice.toLocaleString() + '</span>');
   document.getElementById('ps-price-num').textContent = '$' + psYourPrice.toLocaleString();
   document.getElementById('ps-price-breakdown').innerHTML = lines.join('<br>');
   pb.style.display = 'block';

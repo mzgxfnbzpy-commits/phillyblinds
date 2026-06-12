@@ -133,7 +133,7 @@ function pickDel(btn,key){
   calcPrice();
 }
 
-const NORMAN_DISC = 0.15; // 15% off retail subtotal — not applied to shipping
+const NORMAN_DISC = 0.35; // 35% off retail subtotal — not applied to shipping
 
 function updateQuote(){
   const qty=parseInt(document.getElementById('qty').value)||1;
@@ -165,7 +165,7 @@ function updateQuote(){
   document.getElementById('qr-mount').textContent=state.mount==='inside'?'Inside Mount':state.mount==='semi'?'Semi-Inside Mount':'Outside Mount';
   document.getElementById('qr-dims').textContent=state.w+'″ × '+state.h+'″';
   document.getElementById('qr-qty').textContent=qty+(qty>1?' blinds':' blind');
-  document.getElementById('qr-price').innerHTML='<s style="color:var(--text-dark);font-weight:400">$'+pricePerBlind+' retail</s> &rarr; $'+Math.round(pricePerBlind*0.85)+' your price';
+  document.getElementById('qr-price').innerHTML='<s style="color:var(--text-dark);font-weight:400">$'+pricePerBlind+' retail</s> &rarr; $'+Math.round(pricePerBlind*0.65)+' your price';
   const showRow=(id,show,val)=>{document.getElementById(id).style.display=show?'flex':'none';if(val)document.getElementById(id.replace('-row','-s')).textContent=val;};
   showRow('qr-shim-row',state.shim,'$'+(state.shimQty*7));
 

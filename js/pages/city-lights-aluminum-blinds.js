@@ -227,7 +227,7 @@ function updateQuote(){
   const basePrice=MATRIX[hRow][W_COLS.indexOf(wCol)];
   if(!basePrice){document.getElementById('qp-pending').style.display='block';document.getElementById('qp-detail').style.display='none';return;}
 
-  const NORMAN_DISC = 0.15; // 15% off retail subtotal — not applied to shipping
+  const NORMAN_DISC = 0.35; // 35% off retail subtotal — not applied to shipping
 
   // slat multiplier + color finish surcharge + optional privacy
   const slatMult={half:1.10,one:1.00,two:1.20}[state.slat];
