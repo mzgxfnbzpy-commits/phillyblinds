@@ -330,7 +330,7 @@ function calcPrice(){
   $('q-note').textContent = (isOversized
     ? 'Oversized freight: $80 first blind + $50 each additional (width 90″+).'
     : 'Freight: $25 first blind + $11 each additional.')
-    + ' Norman retail pricing with 15% discount on product subtotal. Shipping at retail rate.';
+    + ' Norman retail pricing with 15% discount applied. ⓘ Estimated price only — tariffs, import fees, and exact shipping confirmed at order. No charge until Justin reviews and confirms your price.';
 }
 
 // ── SUBMIT ────────────────────────────────────────────────────────────────────
