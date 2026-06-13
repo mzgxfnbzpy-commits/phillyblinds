@@ -237,9 +237,9 @@ function selectProduct(productId, productName, isInstant) {
         // Show roller type subsection; hide brand chooser until type is picked
         document.getElementById('roller-types').style.display = 'block';
         document.getElementById('brand-chooser').style.display = 'none';
-        // Auto-select Basic as default so configurator is immediately visible
-        rtSelect('basic');
-        setTimeout(function(){ var el=document.getElementById('brand-pb-content'); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }, 120);
+        // Auto-select Norman Soluna as default
+        rtSelect('norman');
+        setTimeout(function(){ var el=document.getElementById('rn-wrap')||document.getElementById('brand-norman-content'); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }, 120);
       } else {
         pbBtn.classList.add('disabled');
         document.getElementById('pb-only-note').style.display = 'block';
