@@ -83,17 +83,23 @@ const WLP_COLORS = [
 ];
 const LAYOUTS = {
   single: [{code:'L',desc:'1 panel — hinges left'},{code:'R',desc:'1 panel — hinges right'}],
-  two: [{code:'LR',desc:'2 panels — meet center'},{code:'LL',desc:'2 panels — both hinge left'},{code:'RR',desc:'2 panels — both hinge right'}],
-  three: [{code:'LLR',desc:'3 panels — 2 left + 1 right'},{code:'LRR',desc:'3 panels — 1 left + 2 right'},{code:'LTLTL',desc:'3 panels — alternating T-posts'},{code:'LTRR',desc:'3 — L + T-post + RR'},{code:'LLTR',desc:'3 — LL + T-post + R'}],
+  two: [{code:'LR',desc:'2 panels — meet center'}],
+  three: [
+    {code:'LRLR',desc:'alternating L/R panels'},
+    {code:'LTLR',desc:'L + T-post + L + R'},
+    {code:'LTLL',desc:'L + T-post + L + L'},
+    {code:'RTTR',desc:'R + T-posts + R'},
+    {code:'RTTL',desc:'R + T-posts + L'}
+  ],
   four: [{code:'LLRR',desc:'4 panels — 2 each side'},{code:'LLTRR',desc:'4 — LL + T-post + RR'},{code:'RRTLL',desc:'4 — RR + T-post + LL'},{code:'LTLRTR',desc:'4 with multiple T-posts'}]
 };
 
 /* ─── STATE ─────────────────────────────────────────────── */
 const S = {
   line:'', count:1,
-  opentype:'', mount:'', dims:[{w:'',h:'',label:''}],
+  opentype:'Standard window', mount:'', dims:[{w:'',h:'',label:''}],
   layout:'', tpostV:'', tpostH:'',
-  louver:'', tilt:'', frame:'', divider:'',
+  louver:'', tilt:'InvisibleTilt™ (hidden in stile)', frame:'', divider:'',
   colorType:'', color:'',
   specs:[], delivery:'',
   room:'', notes:''
@@ -136,6 +142,12 @@ function pbToggleStep(secId) {
 function continueStep1() {
   if (!S.line) { alert('Please select a shutter line.'); return; }
   pbAdv('sec-line', 1, 'sec-opentype', S.line);
+  // Auto-advance through step 2 with Standard window default
+  if (S.opentype === 'Standard window') {
+    setTimeout(function() {
+      pbAdv('sec-opentype', 2, 'sec-mount', 'Standard window');
+    }, 500);
+  }
 }
 function continueStep2() {
   if (!S.opentype) { alert('Please select an opening type.'); return; }
@@ -160,6 +172,11 @@ function continueStep6() {
 function continueStep7() {
   if (!S.louver) { alert('Please select a louver size.'); return; }
   pbAdv('sec-louver', 7, 'sec-tilt', S.louver);
+  // If InvisibleTilt is already selected (default) and valid for this louver, auto-advance
+  if (S.tilt && S.tilt.includes('InvisibleTilt') && S.line &&
+      !SHUTTER_LINES[S.line].invisibleTiltExclude.includes(S.louver)) {
+    setTimeout(continueStep8, 600);
+  }
 }
 function continueStep8() {
   if (!S.tilt) { alert('Please select a tilt type.'); return; }
@@ -332,8 +349,16 @@ function checkOpenType(btn) {
 function checkMount(btn) {
   selOpt(btn, 'mount');
   var note = qs('mount-note');
-  note.textContent = '⚠ Direct mount hinges directly to the existing window frame and is NOT suitable for drywall installations.';
-  note.classList.add('show');
+  var val = btn.dataset.val || '';
+  if (val.indexOf('Direct mount') !== -1) {
+    note.textContent = '⚠ Direct mount frame attaches to the face of the window frame — not suitable for drywall without proper blocking.';
+    note.classList.add('show');
+  } else if (val.indexOf('Tracking') !== -1 || val.indexOf('sliding') !== -1) {
+    note.textContent = '⚠ Tracking & sliding systems (bi-fold, bypass, barn-door) require a custom quote. We\'ll follow up after submission.';
+    note.classList.add('show');
+  } else {
+    note.classList.remove('show');
+  }
   setTimeout(continueStep3, 500);
 }
 

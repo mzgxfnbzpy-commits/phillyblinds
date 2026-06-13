@@ -199,7 +199,7 @@
         <div class="step-body">
           <p class="step-subhead">Applies to all openings in this order. If you have mixed types, note differences in the notes step.</p>
           <div class="opt-row">
-            <button class="opt-btn" onclick="selOpt(this,'opentype');updateQuote();setTimeout(continueStep2,400)" data-val="Standard window">Standard window</button>
+            <button class="opt-btn sel" onclick="selOpt(this,'opentype');updateQuote();setTimeout(continueStep2,400)" data-val="Standard window">Standard window</button>
             <button class="opt-btn" onclick="checkOpenType(this)" data-val="Double-hung window">Double-hung window <span style="font-size:9px;color:var(--gold)">+10%</span></button>
             <button class="opt-btn" onclick="checkOpenType(this)" data-val="Slider / bypass door">Slider / bypass door</button>
             <button class="opt-btn" onclick="checkOpenType(this)" data-val="Bi-fold door">Bi-fold door</button>
@@ -220,11 +220,11 @@
           <span class="step-head-val" id="shv-3"></span>
         </div>
         <div class="step-body">
-          <p class="step-subhead">Inside mount sits within the window opening. Outside mount covers the full opening or wall area. Direct mount hinges directly to the window frame — not for drywall.</p>
+          <p class="step-subhead">Inside mount fits within the window opening. Direct mount frame attaches to the face of the frame. Tracking &amp; sliding systems for bypass, bi-fold, or barn-door configurations.</p>
           <div class="opt-row">
-            <button class="opt-btn" onclick="selOpt(this,'mount');updateQuote();setTimeout(continueStep3,400)" data-val="Inside mount">Inside mount <span style="font-size:10px;color:#999">(most common)</span></button>
-            <button class="opt-btn" onclick="selOpt(this,'mount');updateQuote();setTimeout(continueStep3,400)" data-val="Outside mount">Outside mount</button>
-            <button class="opt-btn" onclick="checkMount(this)" data-val="Direct mount (hinged to window frame)">Direct mount</button>
+            <button class="opt-btn" onclick="selOpt(this,'mount');updateQuote();setTimeout(continueStep3,400)" data-val="Inside mount">Inside Mount <span style="font-size:10px;color:#999">(most common)</span></button>
+            <button class="opt-btn" onclick="checkMount(this)" data-val="Direct mount frame (exact or window opening)">Direct Mount Frame <span style="font-size:10px;color:#999">(exact or window opening)</span></button>
+            <button class="opt-btn" onclick="checkMount(this)" data-val="Tracking and sliding systems">Tracking &amp; Sliding Systems</button>
           </div>
           <div id="mount-note" class="warn-note"></div>
           <div class="spec-note">
@@ -336,11 +336,10 @@
         </div>
         <div class="step-body">
           <div class="opt-row">
-            <button class="opt-btn" onclick="selOpt(this,'tilt');updateQuote();setTimeout(continueStep8,400)" data-val="Standard tilt rod (center front)">Standard tilt rod <span style="font-size:10px;color:#999">(center, front)</span></button>
-            <button class="opt-btn" onclick="selOpt(this,'tilt');updateQuote();setTimeout(continueStep8,400)" data-val="Offset tilt rod (near hinge side)">Offset tilt rod <span style="font-size:10px;color:#999">(near hinge)</span></button>
-            <button class="opt-btn" onclick="selTilt(this)" data-val="InvisibleTilt™ (hidden in stile)">InvisibleTilt™ <span style="font-size:10px;color:#999">(hidden)</span></button>
+            <button class="opt-btn sel" onclick="selTilt(this)" data-val="InvisibleTilt™ (hidden in stile)">InvisibleTilt™ <span style="font-size:10px;color:#999">(hidden — recommended)</span></button>
+            <button class="opt-btn" onclick="selOpt(this,'tilt');updateQuote();setTimeout(continueStep8,400)" data-val="Visible tilt bar (center front)">Visible tilt bar <span style="font-size:10px;color:#999">(center, front)</span></button>
           </div>
-          <div id="tilt-warn" class="warn-note">⚠ <strong>InvisibleTilt™ is not available with 1⅞″ louvers.</strong> Please select a larger louver size or choose a different tilt type.</div>
+          <div id="tilt-warn" class="warn-note">⚠ <strong>InvisibleTilt™ is not available with 1⅞″ louvers.</strong> Please select a larger louver size or choose Visible tilt bar.</div>
           <div style="font-size:11px;color:#888;line-height:1.6;margin-top:6px">InvisibleTilt™ embeds the tilt mechanism inside the stile — no visible rod. Surcharge applies. Not available for 1⅞″ louvers.</div>
         </div>
       </div>
@@ -379,11 +378,10 @@
         <div class="step-body">
           <p class="step-subhead">A divider rail adds a horizontal mid-panel rail so louvers can be controlled independently above and below. Required on tall panels.</p>
           <div id="divider-req-note" class="spec-note" style="display:none"></div>
+          <div class="info-note" style="margin-bottom:8px;font-size:11px">Split tilt can sometimes eliminate the need for a divider rail. If you select split tilt in Specialty Options, confirm with us before finalizing.</div>
           <div class="opt-row">
-            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep10,400)" data-val="None">None needed</button>
-            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep10,400)" data-val="Standard 3″ divider rail (required or requested)">Standard 3″ divider rail</button>
-            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep10,400)" data-val="Custom divider rail size (specify in notes)">Custom size (notes)</button>
-            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep10,400)" data-val="Not sure — confirm at measurement">Not sure</button>
+            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep10,400)" data-val="None">No divider rail</button>
+            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep10,400)" data-val="Standard divider rail">Add divider rail</button>
           </div>
         </div>
       </div>
