@@ -1,17 +1,71 @@
 // Custom Roller Shades — configurator logic
-// All steps visible; each auto-advances to the next on selection.
-// No pricing shown anywhere — collects specs → POST /api/quote.
 
 var CRS = {
-  type: '', openness: '',
+  type: '', openness: '', color: '',
   mount: '',
-  headrail: '',
+  headrail: '', hwColor: '',
   w: 0, h: 0,
   fabric: '',
   motor: '',
   qty: 1,
   delivery: ''
 };
+
+// ── PRICING TABLES ────────────────────────────────────────────
+// Source: Norman Price Group 1 Solar retail chart
+var _CRS_W = [24,30,36,42,48,54,60,66,72,78,84,90,96,108,120];
+var _CRS_H = [36,48,60,72,84,96,108,120,132,144];
+var _CRS_GRID = [
+  [240,258,278,296,314,331,362,382,406,450,474,507,533,577,628],
+  [259,282,302,325,350,372,412,439,468,519,545,587,614,671,723],
+  [281,302,326,357,390,421,467,497,535,586,618,666,692,745,795],
+  [297,325,359,397,430,468,522,558,595,650,677,721,749,809,870],
+  [318,354,394,434,474,513,573,614,645,697,745,776,809,874,941],
+  [336,383,428,471,518,563,618,656,690,745,797,831,870,941,1015],
+  [361,411,461,511,558,600,659,697,737,795,850,890,932,1007,1088],
+  [387,440,495,546,597,635,697,739,780,844,903,949,990,1078,1160],
+  [408,470,526,582,627,670,737,780,826,894,956,1002,1049,1141,1235],
+  [434,498,561,609,659,703,777,823,872,940,1010,1061,1111,1206,1309]
+];
+// Fascia surcharge by width bracket
+var _CRS_FASCIA_W = [24,30,36,42,48,54,60,66,72,78,84,90,96,108,120,132,144];
+var _CRS_FASCIA_P = [117,122,133,139,150,161,171,188,204,216,232,249,265,293,326,349,375];
+
+function _crsPriceLookup(w, h) {
+  // Round up to nearest bracket; use minimum bracket if below minimum
+  var wi = _CRS_W.length - 1, hi = _CRS_H.length - 1;
+  for (var i = 0; i < _CRS_W.length; i++) { if (w <= _CRS_W[i]) { wi = i; break; } }
+  for (var j = 0; j < _CRS_H.length; j++) { if (h <= _CRS_H[j]) { hi = j; break; } }
+  if (w > _CRS_W[_CRS_W.length-1] || h > _CRS_H[_CRS_H.length-1]) return null;
+  return _CRS_GRID[hi][wi];
+}
+
+function _crsFasciaLookup(w) {
+  for (var i = 0; i < _CRS_FASCIA_W.length; i++) {
+    if (w <= _CRS_FASCIA_W[i]) return _CRS_FASCIA_P[i];
+  }
+  return null;
+}
+
+function crsCalcPricing() {
+  if (!CRS.w || !CRS.h) return null;
+  var baseRetail = _crsPriceLookup(CRS.w, CRS.h);
+  if (baseRetail === null) return null;
+  var fasciaAdj = 0;
+  if (CRS.headrail === 'fascia') {
+    fasciaAdj = _crsFasciaLookup(CRS.w) || 0;
+  }
+  var retail = baseRetail + fasciaAdj;
+  if (CRS.type === 'blackout') retail = Math.round(retail * 1.20);
+  var discount = Math.round(retail * 0.35);
+  var yourPrice = retail - discount;
+  var isOversized = CRS.w >= 90;
+  var freight = isOversized
+    ? (80 + Math.max(0, CRS.qty - 1) * 50)
+    : (25 + Math.max(0, CRS.qty - 1) * 11);
+  var shadeTotal = yourPrice * CRS.qty;
+  return { retail: retail, discount: discount, yourPrice: yourPrice, fasciaAdj: fasciaAdj, freight: freight, shadeTotal: shadeTotal, grandTotal: shadeTotal + freight };
+}
 
 var _crsLoadTime = Date.now();
 var _crsDimTimer, _crsQtyTimer;
@@ -113,12 +167,26 @@ function crsPickMount(val, label) {
 // ── STEP 4: HEADRAIL ─────────────────────────────────────────
 function crsPickHeadrail(val, label) {
   CRS.headrail = val;
+  CRS.hwColor = '';
   document.querySelectorAll('#step-4 .opt-card:not(.disabled)').forEach(function(c) { c.classList.remove('sel'); });
   var card = _crsEl('hc-' + val);
   if (card && !card.classList.contains('disabled')) card.classList.add('sel');
+  // Show hardware color picker; update label for fascia
+  var hwSection = _crsEl('hw-color-section');
+  var hwLabel = _crsEl('hw-color-label');
+  if (hwSection) hwSection.style.display = '';
+  if (hwLabel) hwLabel.textContent = val === 'fascia' ? 'Hardware & fascia color' : 'Hardware color';
+  document.querySelectorAll('#crs-grp-hw-color .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
   crsDone('step-4', label);
   crsUpdatePanel();
   setTimeout(function() { crsOpen('step-5'); }, 350);
+}
+
+function crsPickHwColor(btn, color) {
+  CRS.hwColor = color;
+  document.querySelectorAll('#crs-grp-hw-color .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
+  btn.classList.add('sel');
+  crsUpdatePanel();
 }
 
 // ── STEP 2: DIMENSIONS ───────────────────────────────────────
@@ -136,7 +204,7 @@ function crsDimChanged() {
 
   var errs = [];
   if (w && (w < 12 || w > 144)) errs.push('Width must be 12–144"');
-  if (h && (h < 12 || h > 132)) errs.push('Height must be 12–132"');
+  if (h && (h < 12 || h > 144)) errs.push('Height must be 12–144"');
 
   if (errs.length) {
     warnEl.textContent = errs.join(' · ');
@@ -229,18 +297,28 @@ function crsPickDelivery(val) {
 }
 
 // ── PANEL SUMMARY ────────────────────────────────────────────
+function _qrow(label, val) {
+  return '<div class="qrow"><span class="qrow-label">' + label + '</span><span class="qrow-val">' + val + '</span></div>';
+}
+function _prow(label, val, isNeg) {
+  return '<div style="display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-bottom:.5px solid rgba(255,255,255,.07)">' +
+    '<span style="color:var(--text-muted)">' + label + '</span>' +
+    '<span style="color:' + (isNeg ? '#f87171' : 'var(--cream)') + ';font-weight:500">' + val + '</span></div>';
+}
+
 function crsUpdatePanel() {
   var rows = [];
   if (CRS.type) {
-    var tl = CRS.type === 'solar' ? 'Solar Screen' : 'Blackout';
-    if (CRS.type === 'solar' && CRS.openness) tl += ' · ' + CRS.openness + '%';
+    var tl = CRS.type === 'solar' ? 'Solar ' + (CRS.openness ? CRS.openness + '%' : 'Screen') : 'Blackout';
     if (CRS.color) tl += ' · ' + CRS.color;
     rows.push(['Type', tl]);
   }
   if (CRS.mount) rows.push(['Mount', CRS.mount === 'inside' ? 'Inside' : 'Outside']);
   if (CRS.headrail) {
-    var hMap = { open: 'Open roll', cassette: 'Cassette', fascia: 'Fascia', valance: 'Wood valance box' };
-    rows.push(['Headrail', hMap[CRS.headrail] || CRS.headrail]);
+    var hMap = { open: 'Open roll', fascia: 'Metal fascia' };
+    var hw = hMap[CRS.headrail] || CRS.headrail;
+    if (CRS.hwColor) hw += ' · ' + CRS.hwColor;
+    rows.push(['Headrail', hw]);
   }
   var w = parseFloat((_crsEl('crs-inp-w') || {}).value) || 0;
   var h = parseFloat((_crsEl('crs-inp-h') || {}).value) || 0;
@@ -256,27 +334,45 @@ function crsUpdatePanel() {
   if (CRS.qty > 1) rows.push(['Quantity', CRS.qty + ' shades']);
   if (CRS.delivery) rows.push(['Delivery', CRS.delivery === 'ship' ? 'Ship' : 'Pickup']);
 
-  var pending  = _crsEl('qp-pending');
-  var rowsEl   = _crsEl('qp-rows');
-  var divEl    = _crsEl('qp-div');
-  var noteEl   = _crsEl('qp-note');
+  var pending = _crsEl('qp-pending');
+  var rowsEl  = _crsEl('qp-rows');
+  var divEl   = _crsEl('qp-div');
+  var noteEl  = _crsEl('qp-note');
+  var priceEl = _crsEl('qp-price');
 
   if (!rows.length) {
     if (pending) pending.style.display = 'block';
     if (rowsEl)  rowsEl.innerHTML = '';
     if (divEl)   divEl.style.display = 'none';
     if (noteEl)  noteEl.style.display = 'none';
+    if (priceEl) priceEl.style.display = 'none';
     return;
   }
 
   if (pending) pending.style.display = 'none';
-  if (rowsEl) {
-    rowsEl.innerHTML = rows.map(function(r) {
-      return '<div class="qrow"><span class="qrow-label">' + r[0] + '</span><span class="qrow-val">' + r[1] + '</span></div>';
-    }).join('');
+  if (rowsEl)  rowsEl.innerHTML = rows.map(function(r) { return _qrow(r[0], r[1]); }).join('');
+  if (divEl)   divEl.style.display = '';
+  if (noteEl)  noteEl.style.display = '';
+
+  // Price breakdown
+  var p = (CRS.w && CRS.h) ? crsCalcPricing() : null;
+  if (p && priceEl) {
+    var pRowsEl = _crsEl('qp-price-rows');
+    if (pRowsEl) {
+      var html = _prow('Retail price' + (CRS.qty > 1 ? ' (per shade)' : ''), '$' + p.retail.toLocaleString(), false);
+      html += _prow('Philly Blinds discount (35%)', '−$' + p.discount.toLocaleString(), true);
+      html += _prow('Your price' + (CRS.qty > 1 ? ' × ' + CRS.qty : ''), '$' + p.shadeTotal.toLocaleString(), false);
+      html += _prow('Shipping', '$' + p.freight.toLocaleString(), false);
+      pRowsEl.innerHTML = html;
+    }
+    var totalEl = _crsEl('qp-total');
+    if (totalEl) totalEl.textContent = '$' + p.grandTotal.toLocaleString();
+    priceEl.style.display = '';
+    if (noteEl) noteEl.style.display = 'none';
+  } else if (priceEl) {
+    priceEl.style.display = 'none';
+    if (noteEl) noteEl.style.display = '';
   }
-  if (divEl)  divEl.style.display = '';
-  if (noteEl) noteEl.style.display = '';
 }
 
 // ── SUBMIT ───────────────────────────────────────────────────
@@ -291,7 +387,7 @@ function crsSubmit() {
   if (!email && !phone)   { alert('Please enter an email address or phone number.'); return; }
 
   var typeMap = { lf: 'Light Filtering', rd: 'Blackout', bk: 'Blackout', solar: 'Solar Screening', exterior: 'Exterior Roller (outdoor)' };
-  var hMap    = { open: 'Open roll (no valance)', cassette: 'Cassette headrail', fascia: 'Fascia valance', valance: 'Wood valance box' };
+  var hMap    = { open: 'Open roll (no valance)', fascia: 'Metal fascia' };
   var mMap    = { cord: 'Manual — continuous cord loop', cordless: 'Manual — cordless lift', lutron: 'Motorized — Lutron Serena', somfy: 'Motorized — Somfy', rollease: 'Motorized — Rollease Acmeda / Automate', other: 'Other / not sure — see notes' };
   var fMap    = { we: 'We supply the fabric', customer: 'Customer supplies fabric (ships to shop — do NOT ship until confirmed)', consult: 'Consult — fabric TBD' };
 
@@ -302,7 +398,10 @@ function crsSubmit() {
     selections.push({ label: 'Shade type', value: tl });
   }
   if (CRS.mount)    selections.push({ label: 'Mount', value: CRS.mount === 'inside' ? 'Inside mount' : 'Outside mount' });
-  if (CRS.headrail) selections.push({ label: 'Headrail / valance', value: hMap[CRS.headrail] || CRS.headrail });
+  if (CRS.headrail) {
+    var hrLabel = (hMap[CRS.headrail] || CRS.headrail) + (CRS.hwColor ? ' — ' + CRS.hwColor : '');
+    selections.push({ label: 'Headrail', value: hrLabel });
+  }
 
   var w = parseFloat((_crsEl('crs-inp-w') || {}).value) || 0;
   var h = parseFloat((_crsEl('crs-inp-h') || {}).value) || 0;
@@ -350,6 +449,15 @@ function crsSubmit() {
     // Mailto fallback
     var lines = ['Basic Roller Shades Order'];
     selections.forEach(function(s) { lines.push(s.label + ': ' + s.value); });
+    var p = crsCalcPricing();
+    if (p) {
+      lines.push('---');
+      lines.push('Retail (per shade): $' + p.retail.toLocaleString());
+      lines.push('Discount (35%): -$' + p.discount.toLocaleString());
+      lines.push('Your price (×' + CRS.qty + '): $' + p.shadeTotal.toLocaleString());
+      lines.push('Shipping: $' + p.freight.toLocaleString());
+      lines.push('Estimated total: $' + p.grandTotal.toLocaleString());
+    }
     if (notes) lines.push('Notes: ' + notes);
     lines.push('Name: ' + name);
     if (email) lines.push('Email: ' + email);
