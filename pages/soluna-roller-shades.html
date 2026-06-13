@@ -727,11 +727,25 @@
             <div class="step-label">Step 6</div>
             <div class="step-title">Headrail &amp; add-ons <span style="font-weight:400;color:#888">(optional)</span></div>
             <div class="opt-row" id="grp-addons" style="flex-wrap:wrap">
+              <button class="opt-btn" id="sol-addon-openroll" onclick="solPickAddon('openroll',this)">Open roll</button>
               <button class="opt-btn" id="sol-addon-cassette" onclick="solPickAddon('cassette',this)">Cassette headrail</button>
               <button class="opt-btn" id="sol-addon-fascia" onclick="solPickAddon('fascia',this)">Fascia / valance</button>
               <button class="opt-btn" id="sol-addon-lightguard" onclick="solPickAddon('lightguard',this)">LightGuard 360™ (blackout)</button>
             </div>
             <div class="tooltip-note">Headrail options are mutually exclusive — select one or none. LightGuard 360™ requires Room Darkening fabric.</div>
+
+            <!-- Open roll → Premium hardware color picker -->
+            <div id="sol-hw-subopts" style="display:none;margin-top:10px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:9px">
+              <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Premium hardware color</div>
+              <div class="opt-row" id="grp-hw-color" style="flex-wrap:wrap">
+                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()">Brass</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()">Bronze</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()">Brushed Black</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()">Matte Silver</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()">White</button>
+              </div>
+              <div style="font-size:10px;color:#888;margin-top:6px;line-height:1.5">Premium hardware (brackets, clutches, chains &amp; hem bars) in a preset matching finish. Open roll single shades only — no valance or raceway. Inside mount side-mount bracket not available with premium hardware.</div>
+            </div>
 
             <!-- Fascia sub-options (shown when Fascia / valance selected) -->
             <div id="sol-fascia-subopts" style="display:none;margin-top:10px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:9px">

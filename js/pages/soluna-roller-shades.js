@@ -123,15 +123,18 @@ function getSelectedFabricColor() {
 
 function solPickAddon(type, btn) {
   var isActive = btn.classList.contains('sel');
-  // Headrail options (cassette/fascia) are mutually exclusive
-  if (type === 'cassette' || type === 'fascia') {
-    document.getElementById('sol-addon-cassette').classList.remove('sel');
-    document.getElementById('sol-addon-fascia').classList.remove('sel');
-  }
+  // All headrail options are mutually exclusive — clear all first
+  ['openroll','cassette','fascia','lightguard'].forEach(function(t) {
+    var el = document.getElementById('sol-addon-' + t);
+    if (el) el.classList.remove('sel');
+  });
+  var activeType = isActive ? null : type;
   if (!isActive) btn.classList.add('sel');
-  // Show/hide fascia sub-options
+  // Show/hide sub-panels
+  var hwOpts = document.getElementById('sol-hw-subopts');
   var fasciaOpts = document.getElementById('sol-fascia-subopts');
-  if (fasciaOpts) fasciaOpts.style.display = (type === 'fascia' && !isActive) ? 'block' : 'none';
+  if (hwOpts) hwOpts.style.display = (activeType === 'openroll') ? 'block' : 'none';
+  if (fasciaOpts) fasciaOpts.style.display = (activeType === 'fascia') ? 'block' : 'none';
   updateSummary();
 }
 
@@ -183,7 +186,12 @@ function updateSummary() {
   }
 
   const addons = [...document.querySelectorAll('#grp-addons .opt-btn.sel')].map(b => b.textContent.trim());
-  document.getElementById('s-addons').textContent = addons.length ? addons.join(', ') : 'None';
+  const hwColor = getOpt('grp-hw-color');
+  const fasciaStyle = getOpt('grp-fascia-style');
+  var addonParts = addons.slice();
+  if (hwColor) addonParts.push('Premium HW: ' + hwColor);
+  if (fasciaStyle) addonParts.push(fasciaStyle);
+  document.getElementById('s-addons').textContent = addonParts.length ? addonParts.join(', ') : 'None';
 }
 
 function submitQuote() {
@@ -204,6 +212,10 @@ function submitQuote() {
   const motorOn   = motorSub && motorSub.classList.contains('show');
   const motorVal  = motorOn ? (document.getElementById('sel-motor').value || '—') : 'None';
   const addons    = [...document.querySelectorAll('#grp-addons .opt-btn.sel')].map(b => b.textContent.trim());
+  const hwColor   = getOpt('grp-hw-color');
+  const fasciaStyle = getOpt('grp-fascia-style');
+  if (hwColor) addons.push('Premium hardware: ' + hwColor);
+  if (fasciaStyle) addons.push('Fascia style: ' + fasciaStyle);
   const fabricColor = getSelectedFabricColor();
   const deliveryLabel = solDelivery === 'pickup'
     ? "I'll pick up (Huntingdon Valley, PA 19006 — address confirmed after order)"
