@@ -237,8 +237,9 @@ function selectProduct(productId, productName, isInstant) {
         // Show roller type subsection; hide brand chooser until type is picked
         document.getElementById('roller-types').style.display = 'block';
         document.getElementById('brand-chooser').style.display = 'none';
-        // Scroll to roller-types anchor
-        setTimeout(function(){ var el=document.getElementById('roller-types'); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
+        // Auto-select Basic as default so configurator is immediately visible
+        rtSelect('basic');
+        setTimeout(function(){ var el=document.getElementById('brand-pb-content'); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }, 120);
       } else {
         pbBtn.classList.add('disabled');
         document.getElementById('pb-only-note').style.display = 'block';
@@ -3433,7 +3434,6 @@ async function submitPSForm(btn) {
   var opac   = (document.querySelector('#grp-ps-opacity .opt-btn.sel')||{}).textContent || '';
   var color  = document.getElementById('ps-color').value;
   var lift   = (document.querySelector('#grp-ps-lift .opt-btn.sel')||{}).textContent || '';
-  var cord   = (document.querySelector('#grp-ps-cord .opt-btn.sel')||{}).textContent || '';
   var valance= (document.querySelector('#grp-ps-valance .opt-btn.sel')||{}).textContent || '';
   var woodValColor = '';
   if (valance.indexOf('Wood') >= 0) {
@@ -3459,7 +3459,6 @@ async function submitPSForm(btn) {
     + 'Opacity: ' + opac + '\n'
     + 'Color: ' + color + '\n'
     + 'Operation: ' + lift + '\n'
-    + 'Cord side: ' + cord + '\n'
     + 'Valance: ' + valance + woodValColor + '\n'
     + 'Light guard: ' + lg + '\n'
     + 'Magnetic hold-down: ' + hd + '\n'
