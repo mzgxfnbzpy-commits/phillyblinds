@@ -365,45 +365,69 @@
   </div>
 </div>
 
-<!-- STEP 6: MOTORIZATION -->
+<!-- STEP 6: OPERATION -->
 <div class="step-block" id="step-6">
   <div class="step-head" onclick="crsToggle('step-6')">
     <div class="step-num">6</div>
-    <div class="step-title">Operation &amp; motorization</div>
+    <div class="step-title">Operation</div>
     <div class="step-val" id="sv-6"></div>
   </div>
   <div class="step-body">
-    <div class="opt-grid-2">
-      <div class="opt-card" id="motor-cord" onclick="crsPickMotor('cord','Manual cord loop')">
-        <div class="opt-card-title">Manual cord loop</div>
-        <div class="opt-card-desc">Continuous cord loop, left or right side. Standard, reliable.</div>
+    <div class="opt-grid-3">
+      <div class="opt-card" id="motor-cord" onclick="crsPickMotor('cord','Manual chain')">
+        <div class="opt-card-title">Manual chain</div>
+        <div class="opt-card-desc">Continuous bead chain, left or right side. Standard and reliable.</div>
       </div>
-      <div class="opt-card" id="motor-cordless" onclick="crsPickMotor('cordless','Cordless lift')">
-        <div class="opt-card-title">Cordless lift</div>
-        <div class="opt-card-desc">Push-up, spring-assisted. No cords — safe for children &amp; pets.</div>
+      <div class="opt-card" id="motor-cordless" onclick="crsPickMotor('cordless','Cordless')">
+        <div class="opt-card-title">Cordless</div>
+        <div class="opt-card-desc">Push-up, no cords. Safe for children &amp; pets.</div>
       </div>
-      <div class="opt-card" id="motor-lutron" onclick="crsPickMotor('lutron','Lutron Serena')">
-        <div class="opt-card-title">Lutron Serena</div>
-        <div class="opt-card-desc">Smart motor. App, voice, remote. Integrates with Lutron Caseta system.</div>
-      </div>
-      <div class="opt-card" id="motor-somfy" onclick="crsPickMotor('somfy','Somfy')">
-        <div class="opt-card-title">Somfy</div>
-        <div class="opt-card-desc">Smart motor. TaHoma app, remote, voice. Wide smart home compatibility.</div>
-      </div>
-      <div class="opt-card" id="motor-rollease" onclick="crsPickMotor('rollease','Rollease Acmeda')">
-        <div class="opt-card-title">Rollease Acmeda</div>
-        <div class="opt-card-desc">Smart motor. Automate app, remote. Rechargeable battery or hardwired.</div>
-      </div>
-      <div class="opt-card" id="motor-other" onclick="crsPickMotor('other','Other — specify in notes')">
-        <div class="opt-card-title">Other / not sure</div>
-        <div class="opt-card-desc">Specify brand preference in notes or ask during consultation.</div>
+      <div class="opt-card" id="motor-motorized" onclick="crsPickMotor('motorized','Motorized')">
+        <div class="opt-card-title">Motorized</div>
+        <div class="opt-card-desc">Smart motor. App, remote, voice control. Multiple brands available.</div>
       </div>
     </div>
-    <div id="cordless-upsell" style="display:none;margin-top:12px;padding:12px 14px;background:#FFF8EC;border:1px solid #e8c96b;border-radius:10px">
-      <div style="font-size:12px;font-weight:600;color:#5a3a00;margin-bottom:4px">Better option for cordless: Norman Soluna</div>
-      <div style="font-size:12px;color:#5a3a00;line-height:1.6;margin-bottom:8px">Norman Soluna roller shades include a factory-engineered cordless spring-lift system with tighter tolerances and a manufacturer warranty. It's a better fit for cordless than in-house fabrication.</div>
-      <a href="soluna-roller-shades.html" style="display:inline-block;font-size:12px;font-weight:600;color:#0A4A42;background:var(--gold);padding:7px 14px;border-radius:7px;text-decoration:none">See Norman Soluna →</a>
-      <span style="font-size:11px;color:#888;margin-left:10px">or continue below with Basic Roller</span>
+
+    <!-- Cordless → Norman Soluna redirect -->
+    <div id="cordless-redirect" style="display:none;margin-top:14px;padding:14px 16px;background:#FFF8EC;border:1px solid #e8c96b;border-radius:10px">
+      <div style="font-size:13px;font-weight:700;color:#5a3a00;margin-bottom:6px">Better fit: Norman Soluna Roller Shades</div>
+      <div style="font-size:12px;color:#5a3a00;line-height:1.7;margin-bottom:10px">Norman Soluna includes a factory-engineered cordless spring-lift with tighter tolerances and a full manufacturer warranty — a better choice than in-house cordless fabrication.</div>
+      <a href="soluna-roller-shades.html" style="display:inline-block;font-size:13px;font-weight:600;color:#1C1510;background:var(--gold);padding:9px 18px;border-radius:8px;text-decoration:none;margin-right:10px">Go to Norman Soluna →</a>
+      <span style="font-size:11px;color:#888">or scroll down to submit a custom quote here</span>
+    </div>
+
+    <!-- Motorized sub-options -->
+    <div id="motor-subopts" style="display:none;margin-top:14px;padding-top:12px;border-top:1px solid #f0ede8">
+      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.3px;margin-bottom:10px">Motor brand</div>
+      <div class="opt-grid-2">
+        <div class="opt-card" id="msub-norman" onclick="crsPickMotorSub('norman-motor','Norman Smart')">
+          <div class="opt-card-title">Norman</div>
+          <div class="opt-card-desc">Norman Smart motor. App, voice (Alexa / Google / HomeKit), rechargeable or hardwired.</div>
+        </div>
+        <div class="opt-card" id="msub-rollease" onclick="crsPickMotorSub('rollease-motor','Rollease Automate')">
+          <div class="opt-card-title">Rollease Automate</div>
+          <div class="opt-card-desc">Automate app &amp; remote. Rechargeable or hardwired. Offered through Norman.</div>
+        </div>
+        <div class="opt-card" id="msub-lutron" onclick="crsPickMotorSub('lutron','Lutron')">
+          <div class="opt-card-title">Lutron</div>
+          <div class="opt-card-desc">Caseta / RadioRA integration. Custom quote — fill the form and submit.</div>
+        </div>
+        <div class="opt-card" id="msub-somfy" onclick="crsPickMotorSub('somfy','Somfy')">
+          <div class="opt-card-title">Somfy</div>
+          <div class="opt-card-desc">TaHoma app &amp; remote. Wide smart home compatibility. Custom quote.</div>
+        </div>
+        <div class="opt-card" id="msub-other" onclick="crsPickMotorSub('other','Other / not sure')">
+          <div class="opt-card-title">Other / not sure</div>
+          <div class="opt-card-desc">Specify brand in notes or we'll discuss during consultation.</div>
+        </div>
+      </div>
+      <!-- Norman / Rollease → redirect to Norman Soluna -->
+      <div id="motor-soluna-redirect" style="display:none;margin-top:14px;padding:14px 16px;background:#FFF8EC;border:1px solid #e8c96b;border-radius:10px">
+        <div style="font-size:13px;font-weight:700;color:#5a3a00;margin-bottom:6px">Continue on Norman Soluna</div>
+        <div style="font-size:12px;color:#5a3a00;line-height:1.7;margin-bottom:10px">Norman and Rollease Automate motors are available directly in the Norman Soluna configurator — with full Norman warranty and factory pricing.</div>
+        <a href="soluna-roller-shades.html" style="display:inline-block;font-size:13px;font-weight:600;color:#1C1510;background:var(--gold);padding:9px 18px;border-radius:8px;text-decoration:none;margin-right:10px">Go to Norman Soluna →</a>
+        <span style="font-size:11px;color:#888">or scroll down to submit a custom quote here</span>
+      </div>
     </div>
   </div>
 </div>
