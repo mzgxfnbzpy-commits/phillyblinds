@@ -105,8 +105,7 @@ function pbAdv(fromId, num, toId, summary) {
   if (el) {
     el.classList.remove('active');
     el.classList.add('done');
-    var body = el.querySelector('.step-body');
-    if (body) body.style.display = 'none';
+    // Body stays visible — open style
   }
   var badge = document.getElementById('badge-' + num);
   if (badge) badge.textContent = '✓';
@@ -115,8 +114,6 @@ function pbAdv(fromId, num, toId, summary) {
   var next = document.getElementById(toId);
   if (next) {
     next.classList.add('active');
-    var nb = next.querySelector('.step-body');
-    if (nb) nb.style.display = '';
     setTimeout(function() { next.scrollIntoView({ behavior:'smooth', block:'nearest' }); }, 80);
   }
 }
