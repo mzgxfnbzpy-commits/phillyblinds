@@ -791,7 +791,7 @@ function pbRenderEstimate(priceBoxId, lines, subtotal, conflictMsg, onCheckout) 
       '<div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Your configuration</div>' +
       linesHtml +
       estimateHtml +
-      '<div style="font-size:10px;color:#aaa;line-height:1.6;margin-bottom:10px">&#9432; This is an estimate only. Final price is confirmed after your free in-home measurement. Actual price may vary based on exact dimensions, fabric availability, and installation scope.</div>' +
+      '<div style="font-size:10px;color:#aaa;line-height:1.6;margin-bottom:10px">&#9432; <strong style="color:#888">Estimated price only</strong> — not a guaranteed quote. Final price confirmed after your free in-home measurement. Price may vary due to exact dimensions, fabric selection, tariffs, import fees, and shipping. Submit your order and Justin will confirm your exact price before any charge is made.</div>' +
       conflictHtml +
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' +
         '<button onclick="pbEstimateAddCart(\'' + priceBoxId + '\')" style="padding:11px;border:1.5px solid #e8e8e4;border-radius:8px;background:#fff;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;color:#333">Save to list</button>' +
