@@ -137,6 +137,14 @@ function selectRomanStyle(el, val) {
   });
 
   if (!hideSteps) { calcRoman(); }
+
+  // Auto-scroll to the revealed content
+  setTimeout(function() {
+    var target = isVignette ? document.getElementById('vignette-notice')
+               : isValance  ? document.getElementById('valance-config')
+               : document.getElementById('step-roman-2');
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 150);
 }
 
 function romanChainCheck() {
