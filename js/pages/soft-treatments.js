@@ -73,9 +73,13 @@ function selectPleat(el, val) {
   var rpOpts = document.getElementById('rodpocket-subopts');
   if (rpOpts) rpOpts.style.display = isRodPocket ? 'block' : 'none';
 
-  // Standard dims (Step 2) — hide for pinch, rod pocket, and ripple fold (dims live in sub-options)
+  // Standard dims (Step 2) — hide for pinch and rod pocket only; ripple fold now uses std dims
   var stdDims = document.getElementById('drape-std-dims');
-  if (stdDims) stdDims.style.display = (isPinch || isRodPocket || isRipple) ? 'none' : '';
+  if (stdDims) stdDims.style.display = (isPinch || isRodPocket) ? 'none' : '';
+
+  // Return/overlap row — hide for ripple fold (track system, no returns needed)
+  var stdReturns = document.getElementById('drape-std-returns');
+  if (stdReturns) stdReturns.style.display = isRipple ? 'none' : '';
 
   // Ripple options
   var rippleOpts = document.getElementById('drape-ripple-opts');
@@ -108,7 +112,6 @@ function selectPleat(el, val) {
   // Scroll to reveal the sub-options panel that just appeared
   setTimeout(function() {
     var target = isPinch ? document.getElementById('pinch-subopts')
-               : isRipple ? document.getElementById('drape-ripple-opts')
                : isRodPocket ? document.getElementById('rodpocket-subopts')
                : null;
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -192,22 +195,20 @@ function selectRomanStyle(el, val) {
   document.getElementById('vignette-notice').style.display = isVignette ? 'block' : 'none';
   document.getElementById('valance-config').style.display  = isValance  ? 'block' : 'none';
   document.getElementById('roman-tdbu-wrap').style.display = tdbuStyles.indexOf(val) !== -1 ? 'block' : 'none';
-  var quickDims = document.getElementById('roman-quick-dims');
-  if (quickDims) quickDims.style.display = hideSteps ? 'none' : 'block';
 
-  ['step-roman-2','step-roman-3','step-roman-4','step-roman-5'].forEach(function(id){
+  ['step-roman-3','step-roman-4','step-roman-5','step-roman-6'].forEach(function(id){
     var s = document.getElementById(id);
     if (s) s.style.display = hideSteps ? 'none' : '';
   });
 
-  if (!hideSteps) { calcRoman(); }
+  calcRoman();
 
   // Auto-scroll to the revealed content
   setTimeout(function() {
     var target = isVignette ? document.getElementById('vignette-notice')
                : isValance  ? document.getElementById('valance-config')
-               : document.getElementById('roman-quick-dims');
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+               : document.getElementById('roman-step-style');
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 150);
 }
 
@@ -485,8 +486,8 @@ function calcDrapePrice() {
     w = _getDim('rp-w', 'rp-w-frac');
     h = _getDim('rp-l', 'rp-l-frac');
   } else if (isRippleDim) {
-    w = _getDim('rf-w', 'rf-w-frac');
-    h = _getDim('rf-l', 'rf-l-frac');
+    w = _getDim('d-exact-width', 'd-exact-width-frac');
+    h = _getDim('d-exact-length', 'd-exact-length-frac');
   } else {
     w = _getDim('d-exact-width',  'd-exact-width-frac');
     h = _getDim('d-exact-length', 'd-exact-length-frac');
@@ -998,11 +999,9 @@ async function submitDrape() {
     + 'Hardware: ' + hwNeed + (hwType !== 'N/A' ? ' — ' + hwType : '') + '\n'
     + '\nExact width: ' + (isSubmitPinch ? ((document.getElementById('pp-w')||{}).value || '—') + '"'
         : isSubmitRP ? ((document.getElementById('rp-w')||{}).value || '—') + '"'
-        : isRipple ? ((document.getElementById('rf-w')||{}).value || '—') + '"'
         : (document.getElementById('d-exact-width').value ? document.getElementById('d-exact-width').value + '"' : '—'))
     + '\nFinished length: ' + (isSubmitPinch ? ((document.getElementById('pp-l')||{}).value || '—') + '"'
         : isSubmitRP ? ((document.getElementById('rp-l')||{}).value || '—') + '"'
-        : isRipple ? ((document.getElementById('rf-l')||{}).value || '—') + '"'
         : (document.getElementById('d-exact-length').value ? document.getElementById('d-exact-length').value + '"' : '—')) + '\n'
     + 'Delivery: ' + delivery + '\n'
     + pbInstallLine(document.getElementById('drape-form')) + '\n\n'
@@ -1045,8 +1044,8 @@ async function submitValance() {
   if (!name) { alert('Please enter your name.'); return; }
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email address.'); return; }
   var selections = [
-    { label: 'Width',             value: (document.getElementById('val-w').value || '—') + '"' },
-    { label: 'Height / drop',     value: (document.getElementById('val-h').value || '—') + '"' },
+    { label: 'Width',             value: (_getDim('rn-w','rn-w-frac') || '—') + '"' },
+    { label: 'Height / drop',     value: (_getDim('rn-h','rn-h-frac') || '—') + '"' },
     { label: 'Number of folds',   value: document.getElementById('val-folds').value || '—' },
     { label: 'Fold section size', value: (document.getElementById('val-fold-size').value || '—') + '"' }
   ];

@@ -879,7 +879,7 @@ function updatePrice() {
     const perShadeAll = tableBase + rdAdd + opAdd + liftAdd;
     const activeMotorUp = cellMotorUpcharge;
     const motorCost = motorOn ? activeMotorUp * qty : 0;
-    const NORMAN_DISC_CELL = 0.15;
+    const NORMAN_DISC_CELL = 0.35;
     const cellProductSub = (perShadeAll * qty) + motorCost;
     const cellDiscountAmt = Math.round(cellProductSub * NORMAN_DISC_CELL);
     const cellYourPrice = cellProductSub - cellDiscountAmt;
@@ -3057,8 +3057,8 @@ function rnUpdatePrice() {
   }
 
 
-  // ── Grand total with 15% Norman discount on product subtotal only ──
-  const NORMAN_DISC_RN = 0.15;
+  // ── Grand total with 35% Norman discount on product subtotal only ──
+  const NORMAN_DISC_RN = 0.35;
   const productSubtotalRN = perShade ? (perShade * qty) + motorCost + hrSurcharge + sysSur + liftSur + lgSur + hdSur : null;
   const discountAmtRN = productSubtotalRN ? Math.round(productSubtotalRN * NORMAN_DISC_RN) : 0;
   const yourPriceRN = productSubtotalRN ? productSubtotalRN - discountAmtRN : null;
@@ -3078,7 +3078,7 @@ function rnUpdatePrice() {
     var rnDivider2 = document.querySelector('#rn-price-box .price-divider');
     if (rnDivider2) {
       var dr2 = document.createElement('div'); dr2.className='price-line'; dr2.id='rn-pb-disc-row';
-      dr2.innerHTML='<span style="color:#2DE0C1">15% Norman discount</span><span style="color:#2DE0C1" id="rn-pb-disc-val">—</span>';
+      dr2.innerHTML='<span style="color:#2DE0C1">35% Norman discount</span><span style="color:#2DE0C1" id="rn-pb-disc-val">—</span>';
       rnDivider2.parentNode.insertBefore(dr2, rnDivider2);
       var yr2 = document.createElement('div'); yr2.className='price-line'; yr2.id='rn-pb-your-row';
       yr2.innerHTML='<span style="font-weight:600;color:#fff">Your price (before shipping)</span><span style="font-weight:600;color:#fff" id="rn-pb-your-val">—</span>';
