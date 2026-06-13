@@ -2638,8 +2638,6 @@ function rnBuildConfig() {
   const g = function(id) { const b = document.querySelector('#' + id + ' .opt-btn.sel, #' + id + ' .rn-fc-sel .rn-fc-name'); return b ? b.textContent.trim() : ''; };
   const hrBtn = document.querySelector('#rn-grp-headrail .opt-btn.sel');
   const hrText = hrBtn ? hrBtn.textContent.trim() : 'Open Roll';
-  const isPremium = document.getElementById('rn-premium-hw').style.display !== 'none';
-
   return {
     systemType:         hrText.includes('Cassette') ? 'Cassette' : hrText.includes('Fascia') ? 'Fascia' : 'Open Roll',
     lightGuard:         (document.querySelector('#rn-grp-lg .opt-btn.sel') || {}).textContent || 'None',
@@ -2649,10 +2647,10 @@ function rnBuildConfig() {
     operatingSystem:    rnLiftType === 'motor' ? 'Motorized' : rnLiftType === 'cord' ? 'Continuous Cord Loop' : 'Cordless',
     motorType:          'Battery / Wired (TBD)',
     isDualShade:        rnSystemType === 'dual' || rnSystemType === 'dn',
-    tensionDevice:      true,         // always required
-    cassetteColor:      'Standard',   // defaults to standard — cassette color confirmed at order
-    usesFabricDefaultColor: !isPremium,
-    premiumFinish:      isPremium ? g('rn-grp-premium-finish') : null
+    tensionDevice:      true,
+    cassetteColor:      'Standard',
+    usesFabricDefaultColor: true,
+    hardwareColor:      g('rn-grp-hw-color')
   };
 }
 
@@ -2680,11 +2678,17 @@ function rnSetPremiumFinish(finish) {
 }
 
 // ─── rnSwitchHardwareMode ────────────────────────────────────
-// Open Roll → Premium Hardware / Fascia|Cassette|LightGuard → Standard Hardware
+// Updates hardware color label based on headrail type
 function rnSwitchHardwareMode(mode) {
-  // mode: 'premium' or 'standard'
-  document.getElementById('rn-premium-hw').style.display  = mode === 'premium'  ? 'block' : 'none';
-  document.getElementById('rn-standard-hw').style.display = mode === 'standard' ? 'block' : 'none';
+  var label = document.getElementById('rn-hw-color-label');
+  var note  = document.getElementById('rn-hw-color-note');
+  if (mode === 'standard') {
+    if (label) label.textContent = 'Hardware & fascia color';
+    if (note)  note.textContent  = 'Applies to brackets, hem bar, fascia/cassette housing, and all hardware components.';
+  } else {
+    if (label) label.textContent = 'Hardware color';
+    if (note)  note.textContent  = 'Applies to brackets, hem bar, clutch, and all hardware components.';
+  }
 }
 
 // ─── rnSetFasciaShape ────────────────────────────────────────
@@ -3140,10 +3144,9 @@ async function rnSubmitForm(btn) {
     hrDetail = '\n  Cassette type:  ' + g('rn-grp-cassette');
   }
 
-  // Hardware mode: premium (open roll) or standard (fascia/cassette)
-  const isPremium = document.getElementById('rn-premium-hw').style.display !== 'none';
-  const premiumFinishBtn = document.querySelector('#rn-grp-premium-finish .rn-fc-sel .rn-fc-name');
-  const premiumFinish = isPremium && premiumFinishBtn ? premiumFinishBtn.textContent.trim() : null;
+  // Hardware mode derived from headrail selection
+  const isPremium = hrType.includes('Open Roll');
+  const premiumFinish = null; // unified hw color used for all modes
 
   // Control detail (standard only)
   const ctrlType = g('rn-grp-control');
@@ -3183,17 +3186,8 @@ async function rnSubmitForm(btn) {
     'Hem bar type:   ' + g('rn-grp-hem-type')  + '\n' +
     'Hem bar color:  Fabric Matched (auto)\n\n' +
     '── HARDWARE & COLORS ────────────────────\n' +
-    (isPremium
-      ? 'Hardware mode:  Premium (Open Roll — no mix & match)\n' +
-        'Premium finish: ' + (premiumFinish || '—') + '\n' +
-        '  Brackets/Clutch: ' + (document.getElementById('rn-ps-bracket')||{}).textContent + '\n' +
-        '  Hem Bar:         ' + (document.getElementById('rn-ps-hem')||{}).textContent + '\n' +
-        '  Chain/Tensioner: ' + (document.getElementById('rn-ps-chain')||{}).textContent + '\n'
-      : 'Hardware mode:  Standard (Fascia/Cassette/LightGuard)\n' +
-        'Control:        ' + ctrlType + '\n' +
-        'Control color:  ' + ctrlColor + '\n' +
-        'Hardware color: ' + g('rn-grp-hw-color') + '\n'
-    ) +
+    'Hardware color: ' + g('rn-grp-hw-color') + '\n' +
+    (rnLiftType === 'cord' ? 'Chain color:    ' + ctrlColor + '\n' : '') +
     'Safety tensioner: Included (required by code)\n\n' +
     'Delivery:       ' + delivery             + '\n\n' +
     'Notes:\n' + (notes || '(none)');
