@@ -354,24 +354,33 @@ function crsUpdatePanel() {
   if (divEl)   divEl.style.display = '';
   if (noteEl)  noteEl.style.display = '';
 
-  // Price breakdown
-  var p = (CRS.w && CRS.h) ? crsCalcPricing() : null;
-  if (p && priceEl) {
-    var pRowsEl = _crsEl('qp-price-rows');
-    if (pRowsEl) {
-      var html = _prow('Retail price' + (CRS.qty > 1 ? ' (per shade)' : ''), '$' + p.retail.toLocaleString(), false);
-      html += _prow('Philly Blinds discount (35%)', '−$' + p.discount.toLocaleString(), true);
-      html += _prow('Your price' + (CRS.qty > 1 ? ' × ' + CRS.qty : ''), '$' + p.shadeTotal.toLocaleString(), false);
-      html += _prow('Shipping', '$' + p.freight.toLocaleString(), false);
-      pRowsEl.innerHTML = html;
+  // Price breakdown — suppress for motorized selections
+  var isMotorized = CRS.motor === 'lutron' || CRS.motor === 'somfy' || CRS.motor === 'rollease' || CRS.motor === 'other';
+  if (isMotorized) {
+    if (priceEl) priceEl.style.display = 'none';
+    if (noteEl) {
+      noteEl.textContent = 'Motorized pricing is custom — fill out your specs and submit. Justin will send you a personalized quote.';
+      noteEl.style.display = '';
     }
-    var totalEl = _crsEl('qp-total');
-    if (totalEl) totalEl.textContent = '$' + p.grandTotal.toLocaleString();
-    priceEl.style.display = '';
-    if (noteEl) noteEl.style.display = 'none';
-  } else if (priceEl) {
-    priceEl.style.display = 'none';
-    if (noteEl) noteEl.style.display = '';
+  } else {
+    var p = (CRS.w && CRS.h) ? crsCalcPricing() : null;
+    if (p && priceEl) {
+      var pRowsEl = _crsEl('qp-price-rows');
+      if (pRowsEl) {
+        var html = _prow('Retail price' + (CRS.qty > 1 ? ' (per shade)' : ''), '$' + p.retail.toLocaleString(), false);
+        html += _prow('Philly Blinds discount (35%)', '−$' + p.discount.toLocaleString(), true);
+        html += _prow('Your price' + (CRS.qty > 1 ? ' × ' + CRS.qty : ''), '$' + p.shadeTotal.toLocaleString(), false);
+        html += _prow('Shipping', '$' + p.freight.toLocaleString(), false);
+        pRowsEl.innerHTML = html;
+      }
+      var totalEl = _crsEl('qp-total');
+      if (totalEl) totalEl.textContent = '$' + p.grandTotal.toLocaleString();
+      priceEl.style.display = '';
+      if (noteEl) noteEl.style.display = 'none';
+    } else if (priceEl) {
+      priceEl.style.display = 'none';
+      if (noteEl) noteEl.style.display = '';
+    }
   }
 }
 
