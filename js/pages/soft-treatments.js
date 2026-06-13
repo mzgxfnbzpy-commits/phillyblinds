@@ -73,9 +73,9 @@ function selectPleat(el, val) {
   var rpOpts = document.getElementById('rodpocket-subopts');
   if (rpOpts) rpOpts.style.display = isRodPocket ? 'block' : 'none';
 
-  // Standard dims (Step 2) — hide for pinch and rod pocket (dims now live in sub-options)
+  // Standard dims (Step 2) — hide for pinch, rod pocket, and ripple fold (dims live in sub-options)
   var stdDims = document.getElementById('drape-std-dims');
-  if (stdDims) stdDims.style.display = (isPinch || isRodPocket) ? 'none' : '';
+  if (stdDims) stdDims.style.display = (isPinch || isRodPocket || isRipple) ? 'none' : '';
 
   // Ripple options
   var rippleOpts = document.getElementById('drape-ripple-opts');
@@ -192,6 +192,8 @@ function selectRomanStyle(el, val) {
   document.getElementById('vignette-notice').style.display = isVignette ? 'block' : 'none';
   document.getElementById('valance-config').style.display  = isValance  ? 'block' : 'none';
   document.getElementById('roman-tdbu-wrap').style.display = tdbuStyles.indexOf(val) !== -1 ? 'block' : 'none';
+  var quickDims = document.getElementById('roman-quick-dims');
+  if (quickDims) quickDims.style.display = hideSteps ? 'none' : 'block';
 
   ['step-roman-2','step-roman-3','step-roman-4','step-roman-5'].forEach(function(id){
     var s = document.getElementById(id);
@@ -204,7 +206,7 @@ function selectRomanStyle(el, val) {
   setTimeout(function() {
     var target = isVignette ? document.getElementById('vignette-notice')
                : isValance  ? document.getElementById('valance-config')
-               : document.getElementById('step-roman-2');
+               : document.getElementById('roman-quick-dims');
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 150);
 }
@@ -474,6 +476,7 @@ function _getDim(wholeId, fracId) {
 function calcDrapePrice() {
   var isPinchPleat = drapeState.pleat === 'Pinch Pleat' || (drapeState.pleat && drapeState.pleat.indexOf('Pinch Pleat') === 0);
   var isRodPocket  = drapeState.pleat === 'Rod Pocket / Sheered Pocket';
+  var isRippleDim  = drapeState.pleat === 'Ripple Fold';
   var w, h;
   if (isPinchPleat) {
     w = _getDim('pp-w', 'pp-w-frac');
@@ -481,6 +484,9 @@ function calcDrapePrice() {
   } else if (isRodPocket) {
     w = _getDim('rp-w', 'rp-w-frac');
     h = _getDim('rp-l', 'rp-l-frac');
+  } else if (isRippleDim) {
+    w = _getDim('rf-w', 'rf-w-frac');
+    h = _getDim('rf-l', 'rf-l-frac');
   } else {
     w = _getDim('d-exact-width',  'd-exact-width-frac');
     h = _getDim('d-exact-length', 'd-exact-length-frac');
@@ -992,9 +998,11 @@ async function submitDrape() {
     + 'Hardware: ' + hwNeed + (hwType !== 'N/A' ? ' — ' + hwType : '') + '\n'
     + '\nExact width: ' + (isSubmitPinch ? ((document.getElementById('pp-w')||{}).value || '—') + '"'
         : isSubmitRP ? ((document.getElementById('rp-w')||{}).value || '—') + '"'
+        : isRipple ? ((document.getElementById('rf-w')||{}).value || '—') + '"'
         : (document.getElementById('d-exact-width').value ? document.getElementById('d-exact-width').value + '"' : '—'))
     + '\nFinished length: ' + (isSubmitPinch ? ((document.getElementById('pp-l')||{}).value || '—') + '"'
         : isSubmitRP ? ((document.getElementById('rp-l')||{}).value || '—') + '"'
+        : isRipple ? ((document.getElementById('rf-l')||{}).value || '—') + '"'
         : (document.getElementById('d-exact-length').value ? document.getElementById('d-exact-length').value + '"' : '—')) + '\n'
     + 'Delivery: ' + delivery + '\n'
     + pbInstallLine(document.getElementById('drape-form')) + '\n\n'

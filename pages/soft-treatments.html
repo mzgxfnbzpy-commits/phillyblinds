@@ -355,6 +355,33 @@
 
     <!-- RIPPLE FOLD OPTIONS (shown only when Ripple Fold selected) -->
     <div id="drape-ripple-opts" style="display:none;margin-top:14px;padding:16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:12px">
+      <div class="dim-box" style="margin-bottom:18px">
+        <div class="dim-box-label">Width &amp; finished length</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Width</label>
+            <div style="display:flex;align-items:center;gap:6px">
+              <input type="number" id="rf-w" placeholder="84" min="10" max="200" oninput="calcDrapePrice()" style="width:80px">
+              <select id="rf-w-frac" onchange="calcDrapePrice()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
+                <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
+                <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
+              </select>
+              <span style="font-size:12px;color:#666">inches</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Finished length</label>
+            <div style="display:flex;align-items:center;gap:6px">
+              <input type="number" id="rf-l" placeholder="96" min="10" max="150" oninput="calcDrapePrice()" style="width:80px">
+              <select id="rf-l-frac" onchange="calcDrapePrice()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
+                <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
+                <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
+              </select>
+              <span style="font-size:12px;color:#666">inches</span>
+            </div>
+          </div>
+        </div>
+      </div>
       <div style="font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:14px">Ripple fold options</div>
 
       <div style="margin-bottom:14px">
@@ -809,6 +836,57 @@
       </div>
     </div>
 
+    <!-- QUICK DIMS — appears immediately after style selection -->
+    <div id="roman-quick-dims" style="display:none;margin-top:18px">
+      <div class="configurator" style="margin-top:0">
+        <div>
+          <div class="qty-row">
+            <button class="qty-btn" onclick="adjRomanQty(-1)">−</button>
+            <input class="qty-val" id="rn-qty" type="number" value="1" min="1" max="30" oninput="calcRoman()">
+            <span style="font-size:13px;color:#666">window(s)</span>
+          </div>
+          <div class="dim-box">
+            <div class="dim-box-label">Enter your window size</div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Width</label>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <input type="number" id="rn-w" placeholder="36" min="12" max="120" oninput="calcRoman()" style="width:70px">
+                  <select id="rn-w-frac" onchange="calcRoman()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
+                    <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
+                    <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
+                  </select>
+                  <span style="font-size:12px;color:#666">in</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Finished length</label>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <input type="number" id="rn-h" placeholder="48" max="120" oninput="calcRoman()" style="width:70px">
+                  <select id="rn-h-frac" onchange="calcRoman()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
+                    <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
+                    <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
+                  </select>
+                  <span style="font-size:12px;color:#666">in</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="price-box" id="roman-pricebox" style="display:none">
+            <div class="pb-title">Your configuration</div>
+            <div class="pb-row"><span class="pb-key">Style</span><span class="pb-val" id="rn-pb-style">—</span></div>
+            <div class="pb-row"><span class="pb-key">Size</span><span class="pb-val" id="rn-pb-dims">—</span></div>
+            <div class="pb-row"><span class="pb-key">Qty</span><span class="pb-val" id="rn-pb-qty">1</span></div>
+            <div class="pb-row"><span class="pb-key">Motorization</span><span class="pb-val" id="rn-pb-motor">No</span></div>
+            <div id="rn-pb-min-note" style="display:none"></div>
+            <div class="pb-note">All pricing confirmed at order — submit your configuration for a custom quote.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <!-- STEP 2: FABRIC -->
@@ -968,41 +1046,6 @@
     <div class="step-title">Size &amp; details</div>
     <div class="step-sub">Enter your window dimensions for an instant estimate. Roman shades are custom quoted — this gives you a starting figure.</div>
 
-    <div class="configurator" style="margin-top:16px">
-      <div>
-        <div class="qty-row">
-          <button class="qty-btn" onclick="adjRomanQty(-1)">−</button>
-          <input class="qty-val" id="rn-qty" type="number" value="1" min="1" max="30" oninput="calcRoman()">
-          <span style="font-size:13px;color:#666">window(s)</span>
-        </div>
-        <div class="dim-box">
-          <div class="dim-box-label">Enter your window size</div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Width</label>
-              <div style="display:flex;align-items:center;gap:6px">
-                <input type="number" id="rn-w" placeholder="36" min="12" max="120" oninput="calcRoman()" style="width:70px">
-                <select id="rn-w-frac" onchange="calcRoman()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
-                  <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
-                  <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
-                </select>
-                <span style="font-size:12px;color:#666">in</span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Finished length</label>
-              <div style="display:flex;align-items:center;gap:6px">
-                <input type="number" id="rn-h" placeholder="48" max="120" oninput="calcRoman()" style="width:70px">
-                <select id="rn-h-frac" onchange="calcRoman()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
-                  <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
-                  <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
-                </select>
-                <span style="font-size:12px;color:#666">in</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <!-- Return size -->
         <div style="margin-bottom:14px">
           <label style="font-size:12px;font-weight:600;color:#333;display:block;margin-bottom:6px">Return size (inches) <span style="font-weight:400;color:#999">default 4"</span></label>
@@ -1118,19 +1161,6 @@
           <strong>Order submitted!</strong><br>Your email opened with your full spec pre-filled — just hit Send. We'll review and send you an invoice within a few hours.<br><br>
           Questions? <a href="tel:6097421720" style="color:#2e7d32">(609) 742-1720</a> &middot; 24/7.
         </div>
-      </div>
-
-      <!-- PRICE BOX -->
-      <div class="price-box" id="roman-pricebox" style="display:none">
-        <div class="pb-title">Your configuration</div>
-        <div class="pb-row"><span class="pb-key">Style</span><span class="pb-val" id="rn-pb-style">—</span></div>
-        <div class="pb-row"><span class="pb-key">Size</span><span class="pb-val" id="rn-pb-dims">—</span></div>
-        <div class="pb-row"><span class="pb-key">Qty</span><span class="pb-val" id="rn-pb-qty">1</span></div>
-        <div class="pb-row"><span class="pb-key">Motorization</span><span class="pb-val" id="rn-pb-motor">No</span></div>
-        <div id="rn-pb-min-note" style="display:none"></div>
-        <div class="pb-note">All pricing confirmed at order — submit your configuration for a custom quote.</div>
-      </div>
-    </div>
   </div>
 
 </div><!-- /roman step-wrap -->
