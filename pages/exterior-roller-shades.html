@@ -112,12 +112,6 @@
 .qrow-val{color:var(--cream);font-weight:500;text-align:right;flex-shrink:0;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .qdiv{border:none;border-top:.5px solid var(--border-dark);margin:12px 0}
 .qnote{font-size:10px;color:var(--text-dark);margin-top:8px;line-height:1.6;font-style:italic}
-.price-est{margin-top:14px;padding:12px;background:rgba(255,255,255,.06);border-radius:8px;display:none}
-.price-est.show{display:block}
-.price-line{display:flex;justify-content:space-between;font-size:12px;color:var(--text-dark);padding:3px 0;border-bottom:.5px solid rgba(255,255,255,.07)}
-.price-line:last-child{border-bottom:none}
-.price-line-total{display:flex;justify-content:space-between;font-size:14px;font-weight:700;color:var(--cream);padding:8px 0 0;border-top:.5px solid var(--border-dark);margin-top:6px}
-.price-disclaimer{font-size:10px;color:var(--text-faint);margin-top:6px;line-height:1.5;font-style:italic}
 .submit-note{font-size:10px;color:var(--text-muted);text-align:center;margin-top:8px;line-height:1.5}
 
 .success-box{background:#1a3a2a;border:1px solid rgba(45,224,193,.4);border-radius:10px;padding:18px;text-align:center;display:none}
@@ -360,18 +354,10 @@
 <!-- ── QUOTE PANEL ── -->
 <div class="quote-panel" id="quote-panel">
   <div class="qp-title">Your order</div>
-  <div class="qp-pending" id="qp-pending">Select openness factor above to start.</div>
+  <div class="qp-pending" id="qp-pending">Select your options above to start building your quote.</div>
   <div id="qp-rows"></div>
   <div class="qdiv" id="qp-div" style="display:none"></div>
-  <div class="price-est" id="price-est">
-    <div id="price-lines"></div>
-    <div class="price-line-total">
-      <span>Estimated total</span>
-      <span id="price-total">—</span>
-    </div>
-    <div class="price-disclaimer">Estimate only — confirmed at order. Motorized pricing quoted separately. Freight: $25 first + $11 each, or $80 oversized (&gt;90″).</div>
-  </div>
-  <div class="qnote" id="qp-note" style="display:none">Pricing estimate shown above. Final quote confirmed by Justin before any payment.</div>
+  <div class="qnote" id="qp-note" style="display:none">Fill in your details above and submit — Justin will send you a custom quote.</div>
   <div id="submit-wrap">
     <button onclick="ersSubmit()" id="submit-btn" class="btn-gold" style="width:100%;padding:14px;font-size:15px;font-weight:600;margin-top:16px;border:none;cursor:pointer;border-radius:10px">Submit Order for Review</button>
     <div class="submit-note">No payment required now. Justin reviews your specs and sends a custom quote.</div>
@@ -387,9 +373,6 @@ renderNav('Shades & blinds');
 renderFooter(false);
 
 var ERS = { openness:'', color:'', track:'', mount:'', operation:'', width:0, height:0, qty:1, delivery:'' };
-
-var ERS_SQFT_RATE = { '5': 12, '10': 10 };
-var ERS_MOTOR_ADD = 350;
 
 function ersOpen(id) {
   var el = document.getElementById(id);
@@ -511,7 +494,6 @@ function ersUpdatePanel() {
   var rows = document.getElementById('qp-rows');
   var div = document.getElementById('qp-div');
   var note = document.getElementById('qp-note');
-  var priceEst = document.getElementById('price-est');
 
   var r = '';
   function qr(label, val) { r += '<div class="qrow"><span class="qrow-label">'+label+'</span><span class="qrow-val">'+val+'</span></div>'; }
@@ -534,26 +516,6 @@ function ersUpdatePanel() {
     rows.innerHTML = '';
     div.style.display = 'none';
     note.style.display = 'none';
-  }
-
-  // Price estimate (only for 5% and 10% with dimensions)
-  var rate = ERS_SQFT_RATE[ERS.openness];
-  if (rate && ERS.width > 0 && ERS.height > 0) {
-    var sqft = ERS.width * ERS.height / 144;
-    var shadePrice = Math.round(sqft * rate * ERS.qty);
-    var isOversized = ERS.width > 90 || ERS.height > 90;
-    var freight = isOversized ? (80 + Math.max(0, ERS.qty - 1) * 50) : (25 + Math.max(0, ERS.qty - 1) * 11);
-    var lines = '';
-    function pl(lbl, val) { lines += '<div class="price-line"><span style="color:var(--text-muted)">'+lbl+'</span><span style="color:var(--cream)">'+val+'</span></div>'; }
-    pl(ERS.openness + '% solar · ' + ERS.qty + ' shade' + (ERS.qty > 1 ? 's' : ''), '$' + shadePrice.toLocaleString());
-    if (ERS.operation === 'motorized') pl('Motor (estimate)', 'quoted separately');
-    pl((isOversized ? 'Oversized freight' : 'Standard freight'), '$' + freight.toLocaleString());
-    var grandTotal = shadePrice + freight;
-    document.getElementById('price-lines').innerHTML = lines;
-    document.getElementById('price-total').textContent = ERS.operation === 'motorized' ? ('$' + grandTotal.toLocaleString() + ' + motor') : ('$' + grandTotal.toLocaleString());
-    priceEst.classList.add('show');
-  } else {
-    priceEst.classList.remove('show');
   }
 }
 
