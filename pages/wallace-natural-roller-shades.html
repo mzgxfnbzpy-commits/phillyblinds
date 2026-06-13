@@ -168,38 +168,12 @@
 <div class="config-layout">
 <div id="configurator">
 
-<!-- STEP 1: SINGLE vs DOUBLE — must come first -->
+<!-- STEP 1: MOUNT -->
 <div class="step-block active open" id="step-1">
   <div class="step-head" onclick="toggleStep('step-1')">
     <div class="step-num-circle">1</div>
-    <div class="step-head-title">Shade type</div>
-    <div class="step-head-val" id="s1-val"></div>
-  </div>
-  <div class="step-body">
-    <div style="font-size:12px;color:#666;margin-bottom:12px;line-height:1.6">This is the first decision — it changes which top treatments, controls, and options are available.</div>
-    <div class="type-grid">
-      <div class="type-card" id="tc-single" onclick="selectType('single')">
-        <div class="type-icon">🪟</div>
-        <div class="type-name">Single Natural Roller</div>
-        <div class="type-desc">Natural woven-look fabric only. Open roll, cassette, box valance, or traditional valance. All control types available.</div>
-        <span class="type-badge">All control types · Up to 108" tall</span>
-      </div>
-      <div class="type-card" id="tc-double" onclick="selectType('double')">
-        <div class="type-icon">🪟🪟</div>
-        <div class="type-name">Double Natural Roller</div>
-        <div class="type-desc">Natural front fabric + light-filtering or Blackout back fabric on dual bracket. Max height 96". No cassette, no Pro Wand, no decorative metal brackets.</div>
-        <span class="type-badge">Enhanced privacy · Max 96" tall</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- STEP 2: MOUNT -->
-<div class="step-block" id="step-2">
-  <div class="step-head" onclick="toggleStep('step-2')">
-    <div class="step-num-circle">2</div>
     <div class="step-head-title">Mount type</div>
-    <div class="step-head-val" id="s2-val"></div>
+    <div class="step-head-val" id="s1-val"></div>
   </div>
   <div class="step-body">
     <div class="opt-grid-2">
@@ -217,12 +191,12 @@
   </div>
 </div>
 
-<!-- STEP 3: SIZE -->
-<div class="step-block" id="step-3">
-  <div class="step-head" onclick="toggleStep('step-3')">
-    <div class="step-num-circle">3</div>
+<!-- STEP 2: WIDTH & HEIGHT -->
+<div class="step-block" id="step-2">
+  <div class="step-head" onclick="toggleStep('step-2')">
+    <div class="step-num-circle">2</div>
     <div class="step-head-title">Width &amp; height</div>
-    <div class="step-head-val" id="s3-val"></div>
+    <div class="step-head-val" id="s2-val"></div>
   </div>
   <div class="step-body">
     <div id="size-type-note" class="info-box" style="display:none"></div>
@@ -242,19 +216,6 @@
       </div>
     </div>
     <div class="tooltip-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine — we confirm at the home visit.</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px">
-      <div>
-        <div class="dim-label">Quantity</div>
-        <div style="display:flex;align-items:center;gap:6px">
-          <input class="dim-input" type="number" id="inp-qty" min="1" max="50" value="1" oninput="validateSize()">
-          <span class="dim-unit">shades</span>
-        </div>
-      </div>
-      <div>
-        <div class="dim-label">Room / window label</div>
-        <input type="text" id="inp-room" placeholder="e.g. Master Bedroom Left" style="padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;width:100%;box-sizing:border-box">
-      </div>
-    </div>
     <div id="size-msgs" style="margin-top:8px"></div>
     <div id="size-computed" class="computed-info" style="display:none">
       <div class="computed-row"><span class="computed-key">Fabric width (approx.)</span><span class="computed-val" id="cp-fabW">—</span></div>
@@ -263,12 +224,62 @@
   </div>
 </div>
 
-<!-- STEP 4: FRONT FABRIC -->
+<!-- STEP 3: QTY & ROOM -->
+<div class="step-block" id="step-3">
+  <div class="step-head" onclick="toggleStep('step-3')">
+    <div class="step-num-circle">3</div>
+    <div class="step-head-title">Quantity &amp; room</div>
+    <div class="step-head-val" id="s3-val"></div>
+  </div>
+  <div class="step-body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px">
+      <div>
+        <div class="dim-label">Quantity</div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <input class="dim-input" type="number" id="inp-qty" min="1" max="50" value="1" oninput="validateQty()">
+          <span class="dim-unit">shades</span>
+        </div>
+      </div>
+      <div>
+        <div class="dim-label">Room / window label</div>
+        <input type="text" id="inp-room" placeholder="e.g. Master Bedroom Left" style="padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;width:100%;box-sizing:border-box" oninput="validateQty()">
+      </div>
+    </div>
+    <div style="font-size:11px;color:#888;margin-top:10px;line-height:1.5">Room label is optional. Click continue when ready.</div>
+    <button class="btn-outline" onclick="validateQty(true)" style="margin-top:12px">Continue →</button>
+  </div>
+</div>
+
+<!-- STEP 4: SHADE TYPE -->
 <div class="step-block" id="step-4">
   <div class="step-head" onclick="toggleStep('step-4')">
     <div class="step-num-circle">4</div>
-    <div class="step-head-title">Front fabric pattern</div>
+    <div class="step-head-title">Shade type</div>
     <div class="step-head-val" id="s4-val"></div>
+  </div>
+  <div class="step-body">
+    <div style="font-size:12px;color:#666;margin-bottom:12px;line-height:1.6">Single shade uses one natural fabric. Double shade adds a light-filtering or blackout back fabric on a dual bracket.</div>
+    <div class="opt-grid-2">
+      <div class="opt-card" id="tc-single" onclick="selectType('single')">
+        <div class="opt-card-title">Single Natural Roller</div>
+        <div class="opt-card-desc">One natural fabric. Open roll, cassette, or valance. All control types available.</div>
+        <span class="type-badge" style="display:inline-block;margin-top:6px">All controls · Up to 108" tall</span>
+      </div>
+      <div class="opt-card" id="tc-double" onclick="selectType('double')">
+        <div class="opt-card-title">Double Natural Roller</div>
+        <div class="opt-card-desc">Natural front + LF or blackout back on dual bracket. No cassette, no Pro Wand.</div>
+        <span class="type-badge" style="display:inline-block;margin-top:6px">Max 96" tall</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 5: FRONT FABRIC -->
+<div class="step-block" id="step-5">
+  <div class="step-head" onclick="toggleStep('step-5')">
+    <div class="step-num-circle">5</div>
+    <div class="step-head-title">Front fabric pattern</div>
+    <div class="step-head-val" id="s5-val"></div>
   </div>
   <div class="step-body">
     <div style="font-size:12px;color:#666;margin-bottom:10px;line-height:1.6">Select your fabric pattern — this sets max width/height. Specific color and PR code entered below.</div>
@@ -290,12 +301,12 @@
   </div>
 </div>
 
-<!-- STEP 5: BACK FABRIC (double only) -->
-<div class="step-block" id="step-5" style="display:none">
-  <div class="step-head" onclick="toggleStep('step-5')">
-    <div class="step-num-circle">5</div>
+<!-- STEP 6: BACK FABRIC (double only) -->
+<div class="step-block" id="step-6" style="display:none">
+  <div class="step-head" onclick="toggleStep('step-6')">
+    <div class="step-num-circle">6</div>
     <div class="step-head-title">Back fabric</div>
-    <div class="step-head-val" id="s5-val"></div>
+    <div class="step-head-val" id="s6-val"></div>
   </div>
   <div class="step-body">
     <div style="font-size:12px;color:#666;margin-bottom:10px">Select the back fabric for your double shade — light filtering or Blackout.</div>
@@ -307,23 +318,11 @@
   </div>
 </div>
 
-<!-- STEP 6: TOP TREATMENT -->
-<div class="step-block" id="step-6">
-  <div class="step-head" onclick="toggleStep('step-6')">
-    <div class="step-num-circle">6</div>
-    <div class="step-head-title">Top treatment / bracket style</div>
-    <div class="step-head-val" id="s6-val"></div>
-  </div>
-  <div class="step-body" id="s6-body">
-    <!-- Built dynamically -->
-  </div>
-</div>
-
-<!-- STEP 7: ROLL DIRECTION -->
+<!-- STEP 7: TOP TREATMENT -->
 <div class="step-block" id="step-7">
   <div class="step-head" onclick="toggleStep('step-7')">
     <div class="step-num-circle">7</div>
-    <div class="step-head-title">Roll direction</div>
+    <div class="step-head-title">Top treatment / bracket style</div>
     <div class="step-head-val" id="s7-val"></div>
   </div>
   <div class="step-body" id="s7-body">
@@ -331,11 +330,11 @@
   </div>
 </div>
 
-<!-- STEP 8: CONTROL -->
+<!-- STEP 8: ROLL DIRECTION -->
 <div class="step-block" id="step-8">
   <div class="step-head" onclick="toggleStep('step-8')">
     <div class="step-num-circle">8</div>
-    <div class="step-head-title">Control type</div>
+    <div class="step-head-title">Roll direction</div>
     <div class="step-head-val" id="s8-val"></div>
   </div>
   <div class="step-body" id="s8-body">
@@ -343,11 +342,11 @@
   </div>
 </div>
 
-<!-- STEP 9: CONTROL DETAILS -->
-<div class="step-block" id="step-9" style="display:none">
+<!-- STEP 9: CONTROL TYPE -->
+<div class="step-block" id="step-9">
   <div class="step-head" onclick="toggleStep('step-9')">
     <div class="step-num-circle">9</div>
-    <div class="step-head-title" id="s9-title">Control details</div>
+    <div class="step-head-title">Control type</div>
     <div class="step-head-val" id="s9-val"></div>
   </div>
   <div class="step-body" id="s9-body">
@@ -355,24 +354,36 @@
   </div>
 </div>
 
-<!-- STEP 10: MOTOR ACCESSORIES -->
+<!-- STEP 10: CONTROL DETAILS -->
 <div class="step-block" id="step-10" style="display:none">
   <div class="step-head" onclick="toggleStep('step-10')">
     <div class="step-num-circle">10</div>
-    <div class="step-head-title">Motor accessories</div>
-    <div class="step-head-val" id="s10-val">Optional</div>
+    <div class="step-head-title" id="s10-title">Control details</div>
+    <div class="step-head-val" id="s10-val"></div>
   </div>
   <div class="step-body" id="s10-body">
     <!-- Built dynamically -->
   </div>
 </div>
 
-<!-- STEP 11: OPTIONS -->
-<div class="step-block" id="step-11">
+<!-- STEP 11: MOTOR ACCESSORIES -->
+<div class="step-block" id="step-11" style="display:none">
   <div class="step-head" onclick="toggleStep('step-11')">
     <div class="step-num-circle">11</div>
+    <div class="step-head-title">Motor accessories</div>
+    <div class="step-head-val" id="s11-val">Optional</div>
+  </div>
+  <div class="step-body" id="s11-body">
+    <!-- Built dynamically -->
+  </div>
+</div>
+
+<!-- STEP 12: OPTIONS -->
+<div class="step-block" id="step-12">
+  <div class="step-head" onclick="toggleStep('step-12')">
+    <div class="step-num-circle">12</div>
     <div class="step-head-title">Hold-downs &amp; spacer blocks <span style="font-size:11px;color:#aaa;font-weight:400">(optional)</span></div>
-    <div class="step-head-val" id="s11-val">None</div>
+    <div class="step-head-val" id="s12-val">None</div>
   </div>
   <div class="step-body">
     <div class="acc-item">
@@ -391,10 +402,10 @@
   </div>
 </div>
 
-<!-- STEP 12: QUOTE FORM -->
-<div class="step-block open" id="step-12">
-  <div class="step-head" onclick="toggleStep('step-12')">
-    <div class="step-num-circle">12</div>
+<!-- STEP 13: QUOTE FORM -->
+<div class="step-block open" id="step-13">
+  <div class="step-head" onclick="toggleStep('step-13')">
+    <div class="step-num-circle">13</div>
     <div class="step-head-title">Get your custom quote</div>
   </div>
   <div class="step-body">

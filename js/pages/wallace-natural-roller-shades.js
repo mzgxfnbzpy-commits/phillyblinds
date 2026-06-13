@@ -101,11 +101,11 @@ function selectType(t) {
   document.getElementById('tc-single').classList.toggle('sel', t === 'single');
   document.getElementById('tc-double').classList.toggle('sel', t === 'double');
   var label = t === 'single' ? 'Single Natural Roller' : 'Double Natural Roller';
-  completeStep('step-1', label);
+  completeStep('step-4', label);
   updateSpec('sp-type', label);
 
   // Show/hide back fabric step
-  document.getElementById('step-5').style.display = t === 'double' ? 'block' : 'none';
+  document.getElementById('step-6').style.display = t === 'double' ? 'block' : 'none';
   document.getElementById('sp-back-row').style.display = t === 'double' ? 'flex' : 'none';
 
   // Update size note
@@ -120,7 +120,7 @@ function selectType(t) {
   buildTopTreatmentStep();
   buildControlStep();
   validateSize();
-  activateStep('step-2');
+  activateStep('step-5');
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -131,10 +131,10 @@ function selectMount(m) {
   document.getElementById('mc-in').classList.toggle('sel', m === 'inside');
   document.getElementById('mc-out').classList.toggle('sel', m === 'outside');
   var label = m === 'inside' ? 'Inside Mount' : 'Outside Mount';
-  completeStep('step-2', label);
+  completeStep('step-1', label);
   updateSpec('sp-mount', label);
   validateSize();
-  activateStep('step-3');
+  activateStep('step-2');
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -143,18 +143,13 @@ function selectMount(m) {
 function validateSize() {
   var w = parseFloat(document.getElementById('inp-w').value) || 0;
   var h = parseFloat(document.getElementById('inp-h').value) || 0;
-  var qty = parseInt(document.getElementById('inp-qty').value) || 1;
-  S.width = w; S.height = h; S.qty = qty;
-  S.room = document.getElementById('inp-room') ? document.getElementById('inp-room').value.trim() : '';
+  S.width = w; S.height = h;
 
   var msgs = document.getElementById('size-msgs');
   msgs.innerHTML = '';
   var errors = [], warns = [];
 
   if (w > 0 && h > 0) {
-    var maxH = S.shadeType === 'double' ? 96 : (S.fabric ? S.fabric.maxH : 108);
-    var maxW = S.fabric ? S.fabric.maxW : 114;
-
     if (S.fabric && w > S.fabric.maxW) errors.push('Width ' + w + '" exceeds ' + S.fabric.name + ' maximum of ' + S.fabric.maxW + '".');
     if (S.shadeType === 'double' && h > 96) errors.push('Double shades: maximum height is 96". Entered: ' + h + '".');
     if (S.fabric && !S.shadeType === 'double' && h > S.fabric.maxH) errors.push('Height ' + h + '" exceeds ' + S.fabric.name + ' maximum of ' + S.fabric.maxH + '".');
@@ -165,8 +160,7 @@ function validateSize() {
     if (!errors.length) {
       msgs.innerHTML += '<div class="size-ok">✓ Dimensions within specification.</div>';
       updateSpec('sp-dims', w + '" × ' + h + '"');
-      updateSpec('sp-qty', qty);
-      document.getElementById('s3-val').textContent = w + '" × ' + h + '"';
+      document.getElementById('s2-val').textContent = w + '" × ' + h + '"';
 
       // Approximate fabric width
       var ded = getDeduction();
@@ -175,12 +169,25 @@ function validateSize() {
       document.getElementById('cp-fabW').textContent = fabW + '"';
       document.getElementById('size-computed').style.display = 'block';
 
-      if (!document.getElementById('step-4').classList.contains('done')) activateStep('step-4');
+      if (!document.getElementById('step-3').classList.contains('done')) activateStep('step-3');
     } else {
       document.getElementById('size-computed').style.display = 'none';
     }
   } else {
     document.getElementById('size-computed').style.display = 'none';
+  }
+}
+
+function validateQty(force) {
+  var qty = parseInt(document.getElementById('inp-qty').value) || 1;
+  S.qty = qty;
+  S.room = document.getElementById('inp-room').value.trim();
+  var label = qty + ' shade' + (qty !== 1 ? 's' : '') + (S.room ? ' · ' + S.room : '');
+  document.getElementById('s3-val').textContent = label;
+  updateSpec('sp-qty', qty);
+  if (force) {
+    completeStep('step-3', label);
+    activateStep('step-4');
   }
 }
 
@@ -229,14 +236,14 @@ function selectFabric(idx) {
   validateSize();
   buildTopTreatmentStep();
 
-  if (S.shadeType === 'double') activateStep('step-5');
-  else activateStep('step-6');
+  if (S.shadeType === 'double') activateStep('step-6');
+  else activateStep('step-7');
 }
 
 function updateFabColor(val) {
   S.fabColor = val;
   if (val.trim()) {
-    completeStep('step-4', S.fabric.name + (val ? ' · ' + val : ''));
+    completeStep('step-5', S.fabric.name + (val ? ' · ' + val : ''));
     updateSpec('sp-front', S.fabric.name + (val ? ' · ' + val : '') + ' · Group ' + S.fabric.group);
   }
 }
@@ -264,16 +271,16 @@ function selectBack(code, name, type) {
   var el = document.getElementById('backc-' + code);
   if (el) el.classList.add('sel');
   var label = (type === 'RD' ? 'Blackout ' : 'Light Filtering ') + name + ' · ' + code;
-  completeStep('step-5', label);
+  completeStep('step-6', label);
   updateSpec('sp-back', label);
-  activateStep('step-6');
+  activateStep('step-7');
 }
 
 // ═══════════════════════════════════════════════════════════════
 // STEP 6 — TOP TREATMENT
 // ═══════════════════════════════════════════════════════════════
 function buildTopTreatmentStep() {
-  var body = document.getElementById('s6-body');
+  var body = document.getElementById('s7-body');
   var isDouble = S.shadeType === 'double';
   var isRhea = S.fabric && S.fabric.rhea;
 
@@ -310,14 +317,14 @@ function selectTopTreatment(key) {
   if (el) el.classList.add('sel');
 
   var label = TOP_TREATMENTS[key] ? TOP_TREATMENTS[key].label : key;
-  completeStep('step-6', label);
+  completeStep('step-7', label);
   updateSpec('sp-top', label);
 
   buildTopSubOpts(key);
   buildRollStep();
   buildControlStep();
   validateSize();
-  activateStep('step-7');
+  activateStep('step-8');
 }
 
 function buildTopSubOpts(key) {
@@ -378,14 +385,14 @@ function selMetalBracket(c) {
 // STEP 7 — ROLL DIRECTION
 // ═══════════════════════════════════════════════════════════════
 function buildRollStep() {
-  var body = document.getElementById('s7-body');
+  var body = document.getElementById('s8-body');
   var tt = S.topTreatment;
   var isDouble = S.shadeType === 'double';
 
   if (isDouble) {
     body.innerHTML = '<div class="info-box">Double shades: roll direction is fixed — front fabric reverse roll, back fabric standard roll. No selection needed.</div>';
     S.rollDir = 'double-fixed';
-    completeStep('step-7', 'Front: Reverse · Back: Standard (fixed)');
+    completeStep('step-8', 'Front: Reverse · Back: Standard (fixed)');
     updateSpec('sp-roll', 'Front Reverse / Back Standard');
     return;
   }
@@ -414,16 +421,16 @@ function selectRoll(dir) {
   S.rollDir = dir;
   document.getElementById('rd-std') && document.getElementById('rd-std').classList.toggle('sel', dir === 'standard');
   document.getElementById('rd-rev') && document.getElementById('rd-rev').classList.toggle('sel', dir === 'reverse');
-  completeStep('step-7', dir === 'standard' ? 'Standard Roll' : 'Reverse Roll');
+  completeStep('step-8', dir === 'standard' ? 'Standard Roll' : 'Reverse Roll');
   updateSpec('sp-roll', dir === 'standard' ? 'Standard' : 'Reverse');
-  activateStep('step-8');
+  activateStep('step-9');
 }
 
 // ═══════════════════════════════════════════════════════════════
 // STEP 8 — CONTROL TYPE
 // ═══════════════════════════════════════════════════════════════
 function buildControlStep() {
-  var body = document.getElementById('s8-body');
+  var body = document.getElementById('s9-body');
   var tt = S.topTreatment;
   var isDouble = S.shadeType === 'double';
 
@@ -461,27 +468,26 @@ function selectControl(key) {
   S.control = key;
   S.controlSide = '';
   var labels = {clutch:'Clutch', cordless:'Cordless', prowand:'Pro Wand Motor', motor:'Remote Motor'};
-  completeStep('step-8', labels[key]);
+  completeStep('step-9', labels[key]);
   updateSpec('sp-control', labels[key]);
   validateSize();
 
-  var needsSide = key !== 'cordless';
   var needsMotorAcc = key === 'motor' || key === 'prowand';
-  document.getElementById('step-9').style.display = 'block';
-  document.getElementById('step-10').style.display = needsMotorAcc ? 'block' : 'none';
+  document.getElementById('step-10').style.display = 'block';
+  document.getElementById('step-11').style.display = needsMotorAcc ? 'block' : 'none';
 
   buildControlDetails(key);
   if (needsMotorAcc) buildMotorAcc(key);
 
-  activateStep('step-9');
+  activateStep('step-10');
 }
 
 // ═══════════════════════════════════════════════════════════════
 // STEP 9 — CONTROL DETAILS
 // ═══════════════════════════════════════════════════════════════
 function buildControlDetails(key) {
-  var body = document.getElementById('s9-body');
-  var titleEl = document.getElementById('s9-title');
+  var body = document.getElementById('s10-body');
+  var titleEl = document.getElementById('s10-title');
   titleEl.textContent = 'Control side' + (key === 'clutch' ? ' + chain' : key === 'prowand' ? ' + wand length' : key === 'motor' ? ' + motor type' : '');
 
   var sideHTML = '<div style="font-size:12px;font-weight:500;color:#444;margin-bottom:8px">Control side</div>' +
@@ -548,13 +554,13 @@ function selectSide(side) {
   S.controlSide = side;
   ['side-right','side-left'].forEach(function(id){ var el=document.getElementById(id); if(el) el.classList.remove('sel'); });
   var el = document.getElementById('side-' + side.toLowerCase()); if(el) el.classList.add('sel');
-  document.getElementById('s9-val').textContent = side;
-  activateStep('step-11');
+  document.getElementById('s10-val').textContent = side;
+  activateStep('step-12');
 }
 function selChainColor(c,el) { S.chainColor=c; document.querySelectorAll('#grp-chain-color .hw-color-opt').forEach(function(e){e.classList.remove('sel');}); el.classList.add('sel'); }
 function selChainDrop(l) { S.chainDrop=l; buildControlDetails('clutch'); }
 function selWandLength(l) { S.wandLength=l; buildControlDetails('prowand'); }
-function selMotorType(v) { S.motorType=v; buildControlDetails('motor'); if(S.motorType==='ac-100'){ document.querySelector('#s9-body .err-box') || (document.getElementById('s9-body').insertAdjacentHTML('beforeend','<div class="err-box" style="margin-top:10px"><span>⚠️</span><span>AC hardwired motor requires installation by a licensed electrician.</span></div>')); } }
+function selMotorType(v) { S.motorType=v; buildControlDetails('motor'); if(S.motorType==='ac-100'){ document.querySelector('#s10-body .err-box') || (document.getElementById('s10-body').insertAdjacentHTML('beforeend','<div class="err-box" style="margin-top:10px"><span>⚠️</span><span>AC hardwired motor requires installation by a licensed electrician.</span></div>')); } }
 function isChainDefault(l) {
   if (!S.height) return false;
   var twoThirds = S.height * 2 / 3;
@@ -567,7 +573,7 @@ function isChainDefault(l) {
 // STEP 10 — MOTOR ACCESSORIES
 // ═══════════════════════════════════════════════════════════════
 function buildMotorAcc(key) {
-  var body = document.getElementById('s10-body');
+  var body = document.getElementById('s11-body');
   var items = [
     {id:'acc-remote15', label:'15-Channel Handheld Remote',  sub:'Controls up to 15 shades'},
     {id:'acc-switch15', label:'15-Channel Wall Switch',       sub:'Wall-mounted controller'},
@@ -589,12 +595,12 @@ function buildMotorAcc(key) {
 
 function updateMotorAcc() {
   var acc = [];
-  document.querySelectorAll('#s10-body .acc-check:checked').forEach(function(el) {
+  document.querySelectorAll('#s11-body .acc-check:checked').forEach(function(el) {
     var lbl = el.nextElementSibling && el.nextElementSibling.querySelector('.acc-label');
     if (lbl) acc.push(lbl.textContent);
   });
   S.motorAccessories = acc;
-  document.getElementById('s10-val').textContent = acc.length ? acc.length + ' selected' : 'Optional';
+  document.getElementById('s11-val').textContent = acc.length ? acc.length + ' selected' : 'Optional';
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -607,7 +613,7 @@ function updateOptions() {
   var opts = [];
   if (S.holdDown) opts.push('Hold-downs');
   if (S.spacer) opts.push('Spacer blocks');
-  document.getElementById('s11-val').textContent = opts.length ? opts.join(', ') : 'None';
+  document.getElementById('s12-val').textContent = opts.length ? opts.join(', ') : 'None';
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -615,10 +621,10 @@ function updateOptions() {
 // ═══════════════════════════════════════════════════════════════
 function selectDelivery(mode) {
   S.delivery = mode;
-  document.getElementById('del-ship').classList.toggle('sel', mode === 'ship');
-  document.getElementById('del-pickup').classList.toggle('sel', mode === 'pickup');
-  document.getElementById('del-ship-note').style.display = mode === 'ship' ? 'block' : 'none';
-  document.getElementById('del-pickup-note').style.display = mode === 'pickup' ? 'block' : 'none';
+  var delShip = document.getElementById('del-ship');
+  var shipNote = document.getElementById('del-ship-note');
+  if (delShip) delShip.classList.toggle('sel', mode === 'ship');
+  if (shipNote) shipNote.style.display = mode === 'ship' ? 'block' : 'none';
 }
 
 // ═══════════════════════════════════════════════════════════════
