@@ -653,9 +653,50 @@
         <!-- Shown only when product=roller + brand=Norman. All 8 steps in correct cascade order. -->
         <div id="rn-wrap" style="display:none">
 
-          <!-- Step 1: Shade Configuration / System Type -->
+          <!-- Step 1: Window Measurements & Mount -->
           <div class="step-block">
             <div class="step-label">Step 1</div>
+            <div class="step-title">Window measurements &amp; mount</div>
+            <div class="dim-box">
+              <div class="dim-box-label">Enter your window size</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Width</label>
+                  <input type="number" id="rn-width" min="12" max="118" step="0.5" placeholder="36" oninput="rnUpdatePrice()">
+                  <div class="dim-unit">inches</div>
+                </div>
+                <div class="form-group">
+                  <label>Height</label>
+                  <input type="number" id="rn-height" min="12" max="132" step="0.5" placeholder="48" oninput="rnUpdatePrice()">
+                  <div class="dim-unit">inches</div>
+                </div>
+              </div>
+            </div>
+            <div id="rn-fw-compat" style="display:none;margin-top:8px;padding:10px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
+              <div style="font-size:11px;font-weight:500;color:#444;margin-bottom:5px">Compatible fabric widths for your shade:</div>
+              <div id="rn-fw-pills"></div>
+              <div id="rn-fw-note" class="tooltip-note" style="margin-top:5px"></div>
+            </div>
+            <div class="tooltip-note" id="rn-size-warning" style="color:#DC2626;display:none;margin-top:6px"></div>
+            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:7px;margin-top:14px">Mount type</div>
+            <div class="opt-row" id="rn-grp-mount">
+              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-mount');document.getElementById('ps-door-warn').style.display='none'">Inside mount</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-mount');document.getElementById('ps-door-warn').style.display='none'">Outside mount</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-mount');document.getElementById('ps-door-warn').style.display='block'">Door application</button>
+            </div>
+            <div class="tooltip-note" style="margin-top:4px">Inside mount requires min 2¾″ depth. Cassette and dual shades require more — confirmed at order.</div>
+            <div id="ps-door-warn" class="tooltip-note" style="display:none;margin-top:6px;background:#FFF3CD;border:1px solid #FFC107;border-radius:8px;padding:8px 12px;color:#7d5a00">⚠ Door application: magnetic hold-down brackets required (+$28 each). Extra 1/16″ deduction per side applied. Valances <strong>NOT recommended</strong> for door applications.</div>
+            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:8px;margin-top:14px">Quantity</div>
+            <div class="qty-btns">
+              <button class="qty-btn" onclick="rnAdjQty(-1)">&#8722;</button>
+              <input class="qty-num" type="number" id="rn-qty" value="1" min="1" max="10" oninput="rnUpdatePrice()">
+              <button class="qty-btn" onclick="rnAdjQty(1)">&#43;</button>
+            </div>
+          </div>
+
+          <!-- Step 2: Shade Configuration / System Type -->
+          <div class="step-block">
+            <div class="step-label">Step 2</div>
             <div class="step-title">Shade configuration</div>
             <div class="opt-row" id="rn-grp-system">
               <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-system');rnSetSystem('standard')">Standard Roller</button>
@@ -668,9 +709,9 @@
             <div id="rn-system-note" class="tooltip-note" style="margin-top:6px">Standard: single shade per bracket set.</div>
           </div>
 
-          <!-- Step 2: Fabric Type — visual cards with descriptions -->
+          <!-- Step 3: Fabric Type — visual cards with descriptions -->
           <div class="step-block">
-            <div class="step-label">Step 2</div>
+            <div class="step-label">Step 3</div>
             <div class="step-title">Fabric type</div>
             <div class="rn-fabric-cards" id="rn-grp-fabric">
               <button class="rn-fabric-card" onclick="selRnFabric(this,'sheer')">
@@ -709,43 +750,10 @@
                 <button class="opt-btn" onclick="selOpt(this,'rn-grp-solar');rnUpdatePrice()">7–10% — high visibility</button>
               </div>
             </div>
-            <div id="rn-rd-note" class="tooltip-note" style="display:none;margin-top:8px;color:var(--gold)">⚠ Room Darkening alone still allows edge light gaps. Add <strong>LightGuard 360™</strong> in Step 7 for true blackout.</div>
+            <div id="rn-rd-note" class="tooltip-note" style="display:none;margin-top:8px;color:var(--gold)">⚠ Room Darkening alone still allows edge light gaps. Add <strong>LightGuard 360™</strong> in Step 5 for true blackout.</div>
             <div id="rn-fabric-note" class="tooltip-note" style="margin-top:6px;color:#666"></div>
           </div>
 
-          <!-- Step 3: Shade Size + auto fabric width compatibility -->
-          <div class="step-block">
-            <div class="step-label">Step 3</div>
-            <div class="step-title">Window measurements</div>
-            <div class="dim-box">
-              <div class="dim-box-label">Enter your window size</div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label>Width</label>
-                  <input type="number" id="rn-width" min="12" max="118" step="0.5" placeholder="36" oninput="rnUpdatePrice()">
-                  <div class="dim-unit">inches</div>
-                </div>
-                <div class="form-group">
-                  <label>Height</label>
-                  <input type="number" id="rn-height" min="12" max="132" step="0.5" placeholder="48" oninput="rnUpdatePrice()">
-                  <div class="dim-unit">inches</div>
-                </div>
-              </div>
-            </div>
-            <!-- Fabric width compatibility — auto-computed from entered width -->
-            <div id="rn-fw-compat" style="display:none;margin-top:8px;padding:10px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
-              <div style="font-size:11px;font-weight:500;color:#444;margin-bottom:5px">Compatible fabric widths for your shade:</div>
-              <div id="rn-fw-pills"></div>
-              <div id="rn-fw-note" class="tooltip-note" style="margin-top:5px"></div>
-            </div>
-            <div class="tooltip-note" id="rn-size-warning" style="color:#DC2626;display:none;margin-top:6px"></div>
-            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:8px;margin-top:14px">Quantity</div>
-            <div class="qty-btns">
-              <button class="qty-btn" onclick="rnAdjQty(-1)">&#8722;</button>
-              <input class="qty-num" type="number" id="rn-qty" value="1" min="1" max="10" oninput="rnUpdatePrice()">
-              <button class="qty-btn" onclick="rnAdjQty(1)">&#43;</button>
-            </div>
-          </div>
 
           <!-- Step 3a: Single-shade fabric collection & color (hidden when dual/D&N active) -->
           <div class="step-block" id="rn-single-fabric-block">
@@ -805,22 +813,10 @@
             </div>
           </div>
 
-          <!-- Step 5: Mount Type -->
+
+          <!-- Step 5: Headrail & Top Treatment -->
           <div class="step-block">
             <div class="step-label">Step 5</div>
-            <div class="step-title">Mount type</div>
-            <div class="opt-row" id="rn-grp-mount">
-              <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-mount');document.getElementById('ps-door-warn').style.display='none'">Inside mount</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-mount');document.getElementById('ps-door-warn').style.display='none'">Outside mount</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-mount');document.getElementById('ps-door-warn').style.display='block'">Door application</button>
-            </div>
-            <div class="tooltip-note" style="margin-top:4px">Inside mount requires min 2¾″ depth. Cassette and dual shades require more — confirmed at order.</div>
-            <div id="ps-door-warn" class="tooltip-note" style="display:none;margin-top:6px;background:#FFF3CD;border:1px solid #FFC107;border-radius:8px;padding:8px 12px;color:#7d5a00">⚠ <strong>PerfectSheer door application requirements:</strong> Magnetic hold-down brackets required (+$28 each). An extra 1/16″ fabric deduction per side is applied. Valances are <strong>NOT recommended</strong> for door applications.</div>
-          </div>
-
-          <!-- Step 6: Headrail & Top Treatment — corrected structure -->
-          <div class="step-block">
-            <div class="step-label">Step 6</div>
             <div class="step-title">Headrail &amp; top treatment</div>
 
             <!-- Primary: headrail type -->
@@ -879,144 +875,95 @@
             <div class="tooltip-note" style="margin-top:5px">Hem bar color: <strong>Fabric Matched</strong> — matches the selected shade fabric. No separate color selection needed.</div>
           </div>
 
-          <!-- Step 7: Hardware Colors — Premium (Open Roll) or Standard (Fascia/Cassette) -->
+          <!-- Step 6: Hardware Colors -->
           <div class="step-block">
-            <div class="step-label">Step 7</div>
+            <div class="step-label">Step 6</div>
             <div class="step-title">Hardware colors</div>
 
-            <!-- ── PREMIUM HARDWARE (Open Roll only) ────────────── -->
-            <div id="rn-premium-hw">
-              <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px">Premium Hardware — Open Roll only</div>
-              <div class="tooltip-note" style="margin-bottom:12px">Select one finish — all components (brackets, clutch, hem bar, chain, tensioner) auto-assign to match. No mix &amp; match.</div>
+            <!-- Hidden divs kept for JS isPremium check compatibility -->
+            <div id="rn-premium-hw" style="display:none"></div>
+            <div id="rn-standard-hw" style="display:none"></div>
 
-              <!-- Finish selector -->
-              <div class="rn-fabric-cards" id="rn-grp-premium-finish" style="grid-template-columns:1fr 1fr 1fr">
-                <button class="rn-fabric-card" onclick="selRnFabric(this,'bronze');rnSetPremiumFinish('bronze')">
-                  <div class="rn-fc-name" style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#8B5E3C;flex-shrink:0;display:inline-block"></span>Bronze</div>
-                  <div class="rn-fc-desc">Brackets · Hem Bar · Chain: Chocolate</div>
-                </button>
-                <button class="rn-fabric-card" onclick="selRnFabric(this,'black');rnSetPremiumFinish('black')">
-                  <div class="rn-fc-name" style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#2D2D2D;flex-shrink:0;display:inline-block"></span>Brushed Black</div>
-                  <div class="rn-fc-desc">Brackets · Hem Bar · Chain: Black</div>
-                </button>
-                <button class="rn-fabric-card" onclick="selRnFabric(this,'brass');rnSetPremiumFinish('brass')">
-                  <div class="rn-fc-name" style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#B8963E;flex-shrink:0;display:inline-block"></span>Brass</div>
-                  <div class="rn-fc-desc">Brackets · Hem Bar · Chain: Brass</div>
-                </button>
-                <button class="rn-fabric-card" onclick="selRnFabric(this,'silver');rnSetPremiumFinish('silver')">
-                  <div class="rn-fc-name" style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#A0A0A0;flex-shrink:0;display:inline-block"></span>Matte Silver</div>
-                  <div class="rn-fc-desc">Brackets · Hem Bar · Chain: Silver</div>
-                </button>
-                <button class="rn-fabric-card" onclick="selRnFabric(this,'white');rnSetPremiumFinish('white')">
-                  <div class="rn-fc-name" style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#F0F0F0;border:1px solid #ccc;flex-shrink:0;display:inline-block"></span>White</div>
-                  <div class="rn-fc-desc">Brackets · Hem Bar · Chain: White</div>
-                </button>
+            <!-- Control mechanism (shown only when Continuous Cord Loop lift selected) -->
+            <div id="rn-control-section" style="display:none">
+              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Control</div>
+              <div id="rn-control-note" class="tooltip-note" style="margin-bottom:10px">Metal chain — standard control for continuous chain loop system.</div>
+              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Chain length</div>
+              <div class="opt-row" id="grp-rn-clen">
+                <button class="opt-btn sel" onclick="selOpt(this,'grp-rn-clen');document.getElementById('rn-clen-custom').style.display='none'">Standard <span id="rn-clen-std-label" style="font-size:10px;opacity:.8"></span></button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-rn-clen');document.getElementById('rn-clen-custom').style.display='flex'">Custom</button>
               </div>
-
-              <!-- Auto-assigned color summary -->
-              <div id="rn-premium-summary" style="display:none;margin-top:12px;padding:10px 14px;background:var(--espresso-mid);border-radius:8px;font-size:12px;color:var(--cream)">
-                <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;font-weight:600">Auto-assigned colors</div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px">
-                  <div>Brackets &amp; Clutch: <strong id="rn-ps-bracket">—</strong></div>
-                  <div>Hem Bar: <strong id="rn-ps-hem">—</strong></div>
-                  <div>Chain &amp; Tensioner: <strong id="rn-ps-chain">—</strong></div>
-                  <div id="rn-ps-motor-row" style="display:none">Motor Accessories: <strong id="rn-ps-motor">—</strong></div>
-                </div>
+              <div id="rn-clen-custom" style="display:none;align-items:center;gap:8px;margin-top:8px">
+                <input type="number" id="rn-clen-in" placeholder="e.g. 54" min="9" style="width:80px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px" oninput="chainLenCheck('rn-clen-in','rn-clen-warn','rn-height')">
+                <span style="font-size:13px;color:#666">inches</span>
               </div>
+              <div id="rn-clen-warn" class="tooltip-note" style="display:none;color:#dc2626;margin-top:6px"></div>
+              <div class="tooltip-note" style="margin-top:6px;margin-bottom:10px">Standard = 75% of shade height. Custom must also be at least 75%.</div>
+            </div>
 
-              <!-- Charging port (only if Motorized + Rechargeable) -->
-              <div id="rn-charging-port-wrap" style="display:none;margin-top:14px">
-                <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:5px">Charging port color <span style="font-weight:400;font-size:10px;color:#888">(default: fabric-matched · optional override)</span></div>
-                <div class="opt-row" id="rn-grp-charging">
-                  <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-charging')">Fabric matched</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">White</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Cottage White</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Black</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Silver</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Chocolate</button>
-                </div>
-              </div>
-
-              <!-- Tensioner mandatory notice -->
-              <div style="margin-top:14px;padding:10px 14px;background:#EFF6FF;border:1px solid #93C5FD;border-radius:8px;display:flex;align-items:flex-start;gap:10px">
-                <span style="font-size:15px;flex-shrink:0">✓</span>
-                <div style="font-size:11px;color:#1E3A5F;line-height:1.6"><strong style="color:#1E40AF">Safety tensioner included</strong> — required by code. Color auto-matches chain from finish table. Not optional.</div>
+            <!-- Chain color (shown for Cord Loop lift) -->
+            <div id="rn-chain-color-wrap" style="margin-bottom:14px">
+              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Chain color</div>
+              <div class="opt-row" id="rn-grp-chain-color">
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-chain-color')">White</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Cottage White</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Black</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Silver</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Nature</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Sahara</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Terra</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Chocolate</button>
               </div>
             </div>
 
-            <!-- ── STANDARD HARDWARE (Fascia / Cassette / LightGuard) ── -->
-            <div id="rn-standard-hw" style="display:none">
-              <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#666;margin-bottom:6px">Standard Hardware — Fascia / Cassette / LightGuard systems</div>
-
-              <!-- Control mechanism (shown only when Continuous Cord Loop lift selected) -->
-              <div id="rn-control-section" style="display:none">
-                <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Control</div>
-                <div id="rn-control-note" class="tooltip-note" style="margin-bottom:10px">Metal chain — standard control for continuous chain loop system.</div>
-                <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Chain length</div>
-                <div class="opt-row" id="grp-rn-clen">
-                  <button class="opt-btn sel" onclick="selOpt(this,'grp-rn-clen');document.getElementById('rn-clen-custom').style.display='none'">Standard <span id="rn-clen-std-label" style="font-size:10px;opacity:.8"></span></button>
-                  <button class="opt-btn" onclick="selOpt(this,'grp-rn-clen');document.getElementById('rn-clen-custom').style.display='flex'">Custom</button>
-                </div>
-                <div id="rn-clen-custom" style="display:none;align-items:center;gap:8px;margin-top:8px">
-                  <input type="number" id="rn-clen-in" placeholder="e.g. 54" min="9" style="width:80px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px" oninput="chainLenCheck('rn-clen-in','rn-clen-warn','rn-height')">
-                  <span style="font-size:13px;color:#666">inches</span>
-                </div>
-                <div id="rn-clen-warn" class="tooltip-note" style="display:none;color:#dc2626;margin-top:6px"></div>
-                <div class="tooltip-note" style="margin-top:6px;margin-bottom:10px">Standard = 75% of shade height. Custom must also be at least 75%.</div>
+            <!-- Cord loop color -->
+            <div id="rn-cord-color-wrap" style="display:none;margin-bottom:14px">
+              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Cord loop color</div>
+              <div class="opt-row" id="rn-grp-cord-color">
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-cord-color')">White</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cord-color')">Ivory / Cottage White</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-cord-color')">Black</button>
               </div>
+            </div>
 
-              <!-- Chain colors -->
-              <div id="rn-chain-color-wrap" style="margin-bottom:14px">
-                <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Chain color</div>
-                <div class="opt-row" id="rn-grp-chain-color">
-                  <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-chain-color')">White</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Cottage White</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Black</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Silver</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Nature</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Sahara</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Terra</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-chain-color')">Chocolate</button>
-                </div>
+            <!-- Hardware & fascia color — same swatches for Open Roll, Fascia, and Cassette -->
+            <div style="margin-bottom:14px">
+              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px"><span id="rn-hw-color-label">Hardware color</span> <span style="font-size:11px;color:#888;font-weight:400">(brackets, hem bar &amp; all hardware)</span></div>
+              <div class="opt-row" id="rn-grp-hw-color" style="flex-wrap:wrap">
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#C8A84A;flex-shrink:0;display:inline-block;border:1px solid rgba(0,0,0,.1)"></span>Brass</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#6B4423;flex-shrink:0;display:inline-block"></span>Bronze</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#2D2D2D;flex-shrink:0;display:inline-block"></span>Brushed Black</button>
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#B0B0B0;flex-shrink:0;display:inline-block"></span>Matte Silver</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#F5F5F5;flex-shrink:0;display:inline-block;border:1px solid #ddd"></span>White</button>
               </div>
+              <div class="tooltip-note" id="rn-hw-color-note" style="margin-top:4px">Applies to brackets, hem bar, and all hardware components.</div>
+            </div>
 
-              <!-- Cord loop colors -->
-              <div id="rn-cord-color-wrap" style="display:none;margin-bottom:14px">
-                <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Cord loop color</div>
-                <div class="opt-row" id="rn-grp-cord-color">
-                  <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-cord-color')">White</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-cord-color')">Ivory / Cottage White</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-cord-color')">Black</button>
-                </div>
+            <!-- Charging port (for motorized) -->
+            <div id="rn-charging-port-wrap" style="display:none;margin-bottom:14px">
+              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:5px">Charging port color <span style="font-weight:400;font-size:10px;color:#888">(default: fabric-matched · optional override)</span></div>
+              <div class="opt-row" id="rn-grp-charging">
+                <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-charging')">Fabric matched</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">White</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Cottage White</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Black</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Silver</button>
+                <button class="opt-btn" onclick="selOpt(this,'rn-grp-charging')">Chocolate</button>
               </div>
+            </div>
 
-              <!-- Hardware / bracket / fascia color -->
-              <div style="margin-bottom:14px">
-                <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Hardware, bracket &amp; fascia color</div>
-                <div class="opt-row" id="rn-grp-hw-color" style="flex-wrap:wrap">
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#C8A84A;flex-shrink:0;display:inline-block;border:1px solid rgba(0,0,0,.1)"></span>Brass</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#6B4423;flex-shrink:0;display:inline-block"></span>Bronze</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#2D2D2D;flex-shrink:0;display:inline-block"></span>Brushed Black</button>
-                  <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#B0B0B0;flex-shrink:0;display:inline-block"></span>Matte Silver</button>
-                  <button class="opt-btn" onclick="selOpt(this,'rn-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#F5F5F5;flex-shrink:0;display:inline-block;border:1px solid #ddd"></span>White</button>
-                </div>
-                <div class="tooltip-note" style="margin-top:4px">Applies to: brackets, hem bar, fascia/cassette housing, and all hardware components.</div>
-              </div>
-
-              <!-- Tensioner mandatory notice -->
-              <div style="padding:10px 14px;background:#EFF6FF;border:1px solid #93C5FD;border-radius:8px;display:flex;align-items:flex-start;gap:10px">
-                <span style="font-size:15px;flex-shrink:0">✓</span>
-                <div style="font-size:11px;color:#1E3A5F;line-height:1.6"><strong style="color:#1E40AF">Safety tensioner included</strong> — required by code. Color matches chain/cord selection. Not optional.</div>
-              </div>
+            <div style="padding:10px 14px;background:#EFF6FF;border:1px solid #93C5FD;border-radius:8px;display:flex;align-items:flex-start;gap:10px">
+              <span style="font-size:15px;flex-shrink:0">✓</span>
+              <div style="font-size:11px;color:#1E3A5F;line-height:1.6"><strong style="color:#1E40AF">Safety tensioner included</strong> — required by code. Color matches chain/cord or hardware selection. Not optional.</div>
             </div>
           </div>
 
           <!-- Compatibility alerts — populated live by rnRunValidation() -->
           <div id="rn-compat-alerts" style="margin-bottom:4px"></div>
 
-          <!-- Step 8: Price + Compatibility + Submit -->
+          <!-- Step 7: Price + Compatibility + Submit -->
           <div class="step-block">
-            <div class="step-label">Step 8</div>
+            <div class="step-label">Step 7</div>
             <div class="step-title">Estimated price</div>
             <div class="price-box" id="rn-price-box">
               <div class="price-box-head">Live estimate</div>
