@@ -44,7 +44,7 @@ function crsDone(stepId, val) {
   if (sv) sv.textContent = val || '';
 }
 
-// ── STEP 1: SHADE TYPE ───────────────────────────────────────
+// ── STEP 3: SHADE TYPE ───────────────────────────────────────
 function crsPickType(val, label) {
   CRS.type = val;
   CRS.color = '';
@@ -83,15 +83,15 @@ function crsPickColor(btn, color) {
   var label = CRS.type === 'solar'
     ? 'Solar · ' + CRS.openness + '% · ' + color
     : 'Blackout · ' + color;
-  crsDone('step-1', label);
+  crsDone('step-3', label);
   crsUpdatePanel();
-  setTimeout(function() { crsOpen('step-2'); }, 350);
+  setTimeout(function() { crsOpen('step-4'); }, 350);
 }
 
-// ── STEP 2: MOUNT ────────────────────────────────────────────
+// ── STEP 1: MOUNT ────────────────────────────────────────────
 function crsPickMount(val, label) {
   CRS.mount = val;
-  document.querySelectorAll('#step-2 .opt-card').forEach(function(c) { c.classList.remove('sel'); });
+  document.querySelectorAll('#step-1 .opt-card').forEach(function(c) { c.classList.remove('sel'); });
   var card = _crsEl('mc-' + val);
   if (card) card.classList.add('sel');
 
@@ -101,27 +101,27 @@ function crsPickMount(val, label) {
   if (noteOM) noteOM.classList.toggle('show', val === 'outside');
 
   // Refresh dim info if dims already entered
-  var w = _crsDim('dim-w-whole', 'dim-w-frac');
-  var h = _crsDim('dim-h-whole', 'dim-h-frac');
+  var w = parseFloat((_crsEl('crs-inp-w') || {}).value) || 0;
+  var h = parseFloat((_crsEl('crs-inp-h') || {}).value) || 0;
   if (w && h) crsDimChanged();
 
-  crsDone('step-2', label);
+  crsDone('step-1', label);
   crsUpdatePanel();
-  setTimeout(function() { crsOpen('step-3'); }, 350);
+  setTimeout(function() { crsOpen('step-2'); }, 350);
 }
 
-// ── STEP 3: HEADRAIL ─────────────────────────────────────────
+// ── STEP 4: HEADRAIL ─────────────────────────────────────────
 function crsPickHeadrail(val, label) {
   CRS.headrail = val;
-  document.querySelectorAll('#step-3 .opt-card:not(.disabled)').forEach(function(c) { c.classList.remove('sel'); });
+  document.querySelectorAll('#step-4 .opt-card:not(.disabled)').forEach(function(c) { c.classList.remove('sel'); });
   var card = _crsEl('hc-' + val);
   if (card && !card.classList.contains('disabled')) card.classList.add('sel');
-  crsDone('step-3', label);
+  crsDone('step-4', label);
   crsUpdatePanel();
-  setTimeout(function() { crsOpen('step-4'); }, 350);
+  setTimeout(function() { crsOpen('step-5'); }, 350);
 }
 
-// ── STEP 4: DIMENSIONS ───────────────────────────────────────
+// ── STEP 2: DIMENSIONS ───────────────────────────────────────
 function crsDimChanged() {
   var w = parseFloat((_crsEl('crs-inp-w') || {}).value) || 0;
   var h = parseFloat((_crsEl('crs-inp-h') || {}).value) || 0;
@@ -164,10 +164,10 @@ function crsDimChanged() {
 
   if (w > 0 && h > 0) {
     CRS.w = w; CRS.h = h;
-    crsDone('step-4', w + '" × ' + h + '"');
+    crsDone('step-2', w + '" × ' + h + '"');
     crsUpdatePanel();
     clearTimeout(_crsDimTimer);
-    _crsDimTimer = setTimeout(function() { crsOpen('step-5'); }, 900);
+    _crsDimTimer = setTimeout(function() { crsOpen('step-3'); }, 900);
   }
 }
 
