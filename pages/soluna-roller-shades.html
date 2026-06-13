@@ -716,10 +716,28 @@
             <div class="step-label">Step 5</div>
             <div class="step-title">Shade type</div>
             <div class="opt-row" id="grp-shade-type">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-shade-type');document.getElementById('dual-shade-note').style.display='none';updateSummary()">Standard</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-shade-type');document.getElementById('dual-shade-note').style.display='block';updateSummary()">Dual Shade</button>
+              <button class="opt-btn sel" onclick="solPickShadeType('standard',this)">Standard</button>
+              <button class="opt-btn" onclick="solPickShadeType('dual',this)">Dual Shade</button>
             </div>
-            <div id="dual-shade-note" class="tooltip-note" style="display:none;color:var(--gold)">Dual shade: two rollers in one headrail — combine Sheer &amp; Room Darkening for full light control. Cassette headrail is required.</div>
+            <!-- Dual shade fabric pickers -->
+            <div id="dual-shade-fabrics" style="display:none;margin-top:12px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:9px">
+              <div style="margin-bottom:12px">
+                <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Front shade — daytime</div>
+                <div class="opt-row" id="grp-dual-front" style="flex-wrap:wrap">
+                  <button class="opt-btn sel" onclick="selOpt(this,'grp-dual-front');updateSummary()">Light Filtering</button>
+                  <button class="opt-btn" onclick="selOpt(this,'grp-dual-front');updateSummary()">Solar Screen</button>
+                  <button class="opt-btn" onclick="selOpt(this,'grp-dual-front');updateSummary()">Sheer / Naturals</button>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Back shade — night</div>
+                <div class="opt-row" id="grp-dual-back">
+                  <button class="opt-btn sel" onclick="selOpt(this,'grp-dual-back');updateSummary()">Room Darkening</button>
+                  <button class="opt-btn" onclick="selOpt(this,'grp-dual-back');updateSummary()">Blackout</button>
+                </div>
+              </div>
+              <div style="font-size:10px;color:#888;margin-top:8px;line-height:1.5">Cassette headrail is required for dual shade — auto-selected in Step 6 below.</div>
+            </div>
           </div>
 
           <!-- Step 6: Options -->

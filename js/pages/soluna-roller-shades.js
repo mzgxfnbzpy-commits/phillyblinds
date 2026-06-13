@@ -121,6 +121,32 @@ function getSelectedFabricColor() {
   return sel ? sel.textContent.trim() + ' (' + sel.title + ')' : '';
 }
 
+function solPickShadeType(type, btn) {
+  selOpt(btn, 'grp-shade-type');
+  var isDual = type === 'dual';
+  var dualFabrics = document.getElementById('dual-shade-fabrics');
+  var fabricStep = document.getElementById('fabric-coll-wrap');
+  var grpLight = document.getElementById('grp-light');
+  if (dualFabrics) dualFabrics.style.display = isDual ? 'block' : 'none';
+  // Dim single-shade fabric picker when dual is active
+  if (grpLight) grpLight.style.opacity = isDual ? '0.4' : '';
+  if (fabricStep) fabricStep.style.display = isDual ? 'none' : '';
+  // Auto-select cassette when dual shade chosen
+  if (isDual) {
+    ['openroll','cassette','fascia','lightguard'].forEach(function(t) {
+      var el = document.getElementById('sol-addon-' + t);
+      if (el) el.classList.remove('sel');
+    });
+    var cassetteBtn = document.getElementById('sol-addon-cassette');
+    if (cassetteBtn) cassetteBtn.classList.add('sel');
+    var hwOpts = document.getElementById('sol-hw-subopts');
+    var fasciaOpts = document.getElementById('sol-fascia-subopts');
+    if (hwOpts) hwOpts.style.display = 'none';
+    if (fasciaOpts) fasciaOpts.style.display = 'none';
+  }
+  updateSummary();
+}
+
 function solPickAddon(type, btn) {
   var isActive = btn.classList.contains('sel');
   // All headrail options are mutually exclusive — clear all first
@@ -167,7 +193,13 @@ function updateSummary() {
   const mBrand    = document.getElementById('sel-motor').value;
   const fabric    = getSelectedFabricColor();
 
-  document.getElementById('s-light').textContent      = light;
+  var isDual = shadeType === 'Dual Shade';
+  var dualFront = isDual ? getOpt('grp-dual-front') : '';
+  var dualBack = isDual ? getOpt('grp-dual-back') : '';
+  var lightDisplay = isDual
+    ? 'Front: ' + (dualFront || '—') + ' / Back: ' + (dualBack || '—')
+    : light;
+  document.getElementById('s-light').textContent      = lightDisplay;
   document.getElementById('s-op').textContent         = op;
   document.getElementById('s-mount').textContent      = mount;
   document.getElementById('s-shade-type').textContent = shadeType;
@@ -221,14 +253,21 @@ function submitQuote() {
     ? "I'll pick up (Huntingdon Valley, PA 19006 — address confirmed after order)"
     : 'Ship to me — UPS / FedEx from Huntingdon Valley, PA (freight TBD)';
 
+  const isDualSubmit = shadeType === 'Dual Shade';
+  const dualFrontSubmit = isDualSubmit ? getOpt('grp-dual-front') : '';
+  const dualBackSubmit = isDualSubmit ? getOpt('grp-dual-back') : '';
+  const fabricTypeLabel = isDualSubmit
+    ? 'Dual shade — front: ' + (dualFrontSubmit || '—') + ' / back: ' + (dualBackSubmit || '—')
+    : light;
+
   const body = [
     '=== PREMIER NORMAN ROLLER SHADE QUOTE REQUEST ===',
     '',
     'PRODUCT: Premier Norman Roller Shades',
     '',
     'CONFIGURATION',
-    'Fabric type: ' + light,
-    (fabricColor ? 'Fabric selection: ' + fabricColor : ''),
+    'Fabric type: ' + fabricTypeLabel,
+    (fabricColor && !isDualSubmit ? 'Fabric selection: ' + fabricColor : ''),
     'Shade type: ' + shadeType,
     'Operating system: ' + op,
     'Motorization: ' + motorVal,
