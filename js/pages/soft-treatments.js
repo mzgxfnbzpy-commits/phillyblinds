@@ -49,7 +49,7 @@ var drapeState  = { pleat:'', fabric:'' };
 var romanState  = { style:'', fabric:'' };
 
 var _RIPPLE_STYLES    = ['Ripple Fold'];
-var _NO_FULLNESS      = ['Grommet / Eyelet']; // Rod Pocket has its own fullness section
+var _NO_FULLNESS      = ['Grommet / Eyelet', 'Box Pleat', 'Goblet Pleat', 'Barrel Pleat']; // these use fixed 2.5× fullness
 
 function selectPleat(el, val) {
   document.querySelectorAll('#pleat-cards .opt-card').forEach(c => c.classList.remove('sel'));
@@ -72,10 +72,13 @@ function selectPleat(el, val) {
   var rippleOpts= document.getElementById('drape-ripple-opts');
   var fullRec   = document.getElementById('drape-fullness-rec');
 
-  // Hide standard fullness for ripple, grommet, and rod pocket (rod pocket has its own)
+  // Hide standard fullness for ripple, fixed-fullness styles, and rod pocket (rod pocket has its own)
   if (stdFull)    stdFull.style.display    = (!isRipple && !noFull && !isRodPocket) ? 'block' : 'none';
   if (rippleOpts) rippleOpts.style.display = isRipple ? 'block' : 'none';
   if (fullRec && (isRipple || isRodPocket)) { fullRec.style.display = 'none'; }
+  // Show fixed-fullness note for Box/Goblet/Barrel
+  var fixedFullNote = document.getElementById('drape-fixed-fullness-note');
+  if (fixedFullNote) fixedFullNote.style.display = noFull && val !== 'Grommet / Eyelet' ? 'block' : 'none';
 
   // Scroll to reveal the sub-options or next step that just appeared
   setTimeout(function() {

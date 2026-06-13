@@ -272,12 +272,17 @@
           <button class="opt-btn" onclick="selOpt(this,'grp-rp-fullness');calcDrapePrice()">1.5×</button>
           <button class="opt-btn sel" onclick="selOpt(this,'grp-rp-fullness');calcDrapePrice()" style="border-color:var(--gold)">2.0× <span style="font-size:9px;background:var(--gold);color:var(--espresso);padding:1px 5px;border-radius:4px;margin-left:3px;font-weight:700">REC</span></button>
           <button class="opt-btn" onclick="selOpt(this,'grp-rp-fullness');calcDrapePrice()">2.5×</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-rp-fullness');calcDrapePrice()">3.0×</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-rp-fullness');calcDrapePrice()">3.0× <span style="font-size:9px;background:#e8c96b;color:#5a3a00;padding:1px 5px;border-radius:4px;margin-left:3px;font-weight:600">not rec</span></button>
         </div>
       </div>
     </div>
 
-    <!-- STANDARD FULLNESS (Pinch, Box, Goblet, Barrel — not Ripple/Grommet/Rod Pocket) -->
+    <!-- Fixed fullness note (Box, Goblet, Barrel — standard 2.5×) -->
+    <div id="drape-fixed-fullness-note" style="display:none;margin-top:14px;padding:10px 14px;background:#f0f9f8;border:1px solid rgba(45,224,193,.25);border-radius:9px;font-size:12px;color:#0A4A42;line-height:1.5">
+      <strong>Fullness: 2.5× standard</strong> — this pleat style is fabricated at 2.5× fullness for the best structure and appearance. No selection needed.
+    </div>
+
+    <!-- STANDARD FULLNESS (Pinch only — not Ripple/Grommet/Box/Goblet/Barrel/Rod Pocket) -->
     <div id="drape-fullness-std" style="display:none;margin-top:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
       <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:4px">Fullness</div>
       <div style="font-size:11px;color:#888;margin-bottom:10px;line-height:1.5">How full the panels are when closed. Higher fullness = more fabric = richer look.</div>
@@ -286,7 +291,6 @@
         <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('2.0');calcDrapePrice()">2.0×</button>
         <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('2.5');calcDrapePrice()">2.5×</button>
         <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('3.0');calcDrapePrice()">3.0×</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('3.5');calcDrapePrice()">3.5×</button>
       </div>
       <div id="drape-fullness-rec" style="display:none;margin-top:8px;font-size:12px;padding:8px 12px;border-radius:7px"></div>
     </div>
@@ -341,12 +345,7 @@
   <div class="step">
     <div class="step-label">Step 2</div>
     <div class="step-title">Window dimensions</div>
-    <div class="step-sub">Enter your measurements — we'll confirm with our own measure at the home visit.</div>
-    <div class="form-group" style="margin-top:14px"><label>Approximate window width</label>
-      <select id="d-width">
-        <option>Not sure yet</option><option>Under 36"</option><option>36"–48"</option><option>48"–72"</option><option>72"–96"</option><option>96"–120"</option><option>120"+</option>
-      </select>
-    </div>
+    <div class="step-sub">Enter your exact measurements — we'll confirm with our own measure at the home visit.</div>
     <div class="dim-box" style="margin-top:14px">
       <div class="dim-box-label">Exact measurements</div>
       <div class="form-row">

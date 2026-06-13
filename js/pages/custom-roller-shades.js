@@ -190,6 +190,8 @@ function crsPickMotor(val, label) {
   document.querySelectorAll('#step-6 .opt-card').forEach(function(c) { c.classList.remove('sel'); });
   var card = _crsEl('motor-' + val);
   if (card) card.classList.add('sel');
+  var upsell = document.getElementById('cordless-upsell');
+  if (upsell) upsell.style.display = val === 'cordless' ? 'block' : 'none';
   crsDone('step-6', label);
   crsUpdatePanel();
   setTimeout(function() { crsOpen('step-7'); }, 350);
@@ -356,5 +358,6 @@ function crsSubmit() {
   });
 }
 
-// Init
+// Init — pre-select ship delivery
+CRS.delivery = 'ship';
 crsUpdatePanel();
