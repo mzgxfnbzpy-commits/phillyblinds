@@ -196,10 +196,10 @@
           <span class="step-head-title">What type of opening?</span>
           <span class="step-head-val" id="shv-2"></span>
         </div>
-        <div class="step-body" style="display:none">
+        <div class="step-body">
           <p class="step-subhead">Applies to all openings in this order. If you have mixed types, note differences in the notes step.</p>
           <div class="opt-row">
-            <button class="opt-btn" onclick="selOpt(this,'opentype');updateQuote();setTimeout(continueStep2,400)" data-val="Standard window">Standard window</button>
+            <button class="opt-btn sel" onclick="selOpt(this,'opentype');updateQuote();setTimeout(continueStep2,400)" data-val="Standard window">Standard window</button>
             <button class="opt-btn" onclick="checkOpenType(this)" data-val="Double-hung window">Double-hung window <span style="font-size:9px;color:var(--gold)">+10%</span></button>
             <button class="opt-btn" onclick="checkOpenType(this)" data-val="Slider / bypass door">Slider / bypass door</button>
             <button class="opt-btn" onclick="checkOpenType(this)" data-val="Bi-fold door">Bi-fold door</button>
@@ -219,12 +219,12 @@
           <span class="step-head-title">Mount &amp; frame situation</span>
           <span class="step-head-val" id="shv-3"></span>
         </div>
-        <div class="step-body" style="display:none">
-          <p class="step-subhead">Inside mount sits within the window opening. Outside mount covers the full opening or wall area. Direct mount hinges directly to the window frame — not for drywall.</p>
+        <div class="step-body">
+          <p class="step-subhead">Inside mount fits within the window opening. Direct mount frame attaches to the face of the frame. Tracking &amp; sliding systems for bypass, bi-fold, or barn-door configurations.</p>
           <div class="opt-row">
-            <button class="opt-btn" onclick="selOpt(this,'mount');updateQuote();setTimeout(continueStep3,400)" data-val="Inside mount">Inside mount <span style="font-size:10px;color:#999">(most common)</span></button>
-            <button class="opt-btn" onclick="selOpt(this,'mount');updateQuote();setTimeout(continueStep3,400)" data-val="Outside mount">Outside mount</button>
-            <button class="opt-btn" onclick="checkMount(this)" data-val="Direct mount (hinged to window frame)">Direct mount</button>
+            <button class="opt-btn" onclick="selOpt(this,'mount');updateQuote();setTimeout(continueStep3,400)" data-val="Inside mount">Inside Mount <span style="font-size:10px;color:#999">(most common)</span></button>
+            <button class="opt-btn" onclick="checkMount(this)" data-val="Direct mount frame (exact or window opening)">Direct Mount Frame <span style="font-size:10px;color:#999">(exact or window opening)</span></button>
+            <button class="opt-btn" onclick="checkMount(this)" data-val="Tracking and sliding systems">Tracking &amp; Sliding Systems</button>
           </div>
           <div id="mount-note" class="warn-note"></div>
           <div class="spec-note">
@@ -241,7 +241,7 @@
           <span class="step-head-title">Dimensions</span>
           <span class="step-head-val" id="shv-4"></span>
         </div>
-        <div class="step-body" style="display:none">
+        <div class="step-body">
           <p class="step-subhead">Enter width × height in inches (e.g., 36⅛). Measure to 1/8″ precision. We take 3W × 3H — the installer records final measurements at the home visit.</p>
           <div class="opening-card">
             <div class="dim-row">
@@ -263,7 +263,7 @@
           <span class="step-head-title">Panel layout / orientation</span>
           <span class="step-head-val" id="shv-5"></span>
         </div>
-        <div class="step-body" style="display:none">
+        <div class="step-body">
           <p class="step-subhead">L = hinges on left, opens right. R = hinges on right, opens left. T = T-post (stationary center divider). Select the layout for your openings.</p>
 
           <div class="step-group-label">Single panel</div>
@@ -296,7 +296,7 @@
           <span class="step-head-title">T-Posts</span>
           <span class="step-head-val" id="shv-6"></span>
         </div>
-        <div class="step-body" style="display:none">
+        <div class="step-body">
           <p class="step-subhead">T-posts are stationary center dividers. Vertical T-posts split the shutter width. Horizontal T-posts split double-hung panels. Required when your layout includes "T".</p>
           <div class="opt-row">
             <button class="opt-btn" onclick="selOpt(this,'tpostV');updateQuote()" data-val="None">No vertical T-posts</button>
@@ -319,7 +319,7 @@
           <span class="step-head-title">Louver size</span>
           <span class="step-head-val" id="shv-7"></span>
         </div>
-        <div class="step-body" style="display:none">
+        <div class="step-body">
           <p class="step-subhead">Larger louvers mean a clearer view when open and a bolder look. Smaller louvers offer a traditional style.</p>
           <div class="opt-row" id="louver-opts"></div>
           <div id="louver-note" class="warn-note"></div>
@@ -334,13 +334,12 @@
           <span class="step-head-title">Tilt rod / louver control</span>
           <span class="step-head-val" id="shv-8"></span>
         </div>
-        <div class="step-body" style="display:none">
+        <div class="step-body">
           <div class="opt-row">
-            <button class="opt-btn" onclick="selOpt(this,'tilt');updateQuote();setTimeout(continueStep8,400)" data-val="Standard tilt rod (center front)">Standard tilt rod <span style="font-size:10px;color:#999">(center, front)</span></button>
-            <button class="opt-btn" onclick="selOpt(this,'tilt');updateQuote();setTimeout(continueStep8,400)" data-val="Offset tilt rod (near hinge side)">Offset tilt rod <span style="font-size:10px;color:#999">(near hinge)</span></button>
-            <button class="opt-btn" onclick="selTilt(this)" data-val="InvisibleTilt™ (hidden in stile)">InvisibleTilt™ <span style="font-size:10px;color:#999">(hidden)</span></button>
+            <button class="opt-btn sel" onclick="selTilt(this)" data-val="InvisibleTilt™ (hidden in stile)">InvisibleTilt™ <span style="font-size:10px;color:#999">(hidden — recommended)</span></button>
+            <button class="opt-btn" onclick="selOpt(this,'tilt');updateQuote();setTimeout(continueStep8,400)" data-val="Visible tilt bar (center front)">Visible tilt bar <span style="font-size:10px;color:#999">(center, front)</span></button>
           </div>
-          <div id="tilt-warn" class="warn-note">⚠ <strong>InvisibleTilt™ is not available with 1⅞″ louvers.</strong> Please select a larger louver size or choose a different tilt type.</div>
+          <div id="tilt-warn" class="warn-note">⚠ <strong>InvisibleTilt™ is not available with 1⅞″ louvers.</strong> Please select a larger louver size or choose Visible tilt bar.</div>
           <div style="font-size:11px;color:#888;line-height:1.6;margin-top:6px">InvisibleTilt™ embeds the tilt mechanism inside the stile — no visible rod. Surcharge applies. Not available for 1⅞″ louvers.</div>
         </div>
       </div>
@@ -352,7 +351,7 @@
           <span class="step-head-title">Frame style</span>
           <span class="step-head-val" id="shv-9"></span>
         </div>
-        <div class="step-body" style="display:none">
+        <div class="step-body">
           <p class="step-subhead">The frame surrounds the shutter panel. Most inside-mount orders use an L Frame. Z frames work for window casings with specific depth. Hang strips are low-profile.</p>
           <div class="opt-row">
             <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep9,400)" data-val="Beaded L Frame (standard)">Beaded L Frame <span style="font-size:10px;color:#999">(standard)</span></button>
@@ -376,14 +375,13 @@
           <span class="step-head-title">Divider rails</span>
           <span class="step-head-val" id="shv-10"></span>
         </div>
-        <div class="step-body" style="display:none">
+        <div class="step-body">
           <p class="step-subhead">A divider rail adds a horizontal mid-panel rail so louvers can be controlled independently above and below. Required on tall panels.</p>
           <div id="divider-req-note" class="spec-note" style="display:none"></div>
+          <div class="info-note" style="margin-bottom:8px;font-size:11px">Split tilt can sometimes eliminate the need for a divider rail. If you select split tilt in Specialty Options, confirm with us before finalizing.</div>
           <div class="opt-row">
-            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep10,400)" data-val="None">None needed</button>
-            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep10,400)" data-val="Standard 3″ divider rail (required or requested)">Standard 3″ divider rail</button>
-            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep10,400)" data-val="Custom divider rail size (specify in notes)">Custom size (notes)</button>
-            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep10,400)" data-val="Not sure — confirm at measurement">Not sure</button>
+            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep10,400)" data-val="None">No divider rail</button>
+            <button class="opt-btn" onclick="selOpt(this,'divider');updateQuote();setTimeout(continueStep10,400)" data-val="Standard divider rail">Add divider rail</button>
           </div>
         </div>
       </div>
@@ -395,7 +393,7 @@
           <span class="step-head-title">Finish &amp; color</span>
           <span class="step-head-val" id="shv-11"></span>
         </div>
-        <div class="step-body" style="display:none">
+        <div class="step-body">
           <div id="color-inner"></div>
           <div class="step-continue-wrap">
             <button class="btn-step-continue" onclick="continueStep11()">Continue →</button>
@@ -410,7 +408,7 @@
           <span class="step-head-title">Specialty options</span>
           <span class="step-head-val" id="shv-12"></span>
         </div>
-        <div class="step-body" style="display:none">
+        <div class="step-body">
           <p class="step-subhead">Select any add-ons. All items are optional.</p>
           <div class="step-group-label">Hardware</div>
           <div class="opt-row">
@@ -455,7 +453,7 @@
           <span class="step-head-title">Room &amp; special notes</span>
           <span class="step-head-val" id="shv-13"></span>
         </div>
-        <div class="step-body" style="display:none">
+        <div class="step-body">
           <div class="form-group">
             <label>Room(s) / location</label>
             <input type="text" id="field-room" placeholder="e.g. Master bedroom, living room, kitchen" oninput="updateQuote()">
@@ -477,7 +475,7 @@
           <span class="step-head-title">Quantity</span>
           <span class="step-head-val" id="shv-14"></span>
         </div>
-        <div class="step-body" style="display:none">
+        <div class="step-body">
           <p class="step-subhead">How many windows or openings are you ordering shutters for?</p>
           <div style="display:flex;align-items:center;gap:8px;margin-top:10px">
             <button onclick="adjQty(-1)" style="width:38px;height:38px;border:1.5px solid #e8e8e4;border-radius:8px 0 0 8px;background:#fff;font-size:22px;cursor:pointer;color:#333;font-family:inherit;display:flex;align-items:center;justify-content:center;transition:border-color .12s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='#e8e8e4'">−</button>
@@ -500,7 +498,7 @@
           <span class="step-head-title">Delivery</span>
           <span class="step-head-val" id="shv-15"></span>
         </div>
-        <div class="step-body" style="display:none">
+        <div class="step-body">
           <div class="delivery-opt-grid">
             <div class="delivery-opt-card" onclick="selDelivery('ship',this)">
               <div class="delivery-opt-title">Ship to me</div>
@@ -520,7 +518,7 @@
           <span class="step-head-title">Contact information</span>
           <span class="step-head-val" id="shv-16"></span>
         </div>
-        <div class="step-body" style="display:none">
+        <div class="step-body">
           <div class="dim-row">
             <div class="form-group">
               <label>First &amp; last name *</label>

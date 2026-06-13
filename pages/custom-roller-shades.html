@@ -199,12 +199,64 @@
 <div class="config-layout">
 <div id="configurator">
 
-<!-- STEP 1: SHADE TYPE -->
+<!-- STEP 1: MOUNT TYPE -->
 <div class="step-block active" id="step-1">
   <div class="step-head" onclick="crsToggle('step-1')">
     <div class="step-num">1</div>
-    <div class="step-title">Shade type</div>
+    <div class="step-title">Mount type</div>
     <div class="step-val" id="sv-1"></div>
+  </div>
+  <div class="step-body">
+    <div class="opt-grid-2">
+      <div class="opt-card" id="mc-inside" onclick="crsPickMount('inside','Inside mount')">
+        <div class="opt-card-title">Inside mount</div>
+        <div class="opt-card-desc">Shade fits inside the window frame. Clean, built-in look. Min frame depth required.</div>
+      </div>
+      <div class="opt-card" id="mc-outside" onclick="crsPickMount('outside','Outside mount')">
+        <div class="opt-card-title">Outside mount</div>
+        <div class="opt-card-desc">Mounts on wall or ceiling above the frame. Covers more area, good for shallow frames.</div>
+      </div>
+    </div>
+    <div class="mount-note" id="mount-note-im">Inside mount: give us your exact frame width and height — we'll deduct 1/4" from width for a proper fit.</div>
+    <div class="mount-note" id="mount-note-om">Outside mount: add 2–4" to each side of the opening for full coverage. Mount 2–4" above the frame to maximize the look.</div>
+  </div>
+</div>
+
+<!-- STEP 2: DIMENSIONS -->
+<div class="step-block" id="step-2">
+  <div class="step-head" onclick="crsToggle('step-2')">
+    <div class="step-num">2</div>
+    <div class="step-title">Dimensions</div>
+    <div class="step-val" id="sv-2"></div>
+  </div>
+  <div class="step-body">
+    <div class="dim-box">
+      <div class="dim-box-label">Enter your window size</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Width</label>
+          <input type="number" id="crs-inp-w" min="12" max="144" step="0.5" placeholder="36" oninput="crsDimChanged()">
+          <div class="dim-unit">inches &mdash; 12″ min · 144″ max</div>
+        </div>
+        <div class="form-group">
+          <label>Height</label>
+          <input type="number" id="crs-inp-h" min="12" max="144" step="0.5" placeholder="72" oninput="crsDimChanged()">
+          <div class="dim-unit">inches &mdash; 12″ min · 144″ max</div>
+        </div>
+      </div>
+    </div>
+    <div class="tooltip-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Inside mount: give us exact frame — we deduct for fit.</div>
+    <div class="dim-msg warn" id="dim-warn"></div>
+    <div class="dim-msg info" id="dim-info"></div>
+  </div>
+</div>
+
+<!-- STEP 3: SHADE TYPE -->
+<div class="step-block" id="step-3">
+  <div class="step-head" onclick="crsToggle('step-3')">
+    <div class="step-num">3</div>
+    <div class="step-title">Shade type</div>
+    <div class="step-val" id="sv-3"></div>
   </div>
   <div class="step-body">
     <div class="type-grid" style="grid-template-columns:1fr 1fr">
@@ -223,7 +275,8 @@
     <!-- Solar openness sub-options -->
     <div class="sub-opts" id="solar-opts">
       <div class="sub-opts-label">Openness factor — how much you see through the fabric</div>
-      <div class="openness-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="openness-grid" style="grid-template-columns:repeat(4,1fr)">
+        <button class="openness-btn" id="ob-1" onclick="crsPickOpenness('1','1%')"><span class="openness-pct">1%</span><span class="openness-label">Near blackout</span></button>
         <button class="openness-btn" id="ob-3" onclick="crsPickOpenness('3','3%')"><span class="openness-pct">3%</span><span class="openness-label">Max privacy</span></button>
         <button class="openness-btn" id="ob-5" onclick="crsPickOpenness('5','5%')"><span class="openness-pct">5%</span><span class="openness-label">Good balance</span></button>
         <button class="openness-btn" id="ob-10" onclick="crsPickOpenness('10','10%')"><span class="openness-pct">10%</span><span class="openness-label">Open feel</span></button>
@@ -245,35 +298,12 @@
   </div>
 </div>
 
-<!-- STEP 2: MOUNT TYPE -->
-<div class="step-block" id="step-2">
-  <div class="step-head" onclick="crsToggle('step-2')">
-    <div class="step-num">2</div>
-    <div class="step-title">Mount type</div>
-    <div class="step-val" id="sv-2"></div>
-  </div>
-  <div class="step-body">
-    <div class="opt-grid-2">
-      <div class="opt-card" id="mc-inside" onclick="crsPickMount('inside','Inside mount')">
-        <div class="opt-card-title">Inside mount</div>
-        <div class="opt-card-desc">Shade fits inside the window frame. Clean, built-in look. Min frame depth required.</div>
-      </div>
-      <div class="opt-card" id="mc-outside" onclick="crsPickMount('outside','Outside mount')">
-        <div class="opt-card-title">Outside mount</div>
-        <div class="opt-card-desc">Mounts on wall or ceiling above the frame. Covers more area, good for shallow frames.</div>
-      </div>
-    </div>
-    <div class="mount-note" id="mount-note-im">Inside mount: give us your exact frame width and height — we'll deduct 1/4" from width for a proper fit.</div>
-    <div class="mount-note" id="mount-note-om">Outside mount: add 2–4" to each side of the opening for full coverage. Mount 2–4" above the frame to maximize the look.</div>
-  </div>
-</div>
-
-<!-- STEP 3: HEADRAIL / VALANCE -->
-<div class="step-block" id="step-3">
-  <div class="step-head" onclick="crsToggle('step-3')">
-    <div class="step-num">3</div>
-    <div class="step-title">Headrail &amp; valance</div>
-    <div class="step-val" id="sv-3"></div>
+<!-- STEP 4: HEADRAIL / VALANCE -->
+<div class="step-block" id="step-4">
+  <div class="step-head" onclick="crsToggle('step-4')">
+    <div class="step-num">4</div>
+    <div class="step-title">Headrail</div>
+    <div class="step-val" id="sv-4"></div>
   </div>
   <div class="step-body">
     <div class="opt-grid-2">
@@ -281,50 +311,26 @@
         <div class="opt-card-title">Open roll</div>
         <div class="opt-card-desc">No valance — clean and minimal. Fabric tube is visible at the top.</div>
       </div>
-      <div class="opt-card" id="hc-cassette" onclick="crsPickHeadrail('cassette','Cassette')">
+      <div class="opt-card" id="hc-fascia" onclick="crsPickHeadrail('fascia','Metal fascia')">
         <div class="opt-badge">Most popular</div>
-        <div class="opt-card-title">Cassette</div>
-        <div class="opt-card-desc">Enclosed headrail box hides the tube completely. Best for blackout.</div>
-      </div>
-      <div class="opt-card" id="hc-fascia" onclick="crsPickHeadrail('fascia','Fascia')">
-        <div class="opt-card-title">Fascia</div>
-        <div class="opt-card-desc">Decorative flat valance that drops in front of the tube. Slim, modern look.</div>
-      </div>
-      <div class="opt-card" id="hc-valance" onclick="crsPickHeadrail('valance','Wood valance box')">
-        <div class="opt-card-title">Wood valance box</div>
-        <div class="opt-card-desc">Premium chunky wood frame. Traditional look, great for custom paint or stain.</div>
+        <div class="opt-card-title">Metal fascia</div>
+        <div class="opt-card-desc">Slim metal valance covers the tube. Clean, finished look. Color matches hardware.</div>
       </div>
     </div>
-    <p style="font-size:11px;color:#999;margin-top:10px;line-height:1.6">For blackout shades, cassette is recommended — it eliminates the light gap around the tube.</p>
-  </div>
-</div>
-
-<!-- STEP 4: DIMENSIONS -->
-<div class="step-block" id="step-4">
-  <div class="step-head" onclick="crsToggle('step-4')">
-    <div class="step-num">4</div>
-    <div class="step-title">Dimensions</div>
-    <div class="step-val" id="sv-4"></div>
-  </div>
-  <div class="step-body">
-    <div class="dim-box">
-      <div class="dim-box-label">Enter your window size</div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Width</label>
-          <input type="number" id="crs-inp-w" min="12" max="144" step="0.5" placeholder="36" oninput="crsDimChanged()">
-          <div class="dim-unit">inches &mdash; 12″ min · 144″ max</div>
-        </div>
-        <div class="form-group">
-          <label>Height</label>
-          <input type="number" id="crs-inp-h" min="12" max="132" step="0.5" placeholder="72" oninput="crsDimChanged()">
-          <div class="dim-unit">inches &mdash; 12″ min · 132″ max</div>
-        </div>
+    <!-- Hardware / fascia color (shown after headrail selected) -->
+    <div id="hw-color-section" style="display:none;margin-top:14px;padding-top:12px;border-top:1px solid #f0ede8">
+      <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:8px;text-transform:uppercase;letter-spacing:.3px" id="hw-color-label">Hardware color</div>
+      <div class="opt-row" id="crs-grp-hw-color">
+        <button class="opt-btn" onclick="crsPickHwColor(this,'White')">White</button>
+        <button class="opt-btn" onclick="crsPickHwColor(this,'Cottage')">Cottage</button>
+        <button class="opt-btn" onclick="crsPickHwColor(this,'Silver')">Silver</button>
+        <button class="opt-btn" onclick="crsPickHwColor(this,'Nature')">Nature</button>
+        <button class="opt-btn" onclick="crsPickHwColor(this,'Terra')">Terra</button>
+        <button class="opt-btn" onclick="crsPickHwColor(this,'Sahara')">Sahara</button>
+        <button class="opt-btn" onclick="crsPickHwColor(this,'Chocolate')">Chocolate</button>
+        <button class="opt-btn" onclick="crsPickHwColor(this,'Black')">Black</button>
       </div>
     </div>
-    <div class="tooltip-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Inside mount: give us exact frame — we deduct for fit.</div>
-    <div class="dim-msg warn" id="dim-warn"></div>
-    <div class="dim-msg info" id="dim-info"></div>
   </div>
 </div>
 
@@ -393,6 +399,12 @@
         <div class="opt-card-desc">Specify brand preference in notes or ask during consultation.</div>
       </div>
     </div>
+    <div id="cordless-upsell" style="display:none;margin-top:12px;padding:12px 14px;background:#FFF8EC;border:1px solid #e8c96b;border-radius:10px">
+      <div style="font-size:12px;font-weight:600;color:#5a3a00;margin-bottom:4px">Better option for cordless: Norman Soluna</div>
+      <div style="font-size:12px;color:#5a3a00;line-height:1.6;margin-bottom:8px">Norman Soluna roller shades include a factory-engineered cordless spring-lift system with tighter tolerances and a manufacturer warranty. It's a better fit for cordless than in-house fabrication.</div>
+      <a href="soluna-roller-shades.html" style="display:inline-block;font-size:12px;font-weight:600;color:#0A4A42;background:var(--gold);padding:7px 14px;border-radius:7px;text-decoration:none">See Norman Soluna →</a>
+      <span style="font-size:11px;color:#888;margin-left:10px">or continue below with Basic Roller</span>
+    </div>
   </div>
 </div>
 
@@ -415,17 +427,17 @@
 </div>
 
 <!-- STEP 8: DELIVERY -->
-<div class="step-block" id="step-8">
+<div class="step-block done" id="step-8">
   <div class="step-head" onclick="crsToggle('step-8')">
     <div class="step-num">8</div>
     <div class="step-title">Delivery</div>
-    <div class="step-val" id="sv-8"></div>
+    <div class="step-val" id="sv-8">Ship (UPS/FedEx)</div>
   </div>
   <div class="step-body">
-    <div class="delivery-opt" id="del-ship" onclick="crsPickDelivery('ship')">
-      <div class="del-radio"></div>
+    <div class="delivery-opt sel" id="del-ship" onclick="crsPickDelivery('ship')">
+      <div class="del-radio" style="border-color:var(--gold);background:var(--gold)"></div>
       <div>
-        <div class="del-label">Ship to me</div>
+        <div class="del-label">Shipped to me</div>
         <div class="del-sub">UPS or FedEx from Huntingdon Valley, PA. Lead time provided at quote.</div>
         <div class="tariff-note">Note: U.S. import tariffs may apply on some products. Any applicable duties are disclosed in your quote before payment.</div>
       </div>
@@ -460,6 +472,11 @@
         <label>Notes / questions</label>
         <textarea id="q-notes" placeholder="Window location, existing hardware, cord side preference, timeline, any questions…"></textarea>
       </div>
+      <div class="form-group">
+        <label>Photos / files <span style="font-weight:400;color:#888">(optional)</span></label>
+        <input type="file" id="q-files" multiple accept="image/*,.pdf" style="font-size:12px;color:#555">
+        <div style="font-size:10px;color:#999;margin-top:4px;line-height:1.5">Attach photos of your space, measurements, or reference images. You'll also be able to email them directly after submitting.</div>
+      </div>
       <!-- Honeypot -->
       <input type="text" id="q-hp" style="display:none" tabindex="-1" autocomplete="off">
     </div>
@@ -475,10 +492,18 @@
 <!-- ── QUOTE PANEL ── -->
 <div class="quote-panel" id="quote-panel">
   <div class="qp-title">Your order</div>
-  <div class="qp-pending" id="qp-pending">Select shade type above to start building your order.</div>
+  <div class="qp-pending" id="qp-pending">Select mount type above to start building your order.</div>
   <div id="qp-rows"></div>
   <div class="qdiv" id="qp-div" style="display:none"></div>
-  <div class="qnote" id="qp-note" style="display:none">No pricing shown — Justin quotes each custom shade personally after reviewing your specs.</div>
+  <!-- Price breakdown (shown when dims + type selected) -->
+  <div id="qp-price" style="display:none;margin-top:4px;background:rgba(255,255,255,.05);border-radius:8px;padding:10px 12px">
+    <div id="qp-price-rows"></div>
+    <div style="border-top:.5px solid var(--border-dark);margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;font-size:14px;font-weight:700;color:var(--cream)">
+      <span>Estimated total</span><span id="qp-total">—</span>
+    </div>
+    <div style="font-size:10px;color:var(--text-faint);margin-top:6px;line-height:1.5;font-style:italic">Estimate — confirmed at quote. No payment until you approve.</div>
+  </div>
+  <div class="qnote" id="qp-note" style="display:none">Add dimensions above to see your price estimate.</div>
 
   <div id="submit-wrap">
     <button onclick="crsSubmit()" id="submit-btn" class="btn-gold" style="width:100%;padding:14px;font-size:15px;font-weight:600;margin-top:16px;border:none;cursor:pointer;border-radius:10px">Submit Order for Review</button>

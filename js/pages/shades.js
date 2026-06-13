@@ -206,7 +206,7 @@ function selectProduct(productId, productName, isInstant) {
   sec.style.display = 'block';
 
   // Clear ALL configurators first — prevents stale 'open' panels when switching products
-  ['instant-config','hd-config','fwb-config','exterior-config','perfectsheer-config','verticals-type-config'].forEach(function(id) {
+  ['instant-config','hd-config','fwb-config','exterior-config','perfectsheer-config','verticals-type-config','blinds-type-config','rwb-config'].forEach(function(id) {
     var el = document.getElementById(id);
     if (el) el.classList.remove('open');
   });
@@ -237,9 +237,9 @@ function selectProduct(productId, productName, isInstant) {
         // Show roller type subsection; hide brand chooser until type is picked
         document.getElementById('roller-types').style.display = 'block';
         document.getElementById('brand-chooser').style.display = 'none';
-        // Auto-select Basic as default so configurator is immediately visible
-        rtSelect('basic');
-        setTimeout(function(){ var el=document.getElementById('brand-pb-content'); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }, 120);
+        // Auto-select Norman Soluna as default
+        rtSelect('norman');
+        setTimeout(function(){ var el=document.getElementById('rn-wrap')||document.getElementById('brand-norman-content'); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }, 120);
       } else {
         pbBtn.classList.add('disabled');
         document.getElementById('pb-only-note').style.display = 'block';
@@ -320,11 +320,9 @@ function clearProduct() {
   currentProduct = null;
   document.getElementById('roller-types').style.display = 'none';
   document.getElementById('configurator-section').style.display = 'none';
-  document.getElementById('instant-config').classList.remove('open');
-  document.getElementById('hd-config').classList.remove('open');
-  document.getElementById('fwb-config').classList.remove('open');
-  document.getElementById('exterior-config').classList.remove('open');
-  document.getElementById('perfectsheer-config').classList.remove('open');
+  ['instant-config','hd-config','fwb-config','exterior-config','perfectsheer-config','blinds-type-config','rwb-config','verticals-type-config'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.classList.remove('open');
+  });
   // Scroll back to product grid
   document.getElementById('product-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -1783,10 +1781,9 @@ function selectBlindsType() {
   currentProduct = 'fwb';
   var sec = document.getElementById('configurator-section');
   sec.style.display = 'block';
-  document.getElementById('instant-config').classList.remove('open');
-  document.getElementById('hd-config').classList.remove('open');
-  document.getElementById('fwb-config').classList.remove('open');
-  document.getElementById('rwb-config').classList.remove('open');
+  ['instant-config','hd-config','fwb-config','rwb-config','exterior-config','perfectsheer-config','verticals-type-config'].forEach(function(id){
+    var e = document.getElementById(id); if (e) e.classList.remove('open');
+  });
   document.getElementById('blinds-type-config').classList.add('open');
   sec.scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -2751,6 +2748,26 @@ function rnSetFasciaMat(mat) {
     });
     if (note) note.innerHTML = 'Fabric Wrapped fascia available in Square or Curved shape. Fabric-wrapped fascias have max width limits — confirmed at order.';
   }
+  setTimeout(rnUpdatePrice, 0);
+}
+
+// ─── rnSetFasciaStyleCombined ─────────────────────────────────
+// Called by the 3-button combined fascia style row.
+// Syncs the hidden shape/material DOM state holders so existing
+// rnUpdatePrice / rnBuildSolunaColorConfig readers still work.
+function rnSetFasciaStyleCombined(shape, mat) {
+  var shapeTarget = shape === 'square' ? 'Square' : 'Curved';
+  var matTarget   = mat   === 'metal'  ? 'Metal'  : 'Fabric Wrapped';
+  document.querySelectorAll('#rn-grp-fascia-shape .opt-btn').forEach(function(b) {
+    b.classList.remove('sel');
+    b.disabled = false; b.style.opacity = '1'; b.style.cursor = 'pointer';
+    if (b.textContent.trim() === shapeTarget) b.classList.add('sel');
+  });
+  document.querySelectorAll('#rn-grp-fascia-mat .opt-btn').forEach(function(b) {
+    b.classList.remove('sel');
+    b.disabled = false; b.style.opacity = '1'; b.style.cursor = 'pointer';
+    if (b.textContent.trim() === matTarget) b.classList.add('sel');
+  });
   setTimeout(rnUpdatePrice, 0);
 }
 

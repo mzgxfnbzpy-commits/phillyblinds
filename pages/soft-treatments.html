@@ -174,45 +174,114 @@
 
     <!-- PINCH PLEAT SUB-OPTIONS (shown only when Pinch Pleat selected) -->
     <div id="pinch-subopts" style="display:none;margin-top:16px;padding:16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:12px">
-      <div style="font-size:12px;font-weight:600;color:#444;margin-bottom:14px">Choose your pinch pleat style</div>
+      <div style="font-size:12px;font-weight:600;color:#444;margin-bottom:14px">Pinch pleat details</div>
 
-      <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px">Tack Top</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
-        <div class="opt-card" id="pp-top-2" onclick="selectPinchDetail(this,'Pinch Pleat — 2-Prong Tack Top')">
-          <div class="opt-art">
-            <img loading="lazy" src="../images/pleat-styles/pinch-2prong-tack-top.png" alt="2-prong tack top">
+      <!-- 1: Dimensions + Return -->
+      <div class="dim-box" style="margin-bottom:14px">
+        <div class="dim-box-label">Dimensions</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Width</label>
+            <div style="display:flex;align-items:center;gap:6px">
+              <input type="number" id="pp-w" placeholder="84" min="12" max="250" oninput="calcDrapePrice()" style="width:80px">
+              <select id="pp-w-frac" onchange="calcDrapePrice()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
+                <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
+                <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
+              </select>
+              <span style="font-size:12px;color:#666">inches</span>
+            </div>
           </div>
-          <div class="opt-label-bar"><div class="opt-name">2-Prong Tack Top</div><div class="opt-desc">Classic 2-prong, tack at heading</div></div>
-        </div>
-        <div class="opt-card" id="pp-top-3" onclick="selectPinchDetail(this,'Pinch Pleat — 3-Prong Tack Top')">
-          <div class="opt-art">
-            <img loading="lazy" src="../images/pleat-styles/pinch-3prong-tack-top.png" alt="3-prong tack top">
+          <div class="form-group">
+            <label>Finished length</label>
+            <div style="display:flex;align-items:center;gap:6px">
+              <input type="number" id="pp-l" placeholder="96" min="12" max="150" oninput="calcDrapePrice()" style="width:80px">
+              <select id="pp-l-frac" onchange="calcDrapePrice()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
+                <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
+                <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
+              </select>
+              <span style="font-size:12px;color:#666">inches</span>
+            </div>
           </div>
-          <div class="opt-label-bar"><div class="opt-name">3-Prong Tack Top</div><div class="opt-desc">Fuller, richer triple pleat at heading</div></div>
         </div>
+        <div class="form-group" style="margin-top:10px">
+          <label>Return size <span style="font-weight:400;color:#999">default 4"</span></label>
+          <input type="number" id="pp-return" value="4" min="1" max="24" oninput="calcDrapePrice()" style="width:80px">
+        </div>
+        <div id="pp-min-warn" style="display:none;background:#FFF3CD;border:1px solid #FFC107;border-radius:8px;padding:9px 13px;font-size:12px;color:#7d5a00;margin-top:8px;line-height:1.5"></div>
       </div>
 
-      <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px">Tack Bottom</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-        <div class="opt-card" id="pp-bot-2" onclick="selectPinchDetail(this,'Pinch Pleat — 2-Prong Tack Bottom')">
-          <div class="opt-art">
-            <img loading="lazy" src="../images/pleat-styles/pinch-2prong-tack-bottom.png" alt="2-prong tack bottom">
-          </div>
-          <div class="opt-label-bar"><div class="opt-name">2-Prong Tack Bottom</div><div class="opt-desc">2-prong, tack at base of pleat</div></div>
+      <!-- 2: Fullness — auto-sets prong count -->
+      <div style="margin-bottom:14px">
+        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">Fullness</div>
+        <div style="font-size:11px;color:#888;margin-bottom:8px;line-height:1.5">Selecting fullness automatically sets 2-prong (1.5×–2×) or 3-prong (2.5×–3×).</div>
+        <div class="opt-row" id="grp-pp-fullness">
+          <button class="opt-btn" onclick="selOpt(this,'grp-pp-fullness');drapeFullnessHint('1.5');calcDrapePrice()">1.5×</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-pp-fullness');drapeFullnessHint('2.0');calcDrapePrice()">2.0×</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-pp-fullness');drapeFullnessHint('2.5');calcDrapePrice()">2.5×</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-pp-fullness');drapeFullnessHint('3.0');calcDrapePrice()">3.0×</button>
         </div>
-        <div class="opt-card" id="pp-bot-3" onclick="selectPinchDetail(this,'Pinch Pleat — 3-Prong Tack Bottom')">
-          <div class="opt-art">
-            <img loading="lazy" src="../images/pleat-styles/pinch-3prong-tack-bottom.png" alt="3-prong tack bottom pinch pleat drapery">
-          </div>
-          <div class="opt-label-bar"><div class="opt-name">3-Prong Tack Bottom</div><div class="opt-desc">Full triple pleat, tack at base</div></div>
-        </div>
+        <div id="pp-fullness-rec" style="display:none;margin-top:8px;font-size:12px;padding:8px 12px;border-radius:7px"></div>
       </div>
 
+      <!-- 3: Tack position (auto-populated by fullness) -->
+      <div id="pp-tack-section">
+        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Tack position <span style="font-weight:400;color:var(--gold);text-transform:none;font-size:10px">— tack top recommended</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div class="opt-card" id="pp-tack-top" onclick="selectPinchDetail(this,'top')">
+            <div class="opt-art" style="height:72px;overflow:hidden">
+              <img id="pp-tack-top-img" loading="lazy" src="../images/pleat-styles/pinch-2prong-tack-top.png" alt="Tack top" style="width:100%;height:72px;object-fit:cover">
+            </div>
+            <div class="opt-label-bar">
+              <div class="opt-name" id="pp-tack-top-name">2-Prong Tack Top</div>
+              <div class="opt-desc" id="pp-tack-top-desc">Classic, tack at heading</div>
+            </div>
+          </div>
+          <div class="opt-card" id="pp-tack-bot" onclick="selectPinchDetail(this,'bot')">
+            <div class="opt-art" style="height:72px;overflow:hidden">
+              <img id="pp-tack-bot-img" loading="lazy" src="../images/pleat-styles/pinch-2prong-tack-bottom.png" alt="Tack bottom" style="width:100%;height:72px;object-fit:cover">
+            </div>
+            <div class="opt-label-bar">
+              <div class="opt-name" id="pp-tack-bot-name">2-Prong Tack Bottom</div>
+              <div class="opt-desc" id="pp-tack-bot-desc">Tack at base of pleat</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- ROD POCKET SUB-OPTIONS (shown only when Rod Pocket / Sheered Pocket selected) -->
     <div id="rodpocket-subopts" style="display:none;margin-top:14px;padding:16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:12px">
       <div style="font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:14px">Rod pocket details</div>
+
+      <!-- Dimensions (no return or overlap for rod pocket) -->
+      <div class="dim-box" style="margin-bottom:14px">
+        <div class="dim-box-label">Dimensions</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Width</label>
+            <div style="display:flex;align-items:center;gap:6px">
+              <input type="number" id="rp-w" placeholder="84" min="12" max="250" oninput="calcDrapePrice()" style="width:80px">
+              <select id="rp-w-frac" onchange="calcDrapePrice()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
+                <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
+                <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
+              </select>
+              <span style="font-size:12px;color:#666">inches</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Finished length</label>
+            <div style="display:flex;align-items:center;gap:6px">
+              <input type="number" id="rp-l" placeholder="96" min="12" max="150" oninput="calcDrapePrice()" style="width:80px">
+              <select id="rp-l-frac" onchange="calcDrapePrice()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
+                <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
+                <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
+              </select>
+              <span style="font-size:12px;color:#666">inches</span>
+            </div>
+          </div>
+        </div>
+        <div id="rp-min-warn" style="display:none;background:#FFF3CD;border:1px solid #FFC107;border-radius:8px;padding:9px 13px;font-size:12px;color:#7d5a00;margin-top:8px;line-height:1.5"></div>
+      </div>
 
       <!-- Casing size -->
       <div style="margin-bottom:14px">
@@ -272,24 +341,17 @@
           <button class="opt-btn" onclick="selOpt(this,'grp-rp-fullness');calcDrapePrice()">1.5×</button>
           <button class="opt-btn sel" onclick="selOpt(this,'grp-rp-fullness');calcDrapePrice()" style="border-color:var(--gold)">2.0× <span style="font-size:9px;background:var(--gold);color:var(--espresso);padding:1px 5px;border-radius:4px;margin-left:3px;font-weight:700">REC</span></button>
           <button class="opt-btn" onclick="selOpt(this,'grp-rp-fullness');calcDrapePrice()">2.5×</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-rp-fullness');calcDrapePrice()">3.0×</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-rp-fullness');calcDrapePrice()">3.0× <span style="font-size:9px;background:#e8c96b;color:#5a3a00;padding:1px 5px;border-radius:4px;margin-left:3px;font-weight:600">not rec</span></button>
         </div>
       </div>
     </div>
 
-    <!-- STANDARD FULLNESS (Pinch, Box, Goblet, Barrel — not Ripple/Grommet/Rod Pocket) -->
-    <div id="drape-fullness-std" style="display:none;margin-top:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
-      <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:4px">Fullness</div>
-      <div style="font-size:11px;color:#888;margin-bottom:10px;line-height:1.5">How full the panels are when closed. Higher fullness = more fabric = richer look.</div>
-      <div class="opt-row" id="grp-drape-fullness">
-        <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('1.5');calcDrapePrice()">1.5×</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('2.0');calcDrapePrice()">2.0×</button>
-        <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('2.5');calcDrapePrice()">2.5×</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('3.0');calcDrapePrice()">3.0×</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-drape-fullness');drapeFullnessHint('3.5');calcDrapePrice()">3.5×</button>
-      </div>
-      <div id="drape-fullness-rec" style="display:none;margin-top:8px;font-size:12px;padding:8px 12px;border-radius:7px"></div>
+    <!-- Fixed fullness note (Box, Goblet, Barrel — standard 2.5×) -->
+    <div id="drape-fixed-fullness-note" style="display:none;margin-top:14px;padding:10px 14px;background:#f0f9f8;border:1px solid rgba(45,224,193,.25);border-radius:9px;font-size:12px;color:#0A4A42;line-height:1.5">
+      <strong>Fullness: 2.5× standard</strong> — this pleat style is fabricated at 2.5× fullness for the best structure and appearance. No selection needed.
     </div>
+
+    <!-- STANDARD FULLNESS section removed — fullness is now embedded in pinch-subopts -->
 
     <!-- RIPPLE FOLD OPTIONS (shown only when Ripple Fold selected) -->
     <div id="drape-ripple-opts" style="display:none;margin-top:14px;padding:16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:12px">
@@ -341,19 +403,15 @@
   <div class="step">
     <div class="step-label">Step 2</div>
     <div class="step-title">Window dimensions</div>
-    <div class="step-sub">Enter your measurements — we'll confirm with our own measure at the home visit.</div>
-    <div class="form-group" style="margin-top:14px"><label>Approximate window width</label>
-      <select id="d-width">
-        <option>Not sure yet</option><option>Under 36"</option><option>36"–48"</option><option>48"–72"</option><option>72"–96"</option><option>96"–120"</option><option>120"+</option>
-      </select>
-    </div>
+    <div class="step-sub">Enter your exact measurements — we'll confirm with our own measure at the home visit.</div>
+    <div id="drape-std-dims">
     <div class="dim-box" style="margin-top:14px">
       <div class="dim-box-label">Exact measurements</div>
       <div class="form-row">
         <div class="form-group">
           <label>Width</label>
           <div style="display:flex;align-items:center;gap:6px">
-            <input type="number" id="d-exact-width" placeholder="84" min="12" max="250" oninput="calcDrapePrice()" style="width:80px">
+            <input type="number" id="d-exact-width" placeholder="84" min="10" max="200" oninput="calcDrapePrice()" style="width:80px">
             <select id="d-exact-width-frac" onchange="calcDrapePrice()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
               <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
               <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
@@ -375,8 +433,8 @@
       </div>
       <div id="d-min-warn" style="display:none;background:#FFF3CD;border:1px solid #FFC107;border-radius:8px;padding:9px 13px;font-size:12px;color:#7d5a00;margin-top:8px;line-height:1.5"></div>
     </div>
-    <!-- Returns & Overlaps — shown once for all pleat styles -->
-    <div class="form-row" style="margin-top:12px">
+    <!-- Returns & Overlaps — shown for non-pinch, non-rod-pocket styles -->
+    <div id="drape-std-returns" class="form-row" style="margin-top:12px">
       <div class="form-group">
         <label>Return size (inches) <span style="font-weight:400;color:#999">default 4"</span></label>
         <input type="number" id="d-return" value="4" min="1" max="24" style="font-size:14px">
@@ -386,11 +444,8 @@
         <input type="number" id="d-overlap" value="4" min="0" max="12" style="font-size:14px">
       </div>
     </div>
-    <div id="drape-price-box" style="display:none;background:var(--espresso);border-radius:12px;padding:18px 20px;margin-top:14px">
-      <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:12px">Your configuration</div>
-      <div id="drape-price-rows"></div>
-      <div style="font-size:10px;color:var(--text-faint);margin-top:8px;line-height:1.5" id="drape-price-note"></div>
-    </div>
+    </div><!-- /#drape-std-dims -->
+    <div id="drape-price-box" style="display:none;margin-top:14px"></div>
   </div>
 
   <!-- STEP 3: FABRIC -->
@@ -475,7 +530,7 @@
         <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:10px">Add-ons (optional)</div>
 
         <!-- Trim on drape panels -->
-        <div style="margin-bottom:12px">
+        <div id="drape-trim-section" style="margin-bottom:12px">
           <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:8px">Trim on panels</div>
           <div style="font-size:11px;color:#888;margin-bottom:8px">Select which edges get trim. Mix and match.</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">
@@ -500,7 +555,7 @@
         </div>
 
         <!-- Cornice -->
-        <div style="margin-bottom:12px">
+        <div id="drape-cornice-section" style="margin-bottom:12px">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
             <span style="font-size:12px;font-weight:500;color:#333">Cornice <span style="font-weight:400;color:#999">(self-welt or trim included)</span></span>
             <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#555;cursor:pointer">
@@ -553,8 +608,8 @@
       <div style="border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-bottom:14px">
         <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Panel configuration</div>
         <div class="opt-row" id="grp-drape-panels">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-panels');drapeToggleSingle(false)">Pair</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-drape-panels');drapeToggleSingle(true)">Single panel</button>
+          <button class="opt-btn sel" id="drape-pair-btn" onclick="selOpt(this,'grp-drape-panels');drapeToggleSingle(false)">Pair</button>
+          <button class="opt-btn" id="drape-single-btn" onclick="selOpt(this,'grp-drape-panels');drapeToggleSingle(true)">Single panel</button>
         </div>
         <div id="drape-single-opts" style="display:none;margin-top:10px">
           <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px">Panel position</div>
@@ -607,8 +662,8 @@
       <div class="delivery-section" style="margin-top:16px">
         <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
         <div class="opt-row" id="grp-del-drape">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-drape');document.getElementById('del-drape-s').style.display='block';document.getElementById('del-drape-p').style.display='none'">Ship to me</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-del-drape');document.getElementById('del-drape-s').style.display='none';document.getElementById('del-drape-p').style.display='block'">I'll pick up</button>
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-drape');document.getElementById('del-drape-s').style.display='block';document.getElementById('del-drape-p').style.display='none';calcDrapePrice()">Ship to me</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-del-drape');document.getElementById('del-drape-s').style.display='none';document.getElementById('del-drape-p').style.display='block';calcDrapePrice()">I'll pick up</button>
         </div>
         <div id="del-drape-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately.</div></div>
         <div id="del-drape-p" class="delivery-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.</div>
@@ -926,7 +981,7 @@
             <div class="form-group">
               <label>Width</label>
               <div style="display:flex;align-items:center;gap:6px">
-                <input type="number" id="rn-w" placeholder="36" max="120" oninput="calcRoman()" style="width:70px">
+                <input type="number" id="rn-w" placeholder="36" min="12" max="120" oninput="calcRoman()" style="width:70px">
                 <select id="rn-w-frac" onchange="calcRoman()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
                   <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
                   <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
@@ -1041,8 +1096,8 @@
           <div class="delivery-section" style="margin-top:16px">
             <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
             <div class="opt-row" id="grp-del-roman">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-del-roman');document.getElementById('del-roman-s').style.display='block';document.getElementById('del-roman-p').style.display='none'">Ship to me</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-del-roman');document.getElementById('del-roman-s').style.display='none';document.getElementById('del-roman-p').style.display='block'">I'll pick up</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-del-roman');document.getElementById('del-roman-s').style.display='block';document.getElementById('del-roman-p').style.display='none';calcRoman()">Ship to me</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-del-roman');document.getElementById('del-roman-s').style.display='none';document.getElementById('del-roman-p').style.display='block';calcRoman()">I'll pick up</button>
             </div>
             <div id="del-roman-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional and itemized separately.</div></div>
             <div id="del-roman-p" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>

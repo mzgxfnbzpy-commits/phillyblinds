@@ -121,6 +121,20 @@ function getSelectedFabricColor() {
   return sel ? sel.textContent.trim() + ' (' + sel.title + ')' : '';
 }
 
+function solPickAddon(type, btn) {
+  var isActive = btn.classList.contains('sel');
+  // Headrail options (cassette/fascia) are mutually exclusive
+  if (type === 'cassette' || type === 'fascia') {
+    document.getElementById('sol-addon-cassette').classList.remove('sel');
+    document.getElementById('sol-addon-fascia').classList.remove('sel');
+  }
+  if (!isActive) btn.classList.add('sel');
+  // Show/hide fascia sub-options
+  var fasciaOpts = document.getElementById('sol-fascia-subopts');
+  if (fasciaOpts) fasciaOpts.style.display = (type === 'fascia' && !isActive) ? 'block' : 'none';
+  updateSummary();
+}
+
 function solPickDel(v, card) {
   solDelivery = v;
   document.querySelectorAll('.delivery-opt-card').forEach(function(c){c.classList.remove('sel');});

@@ -49,55 +49,115 @@ var drapeState  = { pleat:'', fabric:'' };
 var romanState  = { style:'', fabric:'' };
 
 var _RIPPLE_STYLES    = ['Ripple Fold'];
-var _NO_FULLNESS      = ['Grommet / Eyelet']; // Rod Pocket has its own fullness section
+var _NO_FULLNESS      = ['Grommet / Eyelet', 'Box Pleat', 'Goblet Pleat', 'Barrel Pleat']; // these use fixed 2.5× fullness
+var _ppProngs = 3; // current prong count for pinch pleat (2 or 3, updated by fullness selection)
 
 function selectPleat(el, val) {
   document.querySelectorAll('#pleat-cards .opt-card').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
   drapeState.pleat = val;
 
+  var isPinch     = val === 'Pinch Pleat';
+  var isRodPocket = val === 'Rod Pocket / Sheered Pocket';
+  var isRipple    = _RIPPLE_STYLES.indexOf(val) !== -1;
+  var noFull      = _NO_FULLNESS.indexOf(val) !== -1;
+
+  // Show / hide pinch sub-options
   var subopts = document.getElementById('pinch-subopts');
   if (subopts) {
-    subopts.style.display = val === 'Pinch Pleat' ? 'block' : 'none';
-    if (val !== 'Pinch Pleat') document.querySelectorAll('#pinch-subopts .opt-card').forEach(c => c.classList.remove('sel'));
+    subopts.style.display = isPinch ? 'block' : 'none';
+    if (!isPinch) document.querySelectorAll('#pinch-subopts .opt-card').forEach(c => c.classList.remove('sel'));
   }
 
+  // Show / hide rod pocket sub-options
   var rpOpts = document.getElementById('rodpocket-subopts');
-  if (rpOpts) rpOpts.style.display = val === 'Rod Pocket / Sheered Pocket' ? 'block' : 'none';
+  if (rpOpts) rpOpts.style.display = isRodPocket ? 'block' : 'none';
 
-  var isRipple  = _RIPPLE_STYLES.indexOf(val) !== -1;
-  var isRodPocket = val === 'Rod Pocket / Sheered Pocket';
-  var noFull    = _NO_FULLNESS.indexOf(val) !== -1;
-  var stdFull   = document.getElementById('drape-fullness-std');
-  var rippleOpts= document.getElementById('drape-ripple-opts');
-  var fullRec   = document.getElementById('drape-fullness-rec');
+  // Standard dims (Step 2) — hide for pinch and rod pocket (dims now live in sub-options)
+  var stdDims = document.getElementById('drape-std-dims');
+  if (stdDims) stdDims.style.display = (isPinch || isRodPocket) ? 'none' : '';
 
-  // Hide standard fullness for ripple, grommet, and rod pocket (rod pocket has its own)
-  if (stdFull)    stdFull.style.display    = (!isRipple && !noFull && !isRodPocket) ? 'block' : 'none';
+  // Ripple options
+  var rippleOpts = document.getElementById('drape-ripple-opts');
   if (rippleOpts) rippleOpts.style.display = isRipple ? 'block' : 'none';
-  if (fullRec && (isRipple || isRodPocket)) { fullRec.style.display = 'none'; }
 
-  // Scroll to reveal the sub-options or next step that just appeared
+  // Fixed fullness note for Box/Goblet/Barrel
+  var fixedFullNote = document.getElementById('drape-fixed-fullness-note');
+  if (fixedFullNote) fixedFullNote.style.display = noFull && val !== 'Grommet / Eyelet' ? 'block' : 'none';
+
+  // Step 4: hide trim and cornice for rod pocket
+  var trimSec = document.getElementById('drape-trim-section');
+  var corniceSec = document.getElementById('drape-cornice-section');
+  if (trimSec) trimSec.style.display = isRodPocket ? 'none' : '';
+  if (corniceSec) corniceSec.style.display = isRodPocket ? 'none' : '';
+
+  // Step 4: rod pocket = single panel only; restore pair for other styles
+  var pairBtn = document.getElementById('drape-pair-btn');
+  if (pairBtn) pairBtn.style.display = isRodPocket ? 'none' : '';
+  if (isRodPocket) {
+    // Force single panel selection
+    var singleBtn = document.getElementById('drape-single-btn');
+    if (singleBtn) { selOpt(singleBtn, 'grp-drape-panels'); drapeToggleSingle(true); }
+  }
+
+  // Pinch: auto-init default fullness (2.5× → 3-prong tack top)
+  if (isPinch) {
+    drapeFullnessHint('2.5');
+  }
+
+  // Scroll to reveal the sub-options panel that just appeared
   setTimeout(function() {
-    var target = val === 'Pinch Pleat' ? document.getElementById('pinch-subopts')
-               : isRipple             ? document.getElementById('drape-ripple-opts')
-               : val === 'Rod Pocket / Sheered Pocket' ? document.getElementById('rodpocket-subopts')
-               : stdFull;
+    var target = isPinch ? document.getElementById('pinch-subopts')
+               : isRipple ? document.getElementById('drape-ripple-opts')
+               : isRodPocket ? document.getElementById('rodpocket-subopts')
+               : null;
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 120);
 }
 
 function drapeFullnessHint(val) {
-  var rec = document.getElementById('drape-fullness-rec');
-  if (!rec) return;
-  rec.style.display = 'block';
   var f = parseFloat(val);
-  if (f <= 2.0) {
-    rec.style.cssText = 'display:block;margin-top:8px;font-size:12px;padding:8px 12px;border-radius:7px;background:#EAF3DE;color:#27500A';
-    rec.textContent = '✓ We recommend 2-prong tack top for ' + val + '× fullness.';
-  } else {
-    rec.style.cssText = 'display:block;margin-top:8px;font-size:12px;padding:8px 12px;border-radius:7px;background:var(--gold-mid);color:#0A4A42';
-    rec.textContent = '✓ We recommend 3-prong tack top for ' + val + '× fullness — rich, full look.';
+  var is2prong = f <= 2.0;
+  _ppProngs = is2prong ? 2 : 3;
+  var prong = String(_ppProngs);
+
+  // Sync fullness button selection (for programmatic calls)
+  document.querySelectorAll('#grp-pp-fullness .opt-btn').forEach(function(b) {
+    b.classList.toggle('sel', parseFloat(b.textContent) === f);
+  });
+
+  // Update tack card images, names, descriptions
+  var topImg  = document.getElementById('pp-tack-top-img');
+  var topName = document.getElementById('pp-tack-top-name');
+  var topDesc = document.getElementById('pp-tack-top-desc');
+  var botImg  = document.getElementById('pp-tack-bot-img');
+  var botName = document.getElementById('pp-tack-bot-name');
+  var botDesc = document.getElementById('pp-tack-bot-desc');
+  if (topImg)  topImg.src  = '../images/pleat-styles/pinch-' + prong + 'prong-tack-top.png';
+  if (topName) topName.textContent = prong + '-Prong Tack Top';
+  if (topDesc) topDesc.textContent = is2prong ? 'Classic 2-prong, tack at heading' : 'Fuller triple pleat at heading';
+  if (botImg)  botImg.src  = '../images/pleat-styles/pinch-' + prong + 'prong-tack-bottom.png';
+  if (botName) botName.textContent = prong + '-Prong Tack Bottom';
+  if (botDesc) botDesc.textContent = is2prong ? '2-prong, tack at base of pleat' : 'Full triple pleat, tack at base';
+
+  // Auto-select tack top (default)
+  var topCard = document.getElementById('pp-tack-top');
+  var botCard = document.getElementById('pp-tack-bot');
+  if (topCard) topCard.classList.add('sel');
+  if (botCard) botCard.classList.remove('sel');
+  drapeState.pleat = 'Pinch Pleat — ' + prong + '-Prong Tack Top';
+
+  // Show recommendation note
+  var rec = document.getElementById('pp-fullness-rec');
+  if (rec) {
+    rec.style.display = 'block';
+    if (is2prong) {
+      rec.style.cssText = 'display:block;margin-top:8px;font-size:12px;padding:8px 12px;border-radius:7px;background:#EAF3DE;color:#27500A';
+      rec.textContent = '2-prong tack top selected for ' + val + '× fullness.';
+    } else {
+      rec.style.cssText = 'display:block;margin-top:8px;font-size:12px;padding:8px 12px;border-radius:7px;background:var(--gold-mid);color:#0A4A42';
+      rec.textContent = '3-prong tack top selected for ' + val + '× fullness — rich, full look.';
+    }
   }
 }
 
@@ -109,10 +169,15 @@ function drapeRippleHwHint(hw) {
   note.style.color = hw === 'idk' ? 'var(--gold)' : '#555';
 }
 
-function selectPinchDetail(el, val) {
-  document.querySelectorAll('#pinch-subopts .opt-card').forEach(c => c.classList.remove('sel'));
+function selectPinchDetail(el, pos) {
+  var topCard = document.getElementById('pp-tack-top');
+  var botCard = document.getElementById('pp-tack-bot');
+  if (topCard) topCard.classList.remove('sel');
+  if (botCard) botCard.classList.remove('sel');
   el.classList.add('sel');
-  drapeState.pleat = val;
+  var prong = String(_ppProngs);
+  var tack = pos === 'top' ? 'Tack Top' : 'Tack Bottom';
+  drapeState.pleat = 'Pinch Pleat — ' + prong + '-Prong ' + tack;
 }
 function selectRomanStyle(el, val) {
   document.querySelectorAll('#roman-style-cards .opt-card').forEach(c => c.classList.remove('sel'));
@@ -134,6 +199,14 @@ function selectRomanStyle(el, val) {
   });
 
   if (!hideSteps) { calcRoman(); }
+
+  // Auto-scroll to the revealed content
+  setTimeout(function() {
+    var target = isVignette ? document.getElementById('vignette-notice')
+               : isValance  ? document.getElementById('valance-config')
+               : document.getElementById('step-roman-2');
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 150);
 }
 
 function romanChainCheck() {
@@ -193,8 +266,11 @@ function _getShippingEst(containerEl) {
 }
 
 // ── Roman pricing ─────────────────────────────────────────
-var RN_MIN       = 85;       // minimum per shade regardless of sq ft
 var RN_TRIM_PER_FT = 15;
+// Minimums: flat/relaxed $150, permanently pleated $250
+function rnGetMin() {
+  return (romanState.style === 'Permanently Pleated Roman') ? 250 : 150;
+}
 
 // Flat/Relaxed: $40/sqft. Permanently Pleated: $50/sqft (extra fabric + labor).
 // Permanently Pleated yardage uses height × 3 before calculation.
@@ -260,13 +336,22 @@ function calcRoman() {
   // Motorized operation → no customer-facing estimate
   if (getOpt('grp-roman-op') === 'Motorized') { _motorCustomMsg(box, 'Motorized Roman Shade'); return; }
 
-  // Oversized → custom quote (max 120″ × 120″)
+  // Minimum functional size — 12″
+  if ((w > 0 && w < 12) || (h > 0 && h < 12)) {
+    if (box) { box.style.display = 'block'; box.innerHTML = '<div style="padding:6px 0;font-size:12px;color:var(--text-dark)">&#9888; Roman shades require a minimum <strong>12&rdquo;</strong> width and height to operate correctly.</div>'; }
+    return;
+  }
+
+  // Custom quote for over 120″
   if (w > 120 || h > 120) { _customSizeMsg(box, 'Roman Shade', 120, 120); return; }
+
+  // Oversized freight flag (>96″ wide = 8 ft)
+  var isRomanOversized = w > 96;
 
   var rate     = rnGetRate();
   var isPleated = romanState.style === 'Permanently Pleated Roman';
   var sqft     = (w / 12) * (h / 12);
-  var perShade = Math.max(RN_MIN, sqft * rate);
+  var perShade = Math.max(rnGetMin(), sqft * rate);
   var laborTotal = perShade * qty;
   // Permanently pleated yardage uses 3× height (extra fabric for folds)
   var rnFabricH = isPleated ? h * 3 : h;
@@ -303,8 +388,17 @@ function calcRoman() {
     }
   }
 
-  // Shipping estimate
-  var shipEst = _getShippingEst(document.getElementById('roman-form'));
+  // Shipping estimate — FedEx/UPS from Philadelphia; min $75; >96″ wide = oversized freight $200
+  var isShippingRn = getOpt('grp-del-roman') === 'Ship to me';
+  var shipEst = 0;
+  if (isShippingRn) {
+    if (isRomanOversized) {
+      shipEst = 200;
+    } else {
+      var rnShipBase = Math.ceil((w / 12) * (h / 12) * qty * 3 / 5) * 5;
+      shipEst = Math.max(75, rnShipBase);
+    }
+  }
 
   var grandTotal = laborTotal + trimTotal + fabricCost + linerCost + shipEst;
   if (box) box.style.display = 'block';
@@ -343,6 +437,9 @@ function calcRoman() {
   ];
   if (getOpt('grp-roman-op') === 'Motorized') rnLines.push({ label: 'Motor brand', value: getOpt('grp-roman-motor-brand') || 'TBD at order' });
   if (trimTotal) rnLines.push({ label: 'Trim', value: getOpt('grp-roman-trim') || 'Selected' });
+  if (shipEst)   rnLines.push({ label: isRomanOversized ? 'Oversized freight est. (>96″ wide)' : 'Shipping est. (FedEx/UPS, Philadelphia)', value: '~$' + shipEst });
+  var rnAtMin = perShade === rnGetMin();
+  if (rnAtMin) rnLines.push({ label: 'Note', value: 'At ' + (isPleated ? 'pleated' : 'flat/relaxed') + ' minimum — $' + rnGetMin() + '/shade' });
   pbRenderEstimate('roman-pricebox', rnLines, grandTotal, '', function(checkout) {
     pbCollectItem(romanState.style || 'Roman Shade', rnLines, grandTotal, getOpt('grp-roman-op')==='Motorized');
     pbOpenCart();
@@ -375,8 +472,19 @@ function _getDim(wholeId, fracId) {
   return whole + frac;
 }
 function calcDrapePrice() {
-  var w = _getDim('d-exact-width',  'd-exact-width-frac');
-  var h = _getDim('d-exact-length', 'd-exact-length-frac');
+  var isPinchPleat = drapeState.pleat === 'Pinch Pleat' || (drapeState.pleat && drapeState.pleat.indexOf('Pinch Pleat') === 0);
+  var isRodPocket  = drapeState.pleat === 'Rod Pocket / Sheered Pocket';
+  var w, h;
+  if (isPinchPleat) {
+    w = _getDim('pp-w', 'pp-w-frac');
+    h = _getDim('pp-l', 'pp-l-frac');
+  } else if (isRodPocket) {
+    w = _getDim('rp-w', 'rp-w-frac');
+    h = _getDim('rp-l', 'rp-l-frac');
+  } else {
+    w = _getDim('d-exact-width',  'd-exact-width-frac');
+    h = _getDim('d-exact-length', 'd-exact-length-frac');
+  }
   var box = document.getElementById('drape-price-box');
   if (!box) return;
   if (!w || !h) { box.style.display = 'none'; return; }
@@ -389,21 +497,22 @@ function calcDrapePrice() {
   if (hwNeed === 'I need hardware' && hwType === 'Motorized track') { _motorCustomMsg(box, 'Motorized Drapery'); return; }
 
   // Minimum dimension guard
-  var minWarn = document.getElementById('d-min-warn');
+  var minWarnId = isPinchPleat ? 'pp-min-warn' : isRodPocket ? 'rp-min-warn' : 'd-min-warn';
+  var minWarn = document.getElementById(minWarnId);
   if (minWarn) {
-    var tooNarrow = w > 0 && w < 24, tooShort = h > 0 && h < 24;
+    var tooNarrow = w > 0 && w < 10, tooShort = h > 0 && h < 10;
     if (tooNarrow && tooShort) {
-      minWarn.textContent = '⚠ Both dimensions seem very small. Minimum panel width and height are typically 24″. Specialty panels smaller than this require a custom quote — call (609) 742-1720.';
+      minWarn.textContent = '⚠ Both dimensions are below the 10″ minimum. Call (609) 742-1720 for specialty sizes.';
       minWarn.style.display = 'block';
     } else if (tooNarrow) {
-      minWarn.textContent = '⚠ Very narrow panel — panels under 24″ wide may require specialty pricing. Call (609) 742-1720 to confirm.';
+      minWarn.textContent = '⚠ Minimum panel width is 10″. Call (609) 742-1720 to confirm.';
       minWarn.style.display = 'block';
     } else if (tooShort) {
-      minWarn.textContent = '⚠ Very short panel — finished lengths under 24″ may require specialty pricing. Call (609) 742-1720 to confirm.';
+      minWarn.textContent = '⚠ Minimum finished length is 10″. Call (609) 742-1720 to confirm.';
       minWarn.style.display = 'block';
-    } else if (w > 250 || h > 150) {
-      minWarn.textContent = w > 250
-        ? '⚠ Width over 250″ exceeds our standard range — custom pricing required. Submit your order and we\'ll quote it.'
+    } else if (w > 200 || h > 150) {
+      minWarn.textContent = w > 200
+        ? '⚠ Width over 200″ exceeds our standard range — custom pricing required. Submit your order and we\'ll quote it.'
         : '⚠ Length over 150″ exceeds our standard range — custom pricing required. Submit your order and we\'ll quote it.';
       minWarn.style.display = 'block';
     } else {
@@ -411,12 +520,11 @@ function calcDrapePrice() {
     }
   }
 
-  // Oversized → custom quote (max 250″ wide × 150″ tall)
-  if (w > 250 || h > 150) { _customSizeMsg(box, 'Custom Drapery', 250, 150); return; }
+  // Oversized → custom quote (max 200″ wide × 150″ tall)
+  if (w > 200 || h > 150) { _customSizeMsg(box, 'Custom Drapery', 200, 150); return; }
 
   // Fullness factor
   var isRipple   = drapeState.pleat === 'Ripple Fold';
-  var isRodPocket = drapeState.pleat === 'Rod Pocket / Sheered Pocket';
   var fullness = 2.0;
   if (isRipple) {
     var rfBtn = document.querySelector('#grp-ripple-fullness .opt-btn.sel');
@@ -426,6 +534,9 @@ function calcDrapePrice() {
     var rpBtn = document.querySelector('#grp-rp-fullness .opt-btn.sel');
     var rpTxt = rpBtn ? rpBtn.textContent.trim() : '2.0';
     fullness = rpTxt === 'Flat (1×)' ? 1.0 : (parseFloat(rpTxt) || 2.0);
+  } else if (isPinchPleat) {
+    var ppBtn = document.querySelector('#grp-pp-fullness .opt-btn.sel');
+    fullness = ppBtn ? (parseFloat(ppBtn.textContent) || 2.5) : 2.5;
   } else {
     var fBtn = document.querySelector('#grp-drape-fullness .opt-btn.sel');
     fullness = fBtn ? (parseFloat(fBtn.textContent) || 2.0) : 2.0;
@@ -508,35 +619,23 @@ function calcDrapePrice() {
     trimTotal = Math.ceil(trimFt) * D_TRIM_PER_FT;
   }
 
-  // Shipping estimate
-  var dShipEst = _getShippingEst(document.getElementById('drape-form'));
+  // Shipping estimate — FedEx/UPS from Philadelphia; min $75 for drapes
+  var isShippingDrape = getOpt('grp-del-drape') === 'Ship to me';
+  var dShipEst = 0;
+  if (isShippingDrape) {
+    var dShipBase = Math.ceil(numWidths * 12 / 5) * 5;
+    dShipEst = Math.max(75, dShipBase);
+  }
 
   var grandTotal = laborTotal + interlineTotal + fabricCost + liningCost + corniceTotal + valanceTotal + trimTotal + dShipEst;
+  grandTotal = Math.max(200, grandTotal); // $200 minimum for custom drapery
 
-  // Render
-  var rows = '';
-  var row = function(lbl, val) {
-    rows += '<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-dark);padding:4px 0;border-bottom:.5px solid var(--border-dark)">' +
-      '<span>' + lbl + '</span><span style="color:var(--cream);font-weight:500">$' + val.toFixed(0) + '</span></div>';
-  };
-  row('Labor — ' + numWidths + ' widths × $' + effectiveRate + (lenSurcharge ? ' (incl. +$' + lenSurcharge + ' length)' : ''), laborTotal);
-  if (fabricCost)     row('Fabric est. (' + yardsTotal + ' yd × $25/yd)', fabricCost);
-  if (liningCost)     row('Lining — ' + lining + ' (' + liningYards + ' yd × $10/yd)', liningCost);
-  if (interlineTotal) row('Interlining (' + numWidths + ' widths × $10)', interlineTotal);
-  if (trimTotal)   row('Trim', trimTotal);
-  if (corniceTotal)row('Cornice', corniceTotal);
-  if (valanceTotal)row('Valance', valanceTotal);
-  if (dShipEst)    row('Shipping est.', dShipEst);
-
-  document.getElementById('drape-price-rows').innerHTML = '';
-  // Fabric yardage note for drapes
-  var dFabNote = document.getElementById('drape-fabric-yds-note');
-  if (!dFabNote) {
-    dFabNote = document.createElement('div');
-    dFabNote.id = 'drape-fabric-yds-note';
-    dFabNote.style.cssText = 'margin-top:8px;font-size:11px;background:rgba(45,224,193,.1);border:1px solid rgba(45,224,193,.2);border-radius:7px;padding:7px 10px;color:var(--cream);line-height:1.5';
-    document.getElementById('drape-price-box').appendChild(dFabNote);
-  }
+  var panels    = getOpt('grp-drape-panels') || '—';
+  var panelSide = panels === 'Single panel' ? (getOpt('grp-drape-side') || '—') : '—';
+  var returnSz  = isPinchPleat
+    ? ((document.getElementById('pp-return') || {}).value || '4')
+    : ((document.getElementById('d-return') || {}).value || '4');
+  var overlapSz = (isRodPocket || isPinchPleat) ? '—' : ((document.getElementById('d-overlap') || {}).value || '4');
   var dYardsPerWidth = Math.ceil((h + 16) / 36 * 4) / 4;
   var dTotalYards    = Math.ceil(dYardsPerWidth * numWidths * 4) / 4;
   var cornYds = 0;
@@ -550,31 +649,24 @@ function calcDrapePrice() {
     valYds = vw2 ? Math.ceil((vw2/36)*1.5*4)/4 : 0;
   }
   var totalFabYds = dTotalYards + cornYds + valYds;
-  dFabNote.textContent = '🧵 Est. fabric needed: ~'+totalFabYds.toFixed(2)+' yards (drapes: '+dTotalYards+
-    (cornYds?' · cornice: '+cornYds:'')+
-    (valYds?' · valance: '+valYds:'')+
-    ') — pattern repeats add more. Confirmed at order.';
 
-  document.getElementById('drape-price-note').textContent = 'Pricing confirmed at order. Fill out the form to request your custom quote.';
   box.style.display = 'block';
 
-  // Shipping: drapes/romans $50 min; over 80" width = likely oversized
-  var dW = parseFloat(document.getElementById('d-exact-width').value) || 0;
-  var dShipMin = 50;
-  var dShipNote = dW > 80 ? 'Oversized (over 80") — heavy freight applies' : '$50 minimum (fabric shipments)';
-  dShipEst = Math.max(dShipMin, dShipEst);
-
-  // Line-by-line estimate panel
   var drapeLines = [
-    { label: 'Product',     value: (drapeState.pleat || 'Custom Drapery') },
-    { label: 'Fabric',      value: (drapeState.fabric || '—') },
-    { label: 'Lining',      value: (lining || '—') },
-    { label: 'Widths',      value: numWidths + ' widths' },
-    { label: 'Panels',      value: (panels || '—') + (panelSide !== '—' ? ' — ' + panelSide : '') }
+    { label: 'Product',   value: (drapeState.pleat || 'Custom Drapery') },
+    { label: 'Size',      value: w + '″ W × ' + h + '″ finished length' },
+    { label: 'Panels',    value: (panels || '—') + (panelSide !== '—' ? ' — ' + panelSide : '') },
+    { label: 'Widths',    value: numWidths + ' widths × $' + effectiveRate + (lenSurcharge ? ' (incl. length surcharge)' : '') },
+    { label: 'Lining',    value: (lining || 'No liner') + (isInterlining ? ' + Interlining' : '') },
+    { label: 'Fabric',    value: (drapeState.fabric || '—') }
   ];
-  if (returnSz) drapeLines.push({ label: 'Return / Overlap', value: returnSz + '" / ' + overlapSz + '"' });
-  if (fabricCost) drapeLines.push({ label: 'Fabric', value: '~' + yardsTotal + ' yds (est.)' });
-  if (isInterlining) drapeLines.push({ label: 'Interlining', value: 'Yes' });
+  if (returnSz && !isRodPocket) drapeLines.push({ label: 'Return / Overlap', value: returnSz + '" / ' + overlapSz + '"' });
+  if (corniceTotal) drapeLines.push({ label: 'Cornice', value: '$' + corniceTotal.toFixed(0) });
+  if (valanceTotal) drapeLines.push({ label: 'Valance', value: '$' + valanceTotal.toFixed(0) });
+  if (trimTotal)    drapeLines.push({ label: 'Trim', value: '$' + trimTotal.toFixed(0) });
+  if (dShipEst)     drapeLines.push({ label: 'Shipping est.', value: '~$' + dShipEst });
+  drapeLines.push({ label: 'Fabric needed est.', value: '~' + totalFabYds.toFixed(1) + ' yds (pattern repeats add more)' });
+  if (grandTotal === 200) drapeLines.push({ label: 'Note', value: '$200 minimum for custom drapery' });
   pbRenderEstimate('drape-price-box', drapeLines, grandTotal, '', function(checkout) {
     pbCollectItem(drapeState.pleat || 'Custom Drapery', drapeLines, grandTotal, false);
     pbOpenCart();
@@ -842,10 +934,14 @@ async function submitDrape() {
   var interlining = interCb && interCb.checked;
   var panels     = getOpt('grp-drape-panels');
   var panelSide  = panels === 'Single panel' ? getOpt('grp-drape-side') : '—';
-  var returnSz   = document.getElementById('d-return').value || '4';
-  var overlapSz  = document.getElementById('d-overlap').value || '4';
+  var isSubmitPinch  = pleat === 'Pinch Pleat' || (pleat && pleat.indexOf('Pinch Pleat') === 0);
+  var isSubmitRP     = pleat === 'Rod Pocket / Sheered Pocket';
+  var returnSz   = isSubmitPinch
+    ? ((document.getElementById('pp-return') || {}).value || '4')
+    : ((document.getElementById('d-return') || {}).value || '4');
+  var overlapSz  = isSubmitRP || isSubmitPinch ? '—' : ((document.getElementById('d-overlap') || {}).value || '4');
   // Fullness (standard pleat styles)
-  var fullness   = getOpt('grp-drape-fullness') || '—';
+  var fullness   = isSubmitPinch ? getOpt('grp-pp-fullness') : getOpt('grp-drape-fullness') || '—';
   // Ripple fold specific
   var isRipple   = pleat === 'Ripple Fold';
   var rippleFull = isRipple ? getOpt('grp-ripple-fullness') : '—';
@@ -894,9 +990,12 @@ async function submitDrape() {
     + (document.getElementById('drape-price-total') && document.getElementById('drape-price-box').style.display !== 'none' ?
         'Estimate: ' + document.getElementById('drape-price-total').textContent + '\n' : '')
     + 'Hardware: ' + hwNeed + (hwType !== 'N/A' ? ' — ' + hwType : '') + '\n'
-    + 'Width range: ' + document.getElementById('d-width').value
-    + '\nExact width: ' + (document.getElementById('d-exact-width').value ? document.getElementById('d-exact-width').value + '"' : '—')
-    + '\nFinished length: ' + (document.getElementById('d-exact-length').value ? document.getElementById('d-exact-length').value + '"' : '—') + '\n'
+    + '\nExact width: ' + (isSubmitPinch ? ((document.getElementById('pp-w')||{}).value || '—') + '"'
+        : isSubmitRP ? ((document.getElementById('rp-w')||{}).value || '—') + '"'
+        : (document.getElementById('d-exact-width').value ? document.getElementById('d-exact-width').value + '"' : '—'))
+    + '\nFinished length: ' + (isSubmitPinch ? ((document.getElementById('pp-l')||{}).value || '—') + '"'
+        : isSubmitRP ? ((document.getElementById('rp-l')||{}).value || '—') + '"'
+        : (document.getElementById('d-exact-length').value ? document.getElementById('d-exact-length').value + '"' : '—')) + '\n'
     + 'Delivery: ' + delivery + '\n'
     + pbInstallLine(document.getElementById('drape-form')) + '\n\n'
     + 'Notes:\n' + (document.getElementById('d-notes').value.trim() || 'None')
@@ -915,9 +1014,13 @@ async function submitDrape() {
     { label: 'Fabric', value: drapeState.fabric || '—' },
     { label: 'Lining', value: lining + (interlining ? ' + Interlining' : '') },
     { label: 'Panels', value: panels + (panelSide !== '—' ? ' — ' + panelSide : '') },
-    { label: 'Width', value: (document.getElementById('d-exact-width').value || '—') + '"' },
-    { label: 'Finished length', value: (document.getElementById('d-exact-length').value || '—') + '"' },
-    { label: 'Return / Overlap', value: (document.getElementById('d-return').value || '4') + '" / ' + (document.getElementById('d-overlap').value || '4') + '"' },
+    { label: 'Width', value: (isSubmitPinch ? ((document.getElementById('pp-w')||{}).value || '—')
+        : isSubmitRP ? ((document.getElementById('rp-w')||{}).value || '—')
+        : (document.getElementById('d-exact-width').value || '—')) + '"' },
+    { label: 'Finished length', value: (isSubmitPinch ? ((document.getElementById('pp-l')||{}).value || '—')
+        : isSubmitRP ? ((document.getElementById('rp-l')||{}).value || '—')
+        : (document.getElementById('d-exact-length').value || '—')) + '"' },
+    { label: 'Return / Overlap', value: returnSz + '" / ' + overlapSz + (overlapSz === '—' ? '' : '"') },
     { label: 'Hardware', value: hwNeed + (hwType !== 'N/A' ? ' — ' + hwType : '') },
     { label: 'Delivery', value: delivery }
   ];
