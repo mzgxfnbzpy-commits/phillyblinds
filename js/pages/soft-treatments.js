@@ -630,30 +630,12 @@ function calcDrapePrice() {
   var grandTotal = laborTotal + interlineTotal + fabricCost + liningCost + corniceTotal + valanceTotal + trimTotal + dShipEst;
   grandTotal = Math.max(200, grandTotal); // $200 minimum for custom drapery
 
-  // Render
-  var rows = '';
-  var row = function(lbl, val) {
-    rows += '<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-dark);padding:4px 0;border-bottom:.5px solid var(--border-dark)">' +
-      '<span>' + lbl + '</span><span style="color:var(--cream);font-weight:500">$' + val.toFixed(0) + '</span></div>';
-  };
-  row('Labor — ' + numWidths + ' widths × $' + effectiveRate + (lenSurcharge ? ' (incl. +$' + lenSurcharge + ' length)' : ''), laborTotal);
-  if (fabricCost)     row('Fabric est. (' + yardsTotal + ' yd × $25/yd)', fabricCost);
-  if (liningCost)     row('Lining — ' + lining + ' (' + liningYards + ' yd × $10/yd)', liningCost);
-  if (interlineTotal) row('Interlining (' + numWidths + ' widths × $10)', interlineTotal);
-  if (trimTotal)   row('Trim', trimTotal);
-  if (corniceTotal)row('Cornice', corniceTotal);
-  if (valanceTotal)row('Valance', valanceTotal);
-  if (dShipEst)    row('Shipping est. (FedEx/UPS from Philadelphia)', dShipEst);
-
-  document.getElementById('drape-price-rows').innerHTML = '';
-  // Fabric yardage note for drapes
-  var dFabNote = document.getElementById('drape-fabric-yds-note');
-  if (!dFabNote) {
-    dFabNote = document.createElement('div');
-    dFabNote.id = 'drape-fabric-yds-note';
-    dFabNote.style.cssText = 'margin-top:8px;font-size:11px;background:rgba(45,224,193,.1);border:1px solid rgba(45,224,193,.2);border-radius:7px;padding:7px 10px;color:var(--cream);line-height:1.5';
-    document.getElementById('drape-price-box').appendChild(dFabNote);
-  }
+  var panels    = getOpt('grp-drape-panels') || '—';
+  var panelSide = panels === 'Single panel' ? (getOpt('grp-drape-side') || '—') : '—';
+  var returnSz  = isPinchPleat
+    ? ((document.getElementById('pp-return') || {}).value || '4')
+    : ((document.getElementById('d-return') || {}).value || '4');
+  var overlapSz = (isRodPocket || isPinchPleat) ? '—' : ((document.getElementById('d-overlap') || {}).value || '4');
   var dYardsPerWidth = Math.ceil((h + 16) / 36 * 4) / 4;
   var dTotalYards    = Math.ceil(dYardsPerWidth * numWidths * 4) / 4;
   var cornYds = 0;
@@ -667,26 +649,23 @@ function calcDrapePrice() {
     valYds = vw2 ? Math.ceil((vw2/36)*1.5*4)/4 : 0;
   }
   var totalFabYds = dTotalYards + cornYds + valYds;
-  dFabNote.textContent = '🧵 Est. fabric needed: ~'+totalFabYds.toFixed(2)+' yards (drapes: '+dTotalYards+
-    (cornYds?' · cornice: '+cornYds:'')+
-    (valYds?' · valance: '+valYds:'')+
-    ') — pattern repeats add more. Confirmed at order.';
 
-  document.getElementById('drape-price-note').textContent = 'Pricing confirmed at order. Fill out the form to request your custom quote.';
   box.style.display = 'block';
 
-  // Line-by-line estimate panel
   var drapeLines = [
-    { label: 'Product',     value: (drapeState.pleat || 'Custom Drapery') },
-    { label: 'Fabric',      value: (drapeState.fabric || '—') },
-    { label: 'Lining',      value: (lining || '—') },
-    { label: 'Widths',      value: numWidths + ' widths' },
-    { label: 'Panels',      value: (panels || '—') + (panelSide !== '—' ? ' — ' + panelSide : '') }
+    { label: 'Product',   value: (drapeState.pleat || 'Custom Drapery') },
+    { label: 'Size',      value: w + '″ W × ' + h + '″ finished length' },
+    { label: 'Panels',    value: (panels || '—') + (panelSide !== '—' ? ' — ' + panelSide : '') },
+    { label: 'Widths',    value: numWidths + ' widths × $' + effectiveRate + (lenSurcharge ? ' (incl. length surcharge)' : '') },
+    { label: 'Lining',    value: (lining || 'No liner') + (isInterlining ? ' + Interlining' : '') },
+    { label: 'Fabric',    value: (drapeState.fabric || '—') }
   ];
-  if (returnSz) drapeLines.push({ label: 'Return / Overlap', value: returnSz + '" / ' + overlapSz + '"' });
-  if (fabricCost) drapeLines.push({ label: 'Fabric', value: '~' + yardsTotal + ' yds (est.)' });
-  if (isInterlining) drapeLines.push({ label: 'Interlining', value: 'Yes' });
-  if (dShipEst)  drapeLines.push({ label: 'Shipping est. (FedEx/UPS, Philadelphia)', value: '~$' + dShipEst });
+  if (returnSz && !isRodPocket) drapeLines.push({ label: 'Return / Overlap', value: returnSz + '" / ' + overlapSz + '"' });
+  if (corniceTotal) drapeLines.push({ label: 'Cornice', value: '$' + corniceTotal.toFixed(0) });
+  if (valanceTotal) drapeLines.push({ label: 'Valance', value: '$' + valanceTotal.toFixed(0) });
+  if (trimTotal)    drapeLines.push({ label: 'Trim', value: '$' + trimTotal.toFixed(0) });
+  if (dShipEst)     drapeLines.push({ label: 'Shipping est.', value: '~$' + dShipEst });
+  drapeLines.push({ label: 'Fabric needed est.', value: '~' + totalFabYds.toFixed(1) + ' yds (pattern repeats add more)' });
   if (grandTotal === 200) drapeLines.push({ label: 'Note', value: '$200 minimum for custom drapery' });
   pbRenderEstimate('drape-price-box', drapeLines, grandTotal, '', function(checkout) {
     pbCollectItem(drapeState.pleat || 'Custom Drapery', drapeLines, grandTotal, false);
