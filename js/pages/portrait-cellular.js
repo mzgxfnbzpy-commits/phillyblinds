@@ -267,7 +267,7 @@ function cellCheckConflict() {
   if (isTDBC && isDN) {
     note.style.display = 'block';
     note.textContent   = '⚠ Top Down / Bottom Up is not compatible with Day & Night fabric. Switching lift to Bottom Up.';
-    pickLift(document.querySelector('#grp-cell-lift .opt-card[data-lift="bu"]'), 'bu');
+    pickCellLift(document.querySelector('#grp-cell-lift .opt-card[data-lift="bu"]'), 'bu');
   } else {
     note.style.display = 'none';
   }
@@ -432,6 +432,7 @@ function cellCalcPrice() {
   document.getElementById('cell-price-total').textContent = '$' + grandTotal.toLocaleString();
   document.getElementById('cell-price-breakdown').innerHTML = lines.join('<br>');
   document.getElementById('cell-size-info').textContent    = res.name + ' · ' + res.pricedAt + ' · ' + sqft.toFixed(1) + ' sqft';
+  document.getElementById('cell-size-info').style.display  = 'block';
   pb.style.display = 'block';
   document.getElementById('qp-cell-pending').style.display = 'none';
   document.getElementById('cell-cart-wrap').style.display  = 'block';
@@ -516,7 +517,6 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('qr-cell-fabric').textContent = 'Light Filtering';
   document.getElementById('qr-cell-size').textContent   = '3⁄4″ Single';
   document.getElementById('s3val').textContent = 'Cordless';
-  document.getElementById('s4val').textContent = 'Light Filtering';
   document.getElementById('s5val').textContent = '3⁄4″ Single';
   filterCellSizes();
   renderCellColorGrid();
