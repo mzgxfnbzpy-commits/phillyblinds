@@ -391,9 +391,16 @@ function crsUpdatePanel() {
 
   // Price breakdown
   var isCustomQuote = CRS.motor === 'lutron' || CRS.motor === 'somfy' || CRS.motor === 'other';
+  var isCustomFabric = CRS.fabric === 'customer';
   var isRedirect = CRS.motor === 'cordless' || CRS.motor === 'norman-motor' || CRS.motor === 'rollease-motor';
   var isPending = CRS.motor === 'motorized';
-  if (isCustomQuote) {
+  if (isCustomFabric) {
+    if (priceEl) priceEl.style.display = 'none';
+    if (noteEl) {
+      noteEl.textContent = 'Customer-supplied fabric pricing is custom — submit your specs and Justin will send you a quote.';
+      noteEl.style.display = '';
+    }
+  } else if (isCustomQuote) {
     if (priceEl) priceEl.style.display = 'none';
     if (noteEl) {
       noteEl.textContent = 'Motorized pricing is custom — fill out your specs and submit. Justin will send you a personalized quote.';
