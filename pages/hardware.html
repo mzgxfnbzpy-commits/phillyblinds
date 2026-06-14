@@ -219,8 +219,10 @@
 
     <!-- Step 1: System type -->
     <div class="step" id="kf-step1">
-      <div class="step-label">Step 1</div>
-      <div class="step-title">What type of system?</div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div class="step-num">1</div>
+        <div class="step-title" style="margin-bottom:0">What type of system?</div>
+      </div>
       <div class="opt-cards" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));margin-top:14px">
 
         <div class="opt-card" onclick="kfSetType('traverse',this)">
@@ -277,8 +279,10 @@
 
     <!-- Step 2: Sub-options (changes per type) -->
     <div class="step" id="kf-step2" style="display:none">
-      <div class="step-label">Step 2</div>
-      <div class="step-title" id="kf-step2-title">Options</div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div class="step-num">2</div>
+        <div class="step-title" id="kf-step2-title" style="margin-bottom:0">Options</div>
+      </div>
 
       <!-- TRAVERSE sub-options -->
       <!-- ── ARCHITRAC FULL CONFIGURATOR ── -->
@@ -548,8 +552,10 @@
 
     <!-- Step 3: Quantity + mount + summary -->
     <div class="step" id="kf-step3" style="display:none">
-      <div class="step-label">Step 3</div>
-      <div class="step-title">Quantity &amp; details</div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div class="step-num">3</div>
+        <div class="step-title" style="margin-bottom:0">Quantity &amp; details</div>
+      </div>
       <div class="form-row" style="margin-top:12px">
         <div class="form-group">
           <label>How many rods / windows?</label>

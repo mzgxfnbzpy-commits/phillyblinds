@@ -2466,6 +2466,23 @@ function selectSheerCat(cat, el) {
   ];
   fields.forEach(function(f) { pbCtx.prefill(f[0], f[1], null); });
 })();
+(function(){
+  document.querySelectorAll('.step-label').forEach(function(lbl){
+    var m = lbl.textContent.trim().match(/^Step\s+(\w+)$/i);
+    if (!m) return;
+    lbl.textContent = m[1];
+    lbl.classList.add('step-num-circle');
+    lbl.style.marginBottom = '0';
+    var title = lbl.nextElementSibling;
+    if (!title || !title.classList.contains('step-title')) return;
+    var wrap = document.createElement('div');
+    wrap.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:10px';
+    lbl.parentNode.insertBefore(wrap, lbl);
+    wrap.appendChild(lbl);
+    wrap.appendChild(title);
+    title.style.marginBottom = '0';
+  });
+})();
 </script>
 </body>
 </html>
