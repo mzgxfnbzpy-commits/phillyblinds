@@ -114,8 +114,10 @@
 <!-- STEP 1: MOUNT -->
 <div class="step-block active" id="step-1">
   <div class="step-body">
-    <div class="step-label">Step 1</div>
-    <div class="step-title">Mount type</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="step-num">1</div>
+      <div class="step-title" style="margin-bottom:0">Mount type</div>
+    </div>
     <p class="step-subhead">Both use the cassette headrail. Wall mount attaches to wall or fascia above the opening. Ceiling / soffit mount attaches overhead — ideal for pergolas and covered patios.</p>
     <div class="opt-row">
       <button class="opt-btn" id="mount-wall" onclick="ersPickMount('wall','Wall Mount')">Wall Mount</button>
@@ -127,8 +129,10 @@
 <!-- STEP 2: DIMENSIONS -->
 <div class="step-block" id="step-2">
   <div class="step-body">
-    <div class="step-label">Step 2</div>
-    <div class="step-title">Dimensions</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="step-num">2</div>
+      <div class="step-title" style="margin-bottom:0">Dimensions</div>
+    </div>
     <p class="step-subhead">Measure the opening you want to cover. Zipper track: measure the exact opening width. Without track: add 2–4″ per side for coverage.</p>
     <div class="dim-box">
       <div class="dim-box-label">Opening size</div>
@@ -152,8 +156,10 @@
 <!-- STEP 3: OPENNESS -->
 <div class="step-block" id="step-3">
   <div class="step-body">
-    <div class="step-label">Step 3</div>
-    <div class="step-title">Openness factor</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="step-num">3</div>
+      <div class="step-title" style="margin-bottom:0">Openness factor</div>
+    </div>
     <p class="step-subhead">Lower % = tighter weave, more shade and glare control. ±10% is industry-standard tolerance.</p>
     <div class="opt-row">
       <button class="opt-btn" id="op-5" onclick="ersPickOpenness('5','5% — high shade')">5% &mdash; High shade</button>
@@ -165,8 +171,10 @@
 <!-- STEP 4: COLOR -->
 <div class="step-block" id="step-4">
   <div class="step-body">
-    <div class="step-label">Step 4</div>
-    <div class="step-title">Fabric color</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="step-num">4</div>
+      <div class="step-title" style="margin-bottom:0">Fabric color</div>
+    </div>
     <p class="step-subhead">Solar screen fabric in your chosen openness. Actual color may vary slightly — request a swatch before ordering for the best match.</p>
     <div class="opt-row" id="color-grid">
       <button class="opt-btn" onclick="ersPickColor(this,'White')"><span class="csw" style="background:#f5f5f5;border-color:#ccc"></span>White</button>
@@ -182,8 +190,10 @@
 <!-- STEP 5: SIDE TRACK -->
 <div class="step-block" id="step-5">
   <div class="step-body">
-    <div class="step-label">Step 5</div>
-    <div class="step-title">Side track</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="step-num">5</div>
+      <div class="step-title" style="margin-bottom:0">Side track</div>
+    </div>
     <p class="step-subhead">Cables guide the hem bar straight — good for exposed areas without a full zipper seal. Zipper track zips the fabric edge into an aluminum channel on each side for the tightest seal and maximum wind resistance.</p>
     <div class="opt-row">
       <button class="opt-btn sel" id="track-cables" onclick="ersPickTrack('cables','Cables')">Cables</button>
@@ -195,8 +205,10 @@
 <!-- STEP 6: OPERATION -->
 <div class="step-block" id="step-6">
   <div class="step-body">
-    <div class="step-label">Step 6</div>
-    <div class="step-title">Operation</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="step-num">6</div>
+      <div class="step-title" style="margin-bottom:0">Operation</div>
+    </div>
     <p class="step-subhead">Manual uses a hand crank — no power required, reliable and low-maintenance. Motor brand and specs are confirmed at quote; add your preference in the notes.</p>
     <div class="opt-row">
       <button class="opt-btn" id="op-manual" onclick="ersPickOperation('manual','Manual — hand crank')">Manual &mdash; hand crank</button>
@@ -208,8 +220,10 @@
 <!-- STEP 7: QUANTITY -->
 <div class="step-block" id="step-7">
   <div class="step-body">
-    <div class="step-label">Step 7</div>
-    <div class="step-title">Quantity</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="step-num">7</div>
+      <div class="step-title" style="margin-bottom:0">Quantity</div>
+    </div>
     <p class="step-subhead">Number of shades with these exact specs. Multiple openings with different sizes? Submit separate orders or add details in the notes.</p>
     <div style="display:flex;align-items:center;gap:10px;margin-top:4px">
       <div class="qty-btns">
@@ -225,8 +239,10 @@
 <!-- STEP 8: DELIVERY -->
 <div class="step-block" id="step-8">
   <div class="step-body">
-    <div class="step-label">Step 8</div>
-    <div class="step-title">Delivery</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="step-num">8</div>
+      <div class="step-title" style="margin-bottom:0">Delivery</div>
+    </div>
     <div class="delivery-opt-grid" style="grid-template-columns:1fr">
       <div class="delivery-opt-card sel" id="del-ship" onclick="ersPickDelivery('ship')">
         <div class="delivery-opt-title">Shipped to me</div>
@@ -240,8 +256,10 @@
 <!-- STEP 9: CONTACT & SUBMIT -->
 <div class="step-block" id="step-9">
   <div class="step-body">
-    <div class="step-label">Step 9</div>
-    <div class="step-title">Your contact info</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="step-num">9</div>
+      <div class="step-title" style="margin-bottom:0">Your contact info</div>
+    </div>
     <div id="contact-form">
       <div class="form-group">
         <label>Your name *</label>

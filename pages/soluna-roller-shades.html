@@ -114,7 +114,7 @@
 /* ─── CONFIGURATOR ──────────────────────────────────────────── */
 .config-wrap{background:#fff;border:1px solid #e8e8e4;border-radius:14px;padding:28px}
 .config-grid{display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start}
-.step-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:6px}
+.step-block{padding:14px 16px}
 .step-title{font-size:14px;font-weight:500;color:#111;margin-bottom:10px}
 .tooltip-note{font-size:11px;color:#888;margin-top:4px;line-height:1.5}
 .dim-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px}
@@ -632,10 +632,92 @@
       <div class="config-grid">
         <div>
 
-          <!-- Step 1: Fabric type -->
+          <!-- Step 1: Mount -->
           <div class="step-block">
-            <div class="step-label">Step 1</div>
-            <div class="step-title">Fabric type</div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+              <div class="step-num">1</div>
+              <div class="step-title" style="margin-bottom:0">Mount type</div>
+            </div>
+            <div class="opt-row" id="grp-mount">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-mount');updateSummary()">Inside mount</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-mount');updateSummary()">Outside mount</button>
+              <button class="opt-btn" onclick="pbShowContact('Free measurement visit — we\'ll come out and measure your windows for you')">Not sure — measure for me</button>
+            </div>
+          </div>
+
+          <!-- Step 2: Dimensions -->
+          <div class="step-block">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+              <div class="step-num">2</div>
+              <div class="step-title" style="margin-bottom:0">Window measurements</div>
+            </div>
+            <div class="dim-box">
+              <div class="dim-box-label">Enter your window size</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Width</label>
+                  <input type="number" id="inp-width" min="12" max="144" step="0.5" placeholder="36" oninput="updateSummary()">
+                  <div class="dim-unit">inches &mdash; 12″ min · 144″ max</div>
+                </div>
+                <div class="form-group">
+                  <label>Height</label>
+                  <input type="number" id="inp-height" min="12" max="132" step="0.5" placeholder="72" oninput="updateSummary()">
+                  <div class="dim-unit">inches &mdash; 12″ min · 132″ max</div>
+                </div>
+              </div>
+            </div>
+            <div class="tooltip-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine — we confirm at the home visit.</div>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <span style="font-size:12px;color:#666">Qty:</span>
+              <div class="qty-btns">
+                <button class="qty-btn" onclick="adjustQty(-1)">&#8722;</button>
+                <input class="qty-num" type="number" id="inp-qty" value="1" min="1" max="20" oninput="updateSummary()">
+                <button class="qty-btn" onclick="adjustQty(1)">&#43;</button>
+              </div>
+              <button id="coupled-toggle-btn" class="opt-btn" style="font-size:11px;padding:5px 12px" onclick="solToggleCoupled()">+ Coupled Shades</button>
+            </div>
+
+            <!-- Coupled shades panel -->
+            <div id="coupled-wrap" style="display:none;margin-top:12px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:9px">
+              <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:6px">Coupled Shades configuration</div>
+              <div id="coupled-op-warn" style="display:none;font-size:11px;color:#c0392b;background:#fdf0ee;border:1px solid #f1c0bb;border-radius:6px;padding:7px 10px;margin-bottom:8px">⚠ PrecisionLift™ Cordless and SmartRelease™ are not available for coupled shades. Please select Continuous Cord Loop or Motorized.</div>
+              <div style="font-size:11px;color:#666;margin-bottom:10px;line-height:1.5">Shades are linked side by side on a shared headrail, ordered left to right. Requires Continuous Cord Loop or Motorized lift system.</div>
+              <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Are the shades the same size?</div>
+              <div class="opt-row" id="grp-coupled-type" style="margin-bottom:10px">
+                <button class="opt-btn sel" onclick="selOpt(this,'grp-coupled-type');solShowCoupledSame();updateSummary()">Same size</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-coupled-type');solShowCoupledDiff();updateSummary()">Different sizes</button>
+              </div>
+
+              <!-- Same size: just pick count -->
+              <div id="coupled-same-wrap">
+                <div style="font-size:11px;color:#666;margin-bottom:6px">How many shades total?</div>
+                <div class="opt-row" id="grp-coupled-count">
+                  <button class="opt-btn sel" onclick="selOpt(this,'grp-coupled-count');solSetCoupledCount(2);updateSummary()">2 shades</button>
+                  <button class="opt-btn" onclick="selOpt(this,'grp-coupled-count');solSetCoupledCount(3);updateSummary()">3 shades</button>
+                  <button class="opt-btn" onclick="selOpt(this,'grp-coupled-count');solSetCoupledCount(4);updateSummary()">4 shades</button>
+                </div>
+                <div style="font-size:10px;color:#888;margin-top:6px">Same size as the dimensions entered above. Total price = (price × count) + coupled surcharge.</div>
+              </div>
+
+              <!-- Different sizes: enter dims per shade -->
+              <div id="coupled-diff-wrap" style="display:none">
+                <div style="font-size:11px;color:#666;margin-bottom:6px">How many shades total (left to right)?</div>
+                <div class="opt-row" id="grp-coupled-diff-count" style="margin-bottom:10px">
+                  <button class="opt-btn sel" onclick="selOpt(this,'grp-coupled-diff-count');solRenderCoupledFields(2);updateSummary()">2 shades</button>
+                  <button class="opt-btn" onclick="selOpt(this,'grp-coupled-diff-count');solRenderCoupledFields(3);updateSummary()">3 shades</button>
+                  <button class="opt-btn" onclick="selOpt(this,'grp-coupled-diff-count');solRenderCoupledFields(4);updateSummary()">4 shades</button>
+                </div>
+                <div id="coupled-dim-fields"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Fabric type -->
+          <div class="step-block">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+              <div class="step-num">3</div>
+              <div class="step-title" style="margin-bottom:0">Fabric type</div>
+            </div>
             <div class="opt-row" id="grp-light">
               <button class="opt-btn" onclick="selOpt(this,'grp-light');showFabricColls('solar');updateSummary()">Solar Screen</button>
               <button class="opt-btn sel" onclick="selOpt(this,'grp-light');showFabricColls('lf');updateSummary()">Light Filtering</button>
@@ -651,10 +733,12 @@
             </div>
           </div>
 
-          <!-- Step 2: Operating system -->
+          <!-- Step 4: Operating system -->
           <div class="step-block">
-            <div class="step-label">Step 2</div>
-            <div class="step-title">Operating system</div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+              <div class="step-num">4</div>
+              <div class="step-title" style="margin-bottom:0">Operating system</div>
+            </div>
             <div class="opt-row" id="grp-op">
               <button class="opt-btn" onclick="selOpt(this,'grp-op');toggleMotor(false);solCheckCoupledOpWarn();solShowOpDesc('cordless');updateSummary()">PrecisionLift™ Cordless</button>
               <button class="opt-btn sel" onclick="selOpt(this,'grp-op');toggleMotor(false);solCheckCoupledOpWarn();solShowOpDesc('loop');updateSummary()">Continuous Cord Loop</button>
@@ -719,86 +803,12 @@
             </div>
           </div>
 
-          <!-- Step 3: Mount -->
-          <div class="step-block">
-            <div class="step-label">Step 3</div>
-            <div class="step-title">Mount type</div>
-            <div class="opt-row" id="grp-mount">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-mount');updateSummary()">Inside mount</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-mount');updateSummary()">Outside mount</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-mount');updateSummary()">Not sure — measure for me</button>
-            </div>
-          </div>
-
-          <!-- Step 4: Dimensions -->
-          <div class="step-block">
-            <div class="step-label">Step 4</div>
-            <div class="step-title">Window measurements</div>
-            <div class="dim-box">
-              <div class="dim-box-label">Enter your window size</div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label>Width</label>
-                  <input type="number" id="inp-width" min="12" max="144" step="0.5" placeholder="36" oninput="updateSummary()">
-                  <div class="dim-unit">inches &mdash; 12″ min · 144″ max</div>
-                </div>
-                <div class="form-group">
-                  <label>Height</label>
-                  <input type="number" id="inp-height" min="12" max="132" step="0.5" placeholder="72" oninput="updateSummary()">
-                  <div class="dim-unit">inches &mdash; 12″ min · 132″ max</div>
-                </div>
-              </div>
-            </div>
-            <div class="tooltip-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine — we confirm at the home visit.</div>
-            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-              <span style="font-size:12px;color:#666">Qty:</span>
-              <div class="qty-btns">
-                <button class="qty-btn" onclick="adjustQty(-1)">&#8722;</button>
-                <input class="qty-num" type="number" id="inp-qty" value="1" min="1" max="20" oninput="updateSummary()">
-                <button class="qty-btn" onclick="adjustQty(1)">&#43;</button>
-              </div>
-              <button id="coupled-toggle-btn" class="opt-btn" style="font-size:11px;padding:5px 12px" onclick="solToggleCoupled()">+ Coupled Shades</button>
-            </div>
-
-            <!-- Coupled shades panel -->
-            <div id="coupled-wrap" style="display:none;margin-top:12px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:9px">
-              <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:6px">Coupled Shades configuration</div>
-              <div id="coupled-op-warn" style="display:none;font-size:11px;color:#c0392b;background:#fdf0ee;border:1px solid #f1c0bb;border-radius:6px;padding:7px 10px;margin-bottom:8px">⚠ PrecisionLift™ Cordless and SmartRelease™ are not available for coupled shades. Please select Continuous Cord Loop or Motorized.</div>
-              <div style="font-size:11px;color:#666;margin-bottom:10px;line-height:1.5">Shades are linked side by side on a shared headrail, ordered left to right. Requires Continuous Cord Loop or Motorized lift system.</div>
-              <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Are the shades the same size?</div>
-              <div class="opt-row" id="grp-coupled-type" style="margin-bottom:10px">
-                <button class="opt-btn sel" onclick="selOpt(this,'grp-coupled-type');solShowCoupledSame();updateSummary()">Same size</button>
-                <button class="opt-btn" onclick="selOpt(this,'grp-coupled-type');solShowCoupledDiff();updateSummary()">Different sizes</button>
-              </div>
-
-              <!-- Same size: just pick count -->
-              <div id="coupled-same-wrap">
-                <div style="font-size:11px;color:#666;margin-bottom:6px">How many shades total?</div>
-                <div class="opt-row" id="grp-coupled-count">
-                  <button class="opt-btn sel" onclick="selOpt(this,'grp-coupled-count');solSetCoupledCount(2);updateSummary()">2 shades</button>
-                  <button class="opt-btn" onclick="selOpt(this,'grp-coupled-count');solSetCoupledCount(3);updateSummary()">3 shades</button>
-                  <button class="opt-btn" onclick="selOpt(this,'grp-coupled-count');solSetCoupledCount(4);updateSummary()">4 shades</button>
-                </div>
-                <div style="font-size:10px;color:#888;margin-top:6px">Same size as the dimensions entered above. Total price = (price × count) + coupled surcharge.</div>
-              </div>
-
-              <!-- Different sizes: enter dims per shade -->
-              <div id="coupled-diff-wrap" style="display:none">
-                <div style="font-size:11px;color:#666;margin-bottom:6px">How many shades total (left to right)?</div>
-                <div class="opt-row" id="grp-coupled-diff-count" style="margin-bottom:10px">
-                  <button class="opt-btn sel" onclick="selOpt(this,'grp-coupled-diff-count');solRenderCoupledFields(2);updateSummary()">2 shades</button>
-                  <button class="opt-btn" onclick="selOpt(this,'grp-coupled-diff-count');solRenderCoupledFields(3);updateSummary()">3 shades</button>
-                  <button class="opt-btn" onclick="selOpt(this,'grp-coupled-diff-count');solRenderCoupledFields(4);updateSummary()">4 shades</button>
-                </div>
-                <div id="coupled-dim-fields"></div>
-              </div>
-            </div>
-          </div>
-
           <!-- Step 5: Shade type -->
           <div class="step-block">
-            <div class="step-label">Step 5</div>
-            <div class="step-title">Shade type</div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+              <div class="step-num">5</div>
+              <div class="step-title" style="margin-bottom:0">Shade type</div>
+            </div>
             <div class="opt-row" id="grp-shade-type">
               <button class="opt-btn sel" onclick="solPickShadeType('standard',this)">Standard</button>
               <button class="opt-btn" onclick="solPickShadeType('dual',this)">Dual Shade</button>
@@ -826,8 +836,10 @@
 
           <!-- Step 6: Options -->
           <div class="step-block">
-            <div class="step-label">Step 6</div>
-            <div class="step-title">Headrail &amp; add-ons <span style="font-weight:400;color:#888">(optional)</span></div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+              <div class="step-num">6</div>
+              <div class="step-title" style="margin-bottom:0">Headrail &amp; add-ons <span style="font-weight:400;color:#888">(optional)</span></div>
+            </div>
             <div class="opt-row" id="grp-addons" style="flex-wrap:wrap">
               <button class="opt-btn" id="sol-addon-openroll" onclick="solPickAddon('openroll',this)">Open roll</button>
               <button class="opt-btn" id="sol-addon-cassette" onclick="solPickAddon('cassette',this)">Cassette headrail</button>
@@ -863,8 +875,10 @@
 
           <!-- Step 7: Delivery -->
           <div class="step-block">
-            <div class="step-label">Step 7</div>
-            <div class="step-title">Delivery</div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+              <div class="step-num">7</div>
+              <div class="step-title" style="margin-bottom:0">Delivery</div>
+            </div>
             <div class="delivery-opt-grid">
               <div class="delivery-opt-card sel" onclick="solPickDel('ship',this)">
                 <div class="delivery-opt-title">Ship to me</div>
@@ -875,8 +889,10 @@
 
           <!-- Step 8: Contact -->
           <div class="step-block" id="contact-block">
-            <div class="step-label">Step 8</div>
-            <div class="step-title">Your details</div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+              <div class="step-num">8</div>
+              <div class="step-title" style="margin-bottom:0">Your details</div>
+            </div>
             <div class="dim-row">
               <div class="form-group"><label>Name *</label><input type="text" id="cf-name" data-pb-contact="name" placeholder="Jane Smith"></div>
               <div class="form-group"><label>Phone *</label><input type="tel" id="cf-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
