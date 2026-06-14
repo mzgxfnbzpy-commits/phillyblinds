@@ -656,10 +656,13 @@
             <div class="step-label">Step 2</div>
             <div class="step-title">Operating system</div>
             <div class="opt-row" id="grp-op">
-              <button class="opt-btn" onclick="selOpt(this,'grp-op');toggleMotor(false);solCheckCoupledOpWarn();updateSummary()">PrecisionLift™ Cordless</button>
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-op');toggleMotor(false);solCheckCoupledOpWarn();updateSummary()">Continuous Cord Loop</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-op');toggleMotor(false);solCheckCoupledOpWarn();updateSummary()">SmartRelease™</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-op');toggleMotor(true);solCheckCoupledOpWarn();updateSummary()">Motorized</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op');toggleMotor(false);solCheckCoupledOpWarn();solShowOpDesc('cordless');updateSummary()">PrecisionLift™ Cordless</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-op');toggleMotor(false);solCheckCoupledOpWarn();solShowOpDesc('loop');updateSummary()">Continuous Cord Loop</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op');toggleMotor(false);solCheckCoupledOpWarn();solShowOpDesc('smartrelease');updateSummary()">SmartRelease™</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op');toggleMotor(true);solCheckCoupledOpWarn();solShowOpDesc('motor');updateSummary()">Motorized</button>
+            </div>
+            <div id="op-desc-box" style="margin-top:10px;padding:10px 13px;border-radius:8px;font-size:12px;line-height:1.6;background:#f5f2ed;border-left:3px solid var(--gold)">
+              <strong style="color:#333">Continuous Cord Loop</strong> — Side-mounted bead chain operates the shade smoothly in both directions. Works for any size window. Best choice when cordless isn't required.
             </div>
             <div class="motor-sub" id="motor-sub">
               <div class="form-group" style="margin-bottom:8px">
@@ -832,12 +835,15 @@
             <div class="step-label">Step 8</div>
             <div class="step-title">Your details</div>
             <div class="dim-row">
-              <div class="form-group"><label>Name *</label><input type="text" id="cf-name" placeholder="Jane Smith"></div>
-              <div class="form-group"><label>Phone *</label><input type="tel" id="cf-phone" placeholder="(215) 555-0100"></div>
+              <div class="form-group"><label>Name *</label><input type="text" id="cf-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+              <div class="form-group"><label>Phone *</label><input type="tel" id="cf-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
             </div>
-            <div class="form-group"><label>Email</label><input type="email" id="cf-email" placeholder="jane@example.com"></div>
+            <div class="form-group"><label>Email *</label><input type="email" id="cf-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+            <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="cf-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
             <div class="form-group"><label>Notes</label><textarea id="cf-notes" placeholder="Room name, ceiling height, fabric ideas, timeline — anything helpful" style="min-height:60px"></textarea></div>
-            <button class="btn-gold" onclick="submitQuote()" style="width:100%;padding:13px;margin-top:4px">Send quote request &rarr;</button>
+            <div id="cf-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
+            <button class="btn-cart-add" onclick="addSolunaToCart()" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
+            <button class="btn-gold" onclick="submitQuote()" style="width:100%;padding:13px;margin-top:4px" data-pb-require-contact="cf-contact-err">Submit Order for Review &rarr;</button>
           </div>
 
           <div class="success-state" id="quote-success">
