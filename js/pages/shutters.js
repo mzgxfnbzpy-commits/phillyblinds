@@ -467,6 +467,26 @@ function updateQuote() {
 }
 
 /* ─── SUBMIT ─────────────────────────────────────────────── */
+function addShuttersToCart(){
+  if(!S.line){ alert('Please select a shutter line before adding to cart.'); return; }
+  if(!S.dims||!S.dims.length||(!S.dims[0].w&&!S.dims[0].h)){ alert('Please enter opening dimensions before adding to cart.'); return; }
+
+  var dimsText=S.dims.map(function(d,i){return 'Opening '+(i+1)+(d.label?' ('+d.label+')':'')+': '+(d.w||'?')+'″ W × '+(d.h||'?')+'″ H';}).join('; ');
+  var lines=[
+    {label:'Product',value:'Norman Plantation Shutters — '+S.line},
+    {label:'Louver Size',value:S.louver||'—'},
+    {label:'Tilt Type',value:S.tilt||'—'},
+    {label:'Mount',value:S.mount||'—'},
+    {label:'Openings',value:String(S.count||1)},
+    {label:'Dimensions',value:dimsText||'—'},
+    {label:'Panel Layout',value:S.layout||'—'},
+    {label:'Color / Finish',value:(S.colorType?S.colorType+' — ':'')+S.color}
+  ];
+  var specs=lines.map(function(l){return l.label+': '+l.value;}).join(' | ');
+  pbAddToCart({product:'Norman Plantation Shutters — '+S.line,lines:lines,specs:specs,price:null,qty:S.count||1});
+  pbOpenCart();
+}
+
 async function submitQuote() {
   var name  = qs('field-name').value.trim();
   var phone = qs('field-phone').value.trim();
