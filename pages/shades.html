@@ -263,7 +263,7 @@
         </div>
 
 
-        <div class="product-card" id="card-cellular" onclick="selectProduct('cellular','Cellular / Honeycomb Shades',true);setTimeout(function(){selectBrand('norman');},150)">
+        <a class="product-card" id="card-cellular" href="portrait-cellular.html">
           <div class="product-img-photo">
             <img src="../images/thumbnails/cellular-shades-new.png" alt="Cellular Shades" loading="eager">
             <div class="motor-chip">+ motorized</div>
@@ -273,7 +273,7 @@
             <div class="product-sub">Insulating honeycomb structure</div>
             <span class="badge badge-instant">Instant price</span>
           </div>
-        </div>
+        </a>
 
         <div class="product-card" id="card-fwb" onclick="selectBlindsType()">
           <div class="product-img-photo">
@@ -344,87 +344,18 @@
       </div>
       <div class="product-grid">
 
-        <!-- SHEER SHADING GROUPED SELECTOR -->
-        <div class="product-card" style="grid-column:1/-1;cursor:default;padding:0;overflow:visible;background:transparent;border:none;box-shadow:none">
-          <div class="sheer-select-wrap">
-            <div style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#888;margin-bottom:12px">Sheer Shading — Choose a style</div>
-            <div class="sheer-cat-grid">
-              <!-- Zebra -->
-              <div class="sheer-cat-card" id="scat-zebra" onclick="selectSheerCat('zebra',this)">
-                <div class="sheer-cat-img"><img src="../images/thumbnails/ZEBRA SHADES.JPEG" alt="Zebra shades" loading="lazy"></div>
-                <div class="sheer-cat-body">
-                  <div class="sheer-cat-name">Zebra</div>
-                  <div class="sheer-cat-sub">Banded alternating sheer &amp; solid</div>
-                </div>
-              </div>
-              <!-- Silhouettes -->
-              <div class="sheer-cat-card" id="scat-silhouette" onclick="selectSheerCat('silhouette',this)">
-                <div class="sheer-cat-img"><img src="../images/thumbnails/SILOUETTE.JPEG" alt="Silhouette sheer shades" loading="lazy"></div>
-                <div class="sheer-cat-body">
-                  <div class="sheer-cat-name">Silhouettes</div>
-                  <div class="sheer-cat-sub">Soft horizontal sheer vane</div>
-                </div>
-              </div>
-              <!-- Hunter Douglas -->
-              <div class="sheer-cat-card" id="scat-hd" onclick="selectSheerCat('hd',this)">
-                <div class="sheer-cat-img"><img src="../images/thumbnails/pirouette-install.JPEG" alt="Hunter Douglas shadings" loading="lazy"></div>
-                <div class="sheer-cat-body">
-                  <div class="sheer-cat-name">Hunter Douglas</div>
-                  <div class="sheer-cat-sub">Pirouette · Silhouette · Luminette · Vignette</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Sub-options: Zebra -->
-            <div class="sheer-sub" id="sheer-sub-zebra">
-              <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:10px">Zebra — Basic or Premium</div>
-              <div class="sheer-tier-grid">
-                <div class="sheer-tier-card" onclick="pbShowContact('Wallace 2D Banded Shades — Basic Zebra — custom quote')">
-                  <div class="sheer-tier-img"><img src="../images/thumbnails/ZEBRA SHADES.JPEG" alt="Wallace 2D Banded" loading="lazy"></div>
-                  <div class="sheer-tier-body">
-                    <span class="sheer-tier-badge basic">Basic</span>
-                    <div class="sheer-tier-brand">Wallace</div>
-                    <div class="sheer-tier-name">2D Banded Shades</div>
-                  </div>
-                </div>
-                <a class="sheer-tier-card" href="portfolio-dual-sheer.html">
-                  <div class="sheer-tier-img"><img src="../images/thumbnails/ZEBRA SHADES.JPEG" alt="Wallace Portfolio Dual" loading="lazy"></div>
-                  <div class="sheer-tier-body">
-                    <span class="sheer-tier-badge premium">Premium</span>
-                    <div class="sheer-tier-brand">Wallace</div>
-                    <div class="sheer-tier-name">Portfolio Dual Sheer</div>
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            <!-- Sub-options: Silhouettes -->
-            <div class="sheer-sub" id="sheer-sub-silhouette">
-              <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:10px">Silhouettes — Basic or Premium</div>
-              <div class="sheer-tier-grid">
-                <a class="sheer-tier-card" href="wallace-3d-sheer.html">
-                  <div class="sheer-tier-img"><img src="../images/thumbnails/PIROUTTES.JPEG" alt="Wallace 3D Sheer Horizontals" loading="lazy" style="object-position:center 60%"></div>
-                  <div class="sheer-tier-body">
-                    <span class="sheer-tier-badge basic">Basic</span>
-                    <div class="sheer-tier-brand">Wallace</div>
-                    <div class="sheer-tier-name">3D Sheer Horizontals</div>
-                  </div>
-                </a>
-                <div class="sheer-tier-card" onclick="selectProduct('perfectsheer','Norman PerfectSheer™ Shades',false)">
-                  <div class="sheer-tier-img" style="position:relative">
-                    <img src="../images/thumbnails/norman-perfect-sheer.jpg" alt="Norman PerfectSheer" loading="lazy" style="object-position:center 40%">
-                    <div style="position:absolute;bottom:6px;left:8px;background:var(--espresso);color:var(--gold);font-size:9px;padding:2px 6px;border-radius:5px;font-weight:600;letter-spacing:0.5px">NORMAN®</div>
-                  </div>
-                  <div class="sheer-tier-body">
-                    <span class="sheer-tier-badge premium">Premium</span>
-                    <div class="sheer-tier-brand">Norman</div>
-                    <div class="sheer-tier-name">PerfectSheer™</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <!-- Sheer Shades — dedicated hub page -->
+        <a class="product-card" href="sheer-shades.html">
+          <div class="product-img-photo">
+            <img src="../images/thumbnails/SILOUETTE.JPEG" alt="Sheer Shades" loading="lazy">
+            <div class="motor-chip">+ motorized</div>
           </div>
-        </div>
+          <div class="product-body">
+            <div class="product-name">Sheer Shades</div>
+            <div class="product-sub">Zebra &middot; Silhouette &middot; Hunter Douglas &middot; SmartDrape</div>
+            <span class="badge badge-quote">Choose style &rarr;</span>
+          </div>
+        </a>
 
         <a class="product-card" id="card-woven" href="soft-treatments.html?tab=woven">
           <div class="product-img-photo">
@@ -2110,8 +2041,8 @@
     </div>
   </div><!-- /rwb-config -->
 
-  <!-- ══ NORMAN PERFECTSHEER™ CONFIGURATOR ══════════════════════════ -->
-  <div class="configurator" id="perfectsheer-config">
+  <!-- PerfectSheer moved to pages/perfectsheer.html -->
+  <div class="configurator" id="perfectsheer-config" style="display:none!important">
     <div class="config-head">
       <button class="config-back" onclick="clearProduct()">&#8592; Change product</button>
       <div class="config-title">Norman PerfectSheer™ Shades</div>

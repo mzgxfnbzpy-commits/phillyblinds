@@ -338,7 +338,7 @@ function renderFooter(isHome) {
       <div class="footer-col">
         <h4>Shades &amp; Blinds</h4>
         <a href="${pre}roller-shades.html">Roller shades</a>
-        <a href="${pre}shades.html">Cellular shades</a>
+        <a href="${pre}portrait-cellular.html">Cellular shades</a>
         <a href="${pre}zebra-shades.html">Zebra shades</a>
         <a href="${pre}woven-wood-shades.html">Woven wood shades</a>
         <a href="${pre}wood-blinds.html">Wood blinds</a>
@@ -1771,7 +1771,8 @@ function reqMoreInfo(product) {
     'wallace-banded-shades','wallace-woven','wallace-verticals',
     'kirsch-spec-complete','kirsch-estate-traverse','kirsch-2in-estate-traverse',
     'walden-premier-woven','walden-select-woven','wallace-dynasty-woven',
-    'woven-wood-shades','sheer-shades'
+    'woven-wood-shades','sheer-shades',
+    'portrait-cellular','perfectsheer'
   ]; // shutters, soft-treatments, upholstery removed — open for real quotes
 
   var slug = window.location.pathname.split('/').pop().replace(/\.html$/i, '').toLowerCase();
