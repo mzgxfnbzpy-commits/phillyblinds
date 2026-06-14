@@ -874,6 +874,20 @@ function submitQuote(){
   document.getElementById('success-box').style.display='block';
 }
 
+function addFinialToCart() {
+  var collNames = {standard:'Standard Collection',steel:'Steel Collection',wood:'Wood Collection',glass:'Glass Collection'};
+  var collLabel = collNames[S.coll] || (S.coll || 'The Finial Company');
+  var lines = [
+    { label: 'Product', value: 'The Finial Company — ' + collLabel },
+    { label: 'Finish', value: S.finish || '—' },
+    { label: 'Left Finial', value: S.finLeft || '—' },
+    { label: 'Right Finial', value: S.finRight || '—' },
+    { label: 'Pole Length', value: S.poleLen ? S.poleLen + '″' : '—' }
+  ];
+  pbAddToCart({ product: 'The Finial Company Hardware', lines: lines, specs: lines.map(function(l){ return l.label+': '+l.value; }).join(' | '), qty: 1 });
+  pbOpenCart();
+}
+
 // INIT
 document.getElementById('step11').style.display='block';
 document.getElementById('step12').style.display='block';

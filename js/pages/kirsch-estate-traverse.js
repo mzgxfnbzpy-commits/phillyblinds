@@ -509,3 +509,18 @@ function updateSpec(id,val){
   var el=document.getElementById(id); if(!el) return;
   el.textContent=val; el.classList.remove('empty');
 }
+
+function addKirschEstateTraverseToCart() {
+  var collLabel = COLLECTIONS[S.coll] ? COLLECTIONS[S.coll].label : (S.coll || '—');
+  var len = S.trackLen ? S.trackLen + '″' : '—';
+  var lines = [
+    { label: 'Product', value: 'Kirsch 1⅜" Estate™ Traverse Rod' },
+    { label: 'Collection', value: collLabel },
+    { label: 'Finish', value: S.finish || '—' },
+    { label: 'Track Length', value: len },
+    { label: 'Draw', value: S.draw || '—' },
+    { label: 'Quantity', value: String(S.qty || 1) }
+  ];
+  pbAddToCart({ product: 'Kirsch 1⅜" Estate™ Traverse Rod', lines: lines, specs: lines.map(function(l){ return l.label+': '+l.value; }).join(' | '), qty: S.qty || 1 });
+  pbOpenCart();
+}

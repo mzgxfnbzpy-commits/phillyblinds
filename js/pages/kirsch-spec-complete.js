@@ -76,3 +76,21 @@ function submitQ() {
     +'&body='+encodeURIComponent(body);
   document.getElementById('q-success').style.display='block';
 }
+
+function addKirschSpecToCart() {
+  function gp(grp){ var s=document.querySelector('#'+grp+' .opt-pill.sel'); return s?s.textContent.trim():'—'; }
+  var rodType = gp('grp-rod-type');
+  var coll = gp('grp-coll');
+  var len = (document.getElementById('q-len')||{value:''}).value || '—';
+  var qty = parseInt((document.getElementById('q-qty')||{value:'1'}).value) || 1;
+  var lines = [
+    { label: 'Product', value: 'Kirsch ' + rodType },
+    { label: 'Collection', value: coll },
+    { label: 'Length', value: len + '″' },
+    { label: 'Draw', value: gp('grp-draw') },
+    { label: 'Mount', value: gp('grp-mount') },
+    { label: 'Quantity', value: String(qty) }
+  ];
+  pbAddToCart({ product: 'Kirsch ' + rodType, lines: lines, specs: lines.map(function(l){ return l.label+': '+l.value; }).join(' | '), qty: qty });
+  pbOpenCart();
+}

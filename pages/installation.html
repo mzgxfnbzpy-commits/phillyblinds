@@ -217,11 +217,11 @@
     <div class="form-sub">Fill out the form below and we&rsquo;ll reach out to discuss your project. The more detail you can provide, the faster we can scope the job.</div>
 
     <div class="form-row">
-      <div class="form-group"><label>Your name *</label><input type="text" id="inst-name" placeholder="Jane Smith"></div>
-      <div class="form-group"><label>Phone *</label><input type="tel" id="inst-phone" placeholder="(215) 555-0100"></div>
+      <div class="form-group"><label>Your name *</label><input type="text" id="inst-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+      <div class="form-group"><label>Phone *</label><input type="tel" id="inst-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
     </div>
-    <div class="form-group"><label>Email</label><input type="email" id="inst-email" placeholder="jane@example.com"></div>
-    <div class="form-group"><label>Installation address</label><input type="text" id="inst-address" placeholder="123 Main St, Philadelphia, PA 19103"></div>
+    <div class="form-group"><label>Email *</label><input type="email" id="inst-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+    <div class="form-group"><label>Installation address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="inst-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia, PA 19103"></div>
 
     <div class="form-row">
       <div class="form-group"><label>Product type</label>
@@ -283,7 +283,8 @@
         <div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately in your quote.</div>
       </div>
     </div>
-    <button class="btn-gold" onclick="submitInstall()" style="width:100%;padding:14px;font-size:14px;font-weight:600">Request Installation Quote &rarr;</button>
+    <div id="inst-contact-err" class="warn-box warn-box-red" style="display:none;margin-bottom:8px"></div>
+    <button class="btn-gold" onclick="submitInstall()" data-pb-require-contact="inst-contact-err" style="width:100%;padding:14px;font-size:14px;font-weight:600">Submit Order for Review &rarr;</button>
   </div>
 
   <div class="success-state" id="inst-success">

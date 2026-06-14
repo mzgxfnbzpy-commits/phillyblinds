@@ -101,17 +101,21 @@
     <div class="field-row">
       <div class="field-group">
         <label>Your Name <span style="color:#e07070">*</span></label>
-        <input type="text" id="wp-name" placeholder="First &amp; last name">
+        <input type="text" id="wp-name" data-pb-contact="name" placeholder="First &amp; last name">
       </div>
       <div class="field-group">
         <label>Phone Number <span style="color:#e07070">*</span></label>
-        <input type="tel" id="wp-phone" placeholder="(215) 555-0100">
+        <input type="tel" id="wp-phone" data-pb-contact="phone" placeholder="(215) 555-0100">
       </div>
     </div>
     <div class="field-row">
       <div class="field-group">
-        <label>Email Address</label>
-        <input type="email" id="wp-email" placeholder="you@example.com">
+        <label>Email Address *</label>
+        <input type="email" id="wp-email" data-pb-contact="email" placeholder="you@example.com">
+      </div>
+      <div class="field-group">
+        <label>Address <span style="font-weight:400;color:#888">(optional)</span></label>
+        <input type="text" id="wp-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA">
       </div>
     </div>
     <div class="field-row">
@@ -194,7 +198,9 @@
       <div class="tariff-note"><strong>Tariff notice:</strong> Products may be subject to U.S. government import tariffs. Surcharges disclosed at order confirmation.</div>
     </div>
 
-    <button class="submit-btn" onclick="submitWPQuote()">Submit Quote Request &rarr;</button>
+    <div id="wp-contact-err" class="warn-box warn-box-red" style="display:none;margin-bottom:12px"></div>
+    <button class="btn-cart-add" onclick="addWaldenPremierToCart()" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
+    <button class="submit-btn" onclick="submitWPQuote()" data-pb-require-contact="wp-contact-err">Submit Order for Review &rarr;</button>
     <div class="req-note">* Required fields. Opens your email client with your selections pre-filled.</div>
   </div>
 </div>

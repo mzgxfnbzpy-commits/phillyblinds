@@ -410,5 +410,22 @@ function submitQuote(){
   document.getElementById('success-box').style.display='block';
 }
 
+function addKirsch2InEstatToCart() {
+  var finish = S.finish || '—';
+  var coll = S.coll === 'dm' ? 'Designer Metals' : S.coll === 'wt' ? 'Wood Trends' : 'Wrought Iron';
+  var len = S.len ? S.len + '″' : '—';
+  var qty = parseInt((document.getElementById('qty')||{}).value) || 1;
+  var lines = [
+    { label: 'Product', value: 'Kirsch 2″ Estate™ Traverse Rod' },
+    { label: 'Collection', value: coll },
+    { label: 'Finish', value: finish },
+    { label: 'Track Length', value: len },
+    { label: 'Draw', value: S.draw || '—' },
+    { label: 'Quantity', value: String(qty) }
+  ];
+  pbAddToCart({ product: 'Kirsch 2″ Estate™ Traverse Rod', lines: lines, specs: lines.map(function(l){ return l.label+': '+l.value; }).join(' | '), qty: qty });
+  pbOpenCart();
+}
+
 // INIT — pre-select one-way draw direction
 document.getElementById('draw-oneway').classList.add('sel');

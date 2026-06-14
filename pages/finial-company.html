@@ -304,14 +304,16 @@
   </div>
   <div class="step-body">
     <div class="form-row">
-      <div class="form-group"><label>Name *</label><input type="text" id="q-name" placeholder="Jane Smith"></div>
-      <div class="form-group"><label>Phone *</label><input type="tel" id="q-phone" placeholder="(215) 555-0100"></div>
+      <div class="form-group"><label>Name *</label><input type="text" id="q-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+      <div class="form-group"><label>Phone *</label><input type="tel" id="q-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
     </div>
-    <div class="form-group"><label>Email</label><input type="email" id="q-email" placeholder="jane@example.com"></div>
+    <div class="form-group"><label>Email *</label><input type="email" id="q-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+    <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="q-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
     <div class="form-group"><label>Notes / questions</label><textarea id="q-notes" placeholder="Additional specifications, custom finish requests, arch template details, special requirements..."></textarea></div>
-    <div id="q-err" class="msg-err" style="display:none">Please enter your name and phone number.</div>
-    <button class="btn-submit-cta" onclick="submitQuote()" style="font-family:var(--font)">
-      Get Custom Quote — The Finial Company →
+    <div id="q-err" class="msg-err" style="display:none"></div>
+    <button class="btn-cart-add" onclick="addFinialToCart()" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
+    <button class="btn-submit-cta" onclick="submitQuote()" data-pb-require-contact="q-err" style="font-family:var(--font)">
+      Submit Order for Review →
       <span class="cta-sub">Hand-painted to order · We'll follow up within a few hours · (609) 742-1720</span>
     </button>
     <div class="success-box" id="success-box">

@@ -676,14 +676,15 @@
 
       <div style="border-top:1px solid #e8e8e4;margin:20px 0 16px"></div>
       <div class="form-row">
-        <div class="form-group"><label>Name *</label><input type="text" id="d-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="d-phone" placeholder="(215) 555-0100"></div>
+        <div class="form-group"><label>Name *</label><input type="text" id="d-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="d-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
       </div>
-      <div class="form-group"><label>Email</label><input type="email" id="d-email" placeholder="jane@example.com"></div>
-      <div class="form-group"><label>Installation address</label><input type="text" id="d-address" placeholder="123 Main St, Philadelphia PA"></div>
+      <div class="form-group"><label>Email *</label><input type="email" id="d-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="d-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
+      <div id="drape-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
       <button onclick="reqMoreInfo('Custom Drapery')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Custom Drapery →</button>
         <button class="btn-cart-add" onclick="addDrapeToCart()" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
-        <button class="btn-gold" onclick="submitDrape()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:16px">Submit Order for Review &rarr;</button>
+        <button class="btn-gold" onclick="submitDrape()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:16px" data-pb-require-contact="drape-contact-err">Submit Order for Review &rarr;</button>
     </div>
     <div class="success-box" id="drape-success">
       <strong>Order submitted!</strong><br>
@@ -861,13 +862,15 @@
         </div>
         <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px">Your contact info</div>
         <div class="form-row">
-          <div class="form-group"><label>Your name *</label><input type="text" id="val-name" placeholder="Jane Smith"></div>
-          <div class="form-group"><label>Phone *</label><input type="tel" id="val-phone" placeholder="(215) 555-0100"></div>
+          <div class="form-group"><label>Your name *</label><input type="text" id="val-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+          <div class="form-group"><label>Phone *</label><input type="tel" id="val-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
         </div>
-        <div class="form-group"><label>Email</label><input type="email" id="val-email" placeholder="jane@example.com"></div>
+        <div class="form-group"><label>Email *</label><input type="email" id="val-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+        <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="val-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
         <div class="form-group"><label>Notes</label><textarea id="val-notes" placeholder="Fabric preference, room details, timeline..." style="min-height:60px"></textarea></div>
+        <div id="val-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
         <button onclick="reqMoreInfo('Custom Valance')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Custom Valance →</button>
-        <button class="btn-gold" onclick="submitValance()" style="width:100%;padding:13px;font-size:14px;margin-top:4px">Submit Order for Review &rarr;</button>
+        <button class="btn-gold" onclick="submitValance()" style="width:100%;padding:13px;font-size:14px;margin-top:4px" data-pb-require-contact="val-contact-err">Submit Order for Review &rarr;</button>
       </div>
       <div id="valance-success" style="display:none;background:#EAF3DE;border-radius:10px;padding:18px;text-align:center;margin-top:10px">
         <strong>Order submitted!</strong><br><span style="font-size:13px;color:#3B6D11">We'll review your valance spec and be in touch. Urgent? <a href="tel:6097421720" style="color:#3B6D11">(609) 742-1720</a></span>
@@ -1125,15 +1128,16 @@
 
           <div style="border-top:1px solid #e8e8e4;margin:20px 0 16px"></div>
           <div class="form-row">
-            <div class="form-group"><label>Name *</label><input type="text" id="rn-name" placeholder="Jane Smith"></div>
-            <div class="form-group"><label>Phone *</label><input type="tel" id="rn-phone" placeholder="(215) 555-0100"></div>
+            <div class="form-group"><label>Name *</label><input type="text" id="rn-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+            <div class="form-group"><label>Phone *</label><input type="tel" id="rn-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
           </div>
-          <div class="form-group"><label>Email</label><input type="email" id="rn-email" placeholder="jane@example.com"></div>
-          <div class="form-group"><label>Installation address</label><input type="text" id="rn-address" placeholder="123 Main St, Philadelphia PA"></div>
+          <div class="form-group"><label>Email *</label><input type="email" id="rn-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+          <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="rn-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
           <div class="form-group"><label>Notes</label><textarea id="rn-notes" placeholder="Room, fabric preference, timeline, any other details..." style="min-height:70px"></textarea></div>
+          <div id="roman-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
           <button onclick="reqMoreInfo('Custom Roman Shades')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Custom Roman Shades →</button>
           <button class="btn-cart-add" onclick="addRomanToCart()" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
-        <button class="btn-gold" onclick="submitRoman()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:16px">Submit Order for Review &rarr;</button>
+        <button class="btn-gold" onclick="submitRoman()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:16px" data-pb-require-contact="roman-contact-err">Submit Order for Review &rarr;</button>
         </div>
         <div class="success-box" id="roman-success">
           <strong>Order submitted!</strong><br>Your email opened with your full spec pre-filled — just hit Send. We'll review and send you an invoice within a few hours.<br><br>
@@ -1261,12 +1265,14 @@
       </div>
       <div style="border-top:1px solid #e8e8e4;margin:20px 0 16px"></div>
       <div class="form-row">
-        <div class="form-group"><label>Name *</label><input type="text" id="cn-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="cn-phone" placeholder="(215) 555-0100"></div>
+        <div class="form-group"><label>Name *</label><input type="text" id="cn-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="cn-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
       </div>
-      <div class="form-group"><label>Email</label><input type="email" id="cn-email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Email *</label><input type="email" id="cn-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="cn-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
       <div class="form-group"><label>Notes</label><textarea id="cn-notes" placeholder="Room, fabric preference, timeline..." style="min-height:60px"></textarea></div>
-      <button class="btn-gold" onclick="submitCornice()" style="width:100%;padding:13px;font-size:14px;font-weight:600;margin-top:4px">Submit Order for Review &rarr;</button>
+      <div id="corn-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
+      <button class="btn-gold" onclick="submitCornice()" style="width:100%;padding:13px;font-size:14px;font-weight:600;margin-top:4px" data-pb-require-contact="corn-contact-err">Submit Order for Review &rarr;</button>
     </div>
     <div class="success-box" id="corn-success"><strong>Order submitted!</strong> Your email opened with your spec — hit Send. We'll review and send you an invoice. Urgent? <a href="tel:6097421720" style="color:#2e7d32">(609) 742-1720</a></div>
   </div>
@@ -1394,12 +1400,14 @@
       </div>
       <div style="border-top:1px solid #e8e8e4;margin:20px 0 16px"></div>
       <div class="form-row">
-        <div class="form-group"><label>Name *</label><input type="text" id="vn-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="vn-phone" placeholder="(215) 555-0100"></div>
+        <div class="form-group"><label>Name *</label><input type="text" id="vn-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="vn-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
       </div>
-      <div class="form-group"><label>Email</label><input type="email" id="vn-email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Email *</label><input type="email" id="vn-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="vn-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
       <div class="form-group"><label>Notes</label><textarea id="vn-notes" placeholder="Room, style preference, timeline..." style="min-height:60px"></textarea></div>
-      <button class="btn-gold" onclick="submitValanceCv()" style="width:100%;padding:13px;font-size:14px;font-weight:600;margin-top:16px">Request valance quote &rarr;</button>
+      <div id="vcv-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
+      <button class="btn-gold" onclick="submitValanceCv()" style="width:100%;padding:13px;font-size:14px;font-weight:600;margin-top:16px" data-pb-require-contact="vcv-contact-err">Submit Order for Review &rarr;</button>
     </div>
     <div class="success-box" id="val-cv-success"><strong>Quote sent!</strong> We'll follow up soon. Urgent? <a href="tel:6097421720" style="color:#2e7d32">(609) 742-1720</a></div>
   </div>
@@ -1428,10 +1436,11 @@
     <div class="section-sub" style="margin-bottom:24px">All soft treatments are custom — no two alike. Tell Justin what you need and he'll follow up with pricing. Or call: <a href="tel:6097421720" style="color:var(--gold);text-decoration:none;font-weight:500">(609) 742-1720</a></div>
     <form id="soft-quote-form" onsubmit="handleSoftQuote(event)">
       <div class="form-row">
-        <div class="form-group"><label>Your name *</label><input type="text" name="name" placeholder="Jane Smith" required></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" name="phone" placeholder="(215) 555-0100" required></div>
+        <div class="form-group"><label>Your name *</label><input type="text" name="name" data-pb-contact="name" placeholder="Jane Smith" required></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" name="phone" data-pb-contact="phone" placeholder="(215) 555-0100" required></div>
       </div>
-      <div class="form-group"><label>Email</label><input type="email" name="email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Email *</label><input type="email" name="email" data-pb-contact="email" placeholder="jane@example.com" required></div>
+      <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" name="address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
       <div class="form-group">
         <label>What are you looking for?</label>
         <select name="product" style="width:100%;padding:10px 12px;border:1px solid #e8e8e4;border-radius:8px;font-size:13px;font-family:var(--font);background:#fff;color:#333">
@@ -1450,7 +1459,8 @@
       <div style="background:var(--gold-mid);border:1px solid #e8e8e4;border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:#666;line-height:1.6">
         No payment now. We review your order and send you a formal invoice. You choose when to pay.
       </div>
-      <button type="submit" class="btn-gold" style="width:100%;padding:13px;font-size:14px">Submit Order for Review &rarr;</button>
+      <button type="submit" class="btn-gold" style="width:100%;padding:13px;font-size:14px" data-pb-require-contact="soft-qf-err">Submit Order for Review &rarr;</button>
+      <div id="soft-qf-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-top:8px"></div>
     </form>
     <div id="soft-quote-success" style="display:none;background:#EAF3DE;border-radius:12px;padding:24px;text-align:center;margin-top:8px">
       <div style="font-size:18px;margin-bottom:8px">&#10003; Order submitted!</div>

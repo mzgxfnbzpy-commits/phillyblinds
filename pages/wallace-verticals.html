@@ -205,10 +205,11 @@
       <div class="step-title">Request quote</div>
     </div>
     <div class="form-row" style="margin-top:12px">
-      <div class="form-group"><label>Your name *</label><input type="text" id="vw-name" placeholder="Jane Smith"></div>
-      <div class="form-group"><label>Phone *</label><input type="tel" id="vw-phone" placeholder="(215) 555-0100"></div>
+      <div class="form-group"><label>Your name *</label><input type="text" id="vw-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+      <div class="form-group"><label>Phone *</label><input type="tel" id="vw-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
     </div>
-    <div class="form-group"><label>Email</label><input type="email" id="vw-email" placeholder="jane@example.com"></div>
+    <div class="form-group"><label>Email *</label><input type="email" id="vw-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+    <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="vw-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
     <div class="form-group"><label>Notes</label><textarea id="vw-notes" placeholder="e.g. sliding patio door, 3 windows side by side, any special requirements"></textarea></div>
 
     <div class="delivery-opt-grid" id="grp-vw-del" style="margin-bottom:14px">
@@ -218,9 +219,10 @@
       </div>
     </div>
 
+    <div id="vw-contact-err" class="warn-box warn-box-red" style="display:none;margin-bottom:12px"></div>
     <button onclick="reqMoreInfo('Wallace Vertical Blinds')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Wallace Vertical Blinds &rarr;</button>
     <button class="btn-cart-add" onclick="addWallaceVerticalsToCart()" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
-    <button class="btn-gold" onclick="submitVWForm(this)" style="width:100%;padding:13px">Send quote request &rarr;</button>
+    <button class="btn-gold" onclick="submitVWForm(this)" data-pb-require-contact="vw-contact-err" style="width:100%;padding:13px">Submit Order for Review &rarr;</button>
   </div>
 
   <div class="success-state" id="vw-success" style="display:none">

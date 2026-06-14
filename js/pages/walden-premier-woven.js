@@ -36,3 +36,22 @@ function submitWPQuote() {
   ].join('\n'));
   window.location.href = 'mailto:justin@phillyblinds.com?subject=' + subject + '&body=' + body;
 }
+
+function addWaldenPremierToCart() {
+  const type = document.getElementById('wp-type').value || 'Roman Shade';
+  const pattern = document.getElementById('wp-pattern').value || '—';
+  const w = document.getElementById('wp-width').value || '—';
+  const h = document.getElementById('wp-height').value || '—';
+  const qty = parseInt(document.getElementById('wp-qty').value) || 1;
+  const control = document.getElementById('wp-control').value || '—';
+  const lines = [
+    { label: 'Product', value: 'Walden Premier Natural Woven Shade' },
+    { label: 'Type', value: type },
+    { label: 'Pattern', value: pattern },
+    { label: 'Size', value: w + '″ × ' + h + '″' },
+    { label: 'Control', value: control },
+    { label: 'Quantity', value: String(qty) }
+  ];
+  pbAddToCart({ product: 'Walden Premier Natural Woven Shade', lines: lines, specs: lines.map(function(l){ return l.label+': '+l.value; }).join(' | '), qty: qty });
+  pbOpenCart();
+}

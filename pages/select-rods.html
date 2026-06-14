@@ -570,18 +570,24 @@
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
         <div>
           <label style="font-size:12px;font-weight:600;color:#444;display:block;margin-bottom:5px">Your name *</label>
-          <input type="text" id="wd-q-name" placeholder="Jane Smith" style="width:100%;padding:9px 13px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;font-family:inherit;color:#222;box-sizing:border-box">
+          <input type="text" id="wd-q-name" data-pb-contact="name" placeholder="Jane Smith" style="width:100%;padding:9px 13px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;font-family:inherit;color:#222;box-sizing:border-box">
         </div>
         <div>
           <label style="font-size:12px;font-weight:600;color:#444;display:block;margin-bottom:5px">Phone *</label>
-          <input type="tel" id="wd-q-phone" placeholder="(215) 555-0100" style="width:100%;padding:9px 13px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;font-family:inherit;color:#222;box-sizing:border-box">
+          <input type="tel" id="wd-q-phone" data-pb-contact="phone" placeholder="(215) 555-0100" style="width:100%;padding:9px 13px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;font-family:inherit;color:#222;box-sizing:border-box">
         </div>
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="font-size:12px;font-weight:600;color:#444;display:block;margin-bottom:5px">Email *</label>
+        <input type="email" id="wd-q-email" data-pb-contact="email" placeholder="jane@example.com" style="width:100%;padding:9px 13px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;font-family:inherit;color:#222;box-sizing:border-box">
       </div>
       <div style="margin-bottom:20px">
         <label style="font-size:12px;font-weight:600;color:#444;display:block;margin-bottom:5px">Notes — finish preference, window width, number of rods, finial ideas</label>
         <textarea id="wd-q-notes" style="width:100%;min-height:100px;padding:9px 13px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;font-family:inherit;color:#222;resize:vertical;box-sizing:border-box" placeholder="e.g. Dark Walnut finish, 96&quot; wide window, 3 rods, pinch pleat rings…"></textarea>
       </div>
-      <button class="btn-gold" onclick="submitWoodQuote()" style="width:100%;padding:13px;font-size:14px;font-weight:600">Request Select Wood Quote →</button>
+      <div id="select-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
+      <div style="margin-bottom:8px"><button class="btn-cart-add" onclick="addSelectToCart()" style="width:100%">+ Add to Cart</button></div>
+      <button class="btn-gold" onclick="submitWoodQuote()" style="width:100%;padding:13px;font-size:14px;font-weight:600" data-pb-require-contact="select-contact-err">Submit Order for Review &rarr;</button>
     </div>
     <div id="wd-q-success" style="display:none;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:12px;padding:20px;color:#2e7d32;font-size:14px;line-height:1.8;text-align:center">
       <strong>Quote request sent!</strong> We'll be in touch within a few hours.<br>

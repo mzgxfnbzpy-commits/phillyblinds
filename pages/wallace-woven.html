@@ -656,23 +656,29 @@ textarea.inp-field{resize:vertical;min-height:80px}
     <div class="inp-row">
       <div class="inp-group">
         <label class="inp-label">Your Name *</label>
-        <input class="inp-field" type="text" id="q-name" placeholder="Full name">
+        <input class="inp-field" type="text" id="q-name" data-pb-contact="name" placeholder="Full name">
       </div>
       <div class="inp-group">
-        <label class="inp-label">Phone / Email *</label>
-        <input class="inp-field" type="text" id="q-contact" placeholder="Best way to reach you">
+        <label class="inp-label">Phone *</label>
+        <input class="inp-field" type="tel" id="q-phone" data-pb-contact="phone" placeholder="(215) 555-0100">
       </div>
     </div>
     <div class="inp-group" style="margin-bottom:12px">
-      <label class="inp-label">Project Address / City</label>
-      <input class="inp-field" type="text" id="q-address" placeholder="City, State (or full address)">
+      <label class="inp-label">Email *</label>
+      <input class="inp-field" type="email" id="q-email" data-pb-contact="email" placeholder="jane@example.com">
+    </div>
+    <div class="inp-group" style="margin-bottom:12px">
+      <label class="inp-label">Project Address / City <span style="font-weight:400;color:#888">(optional)</span></label>
+      <input class="inp-field" type="text" id="q-address" data-pb-contact="address" placeholder="City, State (or full address)">
     </div>
     <div class="inp-group" style="margin-bottom:16px">
       <label class="inp-label">Notes / Special Requests</label>
       <textarea class="inp-field" id="q-notes" placeholder="Charger quantities, cutout locations, custom color preferences, special freight instructions, etc."></textarea>
     </div>
+    <div id="ww-contact-err" class="warn-box warn-box-red" style="display:none;margin-bottom:12px"></div>
     <div class="btn-row">
-      <button class="btn-submit" onclick="submitQuote()">Send Quote Request →</button>
+      <button class="btn-cart-add" onclick="addWallaceWovenToCart()" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
+      <button class="btn-submit" onclick="submitQuote()" data-pb-require-contact="ww-contact-err">Submit Order for Review →</button>
     </div>
   </div>
 
