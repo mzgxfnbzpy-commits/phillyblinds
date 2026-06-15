@@ -211,8 +211,15 @@ var CELL = {
   sizeCode: '34s',
   color:    '',
   colorCode:'',
-  qty:      1
+  qty:      1,
+  delivery: 'ship'
 };
+
+function cellPickDel(v, el) {
+  CELL.delivery = v;
+  document.querySelectorAll('.delivery-opt-card[id^="cell-del"]').forEach(function(c){ c.classList.remove('sel'); });
+  el.classList.add('sel');
+}
 
 var cellMotorOn = false;
 var cellMotorCost = 482;
@@ -499,6 +506,7 @@ async function submitCellQuote(btn) {
     + 'Color: ' + (CELL.color || '—') + (CELL.colorCode ? ' (' + CELL.colorCode + ')' : '') + '\n'
     + 'Quantity: ' + CELL.qty + '\n'
     + 'Estimated total: ' + price + '\n\n'
+    + 'Delivery: ' + (CELL.delivery === 'pickup' ? 'Customer pickup — Huntingdon Valley PA' : 'Ship to customer (UPS/FedEx)') + '\n\n'
     + 'Notes: ' + (notes || 'none');
 
   if (typeof _apiSubmit === 'function') {

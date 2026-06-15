@@ -35,8 +35,15 @@ var PS = {
   lgPrem:   false,
   holddown: false,
   shims:    0,
-  qty:      1
+  qty:      1,
+  delivery: 'ship'
 };
+
+function psPickDel(v, el) {
+  PS.delivery = v;
+  document.querySelectorAll('.delivery-opt-card[id^="ps-del"]').forEach(function(c){ c.classList.remove('sel'); });
+  el.classList.add('sel');
+}
 
 // ── Step helpers ──────────────────────────────────────────────
 function toggleStep(id) {
@@ -272,6 +279,7 @@ async function submitPSQuote(btn) {
     + 'Shims: ' + PS.shims + '\n'
     + 'Quantity: ' + PS.qty + '\n'
     + 'Estimated total: ' + price + '\n\n'
+    + 'Delivery: ' + (PS.delivery === 'pickup' ? 'Customer pickup — Huntingdon Valley PA' : 'Ship to customer (UPS/FedEx)') + '\n\n'
     + 'Notes: ' + (notes || 'none');
 
   if (typeof _apiSubmit === 'function') {
