@@ -206,11 +206,12 @@ function continueStep13() {
 }
 function continueStep14() {
   if (!S.count || S.count < 1) S.count = 1;
-  pbAdv('sec-qty', 14, 'sec-delivery', S.count + ' window' + (S.count !== 1 ? 's' : ''));
+  var summary = S.count + ' window' + (S.count !== 1 ? 's' : '');
+  pbAdv('sec-qty', 14, 'sec-delivery', summary);
+  pbAdv('sec-delivery', 15, 'sec-contact', 'Ship to me');
 }
 function continueStep15() {
-  if (!S.delivery) { alert('Please select delivery or pickup.'); return; }
-  pbAdv('sec-delivery', 15, 'sec-contact', S.delivery.startsWith('Ship') ? 'Ship to me' : 'I\'ll pick up');
+  pbAdv('sec-delivery', 15, 'sec-contact', 'Ship to me');
 }
 
 /* ─── HELPERS ───────────────────────────────────────────── */

@@ -48,11 +48,154 @@ function switchTab(id, btn) {
 var drapeState  = { pleat:'', fabric:'' };
 var romanState  = { style:'', fabric:'' };
 
+// ── Roman style state carryover ──────────────────────────
+var _rnStyleCache = {};
+function _rnCaptureState(styleName) {
+  if (!styleName) return;
+  var s = {};
+  ['rn-w','rn-h','rn-qty','rn-return','roman-clen-in','roman-ring-size','roman-ring-color','val-folds','val-fold-size'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) s[id] = el.value;
+  });
+  ['rn-w-frac','rn-h-frac'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) s[id] = el.value;
+  });
+  ['grp-roman-mount','grp-roman-tdbu','grp-roman-color','grp-roman-liner','grp-roman-lining',
+   'grp-roman-rings','grp-roman-op','grp-roman-clen','grp-roman-motor-brand','grp-roman-control',
+   'grp-roman-trim-supply','grp-roman-mount-style','grp-roman-back-valance','grp-rn-back-val-h',
+   'grp-rn-back-val-fabric','grp-rn-front-val-h','grp-val-lining','grp-val-fabric'].forEach(function(grp) {
+    var sel = document.querySelector('#' + grp + ' .opt-btn.sel');
+    if (sel) s[grp] = sel.textContent.trim();
+  });
+  var trimChecks = document.querySelectorAll('.rn-trim-check');
+  s['rn-trim-checks'] = Array.from(trimChecks).map(function(cb) { return { loc: cb.getAttribute('data-loc'), checked: cb.checked }; });
+  var fabCard = document.querySelector('#roman-fabric-cards .fabric-card.sel');
+  if (fabCard) { var h3 = fabCard.querySelector('h3'); if (h3) s['roman-fabric-card'] = h3.textContent.trim(); }
+  _rnStyleCache[styleName] = s;
+}
+function _rnRestoreState(styleName, fromState) {
+  var saved = _rnStyleCache[styleName];
+  if (!saved) {
+    if (fromState) {
+      ['rn-w','rn-h','rn-qty','rn-w-frac','rn-h-frac'].forEach(function(id) {
+        var el = document.getElementById(id); if (el && fromState[id] !== undefined) el.value = fromState[id];
+      });
+    }
+    return;
+  }
+  ['rn-w','rn-h','rn-qty','rn-return','roman-clen-in','roman-ring-size','roman-ring-color','val-folds','val-fold-size','rn-w-frac','rn-h-frac'].forEach(function(id) {
+    var el = document.getElementById(id); if (el && saved[id] !== undefined) el.value = saved[id];
+  });
+  ['grp-roman-mount','grp-roman-tdbu','grp-roman-color','grp-roman-liner','grp-roman-lining',
+   'grp-roman-rings','grp-roman-op','grp-roman-clen','grp-roman-motor-brand','grp-roman-control',
+   'grp-roman-trim-supply','grp-roman-mount-style','grp-roman-back-valance','grp-rn-back-val-h',
+   'grp-rn-back-val-fabric','grp-rn-front-val-h','grp-val-lining','grp-val-fabric'].forEach(function(grp) {
+    if (!saved[grp]) return;
+    var grpEl = document.getElementById(grp); if (!grpEl) return;
+    grpEl.querySelectorAll('.opt-btn').forEach(function(b) { b.classList.toggle('sel', b.textContent.trim() === saved[grp]); });
+  });
+  if (saved['rn-trim-checks']) {
+    saved['rn-trim-checks'].forEach(function(item) {
+      var cb = document.querySelector('.rn-trim-check[data-loc="' + item.loc + '"]');
+      if (cb) cb.checked = item.checked;
+    });
+  }
+  if (saved['roman-fabric-card']) {
+    document.querySelectorAll('#roman-fabric-cards .fabric-card').forEach(function(c) {
+      var h3 = c.querySelector('h3'); if (!h3) return;
+      if (h3.textContent.trim() === saved['roman-fabric-card']) {
+        var val = h3.textContent.trim() === 'We supply the fabric' ? 'We supply the fabric'
+                : h3.textContent.trim() === 'I have my own fabric' ? 'Customer supplies fabric'
+                : 'Not sure — needs consultation';
+        selectFabric('roman', c, val);
+      }
+    });
+  }
+}
+
+// ── Drape style state carryover ──────────────────────────
+var _drapePleatCache = {};
+function _drapeGetCurrentDims() {
+  var pleat = drapeState.pleat;
+  var w = 0, h = 0;
+  if (pleat === 'Pinch Pleat' || (pleat && pleat.indexOf('Pinch Pleat') === 0)) {
+    w = parseFloat((document.getElementById('pp-w') || {}).value) || 0;
+    h = parseFloat((document.getElementById('pp-l') || {}).value) || 0;
+  } else if (pleat === 'Rod Pocket / Sheered Pocket') {
+    w = parseFloat((document.getElementById('rp-w') || {}).value) || 0;
+    h = parseFloat((document.getElementById('rp-l') || {}).value) || 0;
+  } else if (pleat === 'Ripple Fold') {
+    w = parseFloat((document.getElementById('rf-w') || {}).value) || 0;
+    h = parseFloat((document.getElementById('rf-l') || {}).value) || 0;
+  } else {
+    w = parseFloat((document.getElementById('d-exact-width') || {}).value) || 0;
+    h = parseFloat((document.getElementById('d-exact-length') || {}).value) || 0;
+  }
+  return { w: w, h: h };
+}
+function _drapeSetDims(targetPleat, dims) {
+  if (!dims || (!dims.w && !dims.h)) return;
+  var isPinch = targetPleat === 'Pinch Pleat' || (targetPleat && targetPleat.indexOf('Pinch Pleat') === 0);
+  var isRP = targetPleat === 'Rod Pocket / Sheered Pocket';
+  var isRipple = targetPleat === 'Ripple Fold';
+  if (isPinch) {
+    var pw = document.getElementById('pp-w'); if (pw && dims.w) pw.value = dims.w;
+    var pl = document.getElementById('pp-l'); if (pl && dims.h) pl.value = dims.h;
+  } else if (isRP) {
+    var rw = document.getElementById('rp-w'); if (rw && dims.w) rw.value = dims.w;
+    var rl = document.getElementById('rp-l'); if (rl && dims.h) rl.value = dims.h;
+  } else if (isRipple) {
+    var rfw = document.getElementById('rf-w'); if (rfw && dims.w) rfw.value = dims.w;
+    var rfl = document.getElementById('rf-l'); if (rfl && dims.h) rfl.value = dims.h;
+  } else {
+    var dw = document.getElementById('d-exact-width'); if (dw && dims.w) dw.value = dims.w;
+    var dl = document.getElementById('d-exact-length'); if (dl && dims.h) dl.value = dims.h;
+  }
+}
+function _drapeCaptureState(pleatName) {
+  if (!pleatName) return;
+  var s = { dims: _drapeGetCurrentDims() };
+  ['grp-drape-fullness','grp-drape-panels','grp-drape-side','grp-drape-hw-need','grp-drape-hw-type',
+   'grp-drape-color','grp-drape-liner','grp-ripple-fullness','grp-ripple-hw','grp-ripple-snaps',
+   'grp-ripple-join','grp-pp-fullness','grp-rp-fullness','grp-rp-casing','grp-rp-header'].forEach(function(grp) {
+    var sel = document.querySelector('#' + grp + ' .opt-btn.sel');
+    if (sel) s[grp] = sel.textContent.trim();
+  });
+  var fabCard = document.querySelector('#drape-fabric-cards .fabric-card.sel');
+  if (fabCard) { var h3 = fabCard.querySelector('h3'); if (h3) s['drape-fabric-card'] = h3.textContent.trim(); }
+  _drapePleatCache[pleatName] = s;
+}
+function _drapeRestoreState(targetPleat, prevDims) {
+  var saved = _drapePleatCache[targetPleat];
+  if (!saved) { if (prevDims) _drapeSetDims(targetPleat, prevDims); return; }
+  _drapeSetDims(targetPleat, saved.dims);
+  ['grp-drape-fullness','grp-drape-panels','grp-drape-side','grp-drape-hw-need','grp-drape-hw-type',
+   'grp-drape-color','grp-drape-liner','grp-ripple-fullness','grp-ripple-hw','grp-ripple-snaps',
+   'grp-ripple-join','grp-pp-fullness','grp-rp-fullness','grp-rp-casing','grp-rp-header'].forEach(function(grp) {
+    if (!saved[grp]) return;
+    var grpEl = document.getElementById(grp); if (!grpEl) return;
+    grpEl.querySelectorAll('.opt-btn').forEach(function(b) { b.classList.toggle('sel', b.textContent.trim() === saved[grp]); });
+  });
+  if (saved['drape-fabric-card']) {
+    document.querySelectorAll('#drape-fabric-cards .fabric-card').forEach(function(c) {
+      var h3 = c.querySelector('h3'); if (!h3) return;
+      if (h3.textContent.trim() === saved['drape-fabric-card']) {
+        var val = h3.textContent.trim() === 'We supply the fabric' ? 'We supply the fabric'
+                : h3.textContent.trim() === 'I have my own fabric' ? 'Customer supplies fabric'
+                : 'Not sure — needs consultation';
+        selectFabric('drape', c, val);
+      }
+    });
+  }
+}
+
 var _RIPPLE_STYLES    = ['Ripple Fold'];
 var _NO_FULLNESS      = ['Grommet / Eyelet', 'Box Pleat', 'Goblet Pleat', 'Barrel Pleat']; // these use fixed 2.5× fullness
 var _ppProngs = 3; // current prong count for pinch pleat (2 or 3, updated by fullness selection)
 
 function selectPleat(el, val) {
+  if (drapeState.pleat && drapeState.pleat !== val) _drapeCaptureState(drapeState.pleat);
+  var _prevDims = drapeState.pleat ? _drapeGetCurrentDims() : null;
+
   document.querySelectorAll('#pleat-cards .opt-card').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
   drapeState.pleat = val;
@@ -73,9 +216,9 @@ function selectPleat(el, val) {
   var rpOpts = document.getElementById('rodpocket-subopts');
   if (rpOpts) rpOpts.style.display = isRodPocket ? 'block' : 'none';
 
-  // Standard dims (Step 2) — hide for pinch and rod pocket only; ripple fold now uses std dims
+  // Standard dims — hide for pinch, rod pocket, and ripple fold (each has its own dim inputs)
   var stdDims = document.getElementById('drape-std-dims');
-  if (stdDims) stdDims.style.display = (isPinch || isRodPocket) ? 'none' : '';
+  if (stdDims) stdDims.style.display = (isPinch || isRodPocket || isRipple) ? 'none' : '';
 
   // Return/overlap row — hide for ripple fold (track system, no returns needed)
   var stdReturns = document.getElementById('drape-std-returns');
@@ -109,10 +252,14 @@ function selectPleat(el, val) {
     drapeFullnessHint('2.5');
   }
 
+  _drapeRestoreState(val, _prevDims);
+  calcDrapePrice();
+
   // Scroll to reveal the sub-options panel that just appeared
   setTimeout(function() {
     var target = isPinch ? document.getElementById('pinch-subopts')
                : isRodPocket ? document.getElementById('rodpocket-subopts')
+               : isRipple ? document.getElementById('drape-ripple-opts')
                : null;
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 120);
@@ -183,6 +330,9 @@ function selectPinchDetail(el, pos) {
   drapeState.pleat = 'Pinch Pleat — ' + prong + '-Prong ' + tack;
 }
 function selectRomanStyle(el, val) {
+  if (romanState.style && romanState.style !== val) _rnCaptureState(romanState.style);
+  var _prevRnState = romanState.style ? _rnStyleCache[romanState.style] : null;
+
   document.querySelectorAll('#roman-style-cards .opt-card').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
   romanState.style = val;
@@ -201,13 +351,13 @@ function selectRomanStyle(el, val) {
     if (s) s.style.display = hideSteps ? 'none' : '';
   });
 
+  _rnRestoreState(val, _prevRnState);
   calcRoman();
 
   // Auto-scroll to the revealed content
   setTimeout(function() {
-    var target = isVignette ? document.getElementById('vignette-notice')
-               : isValance  ? document.getElementById('valance-config')
-               : document.getElementById('roman-step-style');
+    var target = isValance  ? document.getElementById('valance-config')
+               : document.getElementById('roman-step-dims');
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 150);
 }
@@ -392,7 +542,7 @@ function calcRoman() {
   }
 
   // Shipping estimate — FedEx/UPS from Philadelphia; min $75; >96″ wide = oversized freight $200
-  var isShippingRn = getOpt('grp-del-roman') === 'Ship to me';
+  var isShippingRn = true;
   var shipEst = 0;
   if (isShippingRn) {
     if (isRomanOversized) {
@@ -486,8 +636,8 @@ function calcDrapePrice() {
     w = _getDim('rp-w', 'rp-w-frac');
     h = _getDim('rp-l', 'rp-l-frac');
   } else if (isRippleDim) {
-    w = _getDim('d-exact-width', 'd-exact-width-frac');
-    h = _getDim('d-exact-length', 'd-exact-length-frac');
+    w = parseFloat((document.getElementById('rf-w') || {}).value) || 0;
+    h = parseFloat((document.getElementById('rf-l') || {}).value) || 0;
   } else {
     w = _getDim('d-exact-width',  'd-exact-width-frac');
     h = _getDim('d-exact-length', 'd-exact-length-frac');
@@ -627,7 +777,7 @@ function calcDrapePrice() {
   }
 
   // Shipping estimate — FedEx/UPS from Philadelphia; min $75 for drapes
-  var isShippingDrape = getOpt('grp-del-drape') === 'Ship to me';
+  var isShippingDrape = true;
   var dShipEst = 0;
   if (isShippingDrape) {
     var dShipBase = Math.ceil(numWidths * 12 / 5) * 5;
@@ -998,7 +1148,7 @@ async function submitDrape() {
   var rippleJoin = isRipple ? getOpt('grp-ripple-join') : '—';
   var hwNeed     = getOpt('grp-drape-hardware');
   var hwType     = hwNeed === 'I need hardware' ? getOpt('grp-drape-hw-type') : 'N/A';
-  var delivery   = getOpt('grp-del-drape');
+  var delivery   = 'Ship (UPS/FedEx from Huntingdon Valley PA)';
   var custFabricFlag = fabric === 'Customer supplies fabric'
     ? '*** CUSTOMER SUPPLYING FABRIC ***\nDO NOT PROCESS PAYMENT UNTIL FABRIC RECEIVED AT SHOP.\nContact customer with shipping address before fabrication begins.\n\n'
     : '';
@@ -1040,9 +1190,11 @@ async function submitDrape() {
     + 'Hardware: ' + hwNeed + (hwType !== 'N/A' ? ' — ' + hwType : '') + '\n'
     + '\nExact width: ' + (isSubmitPinch ? ((document.getElementById('pp-w')||{}).value || '—') + '"'
         : isSubmitRP ? ((document.getElementById('rp-w')||{}).value || '—') + '"'
+        : isRipple ? ((document.getElementById('rf-w')||{}).value || '—') + '"'
         : (document.getElementById('d-exact-width').value ? document.getElementById('d-exact-width').value + '"' : '—'))
     + '\nFinished length: ' + (isSubmitPinch ? ((document.getElementById('pp-l')||{}).value || '—') + '"'
         : isSubmitRP ? ((document.getElementById('rp-l')||{}).value || '—') + '"'
+        : isRipple ? ((document.getElementById('rf-l')||{}).value || '—') + '"'
         : (document.getElementById('d-exact-length').value ? document.getElementById('d-exact-length').value + '"' : '—')) + '\n'
     + 'Delivery: ' + delivery + '\n'
     + pbInstallLine(document.getElementById('drape-form')) + '\n\n'
@@ -1064,9 +1216,11 @@ async function submitDrape() {
     { label: 'Panels', value: panels + (panelSide !== '—' ? ' — ' + panelSide : '') },
     { label: 'Width', value: (isSubmitPinch ? ((document.getElementById('pp-w')||{}).value || '—')
         : isSubmitRP ? ((document.getElementById('rp-w')||{}).value || '—')
+        : isRipple ? ((document.getElementById('rf-w')||{}).value || '—')
         : (document.getElementById('d-exact-width').value || '—')) + '"' },
     { label: 'Finished length', value: (isSubmitPinch ? ((document.getElementById('pp-l')||{}).value || '—')
         : isSubmitRP ? ((document.getElementById('rp-l')||{}).value || '—')
+        : isRipple ? ((document.getElementById('rf-l')||{}).value || '—')
         : (document.getElementById('d-exact-length').value || '—')) + '"' },
     { label: 'Return / Overlap', value: returnSz + '" / ' + overlapSz + (overlapSz === '—' ? '' : '"') },
     { label: 'Hardware', value: hwNeed + (hwType !== 'N/A' ? ' — ' + hwType : '') },
@@ -1117,12 +1271,14 @@ async function submitRoman() {
   var frontVal    = mountStyle === 'Off Back' ? ((document.getElementById('rn-valance-front') || {}).value || '6') : '—';
   var backVal     = mountStyle === 'Off Back' ? getOpt('grp-roman-back-valance') : '—';
   var backValSz   = backVal === 'Add back valance' ? ((document.getElementById('rn-valance-back') || {}).value || '4') : '—';
-  var delivery    = getOpt('grp-del-roman');
+  var delivery    = 'Ship (UPS/FedEx from Huntingdon Valley PA)';
+  var mountType   = getOpt('grp-roman-mount') || 'Inside mount';
   var body = 'ROMAN SHADE QUOTE REQUEST\n\n'
     + 'Name: ' + name + '\nPhone: ' + phone
     + '\nEmail: ' + (document.getElementById('rn-email').value.trim() || '—')
     + '\nAddress: ' + (document.getElementById('rn-address').value.trim() || '—') + '\n\n'
     + 'Style: ' + (romanState.style || '—') + '\n'
+    + 'Mount type: ' + mountType + '\n'
     + 'TDBU: ' + tdbu + '\n'
     + 'Fabric: ' + (romanState.fabric || '—') + '\n'
     + (romanState.fabric === 'We supply the fabric' ? 'Color: ' + (getOpt('grp-roman-color')||'—') + '  Liner: ' + (getOpt('grp-roman-liner')||'No liner') + '\n' : '')
@@ -1149,6 +1305,7 @@ async function submitRoman() {
       }())
   var romanSelections = [
     { label: 'Style',        value: romanState.style || '—' },
+    { label: 'Mount type',   value: mountType },
     { label: 'TDBU',         value: getOpt('grp-roman-tdbu') || '—' },
     { label: 'Fabric',       value: romanState.fabric || '—' },
     { label: 'Lining',       value: getOpt('grp-roman-lining') || '—' },
