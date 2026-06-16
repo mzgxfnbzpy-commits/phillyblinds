@@ -232,21 +232,17 @@
     <div class="step-head-val" id="s3-val"></div>
   </div>
   <div class="step-body">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px">
-      <div>
-        <div class="dim-label">Quantity</div>
-        <div style="display:flex;align-items:center;gap:6px">
-          <input class="dim-input" type="number" id="inp-qty" min="1" max="50" value="1" oninput="validateQty()">
-          <span class="dim-unit">shades</span>
-        </div>
+    <div style="margin-top:4px">
+      <div class="dim-label">Quantity</div>
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:12px">
+        <input class="dim-input" type="number" id="inp-qty" min="1" max="50" value="1" oninput="validateQty()">
+        <span class="dim-unit">shades</span>
       </div>
-      <div>
-        <div class="dim-label">Room / window label</div>
+      <div id="room-labels-wrap">
+        <div class="dim-label">Room / window label <span style="font-weight:400;color:#999">(optional)</span></div>
         <input type="text" id="inp-room" placeholder="e.g. Master Bedroom Left" style="padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;width:100%;box-sizing:border-box" oninput="validateQty()">
       </div>
     </div>
-    <div style="font-size:11px;color:#888;margin-top:10px;line-height:1.5">Room label is optional. Click continue when ready.</div>
-    <button class="btn-outline" onclick="validateQty(true)" style="margin-top:12px">Continue →</button>
   </div>
 </div>
 
@@ -425,13 +421,18 @@
           <div class="opt-card-title">Ship to me</div>
           <div class="opt-card-desc">UPS or FedEx from Huntingdon Valley, PA</div>
         </div>
+        <div class="opt-card" id="del-pickup" onclick="selectDelivery('pickup')">
+          <div class="opt-card-icon">🏠</div>
+          <div class="opt-card-title">I'll pick up</div>
+          <div class="opt-card-desc">Huntingdon Valley, PA — address after order review</div>
+        </div>
       </div>
       <div id="del-ship-note" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA. <div class="delivery-tariff">Tariffs and import fees are additional.</div></div>
     </div>
 
     <div id="wnr-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
     <button class="btn-cart-add" onclick="addWallaceNaturalRollerToCart()" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
-    <button class="btn-gold" onclick="submitQuote()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:16px" data-pb-require-contact="wnr-contact-err">Submit Order for Review &rarr;</button>
+    <button class="btn-gold" onclick="submitQuote()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:0" data-pb-require-contact="wnr-contact-err">Submit Order for Review &rarr;</button>
 
     <div id="quote-success" style="display:none;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:10px;padding:20px;color:#2e7d32;font-size:14px;line-height:1.7;margin-top:12px">
       <strong>Specification submitted!</strong><br>Your email app opened with the complete spec pre-filled. Our team will review and follow up within a few hours.<br><br>

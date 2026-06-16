@@ -694,7 +694,13 @@
 
       <!-- DELIVERY -->
       <div class="delivery-section" style="margin-top:16px">
-        <div class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately.</div></div>
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+        <div class="opt-row" id="grp-del-drape">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-drape');document.getElementById('del-drape-s').style.display='block';document.getElementById('del-drape-p').style.display='none';calcDrapePrice()">Ship to me</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-del-drape');document.getElementById('del-drape-s').style.display='none';document.getElementById('del-drape-p').style.display='block';calcDrapePrice()">I'll pick up</button>
+        </div>
+        <div id="del-drape-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately.</div></div>
+        <div id="del-drape-p" class="delivery-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.</div>
       </div>
 
       <div style="border-top:1px solid #e8e8e4;margin:20px 0 16px"></div>
@@ -924,7 +930,13 @@
       </div>
       <!-- Delivery -->
       <div class="delivery-section" style="margin-bottom:14px">
-        <div class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional.</div></div>
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+        <div class="opt-row" id="grp-del-val-rn">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-val-rn');document.getElementById('del-val-rn-s').style.display='block';document.getElementById('del-val-rn-p').style.display='none'">Ship to me</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-del-val-rn');document.getElementById('del-val-rn-s').style.display='none';document.getElementById('del-val-rn-p').style.display='block'">I'll pick up</button>
+        </div>
+        <div id="del-val-rn-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional.</div></div>
+        <div id="del-val-rn-p" class="delivery-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.</div>
       </div>
       <!-- Contact -->
       <div style="border-top:1px solid #e8e8e4;margin:16px 0 12px"></div>
@@ -1189,7 +1201,13 @@
 
           <!-- DELIVERY -->
           <div class="delivery-section" style="margin-top:16px">
-            <div class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional and itemized separately.</div></div>
+            <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+            <div class="opt-row" id="grp-del-roman">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-del-roman');document.getElementById('del-roman-s').style.display='block';document.getElementById('del-roman-p').style.display='none';calcRoman()">Ship to me</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-del-roman');document.getElementById('del-roman-s').style.display='none';document.getElementById('del-roman-p').style.display='block';calcRoman()">I'll pick up</button>
+            </div>
+            <div id="del-roman-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional and itemized separately.</div></div>
+            <div id="del-roman-p" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>
           </div>
 
           <div style="border-top:1px solid #e8e8e4;margin:20px 0 16px"></div>
@@ -1317,7 +1335,13 @@
     </div>
     <div id="corn-form">
       <div class="delivery-section">
-        <div class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional.</div></div>
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+        <div class="opt-row" id="grp-del-corn">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-corn');document.getElementById('del-corn-s').style.display='block';document.getElementById('del-corn-p').style.display='none'">Ship to me</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-del-corn');document.getElementById('del-corn-s').style.display='none';document.getElementById('del-corn-p').style.display='block'">I'll pick up</button>
+        </div>
+        <div id="del-corn-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional.</div></div>
+        <div id="del-corn-p" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>
       </div>
       <div style="display:flex;align-items:flex-start;gap:10px;background:#fef9ec;border:1px solid #f0d070;border-radius:8px;padding:10px 14px;margin-top:14px;margin-bottom:12px;font-size:12px;color:#7a5c00;line-height:1.5">
         <span style="font-size:15px;flex-shrink:0">&#9888;</span>
@@ -1450,7 +1474,13 @@
     </div>
     <div id="val-form">
       <div class="delivery-section">
-        <div class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional.</div></div>
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+        <div class="opt-row" id="grp-del-val">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-val');document.getElementById('del-val-s').style.display='block';document.getElementById('del-val-p').style.display='none'">Ship to me</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-del-val');document.getElementById('del-val-s').style.display='none';document.getElementById('del-val-p').style.display='block'">I'll pick up</button>
+        </div>
+        <div id="del-val-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional.</div></div>
+        <div id="del-val-p" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>
       </div>
       <div style="border-top:1px solid #e8e8e4;margin:20px 0 16px"></div>
       <div class="form-row">

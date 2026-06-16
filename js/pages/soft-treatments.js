@@ -1022,6 +1022,7 @@ async function submitCornice() {
     { label: 'Return depth', value: (document.getElementById('cv-corn-return').value||'4') + '"' },
     { label: 'Finishing',    value: getOpt('grp-corn-trim') || '—' },
     { label: 'Fabric',       value: getOpt('grp-corn-fabric') || '—' },
+    { label: 'Delivery',     value: getOpt('grp-del-corn') || 'Ship to me' },
     { label: 'Installation', value: pbInstallRequested(document.getElementById('corn-form')) ? 'Requested' : 'Not requested' }
   ];
   await _stApiSubmit('corn-form', 'corn-success', name, email, phone, 'Cornice', selections, document.getElementById('cn-notes').value.trim());
@@ -1038,7 +1039,8 @@ async function submitValanceCv() {
     { label: 'Height',       value: (document.getElementById('cv-val-h').value||'—') + '"' },
     { label: 'Return depth', value: (document.getElementById('cv-val-return').value||'4') + '"' },
     { label: 'Finishing',    value: getOpt('grp-val-trim') || '—' },
-    { label: 'Fabric',       value: getOpt('grp-val-fabric') || '—' }
+    { label: 'Fabric',       value: getOpt('grp-val-fabric') || '—' },
+    { label: 'Delivery',     value: getOpt('grp-del-val') || 'Ship to me' }
   ];
   await _stApiSubmit('val-form', 'val-cv-success', name, email, phone, 'Valance', selections, document.getElementById('vn-notes').value.trim());
 }
@@ -1148,7 +1150,7 @@ async function submitDrape() {
   var rippleJoin = isRipple ? getOpt('grp-ripple-join') : '—';
   var hwNeed     = getOpt('grp-drape-hardware');
   var hwType     = hwNeed === 'I need hardware' ? getOpt('grp-drape-hw-type') : 'N/A';
-  var delivery   = 'Ship (UPS/FedEx from Huntingdon Valley PA)';
+  var delivery   = getOpt('grp-del-drape') || 'Ship to me';
   var custFabricFlag = fabric === 'Customer supplies fabric'
     ? '*** CUSTOMER SUPPLYING FABRIC ***\nDO NOT PROCESS PAYMENT UNTIL FABRIC RECEIVED AT SHOP.\nContact customer with shipping address before fabrication begins.\n\n'
     : '';
@@ -1242,7 +1244,8 @@ async function submitValance() {
     { label: 'Width',             value: (_getDim('rn-w','rn-w-frac') || '—') + '"' },
     { label: 'Height / drop',     value: (_getDim('rn-h','rn-h-frac') || '—') + '"' },
     { label: 'Number of folds',   value: document.getElementById('val-folds').value || '—' },
-    { label: 'Fold section size', value: (document.getElementById('val-fold-size').value || '—') + '"' }
+    { label: 'Fold section size', value: (document.getElementById('val-fold-size').value || '—') + '"' },
+    { label: 'Delivery',          value: getOpt('grp-del-val-rn') || 'Ship to me' }
   ];
   await _stApiSubmit('valance-form-fields', 'valance-success', name, email, phone, 'Roman Valance',
     selections, document.getElementById('val-notes').value.trim());
@@ -1271,7 +1274,7 @@ async function submitRoman() {
   var frontVal    = mountStyle === 'Off Back' ? ((document.getElementById('rn-valance-front') || {}).value || '6') : '—';
   var backVal     = mountStyle === 'Off Back' ? getOpt('grp-roman-back-valance') : '—';
   var backValSz   = backVal === 'Add back valance' ? ((document.getElementById('rn-valance-back') || {}).value || '4') : '—';
-  var delivery    = 'Ship (UPS/FedEx from Huntingdon Valley PA)';
+  var delivery    = getOpt('grp-del-roman') || 'Ship to me';
   var mountType   = getOpt('grp-roman-mount') || 'Inside mount';
   var body = 'ROMAN SHADE QUOTE REQUEST\n\n'
     + 'Name: ' + name + '\nPhone: ' + phone
