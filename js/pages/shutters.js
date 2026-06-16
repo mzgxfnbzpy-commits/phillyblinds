@@ -98,10 +98,12 @@ const LAYOUTS = {
 const S = {
   line:'', count:1,
   opentype:'Standard window', mount:'', dims:[{w:'',h:'',label:''}],
+  exactFrameW:'',
   layout:'', tpostV:'', tpostH:'',
   louver:'', tilt:'InvisibleTilt™ (hidden in stile)', frame:'', divider:'',
+  frameSides:'4-sided (standard)',
   colorType:'', color:'',
-  specs:[], delivery:'',
+  specs:[], delivery:'Ship (UPS/FedEx from Huntingdon Valley PA)',
   room:'', notes:''
 };
 
@@ -140,25 +142,25 @@ function pbToggleStep(secId) {
 
 /* ─── CONTINUE FUNCTIONS ────────────────────────────────── */
 function continueStep1() {
+  pbAdv('sec-dims', 1, 'sec-mount', (S.dims[0].w || '?') + '″W × ' + (S.dims[0].h || '?') + '″H' + (S.exactFrameW ? ' · frame: ' + S.exactFrameW + '″' : ''));
+}
+function continueStep2() {
+  if (!S.mount) { alert('Please select a mount type.'); return; }
+  pbAdv('sec-mount', 2, 'sec-line', S.mount.split(' (')[0]);
+}
+function continueStep3() {
   if (!S.line) { alert('Please select a shutter line.'); return; }
-  pbAdv('sec-line', 1, 'sec-opentype', S.line);
-  // Auto-advance through step 2 with Standard window default
+  pbAdv('sec-line', 3, 'sec-opentype', S.line);
+  // Auto-advance through opening type if Standard window is already selected
   if (S.opentype === 'Standard window') {
     setTimeout(function() {
-      pbAdv('sec-opentype', 2, 'sec-mount', 'Standard window');
+      pbAdv('sec-opentype', 4, 'sec-layout', 'Standard window');
     }, 500);
   }
 }
-function continueStep2() {
-  if (!S.opentype) { alert('Please select an opening type.'); return; }
-  pbAdv('sec-opentype', 2, 'sec-mount', S.opentype.split(' (')[0].split(',')[0]);
-}
-function continueStep3() {
-  if (!S.mount) { alert('Please select a mount type.'); return; }
-  pbAdv('sec-mount', 3, 'sec-dims', S.mount.split(' (')[0]);
-}
 function continueStep4() {
-  pbAdv('sec-dims', 4, 'sec-layout', (S.dims[0].w || '?') + '″W × ' + (S.dims[0].h || '?') + '″H');
+  if (!S.opentype) { alert('Please select an opening type.'); return; }
+  pbAdv('sec-opentype', 4, 'sec-layout', S.opentype.split(' (')[0].split(',')[0]);
 }
 function continueStep5() {
   if (!S.layout) { alert('Please select a panel layout.'); return; }
@@ -242,7 +244,7 @@ function selLine(name, card) {
   buildLouverOpts();
   buildColorSection();
   updateQuote();
-  setTimeout(continueStep1, 400);
+  setTimeout(continueStep3, 400);
 }
 
 /* ─── DIMS ──────────────────────────────────────────────── */
@@ -351,15 +353,17 @@ function checkMount(btn) {
   var note = qs('mount-note');
   var val = btn.dataset.val || '';
   if (val.indexOf('Direct mount') !== -1) {
-    note.textContent = '⚠ Direct mount frame attaches to the face of the window frame — not suitable for drywall without proper blocking.';
+    note.textContent = '⚠ Direct mount frame requires a precision measurement visit — we\'ll contact you to schedule.';
     note.classList.add('show');
+    setTimeout(function() { pbShowContact('Direct Mount Frame — precision fit required'); }, 400);
   } else if (val.indexOf('Tracking') !== -1 || val.indexOf('sliding') !== -1) {
-    note.textContent = '⚠ Tracking & sliding systems (bi-fold, bypass, barn-door) require a custom quote. We\'ll follow up after submission.';
+    note.textContent = '⚠ Tracking & sliding systems require a custom quote. We\'ll reach out after you submit.';
     note.classList.add('show');
+    setTimeout(function() { pbShowContact('Tracking & Sliding Systems — custom quote required'); }, 400);
   } else {
     note.classList.remove('show');
+    setTimeout(continueStep2, 500);
   }
-  setTimeout(continueStep3, 500);
 }
 
 /* ─── COLOR SECTION ─────────────────────────────────────── */
@@ -501,13 +505,15 @@ async function submitQuote() {
   var selections = [
     { label: 'Line', value: S.line },
     { label: 'Quantity', value: S.count+' window'+(S.count!==1?'s':'') },
-    { label: 'Opening type', value: S.opentype||'—' },
     { label: 'Mount', value: S.mount||'—' },
     { label: 'Dimensions', value: dimsText||'—' },
+    { label: 'Exact frame width', value: S.exactFrameW||'N/A' },
+    { label: 'Opening type', value: S.opentype||'—' },
     { label: 'Panel layout', value: S.layout||'—' },
     { label: 'Louver size', value: S.louver||'—' },
     { label: 'Tilt type', value: S.tilt||'—' },
     { label: 'Frame style', value: S.frame||'—' },
+    { label: 'Frame sides', value: S.frameSides||'4-sided (standard)' },
     { label: 'Divider rail', value: S.divider||'None' },
     { label: 'T-post vertical', value: S.tpostV||'None' },
     { label: 'T-post horizontal', value: S.tpostH||'None' },
@@ -530,6 +536,6 @@ async function submitQuote() {
     qs('success-box').classList.add('show');
   } catch(err) {
     if (btn) { btn.disabled = false; btn.textContent = 'Request Quote →'; }
-    alert('Something went wrong. Please call (609) 742-1720 or email justin@phillyblinds.com');
+    alert('Something went wrong. Please call (609) 742-1720 or email blindznation@gmail.com');
   }
 }

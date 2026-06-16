@@ -163,15 +163,75 @@
     <!-- LEFT: CONFIGURATOR -->
     <div id="configurator">
 
-      <!-- ── STEP 1: SHUTTER LINE ── -->
-      <div class="step-block active" id="sec-line">
-        <div class="step-head" onclick="pbToggleStep('sec-line')">
+      <!-- ── STEP 1: DIMENSIONS ── -->
+      <div class="step-block active" id="sec-dims">
+        <div class="step-head" onclick="pbToggleStep('sec-dims')">
           <span class="step-num" id="badge-1">1</span>
-          <span class="step-head-title">Which Norman shutter line?</span>
+          <span class="step-head-title">Window dimensions</span>
           <span class="step-head-val" id="shv-1"></span>
         </div>
         <div class="step-body">
-          <p class="step-subhead">This is your first decision — it determines available colors, louver sizes, and max panel widths.</p>
+          <p class="step-subhead">Enter width × height in inches (e.g., 36⅛). Measure to 1/8″ precision. We take 3W × 3H — the installer records final measurements at the home visit.</p>
+          <div class="opening-card">
+            <div class="dim-row">
+              <div class="form-group" style="margin:0"><label>Width (inches)</label><input type="text" placeholder='e.g. 36⅛"' id="dim-w-0" oninput="S.dims[0].w=this.value;updateQuote();checkDimWarn(0,this.value)"></div>
+              <div class="form-group" style="margin:0"><label>Height (inches)</label><input type="text" placeholder='e.g. 60½"' id="dim-h-0" oninput="S.dims[0].h=this.value;updateQuote();checkDimHWarn(0,this.value)"></div>
+            </div>
+            <div id="dim-warn-0" class="warn-note"></div>
+          </div>
+          <div style="margin-top:10px">
+            <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:#555;cursor:pointer">
+              <input type="checkbox" id="exact-frame-chk" onchange="document.getElementById('exact-frame-row').style.display=this.checked?'block':'none'" style="width:16px;height:16px;flex-shrink:0">
+              I have my exact ordered / frame width from a previous measurement or order
+            </label>
+            <div id="exact-frame-row" style="display:none;margin-top:8px">
+              <div class="form-group" style="margin:0">
+                <label>Exact frame / ordered width</label>
+                <input type="text" id="exact-frame-w" placeholder='e.g. 35⅝"' oninput="S.exactFrameW=this.value;updateQuote()">
+              </div>
+              <div class="spec-note" style="margin-top:4px">Enter only if your installer or a prior order confirmation already established the exact manufactured width.</div>
+            </div>
+          </div>
+          <div class="info-note" style="margin-top:8px">
+            <strong>Multiple windows with different sizes?</strong> Add each set of measurements in the Notes step below.
+          </div>
+          <div class="step-continue-wrap">
+            <button class="btn-step-continue" onclick="continueStep1()">Continue →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STEP 2: MOUNT ── -->
+      <div class="step-block" id="sec-mount">
+        <div class="step-head" onclick="pbToggleStep('sec-mount')">
+          <span class="step-num" id="badge-2">2</span>
+          <span class="step-head-title">Mount &amp; frame situation</span>
+          <span class="step-head-val" id="shv-2"></span>
+        </div>
+        <div class="step-body">
+          <p class="step-subhead">Inside mount fits within the window opening. Direct mount frame attaches to the face of the frame. Tracking &amp; sliding systems for bypass, bi-fold, or barn-door configurations.</p>
+          <div class="opt-row">
+            <button class="opt-btn" onclick="selOpt(this,'mount');updateQuote();setTimeout(continueStep2,400)" data-val="Inside mount">Inside Mount <span style="font-size:10px;color:#999">(most common)</span></button>
+            <button class="opt-btn" onclick="checkMount(this)" data-val="Direct mount frame (exact or window opening)">Direct Mount Frame <span style="font-size:10px;color:#999">(exact or window opening)</span></button>
+            <button class="opt-btn" onclick="checkMount(this)" data-val="Tracking and sliding systems">Tracking &amp; Sliding Systems</button>
+          </div>
+          <div id="mount-note" class="warn-note"></div>
+          <div class="spec-note">
+            <strong>Inside mount minimum depth</strong>
+            Measure the depth of your window opening. 1⅞″ louvers need ~¾″ clearance; 4½″ louvers need ~1¾″. We'll confirm during measurement.
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STEP 3: SHUTTER LINE ── -->
+      <div class="step-block" id="sec-line">
+        <div class="step-head" onclick="pbToggleStep('sec-line')">
+          <span class="step-num" id="badge-3">3</span>
+          <span class="step-head-title">Which Norman shutter line?</span>
+          <span class="step-head-val" id="shv-3"></span>
+        </div>
+        <div class="step-body">
+          <p class="step-subhead">This determines available colors, louver sizes, and max panel widths.</p>
           <div class="line-cards">
             <div class="line-card" onclick="selLine('Normandy',this)">
               <div class="line-card-tag">Real Wood</div>
@@ -194,17 +254,17 @@
         </div>
       </div>
 
-      <!-- ── STEP 2: OPENING TYPE ── -->
+      <!-- ── STEP 4: OPENING TYPE ── -->
       <div class="step-block" id="sec-opentype">
         <div class="step-head" onclick="pbToggleStep('sec-opentype')">
-          <span class="step-num" id="badge-2">2</span>
+          <span class="step-num" id="badge-4">4</span>
           <span class="step-head-title">What type of opening?</span>
-          <span class="step-head-val" id="shv-2"></span>
+          <span class="step-head-val" id="shv-4"></span>
         </div>
         <div class="step-body">
           <p class="step-subhead">Applies to all openings in this order. If you have mixed types, note differences in the notes step.</p>
           <div class="opt-row">
-            <button class="opt-btn sel" onclick="selOpt(this,'opentype');updateQuote();setTimeout(continueStep2,400)" data-val="Standard window">Standard window</button>
+            <button class="opt-btn sel" onclick="selOpt(this,'opentype');updateQuote();setTimeout(continueStep4,400)" data-val="Standard window">Standard window</button>
             <button class="opt-btn" onclick="checkOpenType(this)" data-val="Double-hung window">Double-hung window <span style="font-size:9px;color:var(--gold)">+10%</span></button>
             <button class="opt-btn" onclick="checkOpenType(this)" data-val="Slider / bypass door">Slider / bypass door</button>
             <button class="opt-btn" onclick="checkOpenType(this)" data-val="Bi-fold door">Bi-fold door</button>
@@ -214,50 +274,6 @@
             <button class="opt-btn" onclick="checkOpenType(this)" data-val="Café (lower half only)">Café (lower half only)</button>
           </div>
           <div id="opentype-note" class="warn-note"></div>
-        </div>
-      </div>
-
-      <!-- ── STEP 3: MOUNT ── -->
-      <div class="step-block" id="sec-mount">
-        <div class="step-head" onclick="pbToggleStep('sec-mount')">
-          <span class="step-num" id="badge-3">3</span>
-          <span class="step-head-title">Mount &amp; frame situation</span>
-          <span class="step-head-val" id="shv-3"></span>
-        </div>
-        <div class="step-body">
-          <p class="step-subhead">Inside mount fits within the window opening. Direct mount frame attaches to the face of the frame. Tracking &amp; sliding systems for bypass, bi-fold, or barn-door configurations.</p>
-          <div class="opt-row">
-            <button class="opt-btn" onclick="selOpt(this,'mount');updateQuote();setTimeout(continueStep3,400)" data-val="Inside mount">Inside Mount <span style="font-size:10px;color:#999">(most common)</span></button>
-            <button class="opt-btn" onclick="checkMount(this)" data-val="Direct mount frame (exact or window opening)">Direct Mount Frame <span style="font-size:10px;color:#999">(exact or window opening)</span></button>
-            <button class="opt-btn" onclick="checkMount(this)" data-val="Tracking and sliding systems">Tracking &amp; Sliding Systems</button>
-          </div>
-          <div id="mount-note" class="warn-note"></div>
-          <div class="spec-note">
-            <strong>Inside mount minimum depth</strong>
-            Measure the depth of your window opening. 1⅞″ louvers need ~¾″ clearance; 4½″ louvers need ~1¾″. We'll confirm during measurement.
-          </div>
-        </div>
-      </div>
-
-      <!-- ── STEP 4: DIMENSIONS ── -->
-      <div class="step-block" id="sec-dims">
-        <div class="step-head" onclick="pbToggleStep('sec-dims')">
-          <span class="step-num" id="badge-4">4</span>
-          <span class="step-head-title">Dimensions</span>
-          <span class="step-head-val" id="shv-4"></span>
-        </div>
-        <div class="step-body">
-          <p class="step-subhead">Enter width × height in inches (e.g., 36⅛). Measure to 1/8″ precision. We take 3W × 3H — the installer records final measurements at the home visit.</p>
-          <div class="opening-card">
-            <div class="dim-row">
-              <div class="form-group" style="margin:0"><label>Width (inches)</label><input type="text" placeholder='e.g. 36⅛"' id="dim-w-0" oninput="S.dims[0].w=this.value;updateQuote();checkDimWarn(0,this.value)"></div>
-              <div class="form-group" style="margin:0"><label>Height (inches)</label><input type="text" placeholder='e.g. 60½"' id="dim-h-0" oninput="S.dims[0].h=this.value;updateQuote();checkDimHWarn(0,this.value)"></div>
-            </div>
-            <div id="dim-warn-0" class="warn-note"></div>
-          </div>
-          <div class="info-note" style="margin-top:8px">
-            <strong>Multiple windows with different sizes?</strong> Add each set of measurements in the Notes step below.
-          </div>
         </div>
       </div>
 
@@ -367,8 +383,16 @@
             <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep9,400)" data-val="Z Frame (specify type in notes)">Z Frame</button>
             <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep9,400)" data-val="Hang strip (beside panel)">Hang strip (beside)</button>
             <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep9,400)" data-val="Hang strip (behind panel)">Hang strip (behind)</button>
-            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep9,400)" data-val="No frame / direct mount">No frame (direct mount)</button>
+            <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();pbShowContact('No-frame direct mount — requires a custom measurement visit')" data-val="No frame / direct mount">No frame (direct mount)</button>
             <button class="opt-btn" onclick="selOpt(this,'frame');updateQuote();setTimeout(continueStep9,400)" data-val="Not sure — confirm at measurement">Not sure</button>
+          </div>
+          <div style="margin-top:16px">
+            <div style="font-size:11px;font-weight:600;color:#444;margin-bottom:8px;letter-spacing:0.5px;text-transform:uppercase">Sill / bottom plate</div>
+            <div class="opt-row">
+              <button class="opt-btn sel" onclick="selOpt(this,'frameSides');updateQuote()" data-val="4-sided (standard)">4-Sided <span style="font-size:10px;color:#999">(standard)</span></button>
+              <button class="opt-btn" onclick="selOpt(this,'frameSides');updateQuote()" data-val="3-sided (no bottom plate — window sill used)">3-Sided <span style="font-size:10px;color:#999">(no bottom plate)</span></button>
+            </div>
+            <div class="spec-note" style="margin-top:6px">3-sided frame omits the bottom plate — the window sill acts as the base. Use when you want to preserve the sill appearance or the sill protrudes into the opening.</div>
           </div>
         </div>
       </div>
@@ -505,9 +529,13 @@
         </div>
         <div class="step-body">
           <div class="delivery-opt-grid">
-            <div class="delivery-opt-card" onclick="selDelivery('ship',this)">
+            <div class="delivery-opt-card sel" id="shut-del-ship" onclick="selDelivery('ship',this)">
               <div class="delivery-opt-title">Ship to me</div>
-              <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA 19006. Freight quoted separately. Tariffs/duties may apply for international destinations.</div>
+              <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA. Freight quoted separately. Tariffs and import fees additional.</div>
+            </div>
+            <div class="delivery-opt-card" id="shut-del-pickup" onclick="selDelivery('pickup',this)">
+              <div class="delivery-opt-title">I'll pick up</div>
+              <div class="delivery-opt-body">Huntingdon Valley, PA. We'll provide the exact address after order review.</div>
             </div>
           </div>
           <div id="ship-note" class="delivery-tariff" style="display:none">
