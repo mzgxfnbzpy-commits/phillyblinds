@@ -1,4 +1,4 @@
-// ═══════════════════════════════════════════════════════════════
+﻿// ═══════════════════════════════════════════════════════════════
 // FABRIC DATA — patterns from PDF pages 4-5
 // maxH = single shade max height; double shades always capped at 96"
 // rhea = true → no cassette fabric wrap, no fabric-wrapped box valance
@@ -746,7 +746,7 @@ function submitQuote() {
     + '── NOTES ──\n'
     + (document.getElementById('q-notes').value.trim() || 'None');
 
-  window.location.href = 'mailto:justin@phillyblinds.com'
+  window.location.href = 'mailto:blindznation@gmail.com'
     + '?subject=' + encodeURIComponent('Wallace Natural Roller Spec — ' + name + (fab ? ' · ' + fab.name : ''))
     + '&body=' + encodeURIComponent(body);
 

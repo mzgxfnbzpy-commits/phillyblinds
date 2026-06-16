@@ -1,4 +1,4 @@
-let wsDelivery = 'ship';
+﻿let wsDelivery = 'ship';
 function wsSetDelivery(val) {
   wsDelivery = val;
   document.getElementById('ws-del-ship').classList.toggle('sel', val === 'ship');
@@ -34,7 +34,7 @@ function submitWSQuote() {
     'NOTES',
     document.getElementById('ws-notes').value || '(none)',
   ].join('\n'));
-  window.location.href = 'mailto:justin@phillyblinds.com?subject=' + subject + '&body=' + body;
+  window.location.href = 'mailto:blindznation@gmail.com?subject=' + subject + '&body=' + body;
 }
 
 function addWaldenSelectToCart() {

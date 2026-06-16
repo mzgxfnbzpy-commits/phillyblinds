@@ -1105,7 +1105,7 @@ async function pbSubmitQuote() {
       _pbQuoteLines.forEach(function(l){ mailLines.push('  ' + l.label + ': ' + l.value); });
     }
     if (notes.trim()) mailLines.push('', 'Notes:', notes.trim());
-    var mailHref = 'mailto:justin@phillyblinds.com?subject=' + encodeURIComponent('Quote Request — ' + name) +
+    var mailHref = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent('Quote Request — ' + name) +
       '&body=' + encodeURIComponent(mailLines.join('\n'));
 
     if (errEl) {
@@ -1580,7 +1580,7 @@ function pbShowContact(title) {
             'var fn=fi&&fi.files.length?\'\\n\\nFiles: \'+Array.from(fi.files).map(function(f){return f.name}).join(\', \')+\'\\n(Please email to justin@phillyblinds.com)\':\'\';' +
             'var subj=\'Quote Request — \'+n;' +
             'var body=\'QUOTE REQUEST\\n\\nName: \'+n+\'\\nPhone: \'+p+\'\\n\\nMessage:\\n\'+(m||\'(none)\')+fn;' +
-            'window.location.href=\'mailto:justin@phillyblinds.com?subject=\'+encodeURIComponent(subj)+\'&body=\'+encodeURIComponent(body);' +
+            'window.location.href=\'mailto:blindznation@gmail.com?subject=\'+encodeURIComponent(subj)+\'&body=\'+encodeURIComponent(body);' +
             'document.getElementById(\'' + uid + '\').remove();' +
           '})()" style="width:100%;background:#1C1510;color:var(--gold);border:none;border-radius:8px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">Send request →</button>' +
         '</div>' +
@@ -1629,7 +1629,7 @@ async function pbSubmitContact() {
     if (btn) btn.style.display = 'none';
   } catch(err) {
     if (btn) { btn.disabled = false; btn.textContent = 'Request free consultation →'; }
-    alert('Something went wrong. Please call (609) 742-1720 or email justin@phillyblinds.com');
+    alert('Something went wrong. Please call (609) 742-1720 or email blindznation@gmail.com');
   }
 }
 
@@ -1804,7 +1804,7 @@ function _initChatbot() {
 function reqMoreInfo(product) {
   var subj = product ? 'Request for more information: ' + product : 'Request for more information';
   var body = 'Hi, I would like to request more information about ' + (product || 'your products') + '.\n\nName:\nPhone:\nBest time to call:';
-  window.location.href = 'mailto:justin@phillyblinds.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
+  window.location.href = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
 }
 
 // ── Auto-init nav/footer from data-page body attribute ────────────────────
@@ -1941,7 +1941,7 @@ async function _apiSubmit(name, email, phone, productName, configText, successId
     if (sEl) { sEl.classList.add('show'); sEl.style.display = 'block'; sEl.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   } catch(err) {
     if (btn) { btn.disabled = false; btn.textContent = btn._origText || 'Send quote request'; }
-    var mh = 'mailto:justin@phillyblinds.com?subject=' + encodeURIComponent('Quote — ' + name) + '&body=' + encodeURIComponent('Name: ' + name + '\nPhone: ' + phone + '\nProduct: ' + productName + '\n\n' + configText);
+    var mh = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent('Quote — ' + name) + '&body=' + encodeURIComponent('Name: ' + name + '\nPhone: ' + phone + '\nProduct: ' + productName + '\n\n' + configText);
     var eDiv = document.createElement('div');
     eDiv.style.cssText = 'background:#FEE2E2;border-radius:8px;padding:10px 13px;margin-top:10px;font-size:12px;color:#991B1B;line-height:1.5';
     eDiv.innerHTML = '<strong>Issue sending.</strong> <a href="' + mh + '" style="color:#991B1B;font-weight:700;text-decoration:underline">Email directly →</a> or call <a href="tel:6097421720" style="color:#991B1B">(609) 742-1720</a>';

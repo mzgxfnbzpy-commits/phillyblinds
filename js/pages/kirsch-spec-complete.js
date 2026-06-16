@@ -71,7 +71,7 @@ function submitQ() {
     +'\n── DELIVERY ──\n'+delivery+'\n\n'
     +'── NOTES ──\n'+(document.getElementById('q-notes').value.trim()||'None');
 
-  window.location.href='mailto:justin@phillyblinds.com'
+  window.location.href='mailto:blindznation@gmail.com'
     +'?subject='+encodeURIComponent('Kirsch Hardware Spec — '+gp('grp-rod-type')+' — '+name)
     +'&body='+encodeURIComponent(body);
   document.getElementById('q-success').style.display='block';

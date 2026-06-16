@@ -485,7 +485,7 @@ function submitQuote() {
   ].filter(l => l !== undefined && l !== null).join('\n');
 
   const subj = 'Soluna Roller Quote — ' + w + '"×' + h + '" ' + light + (shadeType !== 'Standard' ? ' ' + shadeType : '') + ' — ' + name;
-  window.location.href = 'mailto:justin@phillyblinds.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
+  window.location.href = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
 
   document.getElementById('quote-success').classList.add('show');
   document.getElementById('quote-success').scrollIntoView({ behavior: 'smooth', block: 'start' });

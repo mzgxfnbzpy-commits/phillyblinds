@@ -1,4 +1,4 @@
-let wpDelivery = 'ship';
+﻿let wpDelivery = 'ship';
 function wpSetDelivery(val) {
   wpDelivery = val;
   document.getElementById('wp-del-ship').classList.toggle('sel', val === 'ship');
@@ -34,7 +34,7 @@ function submitWPQuote() {
     'NOTES',
     document.getElementById('wp-notes').value || '(none)',
   ].join('\n'));
-  window.location.href = 'mailto:justin@phillyblinds.com?subject=' + subject + '&body=' + body;
+  window.location.href = 'mailto:blindznation@gmail.com?subject=' + subject + '&body=' + body;
 }
 
 function addWaldenPremierToCart() {

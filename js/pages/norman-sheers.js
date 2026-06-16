@@ -1,4 +1,4 @@
-// ═══════════════════════════════════════════════════════════
+﻿// ═══════════════════════════════════════════════════════════
 // STATE — initialized before any function calls
 // ═══════════════════════════════════════════════════════════
 var S = {
@@ -504,7 +504,7 @@ async function submitQuote(){
     var form=document.getElementById('quote-form'); if(form) form.style.display='none';
   }catch(err2){
     if(btn){btn.disabled=false;btn.textContent='Submit SmartDrape™ Specification & Request Quote →';}
-    err.innerHTML=(err2.message&&err2.message.length<200?err2.message+'<br>':'')+'Please email <a href="mailto:justin@phillyblinds.com">justin@phillyblinds.com</a> or call (609) 742-1720.';
+    err.innerHTML=(err2.message&&err2.message.length<200?err2.message+'<br>':'')+'Please email <a href="mailto:blindznation@gmail.com">blindznation@gmail.com</a> or call (609) 742-1720.';
     err.style.display='block';
   }
 }

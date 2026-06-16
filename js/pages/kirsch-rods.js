@@ -505,7 +505,7 @@ function submitQuote() {
   ].join('\n');
 
   const subject = 'Kirsch Rod Quote — ' + collectionLabel() + ' — ' + name;
-  window.location.href = 'mailto:justin@phillyblinds.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  window.location.href = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 
   document.querySelectorAll('.section').forEach(s => s.classList.remove('on'));
   document.getElementById('success-box').style.display = 'block';
@@ -535,7 +535,7 @@ function submitUnsure() {
     '--- Sent from phillyblinds.com/pages/kirsch-rods.html ---'
   ].join('\n');
 
-  window.location.href = 'mailto:justin@phillyblinds.com?subject=' + encodeURIComponent('Kirsch Hardware Help — ' + name) + '&body=' + encodeURIComponent(body);
+  window.location.href = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent('Kirsch Hardware Help — ' + name) + '&body=' + encodeURIComponent(body);
   document.querySelectorAll('.section').forEach(s => s.classList.remove('on'));
   document.getElementById('success-box').style.display = 'block';
   document.getElementById('step-bar').style.display = 'none';

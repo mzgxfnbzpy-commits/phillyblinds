@@ -1,4 +1,4 @@
-var S={prod:'',opacity:'lf',fabric:null,fabFilter:'all',w:0,h:0,ctrl:'',motorType:'std-li',cassColor:'White',cassette:'rounded',qty:1,room:'',del:'ship'};
+﻿var S={prod:'',opacity:'lf',fabric:null,fabFilter:'all',w:0,h:0,ctrl:'',motorType:'std-li',cassColor:'White',cassette:'rounded',qty:1,room:'',del:'ship'};
 
 // ── FABRIC DATA — Portfolio Dual Sheer (Wallace 2026 PDF) ─────────────────────
 var FABRICS=[
@@ -634,7 +634,7 @@ function submitQ(){
   ]).join('\n');
 
   var subj='Wallace '+(S.prod==='dual'?'Dual Sheer':'Banded 2D')+' Quote — '+S.w+'"x'+S.h+'" — '+name;
-  window.location.href='mailto:justin@phillyblinds.com?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
+  window.location.href='mailto:blindznation@gmail.com?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
   document.getElementById('step8-body').querySelectorAll(':not(#success-box)').forEach(function(el){el.style.display='none';});
   document.getElementById('success-box').style.display='block';
 }

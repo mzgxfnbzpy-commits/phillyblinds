@@ -1,4 +1,4 @@
-/* ── FABRIC DATA ── */
+﻿/* ── FABRIC DATA ── */
 const FABRICS = [
   // LF
   {code:'AS04',name:'Addison',color:'Ivory',type:'LF',grp:'E',maxW:108,maxH:108,band:'4¾"',sheer:'3"',comp:'Beige'},
@@ -736,5 +736,5 @@ function submitQuote(){
   ].filter(l=>l!=='').join('\n');
 
   const sub='Portfolio Dual Sheer Quote — '+f.name+' '+f.color+' '+S.width+'"×'+S.height+'"';
-  window.location.href='mailto:justin@phillyblinds.com?subject='+encodeURIComponent(sub)+'&body='+encodeURIComponent(lines);
+  window.location.href='mailto:blindznation@gmail.com?subject='+encodeURIComponent(sub)+'&body='+encodeURIComponent(lines);
 }

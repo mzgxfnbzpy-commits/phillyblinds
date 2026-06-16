@@ -1,4 +1,4 @@
-// ============================================================
+﻿// ============================================================
 // Wallace Portfolio Natural Shades — Configurator
 // ============================================================
 
@@ -801,7 +801,7 @@ function submitQuote() {
 
   const body = encodeURIComponent(buildQuote());
   const sub  = encodeURIComponent('Wallace Portfolio Natural Shades Quote — ' + name);
-  window.location.href = `mailto:justin@phillyblinds.com?subject=${sub}&body=${body}`;
+  window.location.href = `mailto:blindznation@gmail.com?subject=${sub}&body=${body}`;
 
   document.getElementById('wallace-form').style.display = 'none';
   document.getElementById('wf-success').style.display = 'block';
