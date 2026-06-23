@@ -280,7 +280,7 @@ function updateQuote(){
     firstDiv.parentNode.insertBefore(retailRow,firstDiv);
     discRow=document.createElement('div');
     discRow.className='qrow';discRow.id='qr-disc-row';
-    discRow.innerHTML='<span class="qrow-label" style="color:#2DE0C1">15% Norman discount</span><span class="qrow-val" style="color:#2DE0C1" id="qr-disc-s">—</span>';
+    discRow.innerHTML='<span class="qrow-label" style="color:#2DE0C1">35% Norman discount</span><span class="qrow-val" style="color:#2DE0C1" id="qr-disc-s">—</span>';
     firstDiv.parentNode.insertBefore(discRow,firstDiv);
     yourPriceRow=document.createElement('div');
     yourPriceRow.className='qrow';yourPriceRow.id='qr-yourprice-row';
@@ -294,6 +294,34 @@ function updateQuote(){
   showRow('qr-freight-row',state.del==='ship','$'+freight);
 
   document.getElementById('qr-total').textContent='$'+Math.round(total).toLocaleString();
+}
+
+function addCityLightsToCart(){
+  if(!state.slat){ alert('Please select a slat size (Step 1) before adding to cart.'); return; }
+  if(!state.colorName){ alert('Please select a color (Step 2) before adding to cart.'); return; }
+  if(!state.mount){ alert('Please select a mount type (Step 3) before adding to cart.'); return; }
+  if(!state.w||!state.h){ alert('Please enter valid dimensions (Step 4) before adding to cart.'); return; }
+
+  const totalEl=document.getElementById('qr-total');
+  const priceText=totalEl?totalEl.textContent.trim():'';
+  const price=priceText?parseFloat(priceText.replace(/[^0-9.]/g,''))||null:null;
+
+  const slatLabels={half:'½″ Micro Slats',one:'1″ Standard Slats',two:'2″ SmartPrivacy®'};
+  const lines=[
+    {label:'Product',value:'Norman City Lights™ Aluminum Blinds'},
+    {label:'Slat Size',value:slatLabels[state.slat]||state.slat},
+    {label:'Color',value:state.colorName+(state.colorSurcharge?' (+'+state.colorSurcharge+'% surcharge)':'')},
+    {label:'Mount',value:state.mount==='inside'?'Inside Mount':'Outside Mount'},
+    {label:'Width',value:state.w+'″'},
+    {label:'Height',value:state.h+'″'},
+    {label:'Privacy Slats',value:state.privacy?'Yes (+10%)':'No'},
+    {label:'Side Mount Bracket',value:state.sidemount?'Yes':'No'},
+    {label:'Shims',value:state.shim?state.shimQty+' × $7':'None'},
+    {label:'Quantity',value:String(state.qty||1)}
+  ];
+  const specs=lines.map(l=>l.label+': '+l.value).join(' | ');
+  pbAddToCart({product:'Norman City Lights™ Aluminum Blinds',lines:lines,specs:specs,price:price,qty:state.qty||1});
+  pbOpenCart();
 }
 
 function submitQuote(){
@@ -327,6 +355,6 @@ function submitQuote(){
   ];
   const body=encodeURIComponent(lines.join('\n'));
   const subject=encodeURIComponent('Citylights Aluminum Blinds Quote — '+name);
-  window.location.href='mailto:justin@phillyblinds.com?subject='+subject+'&body='+body;
+  window.location.href='mailto:blindznation@gmail.com?subject='+subject+'&body='+body;
   document.getElementById('success-box').style.display='block';
 }

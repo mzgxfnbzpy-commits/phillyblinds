@@ -110,6 +110,10 @@
 .tier-badge-basic{background:#e8f5e9;color:#2e7d32}
 .tier-badge-premium{background:rgba(200,151,63,.15);color:#7a5a00}
 .tier-btn.tier-active .tier-badge-premium{background:rgba(255,255,255,.18);color:var(--gold)}
+/* Step reorder: mount+dims first */
+#config-left-sv{display:flex;flex-direction:column}
+#step2{order:1}#step3{order:2}#step1{order:3}
+#step4,#step5,#step6,#step7{order:4}
 </style>
 </head>
 <body data-page="Shades & blinds">
@@ -146,12 +150,12 @@
 </div>
 
 <div class="config-layout">
-<div><!-- left column -->
+<div id="config-left-sv"><!-- left column -->
 
   <!-- STEP 1: FABRIC & COLOR -->
-  <div class="step-block active" id="step1">
+  <div class="step-block" id="step1">
     <div class="step-head" onclick="toggleStep('step1')">
-      <div class="step-num">1</div>
+      <div class="step-num">3</div>
       <div class="step-head-title">Fabric &amp; Color</div>
       <div class="step-head-val" id="s1val">—</div>
     </div>
@@ -410,9 +414,9 @@
   </div>
 
   <!-- STEP 2: MOUNT TYPE -->
-  <div class="step-block" id="step2">
+  <div class="step-block active" id="step2">
     <div class="step-head" onclick="toggleStep('step2')">
-      <div class="step-num">2</div>
+      <div class="step-num">1</div>
       <div class="step-head-title">Mount Type</div>
       <div class="step-head-val" id="s2val">—</div>
     </div>
@@ -438,7 +442,7 @@
   <!-- STEP 3: DIMENSIONS -->
   <div class="step-block" id="step3">
     <div class="step-head" onclick="toggleStep('step3')">
-      <div class="step-num">3</div>
+      <div class="step-num">2</div>
       <div class="step-head-title">Dimensions</div>
       <div class="step-head-val" id="s3val">—</div>
     </div>
@@ -574,14 +578,16 @@
       <div class="step-head-val" id="s7val">—</div>
     </div>
     <div class="step-body">
-      <div class="form-err" id="form-err">Please fill in your name and phone number.</div>
+      <div class="form-err" id="form-err"></div>
       <div class="form-row">
-        <div class="form-group"><label>Your name *</label><input type="text" id="f-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="f-phone" placeholder="(215) 555-0100"></div>
+        <div class="form-group"><label>Your name *</label><input type="text" id="f-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="f-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
       </div>
-      <div class="form-group"><label>Email</label><input type="email" id="f-email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Email *</label><input type="email" id="f-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Address <span style="font-weight:400;color:#999">(optional)</span></label><input type="text" id="f-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
       <div class="form-group"><label>Notes / fabric preference</label><textarea id="f-notes" placeholder="e.g. want Pure White Classic vanes, sliding door, interested in S-Curved style"></textarea></div>
-      <button class="submit-btn" onclick="submitQuote()">Submit Quote Request &rarr;</button>
+      <button class="btn-cart-add" onclick="addSynchronyToCart()" style="margin-bottom:8px">+ Add to Cart</button>
+      <button class="submit-btn" onclick="submitQuote()" data-pb-require-contact="form-err">Submit Order for Review &rarr;</button>
       <div class="success-box" id="success-box">
         <h3>Quote request sent!</h3>
         <p>We'll confirm your exact price within a few hours. For anything urgent, call us at <strong>(609) 742-1720</strong> &mdash; available 24/7.</p>

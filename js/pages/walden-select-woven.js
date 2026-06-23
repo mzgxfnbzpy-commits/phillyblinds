@@ -1,4 +1,4 @@
-let wsDelivery = 'ship';
+﻿let wsDelivery = 'ship';
 function wsSetDelivery(val) {
   wsDelivery = val;
   document.getElementById('ws-del-ship').classList.toggle('sel', val === 'ship');
@@ -34,5 +34,24 @@ function submitWSQuote() {
     'NOTES',
     document.getElementById('ws-notes').value || '(none)',
   ].join('\n'));
-  window.location.href = 'mailto:justin@phillyblinds.com?subject=' + subject + '&body=' + body;
+  window.location.href = 'mailto:blindznation@gmail.com?subject=' + subject + '&body=' + body;
+}
+
+function addWaldenSelectToCart() {
+  const type = document.getElementById('ws-type').value || 'Roman Shade';
+  const pattern = document.getElementById('ws-pattern').value || '—';
+  const w = document.getElementById('ws-width').value || '—';
+  const h = document.getElementById('ws-height').value || '—';
+  const qty = parseInt(document.getElementById('ws-qty').value) || 1;
+  const control = document.getElementById('ws-control').value || '—';
+  const lines = [
+    { label: 'Product', value: 'Walden Select Natural Woven Shade' },
+    { label: 'Type', value: type },
+    { label: 'Pattern', value: pattern },
+    { label: 'Size', value: w + '″ × ' + h + '″' },
+    { label: 'Control', value: control },
+    { label: 'Quantity', value: String(qty) }
+  ];
+  pbAddToCart({ product: 'Walden Select Natural Woven Shade', lines: lines, specs: lines.map(function(l){ return l.label+': '+l.value; }).join(' | '), qty: qty });
+  pbOpenCart();
 }

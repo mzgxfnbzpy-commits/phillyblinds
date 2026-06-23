@@ -114,7 +114,7 @@
 /* ─── CONFIGURATOR ──────────────────────────────────────────── */
 .config-wrap{background:#fff;border:1px solid #e8e8e4;border-radius:14px;padding:28px}
 .config-grid{display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start}
-.step-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:6px}
+.step-block{padding:14px 16px}
 .step-title{font-size:14px;font-weight:500;color:#111;margin-bottom:10px}
 .tooltip-note{font-size:11px;color:#888;margin-top:4px;line-height:1.5}
 .dim-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px}
@@ -197,14 +197,14 @@
       <span class="hero-eyebrow">Roller Shades</span>
     </div>
     <h1>Premier Norman Roller Shades</h1>
-    <p>Norman's flagship roller shade — precision-engineered cassette system, smooth balanced operation, and an extensive fabric program covering solar, light-filtering, Blackout, and blackout. Custom-made to your exact window dimensions.</p>
+    <p>Norman's flagship roller shade — precision-engineered cassette system, smooth balanced operation, and an extensive fabric program covering solar, light-filtering, room darkening, and blackout. Custom-made to your exact window dimensions.</p>
     <div class="hero-stats">
       <div class="hero-stat">
         <div class="hero-stat-val">12″–144″</div>
         <div class="hero-stat-lbl">Width range</div>
       </div>
       <div class="hero-stat">
-        <div class="hero-stat-val">12″–132″</div>
+        <div class="hero-stat-val">12″–144″</div>
         <div class="hero-stat-lbl">Height range</div>
       </div>
       <div class="hero-stat">
@@ -250,7 +250,7 @@
 <div class="spec-bar">
   <div class="spec-bar-item"><span class="sb-icon">📐</span><span class="sb-label">Width</span><span class="sb-val">12″ – 144″</span></div>
   <div class="spec-bar-divider"></div>
-  <div class="spec-bar-item"><span class="sb-icon">📏</span><span class="sb-label">Height</span><span class="sb-val">12″ – 132″</span></div>
+  <div class="spec-bar-item"><span class="sb-icon">📏</span><span class="sb-label">Height</span><span class="sb-val">12″ – 144″</span></div>
   <div class="spec-bar-divider"></div>
   <div class="spec-bar-item"><span class="sb-icon">🔧</span><span class="sb-label">Mount</span><span class="sb-val">Inside or Outside</span></div>
   <div class="spec-bar-divider"></div>
@@ -284,12 +284,12 @@
             <path d="M44 73 Q50 76 56 73" stroke="#2DE0C1" stroke-width="1.5" fill="none" stroke-linecap="round"/>
           </svg>
         </div>
-        <div class="op-name">Cordless Push-Lift</div>
+        <div class="op-name">PrecisionLift™ Cordless</div>
         <span class="op-tag op-tag-safe">Child &amp; pet safe</span>
-        <p class="op-desc">Raise and lower with a gentle push or pull on the bottom rail. No cords — clean look, safe for households with children or pets.</p>
+        <p class="op-desc">Pull the bottom rail handle down to lower; push up to raise. No cords or chains — Norman's best-in-class cordless system. WCMA Best for Kids™ certified.</p>
         <ul class="op-specs">
-          <li>Max width <span>72″</span></li>
-          <li>Max height <span>84″</span></li>
+          <li>Max width <span>118″</span></li>
+          <li>Max height <span>144″</span></li>
           <li>Cord free <span>Yes</span></li>
           <li>Smart home <span>No</span></li>
         </ul>
@@ -312,32 +312,35 @@
         <span class="op-tag op-tag-popular">Most popular</span>
         <p class="op-desc">A side-mounted bead chain operates the shade in both directions. Smooth, consistent force regardless of shade weight. Ideal for most windows.</p>
         <ul class="op-specs">
-          <li>Max width <span>144″</span></li>
-          <li>Max height <span>132″</span></li>
+          <li>Max width <span>118″</span></li>
+          <li>Max height <span>144″</span></li>
           <li>Chain material <span>Steel or nylon</span></li>
           <li>Smart home <span>No</span></li>
         </ul>
       </div>
 
-      <!-- Spring System -->
+      <!-- SmartRelease -->
       <div class="op-card">
         <div class="op-diagram">
           <svg viewBox="0 0 100 80" width="100" height="80" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="10" y="4" width="80" height="8" rx="4" fill="#2DE0C1"/>
-            <rect x="14" y="13" width="72" height="30" rx="2" fill="var(--gold-mid)" stroke="#E8DCC8" stroke-width="1"/>
-            <!-- spring coil symbol in tube -->
-            <path d="M30 8 Q35 2 40 8 Q45 14 50 8 Q55 2 60 8 Q65 14 70 8" stroke="#2DE0C1" stroke-width="1.5" fill="none"/>
-            <!-- arrows up and down -->
-            <path d="M50 50 L50 58 M46 54 L50 58 L54 54" stroke="#8B6914" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="14" y="13" width="72" height="44" rx="2" fill="var(--gold-mid)" stroke="#E8DCC8" stroke-width="1"/>
+            <!-- chain loop on right side -->
+            <circle cx="82" cy="38" r="5" fill="none" stroke="#8B6914" stroke-width="1.5"/>
+            <line x1="82" y1="13" x2="82" y2="33" stroke="#8B6914" stroke-width="1.5" stroke-dasharray="2,2"/>
+            <line x1="82" y1="43" x2="82" y2="63" stroke="#8B6914" stroke-width="1.5" stroke-dasharray="2,2"/>
+            <path d="M77 63 Q82 68 87 63" stroke="#8B6914" stroke-width="1.5" fill="none"/>
+            <!-- release arrow -->
+            <path d="M50 55 L50 63 M46 59 L50 63 L54 59" stroke="#2DE0C1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <div class="op-name">AutoLift™</div>
-        <span class="op-tag op-tag-pro">Pull-to-operate</span>
-        <p class="op-desc">Norman's spring-tension AutoLift™ system. Pull down to lower, pull again to raise. Best for smaller windows with infrequent operation.</p>
+        <div class="op-name">SmartRelease™</div>
+        <span class="op-tag op-tag-pro">Quick-release cord loop</span>
+        <p class="op-desc">Norman's patent-pending innovation. Releases the shade from a raised position with a gentle pull — no lifting required. Raceway included. Ideal for high or hard-to-reach windows.</p>
         <ul class="op-specs">
-          <li>Max width <span>72″</span></li>
-          <li>Max height <span>96″</span></li>
-          <li>Cord free <span>Yes</span></li>
+          <li>Max width <span>118″</span></li>
+          <li>Max height <span>144″</span></li>
+          <li>Cord <span>Bead chain</span></li>
           <li>Smart home <span>No</span></li>
         </ul>
       </div>
@@ -362,7 +365,7 @@
         <p class="op-desc">Battery or hardwired motor inside the roller tube. Control by app, remote, wall switch, voice (Alexa/Google/HomeKit), or schedule. Completely cord-free.</p>
         <ul class="op-specs">
           <li>Max width <span>144″</span></li>
-          <li>Max height <span>132″</span></li>
+          <li>Max height <span>144″</span></li>
           <li>Motor brands <span>Norman Smart (recommended) · Rollease Acmeda Automate</span></li>
           <li>Smart home <span>Yes</span></li>
         </ul>
@@ -396,12 +399,12 @@
             <line x1="62" y1="18" x2="55" y2="25" stroke="#2DE0C1" stroke-width="2" stroke-linecap="round"/>
             <line x1="18" y1="62" x2="25" y2="55" stroke="#2DE0C1" stroke-width="2" stroke-linecap="round"/>
           </svg>
-          <div class="lc-swatch-pct">1% – 14% openness</div>
+          <div class="lc-swatch-pct">1% – 10% openness</div>
         </div>
         <div class="lc-body">
           <div class="lc-name">Solar / Screen</div>
           <p class="lc-desc">Woven mesh fabric. Reduces glare and UV while maintaining your view. You see out — people cannot easily see in during daylight hours.</p>
-          <div class="lc-collections">Openness: 1% · 3% · 5% · 10% (residential) · 14% (commercial NA series)</div>
+          <div class="lc-collections">Openness: 1% · 3% · 5% · 7% (residential max) · 10% (commercial NA series max)</div>
         </div>
       </div>
 
@@ -588,23 +591,23 @@
         </thead>
         <tbody>
           <tr>
-            <td><strong>AutoLift™</strong></td>
-            <td>12″</td><td>72″</td><td>12″</td><td>96″</td>
+            <td><strong>PrecisionLift™ Cordless</strong></td>
+            <td>12″</td><td>118″</td><td>12″</td><td>144″</td>
             <td>Yes</td><td>No</td>
           </tr>
           <tr>
-            <td><strong>Cordless Push-Lift</strong></td>
-            <td>12″</td><td>72″</td><td>12″</td><td>84″</td>
-            <td>Yes</td><td>No</td>
+            <td><strong>SmartRelease™</strong></td>
+            <td>12″</td><td>118″</td><td>12″</td><td>144″</td>
+            <td>No (chain)</td><td>No</td>
           </tr>
           <tr>
             <td><strong>Continuous Loop</strong></td>
-            <td>12″</td><td>144″</td><td>12″</td><td>132″</td>
+            <td>12″</td><td>118″</td><td>12″</td><td>144″</td>
             <td>No (chain)</td><td>No</td>
           </tr>
           <tr>
             <td><strong>Motorized</strong></td>
-            <td>12″</td><td>144″</td><td>12″</td><td>132″</td>
+            <td>12″</td><td>144″</td><td>12″</td><td>144″</td>
             <td>Yes</td><td>Yes</td>
           </tr>
         </tbody>
@@ -629,18 +632,98 @@
       <div class="config-grid">
         <div>
 
-          <!-- Step 1: Fabric type -->
+          <!-- Step 1: Mount -->
           <div class="step-block">
-            <div class="step-label">Step 1</div>
-            <div class="step-title">Fabric type</div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+              <div class="step-num">1</div>
+              <div class="step-title" style="margin-bottom:0">Mount type</div>
+            </div>
+            <div class="opt-row" id="grp-mount">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-mount');updateSummary()">Inside mount</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-mount');updateSummary()">Outside mount</button>
+            </div>
+          </div>
+
+          <!-- Step 2: Dimensions -->
+          <div class="step-block">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+              <div class="step-num">2</div>
+              <div class="step-title" style="margin-bottom:0">Window measurements</div>
+            </div>
+            <div class="dim-box">
+              <div class="dim-box-label">Enter your window size</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Width</label>
+                  <input type="number" id="inp-width" min="12" max="144" step="0.5" placeholder="36" oninput="updateSummary()">
+                  <div class="dim-unit">inches &mdash; 12″ min · 118″ max (manual) · 144″ max (motorized)</div>
+                </div>
+                <div class="form-group">
+                  <label>Height</label>
+                  <input type="number" id="inp-height" min="12" max="144" step="0.5" placeholder="72" oninput="updateSummary()">
+                  <div class="dim-unit">inches &mdash; 12″ min · 144″ max</div>
+                </div>
+              </div>
+            </div>
+            <div class="tooltip-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine — we confirm at the home visit.</div>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <span style="font-size:12px;color:#666">Qty:</span>
+              <div class="qty-btns">
+                <button class="qty-btn" onclick="adjustQty(-1)">&#8722;</button>
+                <input class="qty-num" type="number" id="inp-qty" value="1" min="1" max="20" oninput="updateSummary()">
+                <button class="qty-btn" onclick="adjustQty(1)">&#43;</button>
+              </div>
+              <button id="coupled-toggle-btn" class="opt-btn" style="font-size:11px;padding:5px 12px" onclick="solToggleCoupled()">+ Coupled Shades</button>
+            </div>
+
+            <!-- Coupled shades panel -->
+            <div id="coupled-wrap" style="display:none;margin-top:12px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:9px">
+              <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:6px">Coupled Shades configuration</div>
+              <div id="coupled-op-warn" style="display:none;font-size:11px;color:#c0392b;background:#fdf0ee;border:1px solid #f1c0bb;border-radius:6px;padding:7px 10px;margin-bottom:8px">⚠ PrecisionLift™ Cordless and SmartRelease™ are not available for coupled shades. Please select Continuous Cord Loop or Motorized.</div>
+              <div style="font-size:11px;color:#666;margin-bottom:10px;line-height:1.5">Shades are linked side by side on a shared headrail, ordered left to right. Requires Continuous Cord Loop or Motorized lift system.</div>
+              <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Are the shades the same size?</div>
+              <div class="opt-row" id="grp-coupled-type" style="margin-bottom:10px">
+                <button class="opt-btn sel" onclick="selOpt(this,'grp-coupled-type');solShowCoupledSame();updateSummary()">Same size</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-coupled-type');solShowCoupledDiff();updateSummary()">Different sizes</button>
+              </div>
+
+              <!-- Same size: just pick count -->
+              <div id="coupled-same-wrap">
+                <div style="font-size:11px;color:#666;margin-bottom:6px">How many shades total?</div>
+                <div class="opt-row" id="grp-coupled-count">
+                  <button class="opt-btn sel" onclick="selOpt(this,'grp-coupled-count');solSetCoupledCount(2);updateSummary()">2 shades</button>
+                  <button class="opt-btn" onclick="selOpt(this,'grp-coupled-count');solSetCoupledCount(3);updateSummary()">3 shades</button>
+                  <button class="opt-btn" onclick="selOpt(this,'grp-coupled-count');solSetCoupledCount(4);updateSummary()">4 shades</button>
+                </div>
+                <div style="font-size:10px;color:#888;margin-top:6px">Same size as the dimensions entered above. Total price = (price × count) + coupled surcharge.</div>
+              </div>
+
+              <!-- Different sizes: enter dims per shade -->
+              <div id="coupled-diff-wrap" style="display:none">
+                <div style="font-size:11px;color:#666;margin-bottom:6px">How many shades total (left to right)?</div>
+                <div class="opt-row" id="grp-coupled-diff-count" style="margin-bottom:10px">
+                  <button class="opt-btn sel" onclick="selOpt(this,'grp-coupled-diff-count');solRenderCoupledFields(2);updateSummary()">2 shades</button>
+                  <button class="opt-btn" onclick="selOpt(this,'grp-coupled-diff-count');solRenderCoupledFields(3);updateSummary()">3 shades</button>
+                  <button class="opt-btn" onclick="selOpt(this,'grp-coupled-diff-count');solRenderCoupledFields(4);updateSummary()">4 shades</button>
+                </div>
+                <div id="coupled-dim-fields"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Fabric type -->
+          <div class="step-block">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+              <div class="step-num">3</div>
+              <div class="step-title" style="margin-bottom:0">Fabric type</div>
+            </div>
             <div class="opt-row" id="grp-light">
               <button class="opt-btn" onclick="selOpt(this,'grp-light');showFabricColls('solar');updateSummary()">Solar Screen</button>
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-light');showFabricColls('lf');updateSummary()">Light Filtering</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-light');showFabricColls('sheer');updateSummary()">Sheer / Naturals</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-light');showFabricColls('lf');updateSummary()">Light Filtering Designer</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light');showFabricColls('sheer');updateSummary()">Sheer &amp; Naturals</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-light');showFabricColls('rd');updateSummary()">Room Darkening</button>
-              <button class="opt-btn" onclick="pbShowContact('Norman Soluna — Designer Fabrics')">Designer</button>
             </div>
-            <div class="tooltip-note">Room Darkening blocks most light — pair with LightGuard 360™ cassette for true blackout. Designer fabrics require a custom quote.</div>
+            <div class="tooltip-note">Room Darkening blocks most light — pair with LightGuard 360™ cassette for true blackout. Solar Screen includes residential and commercial NA-series fabrics.</div>
             <!-- Fabric collection picker — populated dynamically by showFabricColls() -->
             <div id="fabric-coll-wrap" style="display:none;margin-top:12px;border:1px solid #e8e4de;border-radius:8px;overflow:hidden">
               <div style="background:#f5f2ed;padding:7px 12px;font-size:10px;font-weight:600;color:#666;letter-spacing:.8px;text-transform:uppercase">Fabric Collection &amp; Color <span style="font-weight:400;color:#aaa;text-transform:none;letter-spacing:0">(optional — select or skip)</span></div>
@@ -648,90 +731,133 @@
             </div>
           </div>
 
-          <!-- Step 2: Operating system -->
+          <!-- Step 4: Operating system -->
           <div class="step-block">
-            <div class="step-label">Step 2</div>
-            <div class="step-title">Operating system</div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+              <div class="step-num">4</div>
+              <div class="step-title" style="margin-bottom:0">Operating system</div>
+            </div>
             <div class="opt-row" id="grp-op">
-              <button class="opt-btn" onclick="selOpt(this,'grp-op');toggleMotor(false);updateSummary()">AutoLift™</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-op');toggleMotor(false);updateSummary()">Cordless</button>
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-op');toggleMotor(false);updateSummary()">Continuous loop</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-op');toggleMotor(true);updateSummary()">Motorized</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op');toggleMotor(false);solCheckCoupledOpWarn();solShowOpDesc('cordless');updateSummary()">PrecisionLift™ Cordless</button>
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-op');toggleMotor(false);solCheckCoupledOpWarn();solShowOpDesc('loop');updateSummary()">Continuous Cord Loop</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op');toggleMotor(false);solCheckCoupledOpWarn();solShowOpDesc('smartrelease');updateSummary()">SmartRelease™</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-op');toggleMotor(true);solCheckCoupledOpWarn();solShowOpDesc('motor');updateSummary()">Motorized</button>
+            </div>
+            <div id="op-desc-box" style="margin-top:10px;padding:10px 13px;border-radius:8px;font-size:12px;line-height:1.6;background:#f5f2ed;border-left:3px solid var(--gold)">
+              <strong style="color:#333">Continuous Cord Loop</strong> — Side-mounted bead chain operates the shade smoothly in both directions. Works for any size window. Best choice when cordless isn't required.
             </div>
             <div class="motor-sub" id="motor-sub">
-              <div class="form-group" style="margin-bottom:8px">
+
+              <!-- Motor brand -->
+              <div class="form-group" style="margin-bottom:10px">
                 <label style="font-size:12px;font-weight:500;color:#555;margin-bottom:5px;display:block">Motor system</label>
-                <select id="sel-motor" onchange="updateSummary()" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;font-family:var(--font)">
-                  <option value="Norman Smart">Norman Smart — Recommended (app, voice, remote; rechargeable or hardwired)</option>
-                  <option value="Rollease Acmeda Automate">Rollease Acmeda Automate — custom priced (for existing Rollease Acmeda systems)</option>
+                <select id="sel-motor" onchange="solUpdateMotorBrand();updateSummary()" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;font-family:var(--font)">
+                  <option value="Norman Smart">Norman Smart — Recommended (app, voice, remote)</option>
+                  <option value="Rollease Acmeda Automate">Rollease Acmeda Automate — custom priced (existing Rollease systems)</option>
                 </select>
               </div>
-              <div class="tooltip-note">Motor surcharge per shade. Power source (rechargeable battery, plug-in, or hardwired) confirmed at measurement visit. Norman Smart supports app control, Alexa, Apple HomeKit, and Google Home via the Norman Smart Hub. Rollease Acmeda Automate uses the Automate Pulse 2 hub.</div>
-            </div>
-          </div>
 
-          <!-- Step 3: Mount -->
-          <div class="step-block">
-            <div class="step-label">Step 3</div>
-            <div class="step-title">Mount type</div>
-            <div class="opt-row" id="grp-mount">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-mount');updateSummary()">Inside mount</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-mount');updateSummary()">Outside mount</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-mount');updateSummary()">Not sure — measure for me</button>
-            </div>
-          </div>
-
-          <!-- Step 4: Dimensions -->
-          <div class="step-block">
-            <div class="step-label">Step 4</div>
-            <div class="step-title">Window measurements</div>
-            <div class="dim-box">
-              <div class="dim-box-label">Enter your window size</div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label>Width</label>
-                  <input type="number" id="inp-width" min="12" max="144" step="0.5" placeholder="36" oninput="updateSummary()">
-                  <div class="dim-unit">inches &mdash; 12″ min · 144″ max</div>
+              <!-- Power source (Norman Smart only) -->
+              <div id="motor-power-wrap">
+                <div style="font-size:12px;font-weight:500;color:#555;margin-bottom:6px">Power source</div>
+                <div class="opt-row" id="grp-motor-power" style="flex-wrap:wrap">
+                  <button class="opt-btn sel" onclick="selOpt(this,'grp-motor-power');solShowPowerOpts('rechargeable');updateSummary()">Rechargeable battery</button>
+                  <button class="opt-btn" onclick="selOpt(this,'grp-motor-power');solShowPowerOpts('hardwired');updateSummary()">Hardwired (DC)</button>
+                  <button class="opt-btn" onclick="selOpt(this,'grp-motor-power');solShowPowerOpts('plugin');updateSummary()">AC plug-in</button>
                 </div>
-                <div class="form-group">
-                  <label>Height</label>
-                  <input type="number" id="inp-height" min="12" max="132" step="0.5" placeholder="72" oninput="updateSummary()">
-                  <div class="dim-unit">inches &mdash; 12″ min · 132″ max</div>
+
+                <!-- Charging wand (rechargeable only) -->
+                <div id="motor-wand-wrap" style="margin-top:10px;padding:10px 12px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
+                  <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Charging wand</div>
+                  <div class="opt-row" id="grp-wand-type" style="margin-bottom:8px">
+                    <button class="opt-btn sel" onclick="selOpt(this,'grp-wand-type');solShowWandExt(false);updateSummary()">Corded</button>
+                    <button class="opt-btn" onclick="selOpt(this,'grp-wand-type');solShowWandExt(true);updateSummary()">Cordless</button>
+                  </div>
+                  <div id="wand-ext-wrap" style="display:none;margin-bottom:8px">
+                    <label style="font-size:11px;color:#444;display:flex;align-items:center;gap:7px;cursor:pointer">
+                      <input type="checkbox" id="wand-ext-chk" onchange="updateSummary()"> Add extension wand
+                    </label>
+                    <div style="font-size:10px;color:#999;margin-top:2px;margin-left:21px">Extends reach for high-mounted shades. Available for cordless wand only.</div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:11px;color:#666">Qty:</span>
+                    <div class="qty-btns">
+                      <button class="qty-btn" onclick="solAdjWandQty(-1)">&#8722;</button>
+                      <input class="qty-num" type="number" id="inp-wand-qty" value="1" min="1" max="20" oninput="updateSummary()" style="width:40px">
+                      <button class="qty-btn" onclick="solAdjWandQty(1)">&#43;</button>
+                    </div>
+                    <span style="font-size:10px;color:#999">default 1 per shade</span>
+                  </div>
+                  <div style="font-size:10px;color:#c0392b;margin-top:6px">⚠ Not available with cassette headrail or dual shades.</div>
                 </div>
               </div>
-            </div>
-            <div class="tooltip-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine — we confirm at the home visit.</div>
-            <div style="display:flex;align-items:center;gap:10px">
-              <span style="font-size:12px;color:#666">Qty:</span>
-              <div class="qty-btns">
-                <button class="qty-btn" onclick="adjustQty(-1)">&#8722;</button>
-                <input class="qty-num" type="number" id="inp-qty" value="1" min="1" max="20" oninput="updateSummary()">
-                <button class="qty-btn" onclick="adjustQty(1)">&#43;</button>
+
+              <!-- Rollease note (shown when Rollease selected) -->
+              <div id="motor-rollease-wrap" style="display:none">
+                <div class="tooltip-note">Rollease Acmeda Automate is custom priced — confirmed at quote. Uses the Automate Pulse 2 hub. For customers with an existing Rollease Acmeda smart home system.</div>
               </div>
+
+              <div class="tooltip-note" style="margin-top:8px">Norman Smart estimate: $482/shade. Supports Alexa, Google Home, Apple HomeKit via the Norman Smart Hub. Exact power source and accessories confirmed at measurement visit.</div>
             </div>
           </div>
 
           <!-- Step 5: Shade type -->
           <div class="step-block">
-            <div class="step-label">Step 5</div>
-            <div class="step-title">Shade type</div>
-            <div class="opt-row" id="grp-shade-type">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-shade-type');document.getElementById('dual-shade-note').style.display='none';updateSummary()">Standard</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-shade-type');document.getElementById('dual-shade-note').style.display='block';updateSummary()">Dual Shade</button>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+              <div class="step-num">5</div>
+              <div class="step-title" style="margin-bottom:0">Shade type</div>
             </div>
-            <div id="dual-shade-note" class="tooltip-note" style="display:none;color:var(--gold)">Dual shade: two rollers in one headrail — combine Sheer &amp; Room Darkening for full light control. Cassette headrail is required.</div>
+            <div class="opt-row" id="grp-shade-type">
+              <button class="opt-btn sel" onclick="solPickShadeType('standard',this)">Standard</button>
+              <button class="opt-btn" onclick="solPickShadeType('dual',this)">Dual Shade</button>
+            </div>
+            <!-- Dual shade fabric pickers -->
+            <div id="dual-shade-fabrics" style="display:none;margin-top:12px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:9px">
+              <div style="margin-bottom:12px">
+                <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Front shade — daytime</div>
+                <div class="opt-row" id="grp-dual-front" style="flex-wrap:wrap">
+                  <button class="opt-btn sel" onclick="selOpt(this,'grp-dual-front');updateSummary()">Light Filtering</button>
+                  <button class="opt-btn" onclick="selOpt(this,'grp-dual-front');updateSummary()">Solar Screen</button>
+                  <button class="opt-btn" onclick="selOpt(this,'grp-dual-front');updateSummary()">Sheer / Naturals</button>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Back shade — night</div>
+                <div class="opt-row" id="grp-dual-back">
+                  <button class="opt-btn sel" onclick="selOpt(this,'grp-dual-back');updateSummary()">Room Darkening</button>
+                  <button class="opt-btn" onclick="selOpt(this,'grp-dual-back');updateSummary()">Blackout</button>
+                </div>
+              </div>
+              <div style="font-size:10px;color:#888;margin-top:8px;line-height:1.5">Cassette headrail is required for dual shade — auto-selected in Step 6 below.</div>
+            </div>
           </div>
 
           <!-- Step 6: Options -->
           <div class="step-block">
-            <div class="step-label">Step 6</div>
-            <div class="step-title">Headrail &amp; add-ons <span style="font-weight:400;color:#888">(optional)</span></div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+              <div class="step-num">6</div>
+              <div class="step-title" style="margin-bottom:0">Headrail &amp; add-ons <span style="font-weight:400;color:#888">(optional)</span></div>
+            </div>
             <div class="opt-row" id="grp-addons" style="flex-wrap:wrap">
+              <button class="opt-btn" id="sol-addon-openroll" onclick="solPickAddon('openroll',this)">Open roll</button>
               <button class="opt-btn" id="sol-addon-cassette" onclick="solPickAddon('cassette',this)">Cassette headrail</button>
               <button class="opt-btn" id="sol-addon-fascia" onclick="solPickAddon('fascia',this)">Fascia / valance</button>
               <button class="opt-btn" id="sol-addon-lightguard" onclick="solPickAddon('lightguard',this)">LightGuard 360™ (blackout)</button>
             </div>
             <div class="tooltip-note">Headrail options are mutually exclusive — select one or none. LightGuard 360™ requires Room Darkening fabric.</div>
+
+            <!-- Open roll → Premium hardware color picker -->
+            <div id="sol-hw-subopts" style="display:none;margin-top:10px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:9px">
+              <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Premium hardware color</div>
+              <div class="opt-row" id="grp-hw-color" style="flex-wrap:wrap">
+                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()">Brass</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()">Bronze</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()">Brushed Black</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()">Matte Silver</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()">White</button>
+              </div>
+              <div style="font-size:10px;color:#888;margin-top:6px;line-height:1.5">Premium hardware (brackets, clutches, chains &amp; hem bars) in a preset matching finish. Open roll single shades only — no valance or raceway. Inside mount side-mount bracket not available with premium hardware.</div>
+            </div>
 
             <!-- Fascia sub-options (shown when Fascia / valance selected) -->
             <div id="sol-fascia-subopts" style="display:none;margin-top:10px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:9px">
@@ -747,8 +873,10 @@
 
           <!-- Step 7: Delivery -->
           <div class="step-block">
-            <div class="step-label">Step 7</div>
-            <div class="step-title">Delivery</div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+              <div class="step-num">7</div>
+              <div class="step-title" style="margin-bottom:0">Delivery</div>
+            </div>
             <div class="delivery-opt-grid">
               <div class="delivery-opt-card sel" onclick="solPickDel('ship',this)">
                 <div class="delivery-opt-title">Ship to me</div>
@@ -759,15 +887,20 @@
 
           <!-- Step 8: Contact -->
           <div class="step-block" id="contact-block">
-            <div class="step-label">Step 8</div>
-            <div class="step-title">Your details</div>
-            <div class="dim-row">
-              <div class="form-group"><label>Name *</label><input type="text" id="cf-name" placeholder="Jane Smith"></div>
-              <div class="form-group"><label>Phone *</label><input type="tel" id="cf-phone" placeholder="(215) 555-0100"></div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+              <div class="step-num">8</div>
+              <div class="step-title" style="margin-bottom:0">Your details</div>
             </div>
-            <div class="form-group"><label>Email</label><input type="email" id="cf-email" placeholder="jane@example.com"></div>
+            <div class="dim-row">
+              <div class="form-group"><label>Name *</label><input type="text" id="cf-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+              <div class="form-group"><label>Phone *</label><input type="tel" id="cf-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
+            </div>
+            <div class="form-group"><label>Email *</label><input type="email" id="cf-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+            <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="cf-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
             <div class="form-group"><label>Notes</label><textarea id="cf-notes" placeholder="Room name, ceiling height, fabric ideas, timeline — anything helpful" style="min-height:60px"></textarea></div>
-            <button class="btn-gold" onclick="submitQuote()" style="width:100%;padding:13px;margin-top:4px">Send quote request &rarr;</button>
+            <div id="cf-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
+            <button class="btn-cart-add" onclick="addSolunaToCart()" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
+            <button class="btn-gold" onclick="submitQuote()" style="width:100%;padding:13px;margin-top:4px" data-pb-require-contact="cf-contact-err">Submit Order for Review &rarr;</button>
           </div>
 
           <div class="success-state" id="quote-success">
@@ -783,15 +916,21 @@
           <div class="summary-row"><span class="sr-key">Product</span><span class="sr-val">Norman Soluna Roller</span></div>
           <div class="summary-row"><span class="sr-key">Light control</span><span class="sr-val" id="s-light">Light Filtering</span></div>
           <div class="summary-row" id="s-fabric-row" style="display:none"><span class="sr-key">Fabric</span><span class="sr-val" id="s-fabric">—</span></div>
-          <div class="summary-row"><span class="sr-key">Operation</span><span class="sr-val" id="s-op">Continuous loop</span></div>
-          <div class="summary-row"><span class="sr-key">Motor</span><span class="sr-val" id="s-motor" style="display:none">—</span></div>
-          <div class="summary-row" id="s-motor-row" style="display:none"><span class="sr-key">Motor brand</span><span class="sr-val" id="s-motor-brand">—</span></div>
+          <div class="summary-row"><span class="sr-key">Operation</span><span class="sr-val" id="s-op">Continuous Cord Loop</span></div>
+          <div class="summary-row" id="s-motor-row" style="display:none"><span class="sr-key">Motor</span><span class="sr-val" id="s-motor-brand">—</span></div>
+          <div class="summary-row" id="s-power-row" style="display:none"><span class="sr-key">Power source</span><span class="sr-val" id="s-power">—</span></div>
+          <div class="summary-row" id="s-wand-row" style="display:none"><span class="sr-key">Charging wand</span><span class="sr-val" id="s-wand">—</span></div>
           <div class="summary-row"><span class="sr-key">Mount</span><span class="sr-val" id="s-mount">Inside mount</span></div>
           <div class="summary-row"><span class="sr-key">Shade type</span><span class="sr-val" id="s-shade-type">Standard</span></div>
           <div class="summary-row"><span class="sr-key">Size</span><span class="sr-val" id="s-size">—</span></div>
           <div class="summary-row"><span class="sr-key">Qty</span><span class="sr-val" id="s-qty">1</span></div>
+          <div class="summary-row" id="s-coupled-row" style="display:none"><span class="sr-key">Coupled</span><span class="sr-val" id="s-coupled">—</span></div>
           <div class="summary-row"><span class="sr-key">Add-ons</span><span class="sr-val" id="s-addons">None</span></div>
-          <div class="summary-note">Norman retail pricing with 35% off — shipping at retail rate. Final price confirmed at quote.</div>
+          <div class="summary-row" id="s-price-row" style="display:none;border-top:1px solid #e8e4de;margin-top:6px;padding-top:8px">
+            <span class="sr-key" style="font-weight:600;color:#111">Est. retail</span>
+            <span class="sr-val" id="s-price" style="font-weight:700;font-size:15px;color:#111">—</span>
+          </div>
+          <div class="summary-note">Norman retail base prices — select a fabric in Step 3 for an instant estimate. SmartRelease™ adds $89. Final price confirmed at quote.</div>
         </div>
 
       </div>

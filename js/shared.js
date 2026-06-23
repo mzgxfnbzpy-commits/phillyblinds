@@ -283,7 +283,7 @@ function renderNav(activePage) {
       </div>
       <div class="nav-right">
         <button class="nav-cart-btn" onclick="pbOpenCart()" aria-label="Open cart">
-          📋 Quote List<span class="nav-cart-count" id="pb-nav-cart-count" style="display:none">0</span>
+          🛒 Cart<span class="nav-cart-count" id="pb-nav-cart-count" style="display:none">0</span>
         </button>
         <a class="nav-phone" href="tel:6097421720">
           📞 (609) 742-1720 <span class="badge-24">24/7</span>
@@ -338,7 +338,7 @@ function renderFooter(isHome) {
       <div class="footer-col">
         <h4>Shades &amp; Blinds</h4>
         <a href="${pre}roller-shades.html">Roller shades</a>
-        <a href="${pre}shades.html">Cellular shades</a>
+        <a href="${pre}portrait-cellular.html">Cellular shades</a>
         <a href="${pre}zebra-shades.html">Zebra shades</a>
         <a href="${pre}woven-wood-shades.html">Woven wood shades</a>
         <a href="${pre}wood-blinds.html">Wood blinds</a>
@@ -446,6 +446,58 @@ function selOrToggle(el, groupId) {
 }
 
 // ============================================================
+// CONTACT PERSISTENCE
+// ============================================================
+var _PB_CONTACT_KEY = 'pb_contact_v1';
+
+function pbGetContact() {
+  try { return JSON.parse(localStorage.getItem(_PB_CONTACT_KEY) || '{}'); } catch(e) { return {}; }
+}
+function pbSaveContact(updates) {
+  try {
+    var cur = pbGetContact();
+    for (var k in updates) if (Object.prototype.hasOwnProperty.call(updates, k) && updates[k] !== undefined) cur[k] = updates[k];
+    localStorage.setItem(_PB_CONTACT_KEY, JSON.stringify(cur));
+  } catch(e) {}
+}
+
+// Auto-fill all [data-pb-contact] inputs from saved data; attach input listeners to keep saving.
+// Called once on DOMContentLoaded from shared.js init.
+function pbAutoFillContact() {
+  var c = pbGetContact();
+  document.querySelectorAll('[data-pb-contact]').forEach(function(el) {
+    var key = el.getAttribute('data-pb-contact');
+    if (c[key] && !el.value) el.value = c[key];
+    if (!el._pbCBound) {
+      el._pbCBound = true;
+      el.addEventListener('input', function() {
+        var upd = {}; upd[key] = el.value.trim();
+        pbSaveContact(upd);
+      });
+    }
+  });
+}
+
+// Returns true when name + phone + email are filled; shows error in element with id=errId.
+function pbContactValid(errId) {
+  var nameEl  = document.querySelector('[data-pb-contact="name"]');
+  var phoneEl = document.querySelector('[data-pb-contact="phone"]');
+  var emailEl = document.querySelector('[data-pb-contact="email"]');
+  var errEl   = errId ? document.getElementById(errId) : null;
+  function _fail(msg, focusEl) {
+    if (errEl) { errEl.textContent = msg; errEl.style.display = 'block'; }
+    if (focusEl) { try { focusEl.scrollIntoView({ behavior:'smooth', block:'center' }); focusEl.focus(); } catch(e){} }
+    return false;
+  }
+  if (!nameEl  || !nameEl.value.trim())  return _fail('Please enter your name.', nameEl);
+  if (!phoneEl || !phoneEl.value.trim()) return _fail('Please enter your phone number.', phoneEl);
+  if (!emailEl || !emailEl.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim()))
+    return _fail('Please enter a valid email address.', emailEl);
+  if (errEl) errEl.style.display = 'none';
+  return true;
+}
+
+// ============================================================
 // GLOBAL CART ENGINE
 // ============================================================
 var _PB_CART_KEY = 'pb_cart_v1';
@@ -509,32 +561,63 @@ function _renderCartBody() {
   _updateCartBadge();
   var foot = document.getElementById('pb-cart-foot');
   if (!cart.length) {
-    body.innerHTML = '<div class="pb-cart-empty"><div class="pb-cart-empty-icon">📋</div>Your cart is empty.<br><span style="font-size:12px">Configure a product and click "Add to cart."</span></div>';
+    body.innerHTML = '<div class="pb-cart-empty"><div class="pb-cart-empty-icon">🛒</div>Your cart is empty.<br><span style="font-size:12px">Configure a product and click "+ Add to Cart."</span></div>';
     if (foot) foot.style.display = 'none';
     return;
   }
   if (foot) foot.style.display = 'block';
-  body.innerHTML = cart.map(function(item, idx) {
+  var pricedTotal = 0;
+  var hasCustom = false;
+  body.innerHTML = cart.map(function(item) {
     var motorHtml = '';
     if (item.motorized && item.motorOptions) {
       var mo = item.motorOptions;
-      var lines = ['Power: ' + mo.power];
-      if (mo.power === 'Rechargeable' && mo.chargers) lines.push('Chargers: ' + mo.chargers);
+      var mlines = ['Power: ' + mo.power];
+      if (mo.power === 'Rechargeable' && mo.chargers) mlines.push('Chargers: ' + mo.chargers);
       if (mo.power === 'Hardwire') {
-        lines.push('Wiring: ' + mo.wiring);
-        if (mo.cord) lines.push('Cord: ' + mo.cord);
+        mlines.push('Wiring: ' + mo.wiring);
+        if (mo.cord) mlines.push('Cord: ' + mo.cord);
       }
-      if (mo.remote === 'Yes') lines.push('Remote: ' + mo.channel + ' × ' + mo.remotes);
-      else lines.push('Remote: No');
-      motorHtml = '<div class="pb-ci-motor">⚡ ' + lines.map(_pbEsc).join(' · ') + '</div>';
+      if (mo.remote === 'Yes') mlines.push('Remote: ' + mo.channel + ' × ' + mo.remotes);
+      else mlines.push('Remote: No');
+      motorHtml = '<div class="pb-ci-motor">⚡ ' + mlines.map(_pbEsc).join(' · ') + '</div>';
+    }
+    var itemQty = item.qty || 1;
+    var priceHtml = '';
+    if (item.price && item.price > 0) {
+      var lineTotal = Math.round(item.price * itemQty);
+      pricedTotal += lineTotal;
+      priceHtml = '<div style="font-size:14px;font-weight:700;color:var(--espresso);margin-top:6px">$' + lineTotal.toLocaleString() + ' <span style="font-size:10px;font-weight:400;color:#aaa">est.</span></div>';
+    } else {
+      hasCustom = true;
+      priceHtml = '<div style="font-size:12px;color:#888;margin-top:6px;font-style:italic">Custom quote</div>';
     }
     return '<div class="pb-ci">' +
-      '<button class="pb-ci-remove" onclick="pbRemoveCartItem(\'' + _pbEsc(item.cartId) + '\')" aria-label="Remove">×</button>' +
-      '<div class="pb-ci-name">' + _pbEsc(item.product || 'Item') + (item.qty > 1 ? ' ×' + item.qty : '') + '</div>' +
-      (item.specs ? '<div class="pb-ci-specs">' + _pbEsc(item.specs) + '</div>' : '') +
-      motorHtml +
-      '</div>';
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px">' +
+        '<div style="flex:1;min-width:0">' +
+          '<div class="pb-ci-name">' + _pbEsc(item.product || 'Item') + (itemQty > 1 ? ' ×' + itemQty : '') + '</div>' +
+          (item.specs ? '<div class="pb-ci-specs">' + _pbEsc(item.specs) + '</div>' : '') +
+          motorHtml +
+          priceHtml +
+        '</div>' +
+        '<button class="pb-ci-remove" onclick="pbRemoveCartItem(\'' + _pbEsc(item.cartId) + '\')" aria-label="Remove">×</button>' +
+      '</div>' +
+    '</div>';
   }).join('');
+  var totEl = document.getElementById('pb-cart-est-total');
+  if (totEl) {
+    if (pricedTotal > 0) {
+      totEl.innerHTML =
+        '<div style="display:flex;justify-content:space-between;align-items:baseline;padding:12px 0 4px;border-top:2px solid #e8e8e4;margin-top:4px">' +
+          '<span style="font-size:12px;color:#555;font-weight:600">Estimated total' + (hasCustom ? '*' : '') + '</span>' +
+          '<span style="font-size:22px;font-weight:700;color:var(--espresso)">$' + pricedTotal.toLocaleString() + '</span>' +
+        '</div>' +
+        (hasCustom ? '<div style="font-size:10px;color:#aaa;margin-bottom:4px">* Custom-quote items not included in total above</div>' : '') +
+        '<div style="font-size:10px;color:#aaa;margin-bottom:10px">Estimate only — final price confirmed at review</div>';
+    } else {
+      totEl.innerHTML = '<div style="font-size:11px;color:#aaa;padding:10px 0;text-align:center">Prices confirmed after Justin reviews your specs — no charge until then.</div>';
+    }
+  }
 }
 
 // ── Checkout from cart ───────────────────────────────────────
@@ -544,14 +627,40 @@ var PB_CHECKOUT_URL = '#checkout';
 function pbGoCheckout() {
   var cart = pbGetCart();
   if (!cart.length) return;
-  var lines = cart.map(function(item, i) {
-    var label = 'Item ' + (i + 1) + (item.product ? ': ' + item.product : '');
-    if (item.qty > 1) label += ' \xd7' + item.qty;
-    return { label: label, value: item.specs || '' };
+  var allLines = [];
+  var pricedTotal = 0;
+  var hasPrice = false;
+  var hasCustom = false;
+  cart.forEach(function(item, i) {
+    var itemQty = item.qty || 1;
+    allLines.push({ label: '─── Item ' + (i + 1), value: (item.product || 'Item') + (itemQty > 1 ? ' ×' + itemQty : '') });
+    if (item.lines && item.lines.length) {
+      item.lines.forEach(function(l) { allLines.push(l); });
+    } else if (item.specs) {
+      item.specs.split(' | ').forEach(function(s) {
+        var idx = s.indexOf(': ');
+        allLines.push(idx > -1 ? { label: s.slice(0,idx), value: s.slice(idx+2) } : { label: s, value: '' });
+      });
+    }
+    if (item.motorized && item.motorOptions) {
+      var mo = item.motorOptions;
+      var mstr = 'Power: ' + mo.power;
+      if (mo.remote === 'Yes') mstr += ' | Remote: ' + mo.channel + ' ×' + mo.remotes;
+      allLines.push({ label: 'Motorization', value: mstr });
+    }
+    if (item.price && item.price > 0) {
+      var lineTotal = Math.round(item.price * itemQty);
+      allLines.push({ label: 'Estimate', value: '$' + lineTotal.toLocaleString() + ' (estimate only)' });
+      pricedTotal += lineTotal;
+      hasPrice = true;
+    } else {
+      hasCustom = true;
+      allLines.push({ label: 'Price', value: 'Custom quote' });
+    }
   });
   var productName = cart.length === 1 ? (cart[0].product || 'Custom Window Treatment') : cart.length + ' items';
   pbCloseCart();
-  pbShowQuoteModal(lines, productName);
+  pbShowQuoteModal(allLines, productName, hasPrice ? pricedTotal : null);
 }
 
 // ── Inject cart DOM ─────────────────────────────────────────
@@ -579,9 +688,10 @@ function _initCart() {
     '</div>' +
     '<div class="pb-cart-body" id="pb-cart-body"></div>' +
     '<div id="pb-cart-foot" style="padding:16px;border-top:1px solid #e8e8e4;display:none">' +
+      '<div id="pb-cart-est-total"></div>' +
       '<button class="btn-gold" style="width:100%;padding:13px;font-size:15px;font-weight:600;margin-bottom:8px" ' +
-        'onclick="pbGoCheckout()">Request Quotes for All Items →</button>' +
-      '<div style="text-align:center;font-size:11px;color:#aaa;margin-bottom:12px">We\'ll reply by email &bull; No payment required now</div>' +
+        'onclick="pbGoCheckout()">Submit Order for Review →</button>' +
+      '<div style="text-align:center;font-size:11px;color:#aaa;margin-bottom:12px">No payment now &bull; Justin reviews before any charge</div>' +
       '<button onclick="pbClearCart()" style="display:block;width:100%;background:none;border:none;font-size:11px;color:#ccc;cursor:pointer;font-family:inherit">Clear cart</button>' +
     '</div>';
   document.body.appendChild(drawer);
@@ -794,7 +904,7 @@ function pbRenderEstimate(priceBoxId, lines, subtotal, conflictMsg, onCheckout) 
       '<div style="font-size:10px;color:#aaa;line-height:1.6;margin-bottom:10px">&#9432; <strong style="color:#888">Estimated price only</strong> — not a guaranteed quote. Final price confirmed after your free in-home measurement. Price may vary due to exact dimensions, fabric selection, tariffs, import fees, and shipping. Submit your order and Justin will confirm your exact price before any charge is made.</div>' +
       conflictHtml +
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' +
-        '<button onclick="pbEstimateAddCart(\'' + priceBoxId + '\')" style="padding:11px;border:1.5px solid #e8e8e4;border-radius:8px;background:#fff;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;color:#333">Save to list</button>' +
+        '<button onclick="pbEstimateAddCart(\'' + priceBoxId + '\')" style="padding:11px;border:2px solid var(--espresso);border-radius:8px;background:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--espresso)">+ Add to Cart</button>' +
         '<button onclick="pbOpenQuoteFromPanel(\'' + priceBoxId + '\')" ' +
           (hasConflict ? 'disabled style="padding:11px;border-radius:8px;background:#e5e5e5;font-size:13px;font-weight:700;cursor:not-allowed;font-family:inherit;color:#aaa;border:none"' :
                          'style="padding:11px;border-radius:8px;background:var(--espresso);color:var(--gold);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;border:none"') +
@@ -814,9 +924,9 @@ function pbEstimateAddCart(priceBoxId) {
   if (panel && panel._pbOnCheckout) {
     panel._pbOnCheckout(false);
   } else if (panel && panel._pbLines) {
-    var product = panel._pbProduct || 'Item';
-    var specs = (panel._pbLines || []).map(function(l){ return l.label + ': ' + l.value; }).join(' | ');
-    pbAddToCart({ product: product, specs: specs, qty: 1 });
+    var lines = panel._pbLines || [];
+    var specs = lines.map(function(l){ return l.label + ': ' + l.value; }).join(' | ');
+    pbAddToCart({ product: panel._pbProduct || 'Item', specs: specs, lines: lines, price: panel._pbEstimate || null, qty: 1 });
   } else {
     pbOpenCart();
   }
@@ -827,7 +937,7 @@ function pbEstimateCheckoutNew(priceBoxId) { pbOpenQuoteFromPanel(priceBoxId); }
 
 function pbCollectItem(productName, lines, total, motorized) {
   var specs = lines.map(function(l){ return l.label + ': ' + l.value; }).join(' | ');
-  pbAddToCartWithMotor({ product: productName, specs: specs, qty: 1 }, !!motorized);
+  pbAddToCartWithMotor({ product: productName, specs: specs, lines: lines, price: total || null, qty: 1 }, !!motorized);
 }
 
 // ── QUOTE REQUEST MODAL ─────────────────────────────────────────
@@ -913,6 +1023,19 @@ function pbShowQuoteModal(lines, productName, estimate) {
       '</div>' +
     '</div>';
   document.body.appendChild(ov);
+  // Pre-fill from saved contact
+  var _ck = pbGetContact();
+  if (_ck.name) {
+    var _pts = _ck.name.trim().split(' ');
+    var _fnEl = document.getElementById('pbq-fname');
+    var _lnEl = document.getElementById('pbq-lname');
+    if (_fnEl && !_fnEl.value) _fnEl.value = _pts[0] || '';
+    if (_lnEl && !_lnEl.value) _lnEl.value = _pts.slice(1).join(' ') || '';
+  }
+  var _emEl = document.getElementById('pbq-email');
+  var _phEl = document.getElementById('pbq-phone');
+  if (_emEl && !_emEl.value && _ck.email) _emEl.value = _ck.email;
+  if (_phEl && !_phEl.value && _ck.phone) _phEl.value = _ck.phone;
   setTimeout(function(){ var f=document.getElementById('pbq-fname'); if(f) f.focus(); }, 80);
 }
 
@@ -967,6 +1090,7 @@ async function pbSubmitQuote() {
     }
     var ok = document.getElementById('pbq-ok');
     if (ok) ok.style.display = 'block';
+    pbSaveContact({ name: name, email: email.trim(), phone: phone.trim() });
 
   } catch(err) {
     console.error('Quote error:', err.message);
@@ -981,7 +1105,7 @@ async function pbSubmitQuote() {
       _pbQuoteLines.forEach(function(l){ mailLines.push('  ' + l.label + ': ' + l.value); });
     }
     if (notes.trim()) mailLines.push('', 'Notes:', notes.trim());
-    var mailHref = 'mailto:justin@phillyblinds.com?subject=' + encodeURIComponent('Quote Request — ' + name) +
+    var mailHref = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent('Quote Request — ' + name) +
       '&body=' + encodeURIComponent(mailLines.join('\n'));
 
     if (errEl) {
@@ -1456,7 +1580,7 @@ function pbShowContact(title) {
             'var fn=fi&&fi.files.length?\'\\n\\nFiles: \'+Array.from(fi.files).map(function(f){return f.name}).join(\', \')+\'\\n(Please email to justin@phillyblinds.com)\':\'\';' +
             'var subj=\'Quote Request — \'+n;' +
             'var body=\'QUOTE REQUEST\\n\\nName: \'+n+\'\\nPhone: \'+p+\'\\n\\nMessage:\\n\'+(m||\'(none)\')+fn;' +
-            'window.location.href=\'mailto:justin@phillyblinds.com?subject=\'+encodeURIComponent(subj)+\'&body=\'+encodeURIComponent(body);' +
+            'window.location.href=\'mailto:blindznation@gmail.com?subject=\'+encodeURIComponent(subj)+\'&body=\'+encodeURIComponent(body);' +
             'document.getElementById(\'' + uid + '\').remove();' +
           '})()" style="width:100%;background:#1C1510;color:var(--gold);border:none;border-radius:8px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">Send request →</button>' +
         '</div>' +
@@ -1505,7 +1629,7 @@ async function pbSubmitContact() {
     if (btn) btn.style.display = 'none';
   } catch(err) {
     if (btn) { btn.disabled = false; btn.textContent = 'Request free consultation →'; }
-    alert('Something went wrong. Please call (609) 742-1720 or email justin@phillyblinds.com');
+    alert('Something went wrong. Please call (609) 742-1720 or email blindznation@gmail.com');
   }
 }
 
@@ -1680,7 +1804,7 @@ function _initChatbot() {
 function reqMoreInfo(product) {
   var subj = product ? 'Request for more information: ' + product : 'Request for more information';
   var body = 'Hi, I would like to request more information about ' + (product || 'your products') + '.\n\nName:\nPhone:\nBest time to call:';
-  window.location.href = 'mailto:justin@phillyblinds.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
+  window.location.href = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
 }
 
 // ── Auto-init nav/footer from data-page body attribute ────────────────────
@@ -1713,7 +1837,8 @@ function reqMoreInfo(product) {
     'wallace-banded-shades','wallace-woven','wallace-verticals',
     'kirsch-spec-complete','kirsch-estate-traverse','kirsch-2in-estate-traverse',
     'walden-premier-woven','walden-select-woven','wallace-dynasty-woven',
-    'woven-wood-shades','sheer-shades'
+    'woven-wood-shades','sheer-shades',
+    'portrait-cellular','perfectsheer'
   ]; // shutters, soft-treatments, upholstery removed — open for real quotes
 
   var slug = window.location.pathname.split('/').pop().replace(/\.html$/i, '').toLowerCase();
@@ -1782,5 +1907,45 @@ function reqMoreInfo(product) {
   }, true);
 }());
 
+// ── Contact auto-fill + submit guard ────────────────────────────────────────
+// Runs on every page that includes shared.js.
+document.addEventListener('DOMContentLoaded', function() {
+  pbAutoFillContact();
+  // Intercept clicks on [data-pb-require-contact] buttons (capture phase = before onclick handler).
+  // Prevents submission when name / phone / email are missing.
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('[data-pb-require-contact]');
+    if (!btn || btn.disabled) return;
+    var errId = btn.getAttribute('data-pb-require-contact');
+    if (!pbContactValid(errId)) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+    }
+  }, true);
+});
 
-
+// ── Quote form submission — used by all standalone product pages ──────────────
+async function _apiSubmit(name, email, phone, productName, configText, successId, formHideId, btn, onSuccess) {
+  if (btn) { btn._origText = btn.textContent; btn.disabled = true; btn.textContent = 'Sending…'; }
+  try {
+    var r = await fetch('/api/quote', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, email: email || '', phone: phone, product: productName, selections: [], notes: configText })
+    });
+    var d = {}; try { d = await r.json(); } catch(e) {}
+    if (!r.ok) throw new Error(d.error || 'Server error ' + r.status);
+    if (onSuccess) onSuccess();
+    if (formHideId) { var fEl = document.getElementById(formHideId); if (fEl) { fEl.classList.remove('show'); fEl.style.display = 'none'; } }
+    var sEl = document.getElementById(successId);
+    if (sEl) { sEl.classList.add('show'); sEl.style.display = 'block'; sEl.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  } catch(err) {
+    if (btn) { btn.disabled = false; btn.textContent = btn._origText || 'Send quote request'; }
+    var mh = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent('Quote — ' + name) + '&body=' + encodeURIComponent('Name: ' + name + '\nPhone: ' + phone + '\nProduct: ' + productName + '\n\n' + configText);
+    var eDiv = document.createElement('div');
+    eDiv.style.cssText = 'background:#FEE2E2;border-radius:8px;padding:10px 13px;margin-top:10px;font-size:12px;color:#991B1B;line-height:1.5';
+    eDiv.innerHTML = '<strong>Issue sending.</strong> <a href="' + mh + '" style="color:#991B1B;font-weight:700;text-decoration:underline">Email directly →</a> or call <a href="tel:6097421720" style="color:#991B1B">(609) 742-1720</a>';
+    if (btn && btn.parentElement) btn.insertAdjacentElement('afterend', eDiv);
+    setTimeout(function(){ if (eDiv.parentElement) eDiv.remove(); }, 15000);
+  }
+}

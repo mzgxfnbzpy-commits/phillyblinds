@@ -366,14 +366,16 @@
       </div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>Name *</label><input type="text" id="q-name" placeholder="Jane Smith"></div>
-      <div class="form-group"><label>Phone *</label><input type="tel" id="q-phone" placeholder="(215) 555-0100"></div>
+      <div class="form-group"><label>Name *</label><input type="text" id="q-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+      <div class="form-group"><label>Phone *</label><input type="tel" id="q-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
     </div>
-    <div class="form-group"><label>Email</label><input type="email" id="q-email" placeholder="jane@example.com"></div>
+    <div class="form-group"><label>Email *</label><input type="email" id="q-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+    <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="q-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
     <div class="form-group"><label>Notes / questions</label><textarea id="q-notes" placeholder="Timeline, room details, alternating color preference, patio door details, anything else..."></textarea></div>
-    <div id="q-err" class="msg-err" style="display:none">Please enter your name and phone number.</div>
+    <div id="q-err" class="msg-err" style="display:none"></div>
     <button onclick="reqMoreInfo('Norman SmartDrape™')" class="req-info-link" style="display:block;margin-bottom:10px;font-size:12px;color:var(--gold);background:none;border:none;cursor:pointer;text-align:left;padding:0">Request more information about SmartDrape™ →</button>
-    <button class="btn-gold" onclick="submitQuote()" style="width:100%;padding:13px;font-size:14px;font-weight:600">Submit SmartDrape™ Specification &amp; Request Quote →</button>
+    <button class="btn-cart-add" onclick="addNormanSheersToCart()" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
+    <button class="btn-gold" onclick="submitQuote()" style="width:100%;padding:13px;font-size:14px;font-weight:600" data-pb-require-contact="q-err">Submit Order for Review &rarr;</button>
     <div id="quote-success" style="display:none;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:10px;padding:20px;color:#2e7d32;font-size:14px;line-height:1.7;margin-top:12px">
       <strong>Specification submitted!</strong><br>Your email app opened with the complete spec pre-filled. We'll follow up within a few hours.<br><br>
       Urgent? <a href="tel:6097421720" style="color:#2e7d32">(609) 742-1720</a> · 24/7.
@@ -413,20 +415,23 @@
     <div class="spec-divider"></div>
     <div id="price-pending" style="font-size:11px;color:var(--text-muted);text-align:center;padding:8px 0;font-style:italic">Select operation, dimensions &amp; fabric then submit for a custom quote.</div>
     <div id="price-box" style="display:none">
-      <div class="price-note" style="font-size:11px;color:var(--text-muted)">Norman retail pricing with 35% off — shipping at retail rate. Final price confirmed at quote.</div>
-      <span id="pr-base" style="display:none"></span>
-      <span id="pr-rd" style="display:none"></span>
-      <span id="pr-alt" style="display:none"></span>
-      <span id="pr-qty" style="display:none"></span>
-      <span id="pr-total" style="display:none"></span>
-      <span id="pr-rd-row" style="display:none"></span>
-      <span id="pr-alt-row" style="display:none"></span>
-      <span id="pr-motor-row" style="display:none"></span>
+      <div style="background:#1a1208;border-radius:10px;padding:13px;margin-top:12px">
+        <div style="font-size:10px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Price Estimate</div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;padding:3px 0;color:#7A6A58"><span>Base (per shade)</span><span style="color:var(--cream)" id="pr-base"></span></div>
+        <div id="pr-rd-row" style="display:none;justify-content:space-between;font-size:11px;padding:3px 0;color:#7A6A58"><span>Room darkening +20%</span><span style="color:var(--cream)" id="pr-rd"></span></div>
+        <div id="pr-alt-row" style="display:none;justify-content:space-between;font-size:11px;padding:3px 0;color:#7A6A58"><span>Alternating colors +10%</span><span style="color:var(--cream)" id="pr-alt"></span></div>
+        <div id="pr-motor-row" style="display:none;justify-content:space-between;font-size:11px;padding:3px 0;color:#7A6A58"><span>Norman Smart motor</span><span style="color:var(--cream)">+$642</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;padding:3px 0;color:#7A6A58"><span>Qty</span><span style="color:var(--cream)" id="pr-qty"></span></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;padding:3px 0;color:#7A6A58"><span>MSRP subtotal</span><span style="color:var(--cream)" id="pr-retail"></span></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;padding:3px 0;color:#7A6A58"><span>Discount (−15%)</span><span style="color:var(--gold)" id="pr-disc"></span></div>
+        <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:600;margin-top:8px;padding-top:8px;border-top:.5px solid #3A2E24"><span style="color:var(--cream)">Est. total</span><span style="color:var(--gold)" id="pr-total"></span></div>
+        <div style="font-size:9px;color:#5A4A38;margin-top:6px;line-height:1.6">Estimate based on Norman MSRP −15%. Freight additional. Final price confirmed at quote.</div>
+      </div>
     </div>
   </div>
   <div style="background:var(--gold-mid);border:1px solid #e8e8e4;border-radius:12px;padding:16px;margin-top:14px">
     <div style="font-size:11px;font-weight:600;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-bottom:6px">Norman® Authorized</div>
-    <div style="font-size:12px;color:#555;line-height:1.6">SmartDrape™ uses Norman's proprietary motor system only. Looking for PerfectSheer™? <a href="shades.html#card-perfectsheer" style="color:var(--gold)">Configure it here →</a></div>
+    <div style="font-size:12px;color:#555;line-height:1.6">SmartDrape™ uses Norman's proprietary motor system only. Looking for PerfectSheer™? <a href="perfectsheer.html" style="color:var(--gold)">Configure it here →</a></div>
   </div>
 </div>
 

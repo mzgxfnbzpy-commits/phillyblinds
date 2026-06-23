@@ -183,6 +183,17 @@ const LINER_DUAL_P = {
   108:[257,285,312,344,462,562,632,698,773],114:[261,290,319,351,472,574,646,715,799],120:[265,295,324,358,481,585,660,737,824]
 };
 
+// Dual shade liner (blackout)
+const LINER_DUAL_BO = {
+  36:[177,195,213,234,275,338,378,417,455],42:[182,201,221,244,286,352,395,436,477],
+  48:[188,208,229,253,298,366,412,456,500],54:[193,215,237,261,309,380,429,476,522],
+  60:[198,221,246,271,320,394,446,495,545],66:[203,228,252,280,331,408,463,515,567],
+  72:[208,234,260,289,343,422,480,535,590],78:[273,304,335,371,483,588,664,737,809],
+  84:[279,312,345,381,496,606,685,761,838],90:[285,319,354,392,511,623,707,786,866],
+  96:[292,327,363,402,525,641,728,812,895],102:[297,335,372,413,540,659,749,836,924],
+  108:[304,342,381,424,554,677,771,862,952],114:[309,350,390,435,568,695,793,887,981],
+  120:[316,357,399,445,582,713,814,912,1010]
+};
 // Valance surcharges by group and width bracket [24,36,48,60,72,84,96]
 const VAL_W = [24,36,48,60,72,84,96];
 const VALANCE_6 = {1:[59,74,94,116,131,152,167],2:[62,79,99,122,139,161,179],3:[81,106,136,169,194,229,255],4:[90,119,154,191,221,260,292],5:[97,130,168,211,245,289,324],6:[110,149,194,241,280,327,366]};
@@ -505,8 +516,7 @@ function updateQuote(){
   // liner
   let linerAdd=0;
   if(S.liner!=='none'){
-    let ltable=(S.style==='dual')?(S.liner==='blackout'?LINER_DUAL_P:LINER_DUAL_P):(S.liner==='blackout'?LINER_BO:LINER_P);
-    // Note: dual shade uses dual liner table — simplified here
+    let ltable=(S.style==='dual')?(S.liner==='blackout'?LINER_DUAL_BO:LINER_DUAL_P):(S.liner==='blackout'?LINER_BO:LINER_P);
     const row=ltable[hrow];
     if(row) linerAdd=row[wi]||0;
     if(isHobbled) linerAdd=Math.round(linerAdd*1.30);
@@ -574,6 +584,40 @@ function updateQuote(){
 }
 
 // ── SUBMIT ────────────────────────────────────────────────────────────────────
+function addGalaxyToCart(){
+  if(!S.patternName){ alert('Please select a pattern before adding to cart.'); return; }
+  if(!S.w||!S.h){ alert('Please enter valid dimensions before adding to cart.'); return; }
+
+  const totalEl=document.getElementById('qr-total');
+  const priceText=totalEl?totalEl.textContent.trim():'';
+  const price=priceText?parseFloat(priceText.replace(/[^0-9.]/g,''))||null:null;
+  const qty=S.qty||1;
+
+  const styleLabel={waterfall:'Waterfall',flat:'Flat Fold',hobbled:'Hobbled',tdbu:'TDBU Cordless',motor:'Motorized',dual:'Dual Shade'}[S.style]||S.style||'—';
+  const ctrlLabel={loop:'Loop Control',cordless:'Cordless',motor:'Motorized'}[S.control]||S.control||'—';
+  const linerLabel=S.liner==='none'?'No liner':(S.liner==='privacy'?'Privacy':'Blackout')+' liner';
+  const edgeLabel={none:'None',half:'½″ Twill',one5:'1½″ Twill'}[S.edge]||'None';
+  const valLabel={standard:'Standard (included)',classic6:'6″ Classic',double12:'12″ Double Hobble',triple18:'18″ Triple Hobble'}[S.valance]||'—';
+
+  const lines=[
+    {label:'Product',value:'Wallace Galaxy Woven Wood Shades'},
+    {label:'Pattern',value:S.patternName+(S.sku?' ('+S.sku+')':'')},
+    {label:'Price Group',value:S.pg||'—'},
+    {label:'Style',value:styleLabel},
+    {label:'Mount',value:S.mount==='inside'?'Inside Mount':'Outside Mount'},
+    {label:'Width',value:(S.w||'—')+'″'},
+    {label:'Height',value:(S.h||'—')+'″'},
+    {label:'Control',value:ctrlLabel},
+    {label:'Liner',value:linerLabel},
+    {label:'Edge Binding',value:edgeLabel},
+    {label:'Valance',value:valLabel},
+    {label:'Quantity',value:String(qty)}
+  ];
+  const specs=lines.map(l=>l.label+': '+l.value).join(' | ');
+  pbAddToCart({product:'Wallace Galaxy Woven Wood Shades',lines:lines,specs:specs,price:price,qty:qty});
+  pbOpenCart();
+}
+
 function submitQuote(){
   const name=document.getElementById('f-name').value.trim();
   const phone=document.getElementById('f-phone').value.trim();
@@ -635,7 +679,7 @@ function submitQuote(){
     'Pricing is an internal estimate only. Final price confirmed with current Wallace Galaxy price book.'
   ];
 
-  window.location.href='mailto:justin@phillyblinds.com?subject='+encodeURIComponent('Galaxy Woven Woods Quote — '+name)+'&body='+encodeURIComponent(lines.join('\n'));
+  window.location.href='mailto:blindznation@gmail.com?subject='+encodeURIComponent('Galaxy Woven Woods Quote — '+name)+'&body='+encodeURIComponent(lines.join('\n'));
   document.getElementById('success-box').style.display='block';
 }
 

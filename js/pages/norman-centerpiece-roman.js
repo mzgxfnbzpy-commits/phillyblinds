@@ -526,6 +526,34 @@ function updateCalc() {
 }
 
 // ── SUBMIT ────────────────────────────────────────────────────────────────────
+function addNormanCenterpieceToCart(){
+  if(!S.type){ alert('Please select product type before adding to cart.'); return; }
+  if(!S.lift){ alert('Please select a lift system before adding to cart.'); return; }
+  if(!S.width||!S.height){ alert('Please enter dimensions before adding to cart.'); return; }
+  if(!S.style){ alert('Please select a shade style before adding to cart.'); return; }
+  if(!S.fabric){ alert('Please select a fabric before adding to cart.'); return; }
+
+  var sLabels={flat:'Flat Fold without Seams',batten:'Flat Fold with Batten Back',soft:'Soft Fold'};
+  var motorLabel={smart:'Norman Smart Motor',autowand:'AutoWand™',automate:'Automate Home by Norman'}[S.motor]||'—';
+
+  var lines=[
+    {label:'Product',value:'Norman Centerpiece™ Roman Shades — '+(S.type==='dn'?'Day & Night':'Standard')},
+    {label:'Quantity',value:String(S.qty||1)},
+    {label:'Width',value:S.width+'"'},
+    {label:'Height',value:S.height+'"'},
+    {label:'Mount',value:S.mount||'Inside mount'},
+    {label:'Lift System',value:(S.lift||'—')},
+    {label:'Shade Style',value:sLabels[S.style]||S.style},
+    {label:'Fabric',value:S.fabric?S.fabric.name+' · '+S.fabric.coll+' (Group '+S.fabric.g+')':'—'},
+    {label:'Lining',value:S.lining||'—'},
+    {label:'Banding',value:S.banding==='none'?'None':S.banding},
+    {label:'Motorization',value:(S.lift==='motor'||S.lift==='motor-dn')?motorLabel:'None'}
+  ];
+  var specs=lines.map(function(l){return l.label+': '+l.value;}).join(' | ');
+  pbAddToCart({product:'Norman Centerpiece™ Roman Shades',lines:lines,specs:specs,price:null,qty:S.qty||1});
+  pbOpenCart();
+}
+
 function submitQuote() {
   var name=document.getElementById('q-name').value.trim();
   var phone=document.getElementById('q-phone').value.trim();
@@ -577,7 +605,7 @@ function submitQuote() {
     '--- Sent from phillyblinds.com/pages/norman-centerpiece-roman.html ---'
   ].join('\n');
   var subj='Norman Centerpiece™ Roman — '+S.width+'"×'+S.height+'" '+(S.fabric?S.fabric.name:'')+' — '+name;
-  window.location.href='mailto:justin@phillyblinds.com?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
+  window.location.href='mailto:blindznation@gmail.com?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
   document.getElementById('step15-body').querySelectorAll(':not(#success-box)').forEach(function(el){el.style.display='none';});
   document.getElementById('success-box').style.display='block';
 }

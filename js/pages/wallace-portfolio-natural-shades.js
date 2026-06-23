@@ -1,4 +1,4 @@
-// ============================================================
+﻿// ============================================================
 // Wallace Portfolio Natural Shades — Configurator
 // ============================================================
 
@@ -763,6 +763,30 @@ Submitted from phillyblinds.com/pages/wallace-portfolio-natural-shades.html
 `;
 }
 
+function addWallacePortfolioNaturalToCart(){
+  if(!W.pattern){ alert('Please select a pattern before adding to cart.'); return; }
+  if(!W.width||!W.height){ alert('Please enter dimensions before adding to cart.'); return; }
+
+  const lines=[
+    {label:'Product',value:'Wallace Portfolio Natural Woven Wood Shades'},
+    {label:'Type',value:W.type||'—'},
+    {label:'Pattern',value:W.pattern?W.pattern.name+' ('+W.pattern.code+')':'—'},
+    {label:'Color',value:W.pattern?W.pattern.color:'—'},
+    {label:'Price Group',value:W.pattern?W.pattern.group:'—'},
+    {label:'Mount',value:W.mount==='inside'?'Inside Mount':'Outside Mount'},
+    {label:'Width',value:(W.width||'—')+'"'},
+    {label:'Height',value:(W.height||'—')+'"'},
+    {label:'Style',value:W.style||'—'},
+    {label:'Control',value:W.control||'—'},
+    {label:'Liner',value:W.liner||'No Liner'},
+    {label:'Binding',value:W.binding||'No Binding'},
+    {label:'Valance',value:W.valance||'—'}
+  ];
+  const specs=lines.map(l=>l.label+': '+l.value).join(' | ');
+  pbAddToCart({product:'Wallace Portfolio Natural Woven Wood Shades',lines:lines,specs:specs,price:null,qty:1});
+  pbOpenCart();
+}
+
 function submitQuote() {
   const name  = document.getElementById('wf-name').value.trim();
   const phone = document.getElementById('wf-phone').value.trim();
@@ -777,7 +801,7 @@ function submitQuote() {
 
   const body = encodeURIComponent(buildQuote());
   const sub  = encodeURIComponent('Wallace Portfolio Natural Shades Quote — ' + name);
-  window.location.href = `mailto:justin@phillyblinds.com?subject=${sub}&body=${body}`;
+  window.location.href = `mailto:blindznation@gmail.com?subject=${sub}&body=${body}`;
 
   document.getElementById('wallace-form').style.display = 'none';
   document.getElementById('wf-success').style.display = 'block';

@@ -455,13 +455,21 @@ textarea.form-input{resize:vertical;min-height:80px}
 
       <div class="form-grid">
         <div class="form-group">
-          <label>Your Name</label>
-          <input class="form-input" type="text" id="inp-name" placeholder="First &amp; last name" oninput="S.name=this.value">
+          <label>Your Name *</label>
+          <input class="form-input" type="text" id="inp-name" data-pb-contact="name" placeholder="First &amp; last name" oninput="S.name=this.value">
         </div>
         <div class="form-group">
-          <label>Phone / Email</label>
-          <input class="form-input" type="text" id="inp-phone" placeholder="Best way to reach you" oninput="S.phone=this.value">
+          <label>Phone *</label>
+          <input class="form-input" type="tel" id="inp-phone" data-pb-contact="phone" placeholder="(215) 555-0100" oninput="S.phone=this.value">
         </div>
+      </div>
+      <div class="form-group">
+        <label>Email *</label>
+        <input class="form-input" type="email" id="inp-email" data-pb-contact="email" placeholder="jane@example.com" oninput="S.email=this.value">
+      </div>
+      <div class="form-group">
+        <label>Address <span style="font-weight:400;color:#aaa">(optional)</span></label>
+        <input class="form-input" type="text" id="inp-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA">
       </div>
       <div class="form-group" style="margin-bottom:12px">
         <label>Notes (optional)</label>
@@ -475,7 +483,9 @@ textarea.form-input{resize:vertical;min-height:80px}
         </div>
       </div>
 
-      <button class="submit-btn" onclick="submitQuote()">Submit Quote Request &rarr;</button>
+      <div id="pds-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
+      <button class="btn-cart-add" onclick="addPortfolioDualSheerToCart()" style="margin-bottom:8px">+ Add to Cart</button>
+      <button class="submit-btn" onclick="submitQuote()" data-pb-require-contact="pds-contact-err">Submit Order for Review &rarr;</button>
       <div style="font-size:11px;color:#aaa;margin-top:10px;text-align:center">Opens your email with all specs pre-filled</div>
     </div>
   </div>

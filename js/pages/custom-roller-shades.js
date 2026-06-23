@@ -1,4 +1,4 @@
-// Custom Roller Shades — configurator logic
+﻿// Custom Roller Shades — configurator logic
 
 var CRS = {
   type: '', openness: '', color: '',
@@ -252,17 +252,52 @@ function crsPickFabric(val, label) {
   setTimeout(function() { crsOpen('step-6'); }, 350);
 }
 
-// ── STEP 6: MOTORIZATION ─────────────────────────────────────
+// ── STEP 6: OPERATION ────────────────────────────────────────
 function crsPickMotor(val, label) {
   CRS.motor = val;
-  document.querySelectorAll('#step-6 .opt-card').forEach(function(c) { c.classList.remove('sel'); });
+  // Clear top-level cards only
+  document.querySelectorAll('.opt-grid-3 .opt-card').forEach(function(c) { c.classList.remove('sel'); });
   var card = _crsEl('motor-' + val);
   if (card) card.classList.add('sel');
-  var upsell = document.getElementById('cordless-upsell');
-  if (upsell) upsell.style.display = val === 'cordless' ? 'block' : 'none';
-  crsDone('step-6', label);
+
+  // Show/hide sub-sections
+  var cordlessRedir = _crsEl('cordless-redirect');
+  var motorSub = _crsEl('motor-subopts');
+  var solunaRedir = _crsEl('motor-soluna-redirect');
+  if (cordlessRedir) cordlessRedir.style.display = val === 'cordless' ? 'block' : 'none';
+  if (motorSub) motorSub.style.display = val === 'motorized' ? 'block' : 'none';
+  if (solunaRedir) solunaRedir.style.display = 'none';
+
+  // Clear sub-option selections when switching away from motorized
+  document.querySelectorAll('#motor-subopts .opt-card').forEach(function(c) { c.classList.remove('sel'); });
+
+  if (val !== 'motorized') {
+    crsDone('step-6', label);
+    crsUpdatePanel();
+    if (val === 'cord') {
+      setTimeout(function() { crsOpen('step-7'); }, 350);
+    }
+  } else {
+    crsUpdatePanel(); // show panel in pending state
+  }
+}
+
+function crsPickMotorSub(val, label) {
+  CRS.motor = val;
+  document.querySelectorAll('#motor-subopts .opt-card').forEach(function(c) { c.classList.remove('sel'); });
+  var idMap = { 'norman-motor': 'msub-norman', 'rollease-motor': 'msub-rollease', lutron: 'msub-lutron', somfy: 'msub-somfy', other: 'msub-other' };
+  var card = _crsEl(idMap[val]);
+  if (card) card.classList.add('sel');
+
+  var solunaRedir = _crsEl('motor-soluna-redirect');
+  var isNormanOrRollease = val === 'norman-motor' || val === 'rollease-motor';
+  if (solunaRedir) solunaRedir.style.display = isNormanOrRollease ? 'block' : 'none';
+
+  crsDone('step-6', 'Motorized — ' + label);
   crsUpdatePanel();
-  setTimeout(function() { crsOpen('step-7'); }, 350);
+  if (!isNormanOrRollease) {
+    setTimeout(function() { crsOpen('step-7'); }, 350);
+  }
 }
 
 // ── STEP 7: QUANTITY ─────────────────────────────────────────
@@ -328,7 +363,7 @@ function crsUpdatePanel() {
     rows.push(['Fabric', fMap[CRS.fabric] || CRS.fabric]);
   }
   if (CRS.motor) {
-    var mMap = { cord: 'Manual cord', cordless: 'Cordless', lutron: 'Lutron Serena', somfy: 'Somfy', rollease: 'Rollease Acmeda', other: 'Other (see notes)' };
+    var mMap = { cord: 'Manual chain', cordless: 'Cordless → Norman Soluna', motorized: 'Motorized (selecting brand…)', 'norman-motor': 'Motorized — Norman Smart', 'rollease-motor': 'Motorized — Rollease Automate', lutron: 'Motorized — Lutron', somfy: 'Motorized — Somfy', other: 'Motorized — Other' };
     rows.push(['Operation', mMap[CRS.motor] || CRS.motor]);
   }
   if (CRS.qty > 1) rows.push(['Quantity', CRS.qty + ' shades']);
@@ -354,14 +389,26 @@ function crsUpdatePanel() {
   if (divEl)   divEl.style.display = '';
   if (noteEl)  noteEl.style.display = '';
 
-  // Price breakdown — suppress for motorized selections
-  var isMotorized = CRS.motor === 'lutron' || CRS.motor === 'somfy' || CRS.motor === 'rollease' || CRS.motor === 'other';
-  if (isMotorized) {
+  // Price breakdown
+  var isCustomQuote = CRS.motor === 'lutron' || CRS.motor === 'somfy' || CRS.motor === 'other';
+  var isCustomFabric = CRS.fabric === 'customer';
+  var isRedirect = CRS.motor === 'cordless' || CRS.motor === 'norman-motor' || CRS.motor === 'rollease-motor';
+  var isPending = CRS.motor === 'motorized';
+  if (isCustomFabric) {
+    if (priceEl) priceEl.style.display = 'none';
+    if (noteEl) {
+      noteEl.textContent = 'Customer-supplied fabric pricing is custom — submit your specs and Justin will send you a quote.';
+      noteEl.style.display = '';
+    }
+  } else if (isCustomQuote) {
     if (priceEl) priceEl.style.display = 'none';
     if (noteEl) {
       noteEl.textContent = 'Motorized pricing is custom — fill out your specs and submit. Justin will send you a personalized quote.';
       noteEl.style.display = '';
     }
+  } else if (isRedirect || isPending) {
+    if (priceEl) priceEl.style.display = 'none';
+    if (noteEl) noteEl.style.display = 'none';
   } else {
     var p = (CRS.w && CRS.h) ? crsCalcPricing() : null;
     if (p && priceEl) {
@@ -385,6 +432,39 @@ function crsUpdatePanel() {
 }
 
 // ── SUBMIT ───────────────────────────────────────────────────
+function addCustomRollerToCart(){
+  if(!CRS.mount){ alert('Please select a mount type before adding to cart.'); return; }
+  if(!CRS.w||!CRS.h){ alert('Please enter valid dimensions before adding to cart.'); return; }
+
+  var totalEl=document.getElementById('qp-total');
+  var priceText=totalEl?totalEl.textContent.trim():'';
+  var price=priceText&&priceText!=='—'?parseFloat(priceText.replace(/[^0-9.]/g,''))||null:null;
+
+  var typeMap={lf:'Light Filtering',rd:'Blackout',bk:'Blackout',solar:'Solar Screening',exterior:'Exterior Roller'};
+  var hMap={open:'Open Roll (no valance)',fascia:'Metal Fascia'};
+  var mMap={cord:'Manual chain',cordless:'Cordless',motorized:'Motorized',lutron:'Motorized — Lutron',somfy:'Motorized — Somfy','norman-motor':'Motorized — Norman Smart'};
+  var fMap={we:'We supply fabric',customer:'Customer supplies fabric',consult:'Consult — TBD'};
+
+  var typeLabel=typeMap[CRS.type]||CRS.type||'—';
+  if(CRS.type==='solar'&&CRS.openness) typeLabel+=' · '+CRS.openness+'% openness';
+  if(CRS.color) typeLabel+=' · '+CRS.color;
+
+  var lines=[
+    {label:'Product',value:'Custom Roller Shades'},
+    {label:'Shade Type',value:typeLabel},
+    {label:'Mount',value:CRS.mount==='inside'?'Inside Mount':'Outside Mount'},
+    {label:'Headrail',value:(hMap[CRS.headrail]||CRS.headrail||'—')+(CRS.hwColor?' — '+CRS.hwColor:'')},
+    {label:'Width',value:(CRS.w||'—')+'"'},
+    {label:'Height',value:(CRS.h||'—')+'"'},
+    {label:'Fabric',value:fMap[CRS.fabric]||CRS.fabric||'—'},
+    {label:'Operation',value:mMap[CRS.motor]||CRS.motor||'—'},
+    {label:'Quantity',value:String(CRS.qty||1)}
+  ];
+  var specs=lines.map(function(l){return l.label+': '+l.value;}).join(' | ');
+  pbAddToCart({product:'Custom Roller Shades',lines:lines,specs:specs,price:price,qty:CRS.qty||1});
+  pbOpenCart();
+}
+
 function crsSubmit() {
   var name  = ((_crsEl('q-name')  || {}).value || '').trim();
   var email = ((_crsEl('q-email') || {}).value || '').trim();
@@ -397,7 +477,7 @@ function crsSubmit() {
 
   var typeMap = { lf: 'Light Filtering', rd: 'Blackout', bk: 'Blackout', solar: 'Solar Screening', exterior: 'Exterior Roller (outdoor)' };
   var hMap    = { open: 'Open roll (no valance)', fascia: 'Metal fascia' };
-  var mMap    = { cord: 'Manual — continuous cord loop', cordless: 'Manual — cordless lift', lutron: 'Motorized — Lutron Serena', somfy: 'Motorized — Somfy', rollease: 'Motorized — Rollease Acmeda / Automate', other: 'Other / not sure — see notes' };
+  var mMap    = { cord: 'Manual chain', cordless: 'Cordless (see Norman Soluna recommendation)', motorized: 'Motorized — brand not selected', 'norman-motor': 'Motorized — Norman Smart (see Norman Soluna)', 'rollease-motor': 'Motorized — Rollease Automate (see Norman Soluna)', lutron: 'Motorized — Lutron (custom quote)', somfy: 'Motorized — Somfy (custom quote)', other: 'Motorized — Other / not sure (specify in notes)' };
   var fMap    = { we: 'We supply the fabric', customer: 'Customer supplies fabric (ships to shop — do NOT ship until confirmed)', consult: 'Consult — fabric TBD' };
 
   var selections = [];
@@ -471,7 +551,7 @@ function crsSubmit() {
     lines.push('Name: ' + name);
     if (email) lines.push('Email: ' + email);
     if (phone) lines.push('Phone: ' + phone);
-    window.location.href = 'mailto:justin@phillyblinds.com?subject=' + encodeURIComponent('Basic Roller Quote — ' + name) + '&body=' + encodeURIComponent(lines.join('\n'));
+    window.location.href = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent('Basic Roller Quote — ' + name) + '&body=' + encodeURIComponent(lines.join('\n'));
   });
 }
 

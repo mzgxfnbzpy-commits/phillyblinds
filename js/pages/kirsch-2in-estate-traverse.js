@@ -406,8 +406,25 @@ function submitQuote(){
     'Name: '+name,'Phone: '+phone,
     'Email: '+(document.getElementById('q-email').value.trim()||'—')
   ].filter(function(l){return l!==null&&l!==undefined;}).join('\n');
-  window.location.href='mailto:justin@phillyblinds.com?subject='+encodeURIComponent('Kirsch 2″ Estate Traverse Rod — '+name)+'&body='+encodeURIComponent(lines);
+  window.location.href='mailto:blindznation@gmail.com?subject='+encodeURIComponent('Kirsch 2″ Estate Traverse Rod — '+name)+'&body='+encodeURIComponent(lines);
   document.getElementById('success-box').style.display='block';
+}
+
+function addKirsch2InEstatToCart() {
+  var finish = S.finish || '—';
+  var coll = S.coll === 'dm' ? 'Designer Metals' : S.coll === 'wt' ? 'Wood Trends' : 'Wrought Iron';
+  var len = S.len ? S.len + '″' : '—';
+  var qty = parseInt((document.getElementById('qty')||{}).value) || 1;
+  var lines = [
+    { label: 'Product', value: 'Kirsch 2″ Estate™ Traverse Rod' },
+    { label: 'Collection', value: coll },
+    { label: 'Finish', value: finish },
+    { label: 'Track Length', value: len },
+    { label: 'Draw', value: S.draw || '—' },
+    { label: 'Quantity', value: String(qty) }
+  ];
+  pbAddToCart({ product: 'Kirsch 2″ Estate™ Traverse Rod', lines: lines, specs: lines.map(function(l){ return l.label+': '+l.value; }).join(' | '), qty: qty });
+  pbOpenCart();
 }
 
 // INIT — pre-select one-way draw direction

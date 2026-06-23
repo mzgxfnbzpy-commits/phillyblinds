@@ -1,4 +1,4 @@
-// ═══════════════════════════════════════════════════════════════
+﻿// ═══════════════════════════════════════════════════════════════
 // FABRIC DATA — patterns from PDF pages 4-5
 // maxH = single shade max height; double shades always capped at 96"
 // rhea = true → no cassette fabric wrap, no fabric-wrapped box valance
@@ -178,17 +178,48 @@ function validateSize() {
   }
 }
 
-function validateQty(force) {
+function validateQty() {
   var qty = parseInt(document.getElementById('inp-qty').value) || 1;
   S.qty = qty;
-  S.room = document.getElementById('inp-room').value.trim();
+  updateRoomLabels(qty);
+  S.room = getRoomLabels();
   var label = qty + ' shade' + (qty !== 1 ? 's' : '') + (S.room ? ' · ' + S.room : '');
   document.getElementById('s3-val').textContent = label;
   updateSpec('sp-qty', qty);
-  if (force) {
-    completeStep('step-3', label);
-    activateStep('step-4');
+  completeStep('step-3', label);
+  activateStep('step-4');
+}
+
+function updateRoomLabels(qty) {
+  var wrap = document.getElementById('room-labels-wrap');
+  if (!wrap) return;
+  if (qty <= 1) {
+    wrap.innerHTML = '<div class="dim-label">Room / window label <span style="font-weight:400;color:#999">(optional)</span></div>' +
+      '<input type="text" id="inp-room" placeholder="e.g. Master Bedroom Left" style="padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;width:100%;box-sizing:border-box" oninput="validateQty()">';
+  } else {
+    var html = '<div class="dim-label">Room / window labels <span style="font-weight:400;color:#999">(optional — one per shade)</span></div>';
+    for (var i = 1; i <= qty; i++) {
+      var prev = (document.getElementById('inp-room-' + i) || {}).value || '';
+      html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">' +
+        '<span style="font-size:11px;font-weight:600;color:#777;min-width:56px">Shade ' + i + '</span>' +
+        '<input type="text" id="inp-room-' + i + '" placeholder="e.g. Living room left" value="' + prev.replace(/"/g, '&quot;') + '" style="flex:1;padding:7px 10px;border:1px solid #ddd;border-radius:7px;font-size:12px" oninput="validateQty()">' +
+        '</div>';
+    }
+    wrap.innerHTML = html;
   }
+}
+
+function getRoomLabels() {
+  var qty = parseInt((document.getElementById('inp-qty') || {}).value) || 1;
+  if (qty <= 1) {
+    return (document.getElementById('inp-room') || {}).value || '';
+  }
+  var parts = [];
+  for (var i = 1; i <= qty; i++) {
+    var v = ((document.getElementById('inp-room-' + i) || {}).value || '').trim();
+    if (v) parts.push('Shade ' + i + ': ' + v);
+  }
+  return parts.join(' | ');
 }
 
 function getDeduction() {
@@ -622,8 +653,10 @@ function updateOptions() {
 function selectDelivery(mode) {
   S.delivery = mode;
   var delShip = document.getElementById('del-ship');
+  var delPickup = document.getElementById('del-pickup');
   var shipNote = document.getElementById('del-ship-note');
   if (delShip) delShip.classList.toggle('sel', mode === 'ship');
+  if (delPickup) delPickup.classList.toggle('sel', mode === 'pickup');
   if (shipNote) shipNote.style.display = mode === 'ship' ? 'block' : 'none';
 }
 
@@ -649,6 +682,33 @@ function updateSpec(id, val) {
 // ═══════════════════════════════════════════════════════════════
 // SUBMIT QUOTE
 // ═══════════════════════════════════════════════════════════════
+function addWallaceNaturalRollerToCart(){
+  if(!S.shadeType){ alert('Please select single or double shade before adding to cart.'); return; }
+  if(!S.fabric){ alert('Please select a fabric before adding to cart.'); return; }
+  if(!S.width||!S.height){ alert('Please enter dimensions before adding to cart.'); return; }
+
+  var fab=S.fabric;
+  var ttlabels={'open-std':'Open Roll — Standard Bracket','open-metal':'Open Roll — Metal Bracket','cassette':'Square Cassette','box-valance':'Box Valance','trad-valance':'Traditional Valance'};
+  var ctrllabels={clutch:'Clutch',cordless:'Cordless',prowand:'Pro Wand Motor',motor:'Remote Motor'};
+
+  var lines=[
+    {label:'Product',value:'Wallace Portfolio Collection Natural Roller Shades'},
+    {label:'Shade Type',value:S.shadeType==='single'?'Single Natural Roller':'Double Natural Roller'},
+    {label:'Mount',value:S.mount==='inside'?'Inside Mount':'Outside Mount'},
+    {label:'Width',value:(S.width||'—')+'"'},
+    {label:'Height',value:(S.height||'—')+'"'},
+    {label:'Quantity',value:String(S.qty||1)},
+    {label:'Pattern',value:fab?fab.name:'—'},
+    {label:'Price Group',value:fab?'Group '+fab.group:'—'},
+    {label:'Color Code',value:S.fabColor||'— (from sample book)'},
+    {label:'Top Treatment',value:ttlabels[S.topTreatment]||S.topTreatment||'—'},
+    {label:'Control',value:ctrllabels[S.control]||S.control||'—'}
+  ];
+  var specs=lines.map(function(l){return l.label+': '+l.value;}).join(' | ');
+  pbAddToCart({product:'Wallace Portfolio Collection Natural Roller Shades',lines:lines,specs:specs,price:null,qty:S.qty||1});
+  pbOpenCart();
+}
+
 function submitQuote() {
   var name  = document.getElementById('q-name').value.trim();
   var phone = document.getElementById('q-phone').value.trim();
@@ -719,7 +779,7 @@ function submitQuote() {
     + '── NOTES ──\n'
     + (document.getElementById('q-notes').value.trim() || 'None');
 
-  window.location.href = 'mailto:justin@phillyblinds.com'
+  window.location.href = 'mailto:blindznation@gmail.com'
     + '?subject=' + encodeURIComponent('Wallace Natural Roller Spec — ' + name + (fab ? ' · ' + fab.name : ''))
     + '&body=' + encodeURIComponent(body);
 

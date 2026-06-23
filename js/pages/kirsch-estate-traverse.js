@@ -488,7 +488,7 @@ function submitQuote() {
     + '\n── DELIVERY ──\n' + delivery + '\n\n'
     + '── CUSTOMER NOTES ──\n' + (document.getElementById('q-notes').value.trim() || 'None');
 
-  window.location.href = 'mailto:justin@phillyblinds.com'
+  window.location.href = 'mailto:blindznation@gmail.com'
     + '?subject=' + encodeURIComponent('Kirsch 1⅜" Estate Traverse — ' + (S.finish||'') + ' ' + (COLLECTIONS[S.coll]?COLLECTIONS[S.coll].label:'') + ' — ' + name)
     + '&body=' + encodeURIComponent(body);
   document.getElementById('quote-success').style.display = 'block';
@@ -508,4 +508,19 @@ function completeStep(id,val){
 function updateSpec(id,val){
   var el=document.getElementById(id); if(!el) return;
   el.textContent=val; el.classList.remove('empty');
+}
+
+function addKirschEstateTraverseToCart() {
+  var collLabel = COLLECTIONS[S.coll] ? COLLECTIONS[S.coll].label : (S.coll || '—');
+  var len = S.trackLen ? S.trackLen + '″' : '—';
+  var lines = [
+    { label: 'Product', value: 'Kirsch 1⅜" Estate™ Traverse Rod' },
+    { label: 'Collection', value: collLabel },
+    { label: 'Finish', value: S.finish || '—' },
+    { label: 'Track Length', value: len },
+    { label: 'Draw', value: S.draw || '—' },
+    { label: 'Quantity', value: String(S.qty || 1) }
+  ];
+  pbAddToCart({ product: 'Kirsch 1⅜" Estate™ Traverse Rod', lines: lines, specs: lines.map(function(l){ return l.label+': '+l.value; }).join(' | '), qty: S.qty || 1 });
+  pbOpenCart();
 }

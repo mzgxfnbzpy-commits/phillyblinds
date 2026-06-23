@@ -3,18 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Custom drapery and roman shades — handcrafted to your exact dimensions. Your fabric or ours. Motorization available. Philadelphia & surrounding area.">
-<meta property="og:title" content="Soft Treatments — Custom Drapery &amp; Roman Shades | Philly Blinds">
-<meta property="og:description" content="Custom drapery and roman shades — handcrafted to your exact dimensions. Your fabric or ours. Motorization available.">
+<meta name="description" content="Custom drapery from $200 &amp; roman shades from $150. Six pleat styles, blackout lining &amp; motorization available. Instant estimate online. Serving Philadelphia, South Jersey &amp; surrounding area.">
+<meta property="og:title" content="Custom Drapery &amp; Roman Shades Philadelphia | Philly Blinds">
+<meta property="og:description" content="Custom drapery from $200 &amp; roman shades from $150. Six pleat styles, blackout lining &amp; motorization. Instant estimate — serving Philadelphia, South Jersey &amp; surrounding area.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.phillyblinds.com/pages/soft-treatments.html">
 <meta property="og:site_name" content="Philly Blinds">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Custom Drapery &amp; Roman Shades Philadelphia | Philly Blinds">
+<meta name="twitter:description" content="Custom drapery from $200 &amp; roman shades from $150. Six pleat styles, blackout lining &amp; motorization. Instant estimate — serving Philadelphia, South Jersey &amp; surrounding area.">
 <meta property="og:image" content="https://www.phillyblinds.com/img/social-preview.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:image" content="https://www.phillyblinds.com/img/social-preview.png">
-<meta name="twitter:card" content="summary_large_image">
-<title>Soft Treatments — Custom Drapery &amp; Roman Shades | Philly Blinds</title>
+<title>Custom Drapery &amp; Roman Shades Philadelphia | Philly Blinds</title>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much does custom drapery cost in Philadelphia?","acceptedAnswer":{"@type":"Answer","text":"Custom drapery at Philly Blinds starts at $200 total. Labor runs $120–$140 per width panel (unlined or lined). Fabric we supply adds $25/yard and lining adds $10/yard. Use our instant estimate tool online — enter your window size and pleat style to see your total. We serve Philadelphia, South Jersey, Bucks, Delaware, and Montgomery counties."}},{"@type":"Question","name":"What types of drape pleat styles do you offer?","acceptedAnswer":{"@type":"Answer","text":"We offer six pleat styles: ripple fold, pinch pleat, goblet pleat, barrel pleat, grommet, and rod pocket. Ripple fold and goblet are the most popular for a tailored, formal look. All styles are available with your fabric or fabric we supply, plus optional blackout lining and motorized track."}},{"@type":"Question","name":"How much do custom roman shades cost?","acceptedAnswer":{"@type":"Answer","text":"Custom roman shades start at $150 per shade for flat and relaxed styles, and $250 per shade for permanently pleated. All styles include your choice of fabric and optional lining. Blackout lining, motorization, and customer-supplied fabric are all available. Get an instant price estimate by entering your window dimensions on our online configurator."}},{"@type":"Question","name":"Can I supply my own fabric for custom drapes or roman shades?","acceptedAnswer":{"@type":"Answer","text":"Yes — we accept customer-supplied fabric for both custom drapery and roman shades. Ship your fabric to us and we will fabricate your window treatments to your exact specifications. We also offer our own selection of blackout and light-filtering fabrics at $25/yard if you would like us to source the material."}}]}
+</script>
 <link rel="stylesheet" href="../css/global.css">
 <style>
 /* ── HERO ── */
@@ -124,8 +129,10 @@
 
   <!-- STEP 1: PLEAT STYLE -->
   <div class="step">
-    <div class="step-label">Step 1</div>
-    <div class="step-title">Choose your pleat style</div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <div class="step-num">1</div>
+      <div class="step-title" style="margin-bottom:0">Choose your pleat style</div>
+    </div>
     <div class="step-sub">The pleat determines the look and how the panel hangs. Not sure? Book a free consult — we'll bring samples.</div>
     <div class="opt-cards" id="pleat-cards">
       <div class="opt-card" onclick="selectPleat(this,'Ripple Fold')">
@@ -355,34 +362,28 @@
 
     <!-- RIPPLE FOLD OPTIONS (shown only when Ripple Fold selected) -->
     <div id="drape-ripple-opts" style="display:none;margin-top:14px;padding:16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:12px">
-      <div class="dim-box" style="margin-bottom:18px">
-        <div class="dim-box-label">Width &amp; finished length</div>
+      <div style="font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:14px">Ripple fold options</div>
+
+      <div style="margin-bottom:14px">
+        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px">Panel size</div>
         <div class="form-row">
           <div class="form-group">
-            <label>Width</label>
+            <label>Width per panel</label>
             <div style="display:flex;align-items:center;gap:6px">
-              <input type="number" id="rf-w" placeholder="84" min="10" max="200" oninput="calcDrapePrice()" style="width:80px">
-              <select id="rf-w-frac" onchange="calcDrapePrice()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
-                <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
-                <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
-              </select>
-              <span style="font-size:12px;color:#666">inches</span>
+              <input type="number" id="rf-w" placeholder="48" min="12" max="200" oninput="calcDrapePrice()" style="width:70px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px">
+              <span style="font-size:12px;color:#666">in</span>
             </div>
           </div>
           <div class="form-group">
-            <label>Finished length</label>
+            <label>Panel length</label>
             <div style="display:flex;align-items:center;gap:6px">
-              <input type="number" id="rf-l" placeholder="96" min="10" max="150" oninput="calcDrapePrice()" style="width:80px">
-              <select id="rf-l-frac" onchange="calcDrapePrice()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
-                <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
-                <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
-              </select>
-              <span style="font-size:12px;color:#666">inches</span>
+              <input type="number" id="rf-l" placeholder="84" min="12" max="200" oninput="calcDrapePrice()" style="width:70px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px">
+              <span style="font-size:12px;color:#666">in</span>
             </div>
           </div>
         </div>
+        <div style="font-size:11px;color:#888;margin-top:5px">Width × length for one panel — we confirm measurements during installation planning.</div>
       </div>
-      <div style="font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:14px">Ripple fold options</div>
 
       <div style="margin-bottom:14px">
         <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px">Fullness %</div>
@@ -428,8 +429,10 @@
 
   <!-- STEP 2: DIMENSIONS -->
   <div class="step">
-    <div class="step-label">Step 2</div>
-    <div class="step-title">Window dimensions</div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <div class="step-num">2</div>
+      <div class="step-title" style="margin-bottom:0">Window dimensions</div>
+    </div>
     <div class="step-sub">Enter your exact measurements — we'll confirm with our own measure at the home visit.</div>
     <div id="drape-std-dims">
     <div class="dim-box" style="margin-top:14px">
@@ -477,8 +480,10 @@
 
   <!-- STEP 3: FABRIC -->
   <div class="step">
-    <div class="step-label">Step 3</div>
-    <div class="step-title">Fabric</div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <div class="step-num">3</div>
+      <div class="step-title" style="margin-bottom:0">Fabric</div>
+    </div>
     <div class="step-sub">We work with your fabric or help you choose from our selections.</div>
     <div class="fabric-cards" id="drape-fabric-cards">
       <div class="fabric-card" onclick="selectFabric('drape',this,'We supply the fabric')">
@@ -543,8 +548,10 @@
 
   <!-- STEP 4: FINISHING OPTIONS & CONTACT -->
   <div class="step">
-    <div class="step-label">Step 4</div>
-    <div class="step-title">Finishing options &amp; submit</div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <div class="step-num">4</div>
+      <div class="step-title" style="margin-bottom:0">Finishing options &amp; submit</div>
+    </div>
     <div style="display:flex;align-items:flex-start;gap:10px;background:#fef9ec;border:1px solid #f0d070;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#7a5c00;line-height:1.5">
       <span style="font-size:15px;flex-shrink:0">&#9888;</span>
       <span><strong>Specialty shapes &amp; designs</strong> — arched windows, bay windows, or heavily trimmed panels require a custom quote. Use the <strong>Specialty ✦</strong> tab above or call <a href="tel:6097421720" style="color:#7a5c00;font-weight:600">(609) 742-1720</a> and we'll price it out together.</span>
@@ -698,13 +705,15 @@
 
       <div style="border-top:1px solid #e8e8e4;margin:20px 0 16px"></div>
       <div class="form-row">
-        <div class="form-group"><label>Name *</label><input type="text" id="d-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="d-phone" placeholder="(215) 555-0100"></div>
+        <div class="form-group"><label>Name *</label><input type="text" id="d-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="d-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
       </div>
-      <div class="form-group"><label>Email</label><input type="email" id="d-email" placeholder="jane@example.com"></div>
-      <div class="form-group"><label>Installation address</label><input type="text" id="d-address" placeholder="123 Main St, Philadelphia PA"></div>
+      <div class="form-group"><label>Email *</label><input type="email" id="d-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="d-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
+      <div id="drape-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
       <button onclick="reqMoreInfo('Custom Drapery')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Custom Drapery →</button>
-        <button class="btn-gold" onclick="submitDrape()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:16px">Submit Order for Review &rarr;</button>
+        <button class="btn-cart-add" onclick="addDrapeToCart()" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
+        <button class="btn-gold" onclick="submitDrape()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:16px" data-pb-require-contact="drape-contact-err">Submit Order for Review &rarr;</button>
     </div>
     <div class="success-box" id="drape-success">
       <strong>Order submitted!</strong><br>
@@ -733,10 +742,12 @@
 </div>
 <div class="step-wrap">
 
-  <!-- STEP 1: STYLE -->
-  <div class="step">
-    <div class="step-label">Step 1</div>
-    <div class="step-title">Choose your style</div>
+  <!-- STEP 1: CHOOSE YOUR STYLE -->
+  <div class="step" id="roman-step-style">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <div class="step-num">1</div>
+      <div class="step-title" style="margin-bottom:0">Choose your style</div>
+    </div>
     <div class="step-sub">Roman shades fold up into clean horizontal pleats. Each style folds differently when raised.</div>
     <div class="opt-cards" id="roman-style-cards">
       <div class="opt-card" onclick="selectRomanStyle(this,'Flat Roman')">
@@ -808,91 +819,149 @@
       <div style="font-size:12px;color:var(--text-dark);line-height:1.7">Vignette® Modern Roman Shades are a Hunter Douglas product and require a custom quote. We'll discuss fabric collections, lift system, and PowerView® motorization during your consultation.</div>
     </div>
 
-    <!-- VALANCE CONFIG (shows when Roman Valance selected) -->
-    <div id="valance-config" style="display:none;margin-top:18px;background:#fff;border:1px solid #e8e8e4;border-radius:12px;padding:22px">
-      <div id="valance-form-fields">
-      <div style="font-size:14px;font-weight:600;color:#1a1a1a;margin-bottom:4px">Roman Valance</div>
-      <div style="font-size:12px;color:#888;margin-bottom:18px">Custom decorative top treatment — tell us your specs and we'll quote it.</div>
-      <div class="form-row">
-        <div class="form-group"><label>Width (inches) *</label><input type="number" id="val-w" placeholder="e.g. 72" min="12" max="240" style="font-size:14px"></div>
-        <div class="form-group"><label>Height / drop (inches) *</label><input type="number" id="val-h" placeholder="e.g. 18" min="4" max="60" style="font-size:14px"></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Number of folds</label><input type="number" id="val-folds" placeholder="e.g. 3" min="1" max="20" style="font-size:14px"></div>
-        <div class="form-group"><label>Fold section size (inches)</label><input type="number" id="val-fold-size" placeholder="e.g. 4" min="1" max="24" style="font-size:14px"></div>
-      </div>
-      <div style="background:var(--gold-mid);border-radius:8px;padding:10px 13px;font-size:11px;color:#888;margin-bottom:16px">Fold section dimensions will be confirmed and refined during your consultation.</div>
-      <div class="form-row">
-        <div class="form-group"><label>Your name *</label><input type="text" id="val-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="val-phone" placeholder="(215) 555-0100"></div>
-      </div>
-      <div class="form-group"><label>Email</label><input type="email" id="val-email" placeholder="jane@example.com"></div>
-      <div class="form-group"><label>Notes</label><textarea id="val-notes" placeholder="Fabric preference, room details, timeline..." style="min-height:60px"></textarea></div>
-      <button onclick="reqMoreInfo('Custom Valance')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Custom Valance →</button>
-        <button class="btn-gold" onclick="submitValance()" style="width:100%;padding:13px;font-size:14px;margin-top:4px">Submit Order for Review &rarr;</button>
-      </div>
-      <div id="valance-success" style="display:none;background:#EAF3DE;border-radius:10px;padding:18px;text-align:center;margin-top:10px">
-        <strong>Order submitted!</strong><br><span style="font-size:13px;color:#3B6D11">Your email opened with your spec pre-filled — hit Send. We'll review and send an invoice. Urgent? <a href="tel:6097421720" style="color:#3B6D11">(609) 742-1720</a></span>
-      </div>
-    </div>
+  </div>
 
-    <!-- QUICK DIMS — appears immediately after style selection -->
-    <div id="roman-quick-dims" style="display:none;margin-top:18px">
-      <div class="configurator" style="margin-top:0">
-        <div>
-          <div class="qty-row">
-            <button class="qty-btn" onclick="adjRomanQty(-1)">−</button>
-            <input class="qty-val" id="rn-qty" type="number" value="1" min="1" max="30" oninput="calcRoman()">
-            <span style="font-size:13px;color:#666">window(s)</span>
-          </div>
-          <div class="dim-box">
-            <div class="dim-box-label">Enter your window size</div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Width</label>
-                <div style="display:flex;align-items:center;gap:6px">
-                  <input type="number" id="rn-w" placeholder="36" min="12" max="120" oninput="calcRoman()" style="width:70px">
-                  <select id="rn-w-frac" onchange="calcRoman()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
-                    <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
-                    <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
-                  </select>
-                  <span style="font-size:12px;color:#666">in</span>
-                </div>
+  <!-- STEP 2: WIDTH & FINISHED LENGTH -->
+  <div class="step" id="roman-step-dims">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <div class="step-num">2</div>
+      <div class="step-title" style="margin-bottom:0">Width &amp; finished length</div>
+    </div>
+    <div class="step-sub">Enter your window size — we confirm measurements at the home visit.</div>
+    <div class="configurator" style="margin-top:0">
+      <div>
+        <div class="qty-row">
+          <button class="qty-btn" onclick="adjRomanQty(-1)">−</button>
+          <input class="qty-val" id="rn-qty" type="number" value="1" min="1" max="30" oninput="calcRoman()">
+          <span style="font-size:13px;color:#666">window(s)</span>
+        </div>
+        <div class="dim-box" style="margin-top:14px">
+          <div class="dim-box-label">Enter your window size</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Width</label>
+              <div style="display:flex;align-items:center;gap:6px">
+                <input type="number" id="rn-w" placeholder="36" min="12" max="120" oninput="calcRoman()" style="width:70px">
+                <select id="rn-w-frac" onchange="calcRoman()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
+                  <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
+                  <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
+                </select>
+                <span style="font-size:12px;color:#666">in</span>
               </div>
-              <div class="form-group">
-                <label>Finished length</label>
-                <div style="display:flex;align-items:center;gap:6px">
-                  <input type="number" id="rn-h" placeholder="48" max="120" oninput="calcRoman()" style="width:70px">
-                  <select id="rn-h-frac" onchange="calcRoman()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
-                    <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
-                    <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
-                  </select>
-                  <span style="font-size:12px;color:#666">in</span>
-                </div>
+            </div>
+            <div class="form-group">
+              <label>Finished length</label>
+              <div style="display:flex;align-items:center;gap:6px">
+                <input type="number" id="rn-h" placeholder="48" max="120" oninput="calcRoman()" style="width:70px">
+                <select id="rn-h-frac" onchange="calcRoman()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
+                  <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
+                  <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
+                </select>
+                <span style="font-size:12px;color:#666">in</span>
               </div>
             </div>
           </div>
         </div>
-        <div>
-          <div class="price-box" id="roman-pricebox" style="display:none">
-            <div class="pb-title">Your configuration</div>
-            <div class="pb-row"><span class="pb-key">Style</span><span class="pb-val" id="rn-pb-style">—</span></div>
-            <div class="pb-row"><span class="pb-key">Size</span><span class="pb-val" id="rn-pb-dims">—</span></div>
-            <div class="pb-row"><span class="pb-key">Qty</span><span class="pb-val" id="rn-pb-qty">1</span></div>
-            <div class="pb-row"><span class="pb-key">Motorization</span><span class="pb-val" id="rn-pb-motor">No</span></div>
-            <div id="rn-pb-min-note" style="display:none"></div>
-            <div class="pb-note">All pricing confirmed at order — submit your configuration for a custom quote.</div>
-          </div>
+      </div>
+      <div>
+        <div class="price-box" id="roman-pricebox" style="display:none">
+          <div class="pb-title">Your configuration</div>
+          <div class="pb-row"><span class="pb-key">Style</span><span class="pb-val" id="rn-pb-style">—</span></div>
+          <div class="pb-row"><span class="pb-key">Size</span><span class="pb-val" id="rn-pb-dims">—</span></div>
+          <div class="pb-row"><span class="pb-key">Qty</span><span class="pb-val" id="rn-pb-qty">1</span></div>
+          <div class="pb-row"><span class="pb-key">Motorization</span><span class="pb-val" id="rn-pb-motor">No</span></div>
+          <div id="rn-pb-min-note" style="display:none"></div>
+          <div class="pb-note">All pricing confirmed at order — submit your configuration for a custom quote.</div>
         </div>
       </div>
     </div>
-
   </div>
 
-  <!-- STEP 2: FABRIC -->
-  <div class="step" id="step-roman-2">
-    <div class="step-label">Step 2</div>
-    <div class="step-title">Fabric</div>
+  <!-- STEP 3: MOUNTING -->
+  <div class="step" id="roman-step-mount">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <div class="step-num">3</div>
+      <div class="step-title" style="margin-bottom:0">Mounting</div>
+    </div>
+    <div class="step-sub">How will the shade be attached to the window?</div>
+    <div class="opt-row" id="grp-roman-mount" style="margin-top:12px">
+      <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-mount');document.getElementById('roman-mount-note-inside').style.display='block';document.getElementById('roman-mount-note-outside').style.display='none'">Inside mount</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-roman-mount');document.getElementById('roman-mount-note-inside').style.display='none';document.getElementById('roman-mount-note-outside').style.display='block'">Outside mount</button>
+    </div>
+    <div id="roman-mount-note-inside" style="margin-top:8px;font-size:11px;color:#555;line-height:1.5;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px;padding:10px 12px">Shade mounts inside the window frame. We deduct ⅜″ from your ordered width for clearance — best for a clean, built-in look.</div>
+    <div id="roman-mount-note-outside" style="margin-top:8px;font-size:11px;color:#555;line-height:1.5;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px;padding:10px 12px;display:none">Shade mounts outside the frame on the wall or ceiling. Add 3–6″ beyond each side of the window for best light blockage and privacy.</div>
+  </div>
+
+  <!-- ROMAN VALANCE (shown when Roman Valance style selected; replaces steps 4–7) -->
+  <div id="valance-config" style="display:none;margin-top:18px">
+    <div id="valance-form-fields">
+      <!-- Lining -->
+      <div style="margin-bottom:14px">
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Lining</div>
+        <div class="opt-row" id="grp-val-lining">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-val-lining')">Unlined</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-val-lining')">White liner (+$10/yd)</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-val-lining')">Cream liner (+$10/yd)</button>
+        </div>
+      </div>
+      <!-- Fabric supply -->
+      <div style="margin-bottom:14px">
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Who supplies the fabric?</div>
+        <div class="opt-row" id="grp-val-fabric">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-val-fabric')">We supply fabric</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-val-fabric')">I supply fabric</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-val-fabric')">Not sure</button>
+        </div>
+      </div>
+      <!-- Fold details -->
+      <div style="border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-bottom:14px">
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Fold details <span style="font-weight:400;color:#888">(optional)</span></div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Number of folds</label>
+            <input type="number" id="val-folds" placeholder="e.g. 3" min="1" max="20">
+          </div>
+          <div class="form-group">
+            <label>Fold section size (inches)</label>
+            <input type="number" id="val-fold-size" placeholder="e.g. 4" min="1" max="24">
+          </div>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:8px;line-height:1.5">Fold dimensions confirmed and refined during your consultation.</div>
+      </div>
+      <!-- Delivery -->
+      <div class="delivery-section" style="margin-bottom:14px">
+        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
+        <div class="opt-row" id="grp-del-val-rn">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-val-rn');document.getElementById('del-val-rn-s').style.display='block';document.getElementById('del-val-rn-p').style.display='none'">Ship to me</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-del-val-rn');document.getElementById('del-val-rn-s').style.display='none';document.getElementById('del-val-rn-p').style.display='block'">I'll pick up</button>
+        </div>
+        <div id="del-val-rn-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional.</div></div>
+        <div id="del-val-rn-p" class="delivery-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.</div>
+      </div>
+      <!-- Contact -->
+      <div style="border-top:1px solid #e8e8e4;margin:16px 0 12px"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Name *</label><input type="text" id="val-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="val-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
+      </div>
+      <div class="form-group"><label>Email *</label><input type="email" id="val-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="val-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
+      <div class="form-group"><label>Notes</label><textarea id="val-notes" placeholder="Fabric preference, room details, timeline..." style="min-height:60px"></textarea></div>
+      <div id="val-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
+      <button onclick="reqMoreInfo('Custom Roman Valance')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Custom Roman Valance &rarr;</button>
+      <button class="btn-gold" onclick="submitValance()" style="width:100%;padding:13px;font-size:14px;font-weight:600;margin-top:4px" data-pb-require-contact="val-contact-err">Submit Order for Review &rarr;</button>
+    </div>
+    <div id="valance-success" style="display:none;background:#EAF3DE;border-radius:10px;padding:18px;text-align:center;margin-top:10px">
+      <strong>Order submitted!</strong><br><span style="font-size:13px;color:#3B6D11">We'll review your valance spec and be in touch. Urgent? <a href="tel:6097421720" style="color:#3B6D11">(609) 742-1720</a></span>
+    </div>
+  </div>
+
+  <!-- STEP 4: FABRIC -->
+  <div class="step" id="step-roman-3">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <div class="step-num">4</div>
+      <div class="step-title" style="margin-bottom:0">Fabric</div>
+    </div>
     <div class="fabric-cards" id="roman-fabric-cards">
       <div class="fabric-card" onclick="selectFabric('roman',this,'We supply the fabric')">
         <h3>We supply the fabric</h3>
@@ -932,10 +1001,12 @@
     </div>
   </div>
 
-  <!-- STEP 3: LINING -->
-  <div class="step" id="step-roman-3">
-    <div class="step-label">Step 3</div>
-    <div class="step-title">Lining</div>
+  <!-- STEP 5: LINING -->
+  <div class="step" id="step-roman-4">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <div class="step-num">5</div>
+      <div class="step-title" style="margin-bottom:0">Lining</div>
+    </div>
     <div class="opt-row" id="grp-roman-lining" style="margin-top:12px">
       <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-lining');romanLinerToggle();calcRoman()">Unlined</button>
       <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining');romanLinerToggle();calcRoman()">White liner</button>
@@ -979,10 +1050,12 @@
     </div>
   </div>
 
-  <!-- STEP 4: OPERATION -->
-  <div class="step" id="step-roman-4">
-    <div class="step-label">Step 4</div>
-    <div class="step-title">Operation</div>
+  <!-- STEP 6: OPERATION -->
+  <div class="step" id="step-roman-5">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <div class="step-num">6</div>
+      <div class="step-title" style="margin-bottom:0">Operation</div>
+    </div>
     <div class="opt-row" id="grp-roman-op" style="margin-top:12px">
       <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-op');romanToggleOp('manual')">Manual</button>
       <button class="opt-btn" onclick="selOpt(this,'grp-roman-op');romanToggleOp('motorized')">Motorized</button>
@@ -990,28 +1063,17 @@
 
     <!-- Manual sub-options -->
     <div id="roman-manual-opts" style="margin-top:12px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
-      <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:8px">Lift type</div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;padding:7px 10px;background:rgba(45,224,193,.08);border:1px solid rgba(45,224,193,.2);border-radius:7px;font-size:11px;color:#0A4A42">
-        <span style="font-size:13px">⭐</span>We recommend <strong>Chain / Cord Loop</strong> for roman shades — smoother raise, holds position at any height.
+      <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:8px">Chain loop — chain length</div>
+      <div class="opt-row" id="grp-roman-clen">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-clen');document.getElementById('roman-clen-custom').style.display='none'">Default</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-clen');document.getElementById('roman-clen-custom').style.display='flex'">Custom</button>
       </div>
-      <div class="opt-row" id="grp-roman-lift">
-        <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-lift');document.getElementById('roman-chain-len').style.display='none'">Cordless</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-roman-lift');document.getElementById('roman-chain-len').style.display='block'">Chain / Cord Loop</button>
+      <div id="roman-clen-custom" style="display:none;align-items:center;gap:8px;margin-top:8px">
+        <input type="number" id="roman-clen-in" placeholder="e.g. 54" min="9" style="width:80px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px" oninput="romanChainCheck()">
+        <span style="font-size:13px;color:#666">inches</span>
       </div>
-      <!-- Chain length — visible when Chain selected -->
-      <div id="roman-chain-len" style="display:none;margin-top:10px;padding:10px 12px;background:#fff;border:1px solid #e8e8e4;border-radius:8px">
-        <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Chain length</div>
-        <div class="opt-row" id="grp-roman-clen">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-clen');document.getElementById('roman-clen-custom').style.display='none'">Default</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-roman-clen');document.getElementById('roman-clen-custom').style.display='flex'">Custom</button>
-        </div>
-        <div id="roman-clen-custom" style="display:none;align-items:center;gap:8px;margin-top:8px">
-          <input type="number" id="roman-clen-in" placeholder="e.g. 54" min="9" style="width:80px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px" oninput="romanChainCheck()">
-          <span style="font-size:13px;color:#666">inches</span>
-        </div>
-        <div id="roman-clen-warn" style="display:none;font-size:11px;color:#dc2626;background:#fee2e2;border-radius:6px;padding:6px 10px;margin-top:6px"></div>
-        <div style="font-size:11px;color:#888;margin-top:6px">Custom chain must be at least 75% of finished length for comfortable reach.</div>
-      </div>
+      <div id="roman-clen-warn" style="display:none;font-size:11px;color:#dc2626;background:#fee2e2;border-radius:6px;padding:6px 10px;margin-top:6px"></div>
+      <div style="font-size:11px;color:#888;margin-top:6px">Custom chain must be at least 75% of finished length for comfortable reach.</div>
     </div>
 
     <!-- Motorized sub-options -->
@@ -1040,11 +1102,13 @@
     </div>
   </div>
 
-  <!-- STEP 5: DIMENSIONS + PRICE -->
-  <div class="step" id="step-roman-5">
-    <div class="step-label">Step 5</div>
-    <div class="step-title">Size &amp; details</div>
-    <div class="step-sub">Enter your window dimensions for an instant estimate. Roman shades are custom quoted — this gives you a starting figure.</div>
+  <!-- STEP 7: DETAILS + PRICE -->
+  <div class="step" id="step-roman-6">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <div class="step-num">7</div>
+      <div class="step-title" style="margin-bottom:0">Details &amp; submit</div>
+    </div>
+    <div class="step-sub">Final details for your roman shade order.</div>
 
         <!-- Return size -->
         <div style="margin-bottom:14px">
@@ -1148,14 +1212,16 @@
 
           <div style="border-top:1px solid #e8e8e4;margin:20px 0 16px"></div>
           <div class="form-row">
-            <div class="form-group"><label>Name *</label><input type="text" id="rn-name" placeholder="Jane Smith"></div>
-            <div class="form-group"><label>Phone *</label><input type="tel" id="rn-phone" placeholder="(215) 555-0100"></div>
+            <div class="form-group"><label>Name *</label><input type="text" id="rn-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+            <div class="form-group"><label>Phone *</label><input type="tel" id="rn-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
           </div>
-          <div class="form-group"><label>Email</label><input type="email" id="rn-email" placeholder="jane@example.com"></div>
-          <div class="form-group"><label>Installation address</label><input type="text" id="rn-address" placeholder="123 Main St, Philadelphia PA"></div>
+          <div class="form-group"><label>Email *</label><input type="email" id="rn-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+          <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="rn-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
           <div class="form-group"><label>Notes</label><textarea id="rn-notes" placeholder="Room, fabric preference, timeline, any other details..." style="min-height:70px"></textarea></div>
+          <div id="roman-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
           <button onclick="reqMoreInfo('Custom Roman Shades')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Custom Roman Shades →</button>
-        <button class="btn-gold" onclick="submitRoman()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:16px">Submit Order for Review &rarr;</button>
+          <button class="btn-cart-add" onclick="addRomanToCart()" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
+        <button class="btn-gold" onclick="submitRoman()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:16px" data-pb-require-contact="roman-contact-err">Submit Order for Review &rarr;</button>
         </div>
         <div class="success-box" id="roman-success">
           <strong>Order submitted!</strong><br>Your email opened with your full spec pre-filled — just hit Send. We'll review and send you an invoice within a few hours.<br><br>
@@ -1283,12 +1349,14 @@
       </div>
       <div style="border-top:1px solid #e8e8e4;margin:20px 0 16px"></div>
       <div class="form-row">
-        <div class="form-group"><label>Name *</label><input type="text" id="cn-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="cn-phone" placeholder="(215) 555-0100"></div>
+        <div class="form-group"><label>Name *</label><input type="text" id="cn-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="cn-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
       </div>
-      <div class="form-group"><label>Email</label><input type="email" id="cn-email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Email *</label><input type="email" id="cn-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="cn-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
       <div class="form-group"><label>Notes</label><textarea id="cn-notes" placeholder="Room, fabric preference, timeline..." style="min-height:60px"></textarea></div>
-      <button class="btn-gold" onclick="submitCornice()" style="width:100%;padding:13px;font-size:14px;font-weight:600;margin-top:4px">Submit Order for Review &rarr;</button>
+      <div id="corn-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
+      <button class="btn-gold" onclick="submitCornice()" style="width:100%;padding:13px;font-size:14px;font-weight:600;margin-top:4px" data-pb-require-contact="corn-contact-err">Submit Order for Review &rarr;</button>
     </div>
     <div class="success-box" id="corn-success"><strong>Order submitted!</strong> Your email opened with your spec — hit Send. We'll review and send you an invoice. Urgent? <a href="tel:6097421720" style="color:#2e7d32">(609) 742-1720</a></div>
   </div>
@@ -1416,12 +1484,14 @@
       </div>
       <div style="border-top:1px solid #e8e8e4;margin:20px 0 16px"></div>
       <div class="form-row">
-        <div class="form-group"><label>Name *</label><input type="text" id="vn-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="vn-phone" placeholder="(215) 555-0100"></div>
+        <div class="form-group"><label>Name *</label><input type="text" id="vn-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="vn-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
       </div>
-      <div class="form-group"><label>Email</label><input type="email" id="vn-email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Email *</label><input type="email" id="vn-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="vn-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
       <div class="form-group"><label>Notes</label><textarea id="vn-notes" placeholder="Room, style preference, timeline..." style="min-height:60px"></textarea></div>
-      <button class="btn-gold" onclick="submitValanceCv()" style="width:100%;padding:13px;font-size:14px;font-weight:600;margin-top:16px">Request valance quote &rarr;</button>
+      <div id="vcv-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
+      <button class="btn-gold" onclick="submitValanceCv()" style="width:100%;padding:13px;font-size:14px;font-weight:600;margin-top:16px" data-pb-require-contact="vcv-contact-err">Submit Order for Review &rarr;</button>
     </div>
     <div class="success-box" id="val-cv-success"><strong>Quote sent!</strong> We'll follow up soon. Urgent? <a href="tel:6097421720" style="color:#2e7d32">(609) 742-1720</a></div>
   </div>
@@ -1450,10 +1520,11 @@
     <div class="section-sub" style="margin-bottom:24px">All soft treatments are custom — no two alike. Tell Justin what you need and he'll follow up with pricing. Or call: <a href="tel:6097421720" style="color:var(--gold);text-decoration:none;font-weight:500">(609) 742-1720</a></div>
     <form id="soft-quote-form" onsubmit="handleSoftQuote(event)">
       <div class="form-row">
-        <div class="form-group"><label>Your name *</label><input type="text" name="name" placeholder="Jane Smith" required></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" name="phone" placeholder="(215) 555-0100" required></div>
+        <div class="form-group"><label>Your name *</label><input type="text" name="name" data-pb-contact="name" placeholder="Jane Smith" required></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" name="phone" data-pb-contact="phone" placeholder="(215) 555-0100" required></div>
       </div>
-      <div class="form-group"><label>Email</label><input type="email" name="email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Email *</label><input type="email" name="email" data-pb-contact="email" placeholder="jane@example.com" required></div>
+      <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" name="address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
       <div class="form-group">
         <label>What are you looking for?</label>
         <select name="product" style="width:100%;padding:10px 12px;border:1px solid #e8e8e4;border-radius:8px;font-size:13px;font-family:var(--font);background:#fff;color:#333">
@@ -1472,7 +1543,8 @@
       <div style="background:var(--gold-mid);border:1px solid #e8e8e4;border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:#666;line-height:1.6">
         No payment now. We review your order and send you a formal invoice. You choose when to pay.
       </div>
-      <button type="submit" class="btn-gold" style="width:100%;padding:13px;font-size:14px">Submit Order for Review &rarr;</button>
+      <button type="submit" class="btn-gold" style="width:100%;padding:13px;font-size:14px" data-pb-require-contact="soft-qf-err">Submit Order for Review &rarr;</button>
+      <div id="soft-qf-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-top:8px"></div>
     </form>
     <div id="soft-quote-success" style="display:none;background:#EAF3DE;border-radius:12px;padding:24px;text-align:center;margin-top:8px">
       <div style="font-size:18px;margin-bottom:8px">&#10003; Order submitted!</div>

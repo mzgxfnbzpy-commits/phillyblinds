@@ -1,4 +1,4 @@
-// Auto-open product configurator from URL ?product=xxx parameter
+﻿// Auto-open product configurator from URL ?product=xxx parameter
 window.addEventListener("load", function() {
   var params = new URLSearchParams(window.location.search);
   var product = params.get("product");
@@ -392,24 +392,7 @@ function toggleMotor(on) {
 }
 
 function checkMotorConflict() {
-  // Enforce: Norman Smart controls and Automate Home motors are NOT compatible.
-  // Both programs are Norman-brand but use different RF protocols — cannot mix.
-  if (currentProduct !== 'cellular') return;
-  const motorTypeSel = document.querySelector('#grp-motor-type .opt-btn.sel');
-  if (!motorTypeSel || !motorOn) return;
-  const motorLabel = motorTypeSel.textContent || '';
-  const isNormanSmart   = motorLabel.indexOf('Norman Smart') !== -1;
-  const isAutomateHome  = motorLabel.indexOf('Automate Home') !== -1;
-  // Currently UI only lets user pick one at a time, so mix can't happen via normal flow.
-  // This guard exists in case programmatic state gets out of sync.
-  const conflictNote = document.getElementById('motor-program-conflict');
-  if (!conflictNote) return;
-  if (isNormanSmart && isAutomateHome) {
-    conflictNote.style.display = 'block';
-    conflictNote.textContent = '⛔ Norman Smart and Automate Home are NOT compatible — they use different RF protocols. Select one system only.';
-  } else {
-    conflictNote.style.display = 'none';
-  }
+  // Motor buttons are mutually exclusive (opt-btn .sel pattern) — no conflict possible.
 }
 
 // ─── updateChainStdLabel — live 75%-of-height on Standard btn ─
@@ -636,6 +619,29 @@ function autoMotor() {
     motorBtns[1].classList.add('sel');
     toggleMotor(true);
   }
+}
+
+// ─── Basic roller op change ───────────────────────────────────
+function rollerOpChange(type) {
+  var cordlessNote = document.getElementById('roller-cordless-note');
+  var motorNote = document.getElementById('roller-motor-note');
+  if (cordlessNote) cordlessNote.style.display = type === 'cordless' ? 'block' : 'none';
+  if (motorNote) motorNote.style.display = type === 'motor' ? 'block' : 'none';
+}
+
+function goToSolunaWithOpts(type) {
+  var w = (document.getElementById('inp-width') || {}).value || '';
+  var h = (document.getElementById('inp-height') || {}).value || '';
+  var qty = (document.getElementById('inp-qty') || {}).value || '1';
+  var mountBtn = document.querySelector('#grp-mount .opt-btn.sel');
+  var mount = mountBtn ? (mountBtn.textContent.toLowerCase().indexOf('inside') >= 0 ? 'inside' : 'outside') : 'inside';
+  var params = 'w=' + encodeURIComponent(w) + '&h=' + encodeURIComponent(h) + '&qty=' + qty + '&mount=' + mount + '&op=' + (type === 'motor' ? 'motor' : 'cordless');
+  if (type === 'motor') {
+    var motorBtn = document.querySelector('#grp-roller-motor .opt-btn.sel');
+    var motorText = motorBtn ? motorBtn.textContent.trim() : '';
+    if (motorText.indexOf('Rollease') >= 0) params += '&motor=rollease';
+  }
+  window.location.href = 'soluna-roller-shades.html?' + params;
 }
 
 // ─── toggleSolar ─────────────────────────────────────────────
@@ -879,7 +885,7 @@ function updatePrice() {
     const perShadeAll = tableBase + rdAdd + opAdd + liftAdd;
     const activeMotorUp = cellMotorUpcharge;
     const motorCost = motorOn ? activeMotorUp * qty : 0;
-    const NORMAN_DISC_CELL = 0.15;
+    const NORMAN_DISC_CELL = 0.35;
     const cellProductSub = (perShadeAll * qty) + motorCost;
     const cellDiscountAmt = Math.round(cellProductSub * NORMAN_DISC_CELL);
     const cellYourPrice = cellProductSub - cellDiscountAmt;
@@ -1024,7 +1030,7 @@ async function submitPBForm(btn) {
     'Delivery:       ' + delivery                + '\n\n' +
     'Fabric notes:\n' + (notes || '(none)') +
     pbInstallLine(document.getElementById('brand-pb-content')) +
-    (function(){ var fu = document.querySelector('#brand-pb-content .pb-fu-wrap input[type="file"]'); return fu && fu.files.length ? '\n\nFiles to send: ' + Array.from(fu.files).map(function(f){return f.name;}).join(', ') + '\n(Customer will email these to justin@phillyblinds.com)' : ''; }());
+    (function(){ var fu = document.querySelector('#brand-pb-content .pb-fu-wrap input[type="file"]'); return fu && fu.files.length ? '\n\nFiles to send: ' + Array.from(fu.files).map(function(f){return f.name;}).join(', ') + '\n(Customer will email these to blindznation@gmail.com)' : ''; }());
   await _apiSubmit(name, email, phone, 'Basic Roller Shade', body, 'pb-success', null, btn);
 }
 
@@ -1189,7 +1195,8 @@ function renderCart() {
 // NORMAN ROLLER (rn-*) — Full 8-step Soluna configurator
 // ════════════════════════════════════════════════════════════════
 
-let rnFabricType   = 'lf';
+let rnFabricType     = 'lf';
+let rnDualFrontType  = 'lf'; // tracks front shade type when dual shade is active
 let rnFabricWidth  = 96;
 let currentCellFabric  = 'lf';
 let currentRollerColls = [];
@@ -1216,16 +1223,10 @@ const SOLUNA_COLLECTIONS = {
     {name:'Lakeshore', colors:[{n:'Natural Gray',c:'F1642'}]}
   ],
   'lf': [
-    {name:'Kendra', colors:[{n:'LF Foliage',c:'F0890'}]},
     {name:'Francis', colors:[
       {n:'Pearl',c:'F0876'},{n:'Barley',c:'F0877'},{n:'Sandstone',c:'F0878'},{n:'Toast',c:'F0879'},
       {n:'Espresso',c:'F0882'},{n:'Brownie',c:'F0883'},{n:'Oatmeal',c:'F0884'},{n:'Doe',c:'F0885'},
       {n:'Shale',c:'F0886'},{n:'Black',c:'F0888'},{n:'Denim',c:'F0889'}
-    ]},
-    {name:'Breeze ⚠ Linen', colors:[
-      {n:'Linen Flax',c:'F0891'},{n:'Linen Natural',c:'F0893'},{n:'Linen Khaki',c:'F0894'},
-      {n:'Linen Dune',c:'F0895'},{n:'Linen Graphite',c:'F0896'},{n:'Linen Almond Milk',c:'F0927'},
-      {n:'Linen Stone',c:'F1778'},{n:'Linen Cloud',c:'F1847'},{n:'Linen Warm Ivory',c:'F1851'}
     ]},
     {name:'Hayes', colors:[
       {n:'Maple',c:'F0747'},{n:'Hickory',c:'F0748'},{n:'Birch',c:'F0749'},{n:'Mahogany',c:'F0751'}
@@ -1262,12 +1263,6 @@ const SOLUNA_COLLECTIONS = {
       {n:'Porcelain',c:'F1551'},{n:'Almond',c:'F1552'},{n:'Light Khaki',c:'F1553'},
       {n:'Wheat',c:'F1554'},{n:'Platinum',c:'F1555'},{n:'Cement',c:'F1556'},
       {n:'Pewter',c:'F1557'},{n:'Iron',c:'F1558'},{n:'Indigo',c:'F1559'}
-    ]},
-    {name:'Clarissa', colors:[
-      {n:'Wheat',c:'F0870'},{n:'Platinum',c:'F0871'},{n:'Tobacco Brown',c:'F0872'},
-      {n:'Sable Brown',c:'F0873'},{n:'Burlap',c:'F0874'},{n:'Porcelain',c:'F0928'},
-      {n:'Powder',c:'F1532'},{n:'Steel',c:'F1533'},{n:'Silver Satin',c:'F1534'},
-      {n:'Golden Straw',c:'F1535'},{n:'Coffee Bean',c:'F1536'},{n:'Coal',c:'F1550'}
     ]},
     {name:'Verona LF', colors:[{n:'Pearl Cotton',c:'F1641'}]},
     {name:'Callie', colors:[
@@ -1350,9 +1345,6 @@ const SOLUNA_COLLECTIONS = {
       {n:'Wheat',c:'F1458'},{n:'Platinum',c:'F1459'},{n:'Cement',c:'F1460'},
       {n:'Pewter',c:'F1461'},{n:'Iron',c:'F1462'},{n:'Indigo',c:'F1463'}
     ]},
-    {name:'Summerland ⚠ Linen', colors:[
-      {n:'Pearl',c:'F1510'},{n:'Maize',c:'F1511'},{n:'Sterling',c:'F1512'}
-    ]},
     {name:'Cory', colors:[{n:'White',c:'F1479'},{n:'Ivory',c:'F1480'},{n:'Sand',c:'F1481'}]},
     {name:'Callie RD', colors:[
       {n:'Pure White',c:'F1740'},{n:'Vanilla Cream',c:'F1741'},{n:'Natural Tan',c:'F1742'},
@@ -1366,11 +1358,6 @@ const SOLUNA_COLLECTIONS = {
     {name:'Francis RD', colors:[
       {n:'Pearl',c:'F1762'},{n:'Sandstone',c:'F1763'},{n:'Oatmeal',c:'F1764'},
       {n:'Doe',c:'F1765'},{n:'Black',c:'F1766'},{n:'Denim',c:'F1767'}
-    ]},
-    {name:'Breeze RD ⚠ Linen', colors:[
-      {n:'Linen Flax',c:'F1768'},{n:'Linen Natural',c:'F1769'},{n:'Linen Khaki',c:'F1770'},
-      {n:'Linen Dune',c:'F1771'},{n:'Linen Graphite',c:'F1772'},{n:'Linen Almond Milk',c:'F1773'},
-      {n:'Linen Stone',c:'F1779'},{n:'Linen Cloud',c:'F1848'},{n:'Linen Warm Ivory',c:'F1852'}
     ]},
     {name:'Amelia RD', colors:[
       {n:'Mist Gray',c:'F1774'},{n:'Heather Gray',c:'F1775'},
@@ -1433,6 +1420,31 @@ const SOLUNA_COLLECTIONS = {
     {name:'NA300 5%', colors:[{n:'Charcoal',c:'F1874'}]},
     {name:'NA400 5%', colors:[{n:'Chalk/Beige',c:'F0388'},{n:'Charcoal',c:'F0390'}]},
     {name:'NA400 10%', colors:[{n:'Charcoal',c:'F0396'}]}
+  ],
+  // Designer: premium linen weaves and specialty collections (PG3/PG4)
+  // LF linen varieties at PG3; Kendra at PG4; RD linen varieties at PG3
+  // Breeze Screen (solar linen) stays in 'solar' — uses solar pricing matrix
+  'designer': [
+    {name:'Kendra — Light Filtering (PG4)', colors:[{n:'LF Foliage',c:'F0890'}]},
+    {name:'Breeze Linen — Light Filtering (PG3)', colors:[
+      {n:'Linen Flax',c:'F0891'},{n:'Linen Natural',c:'F0893'},{n:'Linen Khaki',c:'F0894'},
+      {n:'Linen Dune',c:'F0895'},{n:'Linen Graphite',c:'F0896'},{n:'Linen Almond Milk',c:'F0927'},
+      {n:'Linen Stone',c:'F1778'},{n:'Linen Cloud',c:'F1847'},{n:'Linen Warm Ivory',c:'F1851'}
+    ]},
+    {name:'Clarissa — Light Filtering (PG3)', colors:[
+      {n:'Wheat',c:'F0870'},{n:'Platinum',c:'F0871'},{n:'Tobacco Brown',c:'F0872'},
+      {n:'Sable Brown',c:'F0873'},{n:'Burlap',c:'F0874'},{n:'Porcelain',c:'F0928'},
+      {n:'Powder',c:'F1532'},{n:'Steel',c:'F1533'},{n:'Silver Satin',c:'F1534'},
+      {n:'Golden Straw',c:'F1535'},{n:'Coffee Bean',c:'F1536'},{n:'Coal',c:'F1550'}
+    ]},
+    {name:'Summerland Linen — Room Darkening (PG3)', colors:[
+      {n:'Pearl',c:'F1510'},{n:'Maize',c:'F1511'},{n:'Sterling',c:'F1512'}
+    ]},
+    {name:'Breeze Linen — Room Darkening (PG3)', colors:[
+      {n:'Linen Flax',c:'F1768'},{n:'Linen Natural',c:'F1769'},{n:'Linen Khaki',c:'F1770'},
+      {n:'Linen Dune',c:'F1771'},{n:'Linen Graphite',c:'F1772'},{n:'Linen Almond Milk',c:'F1773'},
+      {n:'Linen Stone',c:'F1779'},{n:'Linen Cloud',c:'F1848'},{n:'Linen Warm Ivory',c:'F1852'}
+    ]}
   ]
 };
 
@@ -2303,9 +2315,10 @@ function rnGetPriceGroup() {
   return 2;
 }
 
-function rnLookupPrice(w, h) {
+function rnLookupPrice(w, h, overrideFabType) {
   const pg = rnGetPriceGroup();
-  const isSolar = (rnFabricType === 'solar' || rnFabricType === 'commercial');
+  var fabType = overrideFabType || rnFabricType;
+  const isSolar = (fabType === 'solar' || fabType === 'commercial');
   const hRows = isSolar ? RN_H_SOLAR : RN_H_FABRIC;
   const matrices = isSolar
     ? [null, RN_PG1_SOLAR, RN_PG2_SOLAR, RN_PG3_SOLAR, RN_PG3_SOLAR]
@@ -2322,12 +2335,13 @@ function rnLookupPrice(w, h) {
   return { price: price || null, pricedAt: pW + '″ W × ' + pH + '″ H', group: pg };
 }
 
-const RN_MOTOR_UP  = 482;  // Norman Smart motor per shade (per April 2026 Norman price book)
+var rnMotorUpcharge = 482; // Norman Smart default; updated by rnSetMotorType()
+function rnSetMotorType(price){ rnMotorUpcharge = price; rnUpdatePrice(); }
 const RN_MIN       = 85;   // minimum per shade
 
 const RN_SYSTEM_NOTES = {
   standard:  'Standard: single shade per bracket set — most straightforward.',
-  dual:      'Dual shade: two fabrics (front + back) in one headrail — sheer + Room Darkening is the most popular combo. Extra mounting depth required.',
+  dual:      'Dual shade: Blackout (Room Darkening) back shade + your choice of Light Filtering, Sheer, or Solar Screen front shade — two rolls in one headrail. Priced as two individual shades. Extra mounting depth required.',
   coupled2:  'Coupled 2: two panels linked, operated together. Must use same lift system. Center gap applies.',
   coupled3:  'Coupled 3: three panels linked. Two coupled surcharges apply.',
   coupled4:  'Coupled 4: four panels linked. Three coupled surcharges apply.',
@@ -2339,7 +2353,7 @@ const RN_FABRIC_NOTES = {
   lf:         'Light Filtering: diffused light, medium privacy. Works with all systems.',
   natural:    '⚠ Natural fabrics (bamboo, jute, paper blends) may show variation, bowing, fraying, color shift over time — these are normal material characteristics and not defects.',
   rd:         'Room Darkening: high privacy, coated backing. ⚠ Alone it still allows edge light gaps — add LightGuard 360™ in Step 7 for true blackout.',
-  designer:   'Designer: premium specialty fabrics with unique textures and patterns. Contact us for pricing and fabric samples.',
+  designer:   '⚠ Linen weaves: natural variation in texture, color, and drape is normal. LF designer fabrics at PG3–PG4 pricing; RD linen varieties also available. Breeze Screen (solar linen) is in the Solar Screen category.',
   solar:      'Solar Screen: UV and glare control. Openness factor = % of light allowed through. ⚠ ±10% tolerance is industry standard — not a defect.',
   commercial: 'Commercial Solar (NA series): PVC/polyester construction rated for high UV environments. Same openness rules as residential solar.'
 };
@@ -2357,14 +2371,20 @@ function rnSetSystem(type) {
   if (dualBlock)   dualBlock.style.display   = isDual ? 'block' : 'none';
 
   if (isDual) {
-    // Pre-populate Day roll (sheer default) and Night roll (RD) on switch
-    rnLoadDualFabrics('day',   'sheer');
+    // Front shade defaults to Light Filtering; back shade is always Blackout (RD)
+    rnDualFrontType = 'lf';
+    rnLoadDualFabrics('day',   'lf');
     rnLoadDualFabrics('night', 'rd');
+    // Reset front shade type buttons to LF default
+    var dayBtns = document.querySelectorAll('#rn-grp-day-type .opt-btn');
+    dayBtns.forEach(function(b,i){ b.classList.toggle('sel', i===0); });
+    rnUpdatePrice();
   }
 }
 
 // ─── rnLoadDualFabrics ───────────────────────────────────────
 function rnLoadDualFabrics(roll, fabType) {
+  if (roll === 'day') { rnDualFrontType = fabType; rnUpdatePrice(); }
   const summaryId = roll === 'day' ? 'rn-day-summary' : 'rn-night-summary';
   const gridId    = roll === 'day' ? 'rn-day-grid'    : 'rn-night-grid';
   const summaryEl = document.getElementById(summaryId);
@@ -2384,19 +2404,29 @@ function rnLoadDualFabrics(roll, fabType) {
   const extra = colls.length > 5 ? ' +' + (colls.length - 5) + ' more' : '';
   summaryEl.textContent = label + ' collections: ' + shown + extra;
 
-  let btns = '';
+  let html = '';
   colls.forEach(function(coll, ci) {
     if (coll.colors.length) {
+      html += '<div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#888;margin:8px 0 4px">' + coll.name + '</div>';
+      html += '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:4px">';
       coll.colors.forEach(function(color, ki) {
-        btns += '<button class="opt-btn" style="font-size:11px" onclick="selDualFabric(this,\'' + roll + '\',' + ci + ',' + ki + ',\'' + fabType + '\')">'
-              + coll.name + ' – ' + color + '</button>';
+        var isObj = color && typeof color === 'object';
+        var cName = isObj ? color.n : color;
+        var cCode = isObj ? color.c : '';
+        var dot   = colorDot(cName);
+        var codeTxt = cCode ? ' <span style="font-size:9px;color:#aaa;margin-left:2px">' + cCode + '</span>' : '';
+        html += '<button class="opt-btn" style="font-size:11px;display:inline-flex;align-items:center;gap:0" onclick="selDualFabric(this,\'' + roll + '\',' + ci + ',' + ki + ',\'' + fabType + '\')">'
+              + dot + cName + codeTxt + '</button>';
       });
+      html += '</div>';
     } else {
-      btns += '<button class="opt-btn" style="font-size:11px;opacity:0.65" onclick="selDualFabric(this,\'' + roll + '\',' + ci + ',-1,\'' + fabType + '\')">'
+      html += '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:4px">';
+      html += '<button class="opt-btn" style="font-size:11px;opacity:0.65" onclick="selDualFabric(this,\'' + roll + '\',' + ci + ',-1,\'' + fabType + '\')">'
             + coll.name + '</button>';
+      html += '</div>';
     }
   });
-  gridEl.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:6px">' + btns + '</div>';
+  gridEl.innerHTML = html;
 }
 
 function selDualFabric(el, roll, ci, ki, fabType) {
@@ -2495,7 +2525,8 @@ function rnSetLift(type) {
   if (motorWrap) {
     motorWrap.style.display = type === 'motor' ? 'block' : 'none';
     if (type === 'motor') {
-      if (typeof normanMotorSection === 'function') normanMotorSection('rn-norman-motor-section', 'Norman Roller Shade');
+      rnMotorUpcharge = 482;
+      document.querySelectorAll('#grp-rn-motor-type .opt-btn').forEach(function(b,i){b.classList.toggle('sel',i===0);});
     }
   }
 
@@ -2854,8 +2885,10 @@ function rnRunValidation() {
   if (rnLiftType === 'cordless' && w && w > 72) {
     warnings.push('Cordless lift may not support widths over ~72″ depending on fabric weight. Consider Continuous Cord Loop or Motorized.');
   }
-  if (lgType === 'LightGuard 360™' && rnFabricType !== 'rd') {
-    errors.push('LightGuard 360™ requires Room Darkening fabric to be effective. Select Room Darkening in Step 2.');
+  var isRdFabric = rnFabricType === 'rd' ||
+    (rnFabricType === 'designer' && (currentRollerColl || '').toLowerCase().includes('room darkening'));
+  if (lgType === 'LightGuard 360™' && !isRdFabric) {
+    errors.push('LightGuard 360™ requires Room Darkening fabric to be effective. Select Room Darkening (or a Designer Room Darkening collection) in Step 2.');
   }
   if (rnSystemType === 'dual' || rnSystemType === 'dn') {
     warnings.push('Dual / Day & Night shades require extra mounting depth — confirm depth at order. Price calculated as two individual shades.');
@@ -2951,16 +2984,21 @@ function rnUpdatePrice() {
     document.getElementById('rn-pb-sqft').textContent = '—';
     document.getElementById('rn-pb-base').textContent = '—';
     document.getElementById('rn-pb-total').textContent = '—';
-    if (isMotor) { document.getElementById('rn-pb-motor-row').style.display = 'flex'; document.getElementById('rn-pb-motor').textContent = '+$' + RN_MOTOR_UP + '/shade'; }
+    if (isMotor) { document.getElementById('rn-pb-motor-row').style.display = 'flex'; document.getElementById('rn-pb-motor').textContent = '+$' + rnMotorUpcharge + '/shade'; }
     else { document.getElementById('rn-pb-motor-row').style.display = 'none'; }
     return;
   }
 
+  var isDualSystem = (rnSystemType === 'dual' || rnSystemType === 'dn');
   const sqft      = (w / 12) * (h / 12);
-  const lookup    = rnLookupPrice(w, h);
+  // For dual shade: front shade lookup uses rnDualFrontType; back shade (RD) always uses fabric matrix
+  const lookup    = rnLookupPrice(w, h, isDualSystem ? rnDualFrontType : null);
   const basePrice = lookup ? lookup.price : null;
-  const perShade  = basePrice ? Math.max(RN_MIN, basePrice) : null;
-  const motorCost = isMotor ? RN_MOTOR_UP * qty : 0;
+  var perShade    = basePrice ? Math.max(RN_MIN, basePrice) : null;
+  // Dual shade = 2 individual shades priced per Norman spec (front + back both same W×H)
+  if (isDualSystem && perShade) perShade = perShade * 2;
+  // Motorized dual shade needs 2 motors (one per roll)
+  const motorCost = isMotor ? rnMotorUpcharge * qty * (isDualSystem ? 2 : 1) : 0;
 
   // ── Headrail / fascia surcharge ──────────────────────────────
   var hrBtn2     = document.querySelector('#rn-grp-headrail .opt-btn.sel');
@@ -3057,8 +3095,8 @@ function rnUpdatePrice() {
   }
 
 
-  // ── Grand total with 15% Norman discount on product subtotal only ──
-  const NORMAN_DISC_RN = 0.15;
+  // ── Grand total with 35% Norman discount on product subtotal only ──
+  const NORMAN_DISC_RN = 0.35;
   const productSubtotalRN = perShade ? (perShade * qty) + motorCost + hrSurcharge + sysSur + liftSur + lgSur + hdSur : null;
   const discountAmtRN = productSubtotalRN ? Math.round(productSubtotalRN * NORMAN_DISC_RN) : 0;
   const yourPriceRN = productSubtotalRN ? productSubtotalRN - discountAmtRN : null;
@@ -3078,7 +3116,7 @@ function rnUpdatePrice() {
     var rnDivider2 = document.querySelector('#rn-price-box .price-divider');
     if (rnDivider2) {
       var dr2 = document.createElement('div'); dr2.className='price-line'; dr2.id='rn-pb-disc-row';
-      dr2.innerHTML='<span style="color:#2DE0C1">15% Norman discount</span><span style="color:#2DE0C1" id="rn-pb-disc-val">—</span>';
+      dr2.innerHTML='<span style="color:#2DE0C1">35% Norman discount</span><span style="color:#2DE0C1" id="rn-pb-disc-val">—</span>';
       rnDivider2.parentNode.insertBefore(dr2, rnDivider2);
       var yr2 = document.createElement('div'); yr2.className='price-line'; yr2.id='rn-pb-your-row';
       yr2.innerHTML='<span style="font-weight:600;color:#fff">Your price (before shipping)</span><span style="font-weight:600;color:#fff" id="rn-pb-your-val">—</span>';
@@ -3095,8 +3133,9 @@ function rnUpdatePrice() {
   document.getElementById('rn-pb-total').textContent = total ? '\$' + total.toFixed(0) + ' est.' : '—';
   document.getElementById('rn-pb-min-note').style.display = (perShade === RN_MIN) ? 'block' : 'none';
   if (isMotor) {
+    var motorQtyLabel = isDualSystem ? qty + ' × 2 shades' : qty + ' shade' + (qty > 1 ? 's' : '');
     document.getElementById('rn-pb-motor-row').style.display = 'flex';
-    document.getElementById('rn-pb-motor').textContent = '+\$' + RN_MOTOR_UP + ' × ' + qty + ' = \$' + (RN_MOTOR_UP * qty).toFixed(0);
+    document.getElementById('rn-pb-motor').textContent = '+\$' + rnMotorUpcharge + ' × ' + motorQtyLabel + ' = \$' + motorCost.toFixed(0);
   } else {
     document.getElementById('rn-pb-motor-row').style.display = 'none';
   }
@@ -3269,7 +3308,7 @@ function handleQuickQuote(e) {
     'Timeline: ' + (timeline || 'Not specified'),
     'Notes: ' + (notes || 'None')
   ].join('\n');
-  window.location.href = 'mailto:justin@phillyblinds.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  window.location.href = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
   form.style.display = 'none';
   document.getElementById('quick-quote-success').style.display = 'block';
 }
@@ -3501,7 +3540,7 @@ async function _apiSubmit(name, email, phone, productName, configText, successId
     if (sEl) { sEl.classList.add('show'); sEl.style.display = 'block'; sEl.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   } catch(err) {
     if (btn) { btn.disabled = false; btn.textContent = btn._origText || 'Send quote request'; }
-    var mh = 'mailto:justin@phillyblinds.com?subject=' + encodeURIComponent('Quote — ' + name) + '&body=' + encodeURIComponent('Name: ' + name + '\nPhone: ' + phone + '\nProduct: ' + productName + '\n\n' + configText);
+    var mh = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent('Quote — ' + name) + '&body=' + encodeURIComponent('Name: ' + name + '\nPhone: ' + phone + '\nProduct: ' + productName + '\n\n' + configText);
     var eDiv = document.createElement('div');
     eDiv.style.cssText = 'background:#FEE2E2;border-radius:8px;padding:10px 13px;margin-top:10px;font-size:12px;color:#991B1B;line-height:1.5';
     eDiv.innerHTML = '<strong>Issue sending.</strong> <a href="' + mh + '" style="color:#991B1B;font-weight:700;text-decoration:underline">Email directly →</a> or call <a href="tel:6097421720" style="color:#991B1B">(609) 742-1720</a>';

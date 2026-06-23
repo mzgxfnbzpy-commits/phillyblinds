@@ -364,7 +364,7 @@ function submitRollerQuote() {
     +'  Address : '+((document.getElementById('r-address')||{}).value||'—')+'\n'
     +'  Notes   : '+((document.getElementById('r-notes')||{}).value||'—');
 
-  window.location.href = 'mailto:justin@phillyblinds.com'
+  window.location.href = 'mailto:blindznation@gmail.com'
     +'?subject='+encodeURIComponent('Natural Woven Roller Shades Quote — '+name)
     +'&body='+encodeURIComponent(body);
 
@@ -787,7 +787,10 @@ function pickDel(opt) {
 
 /* ── Submit ── */
 function submitQuote() {
-  var name=$('q-name').value.trim(), contact=$('q-contact').value.trim();
+  var name=$('q-name').value.trim();
+  var phone=($('q-phone')||{value:''}).value.trim();
+  var email=($('q-email')||{value:''}).value.trim();
+  var contact=phone||(email)||'';
   if(!name||!contact){alert('Please enter your name and contact info.'); return;}
   if(!S.pattern){alert('Please select a fabric pattern.'); return;}
 
@@ -799,7 +802,8 @@ function submitQuote() {
     '',
     'CONTACT',
     'Name: '+name,
-    'Phone/Email: '+contact,
+    'Phone: '+(phone||'—'),
+    'Email: '+(email||'—'),
     'Location: '+($('q-address').value||'Not provided'),
     '',
     'PRODUCT CONFIGURATION',
@@ -859,9 +863,26 @@ function submitQuote() {
   ];
 
   var subj='Wallace '+coll+' Quote — '+prod+' — '+name;
-  window.location.href='mailto:justin@phillyblinds.com?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(bodyLines.join('\n'));
+  window.location.href='mailto:blindznation@gmail.com?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(bodyLines.join('\n'));
 
   $('success-box').style.display='block';
   $('success-box').scrollIntoView({behavior:'smooth'});
   document.querySelectorAll('.step-block').forEach(function(b){b.style.display='none';});
+}
+
+function addWallaceWovenToCart() {
+  var collMap = {portfolio:'Wallace Portfolio Natural Woven',galaxy:'Wallace Galaxy Woven',premier:'Walden Premier',select:'Walden Select'};
+  var prodMap = {roman:'Roman Shade',panel:'Sliding Panel',drapery:'Natural Drapery',valance:'Valance Only'};
+  var coll = collMap[S.collection] || (S.collection || 'Natural Woven');
+  var prod = prodMap[S.productType] || (S.productType || '—');
+  var lines = [
+    { label: 'Product', value: coll },
+    { label: 'Type', value: prod },
+    { label: 'Pattern', value: S.pattern ? S.pattern.name : '—' },
+    { label: 'Size', value: (S.w||'—') + '″ × ' + (S.h||'—') + '″' },
+    { label: 'Control', value: S.control || '—' },
+    { label: 'Quantity', value: String(S.qty||1) }
+  ];
+  pbAddToCart({ product: coll, lines: lines, specs: lines.map(function(l){ return l.label+': '+l.value; }).join(' | '), qty: S.qty||1 });
+  pbOpenCart();
 }

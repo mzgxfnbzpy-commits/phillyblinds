@@ -176,7 +176,7 @@ function updateQuote(){
   if(!discRow){
     discRow=document.createElement('div');
     discRow.className='qrow';discRow.id='qr-disc-row';
-    discRow.innerHTML='<span class="qrow-label" style="color:#2DE0C1">15% Norman discount</span><span class="qrow-val" style="color:#2DE0C1" id="qr-disc-s">—</span>';
+    discRow.innerHTML='<span class="qrow-label" style="color:#2DE0C1">35% Norman discount</span><span class="qrow-val" style="color:#2DE0C1" id="qr-disc-s">—</span>';
     qdiv.parentNode.insertBefore(discRow,qdiv);
     yourPriceRow=document.createElement('div');
     yourPriceRow.className='qrow';yourPriceRow.id='qr-yourprice-row';
@@ -188,6 +188,33 @@ function updateQuote(){
 
   showRow('qr-freight-row',state.del==='ship','$'+freight);
   document.getElementById('qr-total').textContent='$'+Math.round(total).toLocaleString();
+}
+
+function addSynchronyToCart(){
+  if(!state.collection||!state.colorName){ alert('Please select a fabric/color before adding to cart.'); return; }
+  if(!state.mount){ alert('Please select a mount type before adding to cart.'); return; }
+  if(!state.w||!state.h){ alert('Please enter valid dimensions before adding to cart.'); return; }
+
+  const totalEl=document.getElementById('qr-total');
+  const priceText=totalEl?totalEl.textContent.trim():'';
+  const price=priceText?parseFloat(priceText.replace(/[^0-9.]/g,''))||null:null;
+  const qty=parseInt(document.getElementById('qty').value)||1;
+
+  const lines=[
+    {label:'Product',value:'Norman Synchrony™ Vertical Blinds'},
+    {label:'Collection',value:state.collection||'—'},
+    {label:'Color',value:state.colorName||'—'},
+    {label:'Vane Style',value:state.vane||'—'},
+    {label:'Mount',value:state.mount==='inside'?'Inside Mount':state.mount==='semi'?'Semi-Inside Mount':'Outside Mount'},
+    {label:'Wand Side',value:state.wand||'—'},
+    {label:'Width',value:(state.w||'—')+'″'},
+    {label:'Height',value:(state.h||'—')+'″'},
+    {label:'Shims',value:state.shim?state.shimQty+' × $7':'None'},
+    {label:'Quantity',value:String(qty)}
+  ];
+  const specs=lines.map(l=>l.label+': '+l.value).join(' | ');
+  pbAddToCart({product:'Norman Synchrony™ Vertical Blinds',lines:lines,specs:specs,price:price,qty:qty});
+  pbOpenCart();
 }
 
 function submitQuote(){
@@ -217,6 +244,6 @@ function submitQuote(){
   ];
   const body=encodeURIComponent(lines.join('\n'));
   const subject=encodeURIComponent('Synchrony Verticals Quote — '+name);
-  window.location.href='mailto:justin@phillyblinds.com?subject='+subject+'&body='+body;
+  window.location.href='mailto:blindznation@gmail.com?subject='+subject+'&body='+body;
   document.getElementById('success-box').style.display='block';
 }

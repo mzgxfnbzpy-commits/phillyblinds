@@ -1,4 +1,4 @@
-// ═══════════════════════════════════════════════════════════
+﻿// ═══════════════════════════════════════════════════════════
 // STATE — initialized before any function calls
 // ═══════════════════════════════════════════════════════════
 var S = {
@@ -425,13 +425,41 @@ function calcPrice(){
   var sdDiscountAmt=Math.round(sdRetailSub*NORMAN_DISC_SD);
   var sdYourPrice=sdRetailSub-sdDiscountAmt;
   document.getElementById('pr-qty').textContent=S.qty+' shade'+(S.qty>1?'s':'');
-  document.getElementById('pr-total').textContent='~$'+sdYourPrice.toLocaleString()+' (retail $'+sdRetailSub.toLocaleString()+' -15%)';
+  document.getElementById('pr-retail').textContent='$'+sdRetailSub.toLocaleString();
+  document.getElementById('pr-disc').textContent='−$'+sdDiscountAmt.toLocaleString();
+  document.getElementById('pr-total').textContent='~$'+sdYourPrice.toLocaleString();
 }
 
 // ═══════════════════════════════════════════════════════════
 // SUBMIT
 // ═══════════════════════════════════════════════════════════
 function getOpt(id){var e=document.getElementById(id);return e?e.textContent.trim():'';}
+
+function addNormanSheersToCart(){
+  if(!S.fabric){ alert('Please select a fabric before adding to cart.'); return; }
+  if(!S.w||!S.h){ alert('Please enter valid dimensions before adding to cart.'); return; }
+
+  var stackLabels={'left':'Left Stack','right':'Right Stack','center':'Traveling Center Stack','copen':'Center Opening'};
+  var mountLabels={'wall':'Wall Mount (L bracket)','ceiling':'Ceiling Mount','pocket':'Ceiling Pocket Mount'};
+  var isSBS=document.getElementById('sbs-check')&&document.getElementById('sbs-check').checked;
+
+  var lines=[
+    {label:'Product',value:'Norman SmartDrape™'},
+    {label:'Operation',value:S.op==='wand'?'Wand Tilt':'Motorized — Norman Smart'},
+    {label:'Stack',value:stackLabels[S.stack]||S.stack},
+    {label:'Mount',value:mountLabels[S.mount]||S.mount},
+    {label:'Track Width',value:(S.w||'—')+'″'},
+    {label:'Height',value:(S.h||'—')+'″'},
+    {label:'Light Control',value:S.opacity==='lf'?'Light Filtering':'Blackout'},
+    {label:'Collection',value:S.fabric?S.fabric.coll:'—'},
+    {label:'Color',value:S.fabric?S.fabric.name:'—'},
+    {label:'Side by Side',value:isSBS?'Yes':'No'},
+    {label:'Quantity',value:String(S.qty||1)}
+  ];
+  var specs=lines.map(function(l){return l.label+': '+l.value;}).join(' | ');
+  pbAddToCart({product:'Norman SmartDrape™',lines:lines,specs:specs,price:null,qty:S.qty||1});
+  pbOpenCart();
+}
 
 async function submitQuote(){
   var name=document.getElementById('q-name').value.trim();
@@ -476,7 +504,7 @@ async function submitQuote(){
     var form=document.getElementById('quote-form'); if(form) form.style.display='none';
   }catch(err2){
     if(btn){btn.disabled=false;btn.textContent='Submit SmartDrape™ Specification & Request Quote →';}
-    err.innerHTML=(err2.message&&err2.message.length<200?err2.message+'<br>':'')+'Please email <a href="mailto:justin@phillyblinds.com">justin@phillyblinds.com</a> or call (609) 742-1720.';
+    err.innerHTML=(err2.message&&err2.message.length<200?err2.message+'<br>':'')+'Please email <a href="mailto:blindznation@gmail.com">blindznation@gmail.com</a> or call (609) 742-1720.';
     err.style.display='block';
   }
 }

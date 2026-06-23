@@ -426,6 +426,32 @@ function selectDelivery(opt, prefix) {
 }
 
 // ── SUBMIT ──
+function addKirschToCart(){
+  if(!S.type){ alert('Please select a rod type before adding to cart.'); return; }
+
+  const travW=(document.getElementById('trav-width')||{value:''}).value;
+  const rodW=(document.getElementById('rod-width')||{value:''}).value;
+  const rodQty=document.getElementById('rod-qty')?.value||document.getElementById('trav-qty')?.value||'1';
+
+  const lines=[
+    {label:'Product',value:'Kirsch Drapery Hardware'},
+    {label:'Rod Type',value:S.type==='static'?'Stationary/Decorative':S.type==='traverse'?'Traverse Rod':'Basic Hardware'},
+    {label:'System',value:S.traverseSystem==='estate'?'Estate™ Traverse':S.traverseSystem==='architrac'?'Architrac® '+(S.architracModel||'94001'):collectionLabel()||'—'},
+    {label:'Collection',value:collectionLabel()||'—'},
+    {label:'Finish',value:S.finish||'—'},
+    {label:'Finial',value:S.finial||'N/A'},
+    {label:'Pole Diameter',value:S.poleDia||S.dmEstateDia||'—'},
+    {label:'Width',value:(travW||rodW||'—')+(travW||rodW?'"':'')},
+    {label:'Quantity',value:String(rodQty)},
+    {label:'Draw',value:S.draw||'N/A'},
+    {label:'Mount',value:S.mount||'—'},
+    {label:'AMP Motor',value:S.motorized?'Yes — Motor #62001300':'No'}
+  ];
+  const specs=lines.map(l=>l.label+': '+l.value).join(' | ');
+  pbAddToCart({product:'Kirsch Drapery Hardware',lines:lines,specs:specs,price:null,qty:parseInt(rodQty)||1});
+  pbOpenCart();
+}
+
 function submitQuote() {
   const name = document.getElementById('q-name').value.trim();
   const contact = document.getElementById('q-contact').value.trim();
@@ -479,7 +505,7 @@ function submitQuote() {
   ].join('\n');
 
   const subject = 'Kirsch Rod Quote — ' + collectionLabel() + ' — ' + name;
-  window.location.href = 'mailto:justin@phillyblinds.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  window.location.href = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 
   document.querySelectorAll('.section').forEach(s => s.classList.remove('on'));
   document.getElementById('success-box').style.display = 'block';
@@ -509,7 +535,7 @@ function submitUnsure() {
     '--- Sent from phillyblinds.com/pages/kirsch-rods.html ---'
   ].join('\n');
 
-  window.location.href = 'mailto:justin@phillyblinds.com?subject=' + encodeURIComponent('Kirsch Hardware Help — ' + name) + '&body=' + encodeURIComponent(body);
+  window.location.href = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent('Kirsch Hardware Help — ' + name) + '&body=' + encodeURIComponent(body);
   document.querySelectorAll('.section').forEach(s => s.classList.remove('on'));
   document.getElementById('success-box').style.display = 'block';
   document.getElementById('step-bar').style.display = 'none';

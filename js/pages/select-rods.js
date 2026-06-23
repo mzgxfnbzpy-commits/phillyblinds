@@ -224,7 +224,7 @@ function submitWoodQuote(){
   var notes=document.getElementById('wd-q-notes').value.trim();
   var sys=SS.system==='traverse'?'Select Wood Traverse':'Select Wood Stationary Pole';
   var body='SELECT WOOD HARDWARE QUOTE REQUEST\n\nType: '+sys+'\nName: '+name+'\nPhone: '+phone+'\n\nProject notes:\n'+(notes||'None')+'\n\n--- phillyblinds.com/pages/select-rods.html ---';
-  window.location.href='mailto:justin@phillyblinds.com?subject='+encodeURIComponent('Select Wood Quote — '+name)+'&body='+encodeURIComponent(body);
+  window.location.href='mailto:blindznation@gmail.com?subject='+encodeURIComponent('Select Wood Quote — '+name)+'&body='+encodeURIComponent(body);
   document.getElementById('wd-q-form').style.display='none';
   document.getElementById('wd-q-success').style.display='block';
 }
@@ -480,6 +480,18 @@ function getSummaryText(){
 }
 
 // ── SUBMIT ────────────────────────────────────────────────────────
+function addSelectToCart(){
+  if(!SS.system){ alert('Please select a hardware system before adding to cart.'); return; }
+
+  var summaryLines=getCurrentSummaryLines();
+  var lines=[{label:'Product',value:'Select Drapery Hardware'}].concat(
+    summaryLines.filter(function(l){return l&&(l.k||l.label);}).map(function(l){return {label:l.k||l.label,value:String(l.v||l.value||'')};})
+  );
+  var specs=lines.map(function(l){return l.label+': '+l.value;}).join(' | ');
+  pbAddToCart({product:'Select Drapery Hardware',lines:lines,specs:specs,price:null,qty:1});
+  pbOpenCart();
+}
+
 function submitSelect(){
   var name=document.getElementById('sel-name').value.trim();
   var phone=document.getElementById('sel-phone').value.trim();
@@ -492,7 +504,7 @@ function submitSelect(){
     +'SPECIFICATION:\n'+spec+'\n\n'
     +'Delivery: '+delivery+'\n\n'
     +'Notes:\n'+(document.getElementById('sel-notes').value.trim()||'None');
-  window.location.href='mailto:justin@phillyblinds.com'
+  window.location.href='mailto:blindznation@gmail.com'
     +'?subject='+encodeURIComponent('Select Hardware Quote — '+(SS.collection||'')+(SS.finish||SS.woodFinish?' · '+(SS.finish||SS.woodFinish):'')+' — '+name)
     +'&body='+encodeURIComponent(body);
   document.getElementById('sel-form').style.display='none';

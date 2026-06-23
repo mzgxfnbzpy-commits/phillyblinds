@@ -129,6 +129,10 @@
 .custom-quote-block-body{font-size:12px;color:#92400E;line-height:1.6}
 .custom-quote-block-phone{font-size:13px;margin-top:8px}
 .custom-quote-block-phone a{color:var(--gold);font-weight:600;text-decoration:none}
+/* Step reorder: mount+dims first */
+#config-left{display:flex;flex-direction:column}
+#step3{order:1}#step4{order:2}#step1{order:3}#step2{order:4}
+#step5,#step6,#step7,#step8{order:5}
 </style>
 </head>
 <body data-page="Shades & blinds">
@@ -157,20 +161,20 @@
       <div class="vcard-img"><img src="../images/thumbnails/faux-blinds-bay-window.JPEG" alt="Faux Wood Blinds"><span class="vcard-badge" style="background:#2DE0C1;color:#0A4A42">Norman</span></div>
       <div class="vcard-body"><div class="vcard-name">Faux Wood Blinds</div><div class="vcard-desc">SmartPrivacy® — moisture resistant, cordless, 16 colors. Instant pricing.</div></div>
     </span>
-    <span class="vcard" style="cursor:pointer" onclick="pbShowContact('Real Wood Blinds — custom quote')">
-      <div class="vcard-img"><img src="../images/thumbnails/real wood blinds.JPEG" onerror="this.src='../images/thumbnails/faux-blinds.png'" alt="Real Wood Blinds"><span class="vcard-badge" style="background:#C8973F;color:#1C1510">Custom</span></div>
-      <div class="vcard-body"><div class="vcard-name">Real Wood Blinds</div><div class="vcard-desc">Genuine hardwood — stained & painted finishes. Custom quote required.</div></div>
+    <span class="vcard" style="cursor:pointer" onclick="location.href='real-wood-blinds.html'">
+      <div class="vcard-img"><img src="../images/thumbnails/real wood blinds.JPEG" onerror="this.src='../images/thumbnails/faux-blinds.png'" alt="Real Wood Blinds"><span class="vcard-badge" style="background:#C8973F;color:#1C1510">Norman</span></div>
+      <div class="vcard-body"><div class="vcard-name">Real Wood Blinds</div><div class="vcard-desc">Genuine hardwood — 26 colors, natural grain. Instant pricing.</div></div>
     </span>
   </div>
 </div>
 
 <div class="config-layout">
-<div><!-- left column -->
+<div id="config-left"><!-- left column -->
 
   <!-- STEP 1: SLAT SIZE -->
-  <div class="step-block active" id="step1">
+  <div class="step-block done" id="step1">
     <div class="step-head" onclick="toggleStep('step1')">
-      <div class="step-num">1</div>
+      <div class="step-num">3</div>
       <div class="step-head-title">Slat Size</div>
       <div class="step-head-val" id="s1val">2&Prime; (selected)</div>
     </div>
@@ -192,7 +196,7 @@
   <!-- STEP 2: COLOR & FINISH -->
   <div class="step-block" id="step2">
     <div class="step-head" onclick="toggleStep('step2')">
-      <div class="step-num">2</div>
+      <div class="step-num">4</div>
       <div class="step-head-title">Color &amp; Finish</div>
       <div class="step-head-val" id="s2val">—</div>
     </div>
@@ -272,9 +276,9 @@
   </div>
 
   <!-- STEP 3: MOUNT TYPE -->
-  <div class="step-block" id="step3">
+  <div class="step-block active" id="step3">
     <div class="step-head" onclick="toggleStep('step3')">
-      <div class="step-num">3</div>
+      <div class="step-num">1</div>
       <div class="step-head-title">Mount Type</div>
       <div class="step-head-val" id="s3val">—</div>
     </div>
@@ -296,7 +300,7 @@
   <!-- STEP 4: DIMENSIONS -->
   <div class="step-block" id="step4">
     <div class="step-head" onclick="toggleStep('step4')">
-      <div class="step-num">4</div>
+      <div class="step-num">2</div>
       <div class="step-head-title">Dimensions</div>
       <div class="step-head-val" id="s4val">—</div>
     </div>
@@ -477,10 +481,11 @@
     </div>
     <div class="step-body">
       <div class="form-row">
-        <div class="form-group"><label>Name *</label><input type="text" id="f-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="f-phone" placeholder="(215) 555-0100"></div>
+        <div class="form-group"><label>Name *</label><input type="text" id="f-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="f-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
       </div>
-      <div class="form-group"><label>Email *</label><input type="email" id="f-email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Email *</label><input type="email" id="f-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Address <span style="font-weight:400;color:#999">(optional)</span></label><input type="text" id="f-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
       <div class="form-group"><label>Notes <span style="font-weight:400;color:#999">(optional)</span></label><textarea id="f-notes" placeholder="Special installation requirements, questions, or anything else we should know…"></textarea></div>
 
       <div class="delivery-wrap">
@@ -499,7 +504,8 @@
       </div>
 
       <div class="form-err" id="form-err"></div>
-      <button class="submit-btn" onclick="submitForm()">Submit Quote Request &rarr;</button>
+      <button class="btn-cart-add" onclick="addFauxWoodToCart()" style="margin-bottom:8px">+ Add to Cart</button>
+      <button class="submit-btn" onclick="submitForm()" data-pb-require-contact="form-err">Submit Order for Review &rarr;</button>
       <div class="success-box" id="success-box">
         <h3>Quote request sent!</h3>
         <p>We&rsquo;ll follow up within a few hours to confirm your specs and collect payment. Call <strong>(609) 742-1720</strong> 24/7 for anything urgent.</p>

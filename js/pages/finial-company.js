@@ -868,10 +868,24 @@ function submitQuote(){
     'No changes/cancellations after 24 hours of order confirmation.'
   ].filter(function(l){return l!==null&&l!==undefined;}).join('\n');
 
-  window.location.href='mailto:justin@phillyblinds.com'
+  window.location.href='mailto:blindznation@gmail.com'
     +'?subject='+encodeURIComponent('Finial Company Hardware Quote — '+name)
     +'&body='+encodeURIComponent(lines);
   document.getElementById('success-box').style.display='block';
+}
+
+function addFinialToCart() {
+  var collNames = {standard:'Standard Collection',steel:'Steel Collection',wood:'Wood Collection',glass:'Glass Collection'};
+  var collLabel = collNames[S.coll] || (S.coll || 'The Finial Company');
+  var lines = [
+    { label: 'Product', value: 'The Finial Company — ' + collLabel },
+    { label: 'Finish', value: S.finish || '—' },
+    { label: 'Left Finial', value: S.finLeft || '—' },
+    { label: 'Right Finial', value: S.finRight || '—' },
+    { label: 'Pole Length', value: S.poleLen ? S.poleLen + '″' : '—' }
+  ];
+  pbAddToCart({ product: 'The Finial Company Hardware', lines: lines, specs: lines.map(function(l){ return l.label+': '+l.value; }).join(' | '), qty: 1 });
+  pbOpenCart();
 }
 
 // INIT

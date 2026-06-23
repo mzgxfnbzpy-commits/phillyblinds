@@ -31,79 +31,30 @@
 .config-layout{display:grid;grid-template-columns:1fr 308px;gap:24px;max-width:1100px;margin:0 auto;padding:28px 28px 60px;align-items:start}
 @media(max-width:880px){.config-layout{grid-template-columns:1fr;padding:20px 16px 48px}}
 
-.config-step{background:#fff;border:1px solid #e8e8e4;border-radius:12px;padding:18px 20px;margin-bottom:10px}
-.config-step.active{border-color:var(--gold);box-shadow:0 2px 12px rgba(200,151,63,.1)}
+/* step-block local overrides */
+.step-body{padding-top:16px}
 .step-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:4px}
-.step-title{font-size:14px;font-weight:600;color:#111;margin-bottom:12px}
+.step-title{font-size:15px;font-weight:600;color:#111;margin-bottom:10px}
+/* color swatch dot */
+.csw{display:inline-block;width:10px;height:10px;border-radius:50%;border:1px solid;vertical-align:middle;margin-right:5px;flex-shrink:0}
 
-.openness-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
-.openness-card{background:#fff;border:1.5px solid #e8e8e4;border-radius:11px;padding:16px 10px;cursor:pointer;transition:all .15s;text-align:center}
-.openness-card:hover{border-color:var(--gold);background:var(--gold-mid)}
-.openness-card.sel{border:2px solid var(--gold);background:var(--gold-mid)}
-.op-pct{font-size:22px;font-weight:700;color:#111;margin-bottom:3px}
-.op-label{font-size:10px;color:#666;line-height:1.4}
-.openness-card.sel .op-pct,.openness-card.sel .op-label{color:#0A4A42}
-.op-quote{background:#FFF8EC;border:1px solid #e8c96b;border-radius:11px;padding:16px 10px;cursor:pointer;transition:all .15s;text-align:center}
-.op-quote:hover{border-color:var(--gold)}
-.op-quote-label{font-size:11px;color:#5a3a00;line-height:1.4}
-
-.color-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
-@media(max-width:400px){.color-grid{grid-template-columns:1fr 1fr}}
-.color-card{background:#fff;border:1.5px solid #e8e8e4;border-radius:10px;padding:12px 8px;cursor:pointer;transition:all .15s;text-align:center}
-.color-card:hover{border-color:var(--gold)}
-.color-card.sel{border:2px solid var(--gold);background:var(--gold-mid)}
-.color-swatch{width:32px;height:32px;border-radius:50%;margin:0 auto 6px;border:1.5px solid #ddd}
-.color-name{font-size:11px;font-weight:600;color:#111}
-.color-card.sel .color-name{color:#0A4A42}
-
-.opt-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
-@media(max-width:480px){.opt-grid-3{grid-template-columns:1fr}}
-.opt-card{background:#fff;border:1.5px solid #e8e8e4;border-radius:10px;padding:13px 11px;cursor:pointer;transition:all .15s;text-align:center}
-.opt-card:hover{border-color:var(--gold)}
-.opt-card.sel{border:2px solid var(--gold);background:var(--gold-mid)}
-.opt-card-title{font-size:12px;font-weight:600;color:#111;margin-bottom:3px}
-.opt-card.sel .opt-card-title{color:#0A4A42}
-.opt-card-desc{font-size:10px;color:#666;line-height:1.4}
-
-.opt-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
-
-.dim-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
-@media(max-width:480px){.dim-row{grid-template-columns:1fr}}
-.dim-label{font-size:12px;font-weight:600;color:#444;margin-bottom:6px}
-.dim-inputs{display:flex;gap:6px;align-items:center}
-.dim-whole{width:62px;padding:8px 10px;border:1.5px solid #ddd;border-radius:8px;font-size:15px;text-align:center;font-family:inherit;transition:border-color .12s}
-.dim-whole:focus{outline:none;border-color:var(--gold)}
-.dim-frac{padding:8px 6px;border:1.5px solid #ddd;border-radius:8px;font-size:12px;background:#fff;font-family:inherit;transition:border-color .12s}
-.dim-frac:focus{outline:none;border-color:var(--gold)}
-.dim-unit{font-size:12px;color:#666}
+/* dimension feedback */
+.dim-unit{font-size:11px;color:#999;text-align:center;margin-top:3px}
 .dim-msg{border-radius:7px;padding:8px 12px;font-size:11px;margin-top:8px;line-height:1.5;display:none}
 .dim-msg.show{display:block}
 .dim-msg.warn{background:#FEE2E2;border:1px solid #EF4444;color:#7f1d1d}
 .dim-msg.info{background:#f0f9f8;border:1px solid rgba(45,224,193,.25);color:#0A4A42}
 
-.spinner-row{display:flex;align-items:center;gap:9px;margin-top:10px}
-.spin-btn{width:34px;height:34px;border:1.5px solid #ddd;border-radius:7px;background:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .12s;font-family:inherit;line-height:1}
-.spin-btn:hover{border-color:var(--gold)}
-.spin-num{width:50px;text-align:center;border:1.5px solid #ddd;border-radius:7px;font-size:15px;font-weight:600;padding:6px;font-family:inherit}
-.spin-label{font-size:12px;color:#666}
+/* quantity */
+.qty-btns{display:flex;align-items:center;gap:0}
+.qty-btn{width:34px;height:34px;border:1.5px solid #ddd;background:#fff;font-size:17px;cursor:pointer;color:#333;font-family:var(--font);display:flex;align-items:center;justify-content:center;transition:background .1s;line-height:1}
+.qty-btn:first-child{border-radius:8px 0 0 8px}
+.qty-btn:last-child{border-radius:0 8px 8px 0}
+.qty-btn:hover{background:var(--gold-mid)}
+.qty-num{width:44px;text-align:center;border-top:1.5px solid #ddd;border-bottom:1.5px solid #ddd;border-left:none;border-right:none;height:34px;font-size:14px;font-weight:600;font-family:var(--font);background:#fff;color:#111}
+.qty-num:focus{outline:none}
 
-.delivery-opt{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border:1.5px solid #e8e8e4;border-radius:10px;cursor:pointer;margin-top:8px;transition:all .15s}
-.delivery-opt:hover{border-color:var(--gold)}
-.delivery-opt.sel{border:2px solid var(--gold);background:var(--gold-mid)}
-.del-radio{width:16px;height:16px;border:2px solid #ccc;border-radius:50%;flex-shrink:0;margin-top:2px;transition:all .15s}
-.delivery-opt.sel .del-radio{border-color:var(--gold);background:var(--gold)}
-.del-label{font-size:13px;font-weight:600;color:#111}
-.del-sub{font-size:11px;color:#666;margin-top:2px;line-height:1.5}
-.tariff-note{font-size:10px;color:#999;margin-top:4px;line-height:1.5}
-
-.form-group{margin-bottom:12px}
-.form-group label{display:block;font-size:11px;font-weight:600;color:#555;margin-bottom:4px;text-transform:uppercase;letter-spacing:.3px}
-.form-group input,.form-group textarea{width:100%;padding:9px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;font-family:inherit;box-sizing:border-box;transition:border-color .12s}
-.form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--gold)}
-.form-group textarea{resize:vertical;min-height:72px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:480px){.form-row{grid-template-columns:1fr}}
-
+/* quote panel */
 .quote-panel{background:var(--espresso);border-radius:14px;padding:22px;position:sticky;top:72px}
 .qp-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:16px}
 .qp-pending{font-size:12px;color:var(--text-muted);text-align:center;padding:12px 0;font-style:italic;line-height:1.6}
@@ -113,7 +64,6 @@
 .qdiv{border:none;border-top:.5px solid var(--border-dark);margin:12px 0}
 .qnote{font-size:10px;color:var(--text-dark);margin-top:8px;line-height:1.6;font-style:italic}
 .submit-note{font-size:10px;color:var(--text-muted);text-align:center;margin-top:8px;line-height:1.5}
-
 .success-box{background:#1a3a2a;border:1px solid rgba(45,224,193,.4);border-radius:10px;padding:18px;text-align:center;display:none}
 .success-box h3{color:var(--gold);font-size:20px;margin-bottom:8px;line-height:1.3}
 .success-box p{color:var(--text-dark);font-size:14px;line-height:1.7;margin-top:6px}
@@ -125,7 +75,7 @@
 <div class="page-hero">
   <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <a href="roller-shades.html">Roller Shades</a> &rsaquo; Exterior</div>
   <h1>Exterior Roller Shades</h1>
-  <p class="sub">Deck, patio, pergola, and outdoor living spaces. Cassette headrail standard. Solar screen 5% &amp; 10% — instant quote online. 15% openness — contact for custom quote.</p>
+  <p class="sub">Deck, patio, pergola, and outdoor living spaces. Cassette headrail standard. Solar screen 5% &amp; 10% — instant quote online.</p>
   <div class="hero-pills">
     <span class="hero-pill hero-pill-gold">Cassette included</span>
     <span class="hero-pill hero-pill-gold">Instant quote — 5% &amp; 10%</span>
@@ -151,7 +101,7 @@
       <div class="vcard-body"><div class="vcard-name">Woven Wood Roller</div><div class="vcard-desc">Wallace Portfolio Natural — 20 woven fabric patterns, single or double shade.</div></div>
     </a>
     <span class="vcard v-active">
-      <span class="v-active-check">✓</span>
+      <span class="v-active-check">&#10003;</span>
       <div class="vcard-img"><img src="../images/thumbnails/exterior-roller-shade.JPEG" alt="Exterior Roller Shades"><span class="vcard-badge" style="background:#555;color:#fff">Exterior</span></div>
       <div class="vcard-body"><div class="vcard-name">Exterior Roller Shades</div><div class="vcard-desc">Outdoor install — cassette, solar screen, zipper track &amp; cable options.</div></div>
     </span>
@@ -162,190 +112,189 @@
 <div><!-- left column -->
 
 <!-- STEP 1: MOUNT -->
-<div class="config-step active" id="step-1">
-  <div class="step-label">Step 1</div>
-  <div class="step-title">Mount type</div>
-  <p style="font-size:12px;color:#555;margin-bottom:10px;line-height:1.6">Both use the cassette headrail — the difference is whether the cassette attaches to the wall face or the ceiling/soffit.</p>
-  <div class="opt-grid-2">
-    <div class="opt-card" id="mount-wall" onclick="ersPickMount('wall','Wall Mount')">
-      <div class="opt-card-title">Wall Mount</div>
-      <div class="opt-card-desc">Cassette attaches to wall or fascia above the opening. Most common for exterior installations.</div>
+<div class="step-block active" id="step-1">
+  <div class="step-body">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="step-num">1</div>
+      <div class="step-title" style="margin-bottom:0">Mount type</div>
     </div>
-    <div class="opt-card" id="mount-ceiling" onclick="ersPickMount('ceiling','Ceiling / Soffit Mount')">
-      <div class="opt-card-title">Ceiling / Soffit Mount</div>
-      <div class="opt-card-desc">Cassette mounts overhead into soffit or ceiling. Good for pergolas and covered patios.</div>
+    <p class="step-subhead">Both use the cassette headrail. Wall mount attaches to wall or fascia above the opening. Ceiling / soffit mount attaches overhead — ideal for pergolas and covered patios.</p>
+    <div class="opt-row">
+      <button class="opt-btn" id="mount-wall" onclick="ersPickMount('wall','Wall Mount')">Wall Mount</button>
+      <button class="opt-btn" id="mount-ceiling" onclick="ersPickMount('ceiling','Ceiling / Soffit Mount')">Ceiling / Soffit Mount</button>
     </div>
   </div>
 </div>
 
 <!-- STEP 2: DIMENSIONS -->
-<div class="config-step" id="step-2">
-  <div class="step-label">Step 2</div>
-  <div class="step-title">Dimensions</div>
-  <p style="font-size:12px;color:#555;margin-bottom:10px;line-height:1.6">Measure the opening you want to cover. For <strong>zipper track</strong>, the fabric goes edge-to-edge — measure the exact opening width. For <strong>wall/ceiling mount without track</strong>, add 2–4″ to each side for coverage.</p>
-  <div class="form-row">
-    <div class="form-group">
-      <label>Width</label>
-      <input type="number" id="ers-inp-w" min="12" max="144" step="0.5" placeholder="60" oninput="ersDimChange()">
-      <div class="dim-unit">inches &mdash; 12″ min · 144″ max</div>
+<div class="step-block" id="step-2">
+  <div class="step-body">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="step-num">2</div>
+      <div class="step-title" style="margin-bottom:0">Dimensions</div>
     </div>
-    <div class="form-group">
-      <label>Height / Drop</label>
-      <input type="number" id="ers-inp-h" min="12" max="144" step="0.5" placeholder="84" oninput="ersDimChange()">
-      <div class="dim-unit">inches &mdash; 12″ min · 144″ max</div>
+    <p class="step-subhead">Measure the opening you want to cover. Zipper track: measure the exact opening width. Without track: add 2–4″ per side for coverage.</p>
+    <div class="dim-box">
+      <div class="dim-box-label">Opening size</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Width</label>
+          <input type="number" id="ers-inp-w" min="12" max="144" step="0.5" placeholder="60" oninput="ersDimChange()">
+          <div class="dim-unit">inches &mdash; 12″ min · 144″ max</div>
+        </div>
+        <div class="form-group">
+          <label>Height / Drop</label>
+          <input type="number" id="ers-inp-h" min="12" max="144" step="0.5" placeholder="84" oninput="ersDimChange()">
+          <div class="dim-unit">inches &mdash; 12″ min · 144″ max</div>
+        </div>
+      </div>
     </div>
+    <div id="ers-dim-msg" class="dim-msg"></div>
   </div>
-  <div id="ers-dim-msg" class="dim-msg"></div>
 </div>
 
 <!-- STEP 3: OPENNESS -->
-<div class="config-step" id="step-3">
-  <div class="step-label">Step 3</div>
-  <div class="step-title">Openness factor</div>
-  <p style="font-size:12px;color:#555;margin-bottom:10px;line-height:1.6">Openness factor = % of light allowed through. Lower % = tighter weave, more shade and glare control. ±10% is industry-standard tolerance.</p>
-  <div class="openness-grid">
-    <div class="openness-card" id="op-5" onclick="ersPickOpenness('5','5% — high shade')">
-      <div class="op-pct">5%</div>
-      <div class="op-label">High shade<br>Most popular for direct sun</div>
+<div class="step-block" id="step-3">
+  <div class="step-body">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="step-num">3</div>
+      <div class="step-title" style="margin-bottom:0">Openness factor</div>
     </div>
-    <div class="openness-card" id="op-10" onclick="ersPickOpenness('10','10% — balanced')">
-      <div class="op-pct">10%</div>
-      <div class="op-label">Balanced<br>View + shade</div>
-    </div>
-    <div class="op-quote" onclick="pbShowContact('Exterior Roller Shades — 15% Openness')">
-      <div class="op-pct" style="font-size:22px;font-weight:700;color:#5a3a00;margin-bottom:3px">15%</div>
-      <div class="op-quote-label">Open weave<br>Contact for custom quote</div>
+    <p class="step-subhead">Lower % = tighter weave, more shade and glare control. ±10% is industry-standard tolerance.</p>
+    <div class="opt-row">
+      <button class="opt-btn" id="op-5" onclick="ersPickOpenness('5','5% — high shade')">5% &mdash; High shade</button>
+      <button class="opt-btn" id="op-10" onclick="ersPickOpenness('10','10% — balanced')">10% &mdash; Balanced</button>
     </div>
   </div>
 </div>
 
 <!-- STEP 4: COLOR -->
-<div class="config-step" id="step-4">
-  <div class="step-label">Step 4</div>
-  <div class="step-title">Fabric color</div>
-  <p style="font-size:12px;color:#555;margin-bottom:10px;line-height:1.6">Solar screen fabric in your chosen openness. Actual color may vary slightly — request a swatch before ordering for the best match.</p>
-  <div class="color-grid" id="color-grid">
-    <div class="color-card" onclick="ersPickColor(this,'White')">
-      <div class="color-swatch" style="background:#f5f5f5;border-color:#ccc"></div>
-      <div class="color-name">White</div>
+<div class="step-block" id="step-4">
+  <div class="step-body">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="step-num">4</div>
+      <div class="step-title" style="margin-bottom:0">Fabric color</div>
     </div>
-    <div class="color-card" onclick="ersPickColor(this,'Off-White')">
-      <div class="color-swatch" style="background:#f0ead8;border-color:#ccc"></div>
-      <div class="color-name">Off-White</div>
-    </div>
-    <div class="color-card" onclick="ersPickColor(this,'Cream')">
-      <div class="color-swatch" style="background:#e8dcc8;border-color:#ccc"></div>
-      <div class="color-name">Cream</div>
-    </div>
-    <div class="color-card" onclick="ersPickColor(this,'Gray')">
-      <div class="color-swatch" style="background:#9e9e9e;border-color:#888"></div>
-      <div class="color-name">Gray</div>
-    </div>
-    <div class="color-card" onclick="ersPickColor(this,'Charcoal')">
-      <div class="color-swatch" style="background:#4a4a4a;border-color:#333"></div>
-      <div class="color-name">Charcoal</div>
-    </div>
-    <div class="color-card" onclick="ersPickColor(this,'Black')">
-      <div class="color-swatch" style="background:#111;border-color:#000"></div>
-      <div class="color-name">Black</div>
+    <p class="step-subhead">Solar screen fabric in your chosen openness. Actual color may vary slightly — request a swatch before ordering for the best match.</p>
+    <div class="opt-row" id="color-grid">
+      <button class="opt-btn" onclick="ersPickColor(this,'White')"><span class="csw" style="background:#f5f5f5;border-color:#ccc"></span>White</button>
+      <button class="opt-btn" onclick="ersPickColor(this,'Off-White')"><span class="csw" style="background:#f0ead8;border-color:#ccc"></span>Off-White</button>
+      <button class="opt-btn" onclick="ersPickColor(this,'Cream')"><span class="csw" style="background:#e8dcc8;border-color:#ccc"></span>Cream</button>
+      <button class="opt-btn" onclick="ersPickColor(this,'Gray')"><span class="csw" style="background:#9e9e9e;border-color:#888"></span>Gray</button>
+      <button class="opt-btn" onclick="ersPickColor(this,'Charcoal')"><span class="csw" style="background:#4a4a4a;border-color:#333"></span>Charcoal</button>
+      <button class="opt-btn" onclick="ersPickColor(this,'Black')"><span class="csw" style="background:#111;border-color:#000"></span>Black</button>
     </div>
   </div>
 </div>
 
 <!-- STEP 5: SIDE TRACK -->
-<div class="config-step" id="step-5">
-  <div class="step-label">Step 5</div>
-  <div class="step-title">Side track</div>
-  <p style="font-size:12px;color:#555;margin-bottom:10px;line-height:1.6">Choose a hold-down system for wind resistance and a tighter light seal on the sides.</p>
-  <div class="opt-grid-2">
-    <div class="opt-card sel" id="track-cables" onclick="ersPickTrack('cables','Cables')">
-      <div class="opt-card-title">Cables</div>
-      <div class="opt-card-desc">Tension cables guide the hem bar straight. Good for exposed areas without a full zipper seal.</div>
+<div class="step-block" id="step-5">
+  <div class="step-body">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="step-num">5</div>
+      <div class="step-title" style="margin-bottom:0">Side track</div>
     </div>
-    <div class="opt-card" id="track-zipper" onclick="ersPickTrack('zipper','Zipper Track')">
-      <div class="opt-card-title">Zipper Track</div>
-      <div class="opt-card-desc">Fabric edge zips into an aluminum channel on each side. Tightest seal, maximum wind resistance.</div>
+    <p class="step-subhead">Cables guide the hem bar straight — good for exposed areas without a full zipper seal. Zipper track zips the fabric edge into an aluminum channel on each side for the tightest seal and maximum wind resistance.</p>
+    <div class="opt-row">
+      <button class="opt-btn sel" id="track-cables" onclick="ersPickTrack('cables','Cables')">Cables</button>
+      <button class="opt-btn" id="track-zipper" onclick="ersPickTrack('zipper','Zipper Track')">Zipper Track</button>
     </div>
   </div>
 </div>
 
 <!-- STEP 6: OPERATION -->
-<div class="config-step" id="step-6">
-  <div class="step-label">Step 6</div>
-  <div class="step-title">Operation</div>
-  <div class="opt-grid-2">
-    <div class="opt-card" id="op-manual" onclick="ersPickOperation('manual','Manual — hand crank')">
-      <div class="opt-card-title">Manual — hand crank</div>
-      <div class="opt-card-desc">Hand crank raises and lowers the shade. No power required. Reliable and low-maintenance.</div>
+<div class="step-block" id="step-6">
+  <div class="step-body">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="step-num">6</div>
+      <div class="step-title" style="margin-bottom:0">Operation</div>
     </div>
-    <div class="opt-card" id="op-motorized" onclick="ersPickOperation('motorized','Motorized')">
-      <div class="opt-card-title">Motorized</div>
-      <div class="opt-card-desc">Motor brand and specs confirmed at quote. Specify preference in notes.</div>
+    <p class="step-subhead">Manual uses a hand crank — no power required, reliable and low-maintenance. Motor brand and specs are confirmed at quote; add your preference in the notes.</p>
+    <div class="opt-row">
+      <button class="opt-btn" id="op-manual" onclick="ersPickOperation('manual','Manual — hand crank')">Manual &mdash; hand crank</button>
+      <button class="opt-btn" id="op-motorized" onclick="ersPickOperation('motorized','Motorized')">Motorized</button>
     </div>
   </div>
 </div>
 
 <!-- STEP 7: QUANTITY -->
-<div class="config-step" id="step-7">
-  <div class="step-label">Step 7</div>
-  <div class="step-title">Quantity</div>
-  <p style="font-size:12px;color:#666;margin-bottom:10px;line-height:1.6">Number of shades with these exact specs. Multiple openings with different sizes? Submit separate orders or add details in the notes.</p>
-  <div class="spinner-row">
-    <button class="spin-btn" onclick="ersAdjQty(-1)">−</button>
-    <input class="spin-num" type="number" id="ers-qty" min="1" max="20" value="1" oninput="ersQtyChange()">
-    <button class="spin-btn" onclick="ersAdjQty(1)">+</button>
-    <span class="spin-label">shade(s)</span>
+<div class="step-block" id="step-7">
+  <div class="step-body">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="step-num">7</div>
+      <div class="step-title" style="margin-bottom:0">Quantity</div>
+    </div>
+    <p class="step-subhead">Number of shades with these exact specs. Multiple openings with different sizes? Submit separate orders or add details in the notes.</p>
+    <div style="display:flex;align-items:center;gap:10px;margin-top:4px">
+      <div class="qty-btns">
+        <button class="qty-btn" onclick="ersAdjQty(-1)">&#8722;</button>
+        <input class="qty-num" type="number" id="ers-qty" min="1" max="20" value="1" oninput="ersQtyChange()">
+        <button class="qty-btn" onclick="ersAdjQty(1)">&#43;</button>
+      </div>
+      <span style="font-size:13px;color:#666">shade(s)</span>
+    </div>
   </div>
 </div>
 
 <!-- STEP 8: DELIVERY -->
-<div class="config-step" id="step-8">
-  <div class="step-label">Step 8</div>
-  <div class="step-title">Delivery</div>
-  <div class="delivery-opt sel" id="del-ship" onclick="ersPickDelivery('ship')">
-    <div class="del-radio" style="border-color:var(--gold);background:var(--gold)"></div>
-    <div>
-      <div class="del-label">Shipped to me</div>
-      <div class="del-sub">UPS or FedEx from Huntingdon Valley, PA. Lead time provided at quote.</div>
-      <div class="tariff-note">Note: U.S. import tariffs may apply on some products. Any applicable duties are disclosed in your quote before payment.</div>
+<div class="step-block" id="step-8">
+  <div class="step-body">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="step-num">8</div>
+      <div class="step-title" style="margin-bottom:0">Delivery</div>
+    </div>
+    <div class="delivery-opt-grid" style="grid-template-columns:1fr">
+      <div class="delivery-opt-card sel" id="del-ship" onclick="ersPickDelivery('ship')">
+        <div class="delivery-opt-title">Shipped to me</div>
+        <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA. Lead time provided at quote.</div>
+        <div class="delivery-opt-body" style="margin-top:4px;font-size:10px;color:#bbb">Note: U.S. import tariffs may apply on some products. Any applicable duties are disclosed in your quote before payment.</div>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- STEP 9: CONTACT & SUBMIT -->
-<div class="config-step" id="step-9">
-  <div class="step-label">Step 9</div>
-  <div class="step-title">Your contact info</div>
-  <div id="contact-form">
-    <div class="form-group">
-      <label>Your name *</label>
-      <input type="text" id="q-name" placeholder="Jane Smith" autocomplete="name">
+<div class="step-block" id="step-9">
+  <div class="step-body">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="step-num">9</div>
+      <div class="step-title" style="margin-bottom:0">Your contact info</div>
     </div>
-    <div class="form-row">
+    <div id="contact-form">
       <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="q-email" placeholder="jane@example.com" autocomplete="email">
+        <label>Your name *</label>
+        <input type="text" id="q-name" data-pb-contact="name" placeholder="Jane Smith" autocomplete="name">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" id="q-email" data-pb-contact="email" placeholder="jane@example.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label>Phone *</label>
+          <input type="tel" id="q-phone" data-pb-contact="phone" placeholder="(215) 555-0100" autocomplete="tel">
+        </div>
       </div>
       <div class="form-group">
-        <label>Phone</label>
-        <input type="tel" id="q-phone" placeholder="(215) 555-0100" autocomplete="tel">
+        <label>Address <span style="font-weight:400;color:#888">(optional)</span></label>
+        <input type="text" id="q-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA" autocomplete="street-address">
       </div>
+      <div class="form-group">
+        <label>Notes / questions</label>
+        <textarea id="q-notes" placeholder="Location of shades, motor brand preference, mounting surface, timeline, any questions…"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Photos / files <span style="font-weight:400;color:#888">(optional)</span></label>
+        <input type="file" id="q-files" multiple accept="image/*,.pdf" style="font-size:12px;color:#555">
+        <div style="font-size:10px;color:#999;margin-top:4px;line-height:1.5">Attach photos of your space, measurements, or reference images. You'll also be able to email them directly after submitting.</div>
+      </div>
+      <input type="text" id="q-hp" style="display:none" tabindex="-1" autocomplete="off">
     </div>
-    <div class="form-group">
-      <label>Notes / questions</label>
-      <textarea id="q-notes" placeholder="Location of shades, motor brand preference, mounting surface, timeline, any questions…"></textarea>
+    <div class="success-box" id="success-box">
+      <h3>Request for Quote Submitted!</h3>
+      <p>Your email opened with your full spec pre-filled — just hit Send. We'll review your order and send you an invoice within a few hours.</p>
+      <p style="margin-top:10px;font-size:13px">Questions? <strong>(609) 742-1720</strong> &middot; 24/7 call or text.</p>
     </div>
-    <div class="form-group">
-      <label>Photos / files <span style="font-weight:400;color:#888">(optional)</span></label>
-      <input type="file" id="q-files" multiple accept="image/*,.pdf" style="font-size:12px;color:#555">
-      <div style="font-size:10px;color:#999;margin-top:4px;line-height:1.5">Attach photos of your space, measurements, or reference images. You'll also be able to email them directly after submitting.</div>
-    </div>
-    <input type="text" id="q-hp" style="display:none" tabindex="-1" autocomplete="off">
-  </div>
-  <div class="success-box" id="success-box">
-    <h3 style="font-size:20px">Request for Quote Submitted!</h3>
-    <p style="font-size:14px;margin-top:6px">Your email opened with your full spec pre-filled — just hit Send. We'll review your order and send you an invoice within a few hours.</p>
-    <p style="margin-top:10px;font-size:13px">Questions? <strong>(609) 742-1720</strong> · 24/7 call or text.</p>
   </div>
 </div>
 
@@ -359,7 +308,9 @@
   <div class="qdiv" id="qp-div" style="display:none"></div>
   <div class="qnote" id="qp-note" style="display:none">Fill in your details above and submit — Justin will send you a custom quote.</div>
   <div id="submit-wrap">
-    <button onclick="ersSubmit()" id="submit-btn" class="btn-gold" style="width:100%;padding:14px;font-size:15px;font-weight:600;margin-top:16px;border:none;cursor:pointer;border-radius:10px">Submit Order for Review</button>
+    <div id="ers-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
+    <button onclick="addExteriorRollerToCart()" class="btn-cart-add" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
+    <button onclick="ersSubmit()" id="submit-btn" class="btn-gold" style="width:100%;padding:14px;font-size:15px;font-weight:600;margin-top:16px;border:none;cursor:pointer;border-radius:10px" data-pb-require-contact="ers-contact-err">Submit Order for Review &rarr;</button>
     <div class="submit-note">No payment required now. Justin reviews your specs and sends a custom quote.</div>
   </div>
 </div>
@@ -372,7 +323,7 @@
 renderNav('Shades & blinds');
 renderFooter(false);
 
-var ERS = { openness:'', color:'', track:'', mount:'', operation:'', width:0, height:0, qty:1, delivery:'' };
+var ERS = { openness:'', color:'', track:'cables', mount:'', operation:'', width:0, height:0, qty:1, delivery:'ship' };
 
 function ersOpen(id) {
   var el = document.getElementById(id);
@@ -384,17 +335,17 @@ function ersOpen(id) {
   }, 80);
 }
 
-function ersDone(id, label) {
+function ersDone(id) {
   var el = document.getElementById(id);
   if (el) el.classList.remove('active');
 }
 
 function ersPickMount(val, label) {
   ERS.mount = val;
-  document.querySelectorAll('#step-1 .opt-card').forEach(function(c) { c.classList.remove('sel'); });
+  document.querySelectorAll('#step-1 .opt-btn').forEach(function(c) { c.classList.remove('sel'); });
   var card = document.getElementById('mount-' + val);
   if (card) card.classList.add('sel');
-  ersDone('step-1', label);
+  ersDone('step-1');
   ersUpdatePanel();
   setTimeout(function() { ersOpen('step-2'); }, 300);
 }
@@ -402,40 +353,40 @@ function ersPickMount(val, label) {
 function ersPickOpenness(val, label) {
   ERS.openness = val;
   ERS.color = '';
-  document.querySelectorAll('.openness-card').forEach(function(c) { c.classList.remove('sel'); });
+  document.querySelectorAll('#step-3 .opt-btn').forEach(function(c) { c.classList.remove('sel'); });
   var card = document.getElementById('op-' + val);
   if (card) card.classList.add('sel');
-  document.querySelectorAll('.color-card').forEach(function(c) { c.classList.remove('sel'); });
-  ersDone('step-3', label);
+  document.querySelectorAll('#color-grid .opt-btn').forEach(function(c) { c.classList.remove('sel'); });
+  ersDone('step-3');
   ersUpdatePanel();
   ersOpen('step-4');
 }
 
 function ersPickColor(btn, color) {
   ERS.color = color;
-  document.querySelectorAll('.color-card').forEach(function(c) { c.classList.remove('sel'); });
+  document.querySelectorAll('#color-grid .opt-btn').forEach(function(c) { c.classList.remove('sel'); });
   btn.classList.add('sel');
-  ersDone('step-4', color);
+  ersDone('step-4');
   ersUpdatePanel();
   setTimeout(function() { ersOpen('step-5'); }, 300);
 }
 
 function ersPickTrack(val, label) {
   ERS.track = val;
-  document.querySelectorAll('#step-5 .opt-card').forEach(function(c) { c.classList.remove('sel'); });
+  document.querySelectorAll('#step-5 .opt-btn').forEach(function(c) { c.classList.remove('sel'); });
   var card = document.getElementById('track-' + val);
   if (card) card.classList.add('sel');
-  ersDone('step-5', label);
+  ersDone('step-5');
   ersUpdatePanel();
   setTimeout(function() { ersOpen('step-6'); }, 300);
 }
 
 function ersPickOperation(val, label) {
   ERS.operation = val;
-  document.querySelectorAll('#step-6 .opt-card').forEach(function(c) { c.classList.remove('sel'); });
+  document.querySelectorAll('#step-6 .opt-btn').forEach(function(c) { c.classList.remove('sel'); });
   var card = document.getElementById('op-' + val);
   if (card) card.classList.add('sel');
-  ersDone('step-6', label);
+  ersDone('step-6');
   ersUpdatePanel();
   setTimeout(function() { ersOpen('step-7'); }, 300);
 }
@@ -455,7 +406,7 @@ function ersDimChange() {
     } else if (ERS.width > 0 && ERS.height > 0) {
       msg.className = 'dim-msg show info';
       msg.textContent = ERS.width + '″W × ' + ERS.height + '″H — ' + (ERS.width * ERS.height / 144).toFixed(1) + ' sq ft';
-      ersDone('step-2', '');
+      ersDone('step-2');
       setTimeout(function() { ersOpen('step-3'); }, 600);
     }
   }
@@ -468,24 +419,20 @@ function ersAdjQty(delta) {
   v = Math.max(1, Math.min(20, v + delta));
   inp.value = v;
   ERS.qty = v;
-  document.getElementById('sv-7').textContent = v + ' shade' + (v > 1 ? 's' : '');
   ersUpdatePanel();
 }
 
 function ersQtyChange() {
   var v = parseInt(document.getElementById('ers-qty').value) || 1;
   ERS.qty = Math.max(1, Math.min(20, v));
-  document.getElementById('sv-7').textContent = ERS.qty + ' shade' + (ERS.qty > 1 ? 's' : '');
   ersUpdatePanel();
 }
 
 function ersPickDelivery(val) {
   ERS.delivery = val;
   document.getElementById('del-ship').classList.toggle('sel', val === 'ship');
-  var sv = document.getElementById('sv-8');
-  if (sv) sv.textContent = 'Ship to me';
   var el8 = document.getElementById('step-8');
-  if (el8) { el8.classList.add('done'); el8.classList.remove('active','open'); }
+  if (el8) { el8.classList.add('done'); el8.classList.remove('active'); }
   ersUpdatePanel();
 }
 
@@ -500,7 +447,7 @@ function ersUpdatePanel() {
 
   if (ERS.openness) {
     pending.style.display = 'none';
-    if (ERS.openness) qr('Openness', ERS.openness + '% solar screen');
+    qr('Openness', ERS.openness + '% solar screen');
     if (ERS.color) qr('Color', ERS.color);
     if (ERS.track) qr('Side track', ERS.track === 'zipper' ? 'Zipper Track' : 'Cables');
     if (ERS.mount) qr('Mount', ERS.mount === 'wall' ? 'Wall Mount' : 'Ceiling / Soffit Mount');
@@ -519,6 +466,31 @@ function ersUpdatePanel() {
   }
 }
 
+function addExteriorRollerToCart(){
+  if(!ERS.mount){ alert('Please select a mount type before adding to cart.'); return; }
+  if(!ERS.openness){ alert('Please select an openness factor before adding to cart.'); return; }
+  if(!ERS.width||!ERS.height){ alert('Please enter dimensions before adding to cart.'); return; }
+
+  var trackLabel=ERS.track==='zipper'?'Zipper Track':ERS.track==='cables'?'Cables':'—';
+  var mountLabel=ERS.mount==='wall'?'Wall Mount':ERS.mount==='ceiling'?'Ceiling / Soffit Mount':'—';
+  var opLabel=ERS.operation==='manual'?'Manual — hand crank':ERS.operation==='motorized'?'Motorized':'—';
+
+  var lines=[
+    {label:'Product',value:'Exterior Roller Shades'},
+    {label:'Openness',value:(ERS.openness||'—')+'% solar screen'},
+    {label:'Color',value:ERS.color||'—'},
+    {label:'Side Track',value:trackLabel},
+    {label:'Mount',value:mountLabel},
+    {label:'Operation',value:opLabel},
+    {label:'Width',value:(ERS.width||'—')+'″'},
+    {label:'Height',value:(ERS.height||'—')+'″'},
+    {label:'Quantity',value:String(ERS.qty||1)}
+  ];
+  var specs=lines.map(function(l){return l.label+': '+l.value;}).join(' | ');
+  pbAddToCart({product:'Exterior Roller Shades',lines:lines,specs:specs,price:null,qty:ERS.qty||1});
+  pbOpenCart();
+}
+
 function ersSubmit() {
   if (document.getElementById('q-hp').value) return;
   var name = (document.getElementById('q-name').value || '').trim();
@@ -534,7 +506,7 @@ function ersSubmit() {
   var sqft = (ERS.width && ERS.height) ? (ERS.width * ERS.height / 144).toFixed(1) + ' sq ft' : '—';
 
   var body =
-    '── EXTERIOR ROLLER SHADE ORDER ─────────\n' +
+    '── EXTERIOR ROLLER SHADE ORDER ─────────────────\n' +
     'Openness:       ' + (ERS.openness ? ERS.openness + '% solar screen' : '—') + '\n' +
     'Color:          ' + (ERS.color || '—') + '\n' +
     'Headrail:       Cassette (standard)\n' +
@@ -561,10 +533,6 @@ function ersSubmit() {
   document.getElementById('success-box').style.display = 'block';
   document.getElementById('submit-wrap').style.display = 'none';
 }
-
-// Pre-select defaults
-ERS.track = 'cables';
-ERS.delivery = 'ship';
 </script>
 </body>
 </html>

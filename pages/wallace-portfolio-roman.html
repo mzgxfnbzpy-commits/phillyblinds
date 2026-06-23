@@ -529,14 +529,15 @@
     <div class="step-body" id="step16-body">
       <div id="submit-errors" class="warn-box warn-box-red" style="display:none;margin-bottom:14px"></div>
       <div class="form-row">
-        <div class="form-group"><label>Name *</label><input type="text" id="q-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="q-phone" placeholder="(215) 555-0100"></div>
+        <div class="form-group"><label>Name *</label><input type="text" id="q-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="q-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
       </div>
-      <div class="form-group"><label>Email</label><input type="email" id="q-email" placeholder="jane@example.com"></div>
-      <div class="form-group"><label>Address (city/state or full)</label><input type="text" id="q-address" placeholder="Philadelphia, PA"></div>
+      <div class="form-group"><label>Email *</label><input type="email" id="q-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Address <span style="font-weight:400;color:#999">(optional)</span></label><input type="text" id="q-address" data-pb-contact="address" placeholder="Philadelphia, PA"></div>
       <div class="form-group"><label>Notes &mdash; patterns, dressing requirements, ceiling height, anything special</label><textarea id="q-notes" placeholder="e.g. three windows in a row, hobbled shades need dressing after install, high ceiling..."></textarea></div>
       <button onclick="reqMoreInfo('Wallace Portfolio Fabric Roman Shades')" class="req-info-link" style="display:block;margin-bottom:12px">Request more information about Wallace Portfolio Romans &rarr;</button>
-      <button class="submit-btn" onclick="submitQuote()">Submit Quote Request &rarr;</button>
+      <button class="btn-cart-add" onclick="addWallaceRomanToCart()" style="margin-bottom:8px">+ Add to Cart</button>
+      <button class="submit-btn" onclick="submitQuote()" data-pb-require-contact="submit-errors">Submit Order for Review &rarr;</button>
       <div class="success-box" id="success-box">
         <h3>&#10003; Quote request sent!</h3>
         <p>We&rsquo;ll follow up within 1 business day.<br><strong>(609) 742-1720 &mdash; 24/7</strong></p>
