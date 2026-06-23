@@ -1,6 +1,7 @@
 {
   "rewrites": [
-    { "source": "/HANDOFF.html", "destination": "/404.html" }
+    { "source": "/HANDOFF.html", "destination": "/404.html" },
+    { "source": "/(.*)", "destination": "/maintenance.html" }
   ],
   "redirects": [
     { "source": "/pages/drapery.html",              "destination": "/pages/soft-treatments.html",          "permanent": true },
