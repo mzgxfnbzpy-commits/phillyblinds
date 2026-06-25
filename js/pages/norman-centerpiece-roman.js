@@ -1,4 +1,4 @@
-﻿// ── STATE ─────────────────────────────────────────────────────────────────────
+// ── STATE ─────────────────────────────────────────────────────────────────────
 var S = {
   type:'', qty:1, room:'', lift:'', headrail:'1.5',
   width:0, height:0, mount:'Inside mount', style:'',
@@ -451,7 +451,7 @@ function setDelivery(opt,card) {
   S.delivery=opt;
   document.querySelectorAll('.delivery-opt-card').forEach(function(c){c.classList.remove('sel');});
   card.classList.add('sel');
-  var labels={ship:'Ship to me',pickup:'Pick up',install:'Professional installation'};
+  var labels={ship:'Ship to me',install:'Professional installation'};
   document.getElementById('val14').textContent=labels[opt]||opt;
   sp('sp-delivery',labels[opt]||opt);
   document.getElementById('step14').classList.add('done');
@@ -515,7 +515,7 @@ function updateCalc() {
   var accT=(S.holddown?28:0)+(S.pole?89:0)+(S.cordlessPole?89:0)+((S.shims||0)*7);
   showRow('pr-acc-row',accT>0); if(accT>0)setVal('pr-acc','+$'+accT+'/shade');
   var isOversized=w>=90;
-  var freight=S.delivery==='pickup'||S.delivery==='install'?0:isOversized?(80+(qty>1?(qty-1)*50:0)):(25+(qty>1?(qty-1)*11:0));
+  var freight=S.delivery==='install'?0:isOversized?(80+(qty>1?(qty-1)*50:0)):(25+(qty>1?(qty-1)*11:0));
   showRow('pr-freight-row',freight>0); if(freight>0)setVal('pr-freight','$'+freight);
   var NORMAN_DISC_CP=0.15;
   var cpRetailSub=(per*qty)+(srAdd*qty)+(dnAdd*qty)+(vSur*qty)+(accT*qty);
@@ -579,7 +579,7 @@ function submitQuote() {
   var valance=S.valance?'Fabric valance ($'+getValanceSurcharge(S.width)+')':'None';
   var sbs=S.sbs?'Yes':'No';
   var sLabels={flat:'Flat Fold without Seams',batten:'Flat Fold with Batten Back',soft:'Soft Fold'};
-  var delivery={ship:'Ship (UPS/FedEx from Huntingdon Valley PA)',pickup:'Pick up (Huntingdon Valley PA)',install:'Professional installation'}[S.delivery]||S.delivery;
+  var delivery='Ship (UPS/FedEx from Huntingdon Valley PA)'||S.delivery;
   var motorLabel={smart:'Norman Smart Motor',autowand:'AutoWand™',automate:'Automate Home by Norman'}[S.motor]||'—';
   var _powerBtn=document.querySelector('#grp-power .opt-btn.sel');
   var power=_powerBtn?_powerBtn.textContent.trim():'Rechargeable battery';
@@ -616,3 +616,17 @@ renderRollerGrid();
 setQtyVal(1);
 document.getElementById('room-label').addEventListener('input', updateSpec);
 document.querySelectorAll('#grp-mount .opt-btn').forEach(function(b){b.addEventListener('click',function(){sp('sp-mount',this.textContent.trim());});});
+
+// Prefill from the custom Roman → Norman hand-off (soft-treatments.html ?w=&h=&qty=)
+(function(){
+  var q = new URLSearchParams(window.location.search);
+  var w = q.get('w'), h = q.get('h'), qty = q.get('qty');
+  var wEl = document.getElementById('inp-width'), hEl = document.getElementById('inp-height');
+  if (w && wEl) wEl.value = w;
+  if (h && hEl) hEl.value = h;
+  if (qty) { var n = parseInt(qty) || 1; setQtyVal(n); var qi = document.getElementById('qty-inp'); if (qi) qi.value = n; }
+  if (w || h) {
+    if (typeof validateDims === 'function') validateDims();
+    if (typeof updateCalc === 'function') updateCalc();
+  }
+})();
