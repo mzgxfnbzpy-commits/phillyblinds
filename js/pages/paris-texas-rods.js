@@ -432,7 +432,7 @@ function typeLabel() {
 function selectDelivery(opt, prefix) {
   S.delivery=opt;
   const pre = prefix||'';
-  ['install','ship','pickup'].forEach(o=>{
+  ['install','ship'].forEach(o=>{
     const el=document.getElementById((pre?pre+'-':'')+'del-'+o);
     if(el) el.classList.toggle('sel',o===opt);
   });
@@ -517,7 +517,7 @@ function submitQuote() {
     'Smart Controls: '+(S.controls||'None'),
     '',
     'DELIVERY',
-    'Preference: '+(S.delivery==='install'?'Professional Installation':S.delivery==='ship'?'Ship to Customer':'Pick Up'),
+    'Preference: '+(S.delivery==='install'?'Professional Installation':'Ship to Customer'),
     '',
     'ADDITIONAL NOTES',
     notes||'None',

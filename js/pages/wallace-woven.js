@@ -323,7 +323,7 @@ function pickStyle(s, el) {
 function rPill(el, grpId) {
   // For opt-pill groups, remove sel from siblings; for delivery-opt groups remove sel
   if(grpId==='r-del-grp') {
-    ['r-del-install','r-del-ship','r-del-pickup'].forEach(function(id){
+    ['r-del-install','r-del-ship'].forEach(function(id){
       var e=document.getElementById(id); if(e) e.classList.remove('sel');
     });
     el.classList.add('sel');
@@ -780,7 +780,7 @@ function toggleMotorAcc(el, key) {
 /* ── Delivery ── */
 function pickDel(opt) {
   S.delivery=opt;
-  ['install','ship','pickup'].forEach(function(o){
+  ['install','ship'].forEach(function(o){
     $('del-'+o).classList.toggle('sel', o===opt);
   });
 }
@@ -854,7 +854,7 @@ function submitQuote() {
     'Motor Accessories: '+(S.motorAccs.length?S.motorAccs.join(', '):'None'),
     '',
     'DELIVERY / SERVICE',
-    'Preference: '+(S.delivery==='install'?'Professional Installation':S.delivery==='ship'?'Ship to Customer':'Pick Up'),
+    'Preference: '+(S.delivery==='install'?'Professional Installation':'Ship to Customer'),
     '',
     'NOTES',
     $('q-notes').value||'None',
