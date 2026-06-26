@@ -1,4 +1,4 @@
-﻿// ── PRICING DATA ─────────────────────────────────────────────────────────────
+// ── PRICING DATA ─────────────────────────────────────────────────────────────
 const W=[24,30,36,42,48,60,72,84,96];
 const H=[36,42,48,54,60,66,72,78,84,90,96,102,108,114,120];
 
@@ -612,7 +612,7 @@ function submitQuote(){
     '  ESTIMATED TOTAL: $'+Math.round(total).toLocaleString(),
     '',
     'DELIVERY',
-    '  '+(S.del==='ship'?'Ship to me (UPS/FedEx from Huntingdon Valley PA)':'Pickup (Huntingdon Valley PA — address provided after order confirmation)'),
+    '  '+'Ship to me (UPS/FedEx from Huntingdon Valley PA)',
     '',
     'CUSTOMER',
     '  Name: '+name,

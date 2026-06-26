@@ -506,7 +506,7 @@ async function submitCellQuote(btn) {
     + 'Color: ' + (CELL.color || '—') + (CELL.colorCode ? ' (' + CELL.colorCode + ')' : '') + '\n'
     + 'Quantity: ' + CELL.qty + '\n'
     + 'Estimated total: ' + price + '\n\n'
-    + 'Delivery: ' + (CELL.delivery === 'pickup' ? 'Customer pickup — Huntingdon Valley PA' : 'Ship to customer (UPS/FedEx)') + '\n\n'
+    + 'Delivery: ' + ('Ship to customer (UPS/FedEx)') + '\n\n'
     + 'Notes: ' + (notes || 'none');
 
   if (typeof _apiSubmit === 'function') {

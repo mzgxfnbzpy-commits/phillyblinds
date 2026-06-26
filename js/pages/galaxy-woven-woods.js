@@ -1,4 +1,4 @@
-﻿// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 // GALAXY PATTERN DATA — Source: 2025 Galaxy Woven Collection PDF (Wallace)
 // ═══════════════════════════════════════════════════════════
 // [pg, sku, name, headrail, chain]
@@ -667,7 +667,7 @@ function submitQuote(){
     'Accessories: '+(accs.length?accs.join(', '):'None'),
     '',
     'Room/window: '+(document.getElementById('room-label').value.trim()||'—'),
-    'Delivery: '+(S.del==='ship'?'Ship to me (UPS/FedEx)':'Will pick up'),
+    'Delivery: '+'Ship to me (UPS/FedEx)',
     '',
     'Notes: '+(document.getElementById('f-notes').value.trim()||'None'),
     '',
