@@ -1,4 +1,4 @@
-﻿// Custom Roller Shades — configurator logic
+// Custom Roller Shades — configurator logic
 
 var CRS = {
   type: '', openness: '', color: '',
@@ -137,9 +137,9 @@ function crsPickColor(btn, color) {
   var label = CRS.type === 'solar'
     ? 'Solar · ' + CRS.openness + '% · ' + color
     : 'Blackout · ' + color;
-  crsDone('step-3', label);
+  crsDone('step-2', label);
   crsUpdatePanel();
-  setTimeout(function() { crsOpen('step-4'); }, 350);
+  setTimeout(function() { crsOpen('step-3'); }, 350);
 }
 
 // ── STEP 1: MOUNT ────────────────────────────────────────────
@@ -154,21 +154,18 @@ function crsPickMount(val, label) {
   if (noteIM) noteIM.classList.toggle('show', val === 'inside');
   if (noteOM) noteOM.classList.toggle('show', val === 'outside');
 
-  // Refresh dim info if dims already entered
+  // Mount, dimensions & quantity all live in Step 1 — advancing is owned by crsDimChanged()
   var w = parseFloat((_crsEl('crs-inp-w') || {}).value) || 0;
   var h = parseFloat((_crsEl('crs-inp-h') || {}).value) || 0;
   if (w && h) crsDimChanged();
-
-  crsDone('step-1', label);
   crsUpdatePanel();
-  setTimeout(function() { crsOpen('step-2'); }, 350);
 }
 
 // ── STEP 4: HEADRAIL ─────────────────────────────────────────
 function crsPickHeadrail(val, label) {
   CRS.headrail = val;
   CRS.hwColor = '';
-  document.querySelectorAll('#step-4 .opt-card:not(.disabled)').forEach(function(c) { c.classList.remove('sel'); });
+  document.querySelectorAll('#step-3 .opt-card:not(.disabled)').forEach(function(c) { c.classList.remove('sel'); });
   var card = _crsEl('hc-' + val);
   if (card && !card.classList.contains('disabled')) card.classList.add('sel');
   // Show hardware color picker; update label for fascia
@@ -177,9 +174,9 @@ function crsPickHeadrail(val, label) {
   if (hwSection) hwSection.style.display = '';
   if (hwLabel) hwLabel.textContent = val === 'fascia' ? 'Hardware & fascia color' : 'Hardware color';
   document.querySelectorAll('#crs-grp-hw-color .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
-  crsDone('step-4', label);
+  crsDone('step-3', label);
   crsUpdatePanel();
-  setTimeout(function() { crsOpen('step-5'); }, 350);
+  setTimeout(function() { crsOpen('step-4'); }, 350);
 }
 
 function crsPickHwColor(btn, color) {
@@ -232,10 +229,11 @@ function crsDimChanged() {
 
   if (w > 0 && h > 0) {
     CRS.w = w; CRS.h = h;
-    crsDone('step-2', w + '" × ' + h + '"');
+    var ml = CRS.mount === 'inside' ? 'Inside · ' : CRS.mount === 'outside' ? 'Outside · ' : '';
+    crsDone('step-1', ml + w + '" × ' + h + '"');
     crsUpdatePanel();
     clearTimeout(_crsDimTimer);
-    _crsDimTimer = setTimeout(function() { crsOpen('step-3'); }, 900);
+    _crsDimTimer = setTimeout(function() { crsOpen('step-2'); }, 900);
   }
 }
 
@@ -247,9 +245,9 @@ function crsPickFabric(val, label) {
   if (card) card.classList.add('sel');
   var note = _crsEl('cust-fabric-note');
   if (note) note.classList.toggle('show', val === 'customer');
-  crsDone('step-5', label);
+  crsDone('step-4', label);
   crsUpdatePanel();
-  setTimeout(function() { crsOpen('step-6'); }, 350);
+  setTimeout(function() { crsOpen('step-5'); }, 350);
 }
 
 // ── STEP 6: OPERATION ────────────────────────────────────────
@@ -272,10 +270,10 @@ function crsPickMotor(val, label) {
   document.querySelectorAll('#motor-subopts .opt-card').forEach(function(c) { c.classList.remove('sel'); });
 
   if (val !== 'motorized') {
-    crsDone('step-6', label);
+    crsDone('step-5', label);
     crsUpdatePanel();
     if (val === 'cord') {
-      setTimeout(function() { crsOpen('step-7'); }, 350);
+      setTimeout(function() { crsOpen('step-6'); }, 350);
     }
   } else {
     crsUpdatePanel(); // show panel in pending state
@@ -293,42 +291,36 @@ function crsPickMotorSub(val, label) {
   var isNormanOrRollease = val === 'norman-motor' || val === 'rollease-motor';
   if (solunaRedir) solunaRedir.style.display = isNormanOrRollease ? 'block' : 'none';
 
-  crsDone('step-6', 'Motorized — ' + label);
+  crsDone('step-5', 'Motorized — ' + label);
   crsUpdatePanel();
   if (!isNormanOrRollease) {
-    setTimeout(function() { crsOpen('step-7'); }, 350);
+    setTimeout(function() { crsOpen('step-6'); }, 350);
   }
 }
 
-// ── STEP 7: QUANTITY ─────────────────────────────────────────
+// ── STEP 1: QUANTITY (lives in the combined first step) ──────
 function crsAdjQty(d) {
   CRS.qty = Math.max(1, Math.min(20, CRS.qty + d));
   var el = _crsEl('qty-num');
   if (el) el.value = CRS.qty;
-  crsDone('step-7', CRS.qty + (CRS.qty === 1 ? ' shade' : ' shades'));
   crsUpdatePanel();
-  clearTimeout(_crsQtyTimer);
-  _crsQtyTimer = setTimeout(function() { crsOpen('step-8'); }, 500);
 }
 
 function crsQtyInput() {
   var v = parseInt((_crsEl('qty-num') || {}).value) || 1;
   CRS.qty = Math.max(1, Math.min(20, v));
-  crsDone('step-7', CRS.qty + (CRS.qty === 1 ? ' shade' : ' shades'));
   crsUpdatePanel();
-  clearTimeout(_crsQtyTimer);
-  _crsQtyTimer = setTimeout(function() { crsOpen('step-8'); }, 700);
 }
 
-// ── STEP 8: DELIVERY ─────────────────────────────────────────
+// ── STEP 6: DELIVERY ─────────────────────────────────────────
 function crsPickDelivery(val) {
   CRS.delivery = val;
   document.querySelectorAll('.delivery-opt').forEach(function(o) { o.classList.remove('sel'); });
   var opt = _crsEl('del-' + val);
   if (opt) opt.classList.add('sel');
-  crsDone('step-8', val === 'ship' ? 'Ship (UPS/FedEx)' : 'Pickup — Huntingdon Valley');
+  crsDone('step-6', val === 'ship' ? 'Ship (UPS/FedEx)' : 'Pickup — Huntingdon Valley');
   crsUpdatePanel();
-  setTimeout(function() { crsOpen('step-9'); }, 350);
+  setTimeout(function() { crsOpen('step-7'); }, 350);
 }
 
 // ── PANEL SUMMARY ────────────────────────────────────────────
@@ -367,7 +359,7 @@ function crsUpdatePanel() {
     rows.push(['Operation', mMap[CRS.motor] || CRS.motor]);
   }
   if (CRS.qty > 1) rows.push(['Quantity', CRS.qty + ' shades']);
-  if (CRS.delivery) rows.push(['Delivery', CRS.delivery === 'ship' ? 'Ship' : 'Pickup']);
+  if (CRS.delivery) rows.push(['Delivery', 'Ship']);
 
   var pending = _crsEl('qp-pending');
   var rowsEl  = _crsEl('qp-rows');
@@ -500,7 +492,7 @@ function crsSubmit() {
   if (CRS.fabric) selections.push({ label: 'Fabric', value: fMap[CRS.fabric] || CRS.fabric });
   if (CRS.motor)  selections.push({ label: 'Operation', value: mMap[CRS.motor]  || CRS.motor  });
   selections.push({ label: 'Quantity', value: CRS.qty + ' shade' + (CRS.qty === 1 ? '' : 's') });
-  if (CRS.delivery) selections.push({ label: 'Delivery', value: CRS.delivery === 'ship' ? 'Ship via UPS/FedEx' : 'Pickup — Huntingdon Valley, PA' });
+  if (CRS.delivery) selections.push({ label: 'Delivery', value: 'Ship via UPS/FedEx' });
 
   var btn = _crsEl('submit-btn');
   if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
@@ -527,7 +519,7 @@ function crsSubmit() {
       if (form) form.style.display = 'none';
       if (sw)   sw.style.display   = 'none';
       if (sbox) sbox.style.display = 'block';
-      crsDone('step-9', name);
+      crsDone('step-7', name);
     } else {
       if (btn) { btn.disabled = false; btn.textContent = 'Submit Order for Review'; }
       alert(data.error || 'Something went wrong. Please call (609) 742-1720.');

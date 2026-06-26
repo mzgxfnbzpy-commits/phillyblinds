@@ -152,6 +152,10 @@
 .success-box{background:#1a3a2a;border:1px solid rgba(45,224,193,.4);border-radius:10px;padding:16px;text-align:center;display:none}
 .success-box h4{color:var(--gold);font-size:14px;margin-bottom:6px}
 .success-box p{color:var(--text-dark);font-size:12px;line-height:1.6}
+/* Teal bubble selection ring — consistent across all selectable cards */
+.type-card.sel,.opt-card.sel,.fabric-card.sel,.delivery-opt.sel,.openness-btn.sel{box-shadow:0 0 0 3px rgba(45,224,193,.15),0 2px 8px rgba(45,224,193,.18)}
+/* Hardware finish swatch dots */
+.hw-sw{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:7px;vertical-align:-2px;border:1px solid rgba(0,0,0,.18);box-shadow:inset 0 1px 2px rgba(255,255,255,.3)}
 </style>
 </head>
 <body data-page="Shades & blinds">
@@ -199,37 +203,15 @@
 <div class="config-layout">
 <div id="configurator">
 
-<!-- STEP 1: MOUNT TYPE -->
+<!-- STEP 1: MEASUREMENTS & MOUNT -->
 <div class="step-block active" id="step-1">
   <div class="step-head" onclick="crsToggle('step-1')">
     <div class="step-num">1</div>
-    <div class="step-title">Mount type</div>
+    <div class="step-title">Window measurements &amp; mount</div>
     <div class="step-val" id="sv-1"></div>
   </div>
   <div class="step-body">
-    <div class="opt-grid-2">
-      <div class="opt-card" id="mc-inside" onclick="crsPickMount('inside','Inside mount')">
-        <div class="opt-card-title">Inside mount</div>
-        <div class="opt-card-desc">Shade fits inside the window frame. Clean, built-in look. Min frame depth required.</div>
-      </div>
-      <div class="opt-card" id="mc-outside" onclick="crsPickMount('outside','Outside mount')">
-        <div class="opt-card-title">Outside mount</div>
-        <div class="opt-card-desc">Mounts on wall or ceiling above the frame. Covers more area, good for shallow frames.</div>
-      </div>
-    </div>
-    <div class="mount-note" id="mount-note-im">Inside mount: give us your exact frame width and height — we'll deduct 1/4" from width for a proper fit.</div>
-    <div class="mount-note" id="mount-note-om">Outside mount: add 2–4" to each side of the opening for full coverage. Mount 2–4" above the frame to maximize the look.</div>
-  </div>
-</div>
-
-<!-- STEP 2: DIMENSIONS -->
-<div class="step-block" id="step-2">
-  <div class="step-head" onclick="crsToggle('step-2')">
-    <div class="step-num">2</div>
-    <div class="step-title">Dimensions</div>
-    <div class="step-val" id="sv-2"></div>
-  </div>
-  <div class="step-body">
+    <!-- Width + Height -->
     <div class="dim-box">
       <div class="dim-box-label">Enter your window size</div>
       <div class="form-row">
@@ -245,18 +227,43 @@
         </div>
       </div>
     </div>
-    <div class="tooltip-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Inside mount: give us exact frame — we deduct for fit.</div>
+    <div class="tooltip-note" style="margin-bottom:12px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Inside mount: give us exact frame — we deduct ¼″ for fit.</div>
     <div class="dim-msg warn" id="dim-warn"></div>
     <div class="dim-msg info" id="dim-info"></div>
+
+    <!-- Mount type -->
+    <div class="dim-label" style="margin-top:16px;margin-bottom:8px">Mount type</div>
+    <div class="opt-grid-2">
+      <div class="opt-card" id="mc-inside" onclick="crsPickMount('inside','Inside mount')">
+        <div class="opt-card-title">Inside mount</div>
+        <div class="opt-card-desc">Shade fits inside the window frame. Clean, built-in look. Min frame depth required.</div>
+      </div>
+      <div class="opt-card" id="mc-outside" onclick="crsPickMount('outside','Outside mount')">
+        <div class="opt-card-title">Outside mount</div>
+        <div class="opt-card-desc">Mounts on wall or ceiling above the frame. Covers more area, good for shallow frames.</div>
+      </div>
+    </div>
+    <div class="mount-note" id="mount-note-im">Inside mount: give us your exact frame width and height — we'll deduct 1/4" from width for a proper fit.</div>
+    <div class="mount-note" id="mount-note-om">Outside mount: add 2–4" to each side of the opening for full coverage. Mount 2–4" above the frame to maximize the look.</div>
+
+    <!-- Quantity -->
+    <div class="dim-label" style="margin-top:18px;margin-bottom:6px">Quantity</div>
+    <p style="font-size:12px;color:#666;margin-bottom:6px;line-height:1.6">Number of shades with these same specs. Different sizes or rooms? Add notes below or submit separate orders.</p>
+    <div class="spinner-row">
+      <button class="spin-btn" onclick="crsAdjQty(-1)">−</button>
+      <input class="spin-num" type="number" id="qty-num" min="1" max="20" value="1" oninput="crsQtyInput()">
+      <button class="spin-btn" onclick="crsAdjQty(1)">+</button>
+      <span class="spin-label">shade(s)</span>
+    </div>
   </div>
 </div>
 
-<!-- STEP 3: SHADE TYPE -->
-<div class="step-block" id="step-3">
-  <div class="step-head" onclick="crsToggle('step-3')">
-    <div class="step-num">3</div>
+<!-- STEP 2: SHADE TYPE -->
+<div class="step-block" id="step-2">
+  <div class="step-head" onclick="crsToggle('step-2')">
+    <div class="step-num">2</div>
     <div class="step-title">Shade type</div>
-    <div class="step-val" id="sv-3"></div>
+    <div class="step-val" id="sv-2"></div>
   </div>
   <div class="step-body">
     <div class="type-grid" style="grid-template-columns:1fr 1fr">
@@ -298,12 +305,12 @@
   </div>
 </div>
 
-<!-- STEP 4: HEADRAIL / VALANCE -->
-<div class="step-block" id="step-4">
-  <div class="step-head" onclick="crsToggle('step-4')">
-    <div class="step-num">4</div>
+<!-- STEP 3: HEADRAIL / VALANCE -->
+<div class="step-block" id="step-3">
+  <div class="step-head" onclick="crsToggle('step-3')">
+    <div class="step-num">3</div>
     <div class="step-title">Headrail</div>
-    <div class="step-val" id="sv-4"></div>
+    <div class="step-val" id="sv-3"></div>
   </div>
   <div class="step-body">
     <div class="opt-grid-2">
@@ -321,22 +328,22 @@
     <div id="hw-color-section" style="display:none;margin-top:14px;padding-top:12px;border-top:1px solid #f0ede8">
       <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:8px;text-transform:uppercase;letter-spacing:.3px" id="hw-color-label">Hardware color</div>
       <div class="opt-row" id="crs-grp-hw-color">
-        <button class="opt-btn" onclick="crsPickHwColor(this,'Brass')">Brass</button>
-        <button class="opt-btn" onclick="crsPickHwColor(this,'Bronze')">Bronze</button>
-        <button class="opt-btn" onclick="crsPickHwColor(this,'Brushed Black')">Brushed Black</button>
-        <button class="opt-btn" onclick="crsPickHwColor(this,'Matte Silver')">Matte Silver</button>
-        <button class="opt-btn" onclick="crsPickHwColor(this,'White')">White</button>
+        <button class="opt-btn" onclick="crsPickHwColor(this,'Brass')"><span class="hw-sw" style="background:linear-gradient(135deg,#e3c279,#b8902f)"></span>Brass</button>
+        <button class="opt-btn" onclick="crsPickHwColor(this,'Bronze')"><span class="hw-sw" style="background:linear-gradient(135deg,#a06f3e,#5e3f23)"></span>Bronze</button>
+        <button class="opt-btn" onclick="crsPickHwColor(this,'Brushed Black')"><span class="hw-sw" style="background:linear-gradient(135deg,#4a4a4a,#161616)"></span>Brushed Black</button>
+        <button class="opt-btn" onclick="crsPickHwColor(this,'Matte Silver')"><span class="hw-sw" style="background:linear-gradient(135deg,#dcdcdc,#a4a4a4)"></span>Matte Silver</button>
+        <button class="opt-btn" onclick="crsPickHwColor(this,'White')"><span class="hw-sw" style="background:#f8f8f5"></span>White</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- STEP 5: FABRIC SUPPLY -->
-<div class="step-block" id="step-5">
-  <div class="step-head" onclick="crsToggle('step-5')">
-    <div class="step-num">5</div>
+<!-- STEP 4: FABRIC SUPPLY -->
+<div class="step-block" id="step-4">
+  <div class="step-head" onclick="crsToggle('step-4')">
+    <div class="step-num">4</div>
     <div class="step-title">Fabric</div>
-    <div class="step-val" id="sv-5"></div>
+    <div class="step-val" id="sv-4"></div>
   </div>
   <div class="step-body">
     <div class="fabric-grid">
@@ -362,12 +369,12 @@
   </div>
 </div>
 
-<!-- STEP 6: OPERATION -->
-<div class="step-block" id="step-6">
-  <div class="step-head" onclick="crsToggle('step-6')">
-    <div class="step-num">6</div>
+<!-- STEP 5: OPERATION -->
+<div class="step-block" id="step-5">
+  <div class="step-head" onclick="crsToggle('step-5')">
+    <div class="step-num">5</div>
     <div class="step-title">Operation</div>
-    <div class="step-val" id="sv-6"></div>
+    <div class="step-val" id="sv-5"></div>
   </div>
   <div class="step-body">
     <div class="opt-grid-3">
@@ -429,30 +436,12 @@
   </div>
 </div>
 
-<!-- STEP 7: QUANTITY -->
-<div class="step-block" id="step-7">
-  <div class="step-head" onclick="crsToggle('step-7')">
-    <div class="step-num">7</div>
-    <div class="step-title">Quantity</div>
-    <div class="step-val" id="sv-7">1 shade</div>
-  </div>
-  <div class="step-body">
-    <p style="font-size:12px;color:#666;margin-bottom:4px;line-height:1.6">Number of shades with these same specs. If you have different sizes or rooms, add notes below or submit separate orders.</p>
-    <div class="spinner-row">
-      <button class="spin-btn" onclick="crsAdjQty(-1)">−</button>
-      <input class="spin-num" type="number" id="qty-num" min="1" max="20" value="1" oninput="crsQtyInput()">
-      <button class="spin-btn" onclick="crsAdjQty(1)">+</button>
-      <span class="spin-label">shade(s)</span>
-    </div>
-  </div>
-</div>
-
-<!-- STEP 8: DELIVERY -->
-<div class="step-block done" id="step-8">
-  <div class="step-head" onclick="crsToggle('step-8')">
-    <div class="step-num">8</div>
+<!-- STEP 6: DELIVERY -->
+<div class="step-block done" id="step-6">
+  <div class="step-head" onclick="crsToggle('step-6')">
+    <div class="step-num">6</div>
     <div class="step-title">Delivery</div>
-    <div class="step-val" id="sv-8">Ship (UPS/FedEx)</div>
+    <div class="step-val" id="sv-6">Ship (UPS/FedEx)</div>
   </div>
   <div class="step-body">
     <div class="delivery-opt sel" id="del-ship" onclick="crsPickDelivery('ship')">
@@ -463,22 +452,15 @@
         <div class="tariff-note">Note: U.S. import tariffs may apply on some products. Any applicable duties are disclosed in your quote before payment.</div>
       </div>
     </div>
-    <div class="delivery-opt" id="del-pickup" onclick="crsPickDelivery('pickup')">
-      <div class="del-radio"></div>
-      <div>
-        <div class="del-label">I'll pick up</div>
-        <div class="del-sub">Huntingdon Valley, PA. We'll provide the exact address after order review.</div>
-      </div>
-    </div>
   </div>
 </div>
 
-<!-- STEP 9: CONTACT & SUBMIT -->
-<div class="step-block" id="step-9">
-  <div class="step-head" onclick="crsToggle('step-9')">
-    <div class="step-num">9</div>
+<!-- STEP 7: CONTACT & SUBMIT -->
+<div class="step-block" id="step-7">
+  <div class="step-head" onclick="crsToggle('step-7')">
+    <div class="step-num">7</div>
     <div class="step-title">Your contact info</div>
-    <div class="step-val" id="sv-9"></div>
+    <div class="step-val" id="sv-7"></div>
   </div>
   <div class="step-body">
     <div id="contact-form">
@@ -524,7 +506,7 @@
 <!-- ── QUOTE PANEL ── -->
 <div class="quote-panel" id="quote-panel">
   <div class="qp-title">Your order</div>
-  <div class="qp-pending" id="qp-pending">Select mount type above to start building your order.</div>
+  <div class="qp-pending" id="qp-pending">Enter your window measurements above to start building your order.</div>
   <div id="qp-rows"></div>
   <div class="qdiv" id="qp-div" style="display:none"></div>
   <!-- Price breakdown (shown when dims + type selected) -->

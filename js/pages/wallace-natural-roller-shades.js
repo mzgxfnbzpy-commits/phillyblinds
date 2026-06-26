@@ -1,4 +1,4 @@
-﻿// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════
 // FABRIC DATA — patterns from PDF pages 4-5
 // maxH = single shade max height; double shades always capped at 96"
 // rhea = true → no cassette fabric wrap, no fabric-wrapped box valance
@@ -653,11 +653,7 @@ function updateOptions() {
 function selectDelivery(mode) {
   S.delivery = mode;
   var delShip = document.getElementById('del-ship');
-  var delPickup = document.getElementById('del-pickup');
-  var shipNote = document.getElementById('del-ship-note');
-  if (delShip) delShip.classList.toggle('sel', mode === 'ship');
-  if (delPickup) delPickup.classList.toggle('sel', mode === 'pickup');
-  if (shipNote) shipNote.style.display = mode === 'ship' ? 'block' : 'none';
+  if (delShip) delShip.classList.add('sel');
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -719,7 +715,7 @@ function submitQuote() {
   var ctrl = S.control;
   var ctrllabels = {clutch:'Clutch', cordless:'Cordless', prowand:'Pro Wand Motor', motor:'Remote Motor'};
   var ttlabels = {'open-std':'Open Roll — Standard Bracket','open-metal':'Open Roll — Decorative Metal Bracket','open-dual':'Open Roll — Dual Bracket','cassette':'Square Cassette','box-valance':'Fabric-Wrapped Box Valance','trad-valance':'Traditional Valance'};
-  var delivery = S.delivery === 'pickup' ? "I'll pick up (Huntingdon Valley, PA)" : 'Ship to me (UPS/FedEx from Huntingdon Valley, PA)';
+  var delivery = 'Ship to me (UPS/FedEx from Huntingdon Valley, PA)';
 
   var warns = [];
   if (fab && S.width > fab.maxW) warns.push('Width exceeds fabric max (' + fab.maxW + '")');

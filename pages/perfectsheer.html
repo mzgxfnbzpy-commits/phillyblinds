@@ -37,6 +37,7 @@
 .opt-card.sel{border:2px solid var(--gold);background:var(--gold-mid)}
 .opt-card-title{font-size:13px;font-weight:500;color:#111;margin-bottom:3px}
 .opt-card.sel .opt-card-title{color:#0A4A42}
+.opt-card.sel,.addon-row.sel,.delivery-opt-card.sel{box-shadow:0 0 0 3px rgba(45,224,193,.15),0 2px 8px rgba(45,224,193,.18)}
 .opt-card-desc{font-size:11px;color:#666;line-height:1.45}
 .dim-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
 .dim-label{font-size:12px;font-weight:500;color:#444;margin-bottom:5px}
@@ -110,39 +111,15 @@
 <div class="config-layout">
 <div><!-- left column -->
 
-  <!-- STEP 1: MOUNT -->
+  <!-- STEP 1: MEASUREMENTS & MOUNT -->
   <div class="step-block" id="step1">
     <div class="step-head" onclick="toggleStep('step1')">
       <div class="step-num">1</div>
-      <div class="step-head-title">Mount Type</div>
+      <div class="step-head-title">Window Measurements &amp; Mount</div>
       <div class="step-head-val" id="s1val">—</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-3">
-        <div class="opt-card" onclick="pickMount(this,'Inside mount')">
-          <div class="opt-card-title">Inside Mount</div>
-          <div class="opt-card-desc">Fits inside window frame &middot; clean flush look &middot; mfr deducts 3/8″ automatically</div>
-        </div>
-        <div class="opt-card" onclick="pickMount(this,'Outside mount')">
-          <div class="opt-card-title">Outside Mount</div>
-          <div class="opt-card-desc">Mounts above or outside frame &middot; better light control &middot; covers more wall</div>
-        </div>
-        <div class="opt-card" onclick="pickMount(this,'Semi-inside mount')">
-          <div class="opt-card-title">Semi-Inside</div>
-          <div class="opt-card-desc">Partially recessed &middot; useful with shallow window frames</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- STEP 2: DIMENSIONS -->
-  <div class="step-block" id="step2">
-    <div class="step-head" onclick="toggleStep('step2')">
-      <div class="step-num">2</div>
-      <div class="step-head-title">Dimensions</div>
-      <div class="step-head-val" id="s2val">—</div>
-    </div>
-    <div class="step-body">
+      <!-- Width + Height -->
       <div class="dim-row">
         <div>
           <div class="dim-label">Width (inches)</div>
@@ -157,13 +134,40 @@
       </div>
       <div id="ps-price-note" class="msg-box msg-warn" style="display:none"></div>
       <div class="step-note">Measure to the nearest ¼″. For inside mount, give us the exact opening — we take the deduction.</div>
+
+      <!-- Mount type -->
+      <div class="sub-label">Mount type</div>
+      <div class="opt-grid-3">
+        <div class="opt-card" onclick="pickMount(this,'Inside mount')">
+          <div class="opt-card-title">Inside Mount</div>
+          <div class="opt-card-desc">Fits inside window frame &middot; clean flush look &middot; mfr deducts 3/8″ automatically</div>
+        </div>
+        <div class="opt-card" onclick="pickMount(this,'Outside mount')">
+          <div class="opt-card-title">Outside Mount</div>
+          <div class="opt-card-desc">Mounts above or outside frame &middot; better light control &middot; covers more wall</div>
+        </div>
+        <div class="opt-card" onclick="pickMount(this,'Semi-inside mount')">
+          <div class="opt-card-title">Semi-Inside</div>
+          <div class="opt-card-desc">Partially recessed &middot; useful with shallow window frames</div>
+        </div>
+      </div>
+
+      <!-- Quantity -->
+      <div class="sub-label">Quantity</div>
+      <div class="spinner-row">
+        <button class="spin-btn" onclick="adjPsQty(-1)">−</button>
+        <span class="spin-num" id="ps-qty-display">1</span>
+        <button class="spin-btn" onclick="adjPsQty(1)">+</button>
+        <span class="spin-label">shades (same size)</span>
+      </div>
+      <div class="step-note">For different sizes, add each shade to cart separately. Freight is calculated on the full order.</div>
     </div>
   </div>
 
-  <!-- STEP 3: LIGHT CONTROL -->
-  <div class="step-block" id="step3">
-    <div class="step-head" onclick="toggleStep('step3')">
-      <div class="step-num">3</div>
+  <!-- STEP 2: LIGHT CONTROL -->
+  <div class="step-block" id="step2">
+    <div class="step-head" onclick="toggleStep('step2')">
+      <div class="step-num">2</div>
       <div class="step-head-title">Light Control</div>
       <div class="step-head-val" id="s3val">Light Filtering</div>
     </div>
@@ -182,10 +186,10 @@
     </div>
   </div>
 
-  <!-- STEP 4: COLOR -->
-  <div class="step-block" id="step4">
-    <div class="step-head" onclick="toggleStep('step4')">
-      <div class="step-num">4</div>
+  <!-- STEP 3: COLOR -->
+  <div class="step-block" id="step3">
+    <div class="step-head" onclick="toggleStep('step3')">
+      <div class="step-num">3</div>
       <div class="step-head-title">Fabric Color</div>
       <div class="step-head-val" id="s4val">—</div>
     </div>
@@ -232,10 +236,10 @@
     </div>
   </div>
 
-  <!-- STEP 5: LIFT -->
-  <div class="step-block" id="step5">
-    <div class="step-head" onclick="toggleStep('step5')">
-      <div class="step-num">5</div>
+  <!-- STEP 4: LIFT -->
+  <div class="step-block" id="step4">
+    <div class="step-head" onclick="toggleStep('step4')">
+      <div class="step-num">4</div>
       <div class="step-head-title">Lift System</div>
       <div class="step-head-val" id="s5val">Cord Loop</div>
     </div>
@@ -271,10 +275,10 @@
     </div>
   </div>
 
-  <!-- STEP 6: VALANCE -->
-  <div class="step-block" id="step6">
-    <div class="step-head" onclick="toggleStep('step6')">
-      <div class="step-num">6</div>
+  <!-- STEP 5: VALANCE -->
+  <div class="step-block" id="step5">
+    <div class="step-head" onclick="toggleStep('step5')">
+      <div class="step-num">5</div>
       <div class="step-head-title">Valance / Headrail Cover</div>
       <div class="step-head-val" id="s6val">Curved fascia</div>
     </div>
@@ -323,10 +327,10 @@
     </div>
   </div>
 
-  <!-- STEP 7: ACCESSORIES -->
-  <div class="step-block" id="step7">
-    <div class="step-head" onclick="toggleStep('step7')">
-      <div class="step-num">7</div>
+  <!-- STEP 6: ACCESSORIES -->
+  <div class="step-block" id="step6">
+    <div class="step-head" onclick="toggleStep('step6')">
+      <div class="step-num">6</div>
       <div class="step-head-title">Accessories</div>
       <div class="step-head-val" id="s7val">Optional</div>
     </div>
@@ -371,28 +375,10 @@
     </div>
   </div>
 
-  <!-- STEP 8: QUANTITY -->
-  <div class="step-block" id="step8">
-    <div class="step-head" onclick="toggleStep('step8')">
-      <div class="step-num">8</div>
-      <div class="step-head-title">Quantity</div>
-      <div class="step-head-val" id="s8val">1 shade</div>
-    </div>
-    <div class="step-body">
-      <div class="spinner-row">
-        <button class="spin-btn" onclick="adjPsQty(-1)">−</button>
-        <span class="spin-num" id="ps-qty-display">1</span>
-        <button class="spin-btn" onclick="adjPsQty(1)">+</button>
-        <span class="spin-label">shades (same size)</span>
-      </div>
-      <div class="step-note">For different sizes, add each shade to cart separately. Freight is calculated on the full order.</div>
-    </div>
-  </div>
-
-  <!-- STEP 9: QUOTE FORM -->
-  <div class="step-block" id="step9">
-    <div class="step-head" onclick="toggleStep('step9')">
-      <div class="step-num">9</div>
+  <!-- STEP 7: QUOTE FORM -->
+  <div class="step-block" id="step7">
+    <div class="step-head" onclick="toggleStep('step7')">
+      <div class="step-num">7</div>
       <div class="step-head-title">Request Your Quote</div>
       <div class="step-head-val" id="s9val">—</div>
     </div>
@@ -462,28 +448,37 @@
 <script src="../js/shared.js"></script>
 <script src="../js/pages/perfectsheer.js"></script>
 <script>
+function updateStep1Val() {
+  var w = document.getElementById('ps-width').value;
+  var h = document.getElementById('ps-height').value;
+  var parts = [];
+  if (PS.mount) parts.push(PS.mount);
+  if (w && h) parts.push(w + '″ × ' + h + '″');
+  if (PS.qty > 1) parts.push(PS.qty + ' shades');
+  document.getElementById('s1val').textContent = parts.length ? parts.join(' · ') : '—';
+}
 function pickMount(el, label) {
   document.querySelectorAll('#step1 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
-  document.getElementById('s1val').textContent = label;
-  document.getElementById('qr-mount').textContent = label;
   PS.mount = label;
+  document.getElementById('qr-mount').textContent = label;
+  updateStep1Val();
   markDone('step1');
   psCalc();
 }
 function onDimChange() {
   var w = document.getElementById('ps-width').value;
   var h = document.getElementById('ps-height').value;
-  document.getElementById('s2val').textContent = (w && h) ? w + '″ × ' + h + '″' : '—';
-  if (w && h) markDone('step2');
+  updateStep1Val();
+  if (w && h) markDone('step1');
   psCalc();
 }
 function pickFabric(el, type) {
-  document.querySelectorAll('#step3 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#step2 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
   PS.fabric = type;
   document.getElementById('s3val').textContent = type === 'rd' ? 'Room Darkening' : 'Light Filtering';
-  markDone('step3');
+  markDone('step2');
   psUpdateColors(type);
 }
 function onColorChange() {
@@ -492,18 +487,18 @@ function onColorChange() {
   PS.color = val;
   document.getElementById('s4val').textContent = val.split('(')[0].trim();
   document.getElementById('qr-color').textContent = val.split('(')[0].trim();
-  markDone('step4');
+  markDone('step3');
   psCalc();
 }
 function pickLift(el, type) {
-  document.querySelectorAll('#step5 .opt-grid-2 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#step4 .opt-grid-2 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
   PS.lift = type;
   document.getElementById('s5val').textContent = type === 'motor' ? 'Motorization' : 'Cord Loop';
   document.getElementById('qr-lift').textContent = type === 'motor' ? 'Norman Motorization' : 'Continuous Cord Loop';
   document.getElementById('ps-motor-note').style.display   = type === 'motor' ? 'block' : 'none';
   document.getElementById('ps-chain-len-wrap').style.display = type === 'ccl'   ? 'block' : 'none';
-  markDone('step5');
+  markDone('step4');
   psCalc();
 }
 function pickCLen(el, type) {
@@ -512,14 +507,14 @@ function pickCLen(el, type) {
   document.getElementById('ps-clen-custom').style.display = type === 'custom' ? 'flex' : 'none';
 }
 function pickValance(el, label) {
-  document.querySelectorAll('#step6 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#step5 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
   PS.valance = label;
   var short = label.replace(' (free)', '');
   document.getElementById('s6val').textContent = short;
   document.getElementById('qr-valance').textContent = short;
   document.getElementById('ps-wood-val-wrap').style.display = label.indexOf('Wood') >= 0 ? 'block' : 'none';
-  markDone('step6');
+  markDone('step5');
   psCalc();
 }
 function toggleAddon(rowId, stateKey) {

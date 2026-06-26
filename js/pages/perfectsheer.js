@@ -64,8 +64,8 @@ function goNext(fromId, toId) {
 function adjPsQty(delta) {
   PS.qty = Math.min(20, Math.max(1, PS.qty + delta));
   document.getElementById('ps-qty-display').textContent = PS.qty;
-  document.getElementById('s8val').textContent = PS.qty + (PS.qty === 1 ? ' shade' : ' shades');
   document.getElementById('qr-qty').textContent = PS.qty + (PS.qty === 1 ? ' shade' : ' shades');
+  if (typeof updateStep1Val === 'function') updateStep1Val();
   psCalc();
 }
 
@@ -279,7 +279,7 @@ async function submitPSQuote(btn) {
     + 'Shims: ' + PS.shims + '\n'
     + 'Quantity: ' + PS.qty + '\n'
     + 'Estimated total: ' + price + '\n\n'
-    + 'Delivery: ' + (PS.delivery === 'pickup' ? 'Customer pickup — Huntingdon Valley PA' : 'Ship to customer (UPS/FedEx)') + '\n\n'
+    + 'Delivery: ' + ('Ship to customer (UPS/FedEx)') + '\n\n'
     + 'Notes: ' + (notes || 'none');
 
   if (typeof _apiSubmit === 'function') {
