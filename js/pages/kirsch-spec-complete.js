@@ -13,13 +13,10 @@ function selPill(el, grp) {
 /* ── delivery ── */
 function selDel(m) {
   _delivery = m;
-  var ship = document.getElementById('del-ship'), pick = document.getElementById('del-pickup');
-  ship.style.border = m==='ship' ? '2px solid var(--gold)' : '1.5px solid #e8e8e4';
-  ship.style.background = m==='ship' ? 'rgba(45,224,193,.05)' : '';
-  pick.style.border = m==='pickup' ? '2px solid var(--gold)' : '1.5px solid #e8e8e4';
-  pick.style.background = m==='pickup' ? 'rgba(45,224,193,.05)' : '';
-  document.getElementById('del-ship-note').style.display = m==='ship' ? 'block' : 'none';
-  document.getElementById('del-pickup-note').style.display = m==='pickup' ? 'block' : 'none';
+  var ship = document.getElementById('del-ship');
+  if (ship) { ship.style.border = '2px solid var(--gold)'; ship.style.background = 'rgba(45,224,193,.05)'; }
+  var note = document.getElementById('del-ship-note');
+  if (note) note.style.display = 'block';
 }
 
 /* ── weight calc ── */
@@ -49,7 +46,7 @@ function submitQ() {
   if(!name||!phone){alert('Please enter your name and phone number.');return;}
 
   function gp(grp){ var s=document.querySelector('#'+grp+' .opt-pill.sel'); return s?s.textContent.trim():'—'; }
-  var delivery=_delivery==='pickup'?"I'll pick up (Huntingdon Valley, PA)":'Ship to me (UPS/FedEx)';
+  var delivery='Ship to me (UPS/FedEx)';
 
   var body='KIRSCH DRAPERY HARDWARE — SPECIFICATION REQUEST\n\n'
     +'── CUSTOMER ──\n'

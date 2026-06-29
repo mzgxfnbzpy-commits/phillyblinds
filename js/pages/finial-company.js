@@ -1,4 +1,4 @@
-﻿// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 // DATA — The Finial Company September 2018 Catalog
 // ═══════════════════════════════════════════════════════════
 
@@ -854,7 +854,7 @@ function submitQuote(){
     'Quantity: '+qty,
     'Room / window: '+(document.getElementById('room-label').value.trim()||'—'),
     'Rush order: '+(S.rush==='yes'?'+30% rush (5 business days)':'Standard (10–15 business days for painted/custom)'),
-    'Delivery: '+(S.del==='ship'?'Ship to me (UPS/FedEx from Huntingdon Valley, PA)':'Will pick up'),
+    'Delivery: '+'Ship to me (UPS/FedEx from Huntingdon Valley, PA)',
     '',
     'NOTES:',
     document.getElementById('q-notes').value.trim()||'None',

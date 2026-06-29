@@ -60,7 +60,8 @@ function _rnCaptureState(styleName) {
     var el = document.getElementById(id); if (el) s[id] = el.value;
   });
   ['grp-roman-mount','grp-roman-tdbu','grp-roman-color','grp-roman-liner','grp-roman-lining',
-   'grp-roman-rings','grp-roman-op','grp-roman-clen','grp-roman-motor-brand','grp-roman-control',
+   'grp-roman-rings','grp-roman-op','grp-roman-clen','grp-roman-motor-brand',
+   'grp-roman-motor-power','grp-roman-motor-hardwire','grp-roman-control',
    'grp-roman-trim-supply','grp-roman-mount-style','grp-roman-back-valance','grp-rn-back-val-h',
    'grp-rn-back-val-fabric','grp-rn-front-val-h','grp-val-lining','grp-val-fabric'].forEach(function(grp) {
     var sel = document.querySelector('#' + grp + ' .opt-btn.sel');
@@ -86,7 +87,8 @@ function _rnRestoreState(styleName, fromState) {
     var el = document.getElementById(id); if (el && saved[id] !== undefined) el.value = saved[id];
   });
   ['grp-roman-mount','grp-roman-tdbu','grp-roman-color','grp-roman-liner','grp-roman-lining',
-   'grp-roman-rings','grp-roman-op','grp-roman-clen','grp-roman-motor-brand','grp-roman-control',
+   'grp-roman-rings','grp-roman-op','grp-roman-clen','grp-roman-motor-brand',
+   'grp-roman-motor-power','grp-roman-motor-hardwire','grp-roman-control',
    'grp-roman-trim-supply','grp-roman-mount-style','grp-roman-back-valance','grp-rn-back-val-h',
    'grp-rn-back-val-fabric','grp-rn-front-val-h','grp-val-lining','grp-val-fabric'].forEach(function(grp) {
     if (!saved[grp]) return;
@@ -376,8 +378,47 @@ function romanChainCheck() {
 }
 
 function romanToggleOp(type) {
-  document.getElementById('roman-manual-opts').style.display = type === 'manual'    ? 'block' : 'none';
-  document.getElementById('roman-motor-opts').style.display  = type === 'motorized' ? 'block' : 'none';
+  var cd = document.getElementById('roman-cordless-opts');
+  var mn = document.getElementById('roman-manual-opts');
+  var mo = document.getElementById('roman-motor-opts');
+  var ctrl = document.getElementById('roman-control-wrap');
+  if (cd) cd.style.display = type === 'cordless'  ? 'block' : 'none';
+  if (mn) mn.style.display = type === 'manual'    ? 'block' : 'none';
+  if (mo) mo.style.display = type === 'motorized' ? 'block' : 'none';
+  // Control side applies to chain + motor only — cordless has no control side
+  if (ctrl) ctrl.style.display = (type === 'cordless') ? 'none' : 'block';
+  calcRoman();
+}
+
+// Motorized: brand selection. Norman → redirect to its own form; others → power options.
+function romanMotorBrand(brand) {
+  var isNorman = brand === 'norman';
+  var rd = document.getElementById('roman-norman-redirect');
+  var pw = document.getElementById('roman-motor-power');
+  if (rd) rd.style.display = isNorman ? 'block' : 'none';
+  if (pw) pw.style.display = isNorman ? 'none'  : 'block';
+  calcRoman();
+}
+
+// Motorized power source: Hardwired reveals the low-voltage / 110V choice.
+function romanMotorPower(p) {
+  var hw = document.getElementById('roman-motor-hardwire');
+  if (hw) hw.style.display = (p === 'hardwired') ? 'block' : 'none';
+  calcRoman();
+}
+
+// Hand off to the dedicated Norman Centerpiece Roman form, carrying size + qty.
+function romanGoNorman() {
+  var w = _getDim('rn-w', 'rn-w-frac') || '';
+  var h = _getDim('rn-h', 'rn-h-frac') || '';
+  var qtyEl = document.getElementById('rn-qty');
+  var qty = qtyEl ? (parseInt(qtyEl.value) || 1) : 1;
+  var p = new URLSearchParams();
+  if (w) p.set('w', w);
+  if (h) p.set('h', h);
+  p.set('qty', qty);
+  var q = p.toString();
+  window.location.href = 'norman-centerpiece-roman.html' + (q ? '?' + q : '');
 }
 function selectFabric(tab, el, val) {
   var container = tab === 'drape' ? '#drape-fabric-cards' : '#roman-fabric-cards';
@@ -588,7 +629,18 @@ function calcRoman() {
     { label: 'Operation',      value: (getOpt('grp-roman-op') || '—') },
     { label: 'Mounting',       value: (getOpt('grp-roman-mount-style') || '—') }
   ];
-  if (getOpt('grp-roman-op') === 'Motorized') rnLines.push({ label: 'Motor brand', value: getOpt('grp-roman-motor-brand') || 'TBD at order' });
+  if (getOpt('grp-roman-op') === 'Motorized') {
+    var rnBrand = getOpt('grp-roman-motor-brand') || 'TBD at order';
+    rnLines.push({ label: 'Motor brand', value: rnBrand });
+    if (rnBrand !== 'Norman') {
+      var rnPwr = getOpt('grp-roman-motor-power');
+      if (rnPwr) rnLines.push({ label: 'Power', value: rnPwr });
+      if (rnPwr === 'Hardwired') {
+        var rnHw = getOpt('grp-roman-motor-hardwire');
+        if (rnHw) rnLines.push({ label: 'Hardwired type', value: rnHw });
+      }
+    }
+  }
   if (trimTotal) rnLines.push({ label: 'Trim', value: getOpt('grp-roman-trim') || 'Selected' });
   if (shipEst)   rnLines.push({ label: isRomanOversized ? 'Oversized freight est. (>96″ wide)' : 'Shipping est. (FedEx/UPS, Philadelphia)', value: '~$' + shipEst });
   var rnAtMin = perShade === rnGetMin();
@@ -1022,7 +1074,7 @@ async function submitCornice() {
     { label: 'Return depth', value: (document.getElementById('cv-corn-return').value||'4') + '"' },
     { label: 'Finishing',    value: getOpt('grp-corn-trim') || '—' },
     { label: 'Fabric',       value: getOpt('grp-corn-fabric') || '—' },
-    { label: 'Delivery',     value: getOpt('grp-del-corn') || 'Ship to me' },
+    { label: 'Delivery',     value: 'Ship to me (UPS/FedEx from Huntingdon Valley, PA)' },
     { label: 'Installation', value: pbInstallRequested(document.getElementById('corn-form')) ? 'Requested' : 'Not requested' }
   ];
   await _stApiSubmit('corn-form', 'corn-success', name, email, phone, 'Cornice', selections, document.getElementById('cn-notes').value.trim());
@@ -1040,7 +1092,7 @@ async function submitValanceCv() {
     { label: 'Return depth', value: (document.getElementById('cv-val-return').value||'4') + '"' },
     { label: 'Finishing',    value: getOpt('grp-val-trim') || '—' },
     { label: 'Fabric',       value: getOpt('grp-val-fabric') || '—' },
-    { label: 'Delivery',     value: getOpt('grp-del-val') || 'Ship to me' }
+    { label: 'Delivery',     value: 'Ship to me (UPS/FedEx from Huntingdon Valley, PA)' }
   ];
   await _stApiSubmit('val-form', 'val-cv-success', name, email, phone, 'Valance', selections, document.getElementById('vn-notes').value.trim());
 }
@@ -1150,7 +1202,7 @@ async function submitDrape() {
   var rippleJoin = isRipple ? getOpt('grp-ripple-join') : '—';
   var hwNeed     = getOpt('grp-drape-hardware');
   var hwType     = hwNeed === 'I need hardware' ? getOpt('grp-drape-hw-type') : 'N/A';
-  var delivery   = getOpt('grp-del-drape') || 'Ship to me';
+  var delivery   = 'Ship to me (UPS/FedEx from Huntingdon Valley, PA)';
   var custFabricFlag = fabric === 'Customer supplies fabric'
     ? '*** CUSTOMER SUPPLYING FABRIC ***\nDO NOT PROCESS PAYMENT UNTIL FABRIC RECEIVED AT SHOP.\nContact customer with shipping address before fabrication begins.\n\n'
     : '';
@@ -1245,7 +1297,7 @@ async function submitValance() {
     { label: 'Height / drop',     value: (_getDim('rn-h','rn-h-frac') || '—') + '"' },
     { label: 'Number of folds',   value: document.getElementById('val-folds').value || '—' },
     { label: 'Fold section size', value: (document.getElementById('val-fold-size').value || '—') + '"' },
-    { label: 'Delivery',          value: getOpt('grp-del-val-rn') || 'Ship to me' }
+    { label: 'Delivery',          value: 'Ship to me (UPS/FedEx from Huntingdon Valley, PA)' }
   ];
   await _stApiSubmit('valance-form-fields', 'valance-success', name, email, phone, 'Roman Valance',
     selections, document.getElementById('val-notes').value.trim());
@@ -1264,17 +1316,19 @@ async function submitRoman() {
   var tdbu        = getOpt('grp-roman-tdbu');
   var op          = getOpt('grp-roman-op');
   var isMotor     = op === 'Motorized';
-  var liftType    = !isMotor ? 'Chain loop' : '—';
-  var remotes     = isMotor ? getOpt('grp-roman-remotes') : '—';
-  var channel     = isMotor ? getOpt('grp-roman-channel') : '—';
-  var controlSide = getOpt('grp-roman-control');
+  var isCordless  = op === 'Cordless';
+  var liftType    = isCordless ? 'Cordless' : (isMotor ? '—' : 'Chain loop');
+  var motorBrand    = isMotor ? (getOpt('grp-roman-motor-brand') || 'TBD at order') : '—';
+  var motorPower    = (isMotor && motorBrand !== 'Norman') ? (getOpt('grp-roman-motor-power') || '—') : '—';
+  var motorHardwire = (motorPower === 'Hardwired') ? (getOpt('grp-roman-motor-hardwire') || '—') : '—';
+  var controlSide = isCordless ? '—' : getOpt('grp-roman-control');
   var lining      = getOpt('grp-roman-lining');
   var returnSz    = (document.getElementById('rn-return') || {}).value || '4';
   var mountStyle  = getOpt('grp-roman-mount-style') || 'Waterfall';
   var frontVal    = mountStyle === 'Off Back' ? ((document.getElementById('rn-valance-front') || {}).value || '6') : '—';
   var backVal     = mountStyle === 'Off Back' ? getOpt('grp-roman-back-valance') : '—';
   var backValSz   = backVal === 'Add back valance' ? ((document.getElementById('rn-valance-back') || {}).value || '4') : '—';
-  var delivery    = getOpt('grp-del-roman') || 'Ship to me';
+  var delivery    = 'Ship to me (UPS/FedEx from Huntingdon Valley, PA)';
   var mountType   = getOpt('grp-roman-mount') || 'Inside mount';
   var body = 'ROMAN SHADE QUOTE REQUEST\n\n'
     + 'Name: ' + name + '\nPhone: ' + phone
@@ -1288,7 +1342,10 @@ async function submitRoman() {
     + 'Lining: ' + lining + '\n'
     + 'Operation: ' + op + '\n'
     + (isMotor
-        ? 'Remotes: ' + remotes + '\nChannel: ' + channel + '\n'
+        ? 'Motor brand: ' + motorBrand
+          + (motorBrand !== 'Norman'
+              ? '\nPower: ' + motorPower + (motorPower === 'Hardwired' ? '\nHardwired type: ' + motorHardwire : '')
+              : '') + '\n'
         : 'Lift type: ' + liftType + '\n')
     + 'Control side: ' + controlSide + '\n'
     + 'Return: ' + returnSz + '"\n'
@@ -1343,3 +1400,4 @@ async function handleSoftQuote(e) {
   await _stApiSubmit('soft-quote-form', 'soft-quote-success', name, email, phone,
     'Soft Treatments', selections, data.get('notes') || '');
 }
+

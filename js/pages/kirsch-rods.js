@@ -419,7 +419,7 @@ function collectionLabel() {
 function selectDelivery(opt, prefix) {
   S.delivery = opt;
   prefix = prefix || '';
-  ['install','ship','pickup'].forEach(o => {
+  ['install','ship'].forEach(o => {
     const el = document.getElementById((prefix ? prefix + '-' : '') + 'del-' + o);
     if (el) el.classList.toggle('sel', o === opt);
   });
@@ -496,7 +496,7 @@ function submitQuote() {
     'Accessories Requested: ' + (wtAccessories.length ? wtAccessories.join(', ') : 'None'),
     '',
     'DELIVERY / SERVICE',
-    'Preference: ' + (S.delivery === 'install' ? 'Professional Installation' : S.delivery === 'ship' ? 'Ship to Customer' : 'Pick Up'),
+    'Preference: ' + (S.delivery === 'install' ? 'Professional Installation' : 'Ship to Customer'),
     '',
     'NOTES',
     notes || 'None',

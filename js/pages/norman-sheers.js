@@ -1,4 +1,4 @@
-﻿// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 // STATE — initialized before any function calls
 // ═══════════════════════════════════════════════════════════
 var S = {
@@ -489,7 +489,7 @@ async function submitQuote(){
     {label:'Fabric code',value:S.fabric?S.fabric.code:'—'},
     {label:'Hardware color',value:S.hw&&S.hw!==(S.fabric?S.fabric.hw:'')?S.hw:'Fabric default'},
     {label:'Accessories',value:S.accs.length>0?S.accs.join(', '):'None'},
-    {label:'Delivery',value:S.delivery==='ship'?'Ship to me':'Will pick up (Huntingdon Valley, PA)'}
+    {label:'Delivery',value:'Ship to me'}
   ];
   if(S.isDoor) selections.push({label:'Application',value:'Patio door/slider'});
   var notes=document.getElementById('q-notes').value.trim();

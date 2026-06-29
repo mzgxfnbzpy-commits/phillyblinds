@@ -120,6 +120,7 @@
 .dim-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px}
 .motor-sub{display:none;margin-top:10px;padding:12px;background:var(--gold-mid);border-radius:8px;border:1px solid #E8DCC8}
 .motor-sub.show{display:block}
+.hw-sw{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:7px;vertical-align:-2px;border:1px solid rgba(0,0,0,.18);box-shadow:inset 0 1px 2px rgba(255,255,255,.3)}
 .qty-btns{display:flex;align-items:center}
 .qty-btn{width:32px;height:32px;border:1px solid #ddd;background:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:var(--font)}
 .qty-btn:first-child{border-radius:8px 0 0 8px}
@@ -632,23 +633,11 @@
       <div class="config-grid">
         <div>
 
-          <!-- Step 1: Mount -->
+          <!-- Step 1: Window measurements & mount -->
           <div class="step-block">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
               <div class="step-num">1</div>
-              <div class="step-title" style="margin-bottom:0">Mount type</div>
-            </div>
-            <div class="opt-row" id="grp-mount">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-mount');updateSummary()">Inside mount</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-mount');updateSummary()">Outside mount</button>
-            </div>
-          </div>
-
-          <!-- Step 2: Dimensions -->
-          <div class="step-block">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-              <div class="step-num">2</div>
-              <div class="step-title" style="margin-bottom:0">Window measurements</div>
+              <div class="step-title" style="margin-bottom:0">Window measurements &amp; mount</div>
             </div>
             <div class="dim-box">
               <div class="dim-box-label">Enter your window size</div>
@@ -666,6 +655,15 @@
               </div>
             </div>
             <div class="tooltip-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine — we confirm at the home visit.</div>
+
+            <!-- Mount type -->
+            <div style="font-size:12px;font-weight:600;color:#555;margin-bottom:6px">Mount type</div>
+            <div class="opt-row" id="grp-mount" style="margin-bottom:14px">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-mount');updateSummary()">Inside mount</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-mount');updateSummary()">Outside mount</button>
+            </div>
+
+            <!-- Quantity -->
             <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
               <span style="font-size:12px;color:#666">Qty:</span>
               <div class="qty-btns">
@@ -711,10 +709,10 @@
             </div>
           </div>
 
-          <!-- Step 3: Fabric type -->
+          <!-- Step 2: Fabric type -->
           <div class="step-block">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-              <div class="step-num">3</div>
+              <div class="step-num">2</div>
               <div class="step-title" style="margin-bottom:0">Fabric type</div>
             </div>
             <div class="opt-row" id="grp-light">
@@ -731,10 +729,10 @@
             </div>
           </div>
 
-          <!-- Step 4: Operating system -->
+          <!-- Step 3: Operating system -->
           <div class="step-block">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-              <div class="step-num">4</div>
+              <div class="step-num">3</div>
               <div class="step-title" style="margin-bottom:0">Operating system</div>
             </div>
             <div class="opt-row" id="grp-op">
@@ -801,10 +799,10 @@
             </div>
           </div>
 
-          <!-- Step 5: Shade type -->
+          <!-- Step 4: Shade type -->
           <div class="step-block">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-              <div class="step-num">5</div>
+              <div class="step-num">4</div>
               <div class="step-title" style="margin-bottom:0">Shade type</div>
             </div>
             <div class="opt-row" id="grp-shade-type">
@@ -828,14 +826,14 @@
                   <button class="opt-btn" onclick="selOpt(this,'grp-dual-back');updateSummary()">Blackout</button>
                 </div>
               </div>
-              <div style="font-size:10px;color:#888;margin-top:8px;line-height:1.5">Cassette headrail is required for dual shade — auto-selected in Step 6 below.</div>
+              <div style="font-size:10px;color:#888;margin-top:8px;line-height:1.5">Cassette headrail is required for dual shade — auto-selected in Step 5 below.</div>
             </div>
           </div>
 
-          <!-- Step 6: Options -->
+          <!-- Step 5: Options -->
           <div class="step-block">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-              <div class="step-num">6</div>
+              <div class="step-num">5</div>
               <div class="step-title" style="margin-bottom:0">Headrail &amp; add-ons <span style="font-weight:400;color:#888">(optional)</span></div>
             </div>
             <div class="opt-row" id="grp-addons" style="flex-wrap:wrap">
@@ -850,11 +848,11 @@
             <div id="sol-hw-subopts" style="display:none;margin-top:10px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:9px">
               <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Premium hardware color</div>
               <div class="opt-row" id="grp-hw-color" style="flex-wrap:wrap">
-                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()">Brass</button>
-                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()">Bronze</button>
-                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()">Brushed Black</button>
-                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()">Matte Silver</button>
-                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()">White</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()"><span class="hw-sw" style="background:linear-gradient(135deg,#e3c279,#b8902f)"></span>Brass</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()"><span class="hw-sw" style="background:linear-gradient(135deg,#a06f3e,#5e3f23)"></span>Bronze</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()"><span class="hw-sw" style="background:linear-gradient(135deg,#4a4a4a,#161616)"></span>Brushed Black</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()"><span class="hw-sw" style="background:linear-gradient(135deg,#dcdcdc,#a4a4a4)"></span>Matte Silver</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-hw-color');updateSummary()"><span class="hw-sw" style="background:#f8f8f5"></span>White</button>
               </div>
               <div style="font-size:10px;color:#888;margin-top:6px;line-height:1.5">Premium hardware (brackets, clutches, chains &amp; hem bars) in a preset matching finish. Open roll single shades only — no valance or raceway. Inside mount side-mount bracket not available with premium hardware.</div>
             </div>
@@ -863,18 +861,18 @@
             <div id="sol-fascia-subopts" style="display:none;margin-top:10px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:9px">
               <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Fascia / valance style</div>
               <div class="opt-row" id="grp-fascia-style" style="flex-wrap:wrap">
-                <button class="opt-btn" onclick="selOpt(this,'grp-fascia-style');updateSummary()">Flat metal fascia</button>
-                <button class="opt-btn" onclick="selOpt(this,'grp-fascia-style');updateSummary()">Curved fabric-wrapped fascia</button>
-                <button class="opt-btn" onclick="selOpt(this,'grp-fascia-style');updateSummary()">Fabric valance</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-fascia-style');updateSummary()">Flat Metal Fascia</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-fascia-style');updateSummary()">Flat Fabric Wrapped Fascia</button>
+                <button class="opt-btn" onclick="selOpt(this,'grp-fascia-style');updateSummary()">Curved Fabric Wrapped Fascia</button>
               </div>
-              <div style="font-size:10px;color:#888;margin-top:6px;line-height:1.5">Curved fascia: fabric wraps an aluminum base. Fabric valance: soft fabric cover, no rigid housing. Style confirmed at order.</div>
+              <div style="font-size:10px;color:#888;margin-top:6px;line-height:1.5">Flat Metal Fascia: slim aluminum cover in your hardware color. Flat Fabric Wrapped Fascia: flat aluminum base wrapped in your shade fabric. Curved Fabric Wrapped Fascia: curved aluminum base wrapped in shade fabric. Style confirmed at order.</div>
             </div>
           </div>
 
-          <!-- Step 7: Delivery -->
+          <!-- Step 6: Delivery -->
           <div class="step-block">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-              <div class="step-num">7</div>
+              <div class="step-num">6</div>
               <div class="step-title" style="margin-bottom:0">Delivery</div>
             </div>
             <div class="delivery-opt-grid">
@@ -885,10 +883,10 @@
             </div>
           </div>
 
-          <!-- Step 8: Contact -->
+          <!-- Step 7: Contact -->
           <div class="step-block" id="contact-block">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-              <div class="step-num">8</div>
+              <div class="step-num">7</div>
               <div class="step-title" style="margin-bottom:0">Your details</div>
             </div>
             <div class="dim-row">
@@ -930,7 +928,7 @@
             <span class="sr-key" style="font-weight:600;color:#111">Est. retail</span>
             <span class="sr-val" id="s-price" style="font-weight:700;font-size:15px;color:#111">—</span>
           </div>
-          <div class="summary-note">Norman retail base prices — select a fabric in Step 3 for an instant estimate. SmartRelease™ adds $89. Final price confirmed at quote.</div>
+          <div class="summary-note">Norman retail base prices — select a fabric in Step 2 for an instant estimate. SmartRelease™ adds $89. Final price confirmed at quote.</div>
         </div>
 
       </div>

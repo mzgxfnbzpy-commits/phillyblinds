@@ -53,8 +53,35 @@ function _checkRate(ip) {
 }
 
 // ── Per-field length limits ───────────────────────────────────────────────────
-const FIELD_LIMITS = { name: 200, email: 254, phone: 30, product: 200, notes: 5000, sourceUrl: 500 };
+const FIELD_LIMITS = { name: 200, email: 254, phone: 30, address: 300, delivery: 40, product: 200, notes: 5000, sourceUrl: 500 };
 function _truncate(val, key) { return val ? String(val).slice(0, FIELD_LIMITS[key]) : val; }
+
+// ── Attachment validation ──────────────────────────────────────────────────────
+// Client sends base64 content for each file. Keep these caps in sync with the client cap.
+const ATT_MAX_COUNT     = 20;
+const ATT_MAX_PER_FILE  = 8 * 1024 * 1024;   // ~8MB of base64 chars per file
+const ATT_MAX_TOTAL     = 12 * 1024 * 1024;  // ~12MB of base64 chars total
+const ATT_ALLOWED_TYPE  = /^(image\/(jpe?g|png|gif|webp|heic|heif)|application\/pdf)$/i;
+const ATT_ALLOWED_EXT   = /\.(jpe?g|png|gif|webp|heic|heif|pdf)$/i;
+function _sanitizeAttachments(raw) {
+  if (!Array.isArray(raw)) return [];
+  const out = [];
+  let total = 0;
+  for (const a of raw.slice(0, ATT_MAX_COUNT)) {
+    if (!a || typeof a.content !== 'string' || typeof a.filename !== 'string') continue;
+    const typeOk = ATT_ALLOWED_TYPE.test(String(a.type || ''));
+    const extOk  = ATT_ALLOWED_EXT.test(a.filename);
+    if (!typeOk && !extOk) continue;
+    if (a.content.length > ATT_MAX_PER_FILE) continue;
+    total += a.content.length;
+    if (total > ATT_MAX_TOTAL) break;
+    out.push({
+      filename: String(a.filename).slice(0, 200).replace(/[\r\n"\\/]/g, '_'),
+      content: a.content
+    });
+  }
+  return out;
+}
 
 module.exports = async function handler(req, res) {
   const origin = req.headers.origin || '';
@@ -74,9 +101,12 @@ module.exports = async function handler(req, res) {
   const name       = _truncate(_b.name,      'name');
   const email      = _truncate(_b.email,     'email');
   const phone      = _truncate(_b.phone,     'phone');
+  const address    = _truncate(_b.address,   'address');
+  const delivery   = _truncate(_b.delivery,  'delivery');
   const product    = _truncate(_b.product,   'product');
   const notes      = _truncate(_b.notes,     'notes');
   const _rawSourceUrl = _truncate(_b.sourceUrl, 'sourceUrl');
+  const attachments = _sanitizeAttachments(_b.attachments);
   // Only allow http/https URLs — blocks javascript: scheme injection in email hrefs
   const sourceUrl = (_rawSourceUrl && /^https?:\/\//i.test(_rawSourceUrl.trim())) ? _rawSourceUrl : null;
   const selections = Array.isArray(_b.selections) ? _b.selections.slice(0, 60) : [];
@@ -89,9 +119,9 @@ module.exports = async function handler(req, res) {
   // Timing check — reject if _t missing or form submitted in under 2 seconds (bot speed)
   if (typeof _t !== 'number' || _t < 2000) return res.status(200).json({ ok: true }); // silent reject
 
-  // Basic payload size guard
+  // Basic payload size guard — raised to allow base64 file attachments (still well under Vercel's body limit)
   const bodyStr = JSON.stringify(req.body || {});
-  if (bodyStr.length > 20000) return res.status(413).json({ error: 'Request too large.' });
+  if (bodyStr.length > 6000000) return res.status(413).json({ error: 'Request too large.' });
 
   if (!name || !name.trim()) return res.status(400).json({ error: 'Name is required.' });
   const hasValidEmail = email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
@@ -107,6 +137,8 @@ module.exports = async function handler(req, res) {
   const safeName    = String(name).trim().replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const safeEmail   = String(email || '').trim().replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const safePhone   = phone ? String(phone).trim().replace(/</g,'&lt;') : null;
+  const safeAddress = address ? String(address).trim().replace(/</g,'&lt;').replace(/>/g,'&gt;') : null;
+  const safeDelivery= delivery ? String(delivery).trim().replace(/</g,'&lt;').replace(/>/g,'&gt;') : null;
   const safeProduct = product ? String(product).trim().replace(/</g,'&lt;') : 'Custom Window Treatment';
   const safeNotes   = notes ? String(notes).trim().replace(/</g,'&lt;').replace(/\n/g,'<br>') : null;
   const firstName   = safeName.split(' ')[0];
@@ -140,6 +172,8 @@ module.exports = async function handler(req, res) {
         <tr><td style="padding:4px 14px 4px 0;color:#888;font-size:13px;white-space:nowrap">Name</td>   <td style="font-size:15px;font-weight:700;color:#1C1510">${safeName}</td></tr>
         <tr><td style="padding:4px 14px 4px 0;color:#888;font-size:13px;white-space:nowrap">Email</td>  <td><a href="mailto:${safeEmail}" style="font-size:14px;color:#1C1510">${safeEmail}</a></td></tr>
         <tr><td style="padding:4px 14px 4px 0;color:#888;font-size:13px;white-space:nowrap">Phone</td>  <td style="font-size:14px;font-weight:600;color:#1C1510">${safePhone || '<em style="color:#aaa;font-weight:400">Not provided</em>'}</td></tr>
+        <tr><td style="padding:4px 14px 4px 0;color:#888;font-size:13px;white-space:nowrap;vertical-align:top">Address</td><td style="font-size:14px;color:#1C1510">${safeAddress || '<em style="color:#aaa;font-weight:400">Not provided</em>'}</td></tr>
+        <tr><td style="padding:4px 14px 4px 0;color:#888;font-size:13px;white-space:nowrap">Delivery</td><td style="font-size:14px;font-weight:600;color:#1C1510">${safeDelivery || 'Ship to me'}</td></tr>
       </table>
     </div>
 
@@ -159,6 +193,8 @@ module.exports = async function handler(req, res) {
 
     ${safeNotes ? `<div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#888;margin-bottom:8px">Customer Notes</div>
     <div style="background:#f9f9f7;padding:12px 16px;border-radius:8px;font-size:13px;color:#333;line-height:1.7;margin-bottom:18px">${safeNotes}</div>` : ''}
+
+    ${attachments.length ? `<div style="font-size:13px;color:#1C1510;background:#FBF7F0;border:1px solid #e8ddc8;border-radius:8px;padding:11px 15px;margin-bottom:18px">&#128206; <strong>${attachments.length} file attachment(s)</strong> included with this email.</div>` : ''}
 
     <div style="border-top:1px solid #e8e8e4;padding-top:14px;font-size:11px;color:#bbb">
       Submitted via ${SITE_URL} &nbsp;·&nbsp; Reply-To: <a href="mailto:${safeEmail}" style="color:#bbb">${safeEmail}</a>
@@ -229,7 +265,8 @@ module.exports = async function handler(req, res) {
       to: TEAM_EMAILS,
       reply_to: hasValidEmail ? safeEmail : undefined,
       subject: `📋 Quote Request — ${safeName} — ${safeProduct} — ${dateStr}`,
-      html: teamHtml
+      html: teamHtml,
+      attachments: attachments.length ? attachments : undefined
     });
 
     if (hasValidEmail) {

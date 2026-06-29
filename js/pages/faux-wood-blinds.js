@@ -1,4 +1,4 @@
-﻿// ── PRICING DATA ──────────────────────────────────────────────────────────────
+// ── PRICING DATA ──────────────────────────────────────────────────────────────
 const W_COLS = [24,28,32,36,42,48,54,60,66,72,78,84,96];
 const H_ROWS = [30,36,42,48,54,60,66,73,78,84,90,96];
 const MATRIX = {
@@ -373,7 +373,7 @@ function submitForm(){
     'Name: '+name,
     'Phone: '+(phone||'—'),
     'Email: '+(email||'—'),
-    'Delivery: '+(S.delivery==='ship'?'Ship to me (UPS/FedEx)':'Customer pickup'),
+    'Delivery: '+'Ship to me (UPS/FedEx)',
     '',
     'PRODUCT SPECS',
     'Product: SmartPrivacy Faux Wood Blinds (Ultimate program)',

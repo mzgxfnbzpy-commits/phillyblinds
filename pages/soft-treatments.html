@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -694,13 +694,7 @@
 
       <!-- DELIVERY -->
       <div class="delivery-section" style="margin-top:16px">
-        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
-        <div class="opt-row" id="grp-del-drape">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-drape');document.getElementById('del-drape-s').style.display='block';document.getElementById('del-drape-p').style.display='none';calcDrapePrice()">Ship to me</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-del-drape');document.getElementById('del-drape-s').style.display='none';document.getElementById('del-drape-p').style.display='block';calcDrapePrice()">I'll pick up</button>
-        </div>
-        <div id="del-drape-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately.</div></div>
-        <div id="del-drape-p" class="delivery-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.</div>
+        <div class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.<div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately.</div></div>
       </div>
 
       <div style="border-top:1px solid #e8e8e4;margin:20px 0 16px"></div>
@@ -869,7 +863,7 @@
           <div class="pb-row"><span class="pb-key">Style</span><span class="pb-val" id="rn-pb-style">—</span></div>
           <div class="pb-row"><span class="pb-key">Size</span><span class="pb-val" id="rn-pb-dims">—</span></div>
           <div class="pb-row"><span class="pb-key">Qty</span><span class="pb-val" id="rn-pb-qty">1</span></div>
-          <div class="pb-row"><span class="pb-key">Motorization</span><span class="pb-val" id="rn-pb-motor">No</span></div>
+          <div class="pb-row"><span class="pb-key">Operation</span><span class="pb-val" id="rn-pb-motor">Cordless</span></div>
           <div id="rn-pb-min-note" style="display:none"></div>
           <div class="pb-note">All pricing confirmed at order — submit your configuration for a custom quote.</div>
         </div>
@@ -930,13 +924,7 @@
       </div>
       <!-- Delivery -->
       <div class="delivery-section" style="margin-bottom:14px">
-        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
-        <div class="opt-row" id="grp-del-val-rn">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-val-rn');document.getElementById('del-val-rn-s').style.display='block';document.getElementById('del-val-rn-p').style.display='none'">Ship to me</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-del-val-rn');document.getElementById('del-val-rn-s').style.display='none';document.getElementById('del-val-rn-p').style.display='block'">I'll pick up</button>
-        </div>
-        <div id="del-val-rn-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional.</div></div>
-        <div id="del-val-rn-p" class="delivery-note" style="display:none">Pickup available in <strong>Huntingdon Valley, PA</strong>. Exact address provided after order confirmation.</div>
+        <div class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional.</div></div>
       </div>
       <!-- Contact -->
       <div style="border-top:1px solid #e8e8e4;margin:16px 0 12px"></div>
@@ -1057,12 +1045,19 @@
       <div class="step-title" style="margin-bottom:0">Operation</div>
     </div>
     <div class="opt-row" id="grp-roman-op" style="margin-top:12px">
-      <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-op');romanToggleOp('manual')">Manual</button>
+      <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-op');romanToggleOp('cordless')">Cordless</button>
+      <button class="opt-btn" onclick="selOpt(this,'grp-roman-op');romanToggleOp('manual')">Manual chain</button>
       <button class="opt-btn" onclick="selOpt(this,'grp-roman-op');romanToggleOp('motorized')">Motorized</button>
     </div>
 
-    <!-- Manual sub-options -->
-    <div id="roman-manual-opts" style="margin-top:12px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
+    <!-- Cordless sub-options -->
+    <div id="roman-cordless-opts" style="margin-top:12px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
+      <div style="font-size:12px;font-weight:500;color:#333">Cordless lift — no chain or cord</div>
+      <div style="font-size:11px;color:#888;margin-top:6px;line-height:1.5">Child-safe cordless lift. Raise or lower by gently pulling the bottom rail. Best for windows within easy reach.</div>
+    </div>
+
+    <!-- Manual chain sub-options -->
+    <div id="roman-manual-opts" style="display:none;margin-top:12px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
       <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:8px">Chain loop — chain length</div>
       <div class="opt-row" id="grp-roman-clen">
         <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-clen');document.getElementById('roman-clen-custom').style.display='none'">Default</button>
@@ -1079,26 +1074,51 @@
     <!-- Motorized sub-options -->
     <div id="roman-motor-opts" style="display:none;margin-top:12px">
       <div style="padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
-        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:6px">Motor brand preference</div>
-        <div style="font-size:11px;color:#666;margin-bottom:10px">We install all major brands. Final motor brand and cost confirmed at measurement visit.</div>
+        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:6px">Motor brand</div>
+        <div style="font-size:11px;color:#666;margin-bottom:10px">Choose a motor system. Final motor and cost confirmed at the measurement visit.</div>
         <div class="opt-row" id="grp-roman-motor-brand">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-motor-brand')">Lutron Serena</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-roman-motor-brand')">Somfy</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-roman-motor-brand')">Automate</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-roman-motor-brand')">Rollease Acmeda</button>
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-motor-brand');romanMotorBrand('somfy')">Somfy</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-roman-motor-brand');romanMotorBrand('lutron')">Lutron</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-roman-motor-brand');romanMotorBrand('rollease')">Rollease Acmeda</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-roman-motor-brand');romanMotorBrand('norman')">Norman</button>
         </div>
-        <div style="font-size:11px;color:#888;margin-top:8px">Motor brand and options confirmed at order.</div>
+
+        <!-- Norman → redirect to dedicated Norman Roman form -->
+        <div id="roman-norman-redirect" style="display:none;margin-top:12px;padding:12px 14px;background:var(--espresso);border-radius:9px">
+          <div style="font-size:12px;color:var(--cream);line-height:1.6;margin-bottom:10px">Norman Roman shades use Norman&rsquo;s own motorization, fabrics &amp; Day &amp; Night options &mdash; configured on our dedicated <strong>Norman Centerpiece&trade;</strong> form. We&rsquo;ll carry your size over.</div>
+          <button class="opt-btn" onclick="romanGoNorman()" style="background:var(--gold);border-color:var(--gold);color:var(--espresso);font-weight:600">Continue to Norman Roman form &rarr;</button>
+        </div>
+
+        <!-- Power source (Somfy / Lutron / Rollease) -->
+        <div id="roman-motor-power" style="margin-top:14px">
+          <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Power source</div>
+          <div class="opt-row" id="grp-roman-motor-power">
+            <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-motor-power');romanMotorPower('rechargeable')">Rechargeable battery</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-roman-motor-power');romanMotorPower('hardwired')">Hardwired</button>
+          </div>
+
+          <!-- Hardwired → low voltage or 110V -->
+          <div id="roman-motor-hardwire" style="display:none;margin-top:12px;padding:10px 12px;background:#fff;border:1px solid #e8e4dc;border-radius:8px">
+            <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Hardwired type</div>
+            <div class="opt-row" id="grp-roman-motor-hardwire">
+              <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-motor-hardwire')">Low voltage</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-roman-motor-hardwire')">Standard 110V plug-in</button>
+            </div>
+            <div style="font-size:11px;color:#888;margin-top:6px;line-height:1.5">Low voltage runs off a transformer; 110V plugs into a standard outlet. Electrical coordination confirmed at the measurement visit.</div>
+          </div>
+          <div style="font-size:11px;color:#888;margin-top:8px">Motor brand and options confirmed at order.</div>
+        </div>
       </div>
     </div>
 
-    <!-- Control side — applies to both manual chain and motorized -->
-    <div style="margin-top:14px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
+    <!-- Control side — applies to manual chain and motorized only -->
+    <div id="roman-control-wrap" style="display:none;margin-top:14px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
       <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Control side</div>
       <div class="opt-row" id="grp-roman-control">
         <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-control')">Left</button>
         <button class="opt-btn" onclick="selOpt(this,'grp-roman-control')">Right</button>
       </div>
-      <div style="font-size:11px;color:#888;margin-top:4px">Which side the chain, cord, or motor control is on when facing the window.</div>
+      <div style="font-size:11px;color:#888;margin-top:4px">Which side the chain or motor control is on when facing the window.</div>
     </div>
   </div>
 
@@ -1201,13 +1221,7 @@
 
           <!-- DELIVERY -->
           <div class="delivery-section" style="margin-top:16px">
-            <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
-            <div class="opt-row" id="grp-del-roman">
-              <button class="opt-btn sel" onclick="selOpt(this,'grp-del-roman');document.getElementById('del-roman-s').style.display='block';document.getElementById('del-roman-p').style.display='none';calcRoman()">Ship to me</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-del-roman');document.getElementById('del-roman-s').style.display='none';document.getElementById('del-roman-p').style.display='block';calcRoman()">I'll pick up</button>
-            </div>
-            <div id="del-roman-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional and itemized separately.</div></div>
-            <div id="del-roman-p" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>
+            <div class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional and itemized separately.</div></div>
           </div>
 
           <div style="border-top:1px solid #e8e8e4;margin:20px 0 16px"></div>
@@ -1335,13 +1349,7 @@
     </div>
     <div id="corn-form">
       <div class="delivery-section">
-        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
-        <div class="opt-row" id="grp-del-corn">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-corn');document.getElementById('del-corn-s').style.display='block';document.getElementById('del-corn-p').style.display='none'">Ship to me</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-del-corn');document.getElementById('del-corn-s').style.display='none';document.getElementById('del-corn-p').style.display='block'">I'll pick up</button>
-        </div>
-        <div id="del-corn-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional.</div></div>
-        <div id="del-corn-p" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>
+        <div class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional.</div></div>
       </div>
       <div style="display:flex;align-items:flex-start;gap:10px;background:#fef9ec;border:1px solid #f0d070;border-radius:8px;padding:10px 14px;margin-top:14px;margin-bottom:12px;font-size:12px;color:#7a5c00;line-height:1.5">
         <span style="font-size:15px;flex-shrink:0">&#9888;</span>
@@ -1474,13 +1482,7 @@
     </div>
     <div id="val-form">
       <div class="delivery-section">
-        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery or pickup?</div>
-        <div class="opt-row" id="grp-del-val">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-del-val');document.getElementById('del-val-s').style.display='block';document.getElementById('del-val-p').style.display='none'">Ship to me</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-del-val');document.getElementById('del-val-s').style.display='none';document.getElementById('del-val-p').style.display='block'">I'll pick up</button>
-        </div>
-        <div id="del-val-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional.</div></div>
-        <div id="del-val-p" class="delivery-note" style="display:none">Pickup in <strong>Huntingdon Valley, PA</strong>. Address confirmed after order.</div>
+        <div class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional.</div></div>
       </div>
       <div style="border-top:1px solid #e8e8e4;margin:20px 0 16px"></div>
       <div class="form-row">

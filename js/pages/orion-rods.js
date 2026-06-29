@@ -470,7 +470,7 @@ function buildSummary(){
 /* ── DELIVERY ── */
 function pickDel(opt){
   S.delivery=opt;
-  ['install','ship','pickup'].forEach(o=>{
+  ['install','ship'].forEach(o=>{
     var e=$('del-'+o); if(e) e.classList.toggle('sel',o===opt);
   });
 }
@@ -543,7 +543,7 @@ function submitQuote(){
     'PRICING NOTE: Orion — Request Quote Only (catalog pricing to be confirmed)',
     '',
     'DELIVERY/SERVICE',
-    'Preference: '+(S.delivery==='install'?'Professional Installation':S.delivery==='ship'?'Ship to Customer':'Pick Up'),
+    'Preference: '+(S.delivery==='install'?'Professional Installation':'Ship to Customer'),
     '',
     'NOTES',
     $('q-notes').value||'None',

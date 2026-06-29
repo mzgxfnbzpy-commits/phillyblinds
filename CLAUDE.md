@@ -236,7 +236,7 @@ NEVER a separate top-level page, product, or nav item.
 | Norman PerfectSheer + SmartDrape + Centerpiece Roman | **Norman Smart only.** Rollease Acmeda Automate NOT available for these products. |
 | Norman Synchrony Verticals, City Lights, SmartPrivacy Faux Wood | No motorization — cordless only. |
 | Custom Roller Shades (Philly Blinds custom fab) | Lutron, Somfy, or Rollease Acmeda Automate — custom priced. Customer can note other brand preference. |
-| Custom Roman Shades (Philly Blinds custom fab) | Lutron, Somfy, or Rollease Acmeda Automate — custom priced. Customer can note other brand preference. |
+| Custom Roman Shades (Philly Blinds custom fab) | **Operation = Cordless / Manual chain / Motorized.** Motorized brand = **Somfy / Lutron / Rollease Acmeda / Norman** — custom priced. Picking **Norman** redirects to the Norman Centerpiece Roman form (norman-centerpiece-roman.html, size carried via ?w=&h=&qty=) — Norman motorization only. Somfy/Lutron/Rollease then choose **Power: Rechargeable battery or Hardwired**; Hardwired splits into **Low voltage / Standard 110V plug-in**. (Updated June 2026 — Terminal 3 Roman cleanup. Replaces old "Lutron Serena/Somfy/Automate/Rollease" brand-only picker.) |
 | Custom Drapery + hardware (Kirsch, Paris Texas, Orion, etc.) | Lutron, Somfy, or Rollease Acmeda Automate — custom priced. Customer notes brand preference. |
 | Hunter Douglas (Silhouette, Pirouette) | PowerView — always custom quote, no instant pricing. |
 
@@ -329,7 +329,8 @@ Available on: Soluna Roller and Portrait Cellular ONLY. NOT available for Perfec
 **Removed from all pages: "Automate Home" branding** (replaced with "Rollease Acmeda Automate").
 
 Do NOT add Lutron, Somfy, or any other third-party motor to Norman product pages.
-Custom non-Norman roller/roman shades offer Lutron, Somfy, or Rollease Acmeda Automate at custom pricing.
+Custom non-Norman roller shades offer Lutron, Somfy, or Rollease Acmeda Automate at custom pricing.
+Custom Roman shades (June 2026): operation = Cordless / Manual chain / Motorized. Motorized brands = Somfy / Lutron / Rollease Acmeda / Norman; choosing Norman hands off to the Norman Centerpiece Roman form (Norman motorization only). Non-Norman motors then pick Rechargeable or Hardwired (Hardwired → Low voltage / 110V plug-in). See the Motorization brand-compatibility table above.
 
 ### Brightwood shutters — removed
 Norman no longer offers Brightwood. Removed from product-specs.html (May 2026). If user adds it back, verify against current Norman shutter PDF catalog first.

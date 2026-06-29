@@ -1,4 +1,4 @@
-﻿// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 // DATA
 // ═══════════════════════════════════════════════════════════
 var DM_FINISHES = [
@@ -351,7 +351,7 @@ function pickDel(el,key){
 function updateSpec(){
   var qty=parseInt(document.getElementById('qty').value)||1;
   sp('sp-qty',qty+' rod'+(qty>1?'s':''));
-  document.getElementById('s8val').textContent=qty+' rod'+(qty>1?'s':'')+' · '+(S.del==='ship'?'Ship':'Pickup');
+  document.getElementById('s8val').textContent=qty+' rod'+(qty>1?'s':'')+' · '+'Ship';
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -397,7 +397,7 @@ function submitQuote(){
     'QUANTITY & DELIVERY:',
     'Qty: '+qty+' rod'+(qty>1?'s':''),
     'Room/window: '+(document.getElementById('room-label').value.trim()||'—'),
-    'Delivery: '+(S.del==='ship'?'Ship (UPS/FedEx from Huntingdon Valley, PA)':'Will pick up'),
+    'Delivery: '+'Ship (UPS/FedEx from Huntingdon Valley, PA)',
     '',
     'NOTES:',
     document.getElementById('q-notes').value.trim()||'None',

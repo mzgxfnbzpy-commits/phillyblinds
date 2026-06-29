@@ -1,4 +1,4 @@
-﻿// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════
 // DATA
 // ═══════════════════════════════════════════════════════════════
 var COLLECTIONS = {
@@ -423,10 +423,7 @@ function calcWeight() {
 // ═══════════════════════════════════════════════════════════════
 function selectDel(m) {
   S.delivery = m;
-  document.getElementById('del-ship').classList.toggle('sel', m==='ship');
-  document.getElementById('del-pickup').classList.toggle('sel', m==='pickup');
-  document.getElementById('del-ship-note').style.display = m==='ship' ? 'block' : 'none';
-  document.getElementById('del-pickup-note').style.display = m==='pickup' ? 'block' : 'none';
+  document.getElementById('del-ship').classList.toggle('sel', true);
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -447,7 +444,7 @@ function submitQuote() {
 
   var len    = S.trackLen;
   var brackets = len <= 48 ? 2 : len <= 96 ? 3 : len <= 144 ? 4 : 5;
-  var delivery = S.delivery === 'pickup' ? "I'll pick up (Huntingdon Valley, PA)" : 'Ship to me (UPS/FedEx)';
+  var delivery = 'Ship to me (UPS/FedEx)';
   var ampAcc = S.motorized ? getAMPAcc() : [];
   var stack  = (S.draw && S.header && len) ? getStackback(len, S.draw==='two-way') : '—';
 
