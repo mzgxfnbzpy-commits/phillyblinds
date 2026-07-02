@@ -497,6 +497,58 @@ function pbContactValid(errId) {
   return true;
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// CANONICAL FINAL STEP — identical "Your details" contact + files step on every
+// product configurator. Mirrors the Norman Soluna Roller Step 7 exactly, so it
+// must always be the LAST step, after all product options are chosen.
+// One source of truth: change here → updates on every product.
+//
+// Usage on a page:
+//   <div id="pb-final-step"></div>
+//   <script>document.getElementById('pb-final-step').innerHTML =
+//       pbContactStepHTML({ stepNum: 7, cartFn: "addFooToCart()", submitFn: "submitFooQuote()" });
+//   </script>
+// The contact inputs (cf-name/phone/email/address/notes) feed pbGetContact()/
+// pbContactValid(); the file input feeds the cart via _pbMergeCartExtras. Wrapping
+// the fields in .pb-cart-extras makes the shared file/install auto-injectors skip
+// this block (no duplicate uploader).
+//
+// opts: { stepNum (number|string, required), submitFn (string, default "submitQuote()"),
+//         cartFn (string|null — omit to hide the "+ Add to Cart" button) }
+function pbContactStepHTML(opts) {
+  opts = opts || {};
+  var stepNum  = opts.stepNum != null ? opts.stepNum : '';
+  var submitFn = opts.submitFn || 'submitQuote()';
+  var cartBtn  = opts.cartFn
+    ? '<button class="btn-cart-add" onclick="' + opts.cartFn + '" style="width:100%;margin-bottom:8px">+ Add to Cart</button>'
+    : '';
+  return '' +
+    '<div class="step-block" id="contact-block">' +
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">' +
+        '<div class="step-num">' + stepNum + '</div>' +
+        '<div class="step-title" style="margin-bottom:0">Your details</div>' +
+      '</div>' +
+      '<div class="pb-cart-extras">' +
+        '<div class="dim-row">' +
+          '<div class="form-group"><label>Name *</label><input type="text" id="cf-name" data-pb-contact="name" placeholder="Jane Smith"></div>' +
+          '<div class="form-group"><label>Phone *</label><input type="tel" id="cf-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>' +
+        '</div>' +
+        '<div class="form-group"><label>Email *</label><input type="email" id="cf-email" data-pb-contact="email" placeholder="jane@example.com"></div>' +
+        '<div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="cf-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>' +
+        '<div class="form-group"><label>Notes</label><textarea id="cf-notes" placeholder="Room name, ceiling height, fabric ideas, timeline &mdash; anything helpful" style="min-height:60px"></textarea></div>' +
+        '<div style="border:1.5px dashed #ddd;border-radius:10px;padding:14px 16px;margin-bottom:12px;background:#fafaf8">' +
+          '<div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">&#128206; Attach photos or files <span style="font-weight:400;color:#999">(optional)</span></div>' +
+          '<input type="file" id="cf-files" class="pb-ce-files" multiple accept="image/*,.pdf,.heic,.png,.jpg,.jpeg" style="width:100%;font-size:12px;color:#555;font-family:inherit;cursor:pointer;padding:4px 0" onchange="pbShowFileNames(this,\'cf-files-names\')">' +
+          '<div id="cf-files-names" style="font-size:11px;color:#555;margin-top:6px;line-height:1.8"></div>' +
+          '<div style="font-size:11px;color:#aaa;margin-top:5px;line-height:1.5">Window photos, room photos, measurements, inspiration &mdash; anything that helps.</div>' +
+        '</div>' +
+        '<div id="cf-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>' +
+        cartBtn +
+        '<button class="btn-gold" onclick="' + submitFn + '" style="width:100%;padding:13px;margin-top:4px" data-pb-require-contact="cf-contact-err">Submit Order for Review &rarr;</button>' +
+      '</div>' +
+    '</div>';
+}
+
 // ============================================================
 // GLOBAL CART ENGINE
 // ============================================================
