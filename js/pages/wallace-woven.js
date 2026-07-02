@@ -787,9 +787,9 @@ function pickDel(opt) {
 
 /* ── Submit ── */
 function submitQuote() {
-  var name=$('q-name').value.trim();
-  var phone=($('q-phone')||{value:''}).value.trim();
-  var email=($('q-email')||{value:''}).value.trim();
+  var name=$('cf-name').value.trim();
+  var phone=($('cf-phone')||{value:''}).value.trim();
+  var email=($('cf-email')||{value:''}).value.trim();
   var contact=phone||(email)||'';
   if(!name||!contact){alert('Please enter your name and contact info.'); return;}
   if(!S.pattern){alert('Please select a fabric pattern.'); return;}
@@ -804,7 +804,7 @@ function submitQuote() {
     'Name: '+name,
     'Phone: '+(phone||'—'),
     'Email: '+(email||'—'),
-    'Location: '+($('q-address').value||'Not provided'),
+    'Location: '+($('cf-address').value||'Not provided'),
     '',
     'PRODUCT CONFIGURATION',
     'Collection: Wallace '+coll,
@@ -857,7 +857,7 @@ function submitQuote() {
     'Preference: '+(S.delivery==='install'?'Professional Installation':'Ship to Customer'),
     '',
     'NOTES',
-    $('q-notes').value||'None',
+    $('cf-notes').value||'None',
     '',
     '--- Sent from phillyblinds.com/pages/wallace-woven.html ---'
   ];

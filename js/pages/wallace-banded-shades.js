@@ -574,9 +574,9 @@ function addBandedShadesToCart(){
 }
 
 function submitQ(){
-  var name=document.getElementById('q-name').value.trim();
-  var phone=document.getElementById('q-phone').value.trim();
-  var errEl=document.getElementById('sub-err');
+  var name=document.getElementById('cf-name').value.trim();
+  var phone=document.getElementById('cf-phone').value.trim();
+  var errEl=document.getElementById('cf-contact-err');
   var errs=[];
   if(!name)errs.push('Name required.');
   if(!phone)errs.push('Phone required.');
@@ -601,7 +601,7 @@ function submitQ(){
 
   var body=[
     '=== WALLACE ZEBRA / BANDED SHADE QUOTE ===','',
-    'CONTACT','Name: '+name,'Phone: '+phone,'Email: '+(document.getElementById('q-email').value||'—'),'',
+    'CONTACT','Name: '+name,'Phone: '+phone,'Email: '+(document.getElementById('cf-email').value||'—'),'',
     'ORDER DETAILS',
     'Product: '+(S.prod==='dual'?'Wallace Portfolio Dual Sheer Shades':'Wallace Banded 2D Shades'),
     'Quantity: '+S.qty+' shade(s)',
@@ -629,7 +629,7 @@ function submitQ(){
     'Est. total: ~$'+Math.round((base||0+ctrlUp+wrapUp+accUp)*S.qty+freight),
   ]:['CONTROL',document.querySelector('#grp-ctrl-2d .opt-btn.sel')?.textContent.trim()||'—']).concat([
     '','OPTIONS','Side-by-side matching: '+sbs,'Delivery: '+del,
-    '','NOTES',document.getElementById('q-notes').value||'None','',
+    '','NOTES',document.getElementById('cf-notes').value||'None','',
     '--- Sent from phillyblinds.com/pages/wallace-banded-shades.html ---'
   ]).join('\n');
 

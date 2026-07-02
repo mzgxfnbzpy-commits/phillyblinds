@@ -453,29 +453,6 @@ textarea.form-input{resize:vertical;min-height:80px}
         <div class="price-note">Estimated retail — confirmed with current Wallace Blinds 2026 price book. Final pricing confirmed at time of order. Freight not included.</div>
       </div>
 
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Your Name *</label>
-          <input class="form-input" type="text" id="inp-name" data-pb-contact="name" placeholder="First &amp; last name" oninput="S.name=this.value">
-        </div>
-        <div class="form-group">
-          <label>Phone *</label>
-          <input class="form-input" type="tel" id="inp-phone" data-pb-contact="phone" placeholder="(215) 555-0100" oninput="S.phone=this.value">
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Email *</label>
-        <input class="form-input" type="email" id="inp-email" data-pb-contact="email" placeholder="jane@example.com" oninput="S.email=this.value">
-      </div>
-      <div class="form-group">
-        <label>Address <span style="font-weight:400;color:#aaa">(optional)</span></label>
-        <input class="form-input" type="text" id="inp-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA">
-      </div>
-      <div class="form-group" style="margin-bottom:12px">
-        <label>Notes (optional)</label>
-        <textarea class="form-input" id="inp-notes" placeholder="Room, window name, installation notes, questions..." oninput="S.notes=this.value"></textarea>
-      </div>
-
       <div class="delivery-opt-grid" id="delivery-grid">
         <div class="delivery-opt-card sel" onclick="pickDelivery('ship',this)">
           <div class="delivery-opt-title">Ship to me</div>
@@ -483,9 +460,8 @@ textarea.form-input{resize:vertical;min-height:80px}
         </div>
       </div>
 
-      <div id="pds-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
-      <button class="btn-cart-add" onclick="addPortfolioDualSheerToCart()" style="margin-bottom:8px">+ Add to Cart</button>
-      <button class="submit-btn" onclick="submitQuote()" data-pb-require-contact="pds-contact-err">Submit Order for Review &rarr;</button>
+      <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->
+      <div id="pb-final-step"></div>
       <div style="font-size:11px;color:#aaa;margin-top:10px;text-align:center">Opens your email with all specs pre-filled</div>
     </div>
   </div>
@@ -496,6 +472,9 @@ textarea.form-input{resize:vertical;min-height:80px}
 <script src="../js/shared.js"></script>
 <script src="../js/pages/portfolio-dual-sheer.js"></script>
 <script>
+// Canonical final "Your details" contact + files step — identical on every product.
+document.getElementById('pb-final-step').innerHTML =
+  pbContactStepHTML({ bare: true, cartFn: 'addPortfolioDualSheerToCart()', submitFn: 'submitQuote()' });
 (function() {
   pbCtx.prefill('inp-w',   'w',   function(v) { if (typeof dimChanged === 'function') dimChanged(); });
   pbCtx.prefill('inp-h',   'h',   function(v) { if (typeof dimChanged === 'function') dimChanged(); });

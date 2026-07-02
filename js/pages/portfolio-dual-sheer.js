@@ -677,6 +677,10 @@ function addPortfolioDualSheerToCart(){
 function submitQuote(){
   const f=fab();
   if(!f){ alert('Please complete all steps before submitting.'); return; }
+  const name=(document.getElementById('cf-name').value||'').trim();
+  const phone=(document.getElementById('cf-phone').value||'').trim();
+  const email=(document.getElementById('cf-email').value||'').trim();
+  const notes=(document.getElementById('cf-notes').value||'').trim();
   const lines=[
     '=== PORTFOLIO COLLECTION™ DUAL SHEER SHADE QUOTE REQUEST ===',
     '',
@@ -728,9 +732,10 @@ function submitQuote(){
     'Note: Estimated retail per 2026 Wallace Blinds price book. Final pricing confirmed at order. Freight not included.',
     '',
     'CONTACT',
-    'Name: '+S.name,
-    'Phone/Email: '+S.phone,
-    'Notes: '+S.notes,
+    'Name: '+name,
+    'Phone: '+phone,
+    'Email: '+email,
+    'Notes: '+notes,
     '',
     '=== END QUOTE REQUEST ==='
   ].filter(l=>l!=='').join('\n');

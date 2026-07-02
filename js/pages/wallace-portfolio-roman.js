@@ -697,9 +697,9 @@ function addWallaceRomanToCart(){
 }
 
 function submitQuote() {
-  var name=document.getElementById('q-name').value.trim();
-  var phone=document.getElementById('q-phone').value.trim();
-  var errEl=document.getElementById('submit-errors');
+  var name=document.getElementById('cf-name').value.trim();
+  var phone=document.getElementById('cf-phone').value.trim();
+  var errEl=document.getElementById('cf-contact-err');
   var errs=[];
   if(!name)         errs.push('Name required.');
   if(!phone)        errs.push('Phone required.');
@@ -757,8 +757,8 @@ function submitQuote() {
     'CONTACT',
     'Name: '+name,
     'Phone: '+phone,
-    'Email: '+(document.getElementById('q-email').value.trim()||'—'),
-    'Address: '+(document.getElementById('q-address').value.trim()||'—'),'',
+    'Email: '+(document.getElementById('cf-email').value.trim()||'—'),
+    'Address: '+(document.getElementById('cf-address').value.trim()||'—'),'',
     'ORDER DETAILS',
     'Product: Wallace Portfolio Collection Fabric Roman Shades',
     'Quantity: '+S.qty+' shade(s)',
@@ -813,7 +813,7 @@ var p=isHob?getPriceHobbled(w,l,f.priceGroup):getPriceFlat(w,l,f.priceGroup,f.no
       return '$'+tot+'/shade Group '+f.priceGroup+(ns.length?' ('+ns.join(', ')+')':'');
     })(),
     'NOTES',
-    document.getElementById('q-notes').value.trim()||'None','',
+    document.getElementById('cf-notes').value.trim()||'None','',
     '⚠ INTERNAL NOTE: Fabric codes marked "ENTER" are placeholders. Enter all codes from Wallace PDF pages 3-5 before finalizing this quote.','',
     '--- Sent from phillyblinds.com/pages/wallace-portfolio-roman.html ---',
   ].filter(function(l){return l!==undefined&&l!==null;}).join('\n');

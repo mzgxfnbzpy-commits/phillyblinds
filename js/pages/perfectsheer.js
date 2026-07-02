@@ -250,13 +250,18 @@ function psAddToCart() {
 
 // ── Quote form submit ─────────────────────────────────────────
 async function submitPSQuote(btn) {
-  var name  = document.getElementById('ps-name').value.trim();
-  var phone = document.getElementById('ps-phone').value.trim();
-  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  var name  = document.getElementById('cf-name').value.trim();
+  var phone = document.getElementById('cf-phone').value.trim();
+  if (!name || !phone) {
+    var errEl = document.getElementById('cf-contact-err');
+    if (errEl) { errEl.textContent = 'Please enter your name and phone number.'; errEl.style.display = 'block'; }
+    else { alert('Please enter your name and phone number.'); }
+    return;
+  }
   var w     = document.getElementById('ps-width').value   || '?';
   var h     = document.getElementById('ps-height').value  || '?';
-  var email = document.getElementById('ps-email').value;
-  var notes = document.getElementById('ps-notes').value;
+  var email = document.getElementById('cf-email').value;
+  var notes = document.getElementById('cf-notes').value;
   var price = document.getElementById('ps-price-total').textContent;
   var woodColor = '';
   if (PS.valance.indexOf('Wood') >= 0) {
