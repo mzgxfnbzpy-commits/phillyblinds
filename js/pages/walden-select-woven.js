@@ -1,8 +1,7 @@
-﻿let wsDelivery = 'ship';
+let wsDelivery = 'ship';
 function wsSetDelivery(val) {
   wsDelivery = val;
-  document.getElementById('ws-del-ship').classList.toggle('sel', val === 'ship');
-  document.getElementById('ws-del-pickup').classList.toggle('sel', val === 'pickup');
+  document.getElementById('ws-del-ship').classList.toggle('sel', true);
 }
 
 function submitWSQuote() {
@@ -29,7 +28,7 @@ function submitWSQuote() {
     'Quantity: ' + (document.getElementById('ws-qty').value || '1'),
     'Control: ' + (document.getElementById('ws-control').value || 'Not selected'),
     'Mount: ' + (document.getElementById('ws-mount').value || 'Not selected'),
-    'Delivery: ' + (wsDelivery === 'ship' ? 'Ship via UPS/FedEx' : 'Customer pickup'),
+    'Delivery: ' + ('Ship via UPS/FedEx'),
     '',
     'NOTES',
     document.getElementById('ws-notes').value || '(none)',

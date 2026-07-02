@@ -1,4 +1,4 @@
-﻿// ── PRICING DATA ──────────────────────────────────────────────────────────────
+// ── PRICING DATA ──────────────────────────────────────────────────────────────
 
 // Paris Texas — Retail prices (June 2025, 10% tariff included)
 const PT_POLES_158 = {2:43.26, 4:86.52, 6:129.78, 8:173.05, 10:216.29, 12:259.55}; // metal per section
@@ -559,6 +559,7 @@ function calcPrice(){
   $('q-motor-row').style.display='none';
 
   const total=rodCost+finCost+braCost+ringCost;
+  S.estTotal=total;
   $('q-total').textContent=total>0?fmt(total)+' est.':'TBD';
 
   // ── Update inline summary in Step 9 (always shown once brand picked) ──
@@ -608,7 +609,7 @@ function updateSubmitState(){
   const clItems=$('checklist-items');
 
   if(missing.length===0){
-    if(btn){ btn.disabled=false; btn.style.opacity='1'; btn.style.cursor='pointer'; btn.textContent='Send quote request →'; }
+    if(btn){ btn.disabled=false; btn.style.opacity='1'; btn.style.cursor='pointer'; btn.textContent='Submit Order for Review →'; }
     if(clBox) clBox.style.display='none';
   } else {
     if(btn){ btn.disabled=true; btn.style.opacity='.45'; btn.style.cursor='not-allowed'; btn.textContent='Complete required fields to submit →'; }
@@ -617,6 +618,27 @@ function updateSubmitState(){
       clItems.innerHTML=missing.map(m=>'• '+m).join('<br>');
     }
   }
+}
+
+// ── ADD TO CART ───────────────────────────────────────────────────────────────
+function addHardwareQuoteToCart(){
+  const errEl=$('form-err'); errEl.style.display='none';
+  if(!S.brand){errEl.textContent='Please select a brand (Step 1) before adding to cart.';errEl.style.display='block';return;}
+  calcPrice(); // refresh S.estTotal from current selections
+  const lines=[
+    {label:'Product',       value:'Drapery Hardware — '+(S.brandLabel||'Custom')},
+    {label:'Diameter/Type', value:S.diameter||'—'},
+    {label:'Finish',        value:S.finishLabel||'TBD'},
+    {label:'Length',        value:S.length?(typeof S.length==='number'?S.length+'ft':S.length):'TBD'},
+    {label:'Finials',       value:(!S.finialKey||S.finialKey==='none')?'None':S.finialKey+' × '+(S.finialQty||1)+' pair(s)'},
+    {label:'French Returns',value:S.frenchReturn?'Yes':'No'},
+    {label:'Brackets',      value:(!S.bracketKey||S.bracketKey==='tbd')?'TBD':S.bracketKey+' × '+(S.bracketQty||0)},
+    {label:'Rings',         value:String(S.rings||0)},
+    {label:'Motorization',  value:(!S.motorKey||S.motorKey==='none')?'None':S.motorKey}
+  ];
+  const specs=lines.map(l=>l.label+': '+l.value).join(' | ');
+  pbAddToCart({product:'Drapery Hardware ('+(S.brandLabel||'Custom')+')',lines:lines,specs:specs,price:(S.estTotal>0?S.estTotal:null),qty:1});
+  pbOpenCart();
 }
 
 // ── SUBMIT ────────────────────────────────────────────────────────────────────
@@ -637,7 +659,7 @@ function submitForm(){
     'Name: '+name,
     'Phone: '+(phone||'—'),
     'Email: '+(email||'—'),
-    'Delivery: '+(S.delivery==='ship'?'Ship (UPS/FedEx)':'Customer pickup'),
+    'Delivery: '+'Ship (UPS/FedEx)',
     '',
     'HARDWARE SPECS',
     'Brand: '+S.brandLabel,

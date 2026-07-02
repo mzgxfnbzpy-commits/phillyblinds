@@ -1,8 +1,7 @@
-﻿let wpDelivery = 'ship';
+let wpDelivery = 'ship';
 function wpSetDelivery(val) {
   wpDelivery = val;
-  document.getElementById('wp-del-ship').classList.toggle('sel', val === 'ship');
-  document.getElementById('wp-del-pickup').classList.toggle('sel', val === 'pickup');
+  document.getElementById('wp-del-ship').classList.toggle('sel', true);
 }
 
 function submitWPQuote() {
@@ -29,7 +28,7 @@ function submitWPQuote() {
     'Quantity: ' + (document.getElementById('wp-qty').value || '1'),
     'Control: ' + (document.getElementById('wp-control').value || 'Not selected'),
     'Mount: ' + (document.getElementById('wp-mount').value || 'Not selected'),
-    'Delivery: ' + (wpDelivery === 'ship' ? 'Ship via UPS/FedEx' : 'Customer pickup'),
+    'Delivery: ' + ('Ship via UPS/FedEx'),
     '',
     'NOTES',
     document.getElementById('wp-notes').value || '(none)',

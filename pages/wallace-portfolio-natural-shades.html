@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -529,17 +529,12 @@
 
       <!-- Delivery section -->
       <div style="margin-bottom:16px">
-        <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery</div>
         <div class="opt-row" id="grp-wf-del">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-wf-del');document.getElementById('wf-del-s').style.display='block';document.getElementById('wf-del-p').style.display='none'">Ship to me</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-wf-del');document.getElementById('wf-del-s').style.display='none';document.getElementById('wf-del-p').style.display='block'">I'll pick up</button>
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-wf-del')">Ship to me</button>
         </div>
-        <div id="wf-del-s" class="delivery-note">
+        <div class="delivery-note">
           Shipped via UPS or FedEx from Huntingdon Valley, PA.
-          <div class="delivery-tariff">Note: tariffs and import fees are additional and itemized separately.</div>
-        </div>
-        <div id="wf-del-p" class="delivery-note" style="display:none">
-          Huntingdon Valley, PA. We'll provide the exact address after order review.
+          <div class="delivery-tariff">Tariffs and import fees are additional.</div>
         </div>
       </div>
 

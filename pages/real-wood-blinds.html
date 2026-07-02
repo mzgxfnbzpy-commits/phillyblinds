@@ -460,10 +460,11 @@
     </div>
     <div class="step-body">
       <div class="form-row">
-        <div class="form-group"><label>Name *</label><input type="text" id="f-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="f-phone" placeholder="(215) 555-0100"></div>
+        <div class="form-group"><label>Name *</label><input type="text" id="f-name" data-pb-contact="name" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" id="f-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
       </div>
-      <div class="form-group"><label>Email *</label><input type="email" id="f-email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Email *</label><input type="email" id="f-email" data-pb-contact="email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Address <span style="font-weight:400;color:#999">(optional)</span></label><input type="text" id="f-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
       <div class="form-group"><label>Notes <span style="font-weight:400;color:#999">(optional)</span></label><textarea id="f-notes" placeholder="Installation details, questions, or anything else we should know&hellip;"></textarea></div>
 
       <div class="delivery-section">
@@ -476,7 +477,8 @@
       </div>
 
       <div class="form-err" id="form-err"></div>
-      <button class="submit-btn" id="submit-btn" onclick="submitForm()">Submit Order for Review &rarr;</button>
+      <button class="btn-cart-add" onclick="addRealWoodToCart()" style="margin-bottom:8px">+ Add to Cart</button>
+      <button class="submit-btn" id="submit-btn" onclick="submitForm()" data-pb-require-contact="form-err">Submit Order for Review &rarr;</button>
       <div class="success-box" id="success-box">
         <h3>Quote request sent!</h3>
         <p>We&rsquo;ll follow up within a few hours to confirm your specs and collect payment. Call <strong>(609) 742-1720</strong> 24/7 for anything urgent.</p>

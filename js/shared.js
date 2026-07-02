@@ -367,7 +367,7 @@ function renderFooter(isHome) {
     </div>
     <div class="footer-disc">Blindznation is an independent business providing professional installation and consulting services. Product names, logos, and trademarks are the property of their respective owners and are used for identification purposes only. Blindznation is not affiliated with, endorsed by, or sponsored by any manufacturer. &nbsp;·&nbsp; <a href="${pre}privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></div>
   `;
-  setTimeout(function(){ _initShippingEstimators(); _initFileUploads(); _initInstallationAddons(); }, 0);
+  setTimeout(function(){ _initShippingEstimators(); _initCartExtras(); _initFileUploads(); _initInstallationAddons(); }, 0);
 }
 
 // ── STEP AUTO-ADVANCE (accordion + wizard) ───────────────────────────────────
@@ -524,6 +524,8 @@ function pbAddToCart(item) {
     if ((!item._files || !item._files.length) && _pbPendingExtras.files && _pbPendingExtras.files.length) item._files = _pbPendingExtras.files;
     _pbPendingExtras = null;
   }
+  // Merge extras from the in-form "files / notes + professional installation" block (Add-to-Cart flow)
+  _pbMergeCartExtras(item);
   if (item.notes == null) item.notes = '';
   // Move pending File objects into the per-item in-memory store; keep lightweight metadata on the item
   if (item._files && item._files.length) {
@@ -1505,10 +1507,71 @@ function nmGetMotorSummary() {
 }
 
 // ---- INSTALLATION ADD-ON — auto-injects into every quote form ----
+// ── Add-to-Cart extras: "files / notes" + "Professional installation" block ──
+// Injected immediately before every "+ Add to Cart" button so it is consistent across
+// all configurators (which use varying button/section classes). Captured into the cart
+// item by _pbMergeCartExtras when pbAddToCart runs.
+function _initCartExtras() {
+  var btns = document.querySelectorAll('button');
+  Array.prototype.forEach.call(btns, function(btn) {
+    if (!/add to cart/i.test(btn.textContent || '')) return;
+    if (/pbEstimateAddCart/.test(btn.getAttribute('onclick') || '')) return; // estimate panel has its own notes/files
+    var container = btn.parentNode;
+    if (!container || container.querySelector('.pb-cart-extras')) return;
+    var id = 'ce-' + Math.random().toString(36).slice(2, 7);
+    var wrap = document.createElement('div');
+    wrap.className = 'pb-cart-extras';
+    wrap.style.cssText = 'margin:0 0 12px';
+    wrap.innerHTML =
+      // Files / notes
+      '<div style="border:1.5px dashed #ddd;border-radius:10px;padding:14px 16px;margin-bottom:12px;background:#fafaf8">' +
+        '<div style="font-size:12px;font-weight:600;color:#333;margin-bottom:7px">&#128206; Add files / notes <span style="font-weight:400;color:#999">(optional)</span></div>' +
+        '<textarea id="' + id + '-notes" placeholder="Room, timeline, questions, special requirements&hellip;" ' +
+          'style="width:100%;box-sizing:border-box;font-family:inherit;font-size:12px;padding:8px 10px;border:1px solid #e8e8e4;border-radius:8px;resize:vertical;min-height:40px;margin-bottom:8px"></textarea>' +
+        '<input type="file" id="' + id + '-files" class="pb-ce-files" multiple accept="image/*,.pdf,.heic,.png,.jpg,.jpeg" ' +
+          'style="width:100%;font-size:12px;color:#555;font-family:inherit;cursor:pointer;padding:4px 0" onchange="pbShowFileNames(this,\'' + id + '-names\')">' +
+        '<div id="' + id + '-names" style="font-size:11px;color:#555;margin-top:6px;line-height:1.8"></div>' +
+        '<div style="font-size:11px;color:#aaa;margin-top:4px;line-height:1.5">Window/room photos, measurements, inspiration &mdash; anything that helps.</div>' +
+      '</div>' +
+      // Professional installation (flag only — priced at quote)
+      '<div style="border:2px solid var(--gold,#C8973F);border-radius:12px;padding:14px 16px;background:var(--gold-mid,#FBF7F0)">' +
+        '<label style="display:flex;align-items:flex-start;gap:11px;cursor:pointer">' +
+          '<input type="checkbox" id="' + id + '-install" class="pb-ce-install" ' +
+            'style="margin-top:2px;flex-shrink:0;width:19px;height:19px;cursor:pointer;accent-color:var(--espresso,#1C1510)">' +
+          '<div>' +
+            '<div style="font-size:14px;font-weight:700;color:#1a1a1a;margin-bottom:3px">&#128295; Add professional installation</div>' +
+            '<div style="font-size:12px;color:#555;line-height:1.55">Our team installs it for you. Priced separately by location &amp; product &mdash; Justin confirms installation pricing in your quote.</div>' +
+          '</div>' +
+        '</label>' +
+      '</div>';
+    container.insertBefore(wrap, btn);
+  });
+}
+// Pull notes / files / installation flag from the in-form block into the cart item, then reset it.
+function _pbMergeCartExtras(item) {
+  var ce = document.querySelector('.pb-cart-extras');
+  if (!ce) return;
+  var nEl = ce.querySelector('textarea');
+  var fEl = ce.querySelector('.pb-ce-files');
+  var iEl = ce.querySelector('.pb-ce-install');
+  if (!item.notes && nEl && nEl.value.trim()) item.notes = nEl.value.trim();
+  if ((!item._files || !item._files.length) && fEl && fEl.files && fEl.files.length) item._files = Array.prototype.slice.call(fEl.files);
+  if (iEl && iEl.checked) {
+    item.installation = true;
+    item.lines = (item.lines || []).concat([{ label: 'Professional Installation', value: 'Requested — priced at quote' }]);
+  }
+  // Reset for the next item added from the same form
+  if (nEl) nEl.value = '';
+  if (fEl) fEl.value = '';
+  var nm = ce.querySelector('[id$="-names"]'); if (nm) nm.innerHTML = '';
+  if (iEl) iEl.checked = false;
+}
 function _initInstallationAddons() {
   document.querySelectorAll('.delivery-section').forEach(function(del) {
     var parent = del.parentElement;
     if (!parent || parent.querySelector('.pb-install-wrap')) return;
+    // Skip configurator forms that already have the Add-to-Cart extras block (avoids a duplicate install block)
+    if (parent.querySelector('.pb-cart-extras')) return;
     var btn = parent.querySelector('.btn-gold');
     if (!btn) return;
 
@@ -1567,6 +1630,8 @@ function _initFileUploads() {
   document.querySelectorAll('.delivery-section').forEach(function(del) {
     var parent = del.parentElement;
     if (!parent || parent.querySelector('.pb-fu-wrap')) return;
+    // Skip configurator forms that already have the Add-to-Cart extras block (avoids a duplicate file input)
+    if (parent.querySelector('.pb-cart-extras')) return;
     var btn = parent.querySelector('.btn-gold');
     if (!btn) return;
     var id = 'fu-' + Math.random().toString(36).slice(2, 8);

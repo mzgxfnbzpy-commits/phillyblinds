@@ -478,7 +478,7 @@ function setDel(opt,card){
   S.del=opt;
   document.querySelectorAll('.delivery-opt-card').forEach(function(c){c.classList.remove('sel');});
   card.classList.add('sel');
-  var lbl={ship:'Ship to me',pickup:'Pick up',install:'Professional installation'}[opt]||opt;
+  var lbl='Ship to me';
   document.getElementById('val7').textContent=lbl;
   spv('sp-del',lbl);
   document.getElementById('step7').classList.add('done');
@@ -527,7 +527,7 @@ function updateCalc(){
   showR('pr-ctrl-row',ctrlUp>0); if(ctrlUp)setV('pr-ctrl','+$'+ctrlUp);
   showR('pr-wrap-row',wrapUp>0); if(wrapUp)setV('pr-wrap','+$'+wrapUp+'/shade');
   showR('pr-acc-row',accUp>0);   if(accUp)setV('pr-acc','+$'+accUp);
-  var freight=(S.del==='pickup'||S.del==='install')?0:25+(S.qty>1?(S.qty-1)*11:0);
+  var freight=(S.del==='install')?0:25+(S.qty>1?(S.qty-1)*11:0);
   showR('pr-frt-row',freight>0); if(freight)setV('pr-frt','$'+freight);
   var total=(base+ctrlUp+wrapUp+accUp)*S.qty+freight;
   setV('pr-total','~$'+Math.round(total).toLocaleString());
@@ -588,7 +588,7 @@ function submitQ(){
   errEl.style.display='none';
 
   var mount=document.querySelector('#grp-mount .opt-btn.sel')?.textContent.trim()||'Inside mount';
-  var del={ship:'Ship (UPS/FedEx from Huntingdon Valley PA)',pickup:'Pick up',install:'Professional installation'}[S.del]||S.del;
+  var del='Ship (UPS/FedEx from Huntingdon Valley PA)';
   var sbs=document.querySelector('#grp-sbs .opt-btn.sel')?.textContent.trim().includes('Yes')?'Yes':'No';
   var bar=document.querySelector('#grp-bar .opt-btn.sel')?.textContent.trim()||'Standard';
   var barWrap=document.querySelector('#grp-bar-wrap .opt-btn.sel')?.textContent.trim().includes('wrap')?'Yes (+$'+getWrapP(S.w)+')':'No';
@@ -597,7 +597,7 @@ function submitQ(){
   var wrapUp=S.cassette==='square'?80:0;
   var bbW=document.querySelector('#grp-bar-wrap .opt-btn.sel');if(bbW&&bbW.textContent.includes('wrap'))wrapUp+=getWrapP(S.w);
   var accUp=(document.getElementById('acc-bat')?.checked?160:0)+(document.getElementById('acc-plug')?.checked?60:0)+(document.getElementById('acc-charger')?.checked?83:0)+(document.getElementById('acc-ext6')?.checked?32:0)+(document.getElementById('acc-ext48')?.checked?43:0)+(document.getElementById('acc-pole')?.checked?80:0);
-  var freight=(S.del==='pickup'||S.del==='install')?0:25+(S.qty>1?(S.qty-1)*11:0);
+  var freight=(S.del==='install')?0:25+(S.qty>1?(S.qty-1)*11:0);
 
   var body=[
     '=== WALLACE ZEBRA / BANDED SHADE QUOTE ===','',
@@ -638,3 +638,4 @@ function submitQ(){
   document.getElementById('step8-body').querySelectorAll(':not(#success-box)').forEach(function(el){el.style.display='none';});
   document.getElementById('success-box').style.display='block';
 }
+

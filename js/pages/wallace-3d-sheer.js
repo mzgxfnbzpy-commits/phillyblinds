@@ -1,4 +1,4 @@
-﻿// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 // WALLACE 3D DUAL SHEER — DATA
 // Source: Wallace - Sheer 3D Horizontals.pdf (10/01/2024)
 // ═══════════════════════════════════════════════════════════
@@ -485,7 +485,7 @@ function updateSpec(){
   const qty=parseInt(document.getElementById('qty').value)||1;
   S.qty=qty;
   document.getElementById('sp-qty').textContent=qty+' shade'+(qty>1?'s':'');
-  document.getElementById('s8val').textContent=qty+' shade'+(qty>1?'s':'')+' · '+(S.del==='ship'?'Ship':'Pickup');
+  document.getElementById('s8val').textContent=qty+' shade'+(qty>1?'s':'')+' · '+'Ship';
 
   // Oversize warning
   document.getElementById('sp-warn-os').style.display=S.w>=90?'block':'none';
@@ -604,7 +604,7 @@ function submitQuote(){
     'QUANTITY & DELIVERY:',
     'Quantity: '+qty+' shade'+(qty>1?'s':''),
     'Room/window: '+(document.getElementById('room-label').value.trim()||'—'),
-    'Delivery: '+(S.del==='ship'?'Ship (UPS/FedEx from Huntingdon Valley PA)':'Will pick up'),
+    'Delivery: '+'Ship (UPS/FedEx from Huntingdon Valley PA)',
     '',
     'NOTES:',
     document.getElementById('f-notes').value.trim()||'None',

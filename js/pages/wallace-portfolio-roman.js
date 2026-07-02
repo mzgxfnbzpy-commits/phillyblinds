@@ -1,4 +1,4 @@
-﻿// ── STATE ─────────────────────────────────────────────────────────────────────
+// ── STATE ─────────────────────────────────────────────────────────────────────
 var S = {
   qty:1, room:'', mount:'inside', width:0, length:0,
   shadeStyle:'', panelStyle:'',
@@ -659,7 +659,7 @@ function setDelivery(opt,card) {
   S.delivery=opt;
   document.querySelectorAll('.delivery-opt-card').forEach(function(c){c.classList.remove('sel');});
   card.classList.add('sel');
-  var labels={ship:'Ship to me',pickup:'Pick up',install:'Professional installation'};
+  var labels={ship:'Ship to me',install:'Professional installation'};
   document.getElementById('val15').textContent=labels[opt]||opt;
   sp('sp-delivery',labels[opt]||opt);
   document.getElementById('step15').classList.add('done');
@@ -741,7 +741,7 @@ function submitQuote() {
   var wandLen=document.querySelector('#grp-wand-len .opt-btn.sel')?.textContent.trim()||'—';
   var controlSide=document.querySelector('#grp-control-side .opt-btn.sel')?.textContent.trim()||'—';
   var returnLabel={none:'No returns',standard:'Standard 4½" returns',extended:'Extended depth returns',custom:'Custom — '+document.getElementById('return-depth').value+'"'}[S.returns]||S.returns;
-  var delivery={ship:'Ship (UPS/FedEx from Huntingdon Valley PA)',pickup:'Pick up (Huntingdon Valley PA)',install:'Professional installation'}[S.delivery]||S.delivery;
+  var delivery='Ship (UPS/FedEx from Huntingdon Valley PA)'||S.delivery;
 
   // Motor accessories
   var motorAcc=[];

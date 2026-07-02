@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -140,6 +140,26 @@
     </div>
     <div class="field-row">
       <div class="field-group">
+        <label>Mount Type</label>
+        <select id="wp-mount">
+          <option value="">-- Select mount --</option>
+          <option>Inside Mount</option>
+          <option>Outside Mount</option>
+          <option>Ceiling Mount</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label>Product Type</label>
+        <select id="wp-type">
+          <option value="">-- Select product --</option>
+          <option>Roman Shade</option>
+          <option>Sliding Panel</option>
+          <option>Natural Drapery</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-group">
         <label>Shade Style</label>
         <select id="wp-style">
           <option value="">-- Select style --</option>
@@ -162,26 +182,6 @@
     </div>
     <div class="field-row">
       <div class="field-group">
-        <label>Mount Type</label>
-        <select id="wp-mount">
-          <option value="">-- Select mount --</option>
-          <option>Inside Mount</option>
-          <option>Outside Mount</option>
-          <option>Ceiling Mount</option>
-        </select>
-      </div>
-      <div class="field-group">
-        <label>Product Type</label>
-        <select id="wp-type">
-          <option value="">-- Select product --</option>
-          <option>Roman Shade</option>
-          <option>Sliding Panel</option>
-          <option>Natural Drapery</option>
-        </select>
-      </div>
-    </div>
-    <div class="field-row">
-      <div class="field-group">
         <label>Additional Notes</label>
         <textarea id="wp-notes" rows="3" placeholder="Liner options, edge binding, window location, special requirements, design goals..."></textarea>
       </div>
@@ -194,10 +194,6 @@
           <h4>&#x1F4E6; Ship to me</h4>
           <p>UPS or FedEx from Huntingdon Valley, PA. Shipping calculated at order.</p>
         </div>
-        <div class="del-opt" id="wp-del-pickup" onclick="wpSetDelivery('pickup')">
-          <h4>&#x1F3E0; I'll pick up</h4>
-          <p>Huntingdon Valley, PA. We'll provide the exact address after order review.</p>
-        </div>
       </div>
       <div class="tariff-note"><strong>Tariff notice:</strong> Products may be subject to U.S. government import tariffs. Surcharges disclosed at order confirmation.</div>
     </div>
@@ -209,7 +205,6 @@
   </div>
 </div>
 
-<div id="footer-root"></div>
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script src="../js/pages/walden-premier-woven.js"></script>

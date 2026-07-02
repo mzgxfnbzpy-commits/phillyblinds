@@ -263,6 +263,49 @@ function calcPrice() {
     + 'Norman retail pricing — 35% off. Estimated price — confirmed at order. No charge until Justin reviews.';
 }
 
+// ── ADD TO CART ───────────────────────────────────────────────────────────────
+function addRealWoodToCart() {
+  const errEl = $('form-err');
+  errEl.style.display = 'none';
+  if (!S.mount)  { errEl.textContent = 'Please select a mount type (Step 1) before adding to cart.';      errEl.style.display = 'block'; return; }
+  if (!S.sizeOk) { errEl.textContent = 'Please enter valid dimensions (Step 3) before adding to cart.';   errEl.style.display = 'block'; return; }
+  if (!S.color)  { errEl.textContent = 'Please select a color (Step 4) before adding to cart.';           errEl.style.display = 'block'; return; }
+  if (!S.valance){ errEl.textContent = 'Please select a valance option (Step 5) before adding to cart.';  errEl.style.display = 'block'; return; }
+
+  const pW = NW_W.find(v => v >= S.w);
+  const pH = NW_H.find(v => v >= S.h);
+  const wi = NW_W.indexOf(pW);
+  const base = NW_MATRIX[pH][wi];
+  const colorAdd = Math.round(base * S.colorSurcharge);
+  const valArr = S.valance === 'crown' ? NW_VAL_CROWN : (S.valance === 'contempo' ? NW_VAL_CONTEMPO : null);
+  const valRetail = valArr ? (valArr[wi] || 0) : 0;
+  const unitRetail = base + colorAdd + valRetail;
+  const retailSub = unitRetail * S.qty;
+  const yourPrice = Math.round(retailSub * (1 - NORMAN_DISC));
+  const isOversized = S.w >= 90;
+  const freight = S.delivery === 'ship'
+    ? (isOversized ? (80 + (S.qty - 1) * 50) : (25 + (S.qty - 1) * 11))
+    : 0;
+  const total = yourPrice + freight;
+
+  const surchargeLabel = S.colorSurcharge === 0.10 ? ' [Designer +10%]' : S.colorSurcharge === 0.50 ? ' [Premium +50%]' : '';
+  const valLabel = S.valance === 'none' ? 'No Valance' : S.valance === 'crown' ? 'Designer Crown' : 'Contempo';
+
+  const lines = [
+    { label: 'Product',   value: 'Norman Ultimate™ Normandy® Real Wood Blinds' },
+    { label: 'Slat Size', value: S.slat === '2.5in' ? '2½"' : '2"' },
+    { label: 'Color',     value: S.color + surchargeLabel },
+    { label: 'Mount',     value: S.mount === 'inside' ? 'Inside Mount' : 'Outside Mount' },
+    { label: 'Width',     value: S.w + '"' },
+    { label: 'Height',    value: S.h + '"' },
+    { label: 'Valance',   value: valLabel },
+    { label: 'Quantity',  value: String(S.qty) }
+  ];
+  const specs = lines.map(l => l.label + ': ' + l.value).join(' | ');
+  pbAddToCart({ product: 'Norman Real Wood Blinds', lines: lines, specs: specs, price: total, qty: S.qty });
+  pbOpenCart();
+}
+
 // ── SUBMIT ────────────────────────────────────────────────────────────────────
 function submitForm() {
   const name = $('f-name').value.trim();
@@ -308,7 +351,7 @@ function submitForm() {
     'Phone: ' + (phone || '—'),
     'Email: ' + (email || '—'),
     'Notes: ' + (notes || '—'),
-    'Delivery: ' + (S.delivery === 'ship' ? 'Ship to me (UPS/FedEx)' : 'Customer pickup'),
+    'Delivery: ' + ('Ship to me (UPS/FedEx)'),
     '',
     'PRODUCT SPECS',
     'Product: Norman Ultimate™ Normandy® Cordless Wood Blinds',

@@ -746,6 +746,9 @@ function calcDrapePrice() {
   } else if (isPinchPleat) {
     var ppBtn = document.querySelector('#grp-pp-fullness .opt-btn.sel');
     fullness = ppBtn ? (parseFloat(ppBtn.textContent) || 2.5) : 2.5;
+  } else if (_NO_FULLNESS.indexOf(drapeState.pleat) !== -1) {
+    // Grommet/Eyelet, Box, Goblet & Barrel pleats have no fullness selector — fixed 2.5× standard
+    fullness = 2.5;
   } else {
     var fBtn = document.querySelector('#grp-drape-fullness .opt-btn.sel');
     fullness = fBtn ? (parseFloat(fBtn.textContent) || 2.0) : 2.0;
@@ -1192,8 +1195,9 @@ async function submitDrape() {
     ? ((document.getElementById('pp-return') || {}).value || '4')
     : ((document.getElementById('d-return') || {}).value || '4');
   var overlapSz  = isSubmitRP || isSubmitPinch ? '—' : ((document.getElementById('d-overlap') || {}).value || '4');
-  // Fullness (standard pleat styles)
-  var fullness   = isSubmitPinch ? getOpt('grp-pp-fullness') : getOpt('grp-drape-fullness') || '—';
+  // Fullness (standard pleat styles); Grommet/Box/Goblet/Barrel use a fixed 2.5× standard
+  var fullness   = isSubmitPinch ? getOpt('grp-pp-fullness')
+                 : (_NO_FULLNESS.indexOf(pleat) !== -1 ? '2.5× (standard)' : (getOpt('grp-drape-fullness') || '—'));
   // Ripple fold specific
   var isRipple   = pleat === 'Ripple Fold';
   var rippleFull = isRipple ? getOpt('grp-ripple-fullness') : '—';
