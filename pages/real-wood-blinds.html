@@ -459,14 +459,6 @@
       <div class="step-head-val"></div>
     </div>
     <div class="step-body">
-      <div class="form-row">
-        <div class="form-group"><label>Name *</label><input type="text" id="f-name" data-pb-contact="name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="f-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
-      </div>
-      <div class="form-group"><label>Email *</label><input type="email" id="f-email" data-pb-contact="email" placeholder="jane@example.com"></div>
-      <div class="form-group"><label>Address <span style="font-weight:400;color:#999">(optional)</span></label><input type="text" id="f-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
-      <div class="form-group"><label>Notes <span style="font-weight:400;color:#999">(optional)</span></label><textarea id="f-notes" placeholder="Installation details, questions, or anything else we should know&hellip;"></textarea></div>
-
       <div class="delivery-section">
         <div class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA. Shipping estimated in your quote.<div class="delivery-tariff">Note: tariffs and import fees are additional.</div></div>
       </div>
@@ -476,9 +468,8 @@
         <div class="custom-notice-body">Real wood blinds are custom made to order. Finished sizes may vary within manufacturer tolerance (&plusmn;1/8&Prime; width, +0 to &minus;2&frac34;&Prime; height). No returns on custom products.</div>
       </div>
 
-      <div class="form-err" id="form-err"></div>
-      <button class="btn-cart-add" onclick="addRealWoodToCart()" style="margin-bottom:8px">+ Add to Cart</button>
-      <button class="submit-btn" id="submit-btn" onclick="submitForm()" data-pb-require-contact="form-err">Submit Order for Review &rarr;</button>
+      <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->
+      <div id="pb-final-step"></div>
       <div class="success-box" id="success-box">
         <h3>Quote request sent!</h3>
         <p>We&rsquo;ll follow up within a few hours to confirm your specs and collect payment. Call <strong>(609) 742-1720</strong> 24/7 for anything urgent.</p>
@@ -520,6 +511,9 @@
 <script src="../js/shared.js"></script>
 <script src="../js/pages/real-wood-blinds.js"></script>
 <script>
+// Canonical final "Your details" contact + files step — identical on every product.
+document.getElementById('pb-final-step').innerHTML =
+  pbContactStepHTML({ bare: true, cartFn: 'addRealWoodToCart()', submitFn: 'submitForm()' });
 // Init: pre-select 2" slat and left wand
 (function(){
   S.slat = '2in';

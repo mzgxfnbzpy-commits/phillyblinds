@@ -218,9 +218,9 @@ function addSynchronyToCart(){
 }
 
 function submitQuote(){
-  const name=document.getElementById('f-name').value.trim();
-  const phone=document.getElementById('f-phone').value.trim();
-  const err=document.getElementById('form-err');
+  const name=document.getElementById('cf-name').value.trim();
+  const phone=document.getElementById('cf-phone').value.trim();
+  const err=document.getElementById('cf-contact-err');
   if(!name||!phone){err.style.display='block';return;}
   err.style.display='none';
   const qty=parseInt(document.getElementById('qty').value)||1;
@@ -238,9 +238,9 @@ function submitQuote(){
     'Quantity: '+qty,
     'Delivery: '+(state.del==='ship'?'Ship to me':'Pick up'),
     '',
-    'Notes: '+(document.getElementById('f-notes').value.trim()||'None'),
+    'Notes: '+(document.getElementById('cf-notes').value.trim()||'None'),
     '','Name: '+name,'Phone: '+phone,
-    'Email: '+(document.getElementById('f-email').value.trim()||'—')
+    'Email: '+(document.getElementById('cf-email').value.trim()||'—')
   ];
   const body=encodeURIComponent(lines.join('\n'));
   const subject=encodeURIComponent('Synchrony Verticals Quote — '+name);

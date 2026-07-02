@@ -58,16 +58,16 @@ function addWallaceVerticalsToCart(){
 }
 
 async function submitVWForm(btn) {
-  var name  = document.getElementById('vw-name').value.trim();
-  var phone = document.getElementById('vw-phone').value.trim();
+  var name  = document.getElementById('cf-name').value.trim();
+  var phone = document.getElementById('cf-phone').value.trim();
   if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
 
   var color   = vwColor || '—';
   var w       = document.getElementById('vw-width').value;
   var h       = document.getElementById('vw-height').value;
   var qty     = document.getElementById('vw-qty').value;
-  var email   = document.getElementById('vw-email').value.trim();
-  var notes   = document.getElementById('vw-notes').value.trim();
+  var email   = document.getElementById('cf-email').value.trim();
+  var notes   = document.getElementById('cf-notes').value.trim();
 
   var mount   = document.querySelector('#grp-vw-mount .delivery-opt-card.sel')?.querySelector('.delivery-opt-title')?.textContent.trim() || '—';
   var valSel  = document.querySelector('#grp-vw-valance .delivery-opt-card.sel')?.querySelector('.delivery-opt-title')?.textContent.trim() || '—';

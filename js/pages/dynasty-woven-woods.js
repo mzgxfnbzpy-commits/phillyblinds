@@ -544,10 +544,10 @@ function addDynastyToCart(){
 }
 
 function submitQuote(){
-  const name=document.getElementById('f-name').value.trim();
-  const phone=document.getElementById('f-phone').value.trim();
-  const err=document.getElementById('form-err');
-  if(!name||!phone){err.style.display='block';return;}
+  const name=document.getElementById('cf-name').value.trim();
+  const phone=document.getElementById('cf-phone').value.trim();
+  const err=document.getElementById('cf-contact-err');
+  if(!name||!phone){err.textContent='Please enter your name and phone number.';err.style.display='block';return;}
   err.style.display='none';
 
   const base=getBasePrice(S.grp,S.w,S.h)||0;
@@ -617,9 +617,8 @@ function submitQuote(){
     'CUSTOMER',
     '  Name: '+name,
     '  Phone: '+phone,
-    '  Email: '+(document.getElementById('f-email').value.trim()||'—'),
-    '  Room/location: '+(document.getElementById('f-room').value.trim()||'Not provided'),
-    '  Notes: '+(document.getElementById('f-notes').value.trim()||'None'),
+    '  Email: '+(document.getElementById('cf-email').value.trim()||'—'),
+    '  Notes: '+(document.getElementById('cf-notes').value.trim()||'None'),
     '',
     'NOTE: Estimated retail pricing only. Final price confirmed with current Wallace Blinds price book before order.'
   ];

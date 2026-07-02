@@ -619,10 +619,10 @@ function addGalaxyToCart(){
 }
 
 function submitQuote(){
-  const name=document.getElementById('f-name').value.trim();
-  const phone=document.getElementById('f-phone').value.trim();
-  const err=document.getElementById('form-err');
-  if(!name||!phone){err.style.display='block';return;}
+  const name=document.getElementById('cf-name').value.trim();
+  const phone=document.getElementById('cf-phone').value.trim();
+  const err=document.getElementById('cf-contact-err');
+  if(!name||!phone){err.textContent='Please enter your name and phone number.';err.style.display='block';return;}
   err.style.display='none';
 
   const qty=S.qty||1;
@@ -669,12 +669,12 @@ function submitQuote(){
     'Room/window: '+(document.getElementById('room-label').value.trim()||'—'),
     'Delivery: '+'Ship to me (UPS/FedEx)',
     '',
-    'Notes: '+(document.getElementById('f-notes').value.trim()||'None'),
+    'Notes: '+(document.getElementById('cf-notes').value.trim()||'None'),
     '',
     'CUSTOMER:',
     'Name: '+name,
     'Phone: '+phone,
-    'Email: '+(document.getElementById('f-email').value.trim()||'—'),
+    'Email: '+(document.getElementById('cf-email').value.trim()||'—'),
     '',
     'Pricing is an internal estimate only. Final price confirmed with current Wallace Galaxy price book.'
   ];

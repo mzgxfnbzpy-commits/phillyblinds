@@ -265,7 +265,7 @@ function calcPrice() {
 
 // ── ADD TO CART ───────────────────────────────────────────────────────────────
 function addRealWoodToCart() {
-  const errEl = $('form-err');
+  const errEl = $('cf-contact-err');
   errEl.style.display = 'none';
   if (!S.mount)  { errEl.textContent = 'Please select a mount type (Step 1) before adding to cart.';      errEl.style.display = 'block'; return; }
   if (!S.sizeOk) { errEl.textContent = 'Please enter valid dimensions (Step 3) before adding to cart.';   errEl.style.display = 'block'; return; }
@@ -308,11 +308,11 @@ function addRealWoodToCart() {
 
 // ── SUBMIT ────────────────────────────────────────────────────────────────────
 function submitForm() {
-  const name = $('f-name').value.trim();
-  const phone = $('f-phone').value.trim();
-  const email = $('f-email').value.trim();
-  const notes = ($('f-notes') || {}).value || '';
-  const errEl = $('form-err');
+  const name = $('cf-name').value.trim();
+  const phone = $('cf-phone').value.trim();
+  const email = $('cf-email').value.trim();
+  const notes = ($('cf-notes') || {}).value || '';
+  const errEl = $('cf-contact-err');
   errEl.style.display = 'none';
 
   if (!name) { errEl.textContent = 'Please enter your name.'; errEl.style.display = 'block'; return; }
@@ -386,9 +386,10 @@ function submitForm() {
     })
   }).then(r => {
     if (r.ok) {
-      $('form-err').style.display = 'none';
+      $('cf-contact-err').style.display = 'none';
       $('success-box').style.display = 'block';
-      $('submit-btn').style.display = 'none';
+      const _sb = document.querySelector('[data-pb-require-contact]');
+      if (_sb) _sb.style.display = 'none';
     } else {
       errEl.textContent = 'Submission failed. Please call (609) 742-1720.';
       errEl.style.display = 'block';
