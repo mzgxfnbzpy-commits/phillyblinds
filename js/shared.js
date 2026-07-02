@@ -513,8 +513,10 @@ function pbContactValid(errId) {
 // the fields in .pb-cart-extras makes the shared file/install auto-injectors skip
 // this block (no duplicate uploader).
 //
-// opts: { stepNum (number|string, required), submitFn (string, default "submitQuote()"),
-//         cartFn (string|null — omit to hide the "+ Add to Cart" button) }
+// opts: { stepNum (number|string, required unless bare), submitFn (string, default "submitQuote()"),
+//         cartFn (string|null — omit to hide the "+ Add to Cart" button),
+//         bare (bool — return just the fields/files/buttons with no step-block wrapper or
+//               "Your details" header, for pages that supply their own step chrome/accordion) }
 function pbContactStepHTML(opts) {
   opts = opts || {};
   var stepNum  = opts.stepNum != null ? opts.stepNum : '';
@@ -522,12 +524,7 @@ function pbContactStepHTML(opts) {
   var cartBtn  = opts.cartFn
     ? '<button class="btn-cart-add" onclick="' + opts.cartFn + '" style="width:100%;margin-bottom:8px">+ Add to Cart</button>'
     : '';
-  return '' +
-    '<div class="step-block" id="contact-block">' +
-      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">' +
-        '<div class="step-num">' + stepNum + '</div>' +
-        '<div class="step-title" style="margin-bottom:0">Your details</div>' +
-      '</div>' +
+  var inner = '' +
       '<div class="pb-cart-extras">' +
         '<div class="dim-row">' +
           '<div class="form-group"><label>Name *</label><input type="text" id="cf-name" data-pb-contact="name" placeholder="Jane Smith"></div>' +
@@ -545,7 +542,15 @@ function pbContactStepHTML(opts) {
         '<div id="cf-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>' +
         cartBtn +
         '<button class="btn-gold" onclick="' + submitFn + '" style="width:100%;padding:13px;margin-top:4px" data-pb-require-contact="cf-contact-err">Submit Order for Review &rarr;</button>' +
+      '</div>';
+  if (opts.bare) return inner;
+  return '' +
+    '<div class="step-block" id="contact-block">' +
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">' +
+        '<div class="step-num">' + stepNum + '</div>' +
+        '<div class="step-title" style="margin-bottom:0">Your details</div>' +
       '</div>' +
+      inner +
     '</div>';
 }
 

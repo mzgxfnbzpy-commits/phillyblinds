@@ -335,10 +335,10 @@ function calcPrice(){
 
 // ── SUBMIT ────────────────────────────────────────────────────────────────────
 function submitForm(){
-  const name=$('f-name').value.trim();
-  const phone=$('f-phone').value.trim();
-  const email=$('f-email').value.trim();
-  const errEl=$('form-err');
+  const name=$('cf-name').value.trim();
+  const phone=$('cf-phone').value.trim();
+  const email=$('cf-email').value.trim();
+  const errEl=$('cf-contact-err');
   errEl.style.display='none';
 
   if(!name){ errEl.textContent='Please enter your name.'; errEl.style.display='block'; return; }
@@ -404,7 +404,7 @@ function submitForm(){
     'TOTAL: $'+total,
     '',
     'NOTES',
-    ($('f-notes').value||'None')
+    ($('cf-notes').value||'None')
   ].join('\n');
 
   const subj='SmartPrivacy Faux Wood Blinds Quote — '+name;
