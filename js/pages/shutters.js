@@ -493,11 +493,21 @@ function addShuttersToCart(){
 }
 
 async function submitQuote() {
-  var name  = qs('field-name').value.trim();
-  var phone = qs('field-phone').value.trim();
-  var email = qs('field-email').value.trim();
-  if (!name || !phone || !email) { alert('Please fill in your name, phone, and email.'); return; }
-  if (!S.line) { alert('Please select a shutter line first.'); return; }
+  var name  = qs('cf-name').value.trim();
+  var phone = qs('cf-phone').value.trim();
+  var email = qs('cf-email').value.trim();
+  var errEl = qs('cf-contact-err');
+  if (errEl) errEl.style.display = 'none';
+  if (!name || !phone || !email) {
+    if (errEl) { errEl.textContent = 'Please fill in your name, phone, and email.'; errEl.style.display = 'block'; }
+    else alert('Please fill in your name, phone, and email.');
+    return;
+  }
+  if (!S.line) {
+    if (errEl) { errEl.textContent = 'Please select a shutter line first.'; errEl.style.display = 'block'; }
+    else alert('Please select a shutter line first.');
+    return;
+  }
   var btn = document.querySelector('.btn-submit-quote') || document.querySelector('[onclick*="submitQuote"]');
   if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
   var dimsText = S.dims.map(function(d, i) {
@@ -522,21 +532,24 @@ async function submitQuote() {
     { label: 'Specialty options', value: S.specs&&S.specs.length?S.specs.join(', '):'None' },
     { label: 'Delivery', value: S.delivery||'Not specified' },
     { label: 'Room', value: qs('field-room').value||'—' },
-    { label: 'City / ZIP', value: qs('field-zip').value||'—' },
   ];
+  var combinedNotes = [
+    (qs('field-notes') && qs('field-notes').value.trim()) || '',
+    (qs('cf-notes') && qs('cf-notes').value.trim()) || ''
+  ].filter(Boolean).join(' — ');
   try {
     var resp = await fetch('/api/quote', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: name, email: email, phone: phone,
         product: 'Norman Plantation Shutters — '+S.line,
-        selections: selections, notes: qs('field-notes').value.trim()||'',
+        selections: selections, notes: combinedNotes,
         sourceUrl: window.location.href })
     });
     var data = {}; try { data = await resp.json(); } catch(ex) {}
     if (!resp.ok) throw new Error(data.error||'Server error');
     qs('success-box').classList.add('show');
   } catch(err) {
-    if (btn) { btn.disabled = false; btn.textContent = 'Request Quote →'; }
+    if (btn) { btn.disabled = false; btn.textContent = 'Submit Order for Review →'; }
     alert('Something went wrong. Please call (609) 742-1720 or email blindznation@gmail.com');
   }
 }

@@ -1064,32 +1064,6 @@ textarea.inp-field{resize:vertical;min-height:90px}
       <!-- filled by JS -->
     </div>
 
-    <!-- Contact form -->
-    <div class="inp-row">
-      <div class="inp-group">
-        <label class="inp-label">Your Name *</label>
-        <input class="inp-field" type="text" id="q-name" data-pb-contact="name" placeholder="Full name">
-      </div>
-      <div class="inp-group">
-        <label class="inp-label">Phone *</label>
-        <input class="inp-field" type="tel" id="q-contact" data-pb-contact="phone" placeholder="(215) 555-0100">
-      </div>
-    </div>
-    <div class="inp-group" style="margin-bottom:14px">
-      <label class="inp-label">Email *</label>
-      <input class="inp-field" type="email" id="q-email" data-pb-contact="email" placeholder="jane@example.com">
-    </div>
-
-    <div class="inp-group" style="margin-bottom:14px">
-      <label class="inp-label">Project Address <span style="font-weight:400;color:#888">(optional)</span></label>
-      <input class="inp-field" type="text" id="q-address" data-pb-contact="address" placeholder="City, State (or full address)">
-    </div>
-
-    <div class="inp-group" style="margin-bottom:14px">
-      <label class="inp-label">Notes / Special Requests</label>
-      <textarea class="inp-field" id="q-notes" placeholder="Fabric weight, room details, drapery stack requirements, curved track needs, etc."></textarea>
-    </div>
-
     <!-- Delivery -->
     <div class="delivery-section">
       <div class="delivery-title">Installation or Pick-Up?</div>
@@ -1107,12 +1081,8 @@ textarea.inp-field{resize:vertical;min-height:90px}
       <button class="btn-back" onclick="goStep(6)">← Back</button>
     </div>
     <button onclick="reqMoreInfo('Kirsch Drapery Hardware')" class="req-info-link" style="display:block;margin-bottom:14px">Request more information about Kirsch hardware →</button>
-    <div id="kirsch-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
-    <button class="btn-cart-add" onclick="addKirschToCart()" style="margin-bottom:8px">+ Add to Cart</button>
-    <button class="btn-submit-cta" onclick="submitQuote()" style="font-family:var(--font)" data-pb-require-contact="kirsch-contact-err">
-      Submit Order for Review &rarr;
-      <span class="cta-sub">We'll follow up within a few hours · (609) 742-1720</span>
-    </button>
+    <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->
+    <div id="pb-final-step"></div>
   </div>
 
   <!-- UNSURE / HELP FORM (separate flow) -->
@@ -1159,5 +1129,10 @@ textarea.inp-field{resize:vertical;min-height:90px}
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script src="../js/pages/kirsch-rods.js"></script>
+<script>
+// Canonical final "Your details" contact + files step — identical on every product.
+document.getElementById('pb-final-step').innerHTML =
+  pbContactStepHTML({ bare: true, cartFn: 'addKirschToCart()', submitFn: 'submitQuote()' });
+</script>
 </body>
 </html>

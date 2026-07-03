@@ -465,12 +465,17 @@ function addParisTexasToCart(){
 }
 
 function submitQuote() {
-  const name=document.getElementById('q-name').value.trim();
-  const contact=document.getElementById('q-contact').value.trim();
-  if(!name||!contact){alert('Please enter your name and contact information.');return;}
+  const name=document.getElementById('cf-name').value.trim();
+  const phone=document.getElementById('cf-phone').value.trim();
+  const email=document.getElementById('cf-email').value.trim();
+  const errEl=document.getElementById('cf-contact-err');
+  errEl.style.display='none';
+  if(!name){ errEl.textContent='Please enter your name.'; errEl.style.display='block'; return; }
+  if(!phone&&!email){ errEl.textContent='Please enter a phone number or email address.'; errEl.style.display='block'; return; }
+  const contact=[phone,email].filter(Boolean).join(' / ');
 
-  const notes=document.getElementById('q-notes').value;
-  const addr=document.getElementById('q-address').value;
+  const notes=document.getElementById('cf-notes').value;
+  const addr=document.getElementById('cf-address').value;
   const w=document.getElementById('width-in')?.value||'';
   const qty=document.getElementById('qty-in')?.value||'1';
 

@@ -462,10 +462,10 @@ function addNormanSheersToCart(){
 }
 
 async function submitQuote(){
-  var name=document.getElementById('q-name').value.trim();
-  var email=document.getElementById('q-email').value.trim();
-  var phone=document.getElementById('q-phone').value.trim();
-  var err=document.getElementById('q-err');
+  var name=document.getElementById('cf-name').value.trim();
+  var email=document.getElementById('cf-email').value.trim();
+  var phone=document.getElementById('cf-phone').value.trim();
+  var err=document.getElementById('cf-contact-err');
   if(!name){err.textContent='Please enter your name.';err.style.display='block';return;}
   if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent='Please enter a valid email address.';err.style.display='block';return;}
   err.style.display='none';
@@ -492,7 +492,7 @@ async function submitQuote(){
     {label:'Delivery',value:'Ship to me'}
   ];
   if(S.isDoor) selections.push({label:'Application',value:'Patio door/slider'});
-  var notes=document.getElementById('q-notes').value.trim();
+  var notes=document.getElementById('cf-notes').value.trim();
   var btn=document.querySelector('#quote-form .btn-gold');
   if(btn){btn.disabled=true;btn.textContent='Sending…';}
   try{

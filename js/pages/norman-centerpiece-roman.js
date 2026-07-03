@@ -555,9 +555,9 @@ function addNormanCenterpieceToCart(){
 }
 
 function submitQuote() {
-  var name=document.getElementById('q-name').value.trim();
-  var phone=document.getElementById('q-phone').value.trim();
-  var errEl=document.getElementById('submit-errors');
+  var name=document.getElementById('cf-name').value.trim();
+  var phone=document.getElementById('cf-phone').value.trim();
+  var errEl=document.getElementById('cf-contact-err');
   var errs=[];
   if(!name)         errs.push('Name required.');
   if(!phone)        errs.push('Phone required.');
@@ -587,7 +587,7 @@ function submitQuote() {
   var bandDesc=S.banding==='none'?'None':S.banding==='ribbon'?'Ribbon banding (+15%) — color: '+(S.ribbonColor?S.ribbonColor.name+' '+S.ribbonColor.code:'TBD'):'Edge banding/Border (+30%) — base: '+(S.edgeBase?S.edgeBase.name+' '+S.edgeBase.code:'—')+' / border: '+(S.edgeBorder?S.edgeBorder.name+' '+S.edgeBorder.code:'—');
   var body=[
     '=== NORMAN CENTERPIECE™ ROMAN SHADE QUOTE ===','',
-    'CONTACT','Name: '+name,'Phone: '+phone,'Email: '+(document.getElementById('q-email').value.trim()||'—'),'',
+    'CONTACT','Name: '+name,'Phone: '+phone,'Email: '+(document.getElementById('cf-email').value.trim()||'—'),'',
     'CONFIGURATION',
     'Product: Norman Centerpiece™ Roman Shades — '+(S.type==='dn'?'Day & Night':'Standard'),
     'Quantity: '+S.qty+' shade(s)',
@@ -601,7 +601,7 @@ function submitQuote() {
     (S.type==='dn'?'DAY & NIGHT\nRear roller fabric: '+(S.rollerFabric?S.rollerFabric.name+' · '+S.rollerFabric.coll+' · '+S.rollerFabric.code+' · max '+S.rollerFabric.maxW+'"W':'—')+'\n':''),
     'EXTRAS','Valance: '+valance,'Side-by-side alignment: '+sbs,'Accessories: '+accList,'',
     'MOTORIZATION','Motorization: '+((S.lift==='motor'||S.lift==='motor-dn')?motorLabel+' · Power: '+power:'None — '+liftLabel),'',
-    'DELIVERY',delivery,'','NOTES',document.getElementById('q-notes').value.trim()||'None','',
+    'DELIVERY',delivery,'','NOTES',document.getElementById('cf-notes').value.trim()||'None','',
     '--- Sent from phillyblinds.com/pages/norman-centerpiece-roman.html ---'
   ].join('\n');
   var subj='Norman Centerpiece™ Roman — '+S.width+'"×'+S.height+'" '+(S.fabric?S.fabric.name:'')+' — '+name;

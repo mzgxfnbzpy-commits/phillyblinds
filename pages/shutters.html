@@ -542,31 +542,8 @@
           <span class="step-head-val" id="shv-16"></span>
         </div>
         <div class="step-body">
-          <div class="dim-row">
-            <div class="form-group">
-              <label>First &amp; last name *</label>
-              <input type="text" id="field-name" data-pb-contact="name" placeholder="Your full name" required>
-            </div>
-            <div class="form-group">
-              <label>Phone number *</label>
-              <input type="tel" id="field-phone" data-pb-contact="phone" placeholder="(215) 555-0100" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Email address *</label>
-            <input type="email" id="field-email" data-pb-contact="email" placeholder="you@example.com" required>
-          </div>
-          <div class="form-group">
-            <label>Address <span style="font-weight:400;color:#888">(optional)</span></label>
-            <input type="text" id="field-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA">
-          </div>
-          <div class="form-group">
-            <label>Your city / zip code</label>
-            <input type="text" id="field-zip" placeholder="Philadelphia PA / 19103">
-          </div>
-          <div id="field-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
-          <button class="btn-cart-add" onclick="addShuttersToCart()" style="margin-bottom:8px">+ Add to Cart</button>
-          <button class="submit-btn" onclick="submitQuote()" data-pb-require-contact="field-contact-err">Submit Order for Review &rarr;</button>
+          <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->
+          <div id="pb-final-step"></div>
 
           <div class="success-box" id="success-box">
             <h3 style="font-size:20px">Request for Quote Submitted!</h3>
@@ -613,5 +590,10 @@
 <div id="site-footer"></div>
 <script src="../js/shared.js"></script>
 <script src="../js/pages/shutters.js"></script>
+<script>
+// Canonical final "Your details" contact + files step — identical on every product.
+document.getElementById('pb-final-step').innerHTML =
+  pbContactStepHTML({ bare: true, cartFn: 'addShuttersToCart()', submitFn: 'submitQuote()' });
+</script>
 </body>
 </html>
