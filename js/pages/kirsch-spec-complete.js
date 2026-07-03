@@ -41,8 +41,8 @@ function wCalc() {
 
 /* ── submit ── */
 function submitQ() {
-  var name=document.getElementById('q-name').value.trim();
-  var phone=document.getElementById('q-phone').value.trim();
+  var name=document.getElementById('cf-name').value.trim();
+  var phone=document.getElementById('cf-phone').value.trim();
   if(!name||!phone){alert('Please enter your name and phone number.');return;}
 
   function gp(grp){ var s=document.querySelector('#'+grp+' .opt-pill.sel'); return s?s.textContent.trim():'—'; }
@@ -51,8 +51,8 @@ function submitQ() {
   var body='KIRSCH DRAPERY HARDWARE — SPECIFICATION REQUEST\n\n'
     +'── CUSTOMER ──\n'
     +'Name: '+name+'\nPhone: '+phone
-    +'\nEmail: '+(document.getElementById('q-email').value.trim()||'—')
-    +'\nAddress: '+(document.getElementById('q-address').value.trim()||'—')+'\n\n'
+    +'\nEmail: '+(document.getElementById('cf-email').value.trim()||'—')
+    +'\nAddress: '+(document.getElementById('cf-address').value.trim()||'—')+'\n\n'
     +'── PRODUCT SPECIFICATION ──\n'
     +'Rod / track type: '+gp('grp-rod-type')+'\n'
     +'Collection: '+gp('grp-coll')+'\n'
@@ -66,7 +66,7 @@ function submitQ() {
     +'Motor accessories: '+(document.getElementById('q-motor-acc').value.trim()||'None')+'\n'
     +'Room / window: '+(document.getElementById('q-room').value.trim()||'—')+'\n'
     +'\n── DELIVERY ──\n'+delivery+'\n\n'
-    +'── NOTES ──\n'+(document.getElementById('q-notes').value.trim()||'None');
+    +'── NOTES ──\n'+(document.getElementById('cf-notes').value.trim()||'None');
 
   window.location.href='mailto:blindznation@gmail.com'
     +'?subject='+encodeURIComponent('Kirsch Hardware Spec — '+gp('grp-rod-type')+' — '+name)

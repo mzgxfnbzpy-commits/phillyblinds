@@ -370,40 +370,19 @@ textarea.inp-field{resize:vertical;min-height:80px}
     </div>
 
     <!-- Contact -->
-    <div class="inp-row">
-      <div class="inp-group">
-        <label class="inp-label">Your Name *</label>
-        <input class="inp-field" type="text" id="q-name" data-pb-contact="name" placeholder="Full name">
-      </div>
-      <div class="inp-group">
-        <label class="inp-label">Phone *</label>
-        <input class="inp-field" type="tel" id="q-contact" data-pb-contact="phone" placeholder="(215) 555-0100">
-      </div>
-    </div>
-    <div class="inp-group" style="margin-bottom:12px">
-      <label class="inp-label">Email *</label>
-      <input class="inp-field" type="email" id="q-email" data-pb-contact="email" placeholder="jane@example.com">
-    </div>
-    <div class="inp-group" style="margin-bottom:12px">
-      <label class="inp-label">Project Address <span style="font-weight:400;color:#888">(optional)</span></label>
-      <input class="inp-field" type="text" id="q-address" data-pb-contact="address" placeholder="City, State (or full address)">
-    </div>
-    <div class="inp-group" style="margin-bottom:18px">
-      <label class="inp-label">Notes / Special Requests</label>
-      <textarea class="inp-field" id="q-notes" placeholder="Miter returns, bent/curved track, custom finish, specific finial dimensions, drapery weight, special mounting, etc."></textarea>
-    </div>
     <div class="btn-row">
       <button class="btn-back" onclick="goStep(7)">← Back</button>
-      <div id="orion-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
-      <button class="btn-cart-add" onclick="addOrionToCart()" style="margin-bottom:8px">+ Add to Cart</button>
-      <button class="btn-submit" onclick="submitQuote()" data-pb-require-contact="orion-contact-err">Submit Order for Review &rarr;</button>
     </div>
+    <div id="pb-final-step"></div>
   </div>
 </div>
 
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script src="../js/pages/orion-rods.js"></script>
+<script>
+document.getElementById('pb-final-step').innerHTML = pbContactStepHTML({ bare: true, cartFn: 'addOrionToCart()', submitFn: 'submitQuote()' });
+</script>
 </body>
 </html>
 

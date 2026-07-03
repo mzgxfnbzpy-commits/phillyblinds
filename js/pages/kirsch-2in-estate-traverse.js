@@ -358,10 +358,10 @@ function updateSpec(){
 // SUBMIT
 // ═══════════════════════════════════════════════════════════
 function submitQuote(){
-  var name=document.getElementById('q-name').value.trim();
-  var phone=document.getElementById('q-phone').value.trim();
-  var err=document.getElementById('q-err');
-  if(!name||!phone){err.style.display='block';return;}
+  var name=document.getElementById('cf-name').value.trim();
+  var phone=document.getElementById('cf-phone').value.trim();
+  var err=document.getElementById('cf-contact-err');
+  if(!name||!phone){err.textContent='Please enter your name and phone number.';err.style.display='block';return;}
   err.style.display='none';
   var qty=parseInt(document.getElementById('qty').value)||1;
   var motorAccs=[];
@@ -400,11 +400,11 @@ function submitQuote(){
     'Delivery: '+'Ship (UPS/FedEx from Huntingdon Valley, PA)',
     '',
     'NOTES:',
-    document.getElementById('q-notes').value.trim()||'None',
+    document.getElementById('cf-notes').value.trim()||'None',
     '',
     'CUSTOMER:',
     'Name: '+name,'Phone: '+phone,
-    'Email: '+(document.getElementById('q-email').value.trim()||'—')
+    'Email: '+(document.getElementById('cf-email').value.trim()||'—')
   ].filter(function(l){return l!==null&&l!==undefined;}).join('\n');
   window.location.href='mailto:blindznation@gmail.com?subject='+encodeURIComponent('Kirsch 2″ Estate Traverse Rod — '+name)+'&body='+encodeURIComponent(lines);
   document.getElementById('success-box').style.display='block';

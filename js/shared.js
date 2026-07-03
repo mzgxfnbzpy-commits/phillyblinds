@@ -478,11 +478,21 @@ function pbAutoFillContact() {
   });
 }
 
+// Returns the first VISIBLE [data-pb-contact=key] input, falling back to the first match.
+// Pages can have more than one contact form in the DOM (e.g. a hidden secondary "not sure"
+// or wood-branch form); without the visibility preference, validation would read the hidden
+// form's empty fields and wrongly block the active form's submit.
+function _pbContactEl(key) {
+  var els = document.querySelectorAll('[data-pb-contact="' + key + '"]');
+  for (var i = 0; i < els.length; i++) { if (els[i].offsetParent !== null) return els[i]; }
+  return els[0] || null;
+}
+
 // Returns true when name + phone + email are filled; shows error in element with id=errId.
 function pbContactValid(errId) {
-  var nameEl  = document.querySelector('[data-pb-contact="name"]');
-  var phoneEl = document.querySelector('[data-pb-contact="phone"]');
-  var emailEl = document.querySelector('[data-pb-contact="email"]');
+  var nameEl  = _pbContactEl('name');
+  var phoneEl = _pbContactEl('phone');
+  var emailEl = _pbContactEl('email');
   var errEl   = errId ? document.getElementById(errId) : null;
   function _fail(msg, focusEl) {
     if (errEl) { errEl.textContent = msg; errEl.style.display = 'block'; }

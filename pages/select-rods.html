@@ -743,16 +743,6 @@
       <div class="step-title" style="margin-bottom:0">Request your quote</div>
     </div>
     <div id="sel-form">
-      <div class="form-row">
-        <div class="form-group"><label>Your name *</label><input type="text" id="sel-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="sel-phone" placeholder="(215) 555-0100"></div>
-      </div>
-      <div class="form-group"><label>Email</label><input type="email" id="sel-email" placeholder="jane@example.com"></div>
-      <div class="form-group">
-        <label>Notes — panel weight, fabric, any details we should know</label>
-        <textarea id="sel-notes" style="min-height:80px" placeholder="e.g. Heavy velvet drapes, floor to ceiling 108&quot;, 3 windows side by side, ripple fold overlap masters preferred…"></textarea>
-      </div>
-
       <div style="background:var(--espresso-mid);border:.5px solid var(--border-dark);border-radius:12px;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:16px">
         <div style="font-size:13px;color:var(--cream)"><strong style="color:var(--gold)">Also need custom drapery panels?</strong><br><span style="font-size:12px;color:var(--text-muted)">We fabricate in-house — panels &amp; hardware quoted together.</span></div>
         <a href="soft-treatments.html" class="btn-gold" style="font-size:12px;padding:8px 14px;white-space:nowrap">Custom Drapery &rarr;</a>
@@ -766,8 +756,8 @@
         <div id="del-sel-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional and itemized separately.</div></div>
       </div>
 
-      <button class="btn-cart-add" onclick="addSelectToCart()" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
-      <button class="btn-gold" onclick="submitSelect()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:16px">Request Select Hardware Quote &rarr;</button>
+      <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->
+      <div id="pb-final-step"></div>
     </div>
     <div class="success-box" id="sel-success" style="display:none">
       <strong>Quote request sent!</strong> We'll follow up within a few hours.<br>
@@ -792,6 +782,10 @@
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script src="../js/pages/select-rods.js"></script>
+<script>
+// Canonical final "Your details" contact + files step — identical on every product.
+document.getElementById('pb-final-step').innerHTML = pbContactStepHTML({ bare: true, cartFn: 'addSelectToCart()', submitFn: 'submitSelect()' });
+</script>
 </body>
 </html>
 

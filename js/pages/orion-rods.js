@@ -502,7 +502,7 @@ function addOrionToCart(){
 }
 
 function submitQuote(){
-  var name=$('q-name').value.trim(), contact=$('q-contact').value.trim();
+  var name=$('cf-name').value.trim(), contact=$('cf-phone').value.trim(), email=$('cf-email').value.trim();
   if(!name||!contact){alert('Please enter your name and contact info.');return;}
 
   var typeLabel={decorative:'Decorative Rod',traverse:'Traversing System',motorized:'Motorized Traversing','3d':'3D Hardware',cornice:'Cornice/Crown/Scroll',tieback:'Tieback/Swing Arm'}[S.type]||S.type;
@@ -513,8 +513,9 @@ function submitQuote(){
     '',
     'CONTACT',
     'Name: '+name,
-    'Phone/Email: '+contact,
-    'Location: '+($('q-address').value||'Not provided'),
+    'Phone: '+contact,
+    'Email: '+(email||'Not provided'),
+    'Location: '+($('cf-address').value||'Not provided'),
     '',
     'CONFIGURATION',
     'Hardware Type: '+typeLabel,
@@ -546,7 +547,7 @@ function submitQuote(){
     'Preference: '+(S.delivery==='install'?'Professional Installation':'Ship to Customer'),
     '',
     'NOTES',
-    $('q-notes').value||'None',
+    $('cf-notes').value||'None',
     '',
     '--- Sent from phillyblinds.com/pages/orion-rods.html ---'
   ].filter(l=>l!==undefined&&l!==null).join('\n');

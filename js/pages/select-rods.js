@@ -493,17 +493,23 @@ function addSelectToCart(){
 }
 
 function submitSelect(){
-  var name=document.getElementById('sel-name').value.trim();
-  var phone=document.getElementById('sel-phone').value.trim();
-  if(!name||!phone){alert('Please enter your name and phone number.');return;}
+  var name=document.getElementById('cf-name').value.trim();
+  var phone=document.getElementById('cf-phone').value.trim();
+  var errEl=document.getElementById('cf-contact-err');
+  if(errEl)errEl.style.display='none';
+  if(!name||!phone){
+    if(errEl){errEl.textContent='Please enter your name and phone number.';errEl.style.display='block';}
+    else{alert('Please enter your name and phone number.');}
+    return;
+  }
   var delivery=getOpt('grp-del-sel');
   var spec=getSummaryText();
   var body='SELECT HARDWARE QUOTE REQUEST\n\n'
     +'Name: '+name+'\nPhone: '+phone
-    +'\nEmail: '+(document.getElementById('sel-email').value.trim()||'—')+'\n\n'
+    +'\nEmail: '+(document.getElementById('cf-email').value.trim()||'—')+'\n\n'
     +'SPECIFICATION:\n'+spec+'\n\n'
     +'Delivery: '+delivery+'\n\n'
-    +'Notes:\n'+(document.getElementById('sel-notes').value.trim()||'None');
+    +'Notes:\n'+(document.getElementById('cf-notes').value.trim()||'None');
   window.location.href='mailto:blindznation@gmail.com'
     +'?subject='+encodeURIComponent('Select Hardware Quote — '+(SS.collection||'')+(SS.finish||SS.woodFinish?' · '+(SS.finish||SS.woodFinish):'')+' — '+name)
     +'&body='+encodeURIComponent(body);

@@ -438,8 +438,8 @@ function getAMPAcc() {
 }
 
 function submitQuote() {
-  var name  = document.getElementById('q-name').value.trim();
-  var phone = document.getElementById('q-phone').value.trim();
+  var name  = document.getElementById('cf-name').value.trim();
+  var phone = document.getElementById('cf-phone').value.trim();
   if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
 
   var len    = S.trackLen;
@@ -456,8 +456,8 @@ function submitQuote() {
   var body = 'KIRSCH 1⅜" ESTATE™ TRAVERSE ROD — SPECIFICATION REQUEST\n\n'
     + '── CUSTOMER ──\n'
     + 'Name: ' + name + '\nPhone: ' + phone
-    + '\nEmail: ' + (document.getElementById('q-email').value.trim() || '—')
-    + '\nAddress: ' + (document.getElementById('q-address').value.trim() || '—') + '\n\n'
+    + '\nEmail: ' + (document.getElementById('cf-email').value.trim() || '—')
+    + '\nAddress: ' + (document.getElementById('cf-address').value.trim() || '—') + '\n\n'
     + '── PRODUCT SPECIFICATION ──\n'
     + 'Product: Kirsch 1⅜" Estate™ Traverse Rod\n'
     + 'Room / window: ' + (S.room || '—') + '\n'
@@ -483,7 +483,7 @@ function submitQuote() {
     + (S.accessories.length ? S.accessories.map(function(a){ return '• ' + a; }).join('\n') : 'None') + '\n'
     + (warns.length ? '\n── NOTES / WARNINGS ──\n' + warns.map(function(w){ return '• ' + w; }).join('\n') + '\n' : '')
     + '\n── DELIVERY ──\n' + delivery + '\n\n'
-    + '── CUSTOMER NOTES ──\n' + (document.getElementById('q-notes').value.trim() || 'None');
+    + '── CUSTOMER NOTES ──\n' + (document.getElementById('cf-notes').value.trim() || 'None');
 
   window.location.href = 'mailto:blindznation@gmail.com'
     + '?subject=' + encodeURIComponent('Kirsch 1⅜" Estate Traverse — ' + (S.finish||'') + ' ' + (COLLECTIONS[S.coll]?COLLECTIONS[S.coll].label:'') + ' — ' + name)
