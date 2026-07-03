@@ -592,9 +592,9 @@ function calcPrice(){
 
 // ── SUBMIT VALIDATION ─────────────────────────────────────────────────────────
 function updateSubmitState(){
-  const name=($('f-name')||{}).value||'';
-  const phone=($('f-phone')||{}).value||'';
-  const email=($('f-email')||{}).value||'';
+  const name=($('cf-name')||{}).value||'';
+  const phone=($('cf-phone')||{}).value||'';
+  const email=($('cf-email')||{}).value||'';
   const missing=[];
 
   if(!S.brand) missing.push('Select a brand (Step 1)');
@@ -622,7 +622,7 @@ function updateSubmitState(){
 
 // ── ADD TO CART ───────────────────────────────────────────────────────────────
 function addHardwareQuoteToCart(){
-  const errEl=$('form-err'); errEl.style.display='none';
+  const errEl=$('cf-contact-err'); errEl.style.display='none';
   if(!S.brand){errEl.textContent='Please select a brand (Step 1) before adding to cart.';errEl.style.display='block';return;}
   calcPrice(); // refresh S.estTotal from current selections
   const lines=[
@@ -643,10 +643,10 @@ function addHardwareQuoteToCart(){
 
 // ── SUBMIT ────────────────────────────────────────────────────────────────────
 function submitForm(){
-  const name=$('f-name').value.trim();
-  const phone=$('f-phone').value.trim();
-  const email=$('f-email').value.trim();
-  const errEl=$('form-err'); errEl.style.display='none';
+  const name=$('cf-name').value.trim();
+  const phone=$('cf-phone').value.trim();
+  const email=$('cf-email').value.trim();
+  const errEl=$('cf-contact-err'); errEl.style.display='none';
   if(!name){errEl.textContent='Please enter your name.';errEl.style.display='block';return;}
   if(!phone&&!email){errEl.textContent='Please enter a phone number or email.';errEl.style.display='block';return;}
   if(!S.brand){errEl.textContent='Please select a brand in Step 1.';errEl.style.display='block';return;}
@@ -673,7 +673,7 @@ function submitForm(){
     'Motorization: '+(S.motorKey==='none'||!S.motorKey?'None':S.motorKey),
     '',
     'NOTES',
-    ($('f-notes').value||'None')
+    ($('cf-notes').value||'None')
   ].join('\n');
 
   const subj='Drapery Hardware Quote — '+name+' — '+S.brandLabel;
