@@ -694,10 +694,10 @@ function buildQuote() {
   if(W.pattern && W.pattern.ebReq && W.bindingCode === '') warnings.push('NOTE: Fabric requires edge binding — frayed-edge warranty voided without binding');
   if(W.width > 94 && W.type === 'panel') warnings.push('NOTE: Track over 94″ — will be spliced for shipping');
 
-  const name  = document.getElementById('wf-name').value.trim();
-  const phone = document.getElementById('wf-phone').value.trim();
-  const email = document.getElementById('wf-email').value.trim();
-  const notes = document.getElementById('wf-notes').value.trim();
+  const name  = document.getElementById('cf-name').value.trim();
+  const phone = document.getElementById('cf-phone').value.trim();
+  const email = document.getElementById('cf-email').value.trim();
+  const notes = document.getElementById('cf-notes').value.trim();
 
   return `QUOTE REQUEST — Wallace Portfolio Collection Natural Shades
 ================================================
@@ -788,9 +788,9 @@ function addWallacePortfolioNaturalToCart(){
 }
 
 function submitQuote() {
-  const name  = document.getElementById('wf-name').value.trim();
-  const phone = document.getElementById('wf-phone').value.trim();
-  const errEl = document.getElementById('wf-error');
+  const name  = document.getElementById('cf-name').value.trim();
+  const phone = document.getElementById('cf-phone').value.trim();
+  const errEl = document.getElementById('cf-contact-err');
 
   if(!name || !phone) {
     errEl.textContent = 'Please enter your name and phone number.';

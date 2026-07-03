@@ -245,36 +245,8 @@
       <div class="step-num">7</div>
       <div class="step-title" style="margin-bottom:0">Your contact info</div>
     </div>
-    <div id="contact-form">
-      <div class="form-group">
-        <label>Your name *</label>
-        <input type="text" id="q-name" data-pb-contact="name" placeholder="Jane Smith" autocomplete="name">
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Email *</label>
-          <input type="email" id="q-email" data-pb-contact="email" placeholder="jane@example.com" autocomplete="email">
-        </div>
-        <div class="form-group">
-          <label>Phone *</label>
-          <input type="tel" id="q-phone" data-pb-contact="phone" placeholder="(215) 555-0100" autocomplete="tel">
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Address <span style="font-weight:400;color:#888">(optional)</span></label>
-        <input type="text" id="q-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA" autocomplete="street-address">
-      </div>
-      <div class="form-group">
-        <label>Notes / questions</label>
-        <textarea id="q-notes" placeholder="Location of shades, motor brand preference, mounting surface, timeline, any questions…"></textarea>
-      </div>
-      <div class="form-group">
-        <label>Photos / files <span style="font-weight:400;color:#888">(optional)</span></label>
-        <input type="file" id="q-files" multiple accept="image/*,.pdf" style="font-size:12px;color:#555">
-        <div style="font-size:10px;color:#999;margin-top:4px;line-height:1.5">Attach photos of your space, measurements, or reference images. You'll also be able to email them directly after submitting.</div>
-      </div>
-      <input type="text" id="q-hp" style="display:none" tabindex="-1" autocomplete="off">
-    </div>
+    <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->
+    <div id="pb-final-step"></div>
     <div class="success-box" id="success-box">
       <h3>Request for Quote Submitted!</h3>
       <p>Your email opened with your full spec pre-filled — just hit Send. We'll review your order and send you an invoice within a few hours.</p>
@@ -293,10 +265,7 @@
   <div class="qdiv" id="qp-div" style="display:none"></div>
   <div class="qnote" id="qp-note" style="display:none">Fill in your details above and submit — Justin will send you a custom quote.</div>
   <div id="submit-wrap">
-    <div id="ers-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
-    <button onclick="addExteriorRollerToCart()" class="btn-cart-add" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
-    <button onclick="ersSubmit()" id="submit-btn" class="btn-gold" style="width:100%;padding:14px;font-size:15px;font-weight:600;margin-top:16px;border:none;cursor:pointer;border-radius:10px" data-pb-require-contact="ers-contact-err">Submit Order for Review &rarr;</button>
-    <div class="submit-note">No payment required now. Justin reviews your specs and sends a custom quote.</div>
+    <div class="submit-note">No payment required now. Complete your details on the left and submit — Justin reviews your specs and sends a custom quote.</div>
   </div>
 </div>
 
@@ -305,6 +274,10 @@
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script>
+// Canonical final "Your details" contact + files step — identical on every product.
+document.getElementById('pb-final-step').innerHTML =
+  pbContactStepHTML({ bare: true, cartFn: 'addExteriorRollerToCart()', submitFn: 'ersSubmit()' });
+
 renderNav('Shades & blinds');
 renderFooter(false);
 
@@ -476,12 +449,14 @@ function addExteriorRollerToCart(){
 }
 
 function ersSubmit() {
-  if (document.getElementById('q-hp').value) return;
-  var name = (document.getElementById('q-name').value || '').trim();
-  if (!name) { alert('Please enter your name.'); return; }
-  var email = (document.getElementById('q-email').value || '').trim();
-  var phone = (document.getElementById('q-phone').value || '').trim();
-  if (!email && !phone) { alert('Please enter at least an email or phone number.'); return; }
+  var errEl = document.getElementById('cf-contact-err');
+  if (errEl) errEl.style.display = 'none';
+  function showErr(m) { if (errEl) { errEl.textContent = m; errEl.style.display = 'block'; } else { alert(m); } }
+  var name = (document.getElementById('cf-name').value || '').trim();
+  if (!name) { showErr('Please enter your name.'); return; }
+  var email = (document.getElementById('cf-email').value || '').trim();
+  var phone = (document.getElementById('cf-phone').value || '').trim();
+  if (!email && !phone) { showErr('Please enter a phone number or email address.'); return; }
 
   var trackLabel = ERS.track === 'zipper' ? 'Zipper Track' : ERS.track === 'cables' ? 'Cables' : '—';
   var mountLabel = ERS.mount === 'wall' ? 'Wall Mount' : ERS.mount === 'ceiling' ? 'Ceiling / Soffit Mount' : '—';
@@ -504,7 +479,7 @@ function ersSubmit() {
     'Name:           ' + name + '\n' +
     'Email:          ' + (email || '—') + '\n' +
     'Phone:          ' + (phone || '—') + '\n' +
-    'Notes:          ' + (document.getElementById('q-notes').value || '—') + '\n\n' +
+    'Notes:          ' + (document.getElementById('cf-notes').value || '—') + '\n\n' +
     '── SOURCE ───────────────────────────────\n' +
     'Form:           phillyblinds.com/pages/exterior-roller-shades.html';
 
@@ -513,9 +488,8 @@ function ersSubmit() {
     '&body=' + encodeURIComponent(body);
   window.location.href = mailto;
 
-  document.getElementById('contact-form').style.display = 'none';
   document.getElementById('success-box').style.display = 'block';
-  document.getElementById('submit-wrap').style.display = 'none';
+  if (errEl) errEl.style.display = 'none';
 }
 </script>
 </body>

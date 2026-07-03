@@ -706,8 +706,8 @@ function addWallaceNaturalRollerToCart(){
 }
 
 function submitQuote() {
-  var name  = document.getElementById('q-name').value.trim();
-  var phone = document.getElementById('q-phone').value.trim();
+  var name  = document.getElementById('cf-name').value.trim();
+  var phone = document.getElementById('cf-phone').value.trim();
   if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
 
   var fab = S.fabric;
@@ -731,8 +731,8 @@ function submitQuote() {
   var body = 'WALLACE PORTFOLIO COLLECTION NATURAL ROLLER SHADES — SPECIFICATION REQUEST\n\n'
     + '── CUSTOMER ──\n'
     + 'Name: ' + name + '\nPhone: ' + phone
-    + '\nEmail: ' + (document.getElementById('q-email').value.trim() || '—')
-    + '\nAddress: ' + (document.getElementById('q-address').value.trim() || '—') + '\n\n'
+    + '\nEmail: ' + (document.getElementById('cf-email').value.trim() || '—')
+    + '\nAddress: ' + (document.getElementById('cf-address').value.trim() || '—') + '\n\n'
     + '── PRODUCT SPECIFICATION ──\n'
     + 'Product: Wallace Portfolio Collection Natural Roller Shades (2026)\n'
     + 'Shade type: ' + (S.shadeType === 'single' ? 'Single Natural Roller' : 'Double Natural Roller') + '\n'
@@ -773,7 +773,7 @@ function submitQuote() {
     + '\n── DELIVERY ──\n'
     + delivery + '\n\n'
     + '── NOTES ──\n'
-    + (document.getElementById('q-notes').value.trim() || 'None');
+    + (document.getElementById('cf-notes').value.trim() || 'None');
 
   window.location.href = 'mailto:blindznation@gmail.com'
     + '?subject=' + encodeURIComponent('Wallace Natural Roller Spec — ' + name + (fab ? ' · ' + fab.name : ''))

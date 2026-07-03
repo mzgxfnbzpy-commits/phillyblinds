@@ -5,8 +5,8 @@ function wsSetDelivery(val) {
 }
 
 function submitWSQuote() {
-  const name = document.getElementById('ws-name').value.trim();
-  const phone = document.getElementById('ws-phone').value.trim();
+  const name = document.getElementById('cf-name').value.trim();
+  const phone = document.getElementById('cf-phone').value.trim();
   if (!name) { alert('Please enter your name.'); return; }
   if (!phone) { alert('Please enter your phone number.'); return; }
   const subject = encodeURIComponent('Walden Select Woven Shade Quote — ' + name);
@@ -17,7 +17,7 @@ function submitWSQuote() {
     'CUSTOMER INFO',
     'Name: ' + name,
     'Phone: ' + phone,
-    'Email: ' + (document.getElementById('ws-email').value || 'Not provided'),
+    'Email: ' + (document.getElementById('cf-email').value || 'Not provided'),
     '',
     'SHADE DETAILS',
     'Pattern/Color: ' + (document.getElementById('ws-pattern').value || 'Not specified'),
@@ -31,7 +31,7 @@ function submitWSQuote() {
     'Delivery: ' + ('Ship via UPS/FedEx'),
     '',
     'NOTES',
-    document.getElementById('ws-notes').value || '(none)',
+    document.getElementById('cf-notes').value || '(none)',
   ].join('\n'));
   window.location.href = 'mailto:blindznation@gmail.com?subject=' + subject + '&body=' + body;
 }

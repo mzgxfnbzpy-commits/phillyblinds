@@ -458,10 +458,10 @@ function addCustomRollerToCart(){
 }
 
 function crsSubmit() {
-  var name  = ((_crsEl('q-name')  || {}).value || '').trim();
-  var email = ((_crsEl('q-email') || {}).value || '').trim();
-  var phone = ((_crsEl('q-phone') || {}).value || '').trim();
-  var notes = ((_crsEl('q-notes') || {}).value || '').trim();
+  var name  = ((_crsEl('cf-name')  || {}).value || '').trim();
+  var email = ((_crsEl('cf-email') || {}).value || '').trim();
+  var phone = ((_crsEl('cf-phone') || {}).value || '').trim();
+  var notes = ((_crsEl('cf-notes') || {}).value || '').trim();
   var hp    = ((_crsEl('q-hp')    || {}).value || '');
 
   if (!name)              { alert('Please enter your name.'); return; }
@@ -513,7 +513,7 @@ function crsSubmit() {
   .then(function(r) { return r.json(); })
   .then(function(data) {
     if (data.ok) {
-      var form = _crsEl('contact-form');
+      var form = _crsEl('pb-final-step');
       var sbox = _crsEl('success-box');
       var sw   = _crsEl('submit-wrap');
       if (form) form.style.display = 'none';

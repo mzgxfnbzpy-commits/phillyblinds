@@ -100,26 +100,6 @@
 
     <div class="field-row">
       <div class="field-group">
-        <label>Your Name <span style="color:#e07070">*</span></label>
-        <input type="text" id="wp-name" data-pb-contact="name" placeholder="First &amp; last name">
-      </div>
-      <div class="field-group">
-        <label>Phone Number <span style="color:#e07070">*</span></label>
-        <input type="tel" id="wp-phone" data-pb-contact="phone" placeholder="(215) 555-0100">
-      </div>
-    </div>
-    <div class="field-row">
-      <div class="field-group">
-        <label>Email Address *</label>
-        <input type="email" id="wp-email" data-pb-contact="email" placeholder="you@example.com">
-      </div>
-      <div class="field-group">
-        <label>Address <span style="font-weight:400;color:#888">(optional)</span></label>
-        <input type="text" id="wp-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA">
-      </div>
-    </div>
-    <div class="field-row">
-      <div class="field-group">
         <label>Pattern Name / Color Preference</label>
         <input type="text" id="wp-pattern" placeholder="e.g. warm neutral bamboo, or a specific pattern name">
       </div>
@@ -180,13 +160,6 @@
         </select>
       </div>
     </div>
-    <div class="field-row">
-      <div class="field-group">
-        <label>Additional Notes</label>
-        <textarea id="wp-notes" rows="3" placeholder="Liner options, edge binding, window location, special requirements, design goals..."></textarea>
-      </div>
-    </div>
-
     <div class="delivery-section">
       <div class="delivery-title">Delivery</div>
       <div class="delivery-opts">
@@ -198,9 +171,8 @@
       <div class="tariff-note"><strong>Tariff notice:</strong> Products may be subject to U.S. government import tariffs. Surcharges disclosed at order confirmation.</div>
     </div>
 
-    <div id="wp-contact-err" class="warn-box warn-box-red" style="display:none;margin-bottom:12px"></div>
-    <button class="btn-cart-add" onclick="addWaldenPremierToCart()" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
-    <button class="submit-btn" onclick="submitWPQuote()" data-pb-require-contact="wp-contact-err">Submit Order for Review &rarr;</button>
+    <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->
+    <div id="pb-final-step"></div>
     <div class="req-note">* Required fields. Opens your email client with your selections pre-filled.</div>
   </div>
 </div>
@@ -208,6 +180,11 @@
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script src="../js/pages/walden-premier-woven.js"></script>
+<script>
+// Canonical final "Your details" contact + files step — identical on every product.
+document.getElementById('pb-final-step').innerHTML =
+  pbContactStepHTML({ bare: true, cartFn: 'addWaldenPremierToCart()', submitFn: 'submitWPQuote()' });
+</script>
 </body>
 </html>
 

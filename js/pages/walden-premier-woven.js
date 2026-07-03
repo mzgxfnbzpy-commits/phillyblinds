@@ -5,10 +5,12 @@ function wpSetDelivery(val) {
 }
 
 function submitWPQuote() {
-  const name = document.getElementById('wp-name').value.trim();
-  const phone = document.getElementById('wp-phone').value.trim();
-  if (!name) { alert('Please enter your name.'); return; }
-  if (!phone) { alert('Please enter your phone number.'); return; }
+  const name = document.getElementById('cf-name').value.trim();
+  const phone = document.getElementById('cf-phone').value.trim();
+  const errEl = document.getElementById('cf-contact-err');
+  if (errEl) errEl.style.display = 'none';
+  if (!name) { if (errEl) { errEl.textContent = 'Please enter your name.'; errEl.style.display = 'block'; } else { alert('Please enter your name.'); } return; }
+  if (!phone) { if (errEl) { errEl.textContent = 'Please enter your phone number.'; errEl.style.display = 'block'; } else { alert('Please enter your phone number.'); } return; }
   const subject = encodeURIComponent('Walden Premier Woven Shade Quote — ' + name);
   const body = encodeURIComponent([
     'WALDEN PREMIER WOVEN SHADE QUOTE REQUEST',
@@ -17,7 +19,7 @@ function submitWPQuote() {
     'CUSTOMER INFO',
     'Name: ' + name,
     'Phone: ' + phone,
-    'Email: ' + (document.getElementById('wp-email').value || 'Not provided'),
+    'Email: ' + (document.getElementById('cf-email').value || 'Not provided'),
     '',
     'SHADE DETAILS',
     'Pattern/Color: ' + (document.getElementById('wp-pattern').value || 'Not specified'),
@@ -31,7 +33,7 @@ function submitWPQuote() {
     'Delivery: ' + ('Ship via UPS/FedEx'),
     '',
     'NOTES',
-    document.getElementById('wp-notes').value || '(none)',
+    document.getElementById('cf-notes').value || '(none)',
   ].join('\n'));
   window.location.href = 'mailto:blindznation@gmail.com?subject=' + subject + '&body=' + body;
 }

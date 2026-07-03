@@ -504,29 +504,6 @@
     <div class="step-sub">Fill in your contact info and we'll follow up within 24 hours with pricing.</div>
 
     <div id="wallace-form">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
-        <div>
-          <label style="font-size:12px;font-weight:500;color:#555;display:block;margin-bottom:5px">Your name *</label>
-          <input type="text" id="wf-name" data-pb-contact="name" placeholder="Jane Smith" style="width:100%;padding:10px;border:1.5px solid #e8e8e4;border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box">
-        </div>
-        <div>
-          <label style="font-size:12px;font-weight:500;color:#555;display:block;margin-bottom:5px">Phone *</label>
-          <input type="tel" id="wf-phone" data-pb-contact="phone" placeholder="(215) 555-0100" style="width:100%;padding:10px;border:1.5px solid #e8e8e4;border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box">
-        </div>
-      </div>
-      <div style="margin-bottom:16px">
-        <label style="font-size:12px;font-weight:500;color:#555;display:block;margin-bottom:5px">Email *</label>
-        <input type="email" id="wf-email" data-pb-contact="email" placeholder="jane@example.com" style="width:100%;padding:10px;border:1.5px solid #e8e8e4;border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box">
-      </div>
-      <div style="margin-bottom:16px">
-        <label style="font-size:12px;font-weight:500;color:#555;display:block;margin-bottom:5px">Address <span style="font-weight:400;color:#888">(optional)</span></label>
-        <input type="text" id="wf-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA" style="width:100%;padding:10px;border:1.5px solid #e8e8e4;border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box">
-      </div>
-      <div style="margin-bottom:16px">
-        <label style="font-size:12px;font-weight:500;color:#555;display:block;margin-bottom:5px">Notes</label>
-        <textarea id="wf-notes" placeholder="Any additional details, room description, special requirements..." style="width:100%;padding:10px;border:1.5px solid #e8e8e4;border-radius:8px;font-size:13px;font-family:inherit;min-height:70px;resize:vertical;box-sizing:border-box"></textarea>
-      </div>
-
       <!-- Delivery section -->
       <div style="margin-bottom:16px">
         <div class="opt-row" id="grp-wf-del">
@@ -538,10 +515,8 @@
         </div>
       </div>
 
-      <div id="wf-error" style="display:none;background:#FFEBEE;border:1px solid #FFCDD2;border-radius:8px;padding:10px 14px;font-size:12px;color:#C62828;margin-bottom:12px"></div>
-
-      <button onclick="addWallacePortfolioNaturalToCart()" class="btn-cart-add" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
-      <button onclick="submitQuote()" data-pb-require-contact="wf-error" style="width:100%;padding:14px;background:var(--espresso);color:var(--cream);border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit">Submit Order for Review →</button>
+      <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->
+      <div id="pb-final-step"></div>
     </div>
 
     <div id="wf-success" style="display:none;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:10px;padding:20px;color:#2e7d32;font-size:14px;line-height:1.7">
@@ -565,6 +540,11 @@
 <script src="../js/shared.js"></script>
 
 <script src="../js/pages/wallace-portfolio-natural-shades.js"></script>
+<script>
+// Canonical final "Your details" contact + files step — identical on every product.
+document.getElementById('pb-final-step').innerHTML =
+  pbContactStepHTML({ bare: true, cartFn: 'addWallacePortfolioNaturalToCart()', submitFn: 'submitQuote()' });
+</script>
 </body>
 </html>
 
