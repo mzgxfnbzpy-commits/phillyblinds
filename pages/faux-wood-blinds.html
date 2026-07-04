@@ -179,17 +179,11 @@
       <div class="step-head-val" id="s1val">2&Prime; (selected)</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-2">
-        <div class="opt-card sel" onclick="pickSlat(this,'2&Prime;')">
-          <div class="opt-card-title">2&Prime; Slat</div>
-          <div class="opt-card-desc">Classic proportion &middot; most popular</div>
-        </div>
-        <div class="opt-card" onclick="pickSlat(this,'2&frac12;&Prime;')">
-          <div class="opt-card-title">2&frac12;&Prime; Slat</div>
-          <div class="opt-card-desc">Wider look &middot; fewer slats visible</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn sel" onclick="pickSlat(this,'2&Prime;')">2&Prime; Slat</button>
+        <button class="opt-btn" onclick="pickSlat(this,'2&frac12;&Prime;')">2&frac12;&Prime; Slat</button>
       </div>
-      <div class="step-note">Same price for both slat sizes.</div>
+      <div class="step-note">Classic 2&Prime; is the most popular proportion; 2&frac12;&Prime; shows a wider look with fewer slats. Same price for both.</div>
     </div>
   </div>
 
@@ -283,16 +277,11 @@
       <div class="step-head-val" id="s3val">—</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-2">
-        <div class="opt-card" onclick="pickMount(this,'Inside Mount','inside')">
-          <div class="opt-card-title">Inside Mount</div>
-          <div class="opt-card-desc">Fits inside the window frame &middot; clean, recessed look<br><br>Mfr deducts 3/8&Prime; from width automatically</div>
-        </div>
-        <div class="opt-card" onclick="pickMount(this,'Outside Mount','outside')">
-          <div class="opt-card-title">Outside Mount</div>
-          <div class="opt-card-desc">Mounts above or outside the frame &middot; better light block<br><br>Add ~3&Prime; to width &amp; height for full coverage</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn" onclick="pickMount(this,'Inside Mount','inside')">Inside mount</button>
+        <button class="opt-btn" onclick="pickMount(this,'Outside Mount','outside')">Outside mount</button>
       </div>
+      <div class="step-note">Inside mount fits inside the window frame (mfr deducts 3/8&Prime; from width automatically). Outside mount mounts above/outside the frame for better light block &mdash; add ~3&Prime; to width &amp; height for full coverage.</div>
       <div id="mount-note" class="msg-box msg-info" style="display:none"></div>
     </div>
   </div>
@@ -359,21 +348,12 @@
       <div class="step-head-val" id="s5val">—</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-3">
-        <div class="opt-card" onclick="pickValance(this,'No Valance','none')">
-          <div class="opt-card-title">No Valance</div>
-          <div class="opt-card-desc">Clean headrail with built-in light block</div>
-        </div>
-        <div class="opt-card" onclick="pickValance(this,'Modern Curved 2&frac12;&Prime;','modern')">
-          <div class="opt-card-title">Modern Curved</div>
-          <div class="opt-card-desc">2&frac12;&Prime; curved profile &middot; contemporary</div>
-        </div>
-        <div class="opt-card" onclick="pickValance(this,'Designer Crown 3&frac14;&Prime;','crown')">
-          <div class="opt-card-title">Designer Crown</div>
-          <div class="opt-card-desc">3&frac14;&Prime; crown profile &middot; traditional</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn" onclick="pickValance(this,'No Valance','none')">No Valance</button>
+        <button class="opt-btn" onclick="pickValance(this,'Modern Curved 2&frac12;&Prime;','modern')">Modern Curved</button>
+        <button class="opt-btn" onclick="pickValance(this,'Designer Crown 3&frac14;&Prime;','crown')">Designer Crown</button>
       </div>
-      <div class="step-note">Valance color always matches slat color. Valance surcharge added to price when selected.</div>
+      <div class="step-note">No Valance: clean headrail with built-in light block. Modern Curved: 2&frac12;&Prime; contemporary profile. Designer Crown: 3&frac14;&Prime; traditional profile. Valance color always matches slat color; surcharge added when selected.</div>
     </div>
   </div>
 
@@ -438,15 +418,9 @@
 
       <!-- Wand Location -->
       <div class="sub-label" style="margin-top:14px">Wand Location <span style="font-weight:400;color:#999">(no charge)</span></div>
-      <div id="wand-loc-normal" class="opt-grid-2" style="display:none;margin-top:6px">
-        <div class="opt-card sel" id="wloc-left" onclick="pickWandLoc(this,'Left')">
-          <div class="opt-card-title">Left</div>
-          <div class="opt-card-desc">Standard</div>
-        </div>
-        <div class="opt-card" id="wloc-right" onclick="pickWandLoc(this,'Right')">
-          <div class="opt-card-title">Right</div>
-          <div class="opt-card-desc">Optional</div>
-        </div>
+      <div id="wand-loc-normal" class="opt-row" style="display:none;margin-top:6px">
+        <button class="opt-btn sel" id="wloc-left" onclick="pickWandLoc(this,'Left')">Left <span style="font-weight:400;color:#999">(standard)</span></button>
+        <button class="opt-btn" id="wloc-right" onclick="pickWandLoc(this,'Right')">Right <span style="font-weight:400;color:#999">(optional)</span></button>
       </div>
       <div id="wand-loc-center" class="msg-box msg-info" style="display:none">Blinds under 15&Prime; wide use a center wand with tilt only — no lift function.</div>
       <div id="wand-loc-prompt" class="step-note">Enter dimensions in Step 4 to see wand options.</div>

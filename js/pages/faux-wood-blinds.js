@@ -38,7 +38,7 @@ function markDone(id){ $(id).classList.add('done'); }
 
 // ── STEP 1 ────────────────────────────────────────────────────────────────────
 function pickSlat(el,label){
-  document.querySelectorAll('#step1 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step1 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.slat=label.includes('2½')?'2.5in':'2in';
   $('s1val').innerHTML=label+' (selected)';
@@ -73,7 +73,7 @@ function pickColor(el,label,code,printed){
 
 // ── STEP 3 ────────────────────────────────────────────────────────────────────
 function pickMount(el,label,val){
-  document.querySelectorAll('#step3 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step3 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.mount=val; $('s3val').textContent=label;
 
@@ -196,7 +196,7 @@ function updateSideMtUI(){
 
 // ── STEP 5 ────────────────────────────────────────────────────────────────────
 function pickValance(el,label,val){
-  document.querySelectorAll('#step5 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step5 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.valance=val;
   $('s5val').innerHTML=label;
@@ -224,7 +224,7 @@ function adjShims(d){
 }
 
 function pickWandLoc(el,label){
-  document.querySelectorAll('#wand-loc-normal .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#wand-loc-normal .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.wandLoc=label.toLowerCase(); calcPrice();
 }
