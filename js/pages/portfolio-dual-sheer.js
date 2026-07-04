@@ -205,7 +205,7 @@ const S = {
   ext6:0, ext48:0, ext96:0, charger:false,
   sbs:false, sideCount:2,
   qty:1, name:'', phone:'', notes:'',
-  delivery:'Ship (UPS/FedEx from Huntingdon Valley PA)',
+  delivery:'Ship (UPS/FedEx)',
   maxStep:1
 };
 
@@ -302,7 +302,7 @@ function editStep(n){
 function pickDelivery(v,card){
   document.querySelectorAll('.delivery-opt-card').forEach(function(c){c.classList.remove('sel');});
   card.classList.add('sel');
-  S.delivery=v==='ship'?'Ship (UPS/FedEx from Huntingdon Valley PA)':'Pickup (Huntingdon Valley PA 19006)';
+  S.delivery=v==='ship'?'Ship (UPS/FedEx)':'Pickup (Huntingdon Valley PA 19006)';
 }
 function advance(fromStep, label){
   doneStep(fromStep, label);

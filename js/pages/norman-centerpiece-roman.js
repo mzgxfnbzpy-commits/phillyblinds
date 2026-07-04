@@ -579,7 +579,7 @@ function submitQuote() {
   var valance=S.valance?'Fabric valance ($'+getValanceSurcharge(S.width)+')':'None';
   var sbs=S.sbs?'Yes':'No';
   var sLabels={flat:'Flat Fold without Seams',batten:'Flat Fold with Batten Back',soft:'Soft Fold'};
-  var delivery='Ship (UPS/FedEx from Huntingdon Valley PA)'||S.delivery;
+  var delivery='Ship (UPS/FedEx)'||S.delivery;
   var motorLabel={smart:'Norman Smart Motor',autowand:'AutoWand™',automate:'Automate Home by Norman'}[S.motor]||'—';
   var _powerBtn=document.querySelector('#grp-power .opt-btn.sel');
   var power=_powerBtn?_powerBtn.textContent.trim():'Rechargeable battery';

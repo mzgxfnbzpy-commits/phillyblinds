@@ -612,7 +612,7 @@ function submitQuote(){
     '  ESTIMATED TOTAL: $'+Math.round(total).toLocaleString(),
     '',
     'DELIVERY',
-    '  '+'Ship to me (UPS/FedEx from Huntingdon Valley PA)',
+    '  '+'Ship to me (UPS/FedEx)',
     '',
     'CUSTOMER',
     '  Name: '+name,

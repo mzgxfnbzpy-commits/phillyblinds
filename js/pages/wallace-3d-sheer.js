@@ -604,7 +604,7 @@ function submitQuote(){
     'QUANTITY & DELIVERY:',
     'Quantity: '+qty+' shade'+(qty>1?'s':''),
     'Room/window: '+(document.getElementById('room-label').value.trim()||'—'),
-    'Delivery: '+'Ship (UPS/FedEx from Huntingdon Valley PA)',
+    'Delivery: '+'Ship (UPS/FedEx)',
     '',
     'NOTES:',
     document.getElementById('cf-notes').value.trim()||'None',

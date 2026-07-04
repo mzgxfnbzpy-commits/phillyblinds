@@ -854,7 +854,7 @@ function submitQuote(){
     'Quantity: '+qty,
     'Room / window: '+(document.getElementById('room-label').value.trim()||'—'),
     'Rush order: '+(S.rush==='yes'?'+30% rush (5 business days)':'Standard (10–15 business days for painted/custom)'),
-    'Delivery: '+'Ship to me (UPS/FedEx from Huntingdon Valley, PA)',
+    'Delivery: '+'Ship to me (UPS/FedEx)',
     '',
     'NOTES:',
     document.getElementById('cf-notes').value.trim()||'None',

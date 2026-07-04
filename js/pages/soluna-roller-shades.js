@@ -560,7 +560,7 @@ function submitQuote() {
   if (hwColor) addons.push('Premium hardware: ' + hwColor);
   if (fasciaStyle) addons.push('Fascia style: ' + fasciaStyle);
   const fabricColor = getSelectedFabricColor();
-  const deliveryLabel = 'Ship to me — UPS / FedEx from Huntingdon Valley, PA (freight TBD)';
+  const deliveryLabel = 'Ship to me — UPS / FedEx (freight TBD)';
 
   const isDualSubmit = shadeType === 'Dual Shade';
   const dualFrontSubmit = isDualSubmit ? getOpt('grp-dual-front') : '';

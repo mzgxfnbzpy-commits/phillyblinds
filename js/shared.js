@@ -1776,7 +1776,7 @@ function _initShippingEstimators() {
           'style="width:130px;padding:8px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;font-family:inherit;background:#fff">' +
         '<span class="pb-zip-result" style="font-size:13px;color:#555;min-width:140px"></span>' +
       '</div>' +
-      '<div style="font-size:10px;color:#aaa;margin-top:6px;line-height:1.5">UPS / FedEx Ground estimate from Huntingdon Valley PA 19006 &nbsp;&middot;&nbsp; Actual rate confirmed at order</div>';
+      '<div style="font-size:10px;color:#aaa;margin-top:6px;line-height:1.5">UPS / FedEx Ground estimate &nbsp;&middot;&nbsp; Actual rate confirmed at order</div>';
     el.appendChild(wrap);
     var input = wrap.querySelector('.pb-zip-input');
     var result = wrap.querySelector('.pb-zip-result');

@@ -103,7 +103,7 @@ const S = {
   louver:'', tilt:'InvisibleTilt™ (hidden in stile)', frame:'', divider:'',
   frameSides:'4-sided (standard)',
   colorType:'', color:'',
-  specs:[], delivery:'Ship (UPS/FedEx from Huntingdon Valley PA)',
+  specs:[], delivery:'Ship (UPS/FedEx)',
   room:'', notes:''
 };
 
@@ -439,7 +439,7 @@ function toggleSpec(btn, val) {
 function selDelivery(type, card) {
   document.querySelectorAll('.delivery-opt-card').forEach(function(c) { c.classList.remove('sel'); });
   card.classList.add('sel');
-  S.delivery = type === 'ship' ? 'Ship (UPS/FedEx from Huntingdon Valley PA)' : 'Pickup (Huntingdon Valley PA — address provided after order confirmation)';
+  S.delivery = type === 'ship' ? 'Ship (UPS/FedEx)' : 'Pickup (Huntingdon Valley PA — address provided after order confirmation)';
   qs('ship-note').style.display = type === 'ship' ? 'block' : 'none';
   updateQuote();
   setTimeout(continueStep15, 400);

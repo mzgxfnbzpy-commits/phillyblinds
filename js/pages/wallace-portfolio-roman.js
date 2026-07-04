@@ -741,7 +741,7 @@ function submitQuote() {
   var wandLen=document.querySelector('#grp-wand-len .opt-btn.sel')?.textContent.trim()||'—';
   var controlSide=document.querySelector('#grp-control-side .opt-btn.sel')?.textContent.trim()||'—';
   var returnLabel={none:'No returns',standard:'Standard 4½" returns',extended:'Extended depth returns',custom:'Custom — '+document.getElementById('return-depth').value+'"'}[S.returns]||S.returns;
-  var delivery='Ship (UPS/FedEx from Huntingdon Valley PA)'||S.delivery;
+  var delivery='Ship (UPS/FedEx)'||S.delivery;
 
   // Motor accessories
   var motorAcc=[];

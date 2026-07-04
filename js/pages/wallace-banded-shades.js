@@ -588,7 +588,7 @@ function submitQ(){
   errEl.style.display='none';
 
   var mount=document.querySelector('#grp-mount .opt-btn.sel')?.textContent.trim()||'Inside mount';
-  var del='Ship (UPS/FedEx from Huntingdon Valley PA)';
+  var del='Ship (UPS/FedEx)';
   var sbs=document.querySelector('#grp-sbs .opt-btn.sel')?.textContent.trim().includes('Yes')?'Yes':'No';
   var bar=document.querySelector('#grp-bar .opt-btn.sel')?.textContent.trim()||'Standard';
   var barWrap=document.querySelector('#grp-bar-wrap .opt-btn.sel')?.textContent.trim().includes('wrap')?'Yes (+$'+getWrapP(S.w)+')':'No';
