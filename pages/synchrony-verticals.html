@@ -421,20 +421,12 @@
       <div class="step-head-val" id="s2val">—</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-2">
-        <div class="opt-card" onclick="pickMount(this,'inside','Inside Mount — Fully Flushed')">
-          <div class="opt-card-title">Inside Mount</div>
-          <div class="opt-card-desc">Fully flushed — no valance needed<br>Min depth 3¾&Prime; required<br><br>Mfr deducts 3/8&Prime; W &amp; 3/16&Prime; H</div>
-        </div>
-        <div class="opt-card" onclick="pickMount(this,'semi','Semi-Inside Mount')">
-          <div class="opt-card-title">Semi-Inside Mount</div>
-          <div class="opt-card-desc">Partial recess into opening<br>Min depth 2 13/16&Prime;<br><br>Mfr deducts 3/8&Prime; W &amp; 3/16&Prime; H</div>
-        </div>
-        <div class="opt-card" onclick="pickMount(this,'outside','Outside Mount')">
-          <div class="opt-card-title">Outside Mount</div>
-          <div class="opt-card-desc">Mounts above or outside the frame<br>No deductions — add ~1½&Prime; each side for light block<br>Total projection: 3¾&Prime;–4⅛&Prime;</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn" onclick="pickMount(this,'inside','Inside Mount — Fully Flushed')">Inside Mount</button>
+        <button class="opt-btn" onclick="pickMount(this,'semi','Semi-Inside Mount')">Semi-Inside Mount</button>
+        <button class="opt-btn" onclick="pickMount(this,'outside','Outside Mount')">Outside Mount</button>
       </div>
+      <div class="step-note"><strong>Inside:</strong> fully flushed, no valance needed — min depth 3¾&Prime;, mfr deducts 3/8&Prime; W &amp; 3/16&Prime; H. <strong>Semi-inside:</strong> partial recess into opening — min depth 2 13/16&Prime;, same deductions. <strong>Outside:</strong> mounts above/outside the frame — no deductions, add ~1½&Prime; each side for light block, total projection 3¾&Prime;–4⅛&Prime;.</div>
       <div id="mount-note" class="msg-box msg-info" style="display:none"></div>
     </div>
   </div>

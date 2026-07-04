@@ -226,7 +226,7 @@ function pickColor(el,code,label,hwSuggested){
 
 // ── STEP 3: MOUNT & DIMS ──────────────────────────────────────────────────
 function pickMount(el,key){
-  document.querySelectorAll('#step3 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step3 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.mount=key;
   calcDims();
@@ -292,7 +292,7 @@ function fmtDim(v){
 
 // ── STEP 4: CASSETTE ─────────────────────────────────────────────────────
 function pickCassette(el,key){
-  document.querySelectorAll('#step4 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step4 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.cassette=key;
   document.getElementById('s4val').textContent=(key==='round'?'Round':'Square')+' cassette · '+(S.hwColor||'—');
@@ -358,7 +358,7 @@ buildChainColorGrid();
 buildStainlessGrid();
 
 function pickControl(el,key){
-  document.querySelectorAll('#step6 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step6 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.ctrl=key;
   const note=document.getElementById('ctrl-msg');

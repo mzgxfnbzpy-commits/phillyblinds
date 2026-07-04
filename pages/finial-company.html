@@ -281,17 +281,19 @@
     </div>
     <div style="margin-top:8px">
       <div class="dim-label" style="margin-bottom:6px">Rush order?</div>
-      <div class="opt-grid" style="grid-template-columns:1fr 1fr 1fr">
-        <div class="opt-card sel" id="rush-no" onclick="pickRush(this,'no','Standard')"><div class="opt-card-title" style="font-size:12px">Standard</div><div class="opt-card-desc">10–15 bus. days</div></div>
-        <div class="opt-card" id="rush-yes" onclick="pickRush(this,'yes','Rush +30%')"><div class="opt-card-title" style="font-size:12px">Rush +30%</div><div class="opt-card-desc">5 bus. days</div></div>
+      <div class="opt-row">
+        <button class="opt-btn sel" id="rush-no" onclick="pickRush(this,'no','Standard')">Standard</button>
+        <button class="opt-btn" id="rush-yes" onclick="pickRush(this,'yes','Rush +30%')">Rush +30%</button>
       </div>
+      <div class="step-note">Standard: 10–15 bus. days · Rush +30%: 5 bus. days</div>
       <div id="rush-warn" class="msg-warn" style="display:none">⚠ Rush not available for arch rods, bay windows, custom brackets, or mitered returns.</div>
     </div>
     <div style="margin-top:12px">
       <div class="dim-label" style="margin-bottom:6px">Delivery</div>
-      <div class="opt-grid" style="grid-template-columns:1fr 1fr">
-        <div class="opt-card sel" id="del-ship" onclick="pickDel(this,'ship')"><div class="opt-card-title" style="font-size:12px">📦 Ship to me</div><div class="opt-card-desc">UPS/FedEx · poles over 96″ = common carrier</div></div>
+      <div class="opt-row">
+        <button class="opt-btn sel" id="del-ship" onclick="pickDel(this,'ship')">📦 Ship to me</button>
       </div>
+      <div class="step-note">UPS/FedEx · poles over 96″ = common carrier</div>
     </div>
   </div>
 </div>

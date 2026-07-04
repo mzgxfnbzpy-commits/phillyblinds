@@ -173,10 +173,11 @@
   </div>
   <div class="step-body">
     <div class="sub-label" style="margin-top:4px">Mount type</div>
-    <div class="opt-grid" style="grid-template-columns:1fr 1fr;margin-top:6px">
-      <div class="opt-card sel" id="mc-inside" onclick="pickMount(this,'inside')"><div class="opt-card-title">Inside Mount</div><div class="opt-card-desc">Deductions applied at order</div></div>
-      <div class="opt-card" id="mc-outside" onclick="pickMount(this,'outside')"><div class="opt-card-title">Outside Mount</div><div class="opt-card-desc">No deductions</div></div>
+    <div class="opt-row" style="margin-top:6px">
+      <button class="opt-btn sel" id="mc-inside" onclick="pickMount(this,'inside')">Inside Mount</button>
+      <button class="opt-btn" id="mc-outside" onclick="pickMount(this,'outside')">Outside Mount</button>
     </div>
+    <div class="step-note">Inside Mount: Deductions applied at order · Outside Mount: No deductions.</div>
     <div class="dim-row" style="margin-top:14px">
       <div>
         <div class="dim-label">Width (inches)</div>
@@ -220,16 +221,11 @@
     <div class="step-head-val" id="s4val">—</div>
   </div>
   <div class="step-body">
-    <div class="opt-grid" style="grid-template-columns:1fr 1fr">
-      <div class="opt-card sel" id="cas-round" onclick="pickCassette(this,'round')">
-        <div class="opt-card-title">Round Cassette</div>
-        <div class="opt-card-desc">3⅜″ deep × 3″ high · Standard · IM min 3¾″ depth</div>
-      </div>
-      <div class="opt-card" id="cas-square" onclick="pickCassette(this,'square')">
-        <div class="opt-card-title">Square Cassette</div>
-        <div class="opt-card-desc">3½″ deep × 3″ high · IM min 4″ depth</div>
-      </div>
+    <div class="opt-row">
+      <button class="opt-btn sel" id="cas-round" onclick="pickCassette(this,'round')">Round Cassette</button>
+      <button class="opt-btn" id="cas-square" onclick="pickCassette(this,'square')">Square Cassette</button>
     </div>
+    <div class="step-note">Round Cassette: 3⅜″ deep × 3″ high · Standard · IM min 3¾″ depth · Square Cassette: 3½″ deep × 3″ high · IM min 4″ depth.</div>
     <div class="sub-label">Hardware color</div>
     <div class="hw-colors" id="hw-colors"><!-- filled by JS --></div>
     <!-- Fabric headrail insert -->
@@ -267,16 +263,11 @@
     <div class="step-head-val" id="s6val">—</div>
   </div>
   <div class="step-body">
-    <div class="opt-grid" style="grid-template-columns:1fr 1fr">
-      <div class="opt-card" id="ctrl-ccl" onclick="pickControl(this,'ccl')">
-        <div class="opt-card-title">Continuous Cord Loop</div>
-        <div class="opt-card-desc">Standard · Metal bead chain · No width limit</div>
-      </div>
-      <div class="opt-card" id="ctrl-motor" onclick="pickControl(this,'motor')">
-        <div class="opt-card-title">Battery Motor</div>
-        <div class="opt-card-desc">Min 23″W · Max 100″W · Rechargeable Li-ion</div>
-      </div>
+    <div class="opt-row">
+      <button class="opt-btn" id="ctrl-ccl" onclick="pickControl(this,'ccl')">Continuous Cord Loop</button>
+      <button class="opt-btn" id="ctrl-motor" onclick="pickControl(this,'motor')">Battery Motor</button>
     </div>
+    <div class="step-note">Continuous Cord Loop: Standard · Metal bead chain · No width limit · Battery Motor: Min 23″W · Max 100″W · Rechargeable Li-ion.</div>
     <div id="ctrl-msg" class="msg-box" style="display:none"></div>
 
     <!-- CCL options -->

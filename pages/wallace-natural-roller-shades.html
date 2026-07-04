@@ -176,18 +176,11 @@
     <div class="step-head-val" id="s1-val"></div>
   </div>
   <div class="step-body">
-    <div class="opt-grid-2">
-      <div class="opt-card" id="mc-in" onclick="selectMount('inside')">
-        <div class="opt-card-icon">⬛</div>
-        <div class="opt-card-title">Inside Mount</div>
-        <div class="opt-card-desc">Fits within the window frame. 1/8" deduction applied.</div>
-      </div>
-      <div class="opt-card" id="mc-out" onclick="selectMount('outside')">
-        <div class="opt-card-icon">🔲</div>
-        <div class="opt-card-title">Outside Mount</div>
-        <div class="opt-card-desc">Mounts on the wall above or around the frame.</div>
-      </div>
+    <div class="opt-row">
+      <button class="opt-btn" id="mc-in" onclick="selectMount('inside')">Inside Mount</button>
+      <button class="opt-btn" id="mc-out" onclick="selectMount('outside')">Outside Mount</button>
     </div>
+    <div class="step-note" style="font-size:11px;color:#888;margin-top:6px"><strong>Inside Mount:</strong> fits within the window frame. 1/8" deduction applied. <strong>Outside Mount:</strong> mounts on the wall above or around the frame.</div>
   </div>
 </div>
 
@@ -255,18 +248,11 @@
   </div>
   <div class="step-body">
     <div style="font-size:12px;color:#666;margin-bottom:12px;line-height:1.6">Single shade uses one natural fabric. Double shade adds a light-filtering or blackout back fabric on a dual bracket.</div>
-    <div class="opt-grid-2">
-      <div class="opt-card" id="tc-single" onclick="selectType('single')">
-        <div class="opt-card-title">Single Natural Roller</div>
-        <div class="opt-card-desc">One natural fabric. Open roll, cassette, or valance. All control types available.</div>
-        <span class="type-badge" style="display:inline-block;margin-top:6px">All controls · Up to 108" tall</span>
-      </div>
-      <div class="opt-card" id="tc-double" onclick="selectType('double')">
-        <div class="opt-card-title">Double Natural Roller</div>
-        <div class="opt-card-desc">Natural front + LF or blackout back on dual bracket. No cassette, no Pro Wand.</div>
-        <span class="type-badge" style="display:inline-block;margin-top:6px">Max 96" tall</span>
-      </div>
+    <div class="opt-row">
+      <button class="opt-btn" id="tc-single" onclick="selectType('single')">Single Natural Roller</button>
+      <button class="opt-btn" id="tc-double" onclick="selectType('double')">Double Natural Roller</button>
     </div>
+    <div class="step-note" style="font-size:11px;color:#888;margin-top:6px"><strong>Single Natural Roller:</strong> one natural fabric. Open roll, cassette, or valance. All control types available. (All controls · Up to 108" tall) <strong>Double Natural Roller:</strong> natural front + LF or blackout back on dual bracket. No cassette, no Pro Wand. (Max 96" tall)</div>
   </div>
 </div>
 
@@ -406,12 +392,8 @@
   </div>
   <div class="step-body">
     <div class="delivery-section" style="margin-top:12px">
-      <div class="opt-grid-2">
-        <div class="opt-card sel" id="del-ship" onclick="selectDelivery('ship')">
-          <div class="opt-card-icon">📦</div>
-          <div class="opt-card-title">Ship to me</div>
-          <div class="opt-card-desc">UPS or FedEx</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn sel" id="del-ship" onclick="selectDelivery('ship')">Ship to me</button>
       </div>
       <div id="del-ship-note" class="delivery-note">Shipped via <strong>UPS or FedEx</strong>. <div class="delivery-tariff">Tariffs and import fees are additional.</div></div>
     </div>

@@ -47,7 +47,7 @@ function markDone(id) { $(id).classList.add('done'); }
 
 // ── STEP 1: MOUNT ─────────────────────────────────────────────────────────────
 function pickMount(el, val) {
-  document.querySelectorAll('#step1 .opt-card').forEach(c => c.classList.remove('sel'));
+  document.querySelectorAll('#step1 .opt-btn').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
   S.mount = val;
   $('s1val').textContent = val === 'inside' ? 'Inside Mount' : 'Outside Mount';
@@ -61,7 +61,7 @@ function pickMount(el, val) {
 
 // ── STEP 2: SLAT SIZE ─────────────────────────────────────────────────────────
 function pickSlat(el, label) {
-  document.querySelectorAll('#step2 .opt-card').forEach(c => c.classList.remove('sel'));
+  document.querySelectorAll('#step2 .opt-btn').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
   S.slat = label.includes('2½') ? '2.5in' : '2in';
   $('s2val').textContent = label + ' (selected)';
@@ -146,7 +146,7 @@ function pickColor(el, name, code, surcharge) {
 
 // ── STEP 5: VALANCE ───────────────────────────────────────────────────────────
 function pickValance(el, label, val) {
-  document.querySelectorAll('#step5 .opt-card').forEach(c => c.classList.remove('sel'));
+  document.querySelectorAll('#step5 .opt-btn').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
   S.valance = val;
   $('s5val').textContent = label;
@@ -157,7 +157,7 @@ function pickValance(el, label, val) {
 
 // ── STEP 6: CONTROLS ──────────────────────────────────────────────────────────
 function pickWand(el, val) {
-  document.querySelectorAll('#step6 .opt-card').forEach(c => c.classList.remove('sel'));
+  document.querySelectorAll('#step6 .opt-btn').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
   S.wandLoc = val;
   $('s6val').textContent = val.charAt(0).toUpperCase() + val.slice(1) + ' wand';

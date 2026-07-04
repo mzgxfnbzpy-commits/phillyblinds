@@ -157,17 +157,11 @@
       <div class="step-head-val" id="s1val">&mdash;</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-2">
-        <div class="opt-card" onclick="pickMount(this,'inside')">
-          <div class="opt-card-title">Inside Mount</div>
-          <div class="opt-card-desc">Fits inside window frame &middot; clean built-in look</div>
-        </div>
-        <div class="opt-card" onclick="pickMount(this,'outside')">
-          <div class="opt-card-title">Outside Mount</div>
-          <div class="opt-card-desc">Mounts on wall or above frame &middot; covers trim</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn" onclick="pickMount(this,'inside')">Inside Mount</button>
+        <button class="opt-btn" onclick="pickMount(this,'outside')">Outside Mount</button>
       </div>
-      <div class="step-note">Inside mount: blind width = your opening &minus; 3/8&Prime; (manufacturer deduction). Outside mount: order your finished blind size. We recommend adding 1&frac12;&Prime; each side for best light block.</div>
+      <div class="step-note">Inside mount fits inside the window frame for a clean built-in look; outside mount mounts on the wall or above the frame and covers the trim. Inside mount: blind width = your opening &minus; 3/8&Prime; (manufacturer deduction). Outside mount: order your finished blind size. We recommend adding 1&frac12;&Prime; each side for best light block.</div>
     </div>
   </div>
 
@@ -179,17 +173,11 @@
       <div class="step-head-val" id="s2val">&mdash;</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-2">
-        <div class="opt-card sel" onclick="pickSlat(this,'2&Prime;')">
-          <div class="opt-card-title">2&Prime; Slat</div>
-          <div class="opt-card-desc">Classic proportion &middot; most popular</div>
-        </div>
-        <div class="opt-card" onclick="pickSlat(this,'2&frac12;&Prime;')">
-          <div class="opt-card-title">2&frac12;&Prime; Slat</div>
-          <div class="opt-card-desc">Wider look &middot; fewer slats visible</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn sel" onclick="pickSlat(this,'2&Prime;')">2&Prime; Slat</button>
+        <button class="opt-btn" onclick="pickSlat(this,'2&frac12;&Prime;')">2&frac12;&Prime; Slat</button>
       </div>
-      <div class="step-note">Same price for both slat sizes. All 26 colors available in both slat widths.</div>
+      <div class="step-note">2&Prime; is the classic, most popular proportion; 2&frac12;&Prime; gives a wider look with fewer visible slats. Same price for both slat sizes. All 26 colors available in both slat widths.</div>
     </div>
   </div>
 
@@ -392,21 +380,12 @@
       <div class="step-head-val" id="s5val">&mdash;</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-3">
-        <div class="opt-card" onclick="pickValance(this,'No Valance','none')">
-          <div class="opt-card-title">No Valance</div>
-          <div class="opt-card-desc">Clean PolyDeco headrail &middot; modern look</div>
-        </div>
-        <div class="opt-card" onclick="pickValance(this,'Designer Crown','crown')">
-          <div class="opt-card-title">Designer Crown</div>
-          <div class="opt-card-desc">Traditional crown profile &middot; color matched</div>
-        </div>
-        <div class="opt-card" onclick="pickValance(this,'Contempo','contempo')">
-          <div class="opt-card-title">Contempo</div>
-          <div class="opt-card-desc">Contemporary curved profile &middot; color matched</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn" onclick="pickValance(this,'No Valance','none')">No Valance</button>
+        <button class="opt-btn" onclick="pickValance(this,'Designer Crown','crown')">Designer Crown</button>
+        <button class="opt-btn" onclick="pickValance(this,'Contempo','contempo')">Contempo</button>
       </div>
-      <div class="step-note">Valance color always matches slat color. Valance surcharge is added to your price when selected.</div>
+      <div class="step-note">No Valance: clean PolyDeco headrail, modern look. Designer Crown: traditional crown profile, color matched. Contempo: contemporary curved profile, color matched. Valance color always matches slat color. Valance surcharge is added to your price when selected.</div>
     </div>
   </div>
 
@@ -419,17 +398,11 @@
     </div>
     <div class="step-body">
       <div id="wand-center-note" class="msg-box msg-info" style="display:none">Blinds under 15&Prime; wide use a center wand for tilt only &mdash; no lift function.</div>
-      <div id="wand-normal" class="opt-grid-2">
-        <div class="opt-card sel" onclick="pickWand(this,'left')">
-          <div class="opt-card-title">Left</div>
-          <div class="opt-card-desc">Standard position</div>
-        </div>
-        <div class="opt-card" onclick="pickWand(this,'right')">
-          <div class="opt-card-title">Right</div>
-          <div class="opt-card-desc">Optional &mdash; no extra charge</div>
-        </div>
+      <div id="wand-normal" class="opt-row">
+        <button class="opt-btn sel" onclick="pickWand(this,'left')">Left</button>
+        <button class="opt-btn" onclick="pickWand(this,'right')">Right</button>
       </div>
-      <div class="step-note">No extra charge for wand location change. Wand placement may vary slightly between blinds.</div>
+      <div class="step-note">Left is the standard position; right is optional at no extra charge. No extra charge for wand location change. Wand placement may vary slightly between blinds.</div>
     </div>
   </div>
 

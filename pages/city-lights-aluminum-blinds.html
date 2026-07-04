@@ -138,23 +138,12 @@
       <div class="step-head-val" id="s1val">—</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-3">
-        <div class="opt-card" onclick="pickSlat(this,'half','½&Prime; Micro')">
-          <div class="opt-card-title">½&Prime; Micro</div>
-          <div class="opt-card-desc">Minimal profile &middot; max privacy &middot; max width 78&Prime;</div>
-          <div class="opt-card-badge">+10%</div>
-        </div>
-        <div class="opt-card" onclick="pickSlat(this,'one','1&Prime; Standard')">
-          <div class="opt-card-title">1&Prime; Standard</div>
-          <div class="opt-card-desc">Most popular &middot; 30 colors &middot; max width 78&Prime;</div>
-        </div>
-        <div class="opt-card" onclick="pickSlat(this,'two','2&Prime; SmartPrivacy')">
-          <div class="opt-card-title">2&Prime; SmartPrivacy®</div>
-          <div class="opt-card-desc">Widest look &middot; SmartPrivacy® included &middot; up to 96&Prime; wide</div>
-          <div class="opt-card-badge">+20%</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn" onclick="pickSlat(this,'half','½&Prime; Micro')">½&Prime; Micro</button>
+        <button class="opt-btn" onclick="pickSlat(this,'one','1&Prime; Standard')">1&Prime; Standard</button>
+        <button class="opt-btn" onclick="pickSlat(this,'two','2&Prime; SmartPrivacy')">2&Prime; SmartPrivacy®</button>
       </div>
-      <div class="step-note">Base price is for 1&Prime; slats. ½&Prime; micro adds 10%; 2&Prime; SmartPrivacy® adds 20%. Cordless operation is standard on all sizes at no extra charge.</div>
+      <div class="step-note"><strong>½&Prime; Micro:</strong> minimal profile &middot; max privacy &middot; max width 78&Prime; (+10%). <strong>1&Prime; Standard:</strong> most popular &middot; 30 colors &middot; max width 78&Prime; (base price). <strong>2&Prime; SmartPrivacy®:</strong> widest look &middot; SmartPrivacy® included &middot; up to 96&Prime; wide (+20%). Cordless operation is standard on all sizes at no extra charge.</div>
     </div>
   </div>
 
@@ -322,16 +311,11 @@
       <div class="step-head-val" id="s3val">—</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-2">
-        <div class="opt-card" onclick="pickMount(this,'inside','Inside Mount')">
-          <div class="opt-card-title">Inside Mount</div>
-          <div class="opt-card-desc">Fits inside the window frame &middot; clean, flush look<br><br>Mfr deducts 3/8&Prime; from width automatically</div>
-        </div>
-        <div class="opt-card" onclick="pickMount(this,'outside','Outside Mount')">
-          <div class="opt-card-title">Outside Mount</div>
-          <div class="opt-card-desc">Mounts above or outside the frame &middot; better light block<br><br>Shim available for trim clearance</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn" onclick="pickMount(this,'inside','Inside Mount')">Inside Mount</button>
+        <button class="opt-btn" onclick="pickMount(this,'outside','Outside Mount')">Outside Mount</button>
       </div>
+      <div class="step-note"><strong>Inside Mount:</strong> fits inside the window frame for a clean, flush look — mfr deducts 3/8&Prime; from width automatically. <strong>Outside Mount:</strong> mounts above or outside the frame for better light block — shim available for trim clearance.</div>
       <div id="mount-note" class="msg-box msg-info" style="display:none"></div>
     </div>
   </div>

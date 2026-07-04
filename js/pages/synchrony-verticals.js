@@ -32,7 +32,7 @@ function pickFabric(el,collection,colorName,group){
 // Legacy alias in case anything still references pickGroup
 function pickGroup(el,g,label){}
 function pickMount(el,key,label){
-  document.querySelectorAll('#step2 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step2 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   state.mount=key;
   document.getElementById('s2val').textContent=label;

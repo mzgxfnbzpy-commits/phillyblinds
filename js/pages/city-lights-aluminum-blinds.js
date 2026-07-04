@@ -60,7 +60,7 @@ function filterColorsBySlat(slatKey){
 }
 
 function pickSlat(el,key,label){
-  document.querySelectorAll('#step1 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step1 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   state.slat=key;
   document.getElementById('s1val').textContent=label;
@@ -87,7 +87,7 @@ function pickColor(el,code,name,surcharge){
   goNext('step2','step3');
 }
 function pickMount(el,key,label){
-  document.querySelectorAll('#step3 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step3 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   state.mount=key;
   document.getElementById('s3val').textContent=label;

@@ -141,6 +141,8 @@ html { scroll-padding-top: 96px; }
 .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
 
 .opt-row { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
+/* Small helper note under an option row (used by the Soluna-pill standardization). Pages may override locally. */
+.step-note { font-size: 11px; color: #888; line-height: 1.6; margin-top: 6px; }
 
 /* ---- CARDS ---- */
 .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; overflow: hidden; transition: border-color 0.15s; }
