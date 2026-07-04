@@ -343,7 +343,7 @@ function pickPattern(num,name,grp,el){
 }
 
 function pickStyle(el,style){
-  document.querySelectorAll('#step2 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step2 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.style=style;
   const warn=document.getElementById('style-warn');
@@ -370,7 +370,7 @@ function pickStyle(el,style){
 }
 
 function pickMount(el,mount){
-  document.querySelectorAll('#step2 .opt-card').forEach(c=>{
+  document.querySelectorAll('#step2 .opt-btn').forEach(c=>{
     if(c.closest('#step2')) c.classList.remove('sel');
   });
   // re-apply style selection
@@ -392,7 +392,7 @@ function updateStyleVal(){
 }
 
 function pickLift(el,lift){
-  document.querySelectorAll('#step4 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step4 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.lift=lift;
   document.getElementById('s4val').textContent=lift;
@@ -447,7 +447,7 @@ function pickLinerColor(color,codeBase,el){
 }
 
 function pickEB(el,type){
-  document.querySelectorAll('#step6 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step6 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.eb=type;
   updateEBVal();
@@ -463,8 +463,8 @@ function pickEB(el,type){
 
 function pickValance(el,val){
   // Only update valance cards within step6
-  document.querySelectorAll('#step6 .opt-card').forEach((c,i)=>{
-    if(i>=3) c.classList.remove('sel'); // 0,1,2 are EB cards; 3,4,5 are valance
+  document.querySelectorAll('#step6 .opt-btn').forEach((c,i)=>{
+    if(i>=3) c.classList.remove('sel'); // 0,1,2 are EB pills; 3,4,5 are valance
   });
   el.classList.add('sel');
   S.valance=val;

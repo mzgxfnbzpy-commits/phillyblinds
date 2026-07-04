@@ -244,7 +244,7 @@ function markDone(id){document.getElementById(id).classList.add('done');}
 
 // ── STEP 1: STYLE ─────────────────────────────────────────────────────────────
 function pickStyle(el,key,label){
-  document.querySelectorAll('#step1 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step1 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.style=key;
   document.getElementById('s1val').textContent=label;
@@ -295,7 +295,7 @@ function checkPatternCompat(){
 
 // ── STEP 3: DIMENSIONS ────────────────────────────────────────────────────────
 function pickMount(el,key){
-  document.querySelectorAll('#step3 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step3 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.mount=key;
   calcPrice();
@@ -314,7 +314,7 @@ function updateControlOptions(){
 
 function pickControl(el,key){
   if(el.classList.contains('disabled')) return;
-  document.querySelectorAll('#step4 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step4 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   pickControlByKey(key);
 }
@@ -335,7 +335,7 @@ function pickControlByKey(key){
 
 // ── STEP 5: LINER ─────────────────────────────────────────────────────────────
 function pickLiner(el,type,label,code){
-  document.querySelectorAll('#step5 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step5 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.liner=type;
   document.getElementById('s5val').textContent=label;
@@ -361,7 +361,7 @@ function pickLinerColor(el,name,code){
 
 // ── STEP 6: EDGE BINDING ─────────────────────────────────────────────────────
 function pickEdge(el,key,label){
-  document.querySelectorAll('#step6 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step6 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.edge=key;
   document.getElementById('s6val').textContent=label;
@@ -378,7 +378,7 @@ function updateValanceNote(){
 }
 
 function pickValance(el,key,label){
-  document.querySelectorAll('#step7 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step7 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.valance=key;
   document.getElementById('s7val').textContent=label;

@@ -138,30 +138,12 @@
     <!-- STYLE — appears after type pick -->
     <div class="step" id="dec-style-step">
       <div class="step-title" style="margin-bottom:4px">Which style?</div>
-      <div class="opt-cards" id="dec-type-cards">
-
-        <div class="opt-card" onclick="hwPickStyle(this,'Rods &amp; Rings')">
-          <div class="opt-art">
-            <img loading="lazy" src="../images/thumbnails/rods-and-rings.png" alt="Rod and rings" style="object-position:center 20%">
-          </div>
-          <div class="opt-label-bar"><div class="opt-name">Rods &amp; Rings</div><div class="opt-desc">Classic ring-and-rod — pinch, goblet &amp; grommet pleat</div></div>
-        </div>
-
-        <div class="opt-card" onclick="hwPickStyle(this,'Traverse Rod')">
-          <div class="opt-art">
-            <img loading="lazy" src="../images/thumbnails/RIPPLEFOLD.png" alt="Traverse rod" style="object-position:center 15%">
-          </div>
-          <div class="opt-label-bar"><div class="opt-name">Traverse Rod</div><div class="opt-desc">Cord or wand operated — great for ripple fold</div></div>
-        </div>
-
-        <div class="opt-card" onclick="hwPickStyle(this,'Specialty / Custom')">
-          <div class="opt-art">
-            <img loading="lazy" src="../images/thumbnails/specialty-hardware.JPEG" alt="Specialty hardware">
-          </div>
-          <div class="opt-label-bar"><div class="opt-name">Specialty / Custom</div><div class="opt-desc">Bay windows, arches, curved tracks</div></div>
-        </div>
-
+      <div class="opt-row" id="dec-type-cards">
+        <button class="opt-btn" onclick="hwPickStyle(this,'Rods &amp; Rings')">Rods &amp; Rings</button>
+        <button class="opt-btn" onclick="hwPickStyle(this,'Traverse Rod')">Traverse Rod</button>
+        <button class="opt-btn" onclick="hwPickStyle(this,'Specialty / Custom')">Specialty / Custom</button>
       </div>
+      <div class="step-note">Rods &amp; Rings — classic ring-and-rod for pinch, goblet &amp; grommet pleat. Traverse Rod — cord or wand operated, great for ripple fold. Specialty / Custom — bay windows, arches, curved tracks.</div>
     </div>
 
     <!-- BRAND — appears after style pick (hidden for specialty) -->
@@ -223,58 +205,13 @@
         <div class="step-num">1</div>
         <div class="step-title" style="margin-bottom:0">What type of system?</div>
       </div>
-      <div class="opt-cards" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));margin-top:14px">
-
-        <div class="opt-card" onclick="kfSetType('traverse',this)">
-          <div class="opt-art" style="height:90px;background:#f5f5f3">
-            <svg viewBox="0 0 200 60" width="160" xmlns="http://www.w3.org/2000/svg">
-              <rect x="5" y="22" width="190" height="8" rx="4" fill="#ccc"/>
-              <rect x="0" y="18" width="12" height="16" rx="3" fill="#aaa"/>
-              <rect x="188" y="18" width="12" height="16" rx="3" fill="#aaa"/>
-              <rect x="90" y="14" width="20" height="24" rx="3" fill="#bbb"/>
-              <line x1="60" y1="30" x2="60" y2="56" stroke="#bbb" stroke-width="2"/>
-              <line x1="140" y1="30" x2="140" y2="56" stroke="#bbb" stroke-width="2"/>
-            </svg>
-          </div>
-          <div class="opt-label-bar"><div class="opt-name">Traverse Rod</div><div class="opt-desc">Cord-draw system — panels open &amp; close on a track</div></div>
-        </div>
-
-        <div class="opt-card" onclick="kfSetType('lockseam',this)">
-          <div class="opt-art" style="height:90px;background:#f5f5f3">
-            <svg viewBox="0 0 200 60" width="160" xmlns="http://www.w3.org/2000/svg">
-              <rect x="10" y="24" width="180" height="12" rx="6" fill="#ccc"/>
-              <rect x="0" y="20" width="14" height="20" rx="4" fill="#aaa"/>
-              <rect x="186" y="20" width="14" height="20" rx="4" fill="#aaa"/>
-              <rect x="93" y="16" width="14" height="28" rx="4" fill="#bbb"/>
-            </svg>
-          </div>
-          <div class="opt-label-bar"><div class="opt-name">Lockseam Curtain Rod</div><div class="opt-desc">Stationary rod — rod pocket, grommet, or tab panels</div></div>
-        </div>
-
-        <div class="opt-card" onclick="kfSetType('tension',this)">
-          <div class="opt-art" style="height:90px;background:#f5f5f3">
-            <svg viewBox="0 0 200 60" width="160" xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="100" cy="30" rx="90" ry="6" fill="#ccc"/>
-              <circle cx="10" cy="30" r="8" fill="#aaa"/>
-              <circle cx="190" cy="30" r="8" fill="#aaa"/>
-            </svg>
-          </div>
-          <div class="opt-label-bar"><div class="opt-name">Tension Rod</div><div class="opt-desc">Spring-loaded, no holes needed — café curtains &amp; sheers</div></div>
-        </div>
-
-        <div class="opt-card" onclick="kfSetType('sash',this)">
-          <div class="opt-art" style="height:90px;background:#f5f5f3">
-            <svg viewBox="0 0 200 60" width="160" xmlns="http://www.w3.org/2000/svg">
-              <rect x="10" y="27" width="180" height="6" rx="3" fill="#ccc"/>
-              <circle cx="12" cy="30" r="5" fill="#aaa"/>
-              <circle cx="188" cy="30" r="5" fill="#aaa"/>
-              <rect x="10" y="35" width="180" height="6" rx="3" fill="#ccc"/>
-            </svg>
-          </div>
-          <div class="opt-label-bar"><div class="opt-name">Sash Rod</div><div class="opt-desc">Flat or round — door panels, café tiers, small windows</div></div>
-        </div>
-
+      <div class="opt-row">
+        <button class="opt-btn" onclick="kfSetType('traverse',this)">Traverse Rod</button>
+        <button class="opt-btn" onclick="kfSetType('lockseam',this)">Lockseam Curtain Rod</button>
+        <button class="opt-btn" onclick="kfSetType('tension',this)">Tension Rod</button>
+        <button class="opt-btn" onclick="kfSetType('sash',this)">Sash Rod</button>
       </div>
+      <div class="step-note">Traverse Rod — cord-draw system, panels open &amp; close on a track. Lockseam Curtain Rod — stationary rod for rod pocket, grommet, or tab panels. Tension Rod — spring-loaded, no holes needed (café curtains &amp; sheers). Sash Rod — flat or round for door panels, café tiers, small windows.</div>
     </div>
 
     <!-- Step 2: Sub-options (changes per type) -->
@@ -290,33 +227,11 @@
 
         <!-- Model selection -->
         <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:10px">Kirsch Architrac® model</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:6px">
-
-          <div id="arch-94003-card" class="opt-card sel" onclick="archSelModel('94003',this)" style="padding:14px">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
-              <span style="font-size:13px;font-weight:700;color:#1a1a1a">94003</span>
-              <span style="font-size:9px;font-weight:700;background:var(--gold);color:var(--espresso);padding:2px 7px;border-radius:8px">RECOMMENDED</span>
-            </div>
-            <div style="font-size:12px;color:#555;line-height:1.5">Wall &amp; ceiling mount · Curvable for bay windows · Most versatile</div>
-          </div>
-
-          <div id="arch-94001-card" class="opt-card" onclick="archSelModel('94001',this)" style="padding:14px">
-            <div style="font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:6px">94001</div>
-            <div style="font-size:12px;color:#555;line-height:1.5">Cord draw · Standard residential traverse · Wall or ceiling mount</div>
-          </div>
-
-          <div id="arch-94004-card" class="opt-card" onclick="archSelModel('94004',this)" style="padding:14px">
-            <div style="font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:6px">94004</div>
-            <div style="font-size:12px;color:#555;line-height:1.5">Easy ceiling mount · Flange on back for flush ceiling installation</div>
-          </div>
-
-          <div id="arch-94005-card" class="opt-card" onclick="archSelModel('94005',this)" style="padding:14px">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
-              <span style="font-size:13px;font-weight:700;color:#1a1a1a">94005</span>
-              <span style="font-size:9px;font-weight:700;background:#FEE2E2;color:#991B1B;padding:2px 7px;border-radius:8px">NOT REC.</span>
-            </div>
-            <div style="font-size:12px;color:#555;line-height:1.5">Direct mount through track · Requires low-profile trim screws · Limited access</div>
-          </div>
+        <div class="opt-row" style="margin-bottom:6px">
+          <button id="arch-94003-card" class="opt-btn sel" onclick="archSelModel('94003',this)">94003 <span style="font-size:9px;font-weight:700;background:var(--gold);color:var(--espresso);padding:2px 7px;border-radius:8px;margin-left:4px">RECOMMENDED</span></button>
+          <button id="arch-94001-card" class="opt-btn" onclick="archSelModel('94001',this)">94001</button>
+          <button id="arch-94004-card" class="opt-btn" onclick="archSelModel('94004',this)">94004</button>
+          <button id="arch-94005-card" class="opt-btn" onclick="archSelModel('94005',this)">94005 <span style="font-size:9px;font-weight:700;background:#FEE2E2;color:#991B1B;padding:2px 7px;border-radius:8px;margin-left:4px">NOT REC.</span></button>
         </div>
         <div id="arch-model-note" class="tooltip-note" style="margin-bottom:16px">94003 Architrac: wall or ceiling mount, can be curved for bay windows. Most versatile — recommended for most applications.</div>
 

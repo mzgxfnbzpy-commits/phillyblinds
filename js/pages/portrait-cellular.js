@@ -274,7 +274,7 @@ function cellCheckConflict() {
   if (isTDBC && isDN) {
     note.style.display = 'block';
     note.textContent   = '⚠ Top Down / Bottom Up is not compatible with Day & Night fabric. Switching lift to Bottom Up.';
-    pickCellLift(document.querySelector('#grp-cell-lift .opt-card[data-lift="bu"]'), 'bu');
+    pickCellLift(document.querySelector('#grp-cell-lift .opt-btn[data-lift="bu"]'), 'bu');
   } else {
     note.style.display = 'none';
   }
@@ -291,7 +291,7 @@ function filterCellSizes() {
     }
   }
   // Update UI
-  document.querySelectorAll('#grp-cell-size .opt-card').forEach(function(card) {
+  document.querySelectorAll('#grp-cell-size .opt-btn').forEach(function(card) {
     var code = card.dataset.size;
     var idx  = CELL_SZ_IDX[code];
     var ok   = idx !== undefined && allowed.includes(idx);

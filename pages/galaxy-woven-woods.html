@@ -127,32 +127,15 @@
     <div class="step-head-val" id="s1val">—</div>
   </div>
   <div class="step-body">
-    <div class="opt-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
-      <div class="opt-card" onclick="pickStyle(this,'waterfall','Waterfall')">
-        <div class="opt-card-title">Waterfall</div>
-        <div class="opt-card-desc">4″ back valance · No front valance · Clean cascading look</div>
-      </div>
-      <div class="opt-card" onclick="pickStyle(this,'flat','Flat Fold')">
-        <div class="opt-card-title">Flat Fold</div>
-        <div class="opt-card-desc">6″ front valance · Most popular style</div>
-      </div>
-      <div class="opt-card" onclick="pickStyle(this,'hobbled','Hobbled')">
-        <div class="opt-card-title">Hobbled</div>
-        <div class="opt-card-desc">6″ front valance · +30% · Cordless &amp; motor not available</div>
-      </div>
-      <div class="opt-card" onclick="pickStyle(this,'tdbu','TDBU Cordless')">
-        <div class="opt-card-title">TDBU Cordless</div>
-        <div class="opt-card-desc">Flat style only · Max 72″W × 72″H · Pattern limits apply</div>
-      </div>
-      <div class="opt-card" onclick="pickStyle(this,'motor','Motorized')">
-        <div class="opt-card-title">Motorized</div>
-        <div class="opt-card-desc">Flat &amp; Waterfall only · Rollease Acmeda motor · Pattern limits apply</div>
-      </div>
-      <div class="opt-card" onclick="pickStyle(this,'dual','Dual Shade')">
-        <div class="opt-card-title">Dual Shade</div>
-        <div class="opt-card-desc">Flat &amp; Waterfall · Liner as back shade · Loop or Cordless</div>
-      </div>
+    <div class="opt-row">
+      <button class="opt-btn" onclick="pickStyle(this,'waterfall','Waterfall')">Waterfall</button>
+      <button class="opt-btn" onclick="pickStyle(this,'flat','Flat Fold')">Flat Fold</button>
+      <button class="opt-btn" onclick="pickStyle(this,'hobbled','Hobbled')">Hobbled</button>
+      <button class="opt-btn" onclick="pickStyle(this,'tdbu','TDBU Cordless')">TDBU Cordless</button>
+      <button class="opt-btn" onclick="pickStyle(this,'motor','Motorized')">Motorized</button>
+      <button class="opt-btn" onclick="pickStyle(this,'dual','Dual Shade')">Dual Shade</button>
     </div>
+    <div class="step-note">Waterfall — 4″ back valance · no front valance · clean cascading look. Flat Fold — 6″ front valance · most popular style. Hobbled — 6″ front valance · +30% · Cordless &amp; motor not available. TDBU Cordless — Flat style only · max 72″W × 72″H · pattern limits apply. Motorized — Flat &amp; Waterfall only · Rollease Acmeda motor · pattern limits apply. Dual Shade — Flat &amp; Waterfall · liner as back shade · Loop or Cordless.</div>
     <div id="style-compat-note" class="msg-info" style="display:none;margin-top:10px"></div>
   </div>
 </div>
@@ -204,9 +187,9 @@
     </div>
     <div style="margin-top:12px">
       <div class="dim-label">Mount type</div>
-      <div class="opt-grid" style="grid-template-columns:1fr 1fr;margin-top:6px">
-        <div class="opt-card sel" id="mc-inside" onclick="pickMount(this,'inside')"><div class="opt-card-title">Inside Mount</div></div>
-        <div class="opt-card" id="mc-outside" onclick="pickMount(this,'outside')"><div class="opt-card-title">Outside Mount</div></div>
+      <div class="opt-row" style="margin-top:6px">
+        <button class="opt-btn sel" id="mc-inside" onclick="pickMount(this,'inside')">Inside Mount</button>
+        <button class="opt-btn" id="mc-outside" onclick="pickMount(this,'outside')">Outside Mount</button>
       </div>
     </div>
     <div id="dim-msg" class="msg-box" style="display:none"></div>
@@ -223,20 +206,12 @@
     <div class="step-head-val" id="s4val">—</div>
   </div>
   <div class="step-body">
-    <div class="opt-grid" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr))">
-      <div class="opt-card" id="ctrl-loop" onclick="pickControl(this,'loop')">
-        <div class="opt-card-title">Loop Control</div>
-        <div class="opt-card-desc">Metal bead chain · Rollease · Waterfall &amp; Flat only</div>
-      </div>
-      <div class="opt-card" id="ctrl-cordless" onclick="pickControl(this,'cordless')">
-        <div class="opt-card-title">Cordless</div>
-        <div class="opt-card-desc">Cordless lift · Not for Hobbled</div>
-      </div>
-      <div class="opt-card" id="ctrl-motor" onclick="pickControl(this,'motor')">
-        <div class="opt-card-title">Motorized</div>
-        <div class="opt-card-desc">Rollease Acmeda battery motor</div>
-      </div>
+    <div class="opt-row">
+      <button class="opt-btn" id="ctrl-loop" onclick="pickControl(this,'loop')">Loop Control</button>
+      <button class="opt-btn" id="ctrl-cordless" onclick="pickControl(this,'cordless')">Cordless</button>
+      <button class="opt-btn" id="ctrl-motor" onclick="pickControl(this,'motor')">Motorized</button>
     </div>
+    <div class="step-note">Loop Control — metal bead chain · Rollease · Waterfall &amp; Flat only. Cordless — cordless lift · not for Hobbled. Motorized — Rollease Acmeda battery motor.</div>
     <div id="ctrl-note" class="msg-info" style="display:none;margin-top:8px"></div>
     <!-- Motor accessories -->
     <div id="motor-accessories" style="display:none;margin-top:12px">
@@ -274,11 +249,12 @@
     <div class="step-head-val" id="s5val">No liner</div>
   </div>
   <div class="step-body">
-    <div class="opt-grid" style="grid-template-columns:repeat(auto-fill,minmax(130px,1fr))">
-      <div class="opt-card sel" onclick="pickLiner(this,'none','No liner','')"><div class="opt-card-title">No liner</div></div>
-      <div class="opt-card" id="liner-privacy-opt" onclick="pickLiner(this,'privacy','Privacy liner','')"><div class="opt-card-title">Privacy Liner</div><div class="opt-card-desc">+surcharge · folds into hem</div></div>
-      <div class="opt-card" id="liner-blackout-opt" onclick="pickLiner(this,'blackout','Blackout Liner','')"><div class="opt-card-title">Blackout Liner</div><div class="opt-card-desc">+surcharge · folds into hem</div></div>
+    <div class="opt-row">
+      <button class="opt-btn sel" onclick="pickLiner(this,'none','No liner','')">No liner</button>
+      <button class="opt-btn" id="liner-privacy-opt" onclick="pickLiner(this,'privacy','Privacy liner','')">Privacy Liner</button>
+      <button class="opt-btn" id="liner-blackout-opt" onclick="pickLiner(this,'blackout','Blackout Liner','')">Blackout Liner</button>
     </div>
+    <div class="step-note">Privacy Liner and Blackout Liner — +surcharge · folds into hem.</div>
     <!-- Liner color (shown when liner selected) -->
     <div id="liner-color-section" style="display:none;margin-top:12px">
       <div class="sub-label">Liner Color</div>
@@ -302,11 +278,12 @@
     <div class="step-head-val" id="s6val">None</div>
   </div>
   <div class="step-body">
-    <div class="opt-grid" style="grid-template-columns:repeat(3,1fr)">
-      <div class="opt-card sel" onclick="pickEdge(this,'none','None')"><div class="opt-card-title">No binding</div></div>
-      <div class="opt-card" onclick="pickEdge(this,'half','½″ Twill')"><div class="opt-card-title">½″ Twill</div><div class="opt-card-desc">Color-coordinated thread</div></div>
-      <div class="opt-card" onclick="pickEdge(this,'one5','1½″ Twill')"><div class="opt-card-title">1½″ Twill</div><div class="opt-card-desc">Mitered corners</div></div>
+    <div class="opt-row">
+      <button class="opt-btn sel" onclick="pickEdge(this,'none','None')">No binding</button>
+      <button class="opt-btn" onclick="pickEdge(this,'half','½″ Twill')">½″ Twill</button>
+      <button class="opt-btn" onclick="pickEdge(this,'one5','1½″ Twill')">1½″ Twill</button>
     </div>
+    <div class="step-note">½″ Twill — color-coordinated thread. 1½″ Twill — mitered corners.</div>
     <div class="step-note" style="margin-top:8px">Sewn on left/right/bottom of shade and valance sides. If hold-down clips selected, no bottom edge binding.</div>
   </div>
 </div>
@@ -320,12 +297,13 @@
   </div>
   <div class="step-body">
     <div id="valance-standard-note" class="msg-info" style="display:none;margin-bottom:10px"></div>
-    <div id="valance-options" class="opt-grid" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr))">
-      <div class="opt-card sel" onclick="pickValance(this,'standard','Standard included')"><div class="opt-card-title">Standard</div><div class="opt-card-desc">Included with style</div></div>
-      <div class="opt-card" onclick="pickValance(this,'classic6','6″ Classic')"><div class="opt-card-title">6″ Classic</div><div class="opt-card-desc">+surcharge</div></div>
-      <div class="opt-card" id="val-12" onclick="pickValance(this,'double12','12″ Double Hobble')"><div class="opt-card-title">12″ Double</div><div class="opt-card-desc">Hobble style · +surcharge</div></div>
-      <div class="opt-card" id="val-18" onclick="pickValance(this,'triple18','18″ Triple Hobble')"><div class="opt-card-title">18″ Triple</div><div class="opt-card-desc">Hobble style · +surcharge</div></div>
+    <div id="valance-options" class="opt-row">
+      <button class="opt-btn sel" onclick="pickValance(this,'standard','Standard included')">Standard</button>
+      <button class="opt-btn" onclick="pickValance(this,'classic6','6″ Classic')">6″ Classic</button>
+      <button class="opt-btn" id="val-12" onclick="pickValance(this,'double12','12″ Double Hobble')">12″ Double</button>
+      <button class="opt-btn" id="val-18" onclick="pickValance(this,'triple18','18″ Triple Hobble')">18″ Triple</button>
     </div>
+    <div class="step-note">Standard — included with style. 6″ Classic — +surcharge. 12″ Double &amp; 18″ Triple — Hobble style · +surcharge.</div>
   </div>
 </div>
 

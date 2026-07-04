@@ -109,16 +109,11 @@
       <div class="step-head-val" id="s1val">—</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-2">
-        <div class="opt-card" onclick="pickCellMount(this,'Inside mount')">
-          <div class="opt-card-title">Inside Mount</div>
-          <div class="opt-card-desc">Fits inside window frame &middot; clean flush look &middot; mfr deducts 3/8″ automatically</div>
-        </div>
-        <div class="opt-card" onclick="pickCellMount(this,'Outside mount')">
-          <div class="opt-card-title">Outside Mount</div>
-          <div class="opt-card-desc">Mounts above or outside frame &middot; better light block &middot; covers more wall</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn" onclick="pickCellMount(this,'Inside mount')">Inside Mount</button>
+        <button class="opt-btn" onclick="pickCellMount(this,'Outside mount')">Outside Mount</button>
       </div>
+      <div class="step-note">Inside Mount — Fits inside window frame &middot; clean flush look &middot; mfr deducts 3/8″ automatically. Outside Mount — Mounts above or outside frame &middot; better light block &middot; covers more wall.</div>
     </div>
   </div>
 
@@ -130,20 +125,12 @@
       <div class="step-head-val" id="s2val">Bottom Up</div>
     </div>
     <div class="step-body">
-      <div id="grp-cell-lift" class="opt-grid-3">
-        <div class="opt-card sel" data-lift="bu" onclick="pickCellLift(this,'bu')">
-          <div class="opt-card-title">Bottom Up</div>
-          <div class="opt-card-desc">Standard operation &middot; all fabrics available</div>
-        </div>
-        <div class="opt-card" data-lift="tdbu" onclick="pickCellLift(this,'tdbu')">
-          <div class="opt-card-title">Top Down / Bottom Up <span style="font-size:10px;opacity:.65">+$89</span></div>
-          <div class="opt-card-desc">Opens from top or bottom &middot; max 60 sqft area &middot; not with Day &amp; Night</div>
-        </div>
-        <div class="opt-card" data-lift="dn" onclick="pickCellLift(this,'dn')">
-          <div class="opt-card-title">Day &amp; Night <span style="font-size:10px;opacity:.65">+$89</span></div>
-          <div class="opt-card-desc">Two shades in one headrail &middot; all cell sizes &middot; not with TDBU</div>
-        </div>
+      <div id="grp-cell-lift" class="opt-row">
+        <button class="opt-btn sel" data-lift="bu" onclick="pickCellLift(this,'bu')">Bottom Up</button>
+        <button class="opt-btn" data-lift="tdbu" onclick="pickCellLift(this,'tdbu')">Top Down / Bottom Up <span style="font-size:10px;opacity:.65">+$89</span></button>
+        <button class="opt-btn" data-lift="dn" onclick="pickCellLift(this,'dn')">Day &amp; Night <span style="font-size:10px;opacity:.65">+$89</span></button>
       </div>
+      <div class="step-note">Bottom Up — Standard operation &middot; all fabrics available. Top Down / Bottom Up — Opens from top or bottom &middot; max 60 sqft area &middot; not with Day &amp; Night. Day &amp; Night — Two shades in one headrail &middot; all cell sizes &middot; not with TDBU.</div>
       <div id="tdbu-note" class="msg-box msg-info" style="display:none;margin-top:8px">Top Down / Bottom Up: max area is 60 sqft (width × height). Not available with Day &amp; Night fabric.</div>
       <div id="dn-note"   class="msg-box msg-info" style="display:none;margin-top:8px">Day &amp; Night: two shades (sheer day + room-darkening night) in one headrail. Top and bottom use the same cell size. Not available with TDBU.</div>
       <div id="cell-conflict-note" class="msg-box msg-warn" style="display:none;margin-top:8px"></div>
@@ -158,20 +145,12 @@
       <div class="step-head-val" id="s3val">Cordless</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-3">
-        <div class="opt-card sel" onclick="pickCellOp(this,'Cordless')">
-          <div class="opt-card-title">Cordless</div>
-          <div class="opt-card-desc">Max 108″W × 120″H &middot; child &amp; pet safe &middot; push-to-lift</div>
-        </div>
-        <div class="opt-card" onclick="pickCellOp(this,'Cord Loop')">
-          <div class="opt-card-title">Cord Loop <span style="font-size:10px;opacity:.65">+$73</span></div>
-          <div class="opt-card-desc">Max 120″W × 144″H &middot; 80 sqft area limit &middot; best for large windows</div>
-        </div>
-        <div class="opt-card" onclick="pickCellOp(this,'Motorized')">
-          <div class="opt-card-title">Motorized</div>
-          <div class="opt-card-desc">Max 120″W × 144″H &middot; app, remote &amp; voice &middot; Norman Smart motor</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn sel" onclick="pickCellOp(this,'Cordless')">Cordless</button>
+        <button class="opt-btn" onclick="pickCellOp(this,'Cord Loop')">Cord Loop <span style="font-size:10px;opacity:.65">+$73</span></button>
+        <button class="opt-btn" onclick="pickCellOp(this,'Motorized')">Motorized</button>
       </div>
+      <div class="step-note">Cordless — Max 108″W × 120″H &middot; child &amp; pet safe &middot; push-to-lift. Cord Loop — Max 120″W × 144″H &middot; 80 sqft area limit &middot; best for large windows. Motorized — Max 120″W × 144″H &middot; app, remote &amp; voice &middot; Norman Smart motor.</div>
       <div id="cell-op-note" class="msg-box msg-info" style="display:none;margin-top:8px"></div>
       <div id="cell-motor-section" style="display:none;margin-top:10px"></div>
     </div>
@@ -212,51 +191,23 @@
     </div>
     <div class="step-body">
       <div class="sub-label">Fabric Type</div>
-      <div class="opt-grid-2">
-        <div class="opt-card sel" onclick="pickCellFabric(this,'lf')">
-          <div class="opt-card-title">Light Filtering</div>
-          <div class="opt-card-desc">Softens light &middot; privacy &middot; available in all cell sizes</div>
-        </div>
-        <div class="opt-card" onclick="pickCellFabric(this,'rd')">
-          <div class="opt-card-title">Room Darkening <span style="font-size:10px;opacity:.65">+20%</span></div>
-          <div class="opt-card-desc">Near-blackout &middot; not 3⁄8″S &middot; 9⁄16″S has limited palette</div>
-        </div>
-        <div class="opt-card" onclick="pickCellFabric(this,'sheer')">
-          <div class="opt-card-title">Sheer <span style="font-size:10px;opacity:.65">+20%</span></div>
-          <div class="opt-card-desc">View-through when down &middot; 3⁄8″S single only &middot; 5 colors</div>
-        </div>
-        <div class="opt-card" onclick="pickCellFabric(this,'dn')">
-          <div class="opt-card-title">Day &amp; Night</div>
-          <div class="opt-card-desc">Two shades in one headrail &middot; all cell sizes &middot; requires D&amp;N lift above</div>
-        </div>
+      <div id="grp-cell-fabric" class="opt-row">
+        <button class="opt-btn sel" onclick="pickCellFabric(this,'lf')">Light Filtering</button>
+        <button class="opt-btn" onclick="pickCellFabric(this,'rd')">Room Darkening <span style="font-size:10px;opacity:.65">+20%</span></button>
+        <button class="opt-btn" onclick="pickCellFabric(this,'sheer')">Sheer <span style="font-size:10px;opacity:.65">+20%</span></button>
+        <button class="opt-btn" onclick="pickCellFabric(this,'dn')">Day &amp; Night</button>
       </div>
+      <div class="step-note">Light Filtering — Softens light &middot; privacy &middot; available in all cell sizes. Room Darkening — Near-blackout &middot; not 3⁄8″S &middot; 9⁄16″S has limited palette. Sheer — View-through when down &middot; 3⁄8″S single only &middot; 5 colors. Day &amp; Night — Two shades in one headrail &middot; all cell sizes &middot; requires D&amp;N lift above.</div>
       <div class="sub-label" style="margin-top:16px">Cell Size</div>
-      <div id="grp-cell-size" class="opt-grid-6">
-        <div class="opt-card" data-size="38s" onclick="pickCellSize(this,'38s')">
-          <div class="opt-card-title">3⁄8″ Single</div>
-          <div class="opt-card-desc">Slimmest look &middot; LF &amp; Sheer only</div>
-        </div>
-        <div class="opt-card" data-size="916s" onclick="pickCellSize(this,'916s')">
-          <div class="opt-card-title">9⁄16″ Single</div>
-          <div class="opt-card-desc">Popular &middot; lower price &middot; limited palette</div>
-        </div>
-        <div class="opt-card" data-size="12d" onclick="pickCellSize(this,'12d')">
-          <div class="opt-card-title">1⁄2″ Double</div>
-          <div class="opt-card-desc">LF &amp; RD &middot; better insulation</div>
-        </div>
-        <div class="opt-card sel" data-size="34s" onclick="pickCellSize(this,'34s')">
-          <div class="opt-card-title">3⁄4″ Single</div>
-          <div class="opt-card-desc">All fabrics &middot; balanced look</div>
-        </div>
-        <div class="opt-card" data-size="34d" onclick="pickCellSize(this,'34d')">
-          <div class="opt-card-title">3⁄4″ Double</div>
-          <div class="opt-card-desc">LF &amp; RD &middot; maximum insulation</div>
-        </div>
-        <div class="opt-card" data-size="114s" onclick="pickCellSize(this,'114s')">
-          <div class="opt-card-title">1 1⁄4″ Single</div>
-          <div class="opt-card-desc">Boldest look &middot; all fabrics available</div>
-        </div>
+      <div id="grp-cell-size" class="opt-row">
+        <button class="opt-btn" data-size="38s" onclick="pickCellSize(this,'38s')">3⁄8″ Single</button>
+        <button class="opt-btn" data-size="916s" onclick="pickCellSize(this,'916s')">9⁄16″ Single</button>
+        <button class="opt-btn" data-size="12d" onclick="pickCellSize(this,'12d')">1⁄2″ Double</button>
+        <button class="opt-btn sel" data-size="34s" onclick="pickCellSize(this,'34s')">3⁄4″ Single</button>
+        <button class="opt-btn" data-size="34d" onclick="pickCellSize(this,'34d')">3⁄4″ Double</button>
+        <button class="opt-btn" data-size="114s" onclick="pickCellSize(this,'114s')">1 1⁄4″ Single</button>
       </div>
+      <div class="step-note">3⁄8″ Single — Slimmest look &middot; LF &amp; Sheer only. 9⁄16″ Single — Popular &middot; lower price &middot; limited palette. 1⁄2″ Double — LF &amp; RD &middot; better insulation. 3⁄4″ Single — All fabrics &middot; balanced look. 3⁄4″ Double — LF &amp; RD &middot; maximum insulation. 1 1⁄4″ Single — Boldest look &middot; all fabrics available.</div>
       <div id="cell-size-note" class="step-note" style="display:none;margin-top:8px"></div>
     </div>
   </div>
@@ -376,7 +327,7 @@
 document.getElementById('pb-final-step').innerHTML =
   pbContactStepHTML({ bare: true, cartFn: 'cellAddToCart()', submitFn: 'submitCellQuote(this)' });
 function pickCellMount(el, label) {
-  document.querySelectorAll('#step1 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#step1 .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
   CELL.mount = label;
   document.getElementById('s1val').textContent = label;
@@ -386,7 +337,7 @@ function pickCellMount(el, label) {
 }
 function pickCellLift(el, mode) {
   if (!el) return;
-  document.querySelectorAll('#grp-cell-lift .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#grp-cell-lift .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
   CELL.lift = mode;
   var labels = {bu:'Bottom Up', tdbu:'Top Down / Bottom Up', dn:'Day & Night'};
@@ -397,7 +348,7 @@ function pickCellLift(el, mode) {
   if (mode === 'dn') {
     // Force D&N fabric if not already
     if (CELL.fabric !== 'dn') {
-      var dnCard = document.querySelector('#step5 .opt-card[onclick*="\'dn\'"]');
+      var dnCard = document.querySelector('#grp-cell-fabric .opt-btn[onclick*="\'dn\'"]');
       if (dnCard) pickCellFabric(dnCard, 'dn');
     }
   }
@@ -406,7 +357,7 @@ function pickCellLift(el, mode) {
   cellCalcPrice();
 }
 function pickCellOp(el, sysName) {
-  document.querySelectorAll('#step3 .opt-grid-3 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#step3 .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
   CELL.opSys = sysName;
   cellMotorOn = (sysName === 'Motorized');
@@ -435,14 +386,14 @@ function pickCellOp(el, sysName) {
   cellCalcPrice();
 }
 function pickCellFabric(el, type) {
-  document.querySelectorAll('#step5 .opt-grid-2 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#grp-cell-fabric .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
   CELL.fabric = type;
   var labels = {lf:'Light Filtering', rd:'Room Darkening', sheer:'Sheer', dn:'Day & Night'};
   document.getElementById('qr-cell-fabric').textContent = labels[type] || type;
   // If Day & Night, also set lift to dn
   if (type === 'dn' && CELL.lift !== 'dn') {
-    var dnLiftCard = document.querySelector('#grp-cell-lift .opt-card[data-lift="dn"]');
+    var dnLiftCard = document.querySelector('#grp-cell-lift .opt-btn[data-lift="dn"]');
     if (dnLiftCard) pickCellLift(dnLiftCard, 'dn');
   }
   filterCellSizes();
