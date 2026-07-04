@@ -143,6 +143,13 @@ html { scroll-padding-top: 96px; }
 .opt-row { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
 /* Small helper note under an option row (used by the Soluna-pill standardization). Pages may override locally. */
 .step-note { font-size: 11px; color: #888; line-height: 1.6; margin-top: 6px; }
+/* Consistent Quantity stepper (Soluna style) — used by the canonical Step 1 on every product */
+.qty-btns { display: flex; align-items: center; }
+.qty-btn { width: 32px; height: 32px; border: 1px solid #ddd; background: #fff; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: var(--font); }
+.qty-btn:first-child { border-radius: 8px 0 0 8px; }
+.qty-btn:last-child { border-radius: 0 8px 8px 0; }
+.qty-num { width: 44px; text-align: center; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; border-left: none; border-right: none; height: 32px; font-size: 13px; font-weight: 500; font-family: var(--font); background: #fff; }
+.dim-unit { font-size: 11px; color: #999; margin-top: 4px; line-height: 1.4; }
 
 /* ---- CARDS ---- */
 .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; overflow: hidden; transition: border-color 0.15s; }

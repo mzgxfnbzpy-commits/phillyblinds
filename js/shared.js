@@ -564,6 +564,92 @@ function pbContactStepHTML(opts) {
     '</div>';
 }
 
+// Adjust a numeric quantity <input id=id> by delta, clamped to [min,max]. Shared by every
+// canonical Step-1 quantity stepper so the +/- behaviour is identical on every product.
+function pbAdjQty(id, delta, min, max) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  min = (min == null ? 1 : min); max = (max == null ? 50 : max);
+  var v = (parseInt(el.value, 10) || min) + delta;
+  if (v < min) v = min; if (v > max) v = max;
+  el.value = v;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CANONICAL STEP 1 — "Window measurements & mount". Identical dim-box on every hard
+// window treatment (shades, blinds, cellular, roller, roman, woven, cornices, valances):
+// Width + Height in the teal dim-box, a "How to measure" note, Inside/Outside mount pills,
+// and the shared quantity stepper. One source of truth so Step 1 looks the same everywhere.
+//
+// Rules baked in:
+//  • Inside/Outside mount on everything EXCEPT drapes  → pass noMount:true for drapery.
+//  • Coupled Shades ONLY on the Norman Soluna roller    → pass coupled:'solToggleCoupled()'
+//    there; never anywhere else (default = no coupled button).
+//  • Quantity +/- is always the shared .qty-btns stepper.
+//
+// Canonical ids (override via opts if a page's JS already reads different ids):
+//   width  = inp-width, height = inp-height, qty = inp-qty, mount group = grp-mount.
+// opts: { stepNum(1), title, widthId, heightId, qtyId, mountGroupId,
+//         widthMin/Max/Placeholder/Hint, heightMin/Max/Placeholder/Hint,
+//         calc (oninput expr, default 'updateSummary()'),
+//         mountOnclick (default selOpt+calc), qtyMin(1)/qtyMax(50),
+//         measureHref('measure.html'), extraFieldsHTML, coupled(false|onclick),
+//         noMount(false), noQty(false), bare(false) }
+function pbSizeMountStepHTML(opts) {
+  opts = opts || {};
+  var stepNum = (opts.stepNum != null ? opts.stepNum : 1);
+  var title   = opts.title || 'Window measurements &amp; mount';
+  var calc    = opts.calc || 'updateSummary()';
+  var wId = opts.widthId || 'inp-width', hId = opts.heightId || 'inp-height', qId = opts.qtyId || 'inp-qty';
+  var wMin = (opts.widthMin != null ? opts.widthMin : 12),  wMax = (opts.widthMax != null ? opts.widthMax : 144);
+  var hMin = (opts.heightMin != null ? opts.heightMin : 12), hMax = (opts.heightMax != null ? opts.heightMax : 144);
+  var wPh = opts.widthPlaceholder || '36', hPh = opts.heightPlaceholder || '60';
+  var wHint = opts.widthHint  || ('inches &mdash; ' + wMin + '&Prime; min &middot; ' + wMax + '&Prime; max');
+  var hHint = opts.heightHint || ('inches &mdash; ' + hMin + '&Prime; min &middot; ' + hMax + '&Prime; max');
+  var measureHref = opts.measureHref || 'measure.html';
+  var grp = opts.mountGroupId || 'grp-mount';
+  var mountOnclick = opts.mountOnclick || ("selOpt(this,'" + grp + "');" + calc);
+  var qMin = (opts.qtyMin != null ? opts.qtyMin : 1), qMax = (opts.qtyMax != null ? opts.qtyMax : 50);
+
+  var mount = opts.noMount ? '' :
+    '<div style="font-size:12px;font-weight:600;color:#555;margin:14px 0 6px">Mount type</div>' +
+    '<div class="opt-row" id="' + grp + '" style="margin-bottom:14px">' +
+      '<button class="opt-btn sel" onclick="' + mountOnclick + '">Inside mount</button>' +
+      '<button class="opt-btn" onclick="' + mountOnclick + '">Outside mount</button>' +
+    '</div>';
+
+  var coupledBtn = opts.coupled
+    ? '<button id="coupled-toggle-btn" class="opt-btn" style="font-size:11px;padding:5px 12px" onclick="' + opts.coupled + '">+ Coupled Shades</button>'
+    : '';
+  var qty = opts.noQty ? '' :
+    '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">' +
+      '<span style="font-size:12px;color:#666">Qty:</span>' +
+      '<div class="qty-btns">' +
+        '<button class="qty-btn" onclick="pbAdjQty(\'' + qId + '\',-1,' + qMin + ',' + qMax + ');' + calc + '">&#8722;</button>' +
+        '<input class="qty-num" type="number" id="' + qId + '" value="1" min="' + qMin + '" max="' + qMax + '" oninput="' + calc + '">' +
+        '<button class="qty-btn" onclick="pbAdjQty(\'' + qId + '\',1,' + qMin + ',' + qMax + ');' + calc + '">&#43;</button>' +
+      '</div>' + coupledBtn +
+    '</div>';
+
+  var inner =
+    '<div class="dim-box">' +
+      '<div class="dim-box-label">Enter your window size</div>' +
+      '<div class="form-row">' +
+        '<div class="form-group"><label>Width</label><input type="number" id="' + wId + '" min="' + wMin + '" max="' + wMax + '" step="0.125" placeholder="' + wPh + '" oninput="' + calc + '"><div class="dim-unit">' + wHint + '</div></div>' +
+        '<div class="form-group"><label>Height</label><input type="number" id="' + hId + '" min="' + hMin + '" max="' + hMax + '" step="0.125" placeholder="' + hPh + '" oninput="' + calc + '"><div class="dim-unit">' + hHint + '</div></div>' +
+      '</div>' + (opts.extraFieldsHTML || '') +
+    '</div>' +
+    '<div class="step-note" style="margin-bottom:10px"><a href="' + measureHref + '" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm at the home visit.</div>' +
+    mount + qty;
+
+  if (opts.bare) return inner;
+  return '<div class="step-block" id="size-mount-block">' +
+    '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">' +
+      '<div class="step-num">' + stepNum + '</div>' +
+      '<div class="step-title" style="margin-bottom:0">' + title + '</div>' +
+    '</div>' + inner + '</div>';
+}
+
 // ============================================================
 // GLOBAL CART ENGINE
 // ============================================================

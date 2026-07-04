@@ -101,19 +101,43 @@
 <div class="config-layout">
 <div><!-- left column -->
 
-  <!-- STEP 1: MOUNT -->
-  <div class="step-block" id="step1">
+  <!-- STEP 1: WINDOW MEASUREMENTS & MOUNT -->
+  <div class="step-block active" id="step1">
     <div class="step-head" onclick="toggleStep('step1')">
       <div class="step-num">1</div>
-      <div class="step-head-title">Mount Type</div>
+      <div class="step-head-title">Window measurements &amp; mount</div>
       <div class="step-head-val" id="s1val">—</div>
     </div>
     <div class="step-body">
-      <div class="opt-row">
-        <button class="opt-btn" onclick="pickCellMount(this,'Inside mount')">Inside Mount</button>
-        <button class="opt-btn" onclick="pickCellMount(this,'Outside mount')">Outside Mount</button>
+      <div class="dim-box">
+        <div class="dim-box-label">Enter your window size</div>
+        <div class="form-row">
+          <div class="form-group"><label>Width</label><input type="number" id="cell-width" min="12" max="120" step="0.125" placeholder="36" oninput="onCellDimChange()"><div class="dim-unit" id="cell-w-limit-note">inches &mdash; 12&Prime; min &middot; max depends on operating system</div></div>
+          <div class="form-group"><label>Height</label><input type="number" id="cell-height" min="12" max="144" step="0.125" placeholder="60" oninput="onCellDimChange()"><div class="dim-unit" id="cell-h-limit-note">inches &mdash; 12&Prime; min &middot; 144&Prime; max</div></div>
+        </div>
       </div>
-      <div class="step-note">Inside Mount — Fits inside window frame &middot; clean flush look &middot; mfr deducts 3/8″ automatically. Outside Mount — Mounts above or outside frame &middot; better light block &middot; covers more wall.</div>
+      <div class="step-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm at the home visit.</div>
+      <div id="cell-price-note" class="msg-box msg-warn" style="display:none"></div>
+      <div id="cell-size-info" class="step-note" style="display:none"></div>
+
+      <!-- Mount type (every product except drapes) -->
+      <div style="font-size:12px;font-weight:600;color:#555;margin:14px 0 6px">Mount type</div>
+      <div class="opt-row" style="margin-bottom:6px">
+        <button class="opt-btn" onclick="pickCellMount(this,'Inside mount')">Inside mount</button>
+        <button class="opt-btn" onclick="pickCellMount(this,'Outside mount')">Outside mount</button>
+      </div>
+      <div class="step-note" style="margin-bottom:12px">Inside mount fits inside the window frame (mfr deducts 3/8&Prime; automatically). Outside mount mounts above/outside the frame for better light block and covers more wall.</div>
+
+      <!-- Quantity (shared stepper) -->
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="font-size:12px;color:#666">Qty:</span>
+        <div class="qty-btns">
+          <button class="qty-btn" onclick="adjCellQty(-1)">&#8722;</button>
+          <span class="qty-num" id="cell-qty-display" style="display:flex;align-items:center;justify-content:center">1</span>
+          <button class="qty-btn" onclick="adjCellQty(1)">&#43;</button>
+        </div>
+        <span style="font-size:12px;color:#666">shades (same size)</span>
+      </div>
     </div>
   </div>
 
@@ -156,36 +180,11 @@
     </div>
   </div>
 
-  <!-- STEP 4: DIMENSIONS -->
-  <div class="step-block" id="step4">
-    <div class="step-head" onclick="toggleStep('step4')">
-      <div class="step-num">4</div>
-      <div class="step-head-title">Dimensions</div>
-      <div class="step-head-val" id="s4val">—</div>
-    </div>
-    <div class="step-body">
-      <div class="dim-row">
-        <div>
-          <div class="dim-label">Width (inches)</div>
-          <input class="dim-whole" type="number" id="cell-width" min="12" max="120" placeholder="36" oninput="onCellDimChange()">
-          <div class="dim-unit" id="cell-w-limit-note">Max depends on operating system</div>
-        </div>
-        <div>
-          <div class="dim-label">Height (inches)</div>
-          <input class="dim-whole" type="number" id="cell-height" min="12" max="144" placeholder="60" oninput="onCellDimChange()">
-          <div class="dim-unit" id="cell-h-limit-note">Max depends on operating system</div>
-        </div>
-      </div>
-      <div id="cell-price-note" class="msg-box msg-warn" style="display:none"></div>
-      <div id="cell-size-info" class="step-note" style="display:none"></div>
-      <div class="step-note">Measure to the nearest ¼″. For inside mount, give us the exact opening — we take the deduction.</div>
-    </div>
-  </div>
 
   <!-- STEP 5: FABRIC TYPE + CELL SIZE -->
   <div class="step-block" id="step5">
     <div class="step-head" onclick="toggleStep('step5')">
-      <div class="step-num">5</div>
+      <div class="step-num">4</div>
       <div class="step-head-title">Fabric Type &amp; Cell Size</div>
       <div class="step-head-val" id="s5val">—</div>
     </div>
@@ -215,7 +214,7 @@
   <!-- STEP 6: COLOR -->
   <div class="step-block" id="step6">
     <div class="step-head" onclick="toggleStep('step6')">
-      <div class="step-num">6</div>
+      <div class="step-num">5</div>
       <div class="step-head-title">Color</div>
       <div class="step-head-val" id="s6val">—</div>
     </div>
@@ -228,7 +227,7 @@
   <!-- STEP 7: MOTORIZATION (conditional) -->
   <div class="step-block" id="step7" style="display:none">
     <div class="step-head" onclick="toggleStep('step7')">
-      <div class="step-num">7</div>
+      <div class="step-num">6</div>
       <div class="step-head-title">Motorization Options</div>
       <div class="step-head-val" id="s7val">—</div>
     </div>
@@ -240,28 +239,10 @@
     </div>
   </div>
 
-  <!-- STEP 8: QUANTITY -->
-  <div class="step-block" id="step8">
-    <div class="step-head" onclick="toggleStep('step8')">
-      <div class="step-num">8</div>
-      <div class="step-head-title">Quantity</div>
-      <div class="step-head-val" id="s8val">1 shade</div>
-    </div>
-    <div class="step-body">
-      <div class="spinner-row">
-        <button class="spin-btn" onclick="adjCellQty(-1)">−</button>
-        <span class="spin-num" id="cell-qty-display">1</span>
-        <button class="spin-btn" onclick="adjCellQty(1)">+</button>
-        <span class="spin-label">shades (same size)</span>
-      </div>
-      <div class="step-note">For shades of different sizes, add each to cart separately.</div>
-    </div>
-  </div>
-
-  <!-- STEP 9: QUOTE FORM -->
+  <!-- STEP 7: QUOTE FORM -->
   <div class="step-block" id="step9">
     <div class="step-head" onclick="toggleStep('step9')">
-      <div class="step-num">9</div>
+      <div class="step-num">7</div>
       <div class="step-head-title">Request Your Quote</div>
       <div class="step-head-val" id="s9val">—</div>
     </div>
@@ -415,8 +396,8 @@ function pickCellSize(el, code) {
 function onCellDimChange() {
   var w = document.getElementById('cell-width').value;
   var h = document.getElementById('cell-height').value;
-  document.getElementById('s4val').textContent = (w && h) ? w + '″ × ' + h + '″' : '—';
-  if (w && h) markDone('step4');
+  // Size + mount now share Step 1; the size shows in the dim box itself.
+  if (w && h) markDone('step1');
   document.getElementById('cell-size-info').style.display = 'none';
   cellCalcPrice();
 }

@@ -242,7 +242,6 @@ function goNext(fromId, toId) {
 function adjCellQty(delta) {
   CELL.qty = Math.min(20, Math.max(1, CELL.qty + delta));
   document.getElementById('cell-qty-display').textContent = CELL.qty;
-  document.getElementById('s8val').textContent = CELL.qty + (CELL.qty === 1 ? ' shade' : ' shades');
   document.getElementById('qr-cell-qty').textContent = CELL.qty + (CELL.qty === 1 ? ' shade' : ' shades');
   cellCalcPrice();
 }
