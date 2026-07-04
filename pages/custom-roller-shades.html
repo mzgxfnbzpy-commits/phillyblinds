@@ -233,16 +233,11 @@
 
     <!-- Mount type -->
     <div class="dim-label" style="margin-top:16px;margin-bottom:8px">Mount type</div>
-    <div class="opt-grid-2">
-      <div class="opt-card" id="mc-inside" onclick="crsPickMount('inside','Inside mount')">
-        <div class="opt-card-title">Inside mount</div>
-        <div class="opt-card-desc">Shade fits inside the window frame. Clean, built-in look. Min frame depth required.</div>
-      </div>
-      <div class="opt-card" id="mc-outside" onclick="crsPickMount('outside','Outside mount')">
-        <div class="opt-card-title">Outside mount</div>
-        <div class="opt-card-desc">Mounts on wall or ceiling above the frame. Covers more area, good for shallow frames.</div>
-      </div>
+    <div class="opt-row" id="crs-grp-mount">
+      <button class="opt-btn" id="mc-inside" onclick="crsPickMount('inside','Inside mount')">Inside mount</button>
+      <button class="opt-btn" id="mc-outside" onclick="crsPickMount('outside','Outside mount')">Outside mount</button>
     </div>
+    <div class="step-note">Inside mount fits inside the window frame — clean, built-in look, min frame depth required. Outside mount mounts on wall or ceiling above the frame — covers more area, good for shallow frames.</div>
     <div class="mount-note" id="mount-note-im">Inside mount: give us your exact frame width and height — we'll deduct 1/4" from width for a proper fit.</div>
     <div class="mount-note" id="mount-note-om">Outside mount: add 2–4" to each side of the opening for full coverage. Mount 2–4" above the frame to maximize the look.</div>
 
@@ -313,17 +308,11 @@
     <div class="step-val" id="sv-3"></div>
   </div>
   <div class="step-body">
-    <div class="opt-grid-2">
-      <div class="opt-card" id="hc-open" onclick="crsPickHeadrail('open','Open roll')">
-        <div class="opt-card-title">Open roll</div>
-        <div class="opt-card-desc">No valance — clean and minimal. Fabric tube is visible at the top.</div>
-      </div>
-      <div class="opt-card" id="hc-fascia" onclick="crsPickHeadrail('fascia','Metal fascia')">
-        <div class="opt-badge">Most popular</div>
-        <div class="opt-card-title">Metal fascia</div>
-        <div class="opt-card-desc">Slim metal valance covers the tube. Clean, finished look. Color matches hardware.</div>
-      </div>
+    <div class="opt-row" id="crs-grp-headrail">
+      <button class="opt-btn" id="hc-open" onclick="crsPickHeadrail('open','Open roll')">Open roll</button>
+      <button class="opt-btn" id="hc-fascia" onclick="crsPickHeadrail('fascia','Metal fascia')">Metal fascia</button>
     </div>
+    <div class="step-note">Open roll: no valance — clean and minimal, fabric tube visible at the top. Metal fascia (most popular): slim metal valance covers the tube for a clean, finished look; color matches hardware.</div>
     <!-- Hardware / fascia color (shown after headrail selected) -->
     <div id="hw-color-section" style="display:none;margin-top:14px;padding-top:12px;border-top:1px solid #f0ede8">
       <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:8px;text-transform:uppercase;letter-spacing:.3px" id="hw-color-label">Hardware color</div>
@@ -377,20 +366,12 @@
     <div class="step-val" id="sv-5"></div>
   </div>
   <div class="step-body">
-    <div class="opt-grid-3">
-      <div class="opt-card" id="motor-cord" onclick="crsPickMotor('cord','Manual chain')">
-        <div class="opt-card-title">Manual chain</div>
-        <div class="opt-card-desc">Continuous bead chain, left or right side. Standard and reliable.</div>
-      </div>
-      <div class="opt-card" id="motor-cordless" onclick="crsPickMotor('cordless','Cordless')">
-        <div class="opt-card-title">Cordless</div>
-        <div class="opt-card-desc">Push-up, no cords. Safe for children &amp; pets.</div>
-      </div>
-      <div class="opt-card" id="motor-motorized" onclick="crsPickMotor('motorized','Motorized')">
-        <div class="opt-card-title">Motorized</div>
-        <div class="opt-card-desc">Smart motor. App, remote, voice control. Multiple brands available.</div>
-      </div>
+    <div class="opt-row" id="crs-grp-motor">
+      <button class="opt-btn" id="motor-cord" onclick="crsPickMotor('cord','Manual chain')">Manual chain</button>
+      <button class="opt-btn" id="motor-cordless" onclick="crsPickMotor('cordless','Cordless')">Cordless</button>
+      <button class="opt-btn" id="motor-motorized" onclick="crsPickMotor('motorized','Motorized')">Motorized</button>
     </div>
+    <div class="step-note">Manual chain: continuous bead chain, left or right side — standard and reliable. Cordless: push-up, no cords — safe for children &amp; pets. Motorized: smart motor with app, remote, voice control — multiple brands available.</div>
 
     <!-- Cordless → Norman Soluna redirect -->
     <div id="cordless-redirect" style="display:none;margin-top:14px;padding:14px 16px;background:#FFF8EC;border:1px solid #e8c96b;border-radius:10px">
@@ -403,28 +384,14 @@
     <!-- Motorized sub-options -->
     <div id="motor-subopts" style="display:none;margin-top:14px;padding-top:12px;border-top:1px solid #f0ede8">
       <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.3px;margin-bottom:10px">Motor brand</div>
-      <div class="opt-grid-2">
-        <div class="opt-card" id="msub-norman" onclick="crsPickMotorSub('norman-motor','Norman Smart')">
-          <div class="opt-card-title">Norman</div>
-          <div class="opt-card-desc">Norman Smart motor. App, voice (Alexa / Google / HomeKit), rechargeable or hardwired.</div>
-        </div>
-        <div class="opt-card" id="msub-rollease" onclick="crsPickMotorSub('rollease-motor','Rollease Automate')">
-          <div class="opt-card-title">Rollease Automate</div>
-          <div class="opt-card-desc">Automate app &amp; remote. Rechargeable or hardwired. Offered through Norman.</div>
-        </div>
-        <div class="opt-card" id="msub-lutron" onclick="crsPickMotorSub('lutron','Lutron')">
-          <div class="opt-card-title">Lutron</div>
-          <div class="opt-card-desc">Caseta / RadioRA integration. Custom quote — fill the form and submit.</div>
-        </div>
-        <div class="opt-card" id="msub-somfy" onclick="crsPickMotorSub('somfy','Somfy')">
-          <div class="opt-card-title">Somfy</div>
-          <div class="opt-card-desc">TaHoma app &amp; remote. Wide smart home compatibility. Custom quote.</div>
-        </div>
-        <div class="opt-card" id="msub-other" onclick="crsPickMotorSub('other','Other / not sure')">
-          <div class="opt-card-title">Other / not sure</div>
-          <div class="opt-card-desc">Specify brand in notes or we'll discuss during consultation.</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn" id="msub-norman" onclick="crsPickMotorSub('norman-motor','Norman Smart')">Norman</button>
+        <button class="opt-btn" id="msub-rollease" onclick="crsPickMotorSub('rollease-motor','Rollease Automate')">Rollease Automate</button>
+        <button class="opt-btn" id="msub-lutron" onclick="crsPickMotorSub('lutron','Lutron')">Lutron</button>
+        <button class="opt-btn" id="msub-somfy" onclick="crsPickMotorSub('somfy','Somfy')">Somfy</button>
+        <button class="opt-btn" id="msub-other" onclick="crsPickMotorSub('other','Other / not sure')">Other / not sure</button>
       </div>
+      <div class="step-note">Norman Smart: app, voice (Alexa / Google / HomeKit), rechargeable or hardwired. Rollease Automate: app &amp; remote, rechargeable or hardwired, offered through Norman. Lutron: Caseta / RadioRA integration — custom quote. Somfy: TaHoma app &amp; remote, wide smart home compatibility — custom quote. Other / not sure: specify brand in notes or we'll discuss during consultation.</div>
       <!-- Norman / Rollease → redirect to Norman Soluna -->
       <div id="motor-soluna-redirect" style="display:none;margin-top:14px;padding:14px 16px;background:#FFF8EC;border:1px solid #e8c96b;border-radius:10px">
         <div style="font-size:13px;font-weight:700;color:#5a3a00;margin-bottom:6px">Continue on Norman Soluna</div>

@@ -151,18 +151,11 @@
     <div class="step-head-val" id="s1val">—</div>
   </div>
   <div class="step-body">
-    <div class="opt-grid-2">
-      <div class="opt-card" id="op-wand" onclick="pickOp('wand')">
-        <div class="opt-card-icon">🪄</div>
-        <div class="opt-card-title">Wand Tilt</div>
-        <div class="opt-card-desc">Manual wand. Left, right, or traveling center stack.</div>
-      </div>
-      <div class="opt-card" id="op-motor" onclick="pickOp('motor')">
-        <div class="opt-card-icon">⚡</div>
-        <div class="opt-card-title">Motorized</div>
-        <div class="opt-card-desc">Norman Smart motor. Center stack + center opening available.</div>
-      </div>
+    <div class="opt-row">
+      <button class="opt-btn" id="op-wand" onclick="pickOp('wand')">Wand Tilt</button>
+      <button class="opt-btn" id="op-motor" onclick="pickOp('motor')">Motorized</button>
     </div>
+    <div class="step-note">Wand Tilt: manual wand — left, right, or traveling center stack. Motorized: Norman Smart motor — center stack + center opening available.</div>
     <div id="motor-note" class="msg-info" style="display:none;margin-top:10px">Motorized SmartDrape: Norman Smart Rechargeable Battery or AC Adapter. Min width confirmed in Norman motorization binder. Pricing confirmed at quote.</div>
   </div>
 </div>
@@ -175,7 +168,7 @@
     <div class="step-head-val" id="s2val">—</div>
   </div>
   <div class="step-body">
-    <div class="opt-grid" id="stack-opts"><!-- filled by JS --></div>
+    <div id="stack-opts"><!-- filled by JS --></div>
     <div id="sbs-wrap" style="display:none;margin-top:12px;display:flex;align-items:center;gap:10px">
       <input type="checkbox" id="sbs-check" onchange="onSBSChange()" style="width:16px;height:16px;cursor:pointer">
       <label for="sbs-check" style="font-size:13px;color:#444;cursor:pointer">Side-by-side configuration (wand tilt only — two independently operated shades)</label>
@@ -193,18 +186,11 @@
   </div>
   <div class="step-body">
     <div class="msg-info" style="margin-top:4px;margin-bottom:10px">SmartDrape™ is <strong>Outside Mount only</strong> — no inside mount. No deductions are taken. Order your desired finished track width.</div>
-    <div class="opt-grid-2">
-      <div class="opt-card sel" id="mc-wall" onclick="pickMount(this,'wall')">
-        <div class="opt-card-icon">🔲</div>
-        <div class="opt-card-title">Wall Mount</div>
-        <div class="opt-card-desc">L bracket · Standard. Recommended for doors.</div>
-      </div>
-      <div class="opt-card" id="mc-ceiling" onclick="pickMount(this,'ceiling')">
-        <div class="opt-card-icon">⬆</div>
-        <div class="opt-card-title">Ceiling Mount</div>
-        <div class="opt-card-desc">Direct mount or C clip.</div>
-      </div>
+    <div class="opt-row">
+      <button class="opt-btn sel" id="mc-wall" onclick="pickMount(this,'wall')">Wall Mount</button>
+      <button class="opt-btn" id="mc-ceiling" onclick="pickMount(this,'ceiling')">Ceiling Mount</button>
     </div>
+    <div class="step-note">Wall Mount: L bracket · standard, recommended for doors. Ceiling Mount: direct mount or C clip.</div>
     <div style="margin-top:12px;display:flex;align-items:center;gap:10px">
       <input type="checkbox" id="door-check" onchange="onDoorChange()" style="width:16px;height:16px;cursor:pointer">
       <label for="door-check" style="font-size:13px;color:#444;cursor:pointer">Patio door / slider application</label>
@@ -264,18 +250,11 @@
     <div class="step-head-val" id="s5val">—</div>
   </div>
   <div class="step-body">
-    <div class="opt-grid-2">
-      <div class="opt-card" id="oc-lf" onclick="pickOpacity('lf')">
-        <div class="opt-card-icon">☀️</div>
-        <div class="opt-card-title">Light Filtering</div>
-        <div class="opt-card-desc">Diffuses light, maintains view. Standard pricing.</div>
-      </div>
-      <div class="opt-card" id="oc-rd" onclick="pickOpacity('rd')">
-        <div class="opt-card-icon">🌙</div>
-        <div class="opt-card-title">Blackout</div>
-        <div class="opt-card-desc">Significantly reduces light. Not blackout. +20% surcharge.</div>
-      </div>
+    <div class="opt-row">
+      <button class="opt-btn" id="oc-lf" onclick="pickOpacity('lf')">Light Filtering</button>
+      <button class="opt-btn" id="oc-rd" onclick="pickOpacity('rd')">Blackout</button>
     </div>
+    <div class="step-note">Light Filtering: diffuses light, maintains view — standard pricing. Blackout: significantly reduces light (not blackout) — +20% surcharge.</div>
     <div id="rd-warn" class="msg-warn" style="display:none;margin-top:8px">Blackout fabric reduces light significantly but is not a blackout product. Some light passes through edges and vane openings.</div>
   </div>
 </div>
@@ -301,13 +280,13 @@
   </div>
   <div class="step-body">
     <div class="msg-info" style="margin-top:4px;margin-bottom:10px">Default hardware color is coordinated to your selected fabric. You may override below. Wand, brackets, motor, and keystone all match headrail color.</div>
-    <div class="opt-grid" id="hw-color-grid" style="grid-template-columns:repeat(3,1fr)">
-      <div class="opt-card" onclick="pickHW(this,'White')"><div class="opt-card-title" style="font-size:12px">White</div></div>
-      <div class="opt-card" onclick="pickHW(this,'Cottage White')"><div class="opt-card-title" style="font-size:12px">Cottage White</div></div>
-      <div class="opt-card" onclick="pickHW(this,'Matte Silver')"><div class="opt-card-title" style="font-size:12px">Matte Silver</div></div>
-      <div class="opt-card" onclick="pickHW(this,'Black')"><div class="opt-card-title" style="font-size:12px">Black</div></div>
-      <div class="opt-card" onclick="pickHW(this,'Bronze')"><div class="opt-card-title" style="font-size:12px">Bronze</div></div>
-      <div class="opt-card" onclick="pickHW(this,'Brass')"><div class="opt-card-title" style="font-size:12px">Brass</div></div>
+    <div class="opt-row" id="hw-color-grid">
+      <button class="opt-btn" onclick="pickHW(this,'White')">White</button>
+      <button class="opt-btn" onclick="pickHW(this,'Cottage White')">Cottage White</button>
+      <button class="opt-btn" onclick="pickHW(this,'Matte Silver')">Matte Silver</button>
+      <button class="opt-btn" onclick="pickHW(this,'Black')">Black</button>
+      <button class="opt-btn" onclick="pickHW(this,'Bronze')">Bronze</button>
+      <button class="opt-btn" onclick="pickHW(this,'Brass')">Brass</button>
     </div>
     <div class="msg-info" style="margin-top:8px;font-size:11px">Charging Extension Wand (motorized accessory) defaults to selected fabric color. Override available in: Cloud Cream, Day Light, Silver, Black, Chocolate, Moonbeam.</div>
   </div>

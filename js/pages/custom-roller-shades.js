@@ -145,7 +145,7 @@ function crsPickColor(btn, color) {
 // ── STEP 1: MOUNT ────────────────────────────────────────────
 function crsPickMount(val, label) {
   CRS.mount = val;
-  document.querySelectorAll('#step-1 .opt-card').forEach(function(c) { c.classList.remove('sel'); });
+  document.querySelectorAll('#crs-grp-mount .opt-btn').forEach(function(c) { c.classList.remove('sel'); });
   var card = _crsEl('mc-' + val);
   if (card) card.classList.add('sel');
 
@@ -165,7 +165,7 @@ function crsPickMount(val, label) {
 function crsPickHeadrail(val, label) {
   CRS.headrail = val;
   CRS.hwColor = '';
-  document.querySelectorAll('#step-3 .opt-card:not(.disabled)').forEach(function(c) { c.classList.remove('sel'); });
+  document.querySelectorAll('#crs-grp-headrail .opt-btn:not(.disabled)').forEach(function(c) { c.classList.remove('sel'); });
   var card = _crsEl('hc-' + val);
   if (card && !card.classList.contains('disabled')) card.classList.add('sel');
   // Show hardware color picker; update label for fascia
@@ -254,7 +254,7 @@ function crsPickFabric(val, label) {
 function crsPickMotor(val, label) {
   CRS.motor = val;
   // Clear top-level cards only
-  document.querySelectorAll('.opt-grid-3 .opt-card').forEach(function(c) { c.classList.remove('sel'); });
+  document.querySelectorAll('#crs-grp-motor .opt-btn').forEach(function(c) { c.classList.remove('sel'); });
   var card = _crsEl('motor-' + val);
   if (card) card.classList.add('sel');
 
@@ -267,7 +267,7 @@ function crsPickMotor(val, label) {
   if (solunaRedir) solunaRedir.style.display = 'none';
 
   // Clear sub-option selections when switching away from motorized
-  document.querySelectorAll('#motor-subopts .opt-card').forEach(function(c) { c.classList.remove('sel'); });
+  document.querySelectorAll('#motor-subopts .opt-btn').forEach(function(c) { c.classList.remove('sel'); });
 
   if (val !== 'motorized') {
     crsDone('step-5', label);
@@ -282,7 +282,7 @@ function crsPickMotor(val, label) {
 
 function crsPickMotorSub(val, label) {
   CRS.motor = val;
-  document.querySelectorAll('#motor-subopts .opt-card').forEach(function(c) { c.classList.remove('sel'); });
+  document.querySelectorAll('#motor-subopts .opt-btn').forEach(function(c) { c.classList.remove('sel'); });
   var idMap = { 'norman-motor': 'msub-norman', 'rollease-motor': 'msub-rollease', lutron: 'msub-lutron', somfy: 'msub-somfy', other: 'msub-other' };
   var card = _crsEl(idMap[val]);
   if (card) card.classList.add('sel');

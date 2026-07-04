@@ -99,7 +99,7 @@ function sp(id,val){var e=document.getElementById(id);if(e){e.textContent=val||'
 // ═══════════════════════════════════════════════════════════
 function pickColl(el,coll){
   S.coll=coll; S.finish=null;
-  document.querySelectorAll('#step1 .opt-card').forEach(function(c){c.classList.remove('sel');});
+  document.querySelectorAll('#step1 .opt-btn').forEach(function(c){c.classList.remove('sel');});
   el.classList.add('sel');
   ['fin-dm','fin-wt','fin-wi'].forEach(function(id){document.getElementById(id).style.display='none';});
   document.getElementById('fin-'+coll).style.display='block';
@@ -124,7 +124,7 @@ function clearFinChips(id){document.querySelectorAll('#'+id+' .fin-chip').forEac
 // ═══════════════════════════════════════════════════════════
 function pickDraw(el,key,label){
   S.draw=key; S.isMotor=(key==='motor');
-  document.querySelectorAll('#step2 .opt-card').forEach(function(c){c.classList.remove('sel');});
+  document.querySelectorAll('#step2 .opt-btn').forEach(function(c){c.classList.remove('sel');});
   el.classList.add('sel');
   document.getElementById('motor-detail').style.display=S.isMotor?'block':'none';
   markDone('step2',label); sp('sp-draw',label);
@@ -143,7 +143,7 @@ function toggleAddon(el,key){
 // ═══════════════════════════════════════════════════════════
 function pickHeading(el,key,label){
   S.heading=key; S.fullness=null;
-  document.querySelectorAll('#step3 .opt-card').forEach(function(c){if(!c.closest('#ripplefold-opts'))c.classList.remove('sel');});
+  document.querySelectorAll('#step3 .opt-btn').forEach(function(c){if(!c.closest('#ripplefold-opts'))c.classList.remove('sel');});
   el.classList.add('sel');
   document.getElementById('ripplefold-opts').style.display=key==='ripplefold'?'block':'none';
   if(key==='ripplefold'){document.getElementById('s3val').textContent='Ripplefold™ — select fullness';}
@@ -152,7 +152,7 @@ function pickHeading(el,key,label){
 }
 function pickFullness(el,pct){
   S.fullness=pct;
-  document.querySelectorAll('#ripplefold-opts .opt-card').forEach(function(c){c.classList.remove('sel');});
+  document.querySelectorAll('#ripplefold-opts .opt-btn').forEach(function(c){c.classList.remove('sel');});
   el.classList.add('sel');
   var lbl='Ripplefold™ '+pct+'%';
   markDone('step3',lbl); sp('sp-heading','Ripplefold™'); sp('sp-fullness',pct+'% fullness');
@@ -164,7 +164,7 @@ function pickFullness(el,pct){
 // ═══════════════════════════════════════════════════════════
 function pickMount(el,key,label){
   S.mount=key;
-  document.querySelectorAll('#step4 .opt-card').forEach(function(c){c.classList.remove('sel');});
+  document.querySelectorAll('#step4 .opt-btn').forEach(function(c){c.classList.remove('sel');});
   el.classList.add('sel');
   document.getElementById('wall-bracket-opts').style.display=key==='wall'?'block':'none';
   document.getElementById('ceiling-mount-note').style.display=key==='ceiling'?'block':'none';
@@ -291,7 +291,7 @@ function buildStackback(len){
 // ═══════════════════════════════════════════════════════════
 function pickFinial(el,key,label){
   S.finial=key;
-  document.querySelectorAll('#step6 > .step-body > .opt-grid .opt-card').forEach(function(c){c.classList.remove('sel');});
+  document.querySelectorAll('#step6 > .step-body > .opt-row .opt-btn').forEach(function(c){c.classList.remove('sel');});
   el.classList.add('sel');
   document.getElementById('stratta-finishes').style.display=key==='stratta'?'block':'none';
   if(key==='none'){markDone('step6','No finial / endcap only');sp('sp-finial','Endcap only');updateSpec();openStep('step7');}
@@ -339,7 +339,7 @@ function calcWeight(){
 // ═══════════════════════════════════════════════════════════
 function pickDel(el,key){
   S.del=key;
-  document.querySelectorAll('#step8 .opt-card').forEach(function(c){c.classList.remove('sel');});
+  document.querySelectorAll('#step8 .opt-btn').forEach(function(c){c.classList.remove('sel');});
   el.classList.add('sel');
   markDone('step8',(parseInt(document.getElementById('qty').value)||1)+' rod(s) · '+(key==='ship'?'Ship':'Pickup'));
   updateSpec();

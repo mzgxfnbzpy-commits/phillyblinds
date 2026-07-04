@@ -126,20 +126,12 @@
     <div class="step-head-val" id="s1val">—</div>
   </div>
   <div class="step-body">
-    <div class="opt-grid" style="grid-template-columns:repeat(3,1fr)">
-      <div class="opt-card" onclick="pickColl(this,'dm')">
-        <div class="opt-card-title">Designer Metals</div>
-        <div class="opt-card-desc">8 hand-painted metal finishes</div>
-      </div>
-      <div class="opt-card" onclick="pickColl(this,'wt')">
-        <div class="opt-card-title">Wood Trends</div>
-        <div class="opt-card-desc">8 painted &amp; stained wood finishes</div>
-      </div>
-      <div class="opt-card" onclick="pickColl(this,'wi')">
-        <div class="opt-card-title">Wrought Iron</div>
-        <div class="opt-card-desc">6 hand-forged iron finishes</div>
-      </div>
+    <div class="opt-row">
+      <button class="opt-btn" onclick="pickColl(this,'dm')">Designer Metals</button>
+      <button class="opt-btn" onclick="pickColl(this,'wt')">Wood Trends</button>
+      <button class="opt-btn" onclick="pickColl(this,'wi')">Wrought Iron</button>
     </div>
+    <div class="step-note">Designer Metals: 8 hand-painted metal finishes. Wood Trends: 8 painted &amp; stained wood finishes. Wrought Iron: 6 hand-forged iron finishes.</div>
     <!-- Designer Metals finishes -->
     <div id="fin-dm" style="display:none">
       <div class="coll-label">Designer Metals — 8 finishes</div>
@@ -166,28 +158,14 @@
     <div class="step-head-val" id="s2val">—</div>
   </div>
   <div class="step-body">
-    <div class="opt-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
-      <div class="opt-card" onclick="pickDraw(this,'hand','Hand Draw')">
-        <div class="opt-card-title">Hand Draw</div>
-        <div class="opt-card-desc">Pull drapery by hand to open &amp; close</div>
-      </div>
-      <div class="opt-card" onclick="pickDraw(this,'cord','Cord Draw')">
-        <div class="opt-card-title">Cord Draw</div>
-        <div class="opt-card-desc">Pull-cord operates both panels</div>
-      </div>
-      <div class="opt-card" onclick="pickDraw(this,'baton','Baton Draw')">
-        <div class="opt-card-title">Baton Draw</div>
-        <div class="opt-card-desc">Smooth wand baton control</div>
-      </div>
-      <div class="opt-card" onclick="pickDraw(this,'duplex','Duplex Baton')">
-        <div class="opt-card-title">Duplex Baton</div>
-        <div class="opt-card-desc">Split draw — pulling one baton moves both panels simultaneously</div>
-      </div>
-      <div class="opt-card" onclick="pickDraw(this,'motor','AMP™ Motorized')">
-        <div class="opt-card-title">AMP™ Motorized</div>
-        <div class="opt-card-desc">Quiet RF motor · app + remote + tug feature</div>
-      </div>
+    <div class="opt-row">
+      <button class="opt-btn" onclick="pickDraw(this,'hand','Hand Draw')">Hand Draw</button>
+      <button class="opt-btn" onclick="pickDraw(this,'cord','Cord Draw')">Cord Draw</button>
+      <button class="opt-btn" onclick="pickDraw(this,'baton','Baton Draw')">Baton Draw</button>
+      <button class="opt-btn" onclick="pickDraw(this,'duplex','Duplex Baton')">Duplex Baton</button>
+      <button class="opt-btn" onclick="pickDraw(this,'motor','AMP™ Motorized')">AMP™ Motorized</button>
     </div>
+    <div class="step-note">Hand Draw: pull drapery by hand to open &amp; close. Cord Draw: pull-cord operates both panels. Baton Draw: smooth wand baton control. Duplex Baton: split draw — pulling one baton moves both panels simultaneously. AMP™ Motorized: quiet RF motor · app + remote + tug feature.</div>
     <div id="motor-detail" style="display:none;margin-top:14px">
       <div class="msg-info">AMP™ Motorization available. Charger (#62201300) is included. Remotes and gateway sold separately. Motor mounts to the back of the track — no change needed to drapery fabrication. Pricing confirmed at quote.</div>
       <div class="sub-label" style="margin-top:12px">AMP™ accessories (optional)</div>
@@ -236,25 +214,21 @@
     <div class="step-head-val" id="s3val">—</div>
   </div>
   <div class="step-body">
-    <div class="opt-grid" style="grid-template-columns:1fr 1fr">
-      <div class="opt-card" onclick="pickHeading(this,'pleated','Pleated')">
-        <div class="opt-card-title">Pleated</div>
-        <div class="opt-card-desc">Classic pinch pleat · slip-in or pin-on hooks · 4 carriers/ft standard · heading above or below track</div>
-      </div>
-      <div class="opt-card" onclick="pickHeading(this,'ripplefold','Ripplefold™')">
-        <div class="opt-card-title">Ripplefold™</div>
-        <div class="opt-card-desc">No hooks or pins · snaps onto wheeled carriers · less stack-back · identical interior &amp; exterior appearance</div>
-      </div>
+    <div class="opt-row">
+      <button class="opt-btn" onclick="pickHeading(this,'pleated','Pleated')">Pleated</button>
+      <button class="opt-btn" onclick="pickHeading(this,'ripplefold','Ripplefold™')">Ripplefold™</button>
     </div>
+    <div class="step-note">Pleated: classic pinch pleat · slip-in or pin-on hooks · 4 carriers/ft standard · heading above or below track. Ripplefold™: no hooks or pins · snaps onto wheeled carriers · less stack-back · identical interior &amp; exterior appearance.</div>
     <!-- Ripplefold fullness options -->
     <div id="ripplefold-opts" style="display:none;margin-top:14px">
       <div class="sub-label" style="margin-top:0">Ripplefold™ fullness</div>
-      <div class="opt-grid" style="grid-template-columns:repeat(4,1fr)">
-        <div class="opt-card" onclick="pickFullness(this,'120')"><div class="opt-card-title">120%</div><div class="opt-card-desc">Most fabric · fullest look</div></div>
-        <div class="opt-card" onclick="pickFullness(this,'100')"><div class="opt-card-title">100%</div><div class="opt-card-desc">Standard fullness</div></div>
-        <div class="opt-card" onclick="pickFullness(this,'80')"><div class="opt-card-title">80%</div><div class="opt-card-desc">Lighter look</div></div>
-        <div class="opt-card" onclick="pickFullness(this,'60')"><div class="opt-card-title">60%</div><div class="opt-card-desc">Minimal fullness</div></div>
+      <div class="opt-row">
+        <button class="opt-btn" onclick="pickFullness(this,'120')">120%</button>
+        <button class="opt-btn" onclick="pickFullness(this,'100')">100%</button>
+        <button class="opt-btn" onclick="pickFullness(this,'80')">80%</button>
+        <button class="opt-btn" onclick="pickFullness(this,'60')">60%</button>
       </div>
+      <div class="step-note">120%: most fabric · fullest look. 100%: standard fullness. 80%: lighter look. 60%: minimal fullness.</div>
       <div class="msg-info" style="margin-top:8px">Carrier item numbers: 120% = 82120 · 100% = 82100 · 80% = 82080 · 60% = 82060 (all White/Black). Two Sides Snap Pendant #82001 included for each carrier.</div>
     </div>
     <div class="msg-info" style="margin-top:10px;font-size:11px">Both heading styles work with hand, cord, baton, duplex, and AMP™ motorized draw. Ripplefold™ carriers are wheeled (82xxx series). Pleated uses ball bearing carriers (86700) or buttmaster carriers (84110–84214).</div>
@@ -269,24 +243,13 @@
     <div class="step-head-val" id="s4val">—</div>
   </div>
   <div class="step-body">
-    <div class="opt-grid" style="grid-template-columns:repeat(auto-fill,minmax(160px,1fr))">
-      <div class="opt-card" onclick="pickMount(this,'wall','Wall Mount')">
-        <div class="opt-card-title">Wall Mount</div>
-        <div class="opt-card-desc">Standard L bracket · all components included with rod. 2¾″ wall to pole center.</div>
-      </div>
-      <div class="opt-card" onclick="pickMount(this,'ceiling','Ceiling Mount')">
-        <div class="opt-card-title">Ceiling Mount</div>
-        <div class="opt-card-desc">94130xxx brackets included · order 1796061 separately. 4¼″ from ceiling to track bottom.</div>
-      </div>
-      <div class="opt-card" onclick="pickMount(this,'dbl-wall','Double Wall Mount')">
-        <div class="opt-card-title">Double Wall Mount</div>
-        <div class="opt-card-desc">Two rods — 2″ front, separate back rod. 8¼″ or 4¼″ return. 5¼″ or 9¼″ projection.</div>
-      </div>
-      <div class="opt-card" onclick="pickMount(this,'dbl-combo','2″ + 1⅜″ Double')">
-        <div class="opt-card-title">2″ + 1⅜″ Double</div>
-        <div class="opt-card-desc">2″ front Estate + 1⅜″ back Estate on double bracket #71134110.</div>
-      </div>
+    <div class="opt-row">
+      <button class="opt-btn" onclick="pickMount(this,'wall','Wall Mount')">Wall Mount</button>
+      <button class="opt-btn" onclick="pickMount(this,'ceiling','Ceiling Mount')">Ceiling Mount</button>
+      <button class="opt-btn" onclick="pickMount(this,'dbl-wall','Double Wall Mount')">Double Wall Mount</button>
+      <button class="opt-btn" onclick="pickMount(this,'dbl-combo','2″ + 1⅜″ Double')">2″ + 1⅜″ Double</button>
     </div>
+    <div class="step-note">Wall Mount: standard L bracket · all components included with rod. 2¾″ wall to pole center. Ceiling Mount: 94130xxx brackets included · order 1796061 separately. 4¼″ from ceiling to track bottom. Double Wall Mount: two rods — 2″ front, separate back rod. 8¼″ or 4¼″ return. 5¼″ or 9¼″ projection. 2″ + 1⅜″ Double: 2″ front Estate + 1⅜″ back Estate on double bracket #71134110.</div>
     <!-- Wall mount bracket options -->
     <div id="wall-bracket-opts" style="display:none;margin-top:14px">
       <div class="sub-label" style="margin-top:0">Wall bracket finish</div>
@@ -328,9 +291,9 @@
       </div>
       <div>
         <div class="dim-label">Draw direction</div>
-        <div class="opt-grid" style="grid-template-columns:1fr;margin-top:4px;gap:6px">
-          <div class="opt-card sel" id="draw-oneway" onclick="pickDrawDir(this,'oneway','One-Way')"><div class="opt-card-title" style="font-size:12px">One-Way</div></div>
-          <div class="opt-card" id="draw-twoway" onclick="pickDrawDir(this,'twoway','Two-Way (Split)')"><div class="opt-card-title" style="font-size:12px">Two-Way (Split)</div></div>
+        <div class="opt-row" style="margin-top:4px">
+          <button class="opt-btn sel" id="draw-oneway" onclick="pickDrawDir(this,'oneway','One-Way')">One-Way</button>
+          <button class="opt-btn" id="draw-twoway" onclick="pickDrawDir(this,'twoway','Two-Way (Split)')">Two-Way (Split)</button>
         </div>
       </div>
     </div>
@@ -360,16 +323,11 @@
     <div class="step-head-val" id="s6val">—</div>
   </div>
   <div class="step-body">
-    <div class="opt-grid" style="grid-template-columns:1fr 1fr">
-      <div class="opt-card" onclick="pickFinial(this,'stratta','Stratta')">
-        <div class="opt-card-title">Stratta</div>
-        <div class="opt-card-desc">Only 2″ finial available · 3⅛″D × 3⅝″H × 3⅝″W · $45.72/pair · 8 finishes</div>
-      </div>
-      <div class="opt-card" onclick="pickFinial(this,'none','No finial')">
-        <div class="opt-card-title">No finial</div>
-        <div class="opt-card-desc">Endcap only · included with assembled set</div>
-      </div>
+    <div class="opt-row">
+      <button class="opt-btn" onclick="pickFinial(this,'stratta','Stratta')">Stratta</button>
+      <button class="opt-btn" onclick="pickFinial(this,'none','No finial')">No finial</button>
     </div>
+    <div class="step-note">Stratta: only 2″ finial available · 3⅛″D × 3⅝″H × 3⅝″W · $45.72/pair · 8 finishes. No finial: endcap only · included with assembled set.</div>
     <div id="stratta-finishes" style="display:none;margin-top:12px">
       <div class="sub-label" style="margin-top:0">Stratta finish</div>
       <div class="finish-grid" id="stratta-fin-grid"></div>
@@ -460,9 +418,10 @@
         <input type="text" id="room-label" placeholder="e.g. Living room">
       </div>
     </div>
-    <div class="opt-grid" style="grid-template-columns:1fr 1fr;margin-top:8px">
-      <div class="opt-card sel" id="del-ship" onclick="pickDel(this,'ship')"><div class="opt-card-title" style="font-size:12px">📦 Ship to me</div><div class="opt-card-desc">UPS/FedEx</div></div>
+    <div class="opt-row" style="margin-top:8px">
+      <button class="opt-btn sel" id="del-ship" onclick="pickDel(this,'ship')">📦 Ship to me</button>
     </div>
+    <div class="step-note">Ship to me · UPS/FedEx.</div>
   </div>
 </div>
 

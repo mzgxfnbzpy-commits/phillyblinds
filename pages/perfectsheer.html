@@ -137,20 +137,12 @@
 
       <!-- Mount type -->
       <div class="sub-label">Mount type</div>
-      <div class="opt-grid-3">
-        <div class="opt-card" onclick="pickMount(this,'Inside mount')">
-          <div class="opt-card-title">Inside Mount</div>
-          <div class="opt-card-desc">Fits inside window frame &middot; clean flush look &middot; mfr deducts 3/8″ automatically</div>
-        </div>
-        <div class="opt-card" onclick="pickMount(this,'Outside mount')">
-          <div class="opt-card-title">Outside Mount</div>
-          <div class="opt-card-desc">Mounts above or outside frame &middot; better light control &middot; covers more wall</div>
-        </div>
-        <div class="opt-card" onclick="pickMount(this,'Semi-inside mount')">
-          <div class="opt-card-title">Semi-Inside</div>
-          <div class="opt-card-desc">Partially recessed &middot; useful with shallow window frames</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn" onclick="pickMount(this,'Inside mount')">Inside Mount</button>
+        <button class="opt-btn" onclick="pickMount(this,'Outside mount')">Outside Mount</button>
+        <button class="opt-btn" onclick="pickMount(this,'Semi-inside mount')">Semi-Inside</button>
       </div>
+      <div class="step-note">Inside: fits inside frame &middot; clean flush look &middot; mfr deducts 3/8″ automatically. Outside: mounts above/outside frame &middot; better light control &middot; covers more wall. Semi-Inside: partially recessed &middot; for shallow window frames.</div>
 
       <!-- Quantity -->
       <div class="sub-label">Quantity</div>
@@ -172,17 +164,11 @@
       <div class="step-head-val" id="s3val">Light Filtering</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-2">
-        <div class="opt-card sel" onclick="pickFabric(this,'lf')">
-          <div class="opt-card-title">Light Filtering</div>
-          <div class="opt-card-desc">22 colors &middot; sheer vanes diffuse daylight &middot; view-through when open</div>
-        </div>
-        <div class="opt-card" onclick="pickFabric(this,'rd')">
-          <div class="opt-card-title">Room Darkening <span style="font-size:10px;opacity:.65">+20%</span></div>
-          <div class="opt-card-desc">10 colors &middot; more privacy when closed &middot; not a true blackout</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn sel" onclick="pickFabric(this,'lf')">Light Filtering</button>
+        <button class="opt-btn" onclick="pickFabric(this,'rd')">Room Darkening <span style="font-size:10px;opacity:.65">+20%</span></button>
       </div>
-      <div class="step-note">Room Darkening adds a liner to reduce light — best for bedrooms. Not a full blackout shade.</div>
+      <div class="step-note">Light Filtering: 22 colors &middot; sheer vanes diffuse daylight &middot; view-through when open. Room Darkening: 10 colors &middot; more privacy when closed &middot; adds a liner to reduce light, best for bedrooms &middot; not a true blackout.</div>
     </div>
   </div>
 
@@ -244,29 +230,19 @@
       <div class="step-head-val" id="s5val">Cord Loop</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-2">
-        <div class="opt-card sel" onclick="pickLift(this,'ccl')">
-          <div class="opt-card-title">Continuous Cord Loop</div>
-          <div class="opt-card-desc">Max 98″W × 98″H &middot; smooth pull-chain &middot; most popular</div>
-        </div>
-        <div class="opt-card" onclick="pickLift(this,'motor')">
-          <div class="opt-card-title">Norman Motorization</div>
-          <div class="opt-card-desc">Up to 110″W × 120″H &middot; app, remote &amp; voice control &middot; rechargeable or plug-in</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn sel" onclick="pickLift(this,'ccl')">Continuous Cord Loop</button>
+        <button class="opt-btn" onclick="pickLift(this,'motor')">Norman Motorization</button>
       </div>
+      <div class="step-note">Continuous Cord Loop: max 98″W × 98″H &middot; smooth pull-chain &middot; most popular. Norman Motorization: up to 110″W × 120″H &middot; app, remote &amp; voice control &middot; rechargeable or plug-in.</div>
       <div id="ps-motor-note" class="msg-box msg-info" style="display:none;margin-top:8px">Norman Smart Motorization — rechargeable battery or AC plug-in. Surcharge (+$482) added to your final quote.</div>
       <div id="ps-chain-len-wrap" style="margin-top:14px">
         <div class="sub-label">Chain length</div>
-        <div class="opt-grid-2">
-          <div class="opt-card sel" onclick="pickCLen(this,'default')">
-            <div class="opt-card-title">Default</div>
-            <div class="opt-card-desc">75% of shade height — comfortable reach</div>
-          </div>
-          <div class="opt-card" onclick="pickCLen(this,'custom')">
-            <div class="opt-card-title">Custom</div>
-            <div class="opt-card-desc">Specify length below (min 75% of height)</div>
-          </div>
+        <div class="opt-row">
+          <button class="opt-btn sel" onclick="pickCLen(this,'default')">Default</button>
+          <button class="opt-btn" onclick="pickCLen(this,'custom')">Custom</button>
         </div>
+        <div class="step-note">Default: 75% of shade height — comfortable reach. Custom: specify length below (min 75% of height).</div>
         <div id="ps-clen-custom" style="display:none;align-items:center;gap:8px;margin-top:8px">
           <input type="number" id="ps-clen-in" placeholder="e.g. 54" min="9" style="width:100px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px">
           <span style="font-size:12px;color:#666">inches</span>
@@ -283,24 +259,13 @@
       <div class="step-head-val" id="s6val">Curved fascia</div>
     </div>
     <div class="step-body">
-      <div class="val-grid" id="grp-ps-valance">
-        <div class="opt-card sel" onclick="pickValance(this,'Curved fascia (free)')">
-          <div class="opt-card-title">Curved Fascia — Free</div>
-          <div class="opt-card-desc">Fabric-covered headrail cover matching your shade fabric &middot; included at no charge</div>
-        </div>
-        <div class="opt-card" id="ps-val-fab35" onclick="pickValance(this,'Fabric valance 3½″')">
-          <div class="opt-card-title">Fabric Valance 3½″</div>
-          <div class="opt-card-desc">Flat front valance panel &middot; available for heights ≤72″ only</div>
-        </div>
-        <div class="opt-card" onclick="pickValance(this,'Fabric valance 4½″')">
-          <div class="opt-card-title">Fabric Valance 4½″</div>
-          <div class="opt-card-desc">Flat front panel, taller fascia &middot; available for all heights</div>
-        </div>
-        <div class="opt-card" onclick="pickValance(this,'Wood valance 4½″')">
-          <div class="opt-card-title">Wood Valance 4½″</div>
-          <div class="opt-card-desc">Painted or stained hardwood &middot; 6 paint &amp; 6 stain colors</div>
-        </div>
+      <div class="opt-row" id="grp-ps-valance">
+        <button class="opt-btn sel" onclick="pickValance(this,'Curved fascia (free)')">Curved Fascia — Free</button>
+        <button class="opt-btn" id="ps-val-fab35" onclick="pickValance(this,'Fabric valance 3½″')">Fabric Valance 3½″</button>
+        <button class="opt-btn" onclick="pickValance(this,'Fabric valance 4½″')">Fabric Valance 4½″</button>
+        <button class="opt-btn" onclick="pickValance(this,'Wood valance 4½″')">Wood Valance 4½″</button>
       </div>
+      <div class="step-note">Curved Fascia (free): fabric-covered headrail cover matching your shade fabric. Fabric Valance 3½″: flat front panel, heights ≤72″ only. Fabric Valance 4½″: taller fascia, all heights. Wood Valance 4½″: painted or stained hardwood &middot; 6 paint &amp; 6 stain colors.</div>
       <div id="ps-val-size-warn" class="msg-box msg-warn" style="display:none;margin-top:8px">Height over 72″ — 3½″ valance not available. Only 4½″ options can be ordered.</div>
       <div id="ps-wood-val-wrap" style="display:none;margin-top:10px">
         <div class="sub-label">Wood valance color (paint or stain)</div>
@@ -452,7 +417,7 @@ function updateStep1Val() {
   document.getElementById('s1val').textContent = parts.length ? parts.join(' · ') : '—';
 }
 function pickMount(el, label) {
-  document.querySelectorAll('#step1 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#step1 .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
   PS.mount = label;
   document.getElementById('qr-mount').textContent = label;
@@ -468,7 +433,7 @@ function onDimChange() {
   psCalc();
 }
 function pickFabric(el, type) {
-  document.querySelectorAll('#step2 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#step2 .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
   PS.fabric = type;
   document.getElementById('s3val').textContent = type === 'rd' ? 'Room Darkening' : 'Light Filtering';
@@ -485,7 +450,7 @@ function onColorChange() {
   psCalc();
 }
 function pickLift(el, type) {
-  document.querySelectorAll('#step4 .opt-grid-2 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#step4 .opt-row .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
   PS.lift = type;
   document.getElementById('s5val').textContent = type === 'motor' ? 'Motorization' : 'Cord Loop';
@@ -496,12 +461,12 @@ function pickLift(el, type) {
   psCalc();
 }
 function pickCLen(el, type) {
-  document.querySelectorAll('#ps-chain-len-wrap .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#ps-chain-len-wrap .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
   document.getElementById('ps-clen-custom').style.display = type === 'custom' ? 'flex' : 'none';
 }
 function pickValance(el, label) {
-  document.querySelectorAll('#step5 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#step5 .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
   PS.valance = label;
   var short = label.replace(' (free)', '');

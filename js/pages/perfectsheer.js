@@ -142,8 +142,8 @@ function psCalc() {
       val35Btn.disabled = true; val35Btn.style.opacity = '0.4';
       if (PS.valance === 'Fabric valance 3½″') {
         PS.valance = 'Fabric valance 4½″';
-        document.querySelectorAll('#grp-ps-valance .opt-card').forEach(function(c){ c.classList.remove('sel'); });
-        var v45 = Array.from(document.querySelectorAll('#grp-ps-valance .opt-card')).find(function(c){ return c.textContent.indexOf('4½') >= 0 && c.textContent.indexOf('Fabric') >= 0; });
+        document.querySelectorAll('#grp-ps-valance .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
+        var v45 = Array.from(document.querySelectorAll('#grp-ps-valance .opt-btn')).find(function(c){ return c.textContent.indexOf('4½') >= 0 && c.textContent.indexOf('Fabric') >= 0; });
         if (v45) v45.classList.add('sel');
         document.getElementById('s6val').textContent = 'Fabric valance 4½″';
         document.getElementById('qr-valance').textContent = 'Fabric valance 4½″';

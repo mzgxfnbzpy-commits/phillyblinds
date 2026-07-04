@@ -189,10 +189,11 @@ function buildStack(){
     {val:'center',label:'Center Stack',    desc:'Vanes stack toward center (added Jan 2026)'},
     {val:'copen', label:'Center Opening',  desc:'Motorized only — two panels part from center outward'}
   ];
-  document.getElementById('stack-opts').innerHTML=opts.map(function(o){
-    return '<div class="opt-card'+(S.stack===o.val?' sel':'')+'" id="stk-'+o.val+'" onclick="pickStack(\''+o.val+'\')">'
-      +'<div class="opt-card-title">'+o.label+'</div><div class="opt-card-desc">'+o.desc+'</div></div>';
+  var stackBtns=opts.map(function(o){
+    return '<button class="opt-btn'+(S.stack===o.val?' sel':'')+'" id="stk-'+o.val+'" onclick="pickStack(\''+o.val+'\')">'+o.label+'</button>';
   }).join('');
+  var stackNote=opts.map(function(o){return o.label+': '+o.desc+'.';}).join(' ');
+  document.getElementById('stack-opts').innerHTML='<div class="opt-row">'+stackBtns+'</div><div class="step-note">'+stackNote+'</div>';
   // SBS toggle: wand only
   var sbsWrap=document.getElementById('sbs-wrap');
   if(sbsWrap) sbsWrap.style.display=S.op==='wand'?'flex':'none';
@@ -201,7 +202,7 @@ function buildStack(){
 
 function pickStack(v){
   S.stack=v;
-  document.querySelectorAll('#stack-opts .opt-card').forEach(function(c){c.classList.remove('sel');});
+  document.querySelectorAll('#stack-opts .opt-btn').forEach(function(c){c.classList.remove('sel');});
   var el=document.getElementById('stk-'+v);
   if(el) el.classList.add('sel');
   var labels={'left':'Left Stack','right':'Right Stack','center':'Traveling Center Stack','copen':'Center Opening'};
@@ -345,7 +346,7 @@ function pickFabric(code,name,coll,hw,hex){
 // ═══════════════════════════════════════════════════════════
 function pickHW(el,color){
   S.hw=color;
-  document.querySelectorAll('#hw-color-grid .opt-card').forEach(function(c){c.classList.remove('sel');});
+  document.querySelectorAll('#hw-color-grid .opt-btn').forEach(function(c){c.classList.remove('sel');});
   el.classList.add('sel');
   markDone('step7',color); sp('sp-hw',color);
 }
