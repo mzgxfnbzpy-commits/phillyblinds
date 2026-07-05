@@ -438,16 +438,26 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <!-- Length limits info -->
     <div id="length-info" class="info-banner" style="display:none"></div>
 
-    <div class="inp-row">
-      <div class="inp-group">
-        <label class="inp-label">Width / Track Length (inches)</label>
-        <input class="inp-field" type="number" id="width-in" placeholder="e.g. 96" min="1" max="480">
-        <span class="inp-hint" id="width-hint">Enter the finished rod or track length in inches. Poles are cut to length; fascia is ¼" longer at each end.</span>
+    <!-- Rod width (drapery hardware = width / rod length only) -->
+    <div class="dim-box">
+      <div class="dim-box-label">Enter your rod width</div>
+      <div class="form-group">
+        <label>Width / Track Length</label>
+        <input type="number" id="width-in" min="1" max="480" step="0.125" placeholder="96" oninput="updatePriceEstimate()">
+        <div class="dim-unit" id="width-hint">inches &middot; finished rod / track length</div>
       </div>
-      <div class="inp-group">
-        <label class="inp-label">Quantity</label>
-        <input class="inp-field" type="number" id="qty-in" value="1" min="1" max="50">
+    </div>
+    <div class="step-note" style="margin-bottom:14px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Drapery hardware is measured by rod width (length) only.</div>
+
+    <!-- Quantity (shared stepper) -->
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px">
+      <span style="font-size:12px;color:#666">Qty:</span>
+      <div class="qty-btns">
+        <button class="qty-btn" onclick="adjQty(-1)">&#8722;</button>
+        <input class="qty-num" type="number" id="qty-in" value="1" min="1" max="50" oninput="updatePriceEstimate()">
+        <button class="qty-btn" onclick="adjQty(1)">&#43;</button>
       </div>
+      <span style="font-size:12px;color:#666">rod(s) of this size &amp; finish</span>
     </div>
 
     <!-- Traverse-only options -->

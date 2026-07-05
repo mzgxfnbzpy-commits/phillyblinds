@@ -467,6 +467,14 @@ function buildSummary(){
     rows.map(r=>`<div class="summary-row"><span>${r[0]}</span><strong>${r[1]}</strong></div>`).join('');
 }
 
+/* ── QUANTITY STEPPER (canonical Step 1 qty, reuses id m-qty) ── */
+function adjQty(d){
+  var el=$('m-qty'); if(!el) return;
+  var v=(parseInt(el.value,10)||1)+d;
+  if(v<1) v=1; if(v>50) v=50;
+  el.value=v;
+}
+
 /* ── DELIVERY ── */
 function pickDel(opt){
   S.delivery=opt;

@@ -4,6 +4,24 @@
 function dim_label(){}
 document.querySelectorAll('.dim-label').forEach(function(){});
 
+/* ── quantity stepper (shared, reuses #q-qty) ── */
+function adjQty(d) {
+  var el = document.getElementById('q-qty');
+  if (!el) return;
+  var v = (parseInt(el.value) || 1) + d;
+  if (v < 1) v = 1;
+  if (v > 50) v = 50;
+  el.value = v;
+}
+function updateQty() {
+  var el = document.getElementById('q-qty');
+  if (!el) return;
+  var v = parseInt(el.value) || 1;
+  if (v < 1) v = 1;
+  if (v > 50) v = 50;
+  el.value = v;
+}
+
 /* ── opt pill selector ── */
 function selPill(el, grp) {
   document.querySelectorAll('#' + grp + ' .opt-pill').forEach(function(b){ b.classList.remove('sel'); });

@@ -388,6 +388,16 @@ document.addEventListener('input', e => {
   if(e.target.id==='width-in'||e.target.id==='qty-in') updatePriceEstimate();
 });
 
+/* ─── QTY STEPPER (shared .qty-btns) ─── */
+function adjQty(d){
+  const q=document.getElementById('qty-in');
+  if(!q) return;
+  let v=(parseInt(q.value,10)||1)+d;
+  if(v<1)v=1; if(v>50)v=50;
+  q.value=v;
+  updatePriceEstimate();
+}
+
 /* ─── STEP 7 ─── */
 function prep7() {
   const isTrav = S.type!=='static';

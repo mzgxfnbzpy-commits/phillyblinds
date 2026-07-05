@@ -398,7 +398,7 @@ function updateStep7() {
     ['Bracket Type', S.dmBracketType ? S.dmBracketType : null],
     ['Ring Type', S.dmRingType ? S.dmRingType : null],
     ['Pole Style', S.poleStyle || '—'],
-    ['Track Width', (document.getElementById('trav-width') || {value:''}).value ? document.getElementById('trav-width').value + '"' : (document.getElementById('rod-width') || {value:''}).value ? document.getElementById('rod-width').value + '"' : '—'],
+    ['Track Width', (document.getElementById('trav-width') || {value:''}).value ? document.getElementById('trav-width').value + '"' : (document.getElementById('rod-width') || {value:''}).value ? document.getElementById('rod-width').value + '"' : (document.getElementById('basic-width') || {value:''}).value ? document.getElementById('basic-width').value + '"' : '—'],
     ['Draw', S.draw || '—'],
     ['Header Style', S.header ? (S.header + (S.fullness ? ' ' + S.fullness : '')) : '—'],
     ['Mounting', S.mount || '—'],
@@ -431,7 +431,9 @@ function addKirschToCart(){
 
   const travW=(document.getElementById('trav-width')||{value:''}).value;
   const rodW=(document.getElementById('rod-width')||{value:''}).value;
-  const rodQty=document.getElementById('rod-qty')?.value||document.getElementById('trav-qty')?.value||'1';
+  const basicW=(document.getElementById('basic-width')||{value:''}).value;
+  const width=travW||rodW||basicW;
+  const rodQty=document.getElementById('rod-qty')?.value||document.getElementById('trav-qty')?.value||document.getElementById('basic-qty')?.value||'1';
 
   const lines=[
     {label:'Product',value:'Kirsch Drapery Hardware'},
@@ -441,7 +443,7 @@ function addKirschToCart(){
     {label:'Finish',value:S.finish||'—'},
     {label:'Finial',value:S.finial||'N/A'},
     {label:'Pole Diameter',value:S.poleDia||S.dmEstateDia||'—'},
-    {label:'Width',value:(travW||rodW||'—')+(travW||rodW?'"':'')},
+    {label:'Width',value:(width||'—')+(width?'"':'')},
     {label:'Quantity',value:String(rodQty)},
     {label:'Draw',value:S.draw||'N/A'},
     {label:'Mount',value:S.mount||'—'},
@@ -463,6 +465,7 @@ function submitQuote() {
 
   const travW = (document.getElementById('trav-width') || {value:''}).value;
   const rodW = (document.getElementById('rod-width') || {value:''}).value;
+  const basicW = (document.getElementById('basic-width') || {value:''}).value;
   const notes = document.getElementById('cf-notes').value;
   const addr = document.getElementById('cf-address').value;
 
@@ -488,8 +491,8 @@ function submitQuote() {
     ...(S.dmBracketType ? ['Bracket Type: ' + S.dmBracketType] : []),
     ...(S.dmRingType ? ['Ring Type: ' + S.dmRingType] : []),
     'Pole Style: ' + (S.poleStyle || 'N/A'),
-    'Width: ' + (travW || rodW || 'See notes'),
-    'Quantity: ' + (document.getElementById('rod-qty')?.value || document.getElementById('trav-qty')?.value || '1'),
+    'Width: ' + (travW || rodW || basicW || 'See notes'),
+    'Quantity: ' + (document.getElementById('rod-qty')?.value || document.getElementById('trav-qty')?.value || document.getElementById('basic-qty')?.value || '1'),
     'Draw Type: ' + (S.draw || 'N/A'),
     'Header Style: ' + (S.header || 'N/A') + (S.fullness ? ' ' + S.fullness : ''),
     'Mounting: ' + (S.mount || 'N/A'),
@@ -646,6 +649,18 @@ function updateDMSubSections(dia) {
 // ── HELPERS ──
 function show(id) { const el = document.getElementById(id); if (el) el.style.display = ''; }
 function hide(id) { const el = document.getElementById(id); if (el) el.style.display = 'none'; }
+
+// Shared quantity stepper (dim-box qty-btns) — clamps to input min/max.
+function kAdjQty(id, delta) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const min = parseInt(el.min) || 1;
+  const max = parseInt(el.max) || 50;
+  let v = (parseInt(el.value) || min) + delta;
+  if (v < min) v = min;
+  if (v > max) v = max;
+  el.value = v;
+}
 
 function toggleOptPill(el, group) {
   if (group) {

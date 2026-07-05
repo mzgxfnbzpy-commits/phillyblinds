@@ -471,15 +471,11 @@
     </div>
 
     <div style="margin-bottom:22px">
-      <div style="font-size:13px;font-weight:600;color:#222;margin-bottom:8px">Track width (inches)</div>
-      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-        <div class="dim-box" style="flex:0 0 auto;padding:12px 16px;margin-bottom:0">
-          <div class="dim-box-label" style="margin-bottom:8px">Track width</div>
-          <input type="number" id="brass-width" min="12" max="384" step="0.5" placeholder="84" oninput="tBrassUpdate()" style="font-size:22px;font-weight:600;height:50px;text-align:center;width:110px">
-          <div class="dim-unit">inches</div>
-        </div>
-        <div style="font-size:12px;color:#666;line-height:1.7">Max continuous: 16ft (192"). Over 16ft: spliced 2-way center draw (up to 32ft).</div>
+      <div class="dim-box">
+        <div class="dim-box-label">Enter your rod width</div>
+        <div class="form-group"><label>Width</label><input type="number" id="brass-width" min="12" max="384" step="0.125" placeholder="84" oninput="tBrassUpdate()"><div class="dim-unit">inches &middot; max continuous 16ft (192&Prime;) &middot; over 16ft spliced 2-way, up to 32ft</div></div>
       </div>
+      <div class="step-note" style="margin-bottom:6px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm before fabrication.</div>
       <div id="brass-bracket-note" style="display:none;margin-top:8px" class="tooltip-note"></div>
     </div>
 
@@ -659,15 +655,11 @@
     </div>
 
     <div style="margin-bottom:22px">
-      <div style="font-size:13px;font-weight:600;color:#222;margin-bottom:8px">Track width (inches)</div>
-      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-        <div class="dim-box" style="flex:0 0 auto;padding:12px 16px;margin-bottom:0">
-          <div class="dim-box-label" style="margin-bottom:8px">Track width</div>
-          <input type="number" id="cort-width" min="12" max="236" step="0.5" placeholder="84" oninput="cUpdate()" style="font-size:22px;font-weight:600;height:50px;text-align:center;width:110px">
-          <div class="dim-unit">inches</div>
-        </div>
-        <div style="font-size:12px;color:#666;line-height:1.7">Max continuous: 236". Brackets included — count auto-calculated.</div>
+      <div class="dim-box">
+        <div class="dim-box-label">Enter your rod width</div>
+        <div class="form-group"><label>Width</label><input type="number" id="cort-width" min="12" max="236" step="0.125" placeholder="84" oninput="cUpdate()"><div class="dim-unit">inches &middot; max continuous 236&Prime; &middot; brackets included, count auto-calculated</div></div>
       </div>
+      <div class="step-note" style="margin-bottom:6px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm before fabrication.</div>
       <div id="cort-bracket-note" style="display:none;margin-top:8px" class="tooltip-note"></div>
     </div>
 

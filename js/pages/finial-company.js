@@ -175,7 +175,7 @@ var S = {
   rings:'',ringsQty:0,
   baton:'',batonLen:'',tieback:'',rosette:'',metalBand:'',
   extraFinialFinish:'',customFinishNote:'',
-  rush:'no',del:'ship',qty:1,
+  rush:'no',del:'ship',qty:1,rodWidth:0,
   // Traverse
   travSystem:'',travMotor:'',travFasciaDia:'',travFasciaProfile:'',
   travLen:0,travDraw:'',travHeading:'',travFullness:'',travMount:'',
@@ -787,6 +787,25 @@ function buildAccSummary(){
   return parts.length?parts.join(' · '):'None';
 }
 
+// ═══════════════════════════════════════════════════════════
+// STEP 1: ROD WIDTH & QUANTITY (shared dim-box)
+// ═══════════════════════════════════════════════════════════
+function updateRodWidth(){
+  var e=document.getElementById('rod-width');
+  S.rodWidth=e?parseFloat(e.value)||0:0;
+  var mv=document.getElementById('sMval');
+  if(mv) mv.textContent=S.rodWidth?S.rodWidth+'″ wide':'—';
+}
+function adjQty(d){
+  var e=document.getElementById('qty');
+  if(!e) return;
+  var v=(parseInt(e.value)||1)+d;
+  if(v<1) v=1;
+  if(v>99) v=99;
+  e.value=v;
+  updateSpec();
+}
+
 function updateSpec(){
   var qty=parseInt(document.getElementById('qty').value)||1;
   S.qty=qty;
@@ -840,6 +859,7 @@ function submitQuote(){
     S.coll==='modern-metal'?'Cuff / Collar: '+(S.cuff||'—'):'',
     '',
     'POLE:',
+    'Rod width (overall): '+(S.rodWidth?S.rodWidth+'″':'—'),
     'Pole length: '+(S.poleLen?S.poleLen+'″ ('+(S.poleLen/12).toFixed(2)+' ft)':'—'),
     S.poleLen>96?'⚠ Over 96″ — common carrier shipping required':'',
     S.warnAcrylic?'⚠ Clear Acrylic selected — cannot be spliced':'',
@@ -886,6 +906,7 @@ function addFinialToCart() {
   var collLabel = collNames[S.coll] || (S.coll || 'The Finial Company');
   var lines = [
     { label: 'Product', value: 'The Finial Company — ' + collLabel },
+    { label: 'Rod Width', value: S.rodWidth ? S.rodWidth + '″' : '—' },
     { label: 'Finish', value: S.finish || '—' },
     { label: 'Left Finial', value: S.finLeft || '—' },
     { label: 'Right Finial', value: S.finRight || '—' },

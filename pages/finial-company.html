@@ -134,10 +134,41 @@
   <strong>All items are custom-manufactured to order.</strong> No changes or cancellations after 24 hours of order confirmation. Pricing is from The Finial Company Retail Price List — not shown publicly. Lead time: Modern Metal &amp; Metal Collection ship within 48 hours (non-painted options); all painted products, custom products, and traverse systems ship within <strong>10–15 business days</strong>. Rush orders (+30%) available in 5 business days — <strong>not available</strong> for arch rods, bay windows, custom brackets, or mitered returns. Poles/tracks over 96″ must ship common carrier.
 </div>
 
-<!-- STEP 1: COLLECTION CATEGORY -->
+<!-- STEP 1: ROD WIDTH & QUANTITY -->
+<div class="step-block active open" id="stepMeasure">
+  <div class="step-head" onclick="toggleStep('stepMeasure')">
+    <div class="step-num">1</div>
+    <div class="step-head-title">Rod width &amp; quantity</div>
+    <div class="step-head-val" id="sMval">—</div>
+  </div>
+  <div class="step-body">
+    <div class="dim-box">
+      <div class="dim-box-label">Enter your rod width</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Width</label>
+          <input type="number" id="rod-width" min="12" max="480" step="0.125" placeholder="e.g. 96" oninput="updateRodWidth()">
+          <div class="dim-unit">inches · overall rod length needed</div>
+        </div>
+      </div>
+    </div>
+    <div class="step-note"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> · Approximate is fine — we confirm exact pole/track length in the steps below.</div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <span style="font-size:12px;color:#666">Qty:</span>
+      <div class="qty-btns">
+        <button class="qty-btn" onclick="adjQty(-1)">&#8722;</button>
+        <input class="qty-num" type="number" id="qty" value="1" min="1" max="99" oninput="updateSpec()">
+        <button class="qty-btn" onclick="adjQty(1)">&#43;</button>
+      </div>
+      <span style="font-size:12px;color:#666">rod(s) / system(s) of this spec</span>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2: COLLECTION CATEGORY -->
 <div class="step-block active" id="step1">
   <div class="step-head" onclick="toggleStep('step1')">
-    <div class="step-num">1</div>
+    <div class="step-num">2</div>
     <div class="step-head-title">Collection category</div>
     <div class="step-head-val" id="s1val">—</div>
   </div>
@@ -180,7 +211,7 @@
 <!-- STEP 2: SUB-SELECTION (diameter/profile/system) — filled by JS -->
 <div class="step-block" id="step2" style="display:none">
   <div class="step-head" onclick="toggleStep('step2')">
-    <div class="step-num">2</div>
+    <div class="step-num">3</div>
     <div class="step-head-title" id="s2title">Diameter / system</div>
     <div class="step-head-val" id="s2val">—</div>
   </div>
@@ -190,7 +221,7 @@
 <!-- STEP 3: FINISH -->
 <div class="step-block" id="step3" style="display:none">
   <div class="step-head" onclick="toggleStep('step3')">
-    <div class="step-num">3</div>
+    <div class="step-num">4</div>
     <div class="step-head-title">Finish</div>
     <div class="step-head-val" id="s3val">—</div>
   </div>
@@ -200,7 +231,7 @@
 <!-- STEP 4: FINIALS (left + right) -->
 <div class="step-block" id="step4" style="display:none">
   <div class="step-head" onclick="toggleStep('step4')">
-    <div class="step-num">4</div>
+    <div class="step-num">5</div>
     <div class="step-head-title">Finials</div>
     <div class="step-head-val" id="s4val">—</div>
   </div>
@@ -210,7 +241,7 @@
 <!-- STEP 5: CUFF / COLLAR (Modern Metal only) -->
 <div class="step-block" id="step5" style="display:none">
   <div class="step-head" onclick="toggleStep('step5')">
-    <div class="step-num">5</div>
+    <div class="step-num">6</div>
     <div class="step-head-title">Cuff or collar</div>
     <div class="step-head-val" id="s5val">—</div>
   </div>
@@ -220,7 +251,7 @@
 <!-- STEP 6: POLE LENGTH -->
 <div class="step-block" id="step6" style="display:none">
   <div class="step-head" onclick="toggleStep('step6')">
-    <div class="step-num">6</div>
+    <div class="step-num">7</div>
     <div class="step-head-title">Pole length</div>
     <div class="step-head-val" id="s6val">—</div>
   </div>
@@ -230,7 +261,7 @@
 <!-- STEP 7: BRACKETS -->
 <div class="step-block" id="step7" style="display:none">
   <div class="step-head" onclick="toggleStep('step7')">
-    <div class="step-num">7</div>
+    <div class="step-num">8</div>
     <div class="step-head-title">Brackets &amp; mount</div>
     <div class="step-head-val" id="s7val">—</div>
   </div>
@@ -240,7 +271,7 @@
 <!-- STEP 8: RINGS -->
 <div class="step-block" id="step8" style="display:none">
   <div class="step-head" onclick="toggleStep('step8')">
-    <div class="step-num">8</div>
+    <div class="step-num">9</div>
     <div class="step-head-title">Rings</div>
     <div class="step-head-val" id="s8val">—</div>
   </div>
@@ -250,7 +281,7 @@
 <!-- STEP 9: ACCESSORIES (batons, tiebacks, rosettes, extras) -->
 <div class="step-block" id="step9" style="display:none">
   <div class="step-head" onclick="toggleStep('step9')">
-    <div class="step-num">9</div>
+    <div class="step-num">10</div>
     <div class="step-head-title">Accessories &amp; special options</div>
     <div class="step-head-val" id="s9val">Optional</div>
   </div>
@@ -260,7 +291,7 @@
 <!-- STEP 10: TRAVERSE-SPECIFIC DETAILS (shown only for traverse) -->
 <div class="step-block" id="step10" style="display:none">
   <div class="step-head" onclick="toggleStep('step10')">
-    <div class="step-num">10</div>
+    <div class="step-num">11</div>
     <div class="step-head-title">Traverse specifications</div>
     <div class="step-head-val" id="s10val">—</div>
   </div>
@@ -270,15 +301,12 @@
 <!-- STEP 11: QUANTITY & DELIVERY -->
 <div class="step-block" id="step11" style="display:none">
   <div class="step-head" onclick="toggleStep('step11')">
-    <div class="step-num" id="qtyStepNum">11</div>
-    <div class="step-head-title">Quantity &amp; delivery</div>
+    <div class="step-num" id="qtyStepNum">12</div>
+    <div class="step-head-title">Delivery &amp; room label</div>
     <div class="step-head-val" id="s11val">—</div>
   </div>
   <div class="step-body">
-    <div class="form-row">
-      <div class="form-group"><label>Number of rods / systems</label><input type="number" id="qty" value="1" min="1" max="99" oninput="updateSpec()"></div>
-      <div class="form-group"><label>Room / window label</label><input type="text" id="room-label" placeholder="e.g. Living room bay"></div>
-    </div>
+    <div class="form-group"><label>Room / window label</label><input type="text" id="room-label" placeholder="e.g. Living room bay"></div>
     <div style="margin-top:8px">
       <div class="dim-label" style="margin-bottom:6px">Rush order?</div>
       <div class="opt-row">
@@ -301,7 +329,7 @@
 <!-- STEP 12: CONTACT & SUBMIT -->
 <div class="step-block" id="step12" style="display:none">
   <div class="step-head" onclick="toggleStep('step12')">
-    <div class="step-num" id="contactStepNum">12</div>
+    <div class="step-num" id="contactStepNum">13</div>
     <div class="step-head-title">Your info &amp; submit</div>
   </div>
   <div class="step-body">

@@ -147,7 +147,7 @@ function pickHeading(el,key,label){
   el.classList.add('sel');
   document.getElementById('ripplefold-opts').style.display=key==='ripplefold'?'block':'none';
   if(key==='ripplefold'){document.getElementById('s3val').textContent='Ripplefold™ — select fullness';}
-  else{markDone('step3',label);sp('sp-heading',label);updateSpec();openStep('step4');}
+  else{markDone('step3',label);sp('sp-heading',label);updateSpec();if(S.len>0)buildStackback(S.len);openStep('step4');}
   document.getElementById('sp-fullness-row').style.display=key==='ripplefold'?'flex':'none';
 }
 function pickFullness(el,pct){
@@ -156,7 +156,7 @@ function pickFullness(el,pct){
   el.classList.add('sel');
   var lbl='Ripplefold™ '+pct+'%';
   markDone('step3',lbl); sp('sp-heading','Ripplefold™'); sp('sp-fullness',pct+'% fullness');
-  updateSpec(); openStep('step4');
+  updateSpec(); if(S.len>0)buildStackback(S.len); openStep('step4');
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -171,7 +171,7 @@ function pickMount(el,key,label){
   document.getElementById('dbl-wall-note').style.display=key==='dbl-wall'?'block':'none';
   document.getElementById('dbl-combo-note').style.display=key==='dbl-combo'?'block':'none';
   markDone('step4',label); sp('sp-mount',label);
-  updateSpec(); openStep('step5');
+  updateSpec(); openStep('step6');
 }
 function pickBrktFinish(el,name){
   document.querySelectorAll('#wall-bracket-opts .fin-chip').forEach(function(c){c.classList.remove('sel');});
@@ -216,7 +216,7 @@ function calcTrack(){
   sp('sp-dir',S.dir==='oneway'?'One-Way':'Two-Way (Split)');
   markDone('step5',len+'″ · '+(S.dir==='oneway'?'One-Way':'Two-Way'));
   updateSpec();
-  openStep('step6');
+  openStep('step1');
 }
 
 function buildBracketPlan(len){
@@ -352,6 +352,13 @@ function updateSpec(){
   var qty=parseInt(document.getElementById('qty').value)||1;
   sp('sp-qty',qty+' rod'+(qty>1?'s':''));
   document.getElementById('s8val').textContent=qty+' rod'+(qty>1?'s':'')+' · '+'Ship';
+}
+// Shared canonical qty stepper — reuses id "qty" + updateSpec handler
+function adjQty(d){
+  var el=document.getElementById('qty'); if(!el) return;
+  var v=(parseInt(el.value,10)||1)+d;
+  if(v<1)v=1; if(v>50)v=50;
+  el.value=v; updateSpec();
 }
 
 // ═══════════════════════════════════════════════════════════

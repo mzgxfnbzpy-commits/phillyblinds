@@ -132,21 +132,21 @@ function selectColl(c) {
   S.coll = c; S.finish = ''; S.finial = '';
   ['dm','wt','wi'].forEach(function(id){ document.getElementById('coll-'+id).classList.toggle('sel', id===c); });
   var label = COLLECTIONS[c].label;
-  completeStep('step-1', label);
+  completeStep('step-2', label);
   updateSpec('sp-coll', label);
   updateSpec('sp-finish', '—'); document.getElementById('sp-finish').classList.add('empty');
   updateSpec('sp-finial', '—'); document.getElementById('sp-finial').classList.add('empty');
   buildFinishStep(c);
   buildFinialStep(c);
   buildAccStep(c);
-  activateStep('step-2');
+  activateStep('step-3');
 }
 
 // ═══════════════════════════════════════════════════════════════
 // FINISH
 // ═══════════════════════════════════════════════════════════════
 function buildFinishStep(c) {
-  var body = document.getElementById('s2-body');
+  var body = document.getElementById('s3-body');
   var finishes = COLLECTIONS[c].finishes;
   var warn = c === 'wt' ? '<div class="err-box" style="margin-bottom:10px"><span>⚠️</span><span><strong>Unfinished is not available for Estate™ Traverse Rods</strong> — stationary poles only. All 8 wood finishes above are available.</span></div>' : '';
   body.innerHTML = warn + '<div class="finish-grid">' +
@@ -165,9 +165,9 @@ function selectFinish(name) {
   var id = 'fin-' + name.replace(/\s/g,'-');
   var el = document.getElementById(id);
   if (el) el.classList.add('sel');
-  completeStep('step-2', name);
+  completeStep('step-3', name);
   updateSpec('sp-finish', name);
-  activateStep('step-3');
+  activateStep('step-4');
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -179,9 +179,9 @@ function selectHeader(h) {
   document.getElementById('hdr-ripple').classList.toggle('sel', h==='ripplefold');
   document.getElementById('ripple-fullness-wrap').style.display = h==='ripplefold' ? 'block' : 'none';
   var label = h==='pleated' ? 'Pleated Carriers' : 'Ripplefold™ Carriers (' + S.fullness + ' fullness)';
-  completeStep('step-3', label);
+  completeStep('step-4', label);
   updateSpec('sp-header', label);
-  activateStep('step-4');
+  activateStep('step-5');
 }
 
 function selectFullness(f) {
@@ -191,7 +191,7 @@ function selectFullness(f) {
     if (el) el.classList.toggle('sel', v===f);
   });
   var label = 'Ripplefold™ Carriers (' + f + ' fullness)';
-  completeStep('step-3', label);
+  completeStep('step-4', label);
   updateSpec('sp-header', label);
 }
 
@@ -203,11 +203,11 @@ function selectDraw(d) {
   ['two-way','one-right','one-left'].forEach(function(id){ document.getElementById('draw-'+id).classList.remove('sel'); });
   document.getElementById('draw-'+d).classList.add('sel');
   var labels = {'two-way':'Two-Way / Split Draw','one-way-right':'One-Way Right','one-way-left':'One-Way Left'};
-  completeStep('step-4', labels[d]);
+  completeStep('step-5', labels[d]);
   updateSpec('sp-draw', labels[d]);
   document.getElementById('draw-amp-note').style.display = S.motorized ? 'block' : 'none';
   calcTrack();
-  activateStep('step-5');
+  activateStep('step-6');
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -229,9 +229,9 @@ function selectMount(m) {
       '• 1⅜" + 1⅜" using #71132062/110/006/012 (height 3⅛") — projections 9¼" / 5¼", returns 8¼" / 4¼"<br>' +
       'Specify front and back finish/collection separately if mixing. Both AMP™ compatible on the same double bracket.</div>';
   }
-  completeStep('step-5', labels[m]);
+  completeStep('step-6', labels[m]);
   updateSpec('sp-mount', labels[m]);
-  activateStep('step-6');
+  activateStep('step-7');
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -241,6 +241,15 @@ function calcTrackFt() {
   var ft = parseFloat(document.getElementById('track-ft').value) || 0;
   var inches = ft * 12;
   document.getElementById('track-len').value = inches > 0 ? inches.toFixed(1) : '';
+  calcTrack();
+}
+
+function adjQty(d) {
+  var inp = document.getElementById('track-qty-inp');
+  var v = (parseInt(inp.value) || 1) + d;
+  if (v < 1) v = 1;
+  if (v > 20) v = 20;
+  inp.value = v;
   calcTrack();
 }
 
@@ -302,8 +311,8 @@ function calcTrack() {
 
   updateSpec('sp-len', len + '"');
   updateSpec('sp-brackets', brackets + ' (est.)');
-  document.getElementById('s6-val').textContent = len + '"';
-  completeStep('step-6', len + '" (' + (len/12).toFixed(1) + ' ft)');
+  document.getElementById('s1-val').textContent = len + '"';
+  completeStep('step-1', len + '" (' + (len/12).toFixed(1) + ' ft)');
 }
 
 function getStackback(len, isTwoWay) {

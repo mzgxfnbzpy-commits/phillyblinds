@@ -140,12 +140,63 @@
 <div class="config-layout">
 <div id="configurator">
 
-<!-- STEP 1: COLLECTION -->
+<!-- STEP 1: ROD WIDTH -->
 <div class="step-block active open" id="step-1">
   <div class="step-head" onclick="toggleStep('step-1')">
     <div class="step-num-circle">1</div>
-    <div class="step-head-title">Collection</div>
+    <div class="step-head-title">Rod width</div>
     <div class="step-head-val" id="s1-val"></div>
+  </div>
+  <div class="step-body">
+    <div class="dim-box">
+      <div class="dim-box-label">Enter your rod width</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Width</label>
+          <input type="number" id="track-len" min="18" max="192" step="0.125" placeholder="120" oninput="calcTrack()">
+          <div class="dim-unit">inches &middot; 18&Prime; min &middot; 192&Prime; max (16 ft)</div>
+        </div>
+        <div class="form-group">
+          <label>Or in feet</label>
+          <input type="number" id="track-ft" min="1.5" max="16" step="0.25" placeholder="10" oninput="calcTrackFt()">
+          <div class="dim-unit">feet &middot; converts automatically</div>
+        </div>
+      </div>
+    </div>
+    <div class="step-note"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Enter the <strong>finished track length</strong> the rod will span, including returns if outside mount. Tracks over 96&Prime; (8 ft) include one splice and keystone.</div>
+
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <span style="font-size:12px;color:#666">Qty:</span>
+      <div class="qty-btns">
+        <button class="qty-btn" onclick="adjQty(-1)">&#8722;</button>
+        <input class="qty-num" type="number" id="track-qty-inp" value="1" min="1" max="20" oninput="calcTrack()">
+        <button class="qty-btn" onclick="adjQty(1)">&#43;</button>
+      </div>
+      <span style="font-size:12px;color:#666">rod(s) of this size</span>
+    </div>
+
+    <div id="track-room" style="margin-top:12px">
+      <div class="dim-label">Room / window label</div>
+      <input type="text" id="track-room-inp" placeholder="e.g. Living Room Bay Window" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px" oninput="calcTrack()">
+    </div>
+
+    <div id="track-msgs" style="margin-top:8px"></div>
+    <div id="track-computed" class="computed-info" style="display:none">
+      <div class="computed-row"><span class="computed-key">Track length</span><span class="computed-val" id="cp-len">&mdash;</span></div>
+      <div class="computed-row"><span class="computed-key">Splice required</span><span class="computed-val" id="cp-splice">&mdash;</span></div>
+      <div class="computed-row"><span class="computed-key">Brackets needed (est.)</span><span class="computed-val" id="cp-brackets">&mdash;</span></div>
+      <div class="computed-row"><span class="computed-key">Max fabric weight</span><span class="computed-val" id="cp-weight">64 lbs total / 4 lbs per ft</span></div>
+      <div class="computed-row" id="cp-stack-row"><span class="computed-key">Est. stackback</span><span class="computed-val" id="cp-stack">&mdash;</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2: COLLECTION -->
+<div class="step-block" id="step-2">
+  <div class="step-head" onclick="toggleStep('step-2')">
+    <div class="step-num-circle">2</div>
+    <div class="step-head-title">Collection</div>
+    <div class="step-head-val" id="s2-val"></div>
   </div>
   <div class="step-body">
     <div style="font-size:12px;color:#666;margin-bottom:10px;line-height:1.6">All three collections use the same traverse rod mechanism. The collection determines finish options, finial styles, and fascia aesthetic.</div>
@@ -197,24 +248,24 @@
   </div>
 </div>
 
-<!-- STEP 2: FINISH -->
-<div class="step-block" id="step-2">
-  <div class="step-head" onclick="toggleStep('step-2')">
-    <div class="step-num-circle">2</div>
+<!-- STEP 3: FINISH -->
+<div class="step-block" id="step-3">
+  <div class="step-head" onclick="toggleStep('step-3')">
+    <div class="step-num-circle">3</div>
     <div class="step-head-title">Finish</div>
-    <div class="step-head-val" id="s2-val"></div>
+    <div class="step-head-val" id="s3-val"></div>
   </div>
-  <div class="step-body" id="s2-body">
+  <div class="step-body" id="s3-body">
     <div style="font-size:12px;color:#666">Select a collection first.</div>
   </div>
 </div>
 
-<!-- STEP 3: HEADER TYPE -->
-<div class="step-block" id="step-3">
-  <div class="step-head" onclick="toggleStep('step-3')">
-    <div class="step-num-circle">3</div>
+<!-- STEP 4: HEADER TYPE -->
+<div class="step-block" id="step-4">
+  <div class="step-head" onclick="toggleStep('step-4')">
+    <div class="step-num-circle">4</div>
     <div class="step-head-title">Header / carrier type</div>
-    <div class="step-head-val" id="s3-val"></div>
+    <div class="step-head-val" id="s4-val"></div>
   </div>
   <div class="step-body">
     <div class="opt-row">
@@ -236,12 +287,12 @@
   </div>
 </div>
 
-<!-- STEP 4: DRAW TYPE -->
-<div class="step-block" id="step-4">
-  <div class="step-head" onclick="toggleStep('step-4')">
-    <div class="step-num-circle">4</div>
+<!-- STEP 5: DRAW TYPE -->
+<div class="step-block" id="step-5">
+  <div class="step-head" onclick="toggleStep('step-5')">
+    <div class="step-num-circle">5</div>
     <div class="step-head-title">Draw type</div>
-    <div class="step-head-val" id="s4-val"></div>
+    <div class="step-head-val" id="s5-val"></div>
   </div>
   <div class="step-body">
     <div class="opt-row">
@@ -254,12 +305,12 @@
   </div>
 </div>
 
-<!-- STEP 5: MOUNT TYPE -->
-<div class="step-block" id="step-5">
-  <div class="step-head" onclick="toggleStep('step-5')">
-    <div class="step-num-circle">5</div>
+<!-- STEP 6: MOUNT TYPE -->
+<div class="step-block" id="step-6">
+  <div class="step-head" onclick="toggleStep('step-6')">
+    <div class="step-num-circle">6</div>
     <div class="step-head-title">Mount type</div>
-    <div class="step-head-val" id="s5-val"></div>
+    <div class="step-head-val" id="s6-val"></div>
   </div>
   <div class="step-body">
     <div class="opt-row">
@@ -269,53 +320,6 @@
     </div>
     <div class="step-note"><strong>Wall Mount:</strong> Standard. Brackets attach to wall above window. Adjustable projection 3¼"–4¾".<br><strong>Ceiling Mount:</strong> Track mounts to ceiling. Flat ceiling bracket included. Good for floor-to-ceiling or room dividers.<br><strong>Double Rod:</strong> Two rods at different projections — sheer behind, drapery in front. Requires double bracket.</div>
     <div id="mount-detail" style="margin-top:12px"></div>
-  </div>
-</div>
-
-<!-- STEP 6: TRACK LENGTH -->
-<div class="step-block" id="step-6">
-  <div class="step-head" onclick="toggleStep('step-6')">
-    <div class="step-num-circle">6</div>
-    <div class="step-head-title">Track length</div>
-    <div class="step-head-val" id="s6-val"></div>
-  </div>
-  <div class="step-body">
-    <div class="info-box" style="margin-bottom:12px">Enter the <strong>finished track length</strong> — the total width the rod will span, including returns if outside mount. Min 18" · Max 192" (16 ft). Tracks over 96" (8 ft) include one splice and keystone.</div>
-    <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
-      <div>
-        <div class="dim-label">Track length</div>
-        <div style="display:flex;align-items:center">
-          <input class="dim-input" type="number" id="track-len" min="18" max="192" step="0.5" placeholder="e.g. 120" oninput="calcTrack()">
-          <span class="dim-unit">inches</span>
-        </div>
-      </div>
-      <div style="margin-top:18px;font-size:12px;color:#999">or</div>
-      <div>
-        <div class="dim-label">In feet</div>
-        <div style="display:flex;align-items:center">
-          <input class="dim-input" type="number" id="track-ft" min="1.5" max="16" step="0.25" placeholder="e.g. 10" oninput="calcTrackFt()">
-          <span class="dim-unit">ft</span>
-        </div>
-      </div>
-    </div>
-
-    <div id="track-qty" style="margin-top:10px;display:flex;align-items:center;gap:8px">
-      <div class="dim-label" style="margin:0">Quantity (rods)</div>
-      <input class="dim-input" type="number" id="track-qty-inp" min="1" max="20" value="1" style="width:60px">
-    </div>
-    <div id="track-room" style="margin-top:8px">
-      <div class="dim-label">Room / window label</div>
-      <input type="text" id="track-room-inp" placeholder="e.g. Living Room Bay Window" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px">
-    </div>
-
-    <div id="track-msgs" style="margin-top:8px"></div>
-    <div id="track-computed" class="computed-info" style="display:none">
-      <div class="computed-row"><span class="computed-key">Track length</span><span class="computed-val" id="cp-len">—</span></div>
-      <div class="computed-row"><span class="computed-key">Splice required</span><span class="computed-val" id="cp-splice">—</span></div>
-      <div class="computed-row"><span class="computed-key">Brackets needed (est.)</span><span class="computed-val" id="cp-brackets">—</span></div>
-      <div class="computed-row"><span class="computed-key">Max fabric weight</span><span class="computed-val" id="cp-weight">64 lbs total / 4 lbs per ft</span></div>
-      <div class="computed-row" id="cp-stack-row"><span class="computed-key">Est. stackback</span><span class="computed-val" id="cp-stack">—</span></div>
-    </div>
   </div>
 </div>
 

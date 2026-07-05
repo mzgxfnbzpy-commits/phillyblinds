@@ -741,16 +741,23 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <div id="sz-stationary" style="display:none">
       <div class="sec-label" style="margin-top:12px">Pole Length</div>
       <div class="info-banner" id="pole-length-info"></div>
-      <div class="inp-row">
-        <div class="inp-group">
-          <label class="inp-label">Width (inches)</label>
-          <input class="inp-field" type="number" id="rod-width" placeholder="e.g. 96" min="1" max="300">
-          <span class="inp-hint">Measure your window width + overhang. Most poles extend 6"–12" per side beyond the frame.</span>
+      <div class="dim-box">
+        <div class="dim-box-label">Enter your rod width</div>
+        <div class="form-group">
+          <label>Width</label>
+          <input type="number" id="rod-width" placeholder="96" min="1" max="300" step="0.125">
+          <div class="dim-unit">inches &middot; rod length. Most poles extend 6"–12" per side beyond the window frame.</div>
         </div>
-        <div class="inp-group">
-          <label class="inp-label">Quantity of Rods / Windows</label>
-          <input class="inp-field" type="number" id="rod-qty" placeholder="e.g. 2" min="1" max="50" value="1">
+      </div>
+      <div class="step-note" style="margin-bottom:12px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm at the home visit.</div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px">
+        <span style="font-size:12px;color:#666">Qty:</span>
+        <div class="qty-btns">
+          <button class="qty-btn" type="button" onclick="kAdjQty('rod-qty',-1)">&#8722;</button>
+          <input class="qty-num" type="number" id="rod-qty" value="1" min="1" max="50">
+          <button class="qty-btn" type="button" onclick="kAdjQty('rod-qty',1)">&#43;</button>
         </div>
+        <span style="font-size:12px;color:#666">rod(s) / window(s) of this size</span>
       </div>
 
       <!-- ══ DM STATIONARY DETAIL SECTIONS ══════════════════════════════ -->
@@ -848,16 +855,23 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <div id="sz-traverse" style="display:none">
       <div class="sec-label" style="margin-top:0">Track Length</div>
       <div id="traverse-limits-info" class="info-banner"></div>
-      <div class="inp-row">
-        <div class="inp-group">
-          <label class="inp-label">Track Width / Length (inches)</label>
-          <input class="inp-field" type="number" id="trav-width" placeholder="e.g. 120" min="18" max="480">
-          <span class="inp-hint">Measure from bracket to bracket (finished wall opening + any desired overlap). Estate min 18", max 192" (16ft).</span>
+      <div class="dim-box">
+        <div class="dim-box-label">Enter your track width</div>
+        <div class="form-group">
+          <label>Width</label>
+          <input type="number" id="trav-width" placeholder="120" min="18" max="480" step="0.125">
+          <div class="dim-unit">inches &middot; measure bracket to bracket (finished opening + overlap). Estate min 18", max 192" (16ft).</div>
         </div>
-        <div class="inp-group">
-          <label class="inp-label">Quantity of Tracks / Windows</label>
-          <input class="inp-field" type="number" id="trav-qty" placeholder="e.g. 1" min="1" max="20" value="1">
+      </div>
+      <div class="step-note" style="margin-bottom:12px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm at the home visit.</div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px">
+        <span style="font-size:12px;color:#666">Qty:</span>
+        <div class="qty-btns">
+          <button class="qty-btn" type="button" onclick="kAdjQty('trav-qty',-1)">&#8722;</button>
+          <input class="qty-num" type="number" id="trav-qty" value="1" min="1" max="20">
+          <button class="qty-btn" type="button" onclick="kAdjQty('trav-qty',1)">&#43;</button>
         </div>
+        <span style="font-size:12px;color:#666">track(s) / window(s) of this size</span>
       </div>
 
       <div class="sec-label" style="margin-top:12px">Draw Type</div>
@@ -908,16 +922,23 @@ textarea.inp-field{resize:vertical;min-height:90px}
 
     <!-- BASIC rod specs -->
     <div id="sz-basic" style="display:none">
-      <div class="inp-row">
-        <div class="inp-group">
-          <label class="inp-label">Window Width (inches)</label>
-          <input class="inp-field" type="number" id="basic-width" placeholder="e.g. 60" min="1" max="228">
-          <span class="inp-hint">We'll select the right telescoping size for your measurement.</span>
+      <div class="dim-box">
+        <div class="dim-box-label">Enter your rod width</div>
+        <div class="form-group">
+          <label>Width</label>
+          <input type="number" id="basic-width" placeholder="60" min="1" max="228" step="0.125">
+          <div class="dim-unit">inches &middot; we'll select the right telescoping size for your measurement.</div>
         </div>
-        <div class="inp-group">
-          <label class="inp-label">Quantity</label>
-          <input class="inp-field" type="number" id="basic-qty" value="1" min="1" max="50">
+      </div>
+      <div class="step-note" style="margin-bottom:12px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm at the home visit.</div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px">
+        <span style="font-size:12px;color:#666">Qty:</span>
+        <div class="qty-btns">
+          <button class="qty-btn" type="button" onclick="kAdjQty('basic-qty',-1)">&#8722;</button>
+          <input class="qty-num" type="number" id="basic-qty" value="1" min="1" max="50">
+          <button class="qty-btn" type="button" onclick="kAdjQty('basic-qty',1)">&#43;</button>
         </div>
+        <span style="font-size:12px;color:#666">rod(s) / window(s) of this size</span>
       </div>
 
       <div id="sz-superfine-opts" style="display:none">
