@@ -147,9 +147,7 @@ function setType(type, el) {
 function setQtyVal(n) {
   n = Math.max(1, Math.min(50, n||1));
   S.qty = n;
-  document.getElementById('val2').textContent = n + (n===1?' shade':' shades');
-  document.getElementById('step2').classList.add('done');
-  updateSpec(); updateCalc(); openNext('step3');
+  updateSpec(); updateCalc();
 }
 function adjQty(d) {
   var el = document.getElementById('qty-inp');
@@ -184,14 +182,22 @@ function setLift(lift, el) {
   };
   if (notes[lift]) { noteEl.textContent = notes[lift]; noteEl.style.display = ''; }
   else noteEl.style.display = 'none';
-  validateDims(); updateSpec(); updateCalc(); openNext('step4');
+  validateDims(); updateSpec(); updateCalc(); openNext('step5');
 }
 
 function setHeadrail(size, el) {
   S.headrail = size; selBtn(el,'grp-headrail'); validateDims(); updateCalc();
 }
 
-// ── STEP 4 ────────────────────────────────────────────────────────────────────
+// ── MOUNT (Step 1) ────────────────────────────────────────────────────────────
+function setMount(m, el) {
+  S.mount = m==='outside' ? 'Outside mount' : 'Inside mount';
+  selBtn(el,'grp-mount');
+  sp('sp-mount', S.mount);
+  updateSpec();
+}
+
+// ── STEP 1 DIMENSIONS ─────────────────────────────────────────────────────────
 function validateDims() {
   var w = parseFloat(document.getElementById('inp-width').value)||0;
   var h = parseFloat(document.getElementById('inp-height').value)||0;
@@ -218,7 +224,7 @@ function validateDims() {
     html='<div class="ok-box">✓ '+w+'" × '+h+'" · '+sqft.toFixed(1)+' sqft — within '+lim.label+' limits.</div>';
     document.getElementById('step4').classList.add('done');
     document.getElementById('val4').textContent = w+'" × '+h+'"';
-    openNext('step5');
+    openNext('step1');
   }
   fb.innerHTML = html;
   updateValanceSurcharge(); updateSpec(); updateCalc();
@@ -462,6 +468,7 @@ function setDelivery(opt,card) {
 function updateSpec() {
   sp('sp-type', S.type==='standard'?'Standard Centerpiece Roman':S.type==='dn'?'Day & Night':'');
   var room=document.getElementById('room-label').value.trim(); S.room=room;
+  var val2El=document.getElementById('val2'); if(val2El) val2El.textContent=room||'—';
   sp('sp-qty', S.qty?(S.qty+' shade'+(S.qty>1?'s':''))+(room?' · '+room:''):'');
   sp('sp-lift', S.lift?(LIFT_LIMITS[S.lift]&&LIFT_LIMITS[S.lift].label)||S.lift:'');
   sp('sp-size', S.width&&S.height ? S.width+'"×'+S.height+'"' : '');
@@ -561,9 +568,9 @@ function submitQuote() {
   var errs=[];
   if(!name)         errs.push('Name required.');
   if(!phone)        errs.push('Phone required.');
-  if(!S.type)       errs.push('Select product type (Step 1).');
-  if(!S.lift)       errs.push('Select lift system (Step 3).');
-  if(!S.width||!S.height) errs.push('Enter dimensions (Step 4).');
+  if(!S.type)       errs.push('Select product type (Step 2).');
+  if(!S.lift)       errs.push('Select lift system (Step 4).');
+  if(!S.width||!S.height) errs.push('Enter dimensions (Step 1).');
   if(!S.style)      errs.push('Select shade style (Step 5).');
   if(!S.fabric)     errs.push('Select fabric (Step 6).');
   if(S.type==='dn'&&!S.rollerFabric) errs.push('Select D&N rear roller fabric (Step 9).');
@@ -615,7 +622,6 @@ renderFabricGrid();
 renderRollerGrid();
 setQtyVal(1);
 document.getElementById('room-label').addEventListener('input', updateSpec);
-document.querySelectorAll('#grp-mount .opt-btn').forEach(function(b){b.addEventListener('click',function(){sp('sp-mount',this.textContent.trim());});});
 
 // Prefill from the custom Roman → Norman hand-off (soft-treatments.html ?w=&h=&qty=)
 (function(){

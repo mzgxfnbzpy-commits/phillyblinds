@@ -149,10 +149,47 @@
       <strong>&#9888; Fabric &amp; pricing data needs verification:</strong> The Norman Centerpiece Roman PDF is image-based and machine-unreadable. All fabric codes, colorways, and price group assignments are based on known Norman fabric data and are marked <strong>PDF CONFIRM</strong>. Owner must verify against the Norman Centerpiece Roman PDF pages 6&ndash;7 (pricing) and 23&ndash;30 (fabrics) before final quoting.
     </div>
 
-    <!-- STEP 1 -->
-    <div class="step-block active" id="step1">
-      <div class="step-head" onclick="toggleStep('step1')">
+    <!-- STEP 1: WINDOW MEASUREMENTS & MOUNT -->
+    <div class="step-block active" id="step4">
+      <div class="step-head" onclick="toggleStep('step4')">
         <div class="step-num">1</div>
+        <div class="step-head-title">Window measurements &amp; mount</div>
+        <div class="step-head-val" id="val4">&mdash;</div>
+      </div>
+      <div class="step-body">
+        <div class="dim-box">
+          <div class="dim-box-label">Enter your window size</div>
+          <div class="form-row">
+            <div class="form-group"><label>Width</label><input type="number" id="inp-width" min="12" max="96" step="0.125" placeholder="48" oninput="validateDims()"><div class="dim-unit">inches &middot; to nearest 1/8&Prime;</div></div>
+            <div class="form-group"><label>Height</label><input type="number" id="inp-height" min="24" max="96" step="0.125" placeholder="60" oninput="validateDims()"><div class="dim-unit">inches &middot; to nearest 1/8&Prime;</div></div>
+          </div>
+        </div>
+        <div class="step-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; For inside mount, give the exact window opening &mdash; we apply the standard deduction. Approximate is fine; we confirm at the home visit.</div>
+        <div id="dim-feedback" style="margin-top:10px"></div>
+
+        <!-- Mount type -->
+        <div style="font-size:12px;font-weight:600;color:#555;margin:14px 0 6px">Mount type</div>
+        <div class="opt-row" id="grp-mount">
+          <button class="opt-btn sel" onclick="setMount('inside',this)">Inside mount</button>
+          <button class="opt-btn" onclick="setMount('outside',this)">Outside mount</button>
+        </div>
+        <div class="step-note" style="margin-bottom:12px">Inside mount requires minimum 2&frac34;&Prime; window depth. Outside mount covers the opening &mdash; overlap recommended.</div>
+
+        <!-- Quantity -->
+        <div style="font-size:12px;font-weight:600;color:#555;margin:14px 0 6px">Quantity</div>
+        <div class="qty-btns">
+          <button class="qty-btn" onclick="adjQty(-1)">&#8722;</button>
+          <input class="qty-num" type="number" id="qty-inp" value="1" min="1" max="50" oninput="setQtyVal(parseInt(this.value)||1)">
+          <button class="qty-btn" onclick="adjQty(1)">&#43;</button>
+        </div>
+        <div class="step-note">Number of shades of this size. Note any size differences in the notes field.</div>
+      </div>
+    </div>
+
+    <!-- STEP 2: PRODUCT TYPE -->
+    <div class="step-block" id="step1">
+      <div class="step-head" onclick="toggleStep('step1')">
+        <div class="step-num">2</div>
         <div class="step-head-title">Product Type</div>
         <div class="step-head-val" id="val1">&mdash;</div>
       </div>
@@ -171,35 +208,25 @@
       </div>
     </div>
 
-    <!-- STEP 2 -->
+    <!-- STEP 3: ROOM / WINDOW LABEL -->
     <div class="step-block" id="step2">
       <div class="step-head" onclick="toggleStep('step2')">
-        <div class="step-num">2</div>
-        <div class="step-head-title">Quantity</div>
-        <div class="step-head-val" id="val2">1 shade</div>
+        <div class="step-num">3</div>
+        <div class="step-head-title">Room / Window Label</div>
+        <div class="step-head-val" id="val2">&mdash;</div>
       </div>
       <div class="step-body">
-        <div class="form-row" style="margin-top:8px">
-          <div class="form-group">
-            <label>Number of shades</label>
-            <div style="display:flex;align-items:center;gap:0">
-              <button onclick="adjQty(-1)" style="width:36px;height:36px;border:1.5px solid #ddd;border-radius:8px 0 0 8px;background:#fff;font-size:20px;cursor:pointer;color:#333;font-family:inherit">−</button>
-              <input type="number" id="qty-inp" value="1" min="1" max="50" oninput="setQtyVal(parseInt(this.value)||1)" style="width:52px;height:36px;text-align:center;border-top:1.5px solid #ddd;border-bottom:1.5px solid #ddd;border-left:none;border-right:none;font-size:14px;font-weight:500;font-family:inherit;background:#fff">
-              <button onclick="adjQty(1)" style="width:36px;height:36px;border:1.5px solid #ddd;border-radius:0 8px 8px 0;background:#fff;font-size:20px;cursor:pointer;color:#333;font-family:inherit">+</button>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Room / window label</label>
-            <input type="text" id="room-label" placeholder="e.g. Living room &mdash; north window" oninput="updateSpec()">
-          </div>
+        <div class="form-group" style="margin-top:10px">
+          <label>Label for these shades (room, window position, etc.)</label>
+          <input type="text" id="room-label" placeholder="e.g. Living room &mdash; north window" oninput="updateSpec()">
         </div>
       </div>
     </div>
 
-    <!-- STEP 3 -->
+    <!-- STEP 4: LIFT SYSTEM -->
     <div class="step-block" id="step3">
       <div class="step-head" onclick="toggleStep('step3')">
-        <div class="step-num">3</div>
+        <div class="step-num">4</div>
         <div class="step-head-title">Lift System</div>
         <div class="step-head-val" id="val3">&mdash;</div>
       </div>
@@ -228,40 +255,6 @@
           </div>
         </div>
         <div id="lift-note" class="info-box" style="display:none;margin-top:10px"></div>
-      </div>
-    </div>
-
-    <!-- STEP 4 -->
-    <div class="step-block" id="step4">
-      <div class="step-head" onclick="toggleStep('step4')">
-        <div class="step-num">4</div>
-        <div class="step-head-title">Dimensions &amp; Mount</div>
-        <div class="step-head-val" id="val4">&mdash;</div>
-      </div>
-      <div class="step-body">
-        <div class="dim-row">
-          <div class="dim-field">
-            <div class="dim-label">Width (inches)</div>
-            <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
-              <input class="dim-input" type="number" id="inp-width" min="12" max="96" step="0.125" placeholder="48" oninput="validateDims();updateCalc()">
-              <span class="dim-unit">in</span>
-            </div>
-          </div>
-          <div class="dim-field">
-            <div class="dim-label">Height (inches)</div>
-            <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
-              <input class="dim-input" type="number" id="inp-height" min="24" max="96" step="0.125" placeholder="60" oninput="validateDims();updateCalc()">
-              <span class="dim-unit">in</span>
-            </div>
-          </div>
-        </div>
-        <div class="step-sub-head" style="margin-top:16px">Mount type</div>
-        <div class="opt-row" id="grp-mount">
-          <button class="opt-btn sel" onclick="selBtn(this,'grp-mount');updateSpec()">Inside mount</button>
-          <button class="opt-btn" onclick="selBtn(this,'grp-mount');updateSpec()">Outside mount</button>
-        </div>
-        <div style="font-size:11px;color:#888;margin-top:5px">Inside mount requires minimum 2&frac34;&Prime; window depth.</div>
-        <div id="dim-feedback" style="margin-top:10px"></div>
       </div>
     </div>
 
