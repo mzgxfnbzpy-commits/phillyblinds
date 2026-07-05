@@ -954,7 +954,7 @@
         <!-- Step 1: Dimensions -->
         <div class="step-block" style="margin-bottom:14px">
           <div class="step-label">Step 1</div>
-          <div class="step-title">Window measurements</div>
+          <div class="step-title">Window measurements &amp; mount</div>
           <div class="dim-box">
             <div class="dim-box-label">Enter your window size</div>
             <div class="form-row">
@@ -2074,7 +2074,7 @@
     <!-- Step 1: Dimensions -->
     <div class="step-block">
       <div class="step-label">Step 1</div>
-      <div class="step-title">Dimensions</div>
+      <div class="step-title">Window measurements</div>
       <div class="dim-box">
         <div class="dim-box-label">Enter your window size</div>
         <div class="form-row">
@@ -2273,14 +2273,11 @@
       <div class="form-row">
         <div class="form-group">
           <label>Number of shades</label>
-          <select id="ps-qty">
-            <option value="1">1 shade</option>
-            <option value="2">2 shades</option>
-            <option value="3">3 shades</option>
-            <option value="4">4 shades</option>
-            <option value="5">5 shades</option>
-            <option value="6+">6 or more</option>
-          </select>
+          <div class="qty-btns">
+            <button class="qty-btn" type="button" onclick="var n=document.getElementById('ps-qty');n.value=Math.max(1,(parseInt(n.value)||1)-1);psCalc()">&#8722;</button>
+            <input class="qty-num" type="number" id="ps-qty" min="1" max="10" value="1" oninput="psCalc()">
+            <button class="qty-btn" type="button" onclick="var n=document.getElementById('ps-qty');n.value=Math.min(10,(parseInt(n.value)||1)+1);psCalc()">&#43;</button>
+          </div>
         </div>
         <div class="form-group">
           <label>Room / window location</label>
