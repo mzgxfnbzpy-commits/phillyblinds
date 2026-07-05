@@ -278,14 +278,6 @@ function adjQty(d) {
   setQtyVal(parseInt(el.value));
 }
 
-// ── STEP 2 ────────────────────────────────────────────────────────────────────
-document.getElementById('room-label').addEventListener('input',function(){
-  S.room=this.value.trim();
-  document.getElementById('val2').textContent=S.room||'—';
-  sp('sp-room',S.room);
-  document.getElementById('step2').classList.add('done');
-});
-
 // ── MOUNT (Step 1) ────────────────────────────────────────────────────────────
 function setMount(m, el) {
   S.mount=m; selBtn(el,'grp-mount');
@@ -333,7 +325,7 @@ function validateDims() {
     document.getElementById('step1').classList.add('done');
     document.getElementById('val1').textContent=S.width+'" W &times; '+S.length+'" L';
     sp('sp-size',S.width+'" × '+S.length+'"');
-    openNext('step2');
+    openNext('step5');
   }
   fb.innerHTML=html;
   validate2on1(); updateSpec();
@@ -757,7 +749,6 @@ function submitQuote() {
     'ORDER DETAILS',
     'Product: Wallace Portfolio Collection Fabric Roman Shades',
     'Quantity: '+S.qty+' shade(s)',
-    'Room/Window: '+(S.room||'—'),
     'Mount: '+(S.mount==='inside'?'Inside mount':'Outside mount'),
     'Width: '+S.width+'"',
     'Length: '+S.length+'"','',
@@ -824,9 +815,3 @@ var p=isHob?getPriceHobbled(w,l,f.priceGroup):getPriceFlat(w,l,f.priceGroup,f.no
 renderFabricGrid();
 // Initialize quantity spec (qty defaults to 1)
 setQtyVal(1);
-document.getElementById('room-label').addEventListener('input',function(){
-  S.room=this.value.trim();
-  document.getElementById('val2').textContent=S.room||'—';
-  sp('sp-room',S.room);
-  if(S.room)document.getElementById('step2').classList.add('done');
-});

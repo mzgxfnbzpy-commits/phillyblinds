@@ -1,4 +1,4 @@
-﻿var S={prod:'',opacity:'lf',fabric:null,fabFilter:'all',w:0,h:0,ctrl:'',motorType:'std-li',cassColor:'White',cassette:'rounded',qty:1,room:'',del:'ship'};
+﻿var S={prod:'',opacity:'lf',fabric:null,fabFilter:'all',w:0,h:0,ctrl:'',motorType:'std-li',cassColor:'White',cassette:'rounded',qty:1,del:'ship'};
 
 // ── FABRIC DATA — Portfolio Dual Sheer (Wallace 2026 PDF) ─────────────────────
 var FABRICS=[
@@ -468,7 +468,6 @@ function adjQty(d){
   el.value=Math.max(1,Math.min(50,(parseInt(el.value)||1)+d));
   setQtyInp(el.value);
 }
-document.getElementById('room-lbl').addEventListener('input',function(){S.room=this.value.trim();updateSpec();});
 
 // ── STEP 7 ────────────────────────────────────────────────────────────────────
 function setDel(opt,card){
@@ -602,7 +601,6 @@ function submitQ(){
     'ORDER DETAILS',
     'Product: '+(S.prod==='dual'?'Wallace Portfolio Dual Sheer Shades':'Wallace Banded 2D Shades'),
     'Quantity: '+S.qty+' shade(s)',
-    'Room: '+(S.room||'—'),
     'Width: '+S.w+'"','Height: '+S.h+'"','Mount: '+mount,''
   ].concat(S.prod==='dual'?[
     'FABRIC',

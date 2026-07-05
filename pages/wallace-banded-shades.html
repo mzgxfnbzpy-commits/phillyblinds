@@ -354,9 +354,7 @@
 <div class="step-block" id="step6">
   <div class="step-head" onclick="tog('step6')"><div class="step-num">6</div><div class="step-head-title">Options</div><div class="step-head-val" id="val6">&mdash;</div></div>
   <div class="step-body">
-    <div class="step-sub" style="margin-top:0">Room / window label</div>
-    <input type="text" id="room-lbl" placeholder="e.g. Living room &mdash; east window" style="width:100%;padding:9px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box" oninput="updateSpec()">
-    <div class="step-sub">Side-by-side pattern matching</div>
+    <div class="step-sub" style="margin-top:0">Side-by-side pattern matching</div>
     <div class="opt-row" id="grp-sbs">
       <button class="opt-btn sel" onclick="selB(this,'grp-sbs')">No</button>
       <button class="opt-btn" onclick="selB(this,'grp-sbs');document.getElementById('sbs-note').style.display=''">Yes &mdash; pattern matched</button>
@@ -447,7 +445,6 @@ document.getElementById('pb-final-step').innerHTML =
   pbCtx.prefill('inp-w',   'w',   function(v) { validateDims(); });
   pbCtx.prefill('inp-h',   'h',   function(v) { validateDims(); });
   pbCtx.prefill('qty-inp', 'qty', function(v) { setQtyInp(v); });
-  pbCtx.prefill('room-lbl','room', null);
 })();
 </script>
 </body>

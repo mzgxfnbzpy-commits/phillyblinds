@@ -611,7 +611,6 @@ function submitQuote(){
     '',
     'QUANTITY & DELIVERY:',
     'Quantity: '+qty+' shade'+(qty>1?'s':''),
-    'Room/window: '+(document.getElementById('room-label').value.trim()||'—'),
     'Delivery: '+'Ship (UPS/FedEx)',
     '',
     'NOTES:',

@@ -663,7 +663,6 @@ function submitQuote(){
     'Motor accessories: '+(motorAccs.length?motorAccs.join(', '):'None'),
     'Accessories: '+(accs.length?accs.join(', '):'None'),
     '',
-    'Room/window: '+(document.getElementById('room-label').value.trim()||'—'),
     'Delivery: '+'Ship to me (UPS/FedEx)',
     '',
     'Notes: '+(document.getElementById('cf-notes').value.trim()||'None'),

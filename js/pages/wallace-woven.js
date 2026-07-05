@@ -261,7 +261,7 @@ function getStack(w) {
 
 /* ── State ── */
 const S = {
-  collection:'', productType:'', qty:1, roomLabel:'',
+  collection:'', productType:'', qty:1,
   mountType:'', w:0, h:0, pattern:null,
   shadeStyle:'', multi:'none', twin:false,
   openingStyle:'', trackColor:'', bracketType:'',
@@ -816,7 +816,6 @@ function submitQuote() {
     'PRODUCT CONFIGURATION',
     'Collection: Wallace '+coll,
     'Product Type: '+prod,
-    'Room / Label: '+(S.roomLabel||'Not specified'),
     'Quantity: '+S.qty,
     'Mount Type: '+S.mountType,
     'Width: '+S.w+'"',

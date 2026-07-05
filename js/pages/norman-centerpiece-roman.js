@@ -1,6 +1,6 @@
 // ── STATE ─────────────────────────────────────────────────────────────────────
 var S = {
-  type:'', qty:1, room:'', lift:'', headrail:'1.5',
+  type:'', qty:1, lift:'', headrail:'1.5',
   width:0, height:0, mount:'Inside mount', style:'',
   fabric:null, lining:'Translucent', banding:'none',
   ribbonColor:null, edgeBase:null, edgeBorder:null,
@@ -140,7 +140,7 @@ function setType(type, el) {
   document.querySelectorAll('#grp-lift .opt-btn,#grp-lift-dn .opt-btn').forEach(function(b){b.classList.remove('sel');});
   document.getElementById('val3').textContent = '—';
   validateBanding(); updateSpec(); updateCalc();
-  openNext('step2');
+  openNext('step3');
 }
 
 // ── STEP 2 ────────────────────────────────────────────────────────────────────
@@ -467,9 +467,7 @@ function setDelivery(opt,card) {
 // ── SPEC PANEL ────────────────────────────────────────────────────────────────
 function updateSpec() {
   sp('sp-type', S.type==='standard'?'Standard Centerpiece Roman':S.type==='dn'?'Day & Night':'');
-  var room=document.getElementById('room-label').value.trim(); S.room=room;
-  var val2El=document.getElementById('val2'); if(val2El) val2El.textContent=room||'—';
-  sp('sp-qty', S.qty?(S.qty+' shade'+(S.qty>1?'s':''))+(room?' · '+room:''):'');
+  sp('sp-qty', S.qty?(S.qty+' shade'+(S.qty>1?'s':'')):'');
   sp('sp-lift', S.lift?(LIFT_LIMITS[S.lift]&&LIFT_LIMITS[S.lift].label)||S.lift:'');
   sp('sp-size', S.width&&S.height ? S.width+'"×'+S.height+'"' : '');
   var mountBtn=document.querySelector('#grp-mount .opt-btn.sel');
@@ -569,13 +567,13 @@ function submitQuote() {
   if(!name)         errs.push('Name required.');
   if(!phone)        errs.push('Phone required.');
   if(!S.type)       errs.push('Select product type (Step 2).');
-  if(!S.lift)       errs.push('Select lift system (Step 4).');
+  if(!S.lift)       errs.push('Select lift system (Step 3).');
   if(!S.width||!S.height) errs.push('Enter dimensions (Step 1).');
-  if(!S.style)      errs.push('Select shade style (Step 5).');
-  if(!S.fabric)     errs.push('Select fabric (Step 6).');
-  if(S.type==='dn'&&!S.rollerFabric) errs.push('Select D&N rear roller fabric (Step 9).');
-  if(S.banding==='ribbon'&&!S.ribbonColor) errs.push('Select ribbon banding color (Step 8).');
-  if(S.banding==='edge'&&(!S.edgeBase||!S.edgeBorder)) errs.push('Select base and border colors for edge banding (Step 8).');
+  if(!S.style)      errs.push('Select shade style (Step 4).');
+  if(!S.fabric)     errs.push('Select fabric (Step 5).');
+  if(S.type==='dn'&&!S.rollerFabric) errs.push('Select D&N rear roller fabric (Step 8).');
+  if(S.banding==='ribbon'&&!S.ribbonColor) errs.push('Select ribbon banding color (Step 7).');
+  if(S.banding==='edge'&&(!S.edgeBase||!S.edgeBorder)) errs.push('Select base and border colors for edge banding (Step 7).');
   if(S.banding==='edge'&&S.edgeBase&&S.edgeBorder&&S.edgeBase.code===S.edgeBorder.code) errs.push('Edge banding: base and border must be different colors.');
   if(errs.length){errEl.innerHTML='⚠ Please complete: '+errs.join(' ');errEl.style.display='';document.getElementById('step15').scrollIntoView({behavior:'smooth',block:'start'});return;}
   errEl.style.display='none';
@@ -598,7 +596,6 @@ function submitQuote() {
     'CONFIGURATION',
     'Product: Norman Centerpiece™ Roman Shades — '+(S.type==='dn'?'Day & Night':'Standard'),
     'Quantity: '+S.qty+' shade(s)',
-    'Room/Window: '+(S.room||'—'),
     'Width: '+S.width+'"','Height: '+S.height+'"','Mount: '+mount,
     'Lift system: '+liftLabel+((S.lift==='ccl'||S.lift==='ccl-dn')?' — '+S.headrail+'" headrail':''),
     'Shade style: '+(sLabels[S.style]||S.style),'',
@@ -621,7 +618,6 @@ function submitQuote() {
 renderFabricGrid();
 renderRollerGrid();
 setQtyVal(1);
-document.getElementById('room-label').addEventListener('input', updateSpec);
 
 // Prefill from the custom Roman → Norman hand-off (soft-treatments.html ?w=&h=&qty=)
 (function(){
