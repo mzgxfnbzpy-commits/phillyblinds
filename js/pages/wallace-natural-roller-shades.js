@@ -131,10 +131,19 @@ function selectMount(m) {
   document.getElementById('mc-in').classList.toggle('sel', m === 'inside');
   document.getElementById('mc-out').classList.toggle('sel', m === 'outside');
   var label = m === 'inside' ? 'Inside Mount' : 'Outside Mount';
-  completeStep('step-1', label);
   updateSpec('sp-mount', label);
   validateSize();
-  activateStep('step-2');
+  maybeAdvanceMeasure();
+}
+
+// Step 1 combines width/height + mount + quantity — advance once size is valid and mount picked.
+function maybeAdvanceMeasure() {
+  if (S.width > 0 && S.height > 0 && S.mount &&
+      document.getElementById('size-computed').style.display !== 'none') {
+    var ml = S.mount === 'inside' ? 'Inside Mount' : 'Outside Mount';
+    completeStep('step-1', S.width + '" × ' + S.height + '" · ' + ml);
+    activateStep('step-4');
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -160,7 +169,7 @@ function validateSize() {
     if (!errors.length) {
       msgs.innerHTML += '<div class="size-ok">✓ Dimensions within specification.</div>';
       updateSpec('sp-dims', w + '" × ' + h + '"');
-      document.getElementById('s2-val').textContent = w + '" × ' + h + '"';
+      document.getElementById('s1-val').textContent = w + '" × ' + h + '"';
 
       // Approximate fabric width
       var ded = getDeduction();
@@ -169,7 +178,7 @@ function validateSize() {
       document.getElementById('cp-fabW').textContent = fabW + '"';
       document.getElementById('size-computed').style.display = 'block';
 
-      if (!document.getElementById('step-3').classList.contains('done')) activateStep('step-3');
+      maybeAdvanceMeasure();
     } else {
       document.getElementById('size-computed').style.display = 'none';
     }
@@ -180,14 +189,14 @@ function validateSize() {
 
 function validateQty() {
   var qty = parseInt(document.getElementById('inp-qty').value) || 1;
+  if (qty < 1) qty = 1;
   S.qty = qty;
   updateRoomLabels(qty);
   S.room = getRoomLabels();
-  var label = qty + ' shade' + (qty !== 1 ? 's' : '') + (S.room ? ' · ' + S.room : '');
-  document.getElementById('s3-val').textContent = label;
   updateSpec('sp-qty', qty);
-  completeStep('step-3', label);
-  activateStep('step-4');
+  var label = qty + ' shade' + (qty !== 1 ? 's' : '') + (S.room ? ' · ' + S.room : '');
+  var rel = document.getElementById('s3-val');
+  if (rel) rel.textContent = label;
 }
 
 function updateRoomLabels(qty) {

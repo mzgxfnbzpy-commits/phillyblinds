@@ -137,20 +137,44 @@
 
   <div class="info-box" style="margin-bottom:16px"><strong>Wallace Portfolio Collection</strong> &mdash; 83 fabrics from 27 collections extracted from PDF pages 3&ndash;5. Fabrics marked <strong style="color:#dc2626">NO FLAT</strong> cannot use Flat panel style. A few color names marked <strong style="color:#f59e0b">PDF CONFIRM</strong> need verification. Caravello fabrics have TDBU N.</div>
 
-  <!-- STEP 1: Number of shades -->
+  <!-- STEP 1: WINDOW MEASUREMENTS & MOUNT -->
   <div class="step-block active" id="step1">
     <div class="step-head" onclick="toggleStep('step1')">
       <div class="step-num">1</div>
-      <div class="step-head-title">Quantity</div>
-      <div class="step-head-val" id="val1">1 shade</div>
+      <div class="step-head-title">Window measurements &amp; mount</div>
+      <div class="step-head-val" id="val1">&mdash;</div>
     </div>
     <div class="step-body">
-      <div style="display:flex;align-items:center;gap:0;margin-bottom:4px">
-        <button onclick="adjQty(-1)" style="width:36px;height:36px;border:1.5px solid #ddd;border-radius:8px 0 0 8px;background:#fff;font-size:20px;cursor:pointer;color:#333;font-family:inherit">−</button>
-        <input type="number" id="qty-inp" value="1" min="1" max="50" oninput="setQtyVal(parseInt(this.value)||1)" style="width:52px;height:36px;text-align:center;border-top:1.5px solid #ddd;border-bottom:1.5px solid #ddd;border-left:none;border-right:none;font-size:14px;font-weight:500;font-family:inherit;background:#fff">
-        <button onclick="adjQty(1)" style="width:36px;height:36px;border:1.5px solid #ddd;border-radius:0 8px 8px 0;background:#fff;font-size:20px;cursor:pointer;color:#333;font-family:inherit">+</button>
+      <div class="dim-box">
+        <div class="dim-box-label">Enter your window size</div>
+        <div class="form-row">
+          <div class="form-group"><label>Width</label><input type="number" id="inp-w" min="12" max="96" step="0.125" placeholder="48" oninput="validateDims()"><div class="dim-unit">inches &middot; to nearest 1/8&Prime;</div></div>
+          <div class="form-group"><label>Length</label><input type="number" id="inp-l" min="12" max="96" step="0.125" placeholder="60" oninput="validateDims()"><div class="dim-unit">inches &middot; to nearest 1/8&Prime;</div></div>
+        </div>
       </div>
-      <div style="font-size:11px;color:#888;margin-top:6px">Need different sizes per shade? Each shade is quoted at the same size — note any size differences in the notes field.</div>
+      <div class="step-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; For inside mount, give the exact window opening &mdash; we apply the standard 1/4&Prime; deduction. Approximate is fine; we confirm at the home visit.</div>
+      <div id="roman-valance-height-note" class="info-box" style="display:none;margin-top:10px">
+        <strong>Roman Valance &mdash; Total Height:</strong> Enter the <strong>total height including all folds and spacing</strong>, not just the visible face. A Roman Valance is priced and fabricated to the full folded height.<br>
+        Example: 12&Prime; visible face + 3 folds &times; 8&Prime; each = 36&Prime; total height. Enter 36&Prime; here.
+      </div>
+      <div id="dim-feedback" style="margin-top:10px"></div>
+
+      <!-- Mount type -->
+      <div style="font-size:12px;font-weight:600;color:#555;margin:14px 0 6px">Mount type</div>
+      <div class="opt-row" id="grp-mount">
+        <button class="opt-btn sel" onclick="setMount('inside',this)">Inside mount</button>
+        <button class="opt-btn" onclick="setMount('outside',this)">Outside mount</button>
+      </div>
+      <div class="step-note" style="margin-bottom:12px">Inside mount sits inside the window frame (manufacturer deducts 1/4&Prime; automatically). Outside mount covers the opening &mdash; returns recommended.</div>
+
+      <!-- Quantity -->
+      <div style="font-size:12px;font-weight:600;color:#555;margin:14px 0 6px">Quantity</div>
+      <div class="qty-btns">
+        <button class="qty-btn" onclick="adjQty(-1)">&#8722;</button>
+        <input class="qty-num" type="number" id="qty-inp" value="1" min="1" max="50" oninput="setQtyVal(parseInt(this.value)||1)">
+        <button class="qty-btn" onclick="adjQty(1)">&#43;</button>
+      </div>
+      <div class="step-note">Number of shades of this size. Each shade is quoted at the same size &mdash; note any size differences in the notes field.</div>
     </div>
   </div>
 
@@ -169,61 +193,10 @@
     </div>
   </div>
 
-  <!-- STEP 3: Mount type -->
-  <div class="step-block" id="step3">
-    <div class="step-head" onclick="toggleStep('step3')">
-      <div class="step-num">3</div>
-      <div class="step-head-title">Mount Type</div>
-      <div class="step-head-val" id="val3">Inside mount</div>
-    </div>
-    <div class="step-body">
-      <div class="opt-row" id="grp-mount">
-        <button class="opt-btn sel" onclick="setMount('inside',this)">Inside mount</button>
-        <button class="opt-btn" onclick="setMount('outside',this)">Outside mount</button>
-      </div>
-      <div class="info-box" style="margin-top:10px">
-        Inside mount: minimum 2¾&Prime; depth (cordless/clutch: 1½&Prime; headrail, flush at 2¾&Prime;; motorized: 2½&Prime; headrail, flush at 3&Prime;). Middle support brackets supplied for shades over 41&Prime; wide. Outside mount: returns are recommended.
-      </div>
-    </div>
-  </div>
-
-  <!-- STEP 4: Dimensions -->
-  <div class="step-block" id="step4">
-    <div class="step-head" onclick="toggleStep('step4')">
-      <div class="step-num">4</div>
-      <div class="step-head-title">Width and Length</div>
-      <div class="step-head-val" id="val4">&mdash;</div>
-    </div>
-    <div class="step-body">
-      <div class="dim-row">
-        <div class="dim-field">
-          <div class="dim-label">Width (inches)</div>
-          <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
-            <input class="dim-input" type="number" id="inp-w" min="12" max="96" step="0.125" placeholder="48" oninput="validateDims()">
-            <span class="dim-unit">in</span>
-          </div>
-        </div>
-        <div class="dim-field">
-          <div class="dim-label">Length (inches)</div>
-          <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
-            <input class="dim-input" type="number" id="inp-l" min="12" max="96" step="0.125" placeholder="60" oninput="validateDims()">
-            <span class="dim-unit">in</span>
-          </div>
-        </div>
-      </div>
-      <div style="font-size:11px;color:#888;margin-top:6px">For inside mount, give exact window opening. We apply the standard 1/4&Prime; IB deduction. Measure to nearest 1/8&Prime;.</div>
-      <div id="roman-valance-height-note" class="info-box" style="display:none;margin-top:10px">
-        <strong>Roman Valance &mdash; Total Height:</strong> Enter the <strong>total height including all folds and spacing</strong>, not just the visible face. A Roman Valance is priced and fabricated to the full folded height.<br>
-        Example: 12&Prime; visible face + 3 folds &times; 8&Prime; each = 36&Prime; total height. Enter 36&Prime; here.
-      </div>
-      <div id="dim-feedback" style="margin-top:10px"></div>
-    </div>
-  </div>
-
-  <!-- STEP 5: Shade construction style -->
+  <!-- STEP 3: Shade construction style -->
   <div class="step-block" id="step5">
     <div class="step-head" onclick="toggleStep('step5')">
-      <div class="step-num">5</div>
+      <div class="step-num">3</div>
       <div class="step-head-title">Shade Construction Style</div>
       <div class="step-head-val" id="val5">&mdash;</div>
     </div>
@@ -239,10 +212,10 @@
     </div>
   </div>
 
-  <!-- STEP 6: Panel style -->
+  <!-- STEP 4: Panel style -->
   <div class="step-block" id="step6">
     <div class="step-head" onclick="toggleStep('step6')">
-      <div class="step-num">6</div>
+      <div class="step-num">4</div>
       <div class="step-head-title">Panel Style</div>
       <div class="step-head-val" id="val6">&mdash;</div>
     </div>
@@ -258,10 +231,10 @@
     </div>
   </div>
 
-  <!-- STEP 7: Fabric -->
+  <!-- STEP 5: Fabric -->
   <div class="step-block" id="step7">
     <div class="step-head" onclick="toggleStep('step7')">
-      <div class="step-num">7</div>
+      <div class="step-num">5</div>
       <div class="step-head-title">Fabric Pattern &amp; Color</div>
       <div class="step-head-val" id="val7">&mdash;</div>
     </div>
@@ -280,10 +253,10 @@
     </div>
   </div>
 
-  <!-- STEP 8: Liner -->
+  <!-- STEP 6: Liner -->
   <div class="step-block" id="step8">
     <div class="step-head" onclick="toggleStep('step8')">
-      <div class="step-num">8</div>
+      <div class="step-num">6</div>
       <div class="step-head-title">Liner</div>
       <div class="step-head-val" id="val8">LF03 Light Filtering Ivory</div>
     </div>
@@ -304,10 +277,10 @@
     </div>
   </div>
 
-  <!-- STEP 9: Panel alignment -->
+  <!-- STEP 7: Panel alignment -->
   <div class="step-block" id="step9">
     <div class="step-head" onclick="toggleStep('step9')">
-      <div class="step-num">9</div>
+      <div class="step-num">7</div>
       <div class="step-head-title">Panel Alignment</div>
       <div class="step-head-val" id="val9">Top Panel Aligned</div>
     </div>
@@ -322,10 +295,10 @@
     </div>
   </div>
 
-  <!-- STEP 10: Control type -->
+  <!-- STEP 8: Control type -->
   <div class="step-block" id="step10">
     <div class="step-head" onclick="toggleStep('step10')">
-      <div class="step-num">10</div>
+      <div class="step-num">8</div>
       <div class="step-head-title">Control Type</div>
       <div class="step-head-val" id="val10">&mdash;</div>
     </div>
@@ -408,10 +381,10 @@
     </div>
   </div>
 
-  <!-- STEP 11: Valance returns -->
+  <!-- STEP 9: Valance returns -->
   <div class="step-block" id="step11">
     <div class="step-head" onclick="toggleStep('step11')">
-      <div class="step-num">11</div>
+      <div class="step-num">9</div>
       <div class="step-head-title">Valance Returns</div>
       <div class="step-head-val" id="val11">No returns</div>
     </div>
@@ -434,10 +407,10 @@
     </div>
   </div>
 
-  <!-- STEP 12: 2-on-1 headrail -->
+  <!-- STEP 10: 2-on-1 headrail -->
   <div class="step-block" id="step12">
     <div class="step-head" onclick="toggleStep('step12')">
-      <div class="step-num">12</div>
+      <div class="step-num">10</div>
       <div class="step-head-title">2-on-1 Headrail</div>
       <div class="step-head-val" id="val12">No</div>
     </div>
@@ -461,10 +434,10 @@
     </div>
   </div>
 
-  <!-- STEP 13: Motor accessories (shown only for motor control) -->
+  <!-- STEP 11: Motor accessories (shown only for motor control) -->
   <div class="step-block" id="step13" style="display:none">
     <div class="step-head" onclick="toggleStep('step13')">
-      <div class="step-num">13</div>
+      <div class="step-num">11</div>
       <div class="step-head-title">Motor &mdash; Installation &amp; Notes</div>
       <div class="step-head-val" id="val13">&mdash;</div>
     </div>
@@ -474,10 +447,10 @@
     </div>
   </div>
 
-  <!-- STEP 14: Cut fabric request -->
+  <!-- STEP 12: Cut fabric request -->
   <div class="step-block" id="step14">
     <div class="step-head" onclick="toggleStep('step14')">
-      <div class="step-num">14</div>
+      <div class="step-num">12</div>
       <div class="step-head-title">Cut Fabric Request</div>
       <div class="step-head-val" id="val14">None</div>
     </div>
@@ -496,10 +469,10 @@
     </div>
   </div>
 
-  <!-- STEP 15: Delivery -->
+  <!-- STEP 13: Delivery -->
   <div class="step-block" id="step15">
     <div class="step-head" onclick="toggleStep('step15')">
-      <div class="step-num">15</div>
+      <div class="step-num">13</div>
       <div class="step-head-title">Delivery / Installation</div>
       <div class="step-head-val" id="val15">Ship to me</div>
     </div>
@@ -519,10 +492,10 @@
     </div>
   </div>
 
-  <!-- STEP 16: Contact and quote -->
+  <!-- STEP 14: Contact and quote -->
   <div class="step-block" id="step16">
     <div class="step-head" onclick="toggleStep('step16')">
-      <div class="step-num">16</div>
+      <div class="step-num">14</div>
       <div class="step-head-title">Your Quote Request</div>
       <div class="step-head-val" id="val16">&mdash;</div>
     </div>

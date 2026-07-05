@@ -270,10 +270,7 @@ function sp(id,val) { var el=document.getElementById(id); if(el){el.textContent=
 function setQtyVal(n) {
   n = Math.max(1, Math.min(50, n||1));
   S.qty = n;
-  document.getElementById('val1').textContent = n + (n===1?' shade':' shades');
-  document.getElementById('step1').classList.add('done');
   sp('sp-qty', n + (n===1?' shade':' shades'));
-  openNext('step2');
 }
 function adjQty(d) {
   var el = document.getElementById('qty-inp');
@@ -289,20 +286,18 @@ document.getElementById('room-label').addEventListener('input',function(){
   document.getElementById('step2').classList.add('done');
 });
 
-// ── STEP 3 ────────────────────────────────────────────────────────────────────
+// ── MOUNT (Step 1) ────────────────────────────────────────────────────────────
 function setMount(m, el) {
   S.mount=m; selBtn(el,'grp-mount');
   var label=m==='inside'?'Inside mount':'Outside mount';
-  document.getElementById('val3').textContent=label;
   sp('sp-mount',label);
-  document.getElementById('step3').classList.add('done');
   // Outside mount: extended returns available; inside: standard only
   var extBtn=document.getElementById('btn-ext-returns');
   if(extBtn) extBtn.classList.toggle('blocked',m==='inside');
-  validateTDBU(); validateReturns(); openNext('step4');
+  validateTDBU(); validateReturns(); validateDims();
 }
 
-// ── STEP 4 ────────────────────────────────────────────────────────────────────
+// ── DIMENSIONS (Step 1) ───────────────────────────────────────────────────────
 function validateDims() {
   S.width=parseFloat(document.getElementById('inp-w').value)||0;
   S.length=parseFloat(document.getElementById('inp-l').value)||0;
@@ -335,10 +330,10 @@ function validateDims() {
   if(warns.length) html+=warns.map(function(e){return'<div class="warn-box" style="margin-top:6px">&#9888; '+e+'</div>';}).join('');
   if(!errs.length&&S.width&&S.length){
     html='<div class="ok-box">&#10003; '+S.width+'" W &times; '+S.length+'" L — dimensions accepted.</div>';
-    document.getElementById('step4').classList.add('done');
-    document.getElementById('val4').textContent=S.width+'" W &times; '+S.length+'" L';
+    document.getElementById('step1').classList.add('done');
+    document.getElementById('val1').textContent=S.width+'" W &times; '+S.length+'" L';
     sp('sp-size',S.width+'" × '+S.length+'"');
-    openNext('step5');
+    openNext('step2');
   }
   fb.innerHTML=html;
   validate2on1(); updateSpec();
@@ -704,12 +699,12 @@ function submitQuote() {
   if(!name)         errs.push('Name required.');
   if(!phone)        errs.push('Phone required.');
   if(!S.qty)        errs.push('Select number of shades (Step 1).');
-  if(!S.width||!S.length) errs.push('Enter width and length (Step 4).');
-  if(!S.shadeStyle) errs.push('Select shade construction style (Step 5).');
-  if(!S.panelStyle) errs.push('Select panel style (Step 6).');
-  if(!S.fabric)     errs.push('Select a fabric (Step 7).');
-  if(!S.control&&S.shadeStyle!=='roman-valance') errs.push('Select control type (Step 10).');
-  if(S.control==='motor'&&!S.motorType&&S.shadeStyle!=='roman-valance') errs.push('Select motor type (Step 10).');
+  if(!S.width||!S.length) errs.push('Enter width and length (Step 1).');
+  if(!S.shadeStyle) errs.push('Select shade construction style (Step 3).');
+  if(!S.panelStyle) errs.push('Select panel style (Step 4).');
+  if(!S.fabric)     errs.push('Select a fabric (Step 5).');
+  if(!S.control&&S.shadeStyle!=='roman-valance') errs.push('Select control type (Step 8).');
+  if(S.control==='motor'&&!S.motorType&&S.shadeStyle!=='roman-valance') errs.push('Select motor type (Step 8).');
 
   // Validation warnings to flag in email
   var validationFlags=[];
@@ -827,7 +822,7 @@ var p=isHob?getPriceHobbled(w,l,f.priceGroup):getPriceFlat(w,l,f.priceGroup,f.no
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 renderFabricGrid();
-// Auto-advance step 1 since qty defaults to 1 (valid)
+// Initialize quantity spec (qty defaults to 1)
 setQtyVal(1);
 document.getElementById('room-label').addEventListener('input',function(){
   S.room=this.value.trim();
