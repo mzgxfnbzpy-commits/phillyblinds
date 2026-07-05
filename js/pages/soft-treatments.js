@@ -1075,6 +1075,8 @@ async function submitCornice() {
     { label: 'Width',        value: (document.getElementById('cv-corn-w').value||'—') + '"' },
     { label: 'Height',       value: (document.getElementById('cv-corn-h').value||'—') + '"' },
     { label: 'Return depth', value: (document.getElementById('cv-corn-return').value||'4') + '"' },
+    { label: 'Mount',        value: getOpt('grp-cv-corn-mount') || '—' },
+    { label: 'Quantity',     value: ((document.getElementById('cv-corn-qty')||{}).value) || '1' },
     { label: 'Finishing',    value: getOpt('grp-corn-trim') || '—' },
     { label: 'Fabric',       value: getOpt('grp-corn-fabric') || '—' },
     { label: 'Delivery',     value: 'Ship to me (UPS/FedEx)' },
@@ -1093,6 +1095,8 @@ async function submitValanceCv() {
     { label: 'Width',        value: (document.getElementById('cv-val-w').value||'—') + '"' },
     { label: 'Height',       value: (document.getElementById('cv-val-h').value||'—') + '"' },
     { label: 'Return depth', value: (document.getElementById('cv-val-return').value||'4') + '"' },
+    { label: 'Mount',        value: getOpt('grp-cv-val-mount') || '—' },
+    { label: 'Quantity',     value: ((document.getElementById('cv-val-qty')||{}).value) || '1' },
     { label: 'Finishing',    value: getOpt('grp-val-trim') || '—' },
     { label: 'Fabric',       value: getOpt('grp-val-fabric') || '—' },
     { label: 'Delivery',     value: 'Ship to me (UPS/FedEx)' }
