@@ -234,10 +234,8 @@ function pickMount(el,key){
 
 function calcDims(){
   const wW=parseFloat(document.getElementById('w-whole').value)||0;
-  const wF=parseFloat(document.getElementById('w-frac').value)||0;
   const hW=parseFloat(document.getElementById('h-whole').value)||0;
-  const hF=parseFloat(document.getElementById('h-frac').value)||0;
-  S.w=+(wW+wF).toFixed(3); S.h=+(hW+hF).toFixed(3);
+  S.w=+wW.toFixed(3); S.h=+hW.toFixed(3);
   const msg=document.getElementById('dim-msg');
   const dd=document.getElementById('dim-deduct');
   msg.style.display='none'; dd.style.display='none';
@@ -448,6 +446,16 @@ function pickDel(btn,key){
   btn.classList.add('sel');
   S.del=key;
     }
+
+// ── QUANTITY STEPPER ─────────────────────────────────────────────────────────
+function adjQty(delta){
+  const inp=document.getElementById('qty');
+  if(!inp) return;
+  let v=(parseInt(inp.value)||1)+delta;
+  if(v<1) v=1; if(v>50) v=50;
+  inp.value=v;
+  updateSpec();
+}
 
 // ── SPEC PANEL ─────────────────────────────────────────────────────────────
 function updateSpec(){

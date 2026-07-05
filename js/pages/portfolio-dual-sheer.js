@@ -291,7 +291,7 @@ function doneStep(n,label){
 }
 function editStep(n){
   // Re-activate this step, hide all later steps
-  for(let i=n;i<=14;i++){
+  for(let i=n;i<=12;i++){
     const el=document.getElementById('s'+i);
     if(!el) continue;
     if(i===n){ el.classList.add('active'); el.classList.remove('done'); }
@@ -309,16 +309,61 @@ function advance(fromStep, label){
   showStep(fromStep+1);
 }
 
-/* ── STEP 1: Type ── */
+/* ── STEP 1: Window measurements & mount ── */
+function pickMount(m,el){
+  S.mount=m;
+  document.querySelectorAll('#mount-opts .opt-btn').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+  const note=document.getElementById('dim-note-mount');
+  if(note) note.textContent=
+    m==='inside'?'Inside mount: enter the window opening size. A ¼" deduction will be made to the shade width.':
+    'Outside mount: enter the desired finished shade width and height.';
+}
+function dimChanged(){
+  const w=parseFloat(document.getElementById('inp-w').value)||0;
+  const h=parseFloat(document.getElementById('inp-h').value)||0;
+  const we=document.getElementById('w-err');
+  const he=document.getElementById('h-err');
+  if(we) we.classList.remove('show');
+  if(he) he.classList.remove('show');
+  if(w>0 && w>110){ we.textContent='Maximum width is 110". Please adjust.'; we.classList.add('show'); }
+  else if(w>0 && w<16){ we.textContent='Minimum width is 16".'; we.classList.add('show'); }
+  if(h>0 && h>108){ he.textContent='Maximum height is 108".'; he.classList.add('show'); }
+  else if(h>0 && h<20){ he.textContent='Minimum height is 20".'; he.classList.add('show'); }
+  updatePrice();
+}
+function confirmStep1(){
+  const w=parseFloat(document.getElementById('inp-w').value)||0;
+  const h=parseFloat(document.getElementById('inp-h').value)||0;
+  if(!w||!h){ alert('Please enter both width and height.'); return; }
+  if(w<16){ alert('Minimum width is 16".'); return; }
+  if(w>110){ alert('Maximum width is 110".'); return; }
+  if(h<20){ alert('Minimum height is 20".'); return; }
+  if(h>108){ alert('Maximum height is 108".'); return; }
+  if(!S.mount){ alert('Please select a mount type (inside or outside).'); return; }
+  S.width=w; S.height=h;
+  S.qty=parseInt(document.getElementById('qty-inp').value)||1;
+  // Cordless availability based on dims
+  const ctrl=document.getElementById('ctrl-cordless');
+  if(ctrl){ if(w>96||h>99){ ctrl.classList.add('disabled'); if(S.control==='cordless') S.control=null; } else ctrl.classList.remove('disabled'); }
+  // Bottom bar wrap price display (fabric-independent, width-based)
+  const wi=W_COLS.findIndex(c=>w<=c);
+  const bbp=wi>=0?BB_WRAP_PRICES[wi]:0;
+  const bbEl=document.getElementById('bb-wrap-price'); if(bbEl) bbEl.textContent='(+'+fmt(bbp)+')';
+  advance(1, w+'" W × '+h+'" H · '+(S.mount==='inside'?'Inside':'Outside')+' mount · Qty '+S.qty);
+  updatePrice();
+}
+
+/* ── STEP 2: Type ── */
 function pickType(t,el){
   S.type=t;
   document.querySelectorAll('.type-card').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   buildFabricGrid(t);
-  advance(1, t==='LF'?'Light-Filtering':'Blackout');
+  advance(2, t==='LF'?'Light-Filtering':'Blackout');
 }
 
-/* ── STEP 2: Fabric Grid ── */
+/* ── STEP 3: Fabric Grid ── */
 function buildFabricGrid(type){
   const grid=document.getElementById('fabric-grid');
   // Group by pattern name
@@ -354,98 +399,52 @@ function pickFabric(code){
   // Update cassette color recommendation
   const rec=document.getElementById('rec-comp-color');
   if(rec) rec.textContent=f.comp;
-  advance(2, f.name+' — '+f.color+' ('+f.code+') · Grp '+f.grp);
+  // Re-check ordered width against this fabric's max (dims are entered in Step 1)
+  if(S.width && S.width>f.maxW){
+    alert('Note: '+f.name+' has a maximum width of '+f.maxW+'". Your width '+S.width+'" exceeds it — please Edit Step 1 to adjust.');
+  }
+  advance(3, f.name+' — '+f.color+' ('+f.code+') · Grp '+f.grp);
 }
 
-/* ── STEP 3: Mount ── */
-function pickMount(m,el){
-  S.mount=m;
-  document.querySelectorAll('#s3 .opt-btn').forEach(b=>b.classList.remove('sel'));
-  el.classList.add('sel');
-  // Update dim note
-  document.getElementById('dim-note-mount').textContent=
-    m==='inside'?'Enter the window opening size. A ¼" deduction will be made to the shade width for inside mount.':
-    'Enter the desired shade width and height for outside mount.';
-  const f=fab();
-  document.getElementById('w-hint').textContent='Max width: '+f.maxW+'" for '+f.name;
-  advance(3, m==='inside'?'Inside Mount':'Outside Mount');
-}
-
-/* ── STEP 4: Dimensions ── */
-function dimChanged(){
-  const w=parseFloat(document.getElementById('inp-w').value)||0;
-  const h=parseFloat(document.getElementById('inp-h').value)||0;
-  const f=fab(); if(!f) return;
-  const we=document.getElementById('w-err');
-  const he=document.getElementById('h-err');
-  we.classList.remove('show'); he.classList.remove('show');
-  if(w>0 && w>f.maxW){ we.textContent='Max width for '+f.name+' is '+f.maxW+'". Please adjust.'; we.classList.add('show'); }
-  if(w>0 && w<16){ we.textContent='Minimum width is 16".'; we.classList.add('show'); }
-  if(h>0 && h>108){ he.textContent='Maximum height is 108".'; he.classList.add('show'); }
-  if(h>0 && h<20){ he.textContent='Minimum height is 20".'; he.classList.add('show'); }
-  updatePrice();
-}
-function confirmDims(){
-  const w=parseFloat(document.getElementById('inp-w').value)||0;
-  const h=parseFloat(document.getElementById('inp-h').value)||0;
-  if(!w||!h){ alert('Please enter both width and height.'); return; }
-  const f=fab();
-  if(w>f.maxW){ alert('Width '+w+'" exceeds '+f.name+' maximum of '+f.maxW+'".'); return; }
-  if(w<16){ alert('Minimum width is 16".'); return; }
-  if(h>108){ alert('Maximum height is 108".'); return; }
-  if(h<20){ alert('Minimum height is 20".'); return; }
-  S.width=w; S.height=h;
-  // Reset cordless button based on dims
-  const ctrl=document.getElementById('ctrl-cordless');
-  if(w>96||h>99){ ctrl.classList.add('disabled'); if(S.control==='cordless') S.control=null; }
-  else ctrl.classList.remove('disabled');
-  // Update BB wrap price display
-  const wi=W_COLS.findIndex(c=>w<=c);
-  const bbp=wi>=0?BB_WRAP_PRICES[wi]:0;
-  document.getElementById('bb-wrap-price').textContent='(+'+fmt(bbp)+')';
-  advance(4, w+'" W × '+h+'" H');
-  updatePrice();
-}
-
-/* ── STEP 5: Cassette ── */
+/* ── STEP 4: Cassette ── */
 function pickCassette(v,el){
   S.cassette=v;
-  document.querySelectorAll('#s5 .opt-btn').forEach(b=>b.classList.remove('sel'));
+  document.querySelectorAll('#s4 .opt-btn').forEach(b=>b.classList.remove('sel'));
   el.classList.add('sel');
-  advance(5, v==='rounded'?'Rounded cassette':'Square cassette');
-  // Skip step 7 if rounded
+  advance(4, v==='rounded'?'Rounded cassette':'Square cassette');
+  // Skip step 6 (wrap) if rounded
   if(v==='rounded'){
     S.cassWrap=false;
-    document.getElementById('s7').classList.remove('active','done');
+    document.getElementById('s6').classList.remove('active','done');
   }
 }
 
-/* ── STEP 6: Cassette Color ── */
+/* ── STEP 5: Cassette Color ── */
 function pickCassColor(v,el){
   S.cassColor=v;
   document.querySelectorAll('.color-circle-btn').forEach(b=>b.classList.remove('sel'));
   el.classList.add('sel');
   const label=v.charAt(0).toUpperCase()+v.slice(1);
   if(S.cassette==='square'){
-    advance(6, label);
+    advance(5, label);
   } else {
-    doneStep(6, label);
-    // Skip step 7 (wrap) for rounded, go to step 8
-    showStep(8);
+    doneStep(5, label);
+    // Skip step 6 (wrap) for rounded, go to step 7 (bottom bar)
+    showStep(7);
     applyBBRules();
   }
 }
 
-/* ── STEP 7: Cassette Wrap ── */
+/* ── STEP 6: Cassette Wrap ── */
 function pickCassWrap(v,el){
   S.cassWrap=v;
-  document.querySelectorAll('#s7 .opt-btn').forEach(b=>b.classList.remove('sel'));
+  document.querySelectorAll('#s6 .opt-btn').forEach(b=>b.classList.remove('sel'));
   el.classList.add('sel');
-  advance(7, v?'Fabric wrapped (+$80)':'Unwrapped');
+  advance(6, v?'Fabric wrapped (+$80)':'Unwrapped');
   applyBBRules();
 }
 
-/* ── STEP 8: Bottom Bar ── */
+/* ── STEP 7: Bottom Bar ── */
 function applyBBRules(){
   const f=fab(); if(!f) return;
   const isRD=f.type==='RD';
@@ -458,7 +457,7 @@ function applyBBRules(){
   const sqBtn=document.getElementById('bb-sq-btn');
   if(isTory){ sqBtn.classList.add('disabled'); }
   else sqBtn.classList.remove('disabled');
-  showStep(8);
+  showStep(7);
 }
 function pickBBStyle(v,el){
   S.bbStyle=v;
@@ -468,21 +467,21 @@ function pickBBStyle(v,el){
 }
 function pickBBWrap(v,el){
   S.bbWrap=v;
-  document.querySelectorAll('#s8 [onclick^="pickBBWrap"]').forEach(b=>b.classList.remove('sel'));
+  document.querySelectorAll('#s7 [onclick^="pickBBWrap"]').forEach(b=>b.classList.remove('sel'));
   el.classList.add('sel');
   const bbStyle=S.bbStyle||'rounded';
   const bbSz=S.bbLarge?'large':'standard';
-  advance(8, (bbStyle.charAt(0).toUpperCase()+bbStyle.slice(1))+' '+bbSz+(v?' — fabric wrapped':''));
+  advance(7, (bbStyle.charAt(0).toUpperCase()+bbStyle.slice(1))+' '+bbSz+(v?' — fabric wrapped':''));
   updatePrice();
   // Apply cordless BB square block if needed
-  showStep(9);
+  showStep(8);
   const f=fab();
   const cordlessBtn=document.getElementById('ctrl-cordless');
   if(f&&f.tory){ cordlessBtn.classList.add('disabled'); document.getElementById('cordless-tory-warn').classList.add('show'); }
   else { cordlessBtn.classList.remove('disabled'); document.getElementById('cordless-tory-warn').classList.remove('show'); }
 }
 
-/* ── STEP 9: Control ── */
+/* ── STEP 8: Control ── */
 function pickControl(v,el){
   S.control=v;
   document.querySelectorAll('#control-opts .opt-btn').forEach(b=>b.classList.remove('sel'));
@@ -492,14 +491,14 @@ function pickControl(v,el){
   if(v==='cordless') sqBtn.classList.add('disabled');
   buildControlOptions(v);
   const labels={clutch:'Clutch (beaded chain)',cordless:'Cordless (+$192)',prowand:'Pro Wand (+$232)',remote:'Remote Motor (+$460)'};
-  advance(9, labels[v]);
+  advance(8, labels[v]);
   updatePrice();
 }
 
-/* ── STEP 10: Control Options ── */
+/* ── STEP 9: Control Options ── */
 function buildControlOptions(ctrl){
-  const title=document.getElementById('s10-title');
-  const body=document.getElementById('s10-body');
+  const title=document.getElementById('s9-title');
+  const body=document.getElementById('s9-body');
   if(ctrl==='clutch'){
     title.textContent='Clutch Options';
     const cordLens=['19½"','29½"','39"','49"','59"','69"','79"','89"','98"'];
@@ -528,7 +527,7 @@ function buildControlOptions(ctrl){
       '</div>'+
       '<button class="next-btn" onclick="confirmStep10Motor()" style="margin-top:12px">Continue</button>';
   }
-  showStep(10);
+  showStep(9);
 }
 
 function pickCordLen(v,el){ S.cordLen=v; document.querySelectorAll('#cord-len-opts .opt-btn').forEach(b=>b.classList.remove('sel')); el.classList.add('sel'); }
@@ -537,28 +536,28 @@ function pickMotorType(v,el){ S.motorType=v; document.querySelectorAll('#motor-t
 
 function confirmStep10Clutch(){
   const lbl=(S.cordLen||'Standard length')+(S.metalChain?' · Metal chain':'');
-  advance(10, lbl);
+  advance(9, lbl);
   skipS11();
 }
 function confirmStep10Cordless(){
-  advance(10, 'Cordless'+(S.liftAssist?' · Lift assist':''));
+  advance(9, 'Cordless'+(S.liftAssist?' · Lift assist':''));
   skipS11();
 }
 function confirmStep10Wand(){
   if(!S.wandLen){ alert('Please select a wand length.'); return; }
-  advance(10, 'Pro Wand · '+S.wandLen);
+  advance(9, 'Pro Wand · '+S.wandLen);
   skipS11();
 }
 function confirmStep10Motor(){
   if(!S.motorType){ alert('Please select a motor type.'); return; }
   const labels={li:'Rechargeable LI',dc:'12V DC Hardwired','dc-ext':'12V DC External Power',ac:'100-240V AC Hardwired'};
-  advance(10, labels[S.motorType]);
+  advance(9, labels[S.motorType]);
   buildMotorAccessories();
 }
 
-/* ── STEP 11: Motor Accessories ── */
+/* ── STEP 10: Motor Accessories ── */
 function buildMotorAccessories(){
-  const body=document.getElementById('s11-body');
+  const body=document.getElementById('s10-body');
   const t=S.motorType;
   let html='<div class="step-note">Select any additional accessories for your motor. Shades will operate without a remote (smart button on shade). Remotes and hub are optional upgrades.</div>';
   html+='<div style="margin-bottom:14px">';
@@ -582,7 +581,7 @@ function buildMotorAccessories(){
   }
   html+='<button class="next-btn" onclick="confirmStep11()" style="margin-top:12px">Continue</button>';
   body.innerHTML=html;
-  showStep(11);
+  showStep(10);
 }
 function extRow(id,label,sub,price,stateKey){
   return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div class="qty-wrap"><button class="qty-btn" onclick="adjExt(\''+stateKey+'\',-1,\''+id+'\')">−</button><input class="qty-num" type="number" id="'+id+'" value="0" min="0" max="10" style="width:36px;height:30px" oninput="S[\''+stateKey+'\']=parseInt(this.value)||0;updatePrice()"><button class="qty-btn" onclick="adjExt(\''+stateKey+'\',1,\''+id+'\')">+</button></div><div><div class="check-label" style="font-size:12px">'+label+'</div><div class="check-sub">'+sub+'</div></div></div>';
@@ -594,52 +593,41 @@ function confirmStep11(){
   if(S.remote) parts.push('Remote');
   if(S.wallSwitch) parts.push('Wall switch');
   if(S.hub) parts.push('Pro Hub');
-  advance(11, parts.join(' · '));
+  advance(10, parts.join(' · '));
 }
 
 function skipS11(){
-  document.getElementById('s11').classList.remove('active','done');
-  showStep(12);
+  document.getElementById('s10').classList.remove('active','done');
+  showStep(11);
 }
 
-/* ── STEP 12: SBS ── */
+/* ── STEP 11: SBS ── */
 function pickSBS(v,el){
   S.sbs=v;
-  document.querySelectorAll('#s12 .opt-btn').forEach(b=>b.classList.remove('sel'));
+  document.querySelectorAll('#s11 .opt-btn').forEach(b=>b.classList.remove('sel'));
   el.classList.add('sel');
   document.getElementById('sbs-count-wrap').style.display=v?'block':'none';
-  if(!v){ advance(12,'No — independent shades'); showStep(13); }
+  if(!v){ advance(11,'No — independent shades'); showStep(12); updatePrice(); }
 }
 function adjSBS(d){ const el=document.getElementById('sbs-count'); let v=Math.max(2,Math.min(10,(parseInt(el.value)||2)+d)); el.value=v; S.sideCount=v; }
 
-// Need next button for SBS=yes
-document.addEventListener('DOMContentLoaded',function(){
-  const sbsYes=document.querySelector('#s12 .opt-btn:last-of-type');
-});
-
-/* ── STEP 13: Quantity ── */
-function advanceFromQty(){
-  S.qty=parseInt(document.getElementById('qty-inp').value)||1;
-  doneStep(13, 'Qty: '+S.qty);
-  showStep(14);
-  updatePrice();
-}
 function adjQty(d){ const el=document.getElementById('qty-inp'); let v=Math.max(1,Math.min(50,(parseInt(el.value)||1)+d)); el.value=v; S.qty=v; updatePrice(); }
 
 /* ── SBS confirm button (inject after SBS opt-row) ── */
 (function(){
-  const s12body=document.querySelector('#s12 .step-body');
-  if(s12body){
+  const s11body=document.querySelector('#s11 .step-body');
+  if(s11body){
     const btn=document.createElement('button');
     btn.className='next-btn';
     btn.style.marginTop='12px';
-    btn.textContent='Continue';
+    btn.textContent='Continue to Quote';
     btn.onclick=function(){
-      if(S.sbs){ S.sideCount=parseInt(document.getElementById('sbs-count').value)||2; advance(12,'Side-by-side · '+S.sideCount+' shades'); }
-      else advance(12,'Independent');
-      showStep(13);
+      if(S.sbs){ S.sideCount=parseInt(document.getElementById('sbs-count').value)||2; advance(11,'Side-by-side · '+S.sideCount+' shades'); }
+      else advance(11,'Independent');
+      showStep(12);
+      updatePrice();
     };
-    s12body.appendChild(btn);
+    s11body.appendChild(btn);
   }
 })();
 

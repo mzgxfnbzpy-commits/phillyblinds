@@ -6,6 +6,11 @@ function pickColor(name, card) {
   card.classList.add('sel');
 }
 
+function adjQty(d) {
+  var el = document.getElementById('vw-qty');
+  el.value = Math.max(1, Math.min(20, (parseInt(el.value) || 1) + d));
+}
+
 function pickCard(card, groupId) {
   document.querySelectorAll('#' + groupId + ' .delivery-opt-card').forEach(function(c){c.classList.remove('sel');});
   card.classList.add('sel');
@@ -40,7 +45,7 @@ function addWallaceVerticalsToCart(){
   if(!color||color==='—'){ alert('Please select a color before adding to cart.'); return; }
   if(!w||!h){ alert('Please enter width and height before adding to cart.'); return; }
 
-  var mount=document.querySelector('#grp-vw-mount .delivery-opt-card.sel')?.querySelector('.delivery-opt-title')?.textContent.trim()||'—';
+  var mount=document.querySelector('#grp-vw-mount .opt-btn.sel')?.textContent.trim()||'—';
   var valSel=document.querySelector('#grp-vw-valance .delivery-opt-card.sel')?.querySelector('.delivery-opt-title')?.textContent.trim()||'—';
 
   var lines=[
@@ -69,7 +74,7 @@ async function submitVWForm(btn) {
   var email   = document.getElementById('cf-email').value.trim();
   var notes   = document.getElementById('cf-notes').value.trim();
 
-  var mount   = document.querySelector('#grp-vw-mount .delivery-opt-card.sel')?.querySelector('.delivery-opt-title')?.textContent.trim() || '—';
+  var mount   = document.querySelector('#grp-vw-mount .opt-btn.sel')?.textContent.trim() || '—';
   var valSel  = document.querySelector('#grp-vw-valance .delivery-opt-card.sel')?.querySelector('.delivery-opt-title')?.textContent.trim() || '—';
   var hasVal  = valSel.toLowerCase().includes('with');
   var returnSz = hasVal ? getReturnSize() : 'N/A';

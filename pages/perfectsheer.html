@@ -119,38 +119,35 @@
       <div class="step-head-val" id="s1val">—</div>
     </div>
     <div class="step-body">
-      <!-- Width + Height -->
-      <div class="dim-row">
-        <div>
-          <div class="dim-label">Width (inches)</div>
-          <input class="dim-whole" type="number" id="ps-width" min="12" max="110" placeholder="48" oninput="onDimChange()">
-          <div class="dim-unit">CCL: 12–98″ &bull; Motorized: up to 110″</div>
-        </div>
-        <div>
-          <div class="dim-label">Height (inches)</div>
-          <input class="dim-whole" type="number" id="ps-height" min="12" max="120" placeholder="60" oninput="onDimChange()">
-          <div class="dim-unit">CCL: 12–98″ &bull; Motorized: up to 120″</div>
+      <!-- Width + Height (canonical dim-box) -->
+      <div class="dim-box">
+        <div class="dim-box-label">Enter your window size</div>
+        <div class="form-row">
+          <div class="form-group"><label>Width</label><input type="number" id="ps-width" min="12" max="110" step="0.125" placeholder="48" oninput="onDimChange()"><div class="dim-unit">inches &middot; CCL 12&ndash;98&Prime; &middot; Motorized up to 110&Prime;</div></div>
+          <div class="form-group"><label>Height</label><input type="number" id="ps-height" min="12" max="120" step="0.125" placeholder="60" oninput="onDimChange()"><div class="dim-unit">inches &middot; CCL 12&ndash;98&Prime; &middot; Motorized up to 120&Prime;</div></div>
         </div>
       </div>
+      <div class="step-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Measure to the nearest &frac14;&Prime;. For inside mount, give us the exact opening &mdash; we take the deduction.</div>
       <div id="ps-price-note" class="msg-box msg-warn" style="display:none"></div>
-      <div class="step-note">Measure to the nearest ¼″. For inside mount, give us the exact opening — we take the deduction.</div>
 
       <!-- Mount type -->
-      <div class="sub-label">Mount type</div>
-      <div class="opt-row">
+      <div style="font-size:12px;font-weight:600;color:#555;margin:14px 0 6px">Mount type</div>
+      <div class="opt-row" style="margin-bottom:6px">
         <button class="opt-btn" onclick="pickMount(this,'Inside mount')">Inside Mount</button>
         <button class="opt-btn" onclick="pickMount(this,'Outside mount')">Outside Mount</button>
         <button class="opt-btn" onclick="pickMount(this,'Semi-inside mount')">Semi-Inside</button>
       </div>
-      <div class="step-note">Inside: fits inside frame &middot; clean flush look &middot; mfr deducts 3/8″ automatically. Outside: mounts above/outside frame &middot; better light control &middot; covers more wall. Semi-Inside: partially recessed &middot; for shallow window frames.</div>
+      <div class="step-note" style="margin-bottom:12px">Inside: fits inside frame &middot; clean flush look &middot; mfr deducts 3/8&Prime; automatically. Outside: mounts above/outside frame &middot; better light control &middot; covers more wall. Semi-Inside: partially recessed &middot; for shallow window frames.</div>
 
-      <!-- Quantity -->
-      <div class="sub-label">Quantity</div>
-      <div class="spinner-row">
-        <button class="spin-btn" onclick="adjPsQty(-1)">−</button>
-        <span class="spin-num" id="ps-qty-display">1</span>
-        <button class="spin-btn" onclick="adjPsQty(1)">+</button>
-        <span class="spin-label">shades (same size)</span>
+      <!-- Quantity (shared stepper) -->
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="font-size:12px;color:#666">Qty:</span>
+        <div class="qty-btns">
+          <button class="qty-btn" onclick="adjPsQty(-1)">&#8722;</button>
+          <span class="qty-num" id="ps-qty-display">1</span>
+          <button class="qty-btn" onclick="adjPsQty(1)">&#43;</button>
+        </div>
+        <span style="font-size:12px;color:#666">shades (same size)</span>
       </div>
       <div class="step-note">For different sizes, add each shade to cart separately. Freight is calculated on the full order.</div>
     </div>

@@ -75,7 +75,7 @@ function pickColor(el,label,code,printed){
 function pickMount(el,label,val){
   document.querySelectorAll('#step3 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
-  S.mount=val; $('s3val').textContent=label;
+  S.mount=val;
 
   const mn=$('mount-note');
   if(val==='inside'){
@@ -103,15 +103,15 @@ function pickMount(el,label,val){
 
 // ── STEP 4 ────────────────────────────────────────────────────────────────────
 function calcSize(){
-  const w=(parseFloat($('w-whole').value)||0)+(parseFloat($('w-frac').value)||0);
-  const h=(parseFloat($('h-whole').value)||0)+(parseFloat($('h-frac').value)||0);
+  const w=parseFloat($('w-whole').value)||0;
+  const h=parseFloat($('h-whole').value)||0;
   S.w=w; S.h=h; S.sizeOk=false;
 
   const msgs=$('size-msgs');
   const cbox=$('computed-box');
   msgs.innerHTML='';
 
-  if(!w&&!h){ cbox.style.display='none'; $('s4val').textContent='—'; updateWandUI(); calcPrice(); return; }
+  if(!w&&!h){ cbox.style.display='none'; $('s3val').textContent='—'; updateWandUI(); calcPrice(); return; }
 
   const errs=[];
   if(w>0&&w<16.5) errs.push('Minimum width is 16½″.');
@@ -122,7 +122,7 @@ function calcSize(){
 
   if(errs.length){
     errs.forEach(e=>{const d=document.createElement('div');d.className='msg-box msg-err';d.textContent=e;msgs.appendChild(d);});
-    cbox.style.display='none'; $('s4val').textContent='—'; updateWandUI(); updateSideMtUI(); calcPrice(); return;
+    cbox.style.display='none'; $('s3val').textContent='—'; updateWandUI(); updateSideMtUI(); calcPrice(); return;
   }
   if(!w||!h){ cbox.style.display='none'; updateWandUI(); calcPrice(); return; }
 
@@ -131,14 +131,14 @@ function calcSize(){
   if(!pW||!pH){
     const d=document.createElement('div');d.className='msg-box msg-err';
     d.textContent='Size is outside the pricing range. Please call us for a custom quote.';msgs.appendChild(d);
-    cbox.style.display='none'; $('s4val').textContent='—'; updateWandUI(); calcPrice(); return;
+    cbox.style.display='none'; $('s3val').textContent='—'; updateWandUI(); calcPrice(); return;
   }
 
   const wi=W_COLS.indexOf(pW);
   if(MATRIX[pH][wi]===null){
     const d=document.createElement('div');d.className='msg-box msg-err';
     d.textContent='This width × height combination is not available as a standard order. Please call us for a custom quote.';msgs.appendChild(d);
-    cbox.style.display='none'; $('s4val').textContent='—'; updateWandUI(); calcPrice(); return;
+    cbox.style.display='none'; $('s3val').textContent='—'; updateWandUI(); calcPrice(); return;
   }
 
   if(w>=90){
@@ -155,7 +155,7 @@ function calcSize(){
   $('cv-size').textContent=w+'″ W × '+h+'″ H';
   $('cv-pricesize').textContent=pW+'″ W × '+pH+'″ H';
   $('cv-area').textContent=area.toFixed(2)+' sq ft';
-  $('s4val').textContent=w+'″ × '+h+'″';
+  $('s3val').textContent=w+'″ × '+h+'″';
 
   // Hold down brackets
   $('hdb-prompt').style.display='none';
@@ -166,7 +166,7 @@ function calcSize(){
   }
 
   S.sizeOk=true;
-  markDone('step4'); updateWandUI(); updateSideMtUI(); calcPrice();
+  markDone('step3'); updateWandUI(); updateSideMtUI(); calcPrice();
 }
 
 function updateWandUI(){
@@ -236,7 +236,7 @@ function adjQty(d){
 }
 function updateQty(){
   S.qty=Math.max(1,parseInt($('qty-input').value)||1);
-  $('s7val').textContent=S.qty+(S.qty===1?' blind':' blinds'); calcPrice();
+  calcPrice();
 }
 
 // ── DELIVERY ──────────────────────────────────────────────────────────────────
@@ -343,10 +343,10 @@ function submitForm(){
 
   if(!name){ errEl.textContent='Please enter your name.'; errEl.style.display='block'; return; }
   if(!phone&&!email){ errEl.textContent='Please enter a phone number or email address.'; errEl.style.display='block'; return; }
-  if(!S.color){ errEl.textContent='Please select a color in Step 2.'; errEl.style.display='block'; return; }
-  if(!S.mount){ errEl.textContent='Please select a mount type in Step 3.'; errEl.style.display='block'; return; }
-  if(!S.sizeOk){ errEl.textContent='Please enter valid dimensions in Step 4.'; errEl.style.display='block'; return; }
-  if(!S.valance){ errEl.textContent='Please select a valance option in Step 5.'; errEl.style.display='block'; return; }
+  if(!S.color){ errEl.textContent='Please select a color in Step 3.'; errEl.style.display='block'; return; }
+  if(!S.mount){ errEl.textContent='Please select a mount type in Step 1.'; errEl.style.display='block'; return; }
+  if(!S.sizeOk){ errEl.textContent='Please enter valid dimensions in Step 1.'; errEl.style.display='block'; return; }
+  if(!S.valance){ errEl.textContent='Please select a valance option in Step 4.'; errEl.style.display='block'; return; }
 
   const pW=W_COLS.find(v=>v>=S.w);
   const pH=H_ROWS.find(v=>v>=S.h);
@@ -414,10 +414,10 @@ function submitForm(){
 }
 
 function addFauxWoodToCart(){
-  if(!S.color){ alert('Please select a color (Step 2) before adding to cart.'); return; }
-  if(!S.mount){ alert('Please select a mount type (Step 3) before adding to cart.'); return; }
-  if(!S.sizeOk){ alert('Please enter valid dimensions (Step 4) before adding to cart.'); return; }
-  if(!S.valance){ alert('Please select a valance option (Step 5) before adding to cart.'); return; }
+  if(!S.color){ alert('Please select a color (Step 3) before adding to cart.'); return; }
+  if(!S.mount){ alert('Please select a mount type (Step 1) before adding to cart.'); return; }
+  if(!S.sizeOk){ alert('Please enter valid dimensions (Step 1) before adding to cart.'); return; }
+  if(!S.valance){ alert('Please select a valance option (Step 4) before adding to cart.'); return; }
 
   const pW=W_COLS.find(v=>v>=S.w);
   const pH=H_ROWS.find(v=>v>=S.h);
@@ -455,7 +455,7 @@ function addFauxWoodToCart(){
 
 // Init — apply default 2" slat color filter on page load
 document.addEventListener('DOMContentLoaded',()=>{
-  S.slat='2in'; markDone('step1'); $('s7val').textContent='1 blind';
+  S.slat='2in'; markDone('step1');
   // Hide colors not available for 2" slat (Storm Gray Embossed = 2.5in only)
   document.querySelectorAll('#step2 .color-card').forEach(function(card){
     var ds=card.getAttribute('data-slat');

@@ -185,10 +185,54 @@ textarea.form-input{resize:vertical;min-height:80px}
 
 <div class="cfg-wrap">
 
-  <!-- STEP 1: Fabric Type -->
+  <!-- STEP 1: WINDOW MEASUREMENTS & MOUNT -->
   <div class="step-block active" id="s1">
     <div class="step-hd">
       <div class="step-num">1</div>
+      <div><div class="step-title">Window measurements &amp; mount</div><div class="step-sub">Enter your window size — order to the nearest 1/8"</div></div>
+    </div>
+    <div class="step-body">
+      <div class="dim-box">
+        <div class="dim-box-label">Enter your window size</div>
+        <div class="form-row">
+          <div class="form-group"><label>Width</label><input type="number" id="inp-w" min="16" max="110" step="0.125" placeholder="e.g. 36" oninput="dimChanged()"><div class="dim-unit">inches &middot; 16&Prime; min &middot; 110&Prime; max</div></div>
+          <div class="form-group"><label>Height</label><input type="number" id="inp-h" min="20" max="108" step="0.125" placeholder="e.g. 72" oninput="dimChanged()"><div class="dim-unit">inches &middot; 20&Prime; min &middot; 108&Prime; max (99&Prime; for cordless)</div></div>
+        </div>
+      </div>
+      <div class="step-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine — we confirm at the home visit.</div>
+      <div class="step-note" id="dim-note-mount">Measure your window opening. For Inside Mount, ¼" will be deducted from width.</div>
+      <div class="dim-hint" id="w-hint">Max width 110" · varies slightly by fabric</div>
+      <div class="dim-err" id="w-err"></div>
+      <div class="dim-err" id="h-err"></div>
+      <div class="step-warn" id="dim-warn-sbs">If ordering side-by-side, all shades must be the exact same length for band matching.</div>
+
+      <!-- Mount type -->
+      <div style="font-size:12px;font-weight:600;color:#555;margin:14px 0 6px">Mount type</div>
+      <div class="opt-row" id="mount-opts" style="margin-bottom:6px">
+        <button class="opt-btn opt-btn-lg" onclick="pickMount('inside',this)">Inside mount</button>
+        <button class="opt-btn opt-btn-lg" onclick="pickMount('outside',this)">Outside mount</button>
+      </div>
+      <div class="step-note" style="margin-bottom:12px">Inside Mount: shade installs inside the window frame — ¼" deducted from ordered width. Outside Mount: shade mounts on the wall or frame above the window.</div>
+
+      <!-- Quantity (shared stepper) -->
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="font-size:12px;color:#666">Qty:</span>
+        <div class="qty-btns">
+          <button class="qty-btn" onclick="adjQty(-1)">&#8722;</button>
+          <input class="qty-num" type="number" id="qty-inp" value="1" min="1" max="50" oninput="S.qty=parseInt(this.value)||1;updatePrice()">
+          <button class="qty-btn" onclick="adjQty(1)">&#43;</button>
+        </div>
+        <span style="font-size:12px;color:#666">shade(s) of this size &amp; fabric</span>
+      </div>
+      <button class="next-btn" onclick="confirmStep1()" id="dim-next-btn">Continue</button>
+    </div>
+    <div class="step-done-row"><span class="step-done-val" id="d1"></span><button class="step-edit-btn" onclick="editStep(1)">Edit</button></div>
+  </div>
+
+  <!-- STEP 2: Fabric Type -->
+  <div class="step-block" id="s2">
+    <div class="step-hd">
+      <div class="step-num">2</div>
       <div><div class="step-title">Fabric Type</div><div class="step-sub">Choose light-filtering or Blackout</div></div>
     </div>
     <div class="step-body">
@@ -203,69 +247,25 @@ textarea.form-input{resize:vertical;min-height:80px}
         </div>
       </div>
     </div>
-    <div class="step-done-row"><span class="step-done-val" id="d1"></span><button class="step-edit-btn" onclick="editStep(1)">Edit</button></div>
+    <div class="step-done-row"><span class="step-done-val" id="d2"></span><button class="step-edit-btn" onclick="editStep(2)">Edit</button></div>
   </div>
 
-  <!-- STEP 2: Fabric Pattern -->
-  <div class="step-block" id="s2">
+  <!-- STEP 3: Fabric Pattern -->
+  <div class="step-block" id="s3">
     <div class="step-hd">
-      <div class="step-num">2</div>
+      <div class="step-num">3</div>
       <div><div class="step-title">Select Fabric &amp; Color</div><div class="step-sub">Group A is best value · Group E is premium</div></div>
     </div>
     <div class="step-body">
       <div id="fabric-grid" class="pattern-grid"></div>
     </div>
-    <div class="step-done-row"><span class="step-done-val" id="d2"></span><button class="step-edit-btn" onclick="editStep(2)">Edit</button></div>
-  </div>
-
-  <!-- STEP 3: Mount Type -->
-  <div class="step-block" id="s3">
-    <div class="step-hd">
-      <div class="step-num">3</div>
-      <div><div class="step-title">Mount Type</div></div>
-    </div>
-    <div class="step-body">
-      <div class="step-note">Inside Mount: shade installs inside the window frame — ¼" deducted from ordered width.<br>Outside Mount: shade mounts on the wall or frame above the window.</div>
-      <div class="opt-row">
-        <button class="opt-btn opt-btn-lg" onclick="pickMount('inside',this)">Inside Mount</button>
-        <button class="opt-btn opt-btn-lg" onclick="pickMount('outside',this)">Outside Mount</button>
-      </div>
-    </div>
     <div class="step-done-row"><span class="step-done-val" id="d3"></span><button class="step-edit-btn" onclick="editStep(3)">Edit</button></div>
   </div>
 
-  <!-- STEP 4: Dimensions -->
+  <!-- STEP 4: Cassette Profile -->
   <div class="step-block" id="s4">
     <div class="step-hd">
       <div class="step-num">4</div>
-      <div><div class="step-title">Dimensions</div><div class="step-sub">Enter your window size — order to the nearest 1/8"</div></div>
-    </div>
-    <div class="step-body">
-      <div class="step-note" id="dim-note-mount">Measure your window opening. For Inside Mount, ¼" will be deducted from width.</div>
-      <div class="dims-grid">
-        <div class="dim-group">
-          <label>Width (inches)</label>
-          <input class="dim-input" type="number" id="inp-w" min="1" max="110" step="0.125" placeholder="e.g. 36" oninput="dimChanged()">
-          <div class="dim-hint" id="w-hint">Max width for selected fabric</div>
-          <div class="dim-err" id="w-err"></div>
-        </div>
-        <div class="dim-group">
-          <label>Height / Length (inches)</label>
-          <input class="dim-input" type="number" id="inp-h" min="1" max="108" step="0.125" placeholder="e.g. 72" oninput="dimChanged()">
-          <div class="dim-hint">Min 20" · Max 108" (99" for cordless)</div>
-          <div class="dim-err" id="h-err"></div>
-        </div>
-      </div>
-      <div class="step-warn" id="dim-warn-sbs">If ordering side-by-side, all shades must be the exact same length for band matching.</div>
-      <button class="next-btn" onclick="confirmDims()" id="dim-next-btn">Continue</button>
-    </div>
-    <div class="step-done-row"><span class="step-done-val" id="d4"></span><button class="step-edit-btn" onclick="editStep(4)">Edit</button></div>
-  </div>
-
-  <!-- STEP 5: Cassette Profile -->
-  <div class="step-block" id="s5">
-    <div class="step-hd">
-      <div class="step-num">5</div>
       <div><div class="step-title">Cassette Profile</div></div>
     </div>
     <div class="step-body">
@@ -275,13 +275,13 @@ textarea.form-input{resize:vertical;min-height:80px}
         <button class="opt-btn opt-btn-lg" onclick="pickCassette('square',this)">Square <span style="font-size:11px;color:#888">(unwrapped standard)</span></button>
       </div>
     </div>
-    <div class="step-done-row"><span class="step-done-val" id="d5"></span><button class="step-edit-btn" onclick="editStep(5)">Edit</button></div>
+    <div class="step-done-row"><span class="step-done-val" id="d4"></span><button class="step-edit-btn" onclick="editStep(4)">Edit</button></div>
   </div>
 
-  <!-- STEP 6: Cassette Color -->
-  <div class="step-block" id="s6">
+  <!-- STEP 5: Cassette Color -->
+  <div class="step-block" id="s5">
     <div class="step-hd">
-      <div class="step-num">6</div>
+      <div class="step-num">5</div>
       <div><div class="step-title">Cassette &amp; Hardware Color</div><div class="step-sub">Bottom bar and cord color will match</div></div>
     </div>
     <div class="step-body">
@@ -296,13 +296,13 @@ textarea.form-input{resize:vertical;min-height:80px}
       </div>
       <div class="step-note" style="margin-top:8px">Tip: choose the color that matches your selected fabric's recommended component color: <strong id="rec-comp-color">—</strong></div>
     </div>
-    <div class="step-done-row"><span class="step-done-val" id="d6"></span><button class="step-edit-btn" onclick="editStep(6)">Edit</button></div>
+    <div class="step-done-row"><span class="step-done-val" id="d5"></span><button class="step-edit-btn" onclick="editStep(5)">Edit</button></div>
   </div>
 
-  <!-- STEP 7: Cassette Wrap (Square only) -->
-  <div class="step-block" id="s7">
+  <!-- STEP 6: Cassette Wrap (Square only) -->
+  <div class="step-block" id="s6">
     <div class="step-hd">
-      <div class="step-num">7</div>
+      <div class="step-num">6</div>
       <div><div class="step-title">Square Cassette — Fabric Wrap</div></div>
     </div>
     <div class="step-body">
@@ -312,13 +312,13 @@ textarea.form-input{resize:vertical;min-height:80px}
         <button class="opt-btn opt-btn-lg" onclick="pickCassWrap(true,this)">Fabric Wrapped <span style="font-size:11px;color:#888">(+$80)</span></button>
       </div>
     </div>
-    <div class="step-done-row"><span class="step-done-val" id="d7"></span><button class="step-edit-btn" onclick="editStep(7)">Edit</button></div>
+    <div class="step-done-row"><span class="step-done-val" id="d6"></span><button class="step-edit-btn" onclick="editStep(6)">Edit</button></div>
   </div>
 
-  <!-- STEP 8: Bottom Bar -->
-  <div class="step-block" id="s8">
+  <!-- STEP 7: Bottom Bar -->
+  <div class="step-block" id="s7">
     <div class="step-hd">
-      <div class="step-num">8</div>
+      <div class="step-num">7</div>
       <div><div class="step-title">Bottom Bar</div></div>
     </div>
     <div class="step-body">
@@ -339,13 +339,13 @@ textarea.form-input{resize:vertical;min-height:80px}
         </div>
       </div>
     </div>
-    <div class="step-done-row"><span class="step-done-val" id="d8"></span><button class="step-edit-btn" onclick="editStep(8)">Edit</button></div>
+    <div class="step-done-row"><span class="step-done-val" id="d7"></span><button class="step-edit-btn" onclick="editStep(7)">Edit</button></div>
   </div>
 
-  <!-- STEP 9: Control Type -->
-  <div class="step-block" id="s9">
+  <!-- STEP 8: Control Type -->
+  <div class="step-block" id="s8">
     <div class="step-hd">
-      <div class="step-num">9</div>
+      <div class="step-num">8</div>
       <div><div class="step-title">Control Type</div></div>
     </div>
     <div class="step-body">
@@ -369,14 +369,26 @@ textarea.form-input{resize:vertical;min-height:80px}
       </div>
       <div class="step-warn" id="cordless-tory-warn">Cordless is not available with Tory fabrics.</div>
     </div>
+    <div class="step-done-row"><span class="step-done-val" id="d8"></span><button class="step-edit-btn" onclick="editStep(8)">Edit</button></div>
+  </div>
+
+  <!-- STEP 9: Control Accessories -->
+  <div class="step-block" id="s9">
+    <div class="step-hd">
+      <div class="step-num">9</div>
+      <div><div class="step-title" id="s9-title">Control Options</div></div>
+    </div>
+    <div class="step-body" id="s9-body">
+      <!-- Populated by JS -->
+    </div>
     <div class="step-done-row"><span class="step-done-val" id="d9"></span><button class="step-edit-btn" onclick="editStep(9)">Edit</button></div>
   </div>
 
-  <!-- STEP 10: Control Accessories -->
+  <!-- STEP 10: Remote Motor Accessories -->
   <div class="step-block" id="s10">
     <div class="step-hd">
       <div class="step-num">10</div>
-      <div><div class="step-title" id="s10-title">Control Options</div></div>
+      <div><div class="step-title">Motor Accessories</div><div class="step-sub">Add remotes, hubs, power supplies &amp; extensions</div></div>
     </div>
     <div class="step-body" id="s10-body">
       <!-- Populated by JS -->
@@ -384,22 +396,10 @@ textarea.form-input{resize:vertical;min-height:80px}
     <div class="step-done-row"><span class="step-done-val" id="d10"></span><button class="step-edit-btn" onclick="editStep(10)">Edit</button></div>
   </div>
 
-  <!-- STEP 11: Remote Motor Accessories -->
+  <!-- STEP 11: Side-by-Side -->
   <div class="step-block" id="s11">
     <div class="step-hd">
       <div class="step-num">11</div>
-      <div><div class="step-title">Motor Accessories</div><div class="step-sub">Add remotes, hubs, power supplies &amp; extensions</div></div>
-    </div>
-    <div class="step-body" id="s11-body">
-      <!-- Populated by JS -->
-    </div>
-    <div class="step-done-row"><span class="step-done-val" id="d11"></span><button class="step-edit-btn" onclick="editStep(11)">Edit</button></div>
-  </div>
-
-  <!-- STEP 12: Side-by-Side -->
-  <div class="step-block" id="s12">
-    <div class="step-hd">
-      <div class="step-num">12</div>
       <div><div class="step-title">Side-by-Side Ordering</div></div>
     </div>
     <div class="step-body">
@@ -417,31 +417,13 @@ textarea.form-input{resize:vertical;min-height:80px}
         </div>
       </div>
     </div>
-    <div class="step-done-row"><span class="step-done-val" id="d12"></span><button class="step-edit-btn" onclick="editStep(12)">Edit</button></div>
+    <div class="step-done-row"><span class="step-done-val" id="d11"></span><button class="step-edit-btn" onclick="editStep(11)">Edit</button></div>
   </div>
 
-  <!-- STEP 13: Quantity -->
-  <div class="step-block" id="s13">
+  <!-- STEP 12: Price + Quote -->
+  <div class="step-block" id="s12">
     <div class="step-hd">
-      <div class="step-num">13</div>
-      <div><div class="step-title">Quantity</div></div>
-    </div>
-    <div class="step-body">
-      <div class="qty-wrap" style="margin-bottom:10px">
-        <button class="qty-btn" onclick="adjQty(-1)">−</button>
-        <input class="qty-num" type="number" id="qty-inp" value="1" min="1" max="50" oninput="S.qty=parseInt(this.value)||1;updatePrice()">
-        <button class="qty-btn" onclick="adjQty(1)">+</button>
-      </div>
-      <div style="font-size:11px;color:#888">Shades configured the same. Use separate quote requests for different configurations.</div>
-      <button class="next-btn" onclick="advanceFromQty()">Continue to Quote</button>
-    </div>
-    <div class="step-done-row"><span class="step-done-val" id="d13"></span><button class="step-edit-btn" onclick="editStep(13)">Edit</button></div>
-  </div>
-
-  <!-- STEP 14: Price + Quote -->
-  <div class="step-block" id="s14">
-    <div class="step-hd">
-      <div class="step-num">14</div>
+      <div class="step-num">12</div>
       <div><div class="step-title">Price Estimate &amp; Quote Request</div></div>
     </div>
     <div class="step-body">

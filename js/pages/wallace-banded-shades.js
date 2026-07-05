@@ -313,7 +313,7 @@ function pick2dFabric(collName,colorName,btn){
   spv('sp-op',b2dLight==='T'?'Translucent':'Blackout');
   document.getElementById('val2').textContent=label.length>32?collName:label;
   document.getElementById('step2').classList.add('done');
-  openNext('step3');
+  openNext('step4');
 }
 
 // ── STEP 2 ────────────────────────────────────────────────────────────────────
@@ -366,7 +366,7 @@ function selectFab(f){
   if(cb)cb.classList.toggle('blocked',!f.cordless);
   if(!f.cordless&&S.ctrl==='cordless'){S.ctrl='';document.getElementById('val4').textContent='—';}
   if(f.lb||f.op==='rd'){var lb=document.getElementById('btn-lb');if(lb)selB(lb,'grp-bar');}
-  renderFabricGrid();validateDims();updateCalc();openNext('step3');
+  renderFabricGrid();validateDims();updateCalc();openNext('step4');
 }
 
 // ── STEP 3 ────────────────────────────────────────────────────────────────────
@@ -412,7 +412,6 @@ function validateDims(){
     document.getElementById('step3').classList.add('done');
     document.getElementById('val3').textContent=S.w+'" W \xd7 '+S.h+'" H';
     spv('sp-sz',S.w+'" \xd7 '+S.h+'"');
-    openNext('step4');
   }
   fb.innerHTML=html;
   updateCalc();
@@ -462,8 +461,6 @@ function setQtyInp(v){
   var n=Math.max(1,Math.min(50,parseInt(v)||1));
   S.qty=n;
   spv('sp-qty',n+(n===1?' shade':' shades'));
-  document.getElementById('step6').classList.add('done');
-  document.getElementById('val6').textContent=n+' shade'+(n===1?'':'s');
   updateCalc();
 }
 function adjQty(d){
@@ -580,9 +577,9 @@ function submitQ(){
   var errs=[];
   if(!name)errs.push('Name required.');
   if(!phone)errs.push('Phone required.');
-  if(!S.prod)errs.push('Select product (Step 1).');
-  if(S.prod==='dual'&&!S.fabric)errs.push('Select fabric (Step 2).');
-  if(!S.w||!S.h)errs.push('Enter width and height (Step 3).');
+  if(!S.prod)errs.push('Select product (Step 2).');
+  if(S.prod==='dual'&&!S.fabric)errs.push('Select fabric (Step 3).');
+  if(!S.w||!S.h)errs.push('Enter width and height (Step 1).');
   if(S.prod==='dual'&&!S.ctrl)errs.push('Select control type (Step 4).');
   if(errs.length){errEl.innerHTML='&#9888; '+errs.join(' ');errEl.style.display='';return;}
   errEl.style.display='none';

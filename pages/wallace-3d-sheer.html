@@ -138,68 +138,22 @@
 <div class="config-layout">
 <div><!-- left col -->
 
-<!-- STEP 1: COLLECTION -->
-<div class="step-block active" id="step1">
-  <div class="step-head" onclick="toggleStep('step1')">
-    <div class="step-num">1</div>
-    <div class="step-head-title">Collection</div>
-    <div class="step-head-val" id="s1val">—</div>
-  </div>
-  <div class="step-body">
-    <div class="step-note" style="margin-bottom:8px">Choose collection first — it determines band size, light control, headrail options, and bottom rail type.</div>
-    <div class="coll-grid" id="coll-grid"><!-- filled by JS --></div>
-  </div>
-</div>
-
-<!-- STEP 2: COLOR -->
-<div class="step-block" id="step2">
-  <div class="step-head" onclick="toggleStep('step2')">
-    <div class="step-num">2</div>
-    <div class="step-head-title">Color</div>
-    <div class="step-head-val" id="s2val">—</div>
-  </div>
-  <div class="step-body">
-    <div class="step-note" style="margin-bottom:8px">Colors shown for selected collection. Hardware color suggestion auto-fills from your selection.</div>
-    <div class="color-grid" id="color-grid"><!-- filled by JS --></div>
-  </div>
-</div>
-
-<!-- STEP 3: MOUNT & DIMENSIONS -->
-<div class="step-block" id="step3">
+<!-- STEP 1: WINDOW MEASUREMENTS & MOUNT -->
+<div class="step-block active" id="step3">
   <div class="step-head" onclick="toggleStep('step3')">
-    <div class="step-num">3</div>
-    <div class="step-head-title">Mount &amp; Dimensions</div>
-    <div class="step-head-val" id="s3val">—</div>
+    <div class="step-num">1</div>
+    <div class="step-head-title">Window measurements &amp; mount</div>
+    <div class="step-head-val" id="s3val">&mdash;</div>
   </div>
   <div class="step-body">
-    <div class="sub-label" style="margin-top:4px">Mount type</div>
-    <div class="opt-row" style="margin-top:6px">
-      <button class="opt-btn sel" id="mc-inside" onclick="pickMount(this,'inside')">Inside Mount</button>
-      <button class="opt-btn" id="mc-outside" onclick="pickMount(this,'outside')">Outside Mount</button>
-    </div>
-    <div class="step-note">Inside Mount: Deductions applied at order · Outside Mount: No deductions.</div>
-    <div class="dim-row" style="margin-top:14px">
-      <div>
-        <div class="dim-label">Width (inches)</div>
-        <div class="dim-inputs">
-          <input class="dim-whole" type="number" id="w-whole" min="12" max="110" placeholder="36" oninput="calcDims()">
-          <select class="dim-frac" id="w-frac" onchange="calcDims()">
-            <option value="0">0</option><option value="0.25">¼</option><option value="0.5">½</option><option value="0.75">¾</option>
-          </select>
-          <span class="dim-unit">″</span>
-        </div>
-      </div>
-      <div>
-        <div class="dim-label">Height (inches)</div>
-        <div class="dim-inputs">
-          <input class="dim-whole" type="number" id="h-whole" min="12" max="120" placeholder="72" oninput="calcDims()">
-          <select class="dim-frac" id="h-frac" onchange="calcDims()">
-            <option value="0">0</option><option value="0.25">¼</option><option value="0.5">½</option><option value="0.75">¾</option>
-          </select>
-          <span class="dim-unit">″</span>
-        </div>
+    <div class="dim-box">
+      <div class="dim-box-label">Enter your window size</div>
+      <div class="form-row">
+        <div class="form-group"><label>Width</label><input type="number" id="w-whole" min="12" max="100" step="0.125" placeholder="36" oninput="calcDims()"><div class="dim-unit">inches &middot; 12&Prime; min &middot; 100&Prime; max</div></div>
+        <div class="form-group"><label>Height</label><input type="number" id="h-whole" min="20" max="120" step="0.125" placeholder="72" oninput="calcDims()"><div class="dim-unit">inches &middot; 20&Prime; min &middot; 120&Prime; max</div></div>
       </div>
     </div>
+    <div class="step-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm at the home visit.</div>
     <div id="dim-msg" class="msg-box" style="display:none"></div>
     <div id="dim-deduct" style="display:none;margin-top:12px">
       <div class="sub-label" style="margin-top:0">Finished dimensions (reference)</div>
@@ -209,7 +163,52 @@
       </table>
       <div class="step-note">Measurements are reference only. Final deductions confirmed at production.</div>
     </div>
-    <div class="step-note" style="margin-top:8px">3D shade height is ½″ less than ordered height (vanes fully open).</div>
+    <div class="step-note" style="margin-top:8px">3D shade height is &frac12;&Prime; less than ordered height (vanes fully open). Exact size limits depend on your selected collection.</div>
+
+    <!-- Mount type -->
+    <div class="sub-label" style="margin-top:14px">Mount type</div>
+    <div class="opt-row" style="margin-top:6px">
+      <button class="opt-btn sel" id="mc-inside" onclick="pickMount(this,'inside')">Inside mount</button>
+      <button class="opt-btn" id="mc-outside" onclick="pickMount(this,'outside')">Outside mount</button>
+    </div>
+    <div class="step-note">Inside mount: deductions applied at order &middot; Outside mount: no deductions.</div>
+
+    <!-- Quantity (shared stepper) -->
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px">
+      <span style="font-size:12px;color:#666">Qty:</span>
+      <div class="qty-btns">
+        <button class="qty-btn" onclick="adjQty(-1)">&#8722;</button>
+        <input class="qty-num" type="number" id="qty" value="1" min="1" max="50" oninput="updateSpec()">
+        <button class="qty-btn" onclick="adjQty(1)">&#43;</button>
+      </div>
+      <span style="font-size:12px;color:#666">shade(s) of this size &amp; color</span>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2: COLLECTION -->
+<div class="step-block" id="step1">
+  <div class="step-head" onclick="toggleStep('step1')">
+    <div class="step-num">2</div>
+    <div class="step-head-title">Collection</div>
+    <div class="step-head-val" id="s1val">—</div>
+  </div>
+  <div class="step-body">
+    <div class="step-note" style="margin-bottom:8px">Choose collection first — it determines band size, light control, headrail options, and bottom rail type.</div>
+    <div class="coll-grid" id="coll-grid"><!-- filled by JS --></div>
+  </div>
+</div>
+
+<!-- STEP 3: COLOR -->
+<div class="step-block" id="step2">
+  <div class="step-head" onclick="toggleStep('step2')">
+    <div class="step-num">3</div>
+    <div class="step-head-title">Color</div>
+    <div class="step-head-val" id="s2val">—</div>
+  </div>
+  <div class="step-body">
+    <div class="step-note" style="margin-bottom:8px">Colors shown for selected collection. Hardware color suggestion auto-fills from your selection.</div>
+    <div class="color-grid" id="color-grid"><!-- filled by JS --></div>
   </div>
 </div>
 
@@ -347,23 +346,17 @@
   </div>
 </div>
 
-<!-- STEP 8: QUANTITY & DELIVERY -->
+<!-- STEP 8: ROOM & DELIVERY -->
 <div class="step-block" id="step8">
   <div class="step-head" onclick="toggleStep('step8')">
     <div class="step-num">8</div>
-    <div class="step-head-title">Quantity &amp; Delivery</div>
+    <div class="step-head-title">Room &amp; Delivery</div>
     <div class="step-head-val" id="s8val">—</div>
   </div>
   <div class="step-body">
-    <div class="form-row">
-      <div class="form-group">
-        <label>Number of shades</label>
-        <input type="number" id="qty" value="1" min="1" max="50" oninput="updateSpec()">
-      </div>
-      <div class="form-group">
-        <label>Room / window label</label>
-        <input type="text" id="room-label" placeholder="e.g. Living room center">
-      </div>
+    <div class="form-group">
+      <label>Room / window label</label>
+      <input type="text" id="room-label" placeholder="e.g. Living room center">
     </div>
     <div style="margin-top:6px">
       <div class="dim-label" style="margin-bottom:6px">Delivery</div>
