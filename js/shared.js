@@ -367,7 +367,7 @@ function renderFooter(isHome) {
     </div>
     <div class="footer-disc">Blindznation is an independent business providing professional installation and consulting services. Product names, logos, and trademarks are the property of their respective owners and are used for identification purposes only. Blindznation is not affiliated with, endorsed by, or sponsored by any manufacturer. &nbsp;·&nbsp; <a href="${pre}privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></div>
   `;
-  setTimeout(function(){ _initShippingEstimators(); _initCartExtras(); _initFileUploads(); _initInstallationAddons(); }, 0);
+  setTimeout(function(){ _initShippingEstimators(); _initCartExtras(); _initFileUploads(); _initInstallationAddons(); _initShadeLabels(); }, 0);
 }
 
 // ── STEP AUTO-ADVANCE (accordion + wizard) ───────────────────────────────────
@@ -1713,11 +1713,86 @@ function _pbMergeCartExtras(item) {
     item.installation = true;
     item.lines = (item.lines || []).concat([{ label: 'Professional Installation', value: 'Requested — priced at quote' }]);
   }
+  // Per-unit labels (see _initShadeLabels) captured into the cart line
+  var labels = pbGetShadeLabels();
+  if (labels) {
+    item.labels = labels;
+    item.lines = (item.lines || []).concat([{ label: 'Labels', value: labels }]);
+  }
   // Reset for the next item added from the same form
   if (nEl) nEl.value = '';
   if (fEl) fEl.value = '';
   var nm = ce.querySelector('[id$="-names"]'); if (nm) nm.innerHTML = '';
   if (iEl) iEl.checked = false;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PER-UNIT LABELS — consistent on every product. Auto-injected right after the
+// shared quantity stepper (.qty-btns). Quantity 1 → a single optional label box;
+// quantity N → one label field per unit so the customer can name each shade/panel.
+// Captured into the cart (via _pbMergeCartExtras) and appended to the quote notes
+// on submit (via the data-pb-require-contact interceptor). One source of truth.
+function pbRenderShadeLabels(wrap) {
+  if (!wrap) return;
+  var qtyEl = wrap._pbQtyEl;
+  var count = 1;
+  if (qtyEl) {
+    var raw = (qtyEl.tagName === 'INPUT') ? qtyEl.value : qtyEl.textContent;
+    count = parseInt(raw, 10) || 1;
+  }
+  if (count < 1) count = 1; if (count > 50) count = 50;
+  // preserve any values the customer already typed
+  var prev = {};
+  Array.prototype.forEach.call(wrap.querySelectorAll('.pb-shade-label'), function(inp) {
+    prev[inp.getAttribute('data-idx')] = inp.value;
+  });
+  var inStyle = 'padding:7px 10px;border:1px solid #ddd;border-radius:7px;font-size:12px;font-family:inherit;box-sizing:border-box';
+  var html;
+  if (count === 1) {
+    html = '<div style="font-size:12px;font-weight:600;color:#555;margin-bottom:6px">Label <span style="font-weight:400;color:#999">(optional)</span></div>' +
+           '<input type="text" class="pb-shade-label" data-idx="1" placeholder="e.g. Master bedroom window" style="' + inStyle + ';width:100%">';
+  } else {
+    html = '<div style="font-size:12px;font-weight:600;color:#555;margin-bottom:6px">Label each one <span style="font-weight:400;color:#999">(optional)</span></div>';
+    for (var i = 1; i <= count; i++) {
+      html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">' +
+                '<span style="font-size:11px;color:#888;min-width:26px">#' + i + '</span>' +
+                '<input type="text" class="pb-shade-label" data-idx="' + i + '" placeholder="Room / window ' + i + '" style="' + inStyle + ';flex:1;min-width:0">' +
+              '</div>';
+    }
+  }
+  wrap.innerHTML = html;
+  Array.prototype.forEach.call(wrap.querySelectorAll('.pb-shade-label'), function(inp) {
+    var k = inp.getAttribute('data-idx'); if (prev[k]) inp.value = prev[k];
+  });
+}
+
+function _initShadeLabels() {
+  document.querySelectorAll('.qty-btns').forEach(function(q) {
+    if (q._pbLabelsInit) return; q._pbLabelsInit = true;
+    var qtyEl = q.querySelector('.qty-num') || q.querySelector('input, span');
+    var wrap = document.createElement('div');
+    wrap.className = 'pb-labels-wrap';
+    wrap.style.cssText = 'margin-top:12px';
+    wrap._pbQtyEl = qtyEl;
+    var host = q.parentNode; // the qty row
+    if (host && host.parentNode) host.parentNode.insertBefore(wrap, host.nextSibling);
+    else q.parentNode.appendChild(wrap);
+    var render = function() { setTimeout(function() { pbRenderShadeLabels(wrap); }, 0); };
+    if (qtyEl) { qtyEl.addEventListener('input', render); qtyEl.addEventListener('change', render); }
+    q.querySelectorAll('.qty-btn').forEach(function(b) { b.addEventListener('click', render); });
+    pbRenderShadeLabels(wrap);
+  });
+}
+
+// Collect the VISIBLE per-unit labels into a single string for the quote.
+function pbGetShadeLabels() {
+  var vals = [];
+  document.querySelectorAll('.pb-shade-label').forEach(function(inp) {
+    if (inp.offsetParent === null) return;         // skip hidden configurators
+    var v = (inp.value || '').trim();
+    if (v) vals.push(inp.getAttribute('data-idx') + ': ' + v);
+  });
+  return vals.join(' | ');
 }
 function _initInstallationAddons() {
   document.querySelectorAll('.delivery-section').forEach(function(del) {
@@ -2333,6 +2408,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!pbContactValid(errId)) {
       e.stopImmediatePropagation();
       e.preventDefault();
+      return;
+    }
+    // Fold per-unit labels into the notes so they reach the quote email/cart.
+    var _lbl = pbGetShadeLabels();
+    var _n = document.getElementById('cf-notes');
+    if (_lbl && _n && (_n.value || '').indexOf(_lbl) < 0) {
+      _n.value = (_n.value ? _n.value.replace(/\n?Labels: .*/,'') + '\n' : '') + 'Labels: ' + _lbl;
     }
   }, true);
 });
