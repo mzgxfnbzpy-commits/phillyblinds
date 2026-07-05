@@ -9,6 +9,7 @@ const W = {
   mount: 'inside',
   width: 0,
   height: 0,
+  qty: 1,
   style: 'standard',
   control: 'cordless',
   controlSide: 'right',
@@ -310,7 +311,6 @@ function renderPatterns(group) {
 function pickPattern(idx) {
   W.pattern = PATTERNS[idx];
   renderPatterns(currentGroup);
-  showStep('sec-mount');
 
   // Edge binding warnings
   warn('warn-ebreq', W.pattern.ebReq && W.binding === '' );
@@ -337,7 +337,20 @@ function pickMount(m, btn) {
 
   // TDBU + returns warning
   validateReturns();
-  showStep('sec-dims');
+  updateSummary();
+}
+
+// ── Quantity ────────────────────────────────────────────────
+function adjQty(d) {
+  const el = document.getElementById('qty-input');
+  let v = (parseInt(el.value, 10) || 1) + d;
+  v = Math.max(1, Math.min(50, v));
+  el.value = v;
+  updateQty();
+}
+function updateQty() {
+  const v = Math.max(1, Math.min(50, parseInt(document.getElementById('qty-input').value, 10) || 1));
+  W.qty = v;
   updateSummary();
 }
 
@@ -644,7 +657,7 @@ function updateSummary() {
   setText('s-color',   W.pattern ? W.pattern.color : '—');
   setText('s-group',   W.pattern ? `Group ${W.pattern.group} · ${W.pattern.comp}` : '—');
   setText('s-mount',   W.mount ? W.mount.charAt(0).toUpperCase() + W.mount.slice(1) + ' Mount' : '—');
-  setText('s-size',    W.width && W.height ? `${W.width}″ W × ${W.height}″ H` : '—');
+  setText('s-size',    W.width && W.height ? `${W.width}″ W × ${W.height}″ H${W.qty > 1 ? ` · Qty ${W.qty}` : ''}` : '—');
   setText('s-style',   W.style || '—');
   setText('s-control', W.type === 'shade' ? (CTRL_LABELS[W.control] || '—') + (W.controlSide ? ` · ${W.controlSide} side` : '') : 'N/A');
   setText('s-liner',   W.liner || '—');
@@ -719,6 +732,7 @@ DIMENSIONS & MOUNT
 Mount:  ${W.mount ? W.mount.charAt(0).toUpperCase() + W.mount.slice(1) + ' Mount' : '—'}
 Width:  ${W.width || '—'}″
 Height: ${W.height || '—'}″
+Qty:    ${W.qty}
 
 STYLE & CONTROL
 Style:        ${W.style || '—'}
@@ -780,10 +794,11 @@ function addWallacePortfolioNaturalToCart(){
     {label:'Control',value:W.control||'—'},
     {label:'Liner',value:W.liner||'No Liner'},
     {label:'Binding',value:W.binding||'No Binding'},
-    {label:'Valance',value:W.valance||'—'}
+    {label:'Valance',value:W.valance||'—'},
+    {label:'Quantity',value:String(W.qty)}
   ];
   const specs=lines.map(l=>l.label+': '+l.value).join(' | ');
-  pbAddToCart({product:'Wallace Portfolio Natural Woven Wood Shades',lines:lines,specs:specs,price:null,qty:1});
+  pbAddToCart({product:'Wallace Portfolio Natural Woven Wood Shades',lines:lines,specs:specs,price:null,qty:W.qty});
   pbOpenCart();
 }
 

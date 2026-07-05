@@ -167,11 +167,8 @@ function getFreight(){
 
 // ── CALC + RENDER ─────────────────────────────────────────────────────────────
 function calcPrice(){
-  const wW=parseFloat(document.getElementById('w-whole').value)||0;
-  const wF=parseFloat(document.getElementById('w-frac').value)||0;
-  const hW=parseFloat(document.getElementById('h-whole').value)||0;
-  const hF=parseFloat(document.getElementById('h-frac').value)||0;
-  S.w=wW+wF; S.h=hW+hF;
+  S.w=parseFloat(document.getElementById('w-whole').value)||0;
+  S.h=parseFloat(document.getElementById('h-whole').value)||0;
   const qty=parseInt(document.getElementById('qty').value)||1;
   S.qty=qty;
 
@@ -200,9 +197,9 @@ function calcPrice(){
     document.getElementById('cv-size').textContent=S.w+'″ W × '+S.h+'″ H';
     document.getElementById('cv-bracket').textContent=wCol+'″ × '+hRow+'″';
     document.getElementById('cv-base').textContent=base?'$'+base:'Group not selected';
-    document.getElementById('s3val').textContent=S.w+'″ × '+S.h+'″';
-    markDone('step3');
   }
+
+  updateWindowVal();
 
   // Slim clutch note
   if(S.patNum&&S.w&&S.h){
@@ -370,23 +367,26 @@ function pickStyle(el,style){
 }
 
 function pickMount(el,mount){
-  document.querySelectorAll('#step2 .opt-btn').forEach(c=>{
-    if(c.closest('#step2')) c.classList.remove('sel');
-  });
-  // re-apply style selection
-  if(S.style){
-    const ids={Waterfall:'sc-waterfall','Flat Fold':'sc-flatfold',Hobbled:'sc-hobbled'};
-    const sid=ids[S.style]; if(sid){const e=document.getElementById(sid);if(e)e.classList.add('sel');}
-  }
+  document.querySelectorAll('#grp-mount .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.mount=mount;
-  updateStyleVal();
+  updateWindowVal();
   updateQuote();
 }
 
+function updateWindowVal(){
+  const parts=[];
+  if(S.w&&S.h) parts.push(S.w+'″ × '+S.h+'″');
+  if(S.mount) parts.push(S.mount);
+  if(parts.length){
+    document.getElementById('s3val').textContent=parts.join(' · ');
+    markDone('step3');
+  }
+}
+
 function updateStyleVal(){
-  if(S.style&&S.mount){
-    document.getElementById('s2val').textContent=S.style+' · '+S.mount;
+  if(S.style){
+    document.getElementById('s2val').textContent=S.style;
     markDone('step2');
   }
 }

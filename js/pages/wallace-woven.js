@@ -408,9 +408,16 @@ function pickType(t, el) {
 /* ── Step 3: Mount ── */
 function pickMount(m, el) {
   S.mountType = m;
-  document.querySelectorAll('#mount-opts .opt-pill').forEach(function(p){p.classList.remove('sel');});
+  document.querySelectorAll('#mount-opts .opt-btn').forEach(function(p){p.classList.remove('sel');});
   el.classList.add('sel');
   $('warn-im-deduction').style.display = m==='inside' ? 'block' : 'none';
+}
+
+/* ── Step 3: Quantity stepper ── */
+function adjQty(d) {
+  var el = $('qty'); if(!el) return;
+  var v = Math.max(1, Math.min(50, (parseInt(el.value,10)||1) + d));
+  el.value = v; S.qty = v;
 }
 
 /* ── Step 4: Dimensions ── */

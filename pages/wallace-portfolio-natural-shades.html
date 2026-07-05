@@ -139,9 +139,73 @@
 
 <div class="cfg-wrap">
 
-  <!-- STEP 1: Product Type -->
-  <div class="cfg-step always" id="sec-type">
+  <!-- STEP 1: WINDOW MEASUREMENTS & MOUNT -->
+  <div class="cfg-step always" id="sec-measure">
     <div class="step-lbl">Step 1</div>
+    <div class="step-ttl">Window measurements &amp; mount</div>
+    <div class="step-sub">Enter your window size, choose your mount, and set the quantity.</div>
+    <span id="dims-ttl" hidden></span>
+
+    <div class="dim-box">
+      <div class="dim-box-label">Enter your window size</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Width</label>
+          <input type="number" id="inp-width" min="12" max="192" step="0.125" placeholder="36" oninput="updateDims()">
+          <div class="dim-unit">inches</div>
+        </div>
+        <div class="form-group">
+          <label>Height</label>
+          <input type="number" id="inp-height" min="12" max="144" step="0.125" placeholder="60" oninput="updateDims()">
+          <div class="dim-unit">inches</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm at the home visit.</div>
+
+    <div class="dim-note" id="dim-note">
+      Natural shades: width 14″–96″ · height 18″–120″. TDBU max 60″W × 72″H. Sliding panels: 48″–192″ wide · up to 120″ tall. Exact limits depend on control selected.
+    </div>
+    <div class="warn-box" id="warn-dims"></div>
+    <!-- Panel auto-config info -->
+    <div class="panel-info" id="panel-info" style="display:none">
+      <strong>Panel Track Auto-Configuration</strong>
+      <div id="panel-config-text" style="margin-top:6px"></div>
+      <div style="margin-top:8px;font-size:11px;color:#7A5A3A">Track over 94″ will be spliced for shipping.</div>
+    </div>
+    <!-- Drapery stack depth info -->
+    <div class="panel-info" id="drape-stack-info" style="display:none">
+      <strong>Estimated Stack Depth</strong>
+      <div id="drape-stack-text" style="margin-top:6px"></div>
+    </div>
+
+    <!-- Mount type -->
+    <div style="font-size:12px;font-weight:600;color:#555;margin:16px 0 6px">Mount type</div>
+    <div class="opt-row" id="grp-mount">
+      <button class="opt-btn sel" onclick="pickMount('inside',this)">Inside Mount</button>
+      <button class="opt-btn" onclick="pickMount('outside',this)">Outside Mount</button>
+      <button class="opt-btn" onclick="pickMount('ceiling',this)">Ceiling Mount</button>
+    </div>
+    <div class="dim-note" id="mount-note">Inside mount: minimum 2″ depth required. Shade width = ordered width − 3/8″.</div>
+
+    <!-- Quantity -->
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px">
+      <span style="font-size:12px;color:#666">Qty:</span>
+      <div class="qty-btns">
+        <button class="qty-btn" onclick="adjQty(-1)">&#8722;</button>
+        <input class="qty-num" type="number" id="qty-input" value="1" min="1" max="50" oninput="updateQty()">
+        <button class="qty-btn" onclick="adjQty(1)">&#43;</button>
+      </div>
+      <span style="font-size:12px;color:#666">of this size &amp; configuration</span>
+    </div>
+  </div>
+
+  <div class="sec-div"></div>
+
+  <!-- STEP 2: Product Type -->
+  <div class="cfg-step always" id="sec-type">
+    <div class="step-lbl">Step 2</div>
     <div class="step-ttl">What would you like?</div>
     <div class="step-sub">Choose the product type to configure.</div>
     <div class="type-grid">
@@ -170,9 +234,9 @@
 
   <div class="sec-div"></div>
 
-  <!-- STEP 2: Pattern -->
+  <!-- STEP 3: Pattern -->
   <div class="cfg-step on" id="sec-pattern">
-    <div class="step-lbl">Step 2</div>
+    <div class="step-lbl">Step 3</div>
     <div class="step-ttl">Choose a Pattern</div>
     <div class="step-sub">Wallace Portfolio Collection — 30 patterns in Groups A–D. <span style="font-size:11px;color:#888">Groups reflect pricing tiers — confirmed at quote.</span></div>
 
@@ -197,58 +261,9 @@
 
   <div class="sec-div"></div>
 
-  <!-- STEP 3: Mount -->
-  <div class="cfg-step" id="sec-mount">
-    <div class="step-lbl">Step 3</div>
-    <div class="step-ttl">Mount Type</div>
-    <div class="step-sub">Inside mount fits within the window frame. Outside mount mounts on the wall or trim.</div>
-    <div class="opt-row" id="grp-mount">
-      <button class="opt-btn sel" onclick="pickMount('inside',this)">Inside Mount</button>
-      <button class="opt-btn" onclick="pickMount('outside',this)">Outside Mount</button>
-      <button class="opt-btn" onclick="pickMount('ceiling',this)">Ceiling Mount</button>
-    </div>
-    <div class="dim-note" id="mount-note">Inside mount: minimum 2″ depth required. Shade width = ordered width − 3/8″.</div>
-  </div>
-
-  <div class="sec-div"></div>
-
-  <!-- STEP 4: Dimensions -->
-  <div class="cfg-step" id="sec-dims">
-    <div class="step-lbl">Step 4</div>
-    <div class="step-ttl" id="dims-ttl">Dimensions</div>
-    <div class="step-sub" id="dims-sub">Enter your window measurements. For inside mount, measure the opening width and height.</div>
-    <div class="dim-row">
-      <div class="dim-field">
-        <label>Width (inches)</label>
-        <input type="number" id="inp-width" min="12" max="192" step="0.125" placeholder="36" oninput="updateDims()">
-      </div>
-      <div class="dim-field">
-        <label>Height (inches)</label>
-        <input type="number" id="inp-height" min="12" max="144" step="0.125" placeholder="60" oninput="updateDims()">
-      </div>
-    </div>
-    <div class="dim-note" id="dim-note">
-      Natural shades: width 14″–96″ · height 18″–120″. TDBU max 60″W × 72″H. Sliding panels: 48″–192″ wide · up to 120″ tall. Exact limits depend on control selected.
-    </div>
-    <div class="warn-box" id="warn-dims"></div>
-    <!-- Panel auto-config info -->
-    <div class="panel-info" id="panel-info" style="display:none">
-      <strong>Panel Track Auto-Configuration</strong>
-      <div id="panel-config-text" style="margin-top:6px"></div>
-      <div style="margin-top:8px;font-size:11px;color:#7A5A3A">Track over 94″ will be spliced for shipping.</div>
-    </div>
-    <!-- Drapery stack depth info -->
-    <div class="panel-info" id="drape-stack-info" style="display:none">
-      <strong>Estimated Stack Depth</strong>
-      <div id="drape-stack-text" style="margin-top:6px"></div>
-    </div>
-  </div>
-
-  <div class="sec-div"></div>
-
-  <!-- STEP 5: Style / Opening -->
+  <!-- STEP 4: Style / Opening -->
   <div class="cfg-step" id="sec-style">
-    <div class="step-lbl">Step 5</div>
+    <div class="step-lbl">Step 4</div>
     <div class="step-ttl" id="style-ttl">Shade Style</div>
     <div class="step-sub" id="style-sub">Choose how the shade rolls and folds.</div>
     <!-- Shade styles -->
@@ -287,9 +302,9 @@
 
   <div class="sec-div"></div>
 
-  <!-- STEP 6: Control (Shade only) -->
+  <!-- STEP 5: Control (Shade only) -->
   <div class="cfg-step" id="sec-control">
-    <div class="step-lbl">Step 6</div>
+    <div class="step-lbl">Step 5</div>
     <div class="step-ttl">Control System</div>
     <div class="step-sub">Select how the shade will be operated.</div>
     <div class="opt-row" id="grp-control">
@@ -330,9 +345,9 @@
 
   <div class="sec-div"></div>
 
-  <!-- STEP 7: Liner -->
+  <!-- STEP 6: Liner -->
   <div class="cfg-step" id="sec-liner">
-    <div class="step-lbl">Step 7</div>
+    <div class="step-lbl">Step 6</div>
     <div class="step-ttl">Liner</div>
     <div class="step-sub">Liners add privacy and light control without changing the look of your shade. Natural woven shades are open-weave by nature — a liner is recommended for bedrooms or south-facing windows.</div>
     <div class="liner-grid" id="liner-grid"></div>
@@ -340,9 +355,9 @@
 
   <div class="sec-div"></div>
 
-  <!-- STEP 8: Edge Binding -->
+  <!-- STEP 7: Edge Binding -->
   <div class="cfg-step" id="sec-binding">
-    <div class="step-lbl">Step 8</div>
+    <div class="step-lbl">Step 7</div>
     <div class="step-ttl">Edge Binding</div>
     <div class="step-sub" id="binding-sub">Edge binding frames the shade with a woven or silk-blend tape. Required on certain fabrics. Optional as a decorative upgrade on others.</div>
     <div class="warn-box on" id="warn-binding-req" style="display:none">
@@ -369,9 +384,9 @@
 
   <div class="sec-div"></div>
 
-  <!-- STEP 9: Valance / Track / Accessories -->
+  <!-- STEP 8: Valance / Track / Accessories -->
   <div class="cfg-step" id="sec-valance">
-    <div class="step-lbl">Step 9</div>
+    <div class="step-lbl">Step 8</div>
     <div class="step-ttl" id="valance-ttl">Valance &amp; Hardware</div>
     <div class="step-sub" id="valance-sub">Choose valance, track color, and hardware options.</div>
 
@@ -425,9 +440,9 @@
 
   <div class="sec-div"></div>
 
-  <!-- STEP 10: Special Options -->
+  <!-- STEP 9: Special Options -->
   <div class="cfg-step" id="sec-special">
-    <div class="step-lbl">Step 10</div>
+    <div class="step-lbl">Step 9</div>
     <div class="step-ttl">Special Options</div>
     <div class="step-sub">Twin shade, multi-on-one headrail, cutouts, and hold-down brackets.</div>
 

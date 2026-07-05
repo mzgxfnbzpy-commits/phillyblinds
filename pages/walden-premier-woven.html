@@ -98,6 +98,42 @@
     <h2>Request a Quote</h2>
     <div class="sub">Describe the look you want or share a pattern code, and we'll provide a confirmed price within 24 hours.</div>
 
+    <!-- Canonical Step 1: Window measurements & mount -->
+    <div class="delivery-title" style="margin-bottom:12px">Window measurements &amp; mount</div>
+    <div class="dim-box">
+      <div class="dim-box-label">Enter your window size</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Width</label>
+          <input type="number" id="wp-width" min="10" max="96" step="0.125" placeholder="36">
+          <div class="dim-unit">inches &mdash; 10&Prime; min &middot; 96&Prime; max</div>
+        </div>
+        <div class="form-group">
+          <label>Height</label>
+          <input type="number" id="wp-height" min="12" max="96" step="0.125" placeholder="72">
+          <div class="dim-unit">inches &mdash; 12&Prime; min &middot; 96&Prime; max</div>
+        </div>
+      </div>
+    </div>
+    <div class="step-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm at the home visit.</div>
+
+    <!-- Mount type (required — Inside/Outside) -->
+    <div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:6px">Mount type</div>
+    <div class="opt-row" id="grp-mount" style="margin-bottom:14px">
+      <button type="button" class="opt-btn sel" onclick="selOpt(this,'grp-mount')">Inside mount</button>
+      <button type="button" class="opt-btn" onclick="selOpt(this,'grp-mount')">Outside mount</button>
+    </div>
+
+    <!-- Quantity -->
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px">
+      <span style="font-size:12px;color:var(--text-muted)">Qty:</span>
+      <div class="qty-btns">
+        <button type="button" class="qty-btn" onclick="pbAdjQty('wp-qty',-1,1,50)">&#8722;</button>
+        <input class="qty-num" type="number" id="wp-qty" value="1" min="1" max="50">
+        <button type="button" class="qty-btn" onclick="pbAdjQty('wp-qty',1,1,50)">&#43;</button>
+      </div>
+    </div>
+
     <div class="field-row">
       <div class="field-group">
         <label>Pattern Name / Color Preference</label>
@@ -105,29 +141,6 @@
       </div>
     </div>
     <div class="field-row">
-      <div class="field-group">
-        <label>Width (inches)</label>
-        <input type="number" id="wp-width" placeholder="e.g. 36" min="10" max="96">
-      </div>
-      <div class="field-group">
-        <label>Height (inches)</label>
-        <input type="number" id="wp-height" placeholder="e.g. 72" min="12" max="96">
-      </div>
-      <div class="field-group">
-        <label>Quantity</label>
-        <input type="number" id="wp-qty" value="1" min="1">
-      </div>
-    </div>
-    <div class="field-row">
-      <div class="field-group">
-        <label>Mount Type</label>
-        <select id="wp-mount">
-          <option value="">-- Select mount --</option>
-          <option>Inside Mount</option>
-          <option>Outside Mount</option>
-          <option>Ceiling Mount</option>
-        </select>
-      </div>
       <div class="field-group">
         <label>Product Type</label>
         <select id="wp-type">

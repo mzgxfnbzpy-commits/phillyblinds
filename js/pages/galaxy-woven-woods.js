@@ -423,11 +423,8 @@ function valWIdx(w){const v=lookupValW(w);return VAL_W.indexOf(v);}
 
 // ── MAIN CALC ─────────────────────────────────────────────────────────────────
 function calcPrice(){
-  const wW=parseFloat(document.getElementById('w-whole').value)||0;
-  const wF=parseFloat(document.getElementById('w-frac').value)||0;
-  const hW=parseFloat(document.getElementById('h-whole').value)||0;
-  const hF=parseFloat(document.getElementById('h-frac').value)||0;
-  S.w=wW+wF; S.h=hW+hF;
+  S.w=parseFloat(document.getElementById('w-whole').value)||0;
+  S.h=parseFloat(document.getElementById('h-whole').value)||0;
   S.qty=parseInt(document.getElementById('qty').value)||1;
   document.getElementById('s9val').textContent=S.qty+' shade'+(S.qty>1?'s':'');
 

@@ -125,10 +125,53 @@
 <div class="config-layout">
 <div>
 
-<!-- STEP 1: PATTERN -->
-<div class="step-block active" id="step1">
-  <div class="step-head" onclick="toggleStep('step1')">
+<!-- STEP 1: WINDOW MEASUREMENTS & MOUNT -->
+<div class="step-block active" id="step3">
+  <div class="step-head" onclick="toggleStep('step3')">
     <div class="step-num">1</div>
+    <div class="step-head-title">Window measurements &amp; mount</div>
+    <div class="step-head-val" id="s3val">—</div>
+  </div>
+  <div class="step-body">
+    <div class="dim-box">
+      <div class="dim-box-label">Enter your window size</div>
+      <div class="form-row">
+        <div class="form-group"><label>Width</label><input type="number" id="w-whole" min="18" max="96" step="0.125" placeholder="36" oninput="calcPrice()"><div class="dim-unit">inches &middot; 18&Prime; min &middot; 96&Prime; max</div></div>
+        <div class="form-group"><label>Height</label><input type="number" id="h-whole" min="24" max="120" step="0.125" placeholder="72" oninput="calcPrice()"><div class="dim-unit">inches &middot; 24&Prime; min &middot; 120&Prime; max</div></div>
+      </div>
+    </div>
+    <div class="step-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm at the home visit.</div>
+    <div id="dim-err" class="step-err"></div>
+    <div id="dim-warn" class="step-warn"></div>
+    <div class="computed-box" id="size-box" style="display:none">
+      <div class="cv-row"><span class="cv-key">Entered size</span><span class="cv-val" id="cv-size">—</span></div>
+      <div class="cv-row"><span class="cv-key">Pricing bracket</span><span class="cv-val" id="cv-bracket">—</span></div>
+      <div class="cv-row"><span class="cv-key">Base price (before surcharges)</span><span class="cv-val" id="cv-base">—</span></div>
+    </div>
+
+    <!-- Mount type -->
+    <div class="sub-label" style="margin-top:14px">Mount Type</div>
+    <div class="opt-row" id="grp-mount">
+      <button class="opt-btn" onclick="pickMount(this,'Inside Mount')">Inside Mount</button>
+      <button class="opt-btn" onclick="pickMount(this,'Outside Mount')">Outside Mount</button>
+    </div>
+    <div class="step-note">Inside Mount — flush inside window frame, deductions taken by Wallace. Outside Mount — mounts above &amp; beyond frame, L-shaped side returns included at no charge.</div>
+
+    <!-- Quantity -->
+    <div class="sub-label" style="margin-top:14px">Quantity</div>
+    <div class="qty-btns">
+      <button class="qty-btn" onclick="adjQty(-1)">&#8722;</button>
+      <input class="qty-num" type="number" id="qty" value="1" min="1" max="99" oninput="calcPrice()">
+      <button class="qty-btn" onclick="adjQty(1)">&#43;</button>
+    </div>
+    <div class="step-note">Shade W 18–96&Prime; &middot; H 24–120&Prime;. Standard max 96&Prime; &times; 96&Prime;; larger heights up to 120&Prime; available — confirm before ordering. For 2-on-1 headrail (max combined 102&Prime;), price each shade separately.</div>
+  </div>
+</div>
+
+<!-- STEP 2: PATTERN -->
+<div class="step-block" id="step1">
+  <div class="step-head" onclick="toggleStep('step1')">
+    <div class="step-num">2</div>
     <div class="step-head-title">Pattern &amp; Collection</div>
     <div class="step-head-val" id="s1val">—</div>
   </div>
@@ -204,11 +247,11 @@
   </div>
 </div>
 
-<!-- STEP 2: STYLE + MOUNT -->
+<!-- STEP 3: SHADE STYLE -->
 <div class="step-block" id="step2">
   <div class="step-head" onclick="toggleStep('step2')">
-    <div class="step-num">2</div>
-    <div class="step-head-title">Shade Style &amp; Mount</div>
+    <div class="step-num">3</div>
+    <div class="step-head-title">Shade Style</div>
     <div class="step-head-val" id="s2val">—</div>
   </div>
   <div class="step-body">
@@ -219,66 +262,6 @@
     </div>
     <div class="step-note">Waterfall — 4&Prime; back valance, no front valance, rolls up in soft folds. Flat Fold — 6&Prime; front valance, crisp horizontal folds. Hobbled — 6&Prime; front valance, continuous soft folds when raised · 30% surcharge.</div>
     <div id="style-warn" class="step-warn"></div>
-
-    <div class="sub-label" style="margin-top:16px">Mount Type</div>
-    <div class="opt-row">
-      <button class="opt-btn" onclick="pickMount(this,'Inside Mount')">Inside Mount</button>
-      <button class="opt-btn" onclick="pickMount(this,'Outside Mount')">Outside Mount</button>
-    </div>
-    <div class="step-note">Inside Mount — flush inside window frame, deductions taken by Wallace. Outside Mount — mounts above &amp; beyond frame, L-shaped side returns included at no charge.</div>
-  </div>
-</div>
-
-<!-- STEP 3: DIMENSIONS -->
-<div class="step-block" id="step3">
-  <div class="step-head" onclick="toggleStep('step3')">
-    <div class="step-num">3</div>
-    <div class="step-head-title">Dimensions</div>
-    <div class="step-head-val" id="s3val">—</div>
-  </div>
-  <div class="step-body">
-    <div class="dim-row">
-      <div>
-        <div class="dim-label">Width (inches)</div>
-        <div class="dim-inputs">
-          <input class="dim-whole" type="number" id="w-whole" min="18" max="120" placeholder="36" oninput="calcPrice()">
-          <select class="dim-frac" id="w-frac" onchange="calcPrice()">
-            <option value="0">0</option><option value="0.125">1/8</option><option value="0.25">1/4</option>
-            <option value="0.375">3/8</option><option value="0.5">1/2</option><option value="0.625">5/8</option>
-            <option value="0.75">3/4</option><option value="0.875">7/8</option>
-          </select>
-          <span style="font-size:13px;font-weight:500;color:#555">&Prime;</span>
-        </div>
-      </div>
-      <div>
-        <div class="dim-label">Height (inches)</div>
-        <div class="dim-inputs">
-          <input class="dim-whole" type="number" id="h-whole" min="24" max="120" placeholder="72" oninput="calcPrice()">
-          <select class="dim-frac" id="h-frac" onchange="calcPrice()">
-            <option value="0">0</option><option value="0.125">1/8</option><option value="0.25">1/4</option>
-            <option value="0.375">3/8</option><option value="0.5">1/2</option><option value="0.625">5/8</option>
-            <option value="0.75">3/4</option><option value="0.875">7/8</option>
-          </select>
-          <span style="font-size:13px;font-weight:500;color:#555">&Prime;</span>
-        </div>
-      </div>
-    </div>
-    <div id="dim-err" class="step-err"></div>
-    <div id="dim-warn" class="step-warn"></div>
-    <div class="computed-box" id="size-box" style="display:none">
-      <div class="cv-row"><span class="cv-key">Entered size</span><span class="cv-val" id="cv-size">—</span></div>
-      <div class="cv-row"><span class="cv-key">Pricing bracket</span><span class="cv-val" id="cv-bracket">—</span></div>
-      <div class="cv-row"><span class="cv-key">Base price (before surcharges)</span><span class="cv-val" id="cv-base">—</span></div>
-    </div>
-
-    <div class="sub-label" style="margin-top:14px">Quantity</div>
-    <div class="spinner-row">
-      <button class="spin-btn" onclick="adjQty(-1)">−</button>
-      <input class="spin-num" type="number" id="qty" value="1" min="1" max="99" oninput="calcPrice()">
-      <button class="spin-btn" onclick="adjQty(1)">+</button>
-      <span class="spin-label">shade(s) at this size</span>
-    </div>
-    <div class="step-note">Shade W 18–96&Prime; &middot; H 24–120&Prime;. Standard max 96&Prime; &times; 96&Prime;; larger heights up to 120&Prime; available — confirm before ordering. For 2-on-1 headrail (max combined 102&Prime;), price each shade separately.</div>
   </div>
 </div>
 

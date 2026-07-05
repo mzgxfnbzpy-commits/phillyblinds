@@ -97,7 +97,7 @@ const LAYOUTS = {
 /* ─── STATE ─────────────────────────────────────────────── */
 const S = {
   line:'', count:1,
-  opentype:'Standard window', mount:'', dims:[{w:'',h:'',label:''}],
+  opentype:'Standard window', mount:'', measureType:'Inside mount (frame-to-frame)', dims:[{w:'',h:'',label:''}],
   exactFrameW:'',
   layout:'', tpostV:'', tpostH:'',
   louver:'', tilt:'InvisibleTilt™ (hidden in stile)', frame:'', divider:'',
@@ -217,10 +217,21 @@ function continueStep15() {
 /* ─── HELPERS ───────────────────────────────────────────── */
 function qs(id) { return document.getElementById(id); }
 function setText(id, v) { var e = qs(id); if (e) e.textContent = v || '—'; }
+function syncQtyInputs(srcId) {
+  ['qty-input', 'shutter-qty'].forEach(function(id) {
+    if (id === srcId) return;
+    var e = qs(id);
+    if (e) e.value = S.count;
+  });
+}
 function adjQty(d) {
-  var el = qs('qty-input');
-  el.value = Math.max(1, Math.min(50, (parseInt(el.value) || 1) + d));
-  S.count = parseInt(el.value);
+  S.count = Math.max(1, Math.min(50, (parseInt(S.count) || 1) + d));
+  syncQtyInputs();
+  updateQuote();
+}
+function onQtyInput(v, srcId) {
+  S.count = Math.max(1, Math.min(50, parseInt(v) || 1));
+  syncQtyInputs(srcId);
   updateQuote();
 }
 function selOpt(btn, group) {
@@ -451,6 +462,7 @@ function updateQuote() {
   setText('qs-count', S.count ? S.count + ' window' + (S.count !== 1 ? 's' : '') : '—');
   setText('qs-opentype', S.opentype || '—');
   setText('qs-mount', S.mount || '—');
+  setText('qs-measure', S.measureType || '—');
   setText('qs-layout', S.layout || '—');
   var tpost = [S.tpostV, S.tpostH].filter(Boolean).join(' · ');
   setText('qs-tpost', tpost || '—');
@@ -482,7 +494,8 @@ function addShuttersToCart(){
     {label:'Louver Size',value:S.louver||'—'},
     {label:'Tilt Type',value:S.tilt||'—'},
     {label:'Mount',value:S.mount||'—'},
-    {label:'Openings',value:String(S.count||1)},
+    {label:'Measurement Type',value:S.measureType||'—'},
+    {label:'Quantity',value:String(S.count||1)},
     {label:'Dimensions',value:dimsText||'—'},
     {label:'Panel Layout',value:S.layout||'—'},
     {label:'Color / Finish',value:(S.colorType?S.colorType+' — ':'')+S.color}
@@ -517,6 +530,7 @@ async function submitQuote() {
     { label: 'Line', value: S.line },
     { label: 'Quantity', value: S.count+' window'+(S.count!==1?'s':'') },
     { label: 'Mount', value: S.mount||'—' },
+    { label: 'Measurement type', value: S.measureType||'—' },
     { label: 'Dimensions', value: dimsText||'—' },
     { label: 'Exact frame width', value: S.exactFrameW||'N/A' },
     { label: 'Opening type', value: S.opentype||'—' },

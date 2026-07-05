@@ -11,6 +11,8 @@ function submitWPQuote() {
   if (errEl) errEl.style.display = 'none';
   if (!name) { if (errEl) { errEl.textContent = 'Please enter your name.'; errEl.style.display = 'block'; } else { alert('Please enter your name.'); } return; }
   if (!phone) { if (errEl) { errEl.textContent = 'Please enter your phone number.'; errEl.style.display = 'block'; } else { alert('Please enter your phone number.'); } return; }
+  const mount = getOpt('grp-mount');
+  if (!mount || mount === '—') { if (errEl) { errEl.textContent = 'Please select a mount type (Inside or Outside).'; errEl.style.display = 'block'; } else { alert('Please select a mount type (Inside or Outside).'); } return; }
   const subject = encodeURIComponent('Walden Premier Woven Shade Quote — ' + name);
   const body = encodeURIComponent([
     'WALDEN PREMIER WOVEN SHADE QUOTE REQUEST',
@@ -29,7 +31,7 @@ function submitWPQuote() {
     'Height: ' + (document.getElementById('wp-height').value ? document.getElementById('wp-height').value + '"' : 'Not entered'),
     'Quantity: ' + (document.getElementById('wp-qty').value || '1'),
     'Control: ' + (document.getElementById('wp-control').value || 'Not selected'),
-    'Mount: ' + (document.getElementById('wp-mount').value || 'Not selected'),
+    'Mount: ' + mount,
     'Delivery: ' + ('Ship via UPS/FedEx'),
     '',
     'NOTES',
@@ -45,11 +47,13 @@ function addWaldenPremierToCart() {
   const h = document.getElementById('wp-height').value || '—';
   const qty = parseInt(document.getElementById('wp-qty').value) || 1;
   const control = document.getElementById('wp-control').value || '—';
+  const mount = getOpt('grp-mount');
   const lines = [
     { label: 'Product', value: 'Walden Premier Natural Woven Shade' },
     { label: 'Type', value: type },
     { label: 'Pattern', value: pattern },
     { label: 'Size', value: w + '″ × ' + h + '″' },
+    { label: 'Mount', value: mount },
     { label: 'Control', value: control },
     { label: 'Quantity', value: String(qty) }
   ];

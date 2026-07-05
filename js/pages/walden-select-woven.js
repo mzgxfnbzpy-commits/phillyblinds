@@ -4,11 +4,26 @@ function wsSetDelivery(val) {
   document.getElementById('ws-del-ship').classList.toggle('sel', true);
 }
 
+// Step 1 canonical dim-box: mount pills write to the hidden #ws-mount field.
+function wsSetMount(val) {
+  document.getElementById('ws-mount').value = val;
+}
+
+// Step 1 canonical qty stepper — clamps #ws-qty to 1–20.
+function wsAdjustQty(delta) {
+  const el = document.getElementById('ws-qty');
+  let v = (parseInt(el.value, 10) || 1) + delta;
+  if (v < 1) v = 1;
+  if (v > 20) v = 20;
+  el.value = v;
+}
+
 function submitWSQuote() {
   const name = document.getElementById('cf-name').value.trim();
   const phone = document.getElementById('cf-phone').value.trim();
   if (!name) { alert('Please enter your name.'); return; }
   if (!phone) { alert('Please enter your phone number.'); return; }
+  if (!document.getElementById('ws-mount').value.trim()) { alert('Please select a mount type (Inside or Outside).'); return; }
   const subject = encodeURIComponent('Walden Select Woven Shade Quote — ' + name);
   const body = encodeURIComponent([
     'WALDEN SELECT WOVEN SHADE QUOTE REQUEST',

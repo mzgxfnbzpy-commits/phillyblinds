@@ -168,11 +168,11 @@ function pickOp(op){
   document.getElementById('motor-note').style.display=op==='motor'?'block':'none';
   document.getElementById('acc-charge-row').style.display=op==='motor'?'flex':'none';
   var lbl=op==='wand'?'Wand Tilt':'Motorized (Norman Smart)';
-  markDone('step1',lbl); sp('sp-op',lbl);
+  markDone('step2',lbl); sp('sp-op',lbl);
   // Rebuild stack options
   buildStack();
   calcPrice();
-  openStep('step2');
+  openStep('step3');
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -206,9 +206,9 @@ function pickStack(v){
   var el=document.getElementById('stk-'+v);
   if(el) el.classList.add('sel');
   var labels={'left':'Left Stack','right':'Right Stack','center':'Traveling Center Stack','copen':'Center Opening'};
-  markDone('step2',labels[v]||v); sp('sp-stack',labels[v]||v);
+  markDone('step3',labels[v]||v); sp('sp-stack',labels[v]||v);
   calcDims();
-  openStep('step3');
+  openStep('step4');
 }
 
 function onSBSChange(){calcDims();}
@@ -223,8 +223,8 @@ function pickMount(el,m){
   });
   el.classList.add('sel');
   var lbl={'wall':'Wall Mount (L bracket)','ceiling':'Ceiling Mount'}[m]||'Wall Mount (L bracket)';
-  markDone('step3',lbl); sp('sp-mount',lbl);
-  openStep('step4');
+  sp('sp-mount',lbl);
+  openStep('step2');
 }
 
 function onDoorChange(){
@@ -268,10 +268,20 @@ function calcDims(){
   document.getElementById('cp-joints').textContent=joints===0?'None (track ≤97⅝″)':joints===1?'1 SmartJoint™':'2 SmartJoints™';
   document.getElementById('cp-area').textContent=area.toFixed(1)+' sq ft';
   var dimsText=S.w+'″ × '+S.h+'″';
-  markDone('step4',dimsText);
+  markDone('step1',dimsText);
   sp('sp-dims',dimsText); sp('sp-qty',S.qty+' shade'+(S.qty>1?'s':''));
   calcPrice();
-  openStep('step5');
+  openStep('step2');
+}
+
+// Quantity stepper (shared .qty-btns) — reuses inp-qty id + calcDims handler
+function adjQty(d){
+  var el=document.getElementById('inp-qty');
+  if(!el) return;
+  var v=(parseInt(el.value)||1)+d;
+  if(v<1) v=1; if(v>50) v=50;
+  el.value=v;
+  calcDims();
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -284,13 +294,13 @@ function pickOpacity(o){
   document.getElementById('oc-rd').classList.toggle('sel',o==='rd');
   document.getElementById('rd-warn').style.display=o==='rd'?'block':'none';
   var lbl=o==='lf'?'Light Filtering':'Blackout (+20%)';
-  markDone('step5',lbl); sp('sp-opacity',lbl);
+  markDone('step4',lbl); sp('sp-opacity',lbl);
   sp('sp-fabric','—');
-  document.getElementById('s6val').textContent='—';
-  document.getElementById('step6').classList.remove('done');
+  document.getElementById('s5val').textContent='—';
+  document.getElementById('step5').classList.remove('done');
   buildFabricGrid();
   calcPrice();
-  openStep('step6');
+  openStep('step5');
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -299,7 +309,7 @@ function pickOpacity(o){
 var activeColl='';
 function buildFabricGrid(){
   var body=document.getElementById('fabric-body');
-  if(!S.opacity){body.innerHTML='<div class="msg-info">Select light control first (step 5).</div>';return;}
+  if(!S.opacity){body.innerHTML='<div class="msg-info">Select light control first (step 4).</div>';return;}
   var colls=Object.keys(SD_FABRICS[S.opacity]);
   activeColl=activeColl&&SD_FABRICS[S.opacity][activeColl]?activeColl:colls[0];
   // Collection filter buttons
@@ -334,11 +344,11 @@ function pickFabric(code,name,coll,hw,hex){
   S.fabric={code:code,name:name,coll:coll,hw:hw,hex:hex};
   if(!S.hw) S.hw=hw; // Set hardware default from fabric
   buildFabricGrid();
-  markDone('step6',name+' · '+coll);
+  markDone('step5',name+' · '+coll);
   sp('sp-fabric',name+' ('+code+') · '+coll);
   sp('sp-hw',S.hw||'Fabric default ('+hw+')');
   calcPrice();
-  openStep('step7');
+  openStep('step6');
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -348,7 +358,7 @@ function pickHW(el,color){
   S.hw=color;
   document.querySelectorAll('#hw-color-grid .opt-btn').forEach(function(c){c.classList.remove('sel');});
   el.classList.add('sel');
-  markDone('step7',color); sp('sp-hw',color);
+  markDone('step6',color); sp('sp-hw',color);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -514,10 +524,9 @@ async function submitQuote(){
 // INIT — called AFTER all function and state definitions
 // ═══════════════════════════════════════════════════════════
 (function(){
-  // Pre-select defaults and mark step3 done (wall mount pre-selected)
-  pickOp('wand');        // operation → builds stack options → opens step2
-  pickStack('left');     // stack → opens step3
-  // Mount is pre-selected (wall) — mark done
-  markDone('step3','Wall Mount (L bracket)');
-  openStep('step4');
+  // Step 1 (measurements & mount) is active by default; wall mount pre-selected.
+  pickOp('wand');        // operation (step2) → builds stack options
+  pickStack('left');     // stack (step3) default
+  sp('sp-mount','Wall Mount (L bracket)');  // reflect pre-selected wall mount in spec panel
+  openStep('step1');
 })();
