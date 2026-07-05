@@ -110,10 +110,6 @@
 .tier-badge-basic{background:#e8f5e9;color:#2e7d32}
 .tier-badge-premium{background:rgba(200,151,63,.15);color:#7a5a00}
 .tier-btn.tier-active .tier-badge-premium{background:rgba(255,255,255,.18);color:var(--gold)}
-/* Step reorder: mount+dims first */
-#config-left-sv{display:flex;flex-direction:column}
-#step2{order:1}#step3{order:2}#step1{order:3}
-#step4,#step5,#step6,#step7{order:4}
 </style>
 </head>
 <body data-page="Shades & blinds">
@@ -152,10 +148,57 @@
 <div class="config-layout">
 <div id="config-left-sv"><!-- left column -->
 
-  <!-- STEP 1: FABRIC & COLOR -->
+  <!-- STEP 1: WINDOW MEASUREMENTS & MOUNT -->
+  <div class="step-block active" id="step2">
+    <div class="step-head" onclick="toggleStep('step2')">
+      <div class="step-num">1</div>
+      <div class="step-head-title">Window measurements &amp; mount</div>
+      <div class="step-head-val" id="s2val">—</div>
+    </div>
+    <div class="step-body">
+      <div class="dim-box">
+        <div class="dim-box-label">Enter your window size</div>
+        <div class="form-row">
+          <div class="form-group"><label>Width</label><input type="number" id="w-whole" min="18" max="100" step="0.125" placeholder="60" oninput="calcPrice()"><div class="dim-unit">inches &mdash; 18&Prime; min &middot; 100&Prime; max</div></div>
+          <div class="form-group"><label>Height</label><input type="number" id="h-whole" min="36" max="108" step="0.125" placeholder="84" oninput="calcPrice()"><div class="dim-unit">inches &mdash; 36&Prime; min &middot; 108&Prime; max</div></div>
+        </div>
+      </div>
+      <div class="step-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm at the home visit.</div>
+      <div id="dim-msg" class="msg-box" style="display:none"></div>
+      <div class="computed-box" id="size-box" style="display:none">
+        <div class="cv-row"><span class="cv-key">Order size</span><span class="cv-val" id="cv-size">—</span></div>
+        <div class="cv-row"><span class="cv-key">Pricing bracket</span><span class="cv-val" id="cv-bracket">—</span></div>
+        <div class="cv-row"><span class="cv-key">Price per blind</span><span class="cv-val" id="cv-price">—</span></div>
+      </div>
+      <div class="step-note" style="margin-bottom:12px">Width 18&Prime;–100&Prime; &middot; Height 36&Prime;–108&Prime;. A center support bracket is <strong>required and included</strong> for widths 78&Prime; or wider. For openings wider than 100&Prime;, order two side-by-side blinds — both <strong>must use the same stack direction</strong> (both stack left or both stack right; do not mix directions or the vanes will interfere).</div>
+
+      <!-- Mount type -->
+      <div style="font-size:12px;font-weight:600;color:#555;margin:14px 0 6px">Mount type</div>
+      <div class="opt-row" style="margin-bottom:6px">
+        <button class="opt-btn" onclick="pickMount(this,'inside','Inside Mount — Fully Flushed')">Inside Mount</button>
+        <button class="opt-btn" onclick="pickMount(this,'semi','Semi-Inside Mount')">Semi-Inside Mount</button>
+        <button class="opt-btn" onclick="pickMount(this,'outside','Outside Mount')">Outside Mount</button>
+      </div>
+      <div class="step-note" style="margin-bottom:6px"><strong>Inside:</strong> fully flushed, no valance needed — min depth 3¾&Prime;, mfr deducts 3/8&Prime; W &amp; 3/16&Prime; H. <strong>Semi-inside:</strong> partial recess into opening — min depth 2 13/16&Prime;, same deductions. <strong>Outside:</strong> mounts above/outside the frame — no deductions, add ~1½&Prime; each side for light block, total projection 3¾&Prime;–4⅛&Prime;.</div>
+      <div id="mount-note" class="msg-box msg-info" style="display:none;margin-bottom:12px"></div>
+
+      <!-- Quantity (shared stepper) -->
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="font-size:12px;color:#666">Qty:</span>
+        <div class="qty-btns">
+          <button class="qty-btn" onclick="adjQty(-1)">&#8722;</button>
+          <input class="qty-num" type="number" id="qty" value="1" min="1" max="99" oninput="calcPrice()">
+          <button class="qty-btn" onclick="adjQty(1)">&#43;</button>
+        </div>
+        <span style="font-size:12px;color:#666">blinds (same size)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: FABRIC & COLOR -->
   <div class="step-block" id="step1">
     <div class="step-head" onclick="toggleStep('step1')">
-      <div class="step-num">3</div>
+      <div class="step-num">2</div>
       <div class="step-head-title">Fabric &amp; Color</div>
       <div class="step-head-val" id="s1val">—</div>
     </div>
@@ -413,82 +456,10 @@
     </div>
   </div>
 
-  <!-- STEP 2: MOUNT TYPE -->
-  <div class="step-block active" id="step2">
-    <div class="step-head" onclick="toggleStep('step2')">
-      <div class="step-num">1</div>
-      <div class="step-head-title">Mount Type</div>
-      <div class="step-head-val" id="s2val">—</div>
-    </div>
-    <div class="step-body">
-      <div class="opt-row">
-        <button class="opt-btn" onclick="pickMount(this,'inside','Inside Mount — Fully Flushed')">Inside Mount</button>
-        <button class="opt-btn" onclick="pickMount(this,'semi','Semi-Inside Mount')">Semi-Inside Mount</button>
-        <button class="opt-btn" onclick="pickMount(this,'outside','Outside Mount')">Outside Mount</button>
-      </div>
-      <div class="step-note"><strong>Inside:</strong> fully flushed, no valance needed — min depth 3¾&Prime;, mfr deducts 3/8&Prime; W &amp; 3/16&Prime; H. <strong>Semi-inside:</strong> partial recess into opening — min depth 2 13/16&Prime;, same deductions. <strong>Outside:</strong> mounts above/outside the frame — no deductions, add ~1½&Prime; each side for light block, total projection 3¾&Prime;–4⅛&Prime;.</div>
-      <div id="mount-note" class="msg-box msg-info" style="display:none"></div>
-    </div>
-  </div>
-
-  <!-- STEP 3: DIMENSIONS -->
-  <div class="step-block" id="step3">
-    <div class="step-head" onclick="toggleStep('step3')">
-      <div class="step-num">2</div>
-      <div class="step-head-title">Dimensions</div>
-      <div class="step-head-val" id="s3val">—</div>
-    </div>
-    <div class="step-body">
-      <div class="dim-row">
-        <div>
-          <div class="dim-label">Width (inches)</div>
-          <div class="dim-inputs">
-            <input class="dim-whole" type="number" id="w-whole" min="18" max="100" placeholder="60" oninput="calcPrice()">
-            <select class="dim-frac" id="w-frac" onchange="calcPrice()">
-              <option value="0">0</option>
-              <option value="0.125">1/8</option>
-              <option value="0.25">1/4</option>
-              <option value="0.375">3/8</option>
-              <option value="0.5">1/2</option>
-              <option value="0.625">5/8</option>
-              <option value="0.75">3/4</option>
-              <option value="0.875">7/8</option>
-            </select>
-            <span class="dim-unit">&Prime;</span>
-          </div>
-        </div>
-        <div>
-          <div class="dim-label">Height (inches)</div>
-          <div class="dim-inputs">
-            <input class="dim-whole" type="number" id="h-whole" min="36" max="108" placeholder="84" oninput="calcPrice()">
-            <select class="dim-frac" id="h-frac" onchange="calcPrice()">
-              <option value="0">0</option>
-              <option value="0.125">1/8</option>
-              <option value="0.25">1/4</option>
-              <option value="0.375">3/8</option>
-              <option value="0.5">1/2</option>
-              <option value="0.625">5/8</option>
-              <option value="0.75">3/4</option>
-              <option value="0.875">7/8</option>
-            </select>
-            <span class="dim-unit">&Prime;</span>
-          </div>
-        </div>
-      </div>
-      <div id="dim-msg" class="msg-box" style="display:none"></div>
-      <div class="computed-box" id="size-box" style="display:none">
-        <div class="cv-row"><span class="cv-key">Order size</span><span class="cv-val" id="cv-size">—</span></div>
-        <div class="cv-row"><span class="cv-key">Pricing bracket</span><span class="cv-val" id="cv-bracket">—</span></div>
-        <div class="cv-row"><span class="cv-key">Price per blind</span><span class="cv-val" id="cv-price">—</span></div>
-      </div>
-      <div class="step-note">Width 18&Prime;–100&Prime; &middot; Height 36&Prime;–108&Prime;. A center support bracket is <strong>required and included</strong> for widths 78&Prime; or wider. For openings wider than 100&Prime;, order two side-by-side blinds — both <strong>must use the same stack direction</strong> (both stack left or both stack right; do not mix directions or the vanes will interfere).</div>
-    </div>
-  </div>
-
-  <!-- STEP 4: OPTIONS -->
+  <!-- STEP 3: OPTIONS -->
   <div class="step-block" id="step4">
     <div class="step-head" onclick="toggleStep('step4')">
-      <div class="step-num">4</div>
+      <div class="step-num">3</div>
       <div class="step-head-title">Options &amp; Add-ons</div>
       <div class="step-head-val" id="s4val">None selected</div>
     </div>
@@ -525,28 +496,10 @@
     </div>
   </div>
 
-  <!-- STEP 5: QUANTITY -->
-  <div class="step-block" id="step5">
-    <div class="step-head" onclick="toggleStep('step5')">
-      <div class="step-num">5</div>
-      <div class="step-head-title">Quantity</div>
-      <div class="step-head-val" id="s5val">1 blind</div>
-    </div>
-    <div class="step-body">
-      <div class="spinner-row">
-        <button class="spin-btn" onclick="adjQty(-1)">−</button>
-        <input class="spin-num" type="number" id="qty" value="1" min="1" max="99" oninput="calcPrice()">
-        <button class="spin-btn" onclick="adjQty(1)">+</button>
-        <span class="spin-label">blinds (same size)</span>
-      </div>
-      <div class="step-note">Each blind is priced individually at the same size. For different sizes, submit separate quote requests. Side-by-side panels (same order): we'll advise on spacing at your measurement visit.</div>
-    </div>
-  </div>
-
-  <!-- STEP 6: DELIVERY -->
+  <!-- STEP 4: DELIVERY -->
   <div class="step-block" id="step6">
     <div class="step-head" onclick="toggleStep('step6')">
-      <div class="step-num">6</div>
+      <div class="step-num">4</div>
       <div class="step-head-title">Delivery</div>
       <div class="step-head-val" id="s6val">—</div>
     </div>
@@ -562,10 +515,10 @@
     </div>
   </div>
 
-  <!-- STEP 7: QUOTE FORM -->
+  <!-- STEP 5: QUOTE FORM -->
   <div class="step-block" id="step7">
     <div class="step-head" onclick="toggleStep('step7')">
-      <div class="step-num">7</div>
+      <div class="step-num">5</div>
       <div class="step-head-title">Request Your Quote</div>
       <div class="step-head-val" id="s7val">—</div>
     </div>

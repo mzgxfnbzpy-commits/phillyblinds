@@ -66,23 +66,14 @@ function pickSlat(el, label) {
   S.slat = label.includes('2½') ? '2.5in' : '2in';
   $('s2val').textContent = label + ' (selected)';
   markDone('step2');
-  toggleStep('step3');
+  toggleStep('step4');
   calcPrice();
 }
 
-// ── STEP 3: DIMENSIONS ────────────────────────────────────────────────────────
-function _frac(id) {
-  const el = $(id);
-  return el ? parseFloat(el.value) || 0 : 0;
-}
-function _whole(id) {
-  const el = $(id);
-  return el ? parseInt(el.value, 10) || 0 : 0;
-}
-
+// ── STEP 1: DIMENSIONS (merged into Window measurements & mount) ───────────────
 function calcSize() {
-  const w = _whole('w-whole') + _frac('w-frac');
-  const h = _whole('h-whole') + _frac('h-frac');
+  const w = parseFloat($('w-whole').value) || 0;
+  const h = parseFloat($('h-whole').value) || 0;
   const msgs = $('size-msgs');
   const cbox = $('computed-box');
 
@@ -117,8 +108,7 @@ function calcSize() {
   $('cv-area').textContent = (w * h / 144).toFixed(2) + ' sq ft';
   cbox.style.display = 'block';
 
-  $('s3val').textContent = w + '″ × ' + h + '″';
-  markDone('step3');
+  markDone('step1');
 
   // Wand center note
   const wandCenter = $('wand-center-note');
@@ -162,7 +152,7 @@ function pickWand(el, val) {
   S.wandLoc = val;
   $('s6val').textContent = val.charAt(0).toUpperCase() + val.slice(1) + ' wand';
   markDone('step6');
-  toggleStep('step7');
+  toggleStep('step8');
 }
 
 // ── STEP 7: QUANTITY ──────────────────────────────────────────────────────────
@@ -177,7 +167,6 @@ function adjQty(d) {
 function updateQty() {
   const v = Math.max(1, parseInt($('qty-input').value, 10) || 1);
   S.qty = v;
-  $('s7val').textContent = v + ' blind' + (v > 1 ? 's' : '');
   calcPrice();
 }
 
@@ -268,9 +257,9 @@ function addRealWoodToCart() {
   const errEl = $('cf-contact-err');
   errEl.style.display = 'none';
   if (!S.mount)  { errEl.textContent = 'Please select a mount type (Step 1) before adding to cart.';      errEl.style.display = 'block'; return; }
-  if (!S.sizeOk) { errEl.textContent = 'Please enter valid dimensions (Step 3) before adding to cart.';   errEl.style.display = 'block'; return; }
-  if (!S.color)  { errEl.textContent = 'Please select a color (Step 4) before adding to cart.';           errEl.style.display = 'block'; return; }
-  if (!S.valance){ errEl.textContent = 'Please select a valance option (Step 5) before adding to cart.';  errEl.style.display = 'block'; return; }
+  if (!S.sizeOk) { errEl.textContent = 'Please enter valid dimensions (Step 1) before adding to cart.';   errEl.style.display = 'block'; return; }
+  if (!S.color)  { errEl.textContent = 'Please select a color (Step 3) before adding to cart.';           errEl.style.display = 'block'; return; }
+  if (!S.valance){ errEl.textContent = 'Please select a valance option (Step 4) before adding to cart.';  errEl.style.display = 'block'; return; }
 
   const pW = NW_W.find(v => v >= S.w);
   const pH = NW_H.find(v => v >= S.h);
@@ -318,9 +307,9 @@ function submitForm() {
   if (!name) { errEl.textContent = 'Please enter your name.'; errEl.style.display = 'block'; return; }
   if (!phone && !email) { errEl.textContent = 'Please enter a phone or email.'; errEl.style.display = 'block'; return; }
   if (!S.mount) { errEl.textContent = 'Please select a mount type (Step 1).'; errEl.style.display = 'block'; return; }
-  if (!S.sizeOk) { errEl.textContent = 'Please enter valid dimensions (Step 3).'; errEl.style.display = 'block'; return; }
-  if (!S.color) { errEl.textContent = 'Please select a color (Step 4).'; errEl.style.display = 'block'; return; }
-  if (!S.valance) { errEl.textContent = 'Please select a valance option (Step 5).'; errEl.style.display = 'block'; return; }
+  if (!S.sizeOk) { errEl.textContent = 'Please enter valid dimensions (Step 1).'; errEl.style.display = 'block'; return; }
+  if (!S.color) { errEl.textContent = 'Please select a color (Step 3).'; errEl.style.display = 'block'; return; }
+  if (!S.valance) { errEl.textContent = 'Please select a valance option (Step 4).'; errEl.style.display = 'block'; return; }
 
   const pW = NW_W.find(v => v >= S.w);
   const pH = NW_H.find(v => v >= S.h);

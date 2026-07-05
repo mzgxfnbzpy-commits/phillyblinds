@@ -103,10 +103,9 @@
 .success-box{background:#EEFBE8;border:1px solid #86EFAC;border-radius:12px;padding:22px;text-align:center;display:none}
 .success-box h3{font-size:15px;font-weight:600;color:#14532d;margin-bottom:6px}
 .success-box p{font-size:13px;color:#166534;line-height:1.6}
-/* Step reorder: mount+dims first */
+/* Step order: measurements+mount first */
 #config-left-cl{display:flex;flex-direction:column}
-#step3{order:1}#step4{order:2}#step1{order:3}#step2{order:4}
-#step5,#step6,#step7,#step8{order:5}
+#step3{order:1}#step1{order:2}#step2{order:3}#step5{order:4}#step7{order:5}#step8{order:6}
 </style>
 </head>
 <body data-page="Shades & blinds">
@@ -133,7 +132,7 @@
   <!-- STEP 1: SLAT SIZE -->
   <div class="step-block" id="step1">
     <div class="step-head" onclick="toggleStep('step1')">
-      <div class="step-num">3</div>
+      <div class="step-num">2</div>
       <div class="step-head-title">Slat Size</div>
       <div class="step-head-val" id="s1val">—</div>
     </div>
@@ -150,7 +149,7 @@
   <!-- STEP 2: COLOR -->
   <div class="step-block" id="step2">
     <div class="step-head" onclick="toggleStep('step2')">
-      <div class="step-num">4</div>
+      <div class="step-num">3</div>
       <div class="step-head-title">Color</div>
       <div class="step-head-val" id="s2val">—</div>
     </div>
@@ -303,67 +302,22 @@
     </div>
   </div>
 
-  <!-- STEP 3: MOUNT TYPE -->
+  <!-- STEP 1: WINDOW MEASUREMENTS & MOUNT -->
   <div class="step-block active" id="step3">
     <div class="step-head" onclick="toggleStep('step3')">
       <div class="step-num">1</div>
-      <div class="step-head-title">Mount Type</div>
+      <div class="step-head-title">Window measurements &amp; mount</div>
       <div class="step-head-val" id="s3val">—</div>
     </div>
     <div class="step-body">
-      <div class="opt-row">
-        <button class="opt-btn" onclick="pickMount(this,'inside','Inside Mount')">Inside Mount</button>
-        <button class="opt-btn" onclick="pickMount(this,'outside','Outside Mount')">Outside Mount</button>
-      </div>
-      <div class="step-note"><strong>Inside Mount:</strong> fits inside the window frame for a clean, flush look — mfr deducts 3/8&Prime; from width automatically. <strong>Outside Mount:</strong> mounts above or outside the frame for better light block — shim available for trim clearance.</div>
-      <div id="mount-note" class="msg-box msg-info" style="display:none"></div>
-    </div>
-  </div>
-
-  <!-- STEP 4: DIMENSIONS -->
-  <div class="step-block" id="step4">
-    <div class="step-head" onclick="toggleStep('step4')">
-      <div class="step-num">2</div>
-      <div class="step-head-title">Dimensions</div>
-      <div class="step-head-val" id="s4val">—</div>
-    </div>
-    <div class="step-body">
-      <div class="dim-row">
-        <div>
-          <div class="dim-label">Width (inches)</div>
-          <div class="dim-inputs">
-            <input class="dim-whole" type="number" id="w-whole" min="9" max="96" placeholder="36" oninput="calcPrice()">
-            <select class="dim-frac" id="w-frac" onchange="calcPrice()">
-              <option value="0">0</option>
-              <option value="0.125">1/8</option>
-              <option value="0.25">1/4</option>
-              <option value="0.375">3/8</option>
-              <option value="0.5">1/2</option>
-              <option value="0.625">5/8</option>
-              <option value="0.75">3/4</option>
-              <option value="0.875">7/8</option>
-            </select>
-            <span class="dim-unit">&Prime;</span>
-          </div>
-        </div>
-        <div>
-          <div class="dim-label">Height (inches)</div>
-          <div class="dim-inputs">
-            <input class="dim-whole" type="number" id="h-whole" min="10" max="96" placeholder="48" oninput="calcPrice()">
-            <select class="dim-frac" id="h-frac" onchange="calcPrice()">
-              <option value="0">0</option>
-              <option value="0.125">1/8</option>
-              <option value="0.25">1/4</option>
-              <option value="0.375">3/8</option>
-              <option value="0.5">1/2</option>
-              <option value="0.625">5/8</option>
-              <option value="0.75">3/4</option>
-              <option value="0.875">7/8</option>
-            </select>
-            <span class="dim-unit">&Prime;</span>
-          </div>
+      <div class="dim-box">
+        <div class="dim-box-label">Enter your window size</div>
+        <div class="form-row">
+          <div class="form-group"><label>Width</label><input type="number" id="w-whole" min="9" max="96" step="0.125" placeholder="36" oninput="calcPrice()"><div class="dim-unit">inches &mdash; 9&Prime; min &middot; 78&Prime; max (96&Prime; for 2&Prime; slats)</div></div>
+          <div class="form-group"><label>Height</label><input type="number" id="h-whole" min="10" max="96" step="0.125" placeholder="48" oninput="calcPrice()"><div class="dim-unit">inches &mdash; 10&Prime; min &middot; 96&Prime; max</div></div>
         </div>
       </div>
+      <div class="step-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm at the home visit.</div>
       <div id="dim-msg" class="msg-box" style="display:none"></div>
       <div class="computed-box" id="size-box" style="display:none">
         <div class="cv-row"><span class="cv-key">Order size</span><span class="cv-val" id="cv-size">—</span></div>
@@ -372,13 +326,33 @@
         <div class="cv-row"><span class="cv-key">Base price (1&Prime; slat)</span><span class="cv-val" id="cv-base">—</span></div>
       </div>
       <div class="step-note" id="size-limits-note">Enter your window measurements as ordered. Mfr applies deductions automatically.</div>
+
+      <!-- Mount type -->
+      <div style="font-size:12px;font-weight:600;color:#555;margin:14px 0 6px">Mount type</div>
+      <div class="opt-row" style="margin-bottom:6px">
+        <button class="opt-btn" onclick="pickMount(this,'inside','Inside Mount')">Inside mount</button>
+        <button class="opt-btn" onclick="pickMount(this,'outside','Outside Mount')">Outside mount</button>
+      </div>
+      <div class="step-note" style="margin-bottom:12px"><strong>Inside Mount:</strong> fits inside the window frame for a clean, flush look — mfr deducts 3/8&Prime; from width automatically. <strong>Outside Mount:</strong> mounts above or outside the frame for better light block — shim available for trim clearance.</div>
+      <div id="mount-note" class="msg-box msg-info" style="display:none"></div>
+
+      <!-- Quantity (shared stepper) -->
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px">
+        <span style="font-size:12px;color:#666">Qty:</span>
+        <div class="qty-btns">
+          <button class="qty-btn" onclick="adjQty(-1)">&#8722;</button>
+          <input class="qty-num" type="number" id="qty" value="1" min="1" max="99" oninput="calcPrice()">
+          <button class="qty-btn" onclick="adjQty(1)">&#43;</button>
+        </div>
+        <span style="font-size:12px;color:#666">blinds (same size)</span>
+      </div>
     </div>
   </div>
 
   <!-- STEP 5: OPTIONS -->
   <div class="step-block" id="step5">
     <div class="step-head" onclick="toggleStep('step5')">
-      <div class="step-num">5</div>
+      <div class="step-num">4</div>
       <div class="step-head-title">Options &amp; Add-ons</div>
       <div class="step-head-val" id="s5val">—</div>
     </div>
@@ -440,28 +414,10 @@
     </div>
   </div>
 
-  <!-- STEP 6: QUANTITY -->
-  <div class="step-block" id="step6">
-    <div class="step-head" onclick="toggleStep('step6')">
-      <div class="step-num">6</div>
-      <div class="step-head-title">Quantity</div>
-      <div class="step-head-val" id="s6val">1 blind</div>
-    </div>
-    <div class="step-body">
-      <div class="spinner-row">
-        <button class="spin-btn" onclick="adjQty(-1)">−</button>
-        <input class="spin-num" type="number" id="qty" value="1" min="1" max="99" oninput="calcPrice()">
-        <button class="spin-btn" onclick="adjQty(1)">+</button>
-        <span class="spin-label">blinds (same size)</span>
-      </div>
-      <div class="step-note">Each blind is priced individually at the same size. For different sizes, submit separate quote requests.</div>
-    </div>
-  </div>
-
   <!-- STEP 7: DELIVERY -->
   <div class="step-block" id="step7">
     <div class="step-head" onclick="toggleStep('step7')">
-      <div class="step-num">7</div>
+      <div class="step-num">5</div>
       <div class="step-head-title">Delivery</div>
       <div class="step-head-val" id="s7val">—</div>
     </div>
@@ -480,7 +436,7 @@
   <!-- STEP 8: QUOTE FORM -->
   <div class="step-block" id="step8">
     <div class="step-head" onclick="toggleStep('step8')">
-      <div class="step-num">8</div>
+      <div class="step-num">6</div>
       <div class="step-head-title">Request Your Quote</div>
       <div class="step-head-val" id="s8val">—</div>
     </div>

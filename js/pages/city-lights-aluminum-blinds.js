@@ -84,7 +84,7 @@ function pickColor(el,code,name,surcharge){
   document.getElementById('color-compat-warn').style.display='none';
   markDone('step2');
   calcPrice();
-  goNext('step2','step3');
+  goNext('step2','step5');
 }
 function pickMount(el,key,label){
   document.querySelectorAll('#step3 .opt-btn').forEach(c=>c.classList.remove('sel'));
@@ -98,15 +98,12 @@ function pickMount(el,key,label){
   document.getElementById('shim-wrap').style.display=(key==='outside')?'block':'none';
   if(key==='inside'){state.shim=false;document.getElementById('shim-addon').classList.remove('sel');document.getElementById('shim-qty-wrap').style.display='none';}
   calcPrice();
-  goNext('step3','step4');
+  goNext('step3','step1');
 }
 
 function calcPrice(){
-  const wW=parseFloat(document.getElementById('w-whole').value)||0;
-  const wF=parseFloat(document.getElementById('w-frac').value)||0;
-  const hW=parseFloat(document.getElementById('h-whole').value)||0;
-  const hF=parseFloat(document.getElementById('h-frac').value)||0;
-  state.w=wW+wF; state.h=hW+hF;
+  state.w=parseFloat(document.getElementById('w-whole').value)||0;
+  state.h=parseFloat(document.getElementById('h-whole').value)||0;
 
   const dimMsg=document.getElementById('dim-msg');
   const sizeBox=document.getElementById('size-box');
@@ -152,14 +149,13 @@ function calcPrice(){
     updateQuote();return;
   }
 
-  // all good
-  document.getElementById('s4val').textContent=`${state.w}″ × ${state.h}″`;
-  markDone('step4');
+  // all good — size lives in the merged Step 1 (Window measurements & mount)
+  markDone('step3');
   sizeBox.style.display='block';
-  // Auto-open steps 5-8 the first time dimensions are valid
-  ['step5','step6','step7','step8'].forEach(id=>{
+  // Auto-open the remaining steps the first time dimensions are valid
+  ['step1','step2','step5','step7','step8'].forEach(id=>{
     const el=document.getElementById(id);
-    if(!el.classList.contains('active')&&!el.classList.contains('open'))el.classList.add('active');
+    if(el&&!el.classList.contains('active')&&!el.classList.contains('open'))el.classList.add('active');
   });
   document.getElementById('cv-size').textContent=`${state.w}″ W × ${state.h}″ H`;
   document.getElementById('cv-sqft').textContent=sqft.toFixed(2)+' sq ft';
@@ -182,8 +178,6 @@ function adjQty(d){
   const el=document.getElementById('qty');
   el.value=Math.max(1,Math.min(99,(parseInt(el.value)||1)+d));
   state.qty=parseInt(el.value);
-  document.getElementById('s6val').textContent=state.qty+' blind'+(state.qty>1?'s':'');
-  markDone('step6');
   calcPrice();
 }
 function adjShim(d){
@@ -205,7 +199,6 @@ function pickDel(btn,key){
 function updateQuote(){
   const qty=parseInt(document.getElementById('qty').value)||1;
   state.qty=qty;
-  document.getElementById('s6val').textContent=qty+' blind'+(qty>1?'s':'');
 
   const ready=state.slat&&state.colorCode&&state.mount&&state.w&&state.h;
   if(!ready){document.getElementById('qp-pending').style.display='block';document.getElementById('qp-detail').style.display='none';return;}

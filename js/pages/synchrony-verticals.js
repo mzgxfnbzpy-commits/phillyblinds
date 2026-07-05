@@ -15,7 +15,7 @@ function toggleStep(id){
   b.classList.toggle('open',!b.classList.contains('open'));
   b.classList.toggle('active',!b.classList.contains('active')||b.classList.contains('open'));
 }
-function markDone(id){document.getElementById(id).classList.add('done');}
+function markDone(id){const e=document.getElementById(id);if(e)e.classList.add('done');}
 
 function pickFabric(el,collection,colorName,group){
   document.querySelectorAll('#step1 .color-card').forEach(c=>c.classList.remove('sel'));
@@ -61,11 +61,8 @@ function pickMount(el,key,label){
 }
 
 function calcPrice(){
-  const wW=parseFloat(document.getElementById('w-whole').value)||0;
-  const wF=parseFloat(document.getElementById('w-frac').value)||0;
-  const hW=parseFloat(document.getElementById('h-whole').value)||0;
-  const hF=parseFloat(document.getElementById('h-frac').value)||0;
-  state.w=wW+wF; state.h=hW+hF;
+  state.w=parseFloat(document.getElementById('w-whole').value)||0;
+  state.h=parseFloat(document.getElementById('h-whole').value)||0;
   const dimMsg=document.getElementById('dim-msg');
   const sizeBox=document.getElementById('size-box');
   dimMsg.style.display='none'; sizeBox.style.display='none';
@@ -84,8 +81,7 @@ function calcPrice(){
     dimMsg.style.display='block';
     updateQuote();return;
   }
-  document.getElementById('s3val').textContent=state.w+'″ × '+state.h+'″';
-  markDone('step3');
+  markDone('step2');
   let price=null;
   if(state.group){price=MATRICES[state.group][hRow][W_COLS.indexOf(wCol)];}
   sizeBox.style.display='block';
@@ -115,8 +111,6 @@ function adjQty(d){
   const el=document.getElementById('qty');
   el.value=Math.max(1,Math.min(99,(parseInt(el.value)||1)+d));
   state.qty=parseInt(el.value);
-  document.getElementById('s5val').textContent=state.qty+' blind'+(state.qty>1?'s':'');
-  markDone('step5');
   calcPrice();
 }
 function pickWand(btn,side){
@@ -138,7 +132,6 @@ const NORMAN_DISC = 0.35; // 35% off retail subtotal — not applied to shipping
 function updateQuote(){
   const qty=parseInt(document.getElementById('qty').value)||1;
   state.qty=qty;
-  document.getElementById('s5val').textContent=qty+' blind'+(qty>1?'s':'');
   const mountLabel=state.mount==='inside'?'Inside Mount':state.mount==='semi'?'Semi-Inside Mount':state.mount==='outside'?'Outside Mount':'';
   const ready=state.group&&state.colorName&&state.mount&&state.w&&state.h;
   if(!ready){document.getElementById('qp-pending').style.display='block';document.getElementById('qp-detail').style.display='none';return;}

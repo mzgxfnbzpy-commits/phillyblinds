@@ -149,19 +149,48 @@
 <div class="config-layout">
 <div id="config-left">
 
-  <!-- STEP 1: MOUNT -->
+  <!-- STEP 1: WINDOW MEASUREMENTS & MOUNT -->
   <div class="step-block active" id="step1">
     <div class="step-head" onclick="toggleStep('step1')">
       <div class="step-num">1</div>
-      <div class="step-head-title">Mount Type</div>
+      <div class="step-head-title">Window measurements &amp; mount</div>
       <div class="step-head-val" id="s1val">&mdash;</div>
     </div>
     <div class="step-body">
-      <div class="opt-row">
-        <button class="opt-btn" onclick="pickMount(this,'inside')">Inside Mount</button>
-        <button class="opt-btn" onclick="pickMount(this,'outside')">Outside Mount</button>
+      <div class="dim-box">
+        <div class="dim-box-label">Enter your window size</div>
+        <div class="form-row">
+          <div class="form-group"><label>Width</label><input type="number" id="w-whole" min="6.5" max="96" step="0.125" placeholder="36" oninput="calcSize()"><div class="dim-unit">inches &middot; 6&frac12;&Prime; min &middot; 96&Prime; max</div></div>
+          <div class="form-group"><label>Height</label><input type="number" id="h-whole" min="16" max="96" step="0.125" placeholder="60" oninput="calcSize()"><div class="dim-unit">inches &middot; 16&Prime; min &middot; 96&Prime; max</div></div>
+        </div>
       </div>
-      <div class="step-note">Inside mount fits inside the window frame for a clean built-in look; outside mount mounts on the wall or above the frame and covers the trim. Inside mount: blind width = your opening &minus; 3/8&Prime; (manufacturer deduction). Outside mount: order your finished blind size. We recommend adding 1&frac12;&Prime; each side for best light block.</div>
+      <div class="step-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm at the home visit.</div>
+      <div id="size-msgs"></div>
+      <div id="computed-box" class="computed-box" style="display:none">
+        <div class="cv-row"><span class="cv-key">Your size</span><span class="cv-val" id="cv-size">&mdash;</span></div>
+        <div class="cv-row"><span class="cv-key">Priced at grid</span><span class="cv-val" id="cv-pricesize">&mdash;</span></div>
+        <div class="cv-row"><span class="cv-key">Area</span><span class="cv-val" id="cv-area">&mdash;</span></div>
+      </div>
+      <div class="step-note">Enter your <strong>frame opening</strong> for inside mount, or desired <strong>finished blind size</strong> for outside mount. Min 6&frac12;&Prime; W &times; 16&Prime; H &middot; Max 96&Prime; W &times; 96&Prime; H &middot; Max area 64 sq ft.</div>
+
+      <!-- Mount type -->
+      <div style="font-size:12px;font-weight:600;color:#555;margin:14px 0 6px">Mount type</div>
+      <div class="opt-row" style="margin-bottom:6px">
+        <button class="opt-btn" onclick="pickMount(this,'inside')">Inside mount</button>
+        <button class="opt-btn" onclick="pickMount(this,'outside')">Outside mount</button>
+      </div>
+      <div class="step-note" style="margin-bottom:12px">Inside mount fits inside the window frame for a clean built-in look (mfr deducts 3/8&Prime; automatically). Outside mount mounts on the wall or above the frame and covers the trim &mdash; we recommend adding 1&frac12;&Prime; each side for best light block.</div>
+
+      <!-- Quantity (shared stepper) -->
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="font-size:12px;color:#666">Qty:</span>
+        <div class="qty-btns">
+          <button class="qty-btn" onclick="adjQty(-1)">&#8722;</button>
+          <input class="qty-num" type="number" id="qty-input" value="1" min="1" max="50" oninput="updateQty()">
+          <button class="qty-btn" onclick="adjQty(1)">&#43;</button>
+        </div>
+        <span style="font-size:12px;color:#666">blind(s) of this size &amp; color</span>
+      </div>
     </div>
   </div>
 
@@ -181,64 +210,10 @@
     </div>
   </div>
 
-  <!-- STEP 3: DIMENSIONS -->
-  <div class="step-block" id="step3">
-    <div class="step-head" onclick="toggleStep('step3')">
-      <div class="step-num">3</div>
-      <div class="step-head-title">Dimensions</div>
-      <div class="step-head-val" id="s3val">&mdash;</div>
-    </div>
-    <div class="step-body">
-      <div class="dim-row">
-        <div>
-          <div class="dim-label">Width</div>
-          <div class="dim-inputs">
-            <input class="dim-whole" type="number" id="w-whole" placeholder="36" min="6" max="96" oninput="calcSize()">
-            <select class="dim-frac" id="w-frac" onchange="calcSize()">
-              <option value="0">0&Prime;</option>
-              <option value="0.125">&#8539;&Prime;</option>
-              <option value="0.25">&#188;&Prime;</option>
-              <option value="0.375">&#8540;&Prime;</option>
-              <option value="0.5">&#189;&Prime;</option>
-              <option value="0.625">&#8541;&Prime;</option>
-              <option value="0.75">&#190;&Prime;</option>
-              <option value="0.875">&#8542;&Prime;</option>
-            </select>
-            <span class="dim-unit">&Prime;</span>
-          </div>
-        </div>
-        <div>
-          <div class="dim-label">Height</div>
-          <div class="dim-inputs">
-            <input class="dim-whole" type="number" id="h-whole" placeholder="48" min="16" max="96" oninput="calcSize()">
-            <select class="dim-frac" id="h-frac" onchange="calcSize()">
-              <option value="0">0&Prime;</option>
-              <option value="0.125">&#8539;&Prime;</option>
-              <option value="0.25">&#188;&Prime;</option>
-              <option value="0.375">&#8540;&Prime;</option>
-              <option value="0.5">&#189;&Prime;</option>
-              <option value="0.625">&#8541;&Prime;</option>
-              <option value="0.75">&#190;&Prime;</option>
-              <option value="0.875">&#8542;&Prime;</option>
-            </select>
-            <span class="dim-unit">&Prime;</span>
-          </div>
-        </div>
-      </div>
-      <div id="size-msgs"></div>
-      <div id="computed-box" class="computed-box" style="display:none">
-        <div class="cv-row"><span class="cv-key">Your size</span><span class="cv-val" id="cv-size">&mdash;</span></div>
-        <div class="cv-row"><span class="cv-key">Priced at grid</span><span class="cv-val" id="cv-pricesize">&mdash;</span></div>
-        <div class="cv-row"><span class="cv-key">Area</span><span class="cv-val" id="cv-area">&mdash;</span></div>
-      </div>
-      <div class="step-note">Enter your <strong>frame opening</strong> for inside mount, or desired <strong>finished blind size</strong> for outside mount. Min 6&frac12;&Prime; W &times; 16&Prime; H &middot; Max 96&Prime; W &times; 96&Prime; H &middot; Max area 64 sq ft.</div>
-    </div>
-  </div>
-
-  <!-- STEP 4: COLOR -->
+  <!-- STEP 3: COLOR -->
   <div class="step-block" id="step4">
     <div class="step-head" onclick="toggleStep('step4')">
-      <div class="step-num">4</div>
+      <div class="step-num">3</div>
       <div class="step-head-title">Color &amp; Finish</div>
       <div class="step-head-val" id="s4val">&mdash;</div>
     </div>
@@ -375,7 +350,7 @@
   <!-- STEP 5: VALANCE -->
   <div class="step-block" id="step5">
     <div class="step-head" onclick="toggleStep('step5')">
-      <div class="step-num">5</div>
+      <div class="step-num">4</div>
       <div class="step-head-title">Valance</div>
       <div class="step-head-val" id="s5val">&mdash;</div>
     </div>
@@ -392,7 +367,7 @@
   <!-- STEP 6: CONTROLS -->
   <div class="step-block" id="step6">
     <div class="step-head" onclick="toggleStep('step6')">
-      <div class="step-num">6</div>
+      <div class="step-num">5</div>
       <div class="step-head-title">Wand Location</div>
       <div class="step-head-val" id="s6val">&mdash;</div>
     </div>
@@ -406,28 +381,10 @@
     </div>
   </div>
 
-  <!-- STEP 7: QUANTITY -->
-  <div class="step-block" id="step7">
-    <div class="step-head" onclick="toggleStep('step7')">
-      <div class="step-num">7</div>
-      <div class="step-head-title">Quantity</div>
-      <div class="step-head-val" id="s7val">1 blind</div>
-    </div>
-    <div class="step-body">
-      <div class="spinner-row">
-        <button class="spin-btn" onclick="adjQty(-1)">&#8722;</button>
-        <input class="spin-num" type="number" id="qty-input" value="1" min="1" max="50" oninput="updateQty()" style="width:52px">
-        <button class="spin-btn" onclick="adjQty(1)">&#43;</button>
-        <span class="spin-label">blind(s) of this size &amp; color</span>
-      </div>
-      <div class="step-note" style="margin-top:8px">Need different sizes or colors? Submit a separate order for each. Freight applies per order.</div>
-    </div>
-  </div>
-
-  <!-- STEP 8: INFO & SUBMIT -->
+  <!-- STEP 6: INFO & SUBMIT -->
   <div class="step-block" id="step8">
     <div class="step-head" onclick="toggleStep('step8')">
-      <div class="step-num">8</div>
+      <div class="step-num">6</div>
       <div class="step-head-title">Your Info &amp; Submit</div>
       <div class="step-head-val"></div>
     </div>
