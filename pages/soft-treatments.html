@@ -368,14 +368,14 @@
         <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px">Panel size</div>
         <div class="form-row">
           <div class="form-group">
-            <label>Width per panel</label>
+            <label>Width</label>
             <div style="display:flex;align-items:center;gap:6px">
               <input type="number" id="rf-w" placeholder="48" min="12" max="200" oninput="calcDrapePrice()" style="width:70px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px">
               <span style="font-size:12px;color:#666">in</span>
             </div>
           </div>
           <div class="form-group">
-            <label>Panel length</label>
+            <label>Finished length</label>
             <div style="display:flex;align-items:center;gap:6px">
               <input type="number" id="rf-l" placeholder="84" min="12" max="200" oninput="calcDrapePrice()" style="width:70px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px">
               <span style="font-size:12px;color:#666">in</span>
@@ -475,6 +475,22 @@
       </div>
     </div>
     </div><!-- /#drape-std-dims -->
+    <!-- Panel configuration — shown for ALL pleat styles, positioned right after the dimensions -->
+    <div style="border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-top:14px">
+      <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Panel configuration</div>
+      <div class="opt-row" id="grp-drape-panels">
+        <button class="opt-btn sel" id="drape-pair-btn" onclick="selOpt(this,'grp-drape-panels');drapeToggleSingle(false)">Pair</button>
+        <button class="opt-btn" id="drape-single-btn" onclick="selOpt(this,'grp-drape-panels');drapeToggleSingle(true)">Single panel</button>
+      </div>
+      <div id="drape-single-opts" style="display:none;margin-top:10px">
+        <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px">Panel position</div>
+        <div class="opt-row" id="grp-drape-side">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-side')">Left</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-drape-side')">Right</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-drape-side')">Center</button>
+        </div>
+      </div>
+    </div>
     <div id="drape-price-box" style="display:none;margin-top:14px"></div>
   </div>
 
@@ -638,23 +654,6 @@
           </div>
         </div>
       </div>
-      <!-- Panel configuration -->
-      <div style="border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-bottom:14px">
-        <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Panel configuration</div>
-        <div class="opt-row" id="grp-drape-panels">
-          <button class="opt-btn sel" id="drape-pair-btn" onclick="selOpt(this,'grp-drape-panels');drapeToggleSingle(false)">Pair</button>
-          <button class="opt-btn" id="drape-single-btn" onclick="selOpt(this,'grp-drape-panels');drapeToggleSingle(true)">Single panel</button>
-        </div>
-        <div id="drape-single-opts" style="display:none;margin-top:10px">
-          <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px">Panel position</div>
-          <div class="opt-row" id="grp-drape-side">
-            <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-side')">Left</button>
-            <button class="opt-btn" onclick="selOpt(this,'grp-drape-side')">Right</button>
-            <button class="opt-btn" onclick="selOpt(this,'grp-drape-side')">Center</button>
-          </div>
-        </div>
-      </div>
-
       <div class="form-group"><label>Notes — fabric preference, rod type, timeline, or anything else</label>
         <textarea id="d-notes" style="min-height:90px" placeholder="e.g. Ripple fold panels, customer-supplied linen fabric, 3 windows in master bedroom..."></textarea>
       </div>
