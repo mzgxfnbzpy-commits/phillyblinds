@@ -501,10 +501,6 @@
         </div>
         <div class="step-body">
           <div class="form-group">
-            <label>Room(s) / location</label>
-            <input type="text" id="field-room" placeholder="e.g. Master bedroom, living room, kitchen" oninput="updateQuote()">
-          </div>
-          <div class="form-group">
             <label>Special instructions or questions</label>
             <textarea id="field-notes" placeholder="Any per-opening differences, stile preferences, obstructions (handles, cranks), match to existing shutters, or questions for the installer..."></textarea>
           </div>
@@ -514,35 +510,12 @@
         </div>
       </div>
 
-      <!-- ── STEP 14: QUANTITY ── -->
-      <div class="step-block" id="sec-qty">
-        <div class="step-head" onclick="pbToggleStep('sec-qty')">
-          <span class="step-num" id="badge-14">14</span>
-          <span class="step-head-title">Quantity</span>
-          <span class="step-head-val" id="shv-14"></span>
-        </div>
-        <div class="step-body">
-          <p class="step-subhead">How many windows or openings are you ordering shutters for?</p>
-          <div style="display:flex;align-items:center;gap:8px;margin-top:10px">
-            <div class="qty-btns">
-              <button class="qty-btn" type="button" onclick="adjQty(-1)">&#8722;</button>
-              <input class="qty-num" type="number" id="qty-input" min="1" max="50" value="1" oninput="onQtyInput(this.value,'qty-input')">
-              <button class="qty-btn" type="button" onclick="adjQty(1)">&#43;</button>
-            </div>
-            <span style="font-size:13px;color:#666;margin-left:6px">window(s)</span>
-          </div>
-          <div class="step-continue-wrap">
-            <button class="btn-step-continue" onclick="continueStep14()">Continue →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── STEP 15: DELIVERY ── -->
+      <!-- ── STEP 14: DELIVERY ── -->
       <div class="step-block" id="sec-delivery">
         <div class="step-head" onclick="pbToggleStep('sec-delivery')">
-          <span class="step-num" id="badge-15">15</span>
+          <span class="step-num" id="badge-14">14</span>
           <span class="step-head-title">Delivery</span>
-          <span class="step-head-val" id="shv-15"></span>
+          <span class="step-head-val" id="shv-14"></span>
         </div>
         <div class="step-body">
           <div class="delivery-section">
@@ -551,12 +524,12 @@
         </div>
       </div>
 
-      <!-- ── STEP 16: CONTACT & SUBMIT ── -->
+      <!-- ── STEP 15: CONTACT & SUBMIT ── -->
       <div class="step-block" id="sec-contact">
         <div class="step-head" onclick="pbToggleStep('sec-contact')">
-          <span class="step-num" id="badge-16">16</span>
+          <span class="step-num" id="badge-15">15</span>
           <span class="step-head-title">Contact information</span>
-          <span class="step-head-val" id="shv-16"></span>
+          <span class="step-head-val" id="shv-15"></span>
         </div>
         <div class="step-body">
           <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->

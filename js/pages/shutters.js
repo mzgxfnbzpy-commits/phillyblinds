@@ -104,7 +104,7 @@ const S = {
   frameSides:'4-sided (standard)',
   colorType:'', color:'',
   specs:[], delivery:'Ship (UPS/FedEx)',
-  room:'', notes:''
+  notes:''
 };
 
 /* ─── STEP SYSTEM ───────────────────────────────────────── */
@@ -201,24 +201,19 @@ function continueStep12() {
   pbAdv('sec-special', 12, 'sec-notes', S.specs.length ? S.specs.length + ' add-on' + (S.specs.length !== 1 ? 's' : '') : 'None');
 }
 function continueStep13() {
-  var room = (document.getElementById('field-room').value || '').trim();
-  pbAdv('sec-notes', 13, 'sec-qty', room || 'No room entered');
-}
-function continueStep14() {
-  if (!S.count || S.count < 1) S.count = 1;
-  var summary = S.count + ' window' + (S.count !== 1 ? 's' : '');
-  pbAdv('sec-qty', 14, 'sec-delivery', summary);
-  pbAdv('sec-delivery', 15, 'sec-contact', 'Ship to me');
+  var notes = ((document.getElementById('field-notes') || {}).value || '').trim();
+  pbAdv('sec-notes', 13, 'sec-delivery', notes ? 'Notes added' : 'No notes');
+  pbAdv('sec-delivery', 14, 'sec-contact', 'Ship to me');
 }
 function continueStep15() {
-  pbAdv('sec-delivery', 15, 'sec-contact', 'Ship to me');
+  pbAdv('sec-delivery', 14, 'sec-contact', 'Ship to me');
 }
 
 /* ─── HELPERS ───────────────────────────────────────────── */
 function qs(id) { return document.getElementById(id); }
 function setText(id, v) { var e = qs(id); if (e) e.textContent = v || '—'; }
 function syncQtyInputs(srcId) {
-  ['qty-input', 'shutter-qty'].forEach(function(id) {
+  ['shutter-qty'].forEach(function(id) {
     if (id === srcId) return;
     var e = qs(id);
     if (e) e.value = S.count;
@@ -545,7 +540,6 @@ async function submitQuote() {
     { label: 'Color / Finish', value: (S.colorType?S.colorType+' — ':'')+S.color },
     { label: 'Specialty options', value: S.specs&&S.specs.length?S.specs.join(', '):'None' },
     { label: 'Delivery', value: S.delivery||'Not specified' },
-    { label: 'Room', value: qs('field-room').value||'—' },
   ];
   var combinedNotes = [
     (qs('field-notes') && qs('field-notes').value.trim()) || '',

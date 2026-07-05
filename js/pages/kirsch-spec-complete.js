@@ -82,7 +82,6 @@ function submitQ() {
     +'Finial: '+(document.getElementById('q-finial').value.trim()||'—')+'\n'
     +'Motorization: '+gp('grp-motor')+'\n'
     +'Motor accessories: '+(document.getElementById('q-motor-acc').value.trim()||'None')+'\n'
-    +'Room / window: '+(document.getElementById('q-room').value.trim()||'—')+'\n'
     +'\n── DELIVERY ──\n'+delivery+'\n\n'
     +'── NOTES ──\n'+(document.getElementById('cf-notes').value.trim()||'None');
 

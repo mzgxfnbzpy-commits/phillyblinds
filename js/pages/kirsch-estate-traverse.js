@@ -120,7 +120,7 @@ var STACK_TABLE = [
 // ═══════════════════════════════════════════════════════════════
 var S = {
   coll: '', finish: '', header: '', fullness: '100%',
-  draw: '', mount: '', trackLen: 0, qty: 1, room: '',
+  draw: '', mount: '', trackLen: 0, qty: 1,
   finial: '', motorized: false, motorSide: '',
   accessories: [], delivery: 'ship'
 };
@@ -258,7 +258,6 @@ function calcTrack() {
   if (len > 0) document.getElementById('track-ft').value = (len/12).toFixed(2);
   S.trackLen = len;
   S.qty = parseInt(document.getElementById('track-qty-inp').value) || 1;
-  S.room = document.getElementById('track-room-inp').value.trim();
 
   var msgs = document.getElementById('track-msgs');
   msgs.innerHTML = '';
@@ -469,7 +468,6 @@ function submitQuote() {
     + '\nAddress: ' + (document.getElementById('cf-address').value.trim() || '—') + '\n\n'
     + '── PRODUCT SPECIFICATION ──\n'
     + 'Product: Kirsch 1⅜" Estate™ Traverse Rod\n'
-    + 'Room / window: ' + (S.room || '—') + '\n'
     + 'Collection: ' + (COLLECTIONS[S.coll] ? COLLECTIONS[S.coll].label : '—') + '\n'
     + 'Finish: ' + (S.finish || '—') + '\n'
     + 'Header / carrier: ' + (S.header === 'ripplefold' ? 'Ripplefold™ Carriers — ' + S.fullness + ' fullness' : S.header === 'pleated' ? 'Pleated Carriers (16mm ball-bearing)' : '—') + '\n'

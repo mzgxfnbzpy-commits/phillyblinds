@@ -403,7 +403,6 @@ function submitQuote(){
     '',
     'QUANTITY & DELIVERY:',
     'Qty: '+qty+' rod'+(qty>1?'s':''),
-    'Room/window: '+(document.getElementById('room-label').value.trim()||'—'),
     'Delivery: '+'Ship (UPS/FedEx)',
     '',
     'NOTES:',

@@ -547,7 +547,6 @@ function submitQuote(){
     'Rod/Track Length: '+($('m-length').value||'N/A')+'"',
     'Projection/Return: '+($('m-return').value||'N/A')+'"',
     'Quantity: '+($('m-qty').value||'1'),
-    'Room/Label: '+($('m-label').value||'N/A'),
     '',
     'PRICING NOTE: Orion — Request Quote Only (catalog pricing to be confirmed)',
     '',

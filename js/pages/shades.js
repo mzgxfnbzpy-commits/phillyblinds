@@ -3491,7 +3491,6 @@ async function submitPSForm(btn) {
     if (wvc) woodValColor = ' — Color: ' + wvc.value;
   }
   var qty    = document.getElementById('ps-qty').value;
-  var loc    = document.getElementById('ps-location').value;
   var notes  = document.getElementById('ps-notes').value;
   var email  = document.getElementById('ps-email').value;
   var delBtn = document.querySelector('#grp-del-ps .delivery-opt-card.sel')?.querySelector('.delivery-opt-title')?.textContent.trim() || '';
@@ -3515,7 +3514,6 @@ async function submitPSForm(btn) {
     + 'Shims: ' + shims + '\n\n'
     + 'ORDER DETAILS\n'
     + 'Quantity: ' + qty + '\n'
-    + 'Room/location: ' + (loc||'not specified') + '\n'
     + 'Delivery: ' + delBtn + '\n'
     + 'Estimated price: ' + price + ' per shade\n\n'
     + 'Notes: ' + (notes||'none');
