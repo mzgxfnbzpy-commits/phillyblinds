@@ -1050,7 +1050,7 @@ function calcValance() {
   var w   = parseFloat(document.getElementById('cv-val-w').value) || 0;
   var h   = parseFloat(document.getElementById('cv-val-h').value) || 14;
   var ret = parseFloat(document.getElementById('cv-val-return').value) || 4;
-  _cvPriceBox('val-price-box','val-price-rows','val-price-total','val-fabric-note', w, h, ret, 'val-trim-edge','grp-val-trim','grp-val-fabric', false);
+  _cvPriceBox('val-price-box','val-price-rows','val-price-total','val-fabric-note', w, h, ret, 'val-trim-edge','grp-val-trim','grp-cv-val-fabric', false);
 }
 
 // Shared API submit helper for all soft-treatment forms
@@ -1108,7 +1108,7 @@ async function submitValanceCv() {
     { label: 'Mount',        value: getOpt('grp-cv-val-mount') || '—' },
     { label: 'Quantity',     value: ((document.getElementById('cv-val-qty')||{}).value) || '1' },
     { label: 'Finishing',    value: getOpt('grp-val-trim') || '—' },
-    { label: 'Fabric',       value: getOpt('grp-val-fabric') || '—' },
+    { label: 'Fabric',       value: getOpt('grp-cv-val-fabric') || '—' },
     { label: 'Delivery',     value: 'Ship to me (UPS/FedEx)' }
   ];
   await _stApiSubmit('val-form', 'val-cv-success', name, email, phone, 'Valance', selections, document.getElementById('vn-notes').value.trim());
