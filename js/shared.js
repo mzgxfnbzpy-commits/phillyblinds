@@ -364,6 +364,15 @@ function renderFooter(isHome) {
         <a href="${pre}about.html">About us</a>
         <a href="${pre}privacy.html">Privacy policy</a>
       </div>
+      <div class="footer-col">
+        <h4>Service Areas</h4>
+        <a href="${pre}custom-blinds-philadelphia-pa.html">Philadelphia, PA</a>
+        <a href="${pre}custom-blinds-cherry-hill-nj.html">Cherry Hill, NJ</a>
+        <a href="${pre}custom-blinds-bryn-mawr-pa.html">Bryn Mawr / Main Line</a>
+        <a href="${pre}custom-blinds-doylestown-pa.html">Doylestown, PA</a>
+        <a href="${pre}custom-blinds-media-pa.html">Media, PA</a>
+        <a href="${pre}custom-blinds-huntingdon-valley-pa.html">Huntingdon Valley, PA</a>
+      </div>
     </div>
     <div class="footer-disc">Blindznation is an independent business providing professional installation and consulting services. Product names, logos, and trademarks are the property of their respective owners and are used for identification purposes only. Blindznation is not affiliated with, endorsed by, or sponsored by any manufacturer. &nbsp;·&nbsp; <a href="${pre}privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></div>
   `;
@@ -549,6 +558,8 @@ function pbContactStepHTML(opts) {
           '<div id="cf-files-names" style="font-size:11px;color:#555;margin-top:6px;line-height:1.8"></div>' +
           '<div style="font-size:11px;color:#aaa;margin-top:5px;line-height:1.5">Window photos, room photos, measurements, inspiration &mdash; anything that helps.</div>' +
         '</div>' +
+        // Honeypot — hidden from humans; bots that fill it are blocked in the submit interceptor.
+        '<input type="text" id="pb-hp" name="pb-hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;opacity:0;pointer-events:none">' +
         '<div id="cf-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>' +
         cartBtn +
         '<button class="btn-gold" onclick="' + submitFn + '" style="width:100%;padding:13px;margin-top:4px" data-pb-require-contact="cf-contact-err">Submit Order for Review &rarr;</button>' +
@@ -2404,6 +2415,9 @@ document.addEventListener('DOMContentLoaded', function() {
   document.addEventListener('click', function(e) {
     var btn = e.target.closest('[data-pb-require-contact]');
     if (!btn || btn.disabled) return;
+    // Honeypot: a filled hidden field means a bot — silently block submission.
+    var _hp = document.getElementById('pb-hp');
+    if (_hp && _hp.value.trim() !== '') { e.stopImmediatePropagation(); e.preventDefault(); return; }
     var errId = btn.getAttribute('data-pb-require-contact');
     if (!pbContactValid(errId)) {
       e.stopImmediatePropagation();
