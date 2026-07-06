@@ -836,14 +836,17 @@ function calcDrapePrice() {
   var isShippingDrape = true;
   var dShipEst = 0;
   if (isShippingDrape) {
-    var dShipBase = Math.ceil(numWidths * 12 / 5) * 5;
+    // one shipment sized to the TOTAL number of widths across all sets
+    var dShipBase = Math.ceil(numWidths * qty * 12 / 5) * 5;
     dShipEst = Math.max(75, dShipBase);
   }
 
-  var perSetTotal = laborTotal + interlineTotal + fabricCost + liningCost + corniceTotal + valanceTotal + trimTotal + dShipEst;
+  // Per-window costs (labor, fabric, lining, trim) scale with quantity; the $200 minimum
+  // applies per set. Cornice/valance are single shared pieces and shipping is one estimate —
+  // added ONCE, not multiplied by quantity.
+  var perSetTotal = laborTotal + interlineTotal + fabricCost + liningCost + trimTotal;
   perSetTotal = Math.max(200, perSetTotal); // $200 minimum per drapery set
-  // Quantity multiplies the per-set total (each set = the configured panel/pair for one window)
-  var grandTotal = perSetTotal * qty;
+  var grandTotal = perSetTotal * qty + corniceTotal + valanceTotal + dShipEst;
 
   var panels    = getOpt('grp-drape-panels') || '—';
   var panelSide = panels === 'Single panel' ? (getOpt('grp-drape-side') || '—') : '—';
