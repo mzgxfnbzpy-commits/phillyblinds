@@ -249,7 +249,7 @@ function updateQuote(){
   const slatLabels={half:'½″ Micro Slats',one:'1″ Standard Slats',two:'2″ SmartPrivacy®'};
   document.getElementById('qr-slat').textContent=slatLabels[state.slat];
   document.getElementById('qr-finish').textContent=state.colorName+(state.colorSurcharge?' (+'+state.colorSurcharge+'%)':'');
-  document.getElementById('qr-mount').textContent=state.mount==='inside'?'Inside Mount':'Outside Mount';
+  document.getElementById('qr-mount').textContent=state.mount==='inside'?'Inside mount':'Outside mount';
   document.getElementById('qr-dims').textContent=state.w+'″ × '+state.h+'″';
   document.getElementById('qr-qty').textContent=qty+(qty>1?' blinds':' blind');
   document.getElementById('qr-base').textContent='$'+basePrice.toFixed(0);
@@ -304,7 +304,7 @@ function addCityLightsToCart(){
     {label:'Product',value:'Norman City Lights™ Aluminum Blinds'},
     {label:'Slat Size',value:slatLabels[state.slat]||state.slat},
     {label:'Color',value:state.colorName+(state.colorSurcharge?' (+'+state.colorSurcharge+'% surcharge)':'')},
-    {label:'Mount',value:state.mount==='inside'?'Inside Mount':'Outside Mount'},
+    {label:'Mount',value:state.mount==='inside'?'Inside mount':'Outside mount'},
     {label:'Width',value:state.w+'″'},
     {label:'Height',value:state.h+'″'},
     {label:'Privacy Slats',value:state.privacy?'Yes (+10%)':'No'},
@@ -331,7 +331,7 @@ function submitQuote(){
     '','Product: Norman Citylights™ Aluminum Blinds',
     'Slat size: '+(slatLabels[state.slat]||'—'),
     'Color: '+(state.colorName||'—')+' ('+state.colorCode+')'+(state.colorSurcharge?' +'+state.colorSurcharge+'%':''),
-    'Mount: '+(state.mount==='inside'?'Inside Mount':'Outside Mount'),
+    'Mount: '+(state.mount==='inside'?'Inside mount':'Outside mount'),
     'Width: '+state.w+'″',
     'Height: '+state.h+'″',
     'Privacy slats: '+(state.privacy?'Yes':'No'),

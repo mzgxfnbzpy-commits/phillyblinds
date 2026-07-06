@@ -217,7 +217,7 @@ function selectMount(m) {
   S.mount = m;
   ['wall','ceil','double'].forEach(function(id){ document.getElementById('mnt-'+id).classList.remove('sel'); });
   document.getElementById('mnt-'+m).classList.add('sel');
-  var labels = {wall:'Wall Mount',ceiling:'Ceiling Mount',double:'Double Rod'};
+  var labels = {wall:'Wall mount',ceiling:'Ceiling mount',double:'Double Rod'};
   var detail = document.getElementById('mount-detail');
   if (m === 'wall') {
     detail.innerHTML = '<div class="info-box">Wall mount bracket #94129061 (Zinc) · #1856973 (Satin Nickel) · #1856978 (Brushed Bronze) · #1857324 (Black). Adjustable projection 3¼"–4¾". AMP™ compatible.</div>';
@@ -472,7 +472,7 @@ function submitQuote() {
     + 'Finish: ' + (S.finish || '—') + '\n'
     + 'Header / carrier: ' + (S.header === 'ripplefold' ? 'Ripplefold™ Carriers — ' + S.fullness + ' fullness' : S.header === 'pleated' ? 'Pleated Carriers (16mm ball-bearing)' : '—') + '\n'
     + 'Draw type: ' + (S.draw === 'two-way' ? 'Two-Way / Split Draw' : S.draw === 'one-way-right' ? 'One-Way Right' : S.draw === 'one-way-left' ? 'One-Way Left' : '—') + '\n'
-    + 'Mount type: ' + (S.mount === 'wall' ? 'Wall Mount' : S.mount === 'ceiling' ? 'Ceiling Mount' : S.mount === 'double' ? 'Double Rod' : '—') + '\n'
+    + 'Mount type: ' + (S.mount === 'wall' ? 'Wall mount' : S.mount === 'ceiling' ? 'Ceiling mount' : S.mount === 'double' ? 'Double Rod' : '—') + '\n'
     + 'Track length: ' + (len ? len + '" (' + (len/12).toFixed(2) + ' ft)' : '—') + '\n'
     + 'Quantity: ' + S.qty + ' rod(s)\n'
     + 'Splice required: ' + (len > 96 ? 'Yes — 1 splice + 1 keystone' : len ? 'No' : '—') + '\n'

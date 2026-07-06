@@ -444,7 +444,7 @@ function addCustomRollerToCart(){
   var lines=[
     {label:'Product',value:'Custom Roller Shades'},
     {label:'Shade Type',value:typeLabel},
-    {label:'Mount',value:CRS.mount==='inside'?'Inside Mount':'Outside Mount'},
+    {label:'Mount',value:CRS.mount==='inside'?'Inside mount':'Outside mount'},
     {label:'Headrail',value:(hMap[CRS.headrail]||CRS.headrail||'—')+(CRS.hwColor?' — '+CRS.hwColor:'')},
     {label:'Width',value:(CRS.w||'—')+'"'},
     {label:'Height',value:(CRS.h||'—')+'"'},

@@ -468,7 +468,7 @@ function updateSpec(){
   document.getElementById('sp-pg').textContent='Group '+S.coll.group;
   document.getElementById('sp-color').textContent=(S.color.label||'—')+' ('+S.color.code+')';
   document.getElementById('sp-band').textContent=S.coll.band+' · '+S.coll.lc;
-  document.getElementById('sp-mount').textContent=S.mount==='inside'?'Inside Mount':'Outside Mount';
+  document.getElementById('sp-mount').textContent=S.mount==='inside'?'Inside mount':'Outside mount';
   document.getElementById('sp-size').textContent=S.w+'″ × '+S.h+'″';
   document.getElementById('sp-cassette').textContent=(S.cassette==='round'?'Round':'Square')+' cassette';
   document.getElementById('sp-hwcolor').textContent=S.hwColor||'—';
@@ -541,7 +541,7 @@ function addWallace3dSheerToCart(){
     {label:'Price Group',value:coll?'Group '+coll.group:'—'},
     {label:'Band Size',value:coll?coll.band:'—'},
     {label:'Color',value:S.color?S.color.label+' ('+S.color.code+')':'—'},
-    {label:'Mount',value:S.mount==='inside'?'Inside Mount':'Outside Mount'},
+    {label:'Mount',value:S.mount==='inside'?'Inside mount':'Outside mount'},
     {label:'Width',value:(S.w||'—')+'″'},
     {label:'Height',value:(S.h||'—')+'″'},
     {label:'Control',value:ctrlLabel},
@@ -588,7 +588,7 @@ function submitQuote(){
     'Color: '+(S.color?S.color.label+' ('+S.color.code+')':'—'),
     '',
     'DIMENSIONS:',
-    'Mount type: '+(S.mount==='inside'?'Inside Mount':'Outside Mount'),
+    'Mount type: '+(S.mount==='inside'?'Inside mount':'Outside mount'),
     'Ordered width: '+S.w+'″',
     'Ordered height: '+S.h+'″',
     'Finished shade height (vanes open): '+(S.h?S.h-0.5+'″':'—'),

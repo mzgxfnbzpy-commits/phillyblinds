@@ -154,10 +154,9 @@
         <button class="opt-btn" data-lift="tdbu" onclick="pickCellLift(this,'tdbu')">Top Down / Bottom Up <span style="font-size:10px;opacity:.65">+$89</span></button>
         <button class="opt-btn" data-lift="dn" onclick="pickCellLift(this,'dn')">Day &amp; Night <span style="font-size:10px;opacity:.65">+$89</span></button>
       </div>
-      <div class="step-note">Bottom Up — Standard operation &middot; all fabrics available. Top Down / Bottom Up — Opens from top or bottom &middot; max 60 sqft area &middot; not with Day &amp; Night. Day &amp; Night — Two shades in one headrail &middot; all cell sizes &middot; not with TDBU.</div>
-      <div id="tdbu-note" class="msg-box msg-info" style="display:none;margin-top:8px">Top Down / Bottom Up: max area is 60 sqft (width × height). Not available with Day &amp; Night fabric.</div>
-      <div id="dn-note"   class="msg-box msg-info" style="display:none;margin-top:8px">Day &amp; Night: two shades (sheer day + room-darkening night) in one headrail. Top and bottom use the same cell size. Not available with TDBU.</div>
-      <div id="cell-conflict-note" class="msg-box msg-warn" style="display:none;margin-top:8px"></div>
+      <div class="step-note">Bottom Up — Standard operation &middot; all fabrics available. Top Down / Bottom Up — Opens from top or bottom &middot; max 60 sqft area. Day &amp; Night — Two fabrics in one headrail (a day shade + a night shade); pick the combination in the Fabric step below.</div>
+      <div id="tdbu-note" class="msg-box msg-info" style="display:none;margin-top:8px">Top Down / Bottom Up: max area is 60 sqft (width × height).</div>
+      <div id="dn-note"   class="msg-box msg-info" style="display:none;margin-top:8px">Day &amp; Night: two shades in one headrail — a sheer/light-filtering &ldquo;day&rdquo; shade on top and a room-darkening &ldquo;night&rdquo; shade on the bottom. Choose your fabric combination in the Fabric step below. Top and bottom use the same cell size.</div>
     </div>
   </div>
 
@@ -189,14 +188,24 @@
       <div class="step-head-val" id="s5val">—</div>
     </div>
     <div class="step-body">
-      <div class="sub-label">Fabric Type</div>
-      <div id="grp-cell-fabric" class="opt-row">
-        <button class="opt-btn sel" onclick="pickCellFabric(this,'lf')">Light Filtering</button>
-        <button class="opt-btn" onclick="pickCellFabric(this,'rd')">Room Darkening <span style="font-size:10px;opacity:.65">+20%</span></button>
-        <button class="opt-btn" onclick="pickCellFabric(this,'sheer')">Sheer <span style="font-size:10px;opacity:.65">+20%</span></button>
-        <button class="opt-btn" onclick="pickCellFabric(this,'dn')">Day &amp; Night</button>
+      <!-- Single-shade fabric type (shown when Lift ≠ Day & Night) -->
+      <div id="cell-fabric-wrap">
+        <div class="sub-label">Fabric Type</div>
+        <div id="grp-cell-fabric" class="opt-row">
+          <button class="opt-btn sel" onclick="pickCellFabric(this,'lf')">Light Filtering</button>
+          <button class="opt-btn" onclick="pickCellFabric(this,'rd')">Room Darkening <span style="font-size:10px;opacity:.65">+20%</span></button>
+          <button class="opt-btn" onclick="pickCellFabric(this,'sheer')">Sheer <span style="font-size:10px;opacity:.65">+20%</span></button>
+        </div>
+        <div class="step-note">Light Filtering — Softens light &middot; privacy &middot; available in all cell sizes. Room Darkening — Near-blackout &middot; not 3⁄8″S &middot; 9⁄16″S has limited palette. Sheer — View-through when down &middot; 3⁄8″S, 3⁄4″S or 1¼″S &middot; 5 colors.</div>
       </div>
-      <div class="step-note">Light Filtering — Softens light &middot; privacy &middot; available in all cell sizes. Room Darkening — Near-blackout &middot; not 3⁄8″S &middot; 9⁄16″S has limited palette. Sheer — View-through when down &middot; 3⁄8″S single only &middot; 5 colors. Day &amp; Night — Two shades in one headrail &middot; all cell sizes &middot; requires D&amp;N lift above.</div>
+
+      <!-- Day & Night fabric combination (shown when Lift = Day & Night) -->
+      <div id="cell-dn-wrap" style="display:none">
+        <div class="sub-label">Day &amp; Night fabric combination</div>
+        <div id="grp-cell-dn" class="opt-row" style="flex-wrap:wrap"></div>
+        <div class="step-note">Each combination pairs a &ldquo;day&rdquo; shade (top) with a &ldquo;night&rdquo; shade (bottom). Exact colors for each are selected at your free in-home consultation. Not available in Day &amp; Night: Woven Breeze, Ashton, Flame-Resistant. Top &amp; bottom use the same cell size.</div>
+        <div id="cell-dn-warn" class="msg-box msg-info" style="display:none;margin-top:8px"></div>
+      </div>
       <div class="sub-label" style="margin-top:16px">Cell Size</div>
       <div id="grp-cell-size" class="opt-row">
         <button class="opt-btn" data-size="38s" onclick="pickCellSize(this,'38s')">3⁄8″ Single</button>
@@ -326,15 +335,10 @@ function pickCellLift(el, mode) {
   document.getElementById('qr-cell-lift').textContent = labels[mode] || mode;
   document.getElementById('tdbu-note').style.display = mode === 'tdbu' ? 'block' : 'none';
   document.getElementById('dn-note').style.display   = mode === 'dn'   ? 'block' : 'none';
-  if (mode === 'dn') {
-    // Force D&N fabric if not already
-    if (CELL.fabric !== 'dn') {
-      var dnCard = document.querySelector('#grp-cell-fabric .opt-btn[onclick*="\'dn\'"]');
-      if (dnCard) pickCellFabric(dnCard, 'dn');
-    }
-  }
+  // Day & Night is a two-fabric configuration — it drives the Fabric step.
+  if (mode === 'dn') { enterCellDNMode(); }
+  else { exitCellDNMode(); }
   markDone('step2');
-  cellCheckConflict();
   cellCalcPrice();
 }
 function pickCellOp(el, sysName) {
@@ -367,16 +371,12 @@ function pickCellOp(el, sysName) {
   cellCalcPrice();
 }
 function pickCellFabric(el, type) {
+  // Single-shade fabrics only (lf/rd/sheer). Day & Night is chosen in the Lift step.
   document.querySelectorAll('#grp-cell-fabric .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
   CELL.fabric = type;
-  var labels = {lf:'Light Filtering', rd:'Room Darkening', sheer:'Sheer', dn:'Day & Night'};
+  var labels = {lf:'Light Filtering', rd:'Room Darkening', sheer:'Sheer'};
   document.getElementById('qr-cell-fabric').textContent = labels[type] || type;
-  // If Day & Night, also set lift to dn
-  if (type === 'dn' && CELL.lift !== 'dn') {
-    var dnLiftCard = document.querySelector('#grp-cell-lift .opt-btn[data-lift="dn"]');
-    if (dnLiftCard) pickCellLift(dnLiftCard, 'dn');
-  }
   filterCellSizes();
   renderCellColorGrid();
   CELL.color = ''; CELL.colorCode = '';
@@ -384,13 +384,46 @@ function pickCellFabric(el, type) {
   document.getElementById('qr-cell-color').textContent = '—';
   cellCalcPrice();
 }
+// ── Day & Night mode: swap the single-fabric picker for the combination picker ──
+function enterCellDNMode() {
+  CELL.fabric = 'dn';
+  document.getElementById('cell-fabric-wrap').style.display = 'none';
+  document.getElementById('cell-dn-wrap').style.display     = 'block';
+  document.getElementById('qr-cell-fabric').textContent     = 'Day & Night';
+  if (!CELL.dnCombo) CELL.dnCombo = 'DN-SR'; // default: Sheer (day) + Room Darkening (night)
+  renderCellDNCombos();
+  filterCellSizes();
+  renderCellColorGrid();
+  cellCheckDNSize();
+}
+function exitCellDNMode() {
+  document.getElementById('cell-dn-wrap').style.display     = 'none';
+  document.getElementById('cell-fabric-wrap').style.display = 'block';
+  if (CELL.fabric === 'dn') {
+    // Revert to a single-shade fabric so nothing is left in a half-D&N state.
+    CELL.fabric = 'lf';
+    var lfBtn = document.querySelector('#grp-cell-fabric .opt-btn');
+    document.querySelectorAll('#grp-cell-fabric .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
+    if (lfBtn) lfBtn.classList.add('sel');
+    document.getElementById('qr-cell-fabric').textContent = 'Light Filtering';
+    CELL.color = ''; CELL.colorCode = '';
+    document.getElementById('s6val').textContent = '—';
+    document.getElementById('qr-cell-color').textContent = '—';
+  }
+  filterCellSizes();
+  renderCellColorGrid();
+}
 function pickCellSize(el, code) {
   CELL.sizeCode = code;
   filterCellSizes();
   renderCellColorGrid();
-  CELL.color = ''; CELL.colorCode = '';
-  document.getElementById('s6val').textContent = '—';
-  document.getElementById('qr-cell-color').textContent = '—';
+  if (CELL.fabric !== 'dn') {
+    CELL.color = ''; CELL.colorCode = '';
+    document.getElementById('s6val').textContent = '—';
+    document.getElementById('qr-cell-color').textContent = '—';
+  } else {
+    cellCheckDNSize();
+  }
   cellCalcPrice();
 }
 function onCellDimChange() {

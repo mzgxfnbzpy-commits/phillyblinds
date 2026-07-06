@@ -343,15 +343,15 @@ function buildMountStep(){
   el.innerHTML=`
     <div class="sec-label" style="margin-top:0">Mount type</div>
     <div class="opt-row" id="mount-row">
-      <div class="opt-pill" onclick="S.mount='wall';togglePill(this,'mnt')">Wall Mount</div>
-      <div class="opt-pill" onclick="S.mount='ceiling';togglePill(this,'mnt')">Ceiling Mount</div>
-      ${!isTrav?'<div class="opt-pill" onclick="S.mount=\'inside\';togglePill(this,\'mnt\')">Inside Mount Socket</div>':''}
+      <div class="opt-pill" onclick="S.mount='wall';togglePill(this,'mnt')">Wall mount</div>
+      <div class="opt-pill" onclick="S.mount='ceiling';togglePill(this,'mnt')">Ceiling mount</div>
+      ${!isTrav?'<div class="opt-pill" onclick="S.mount=\'inside\';togglePill(this,\'mnt\')">Inside mount Socket</div>':''}
     </div>
     <div class="sec-label" style="margin-top:12px">Bracket type</div>
     <div class="opt-row">
       <div class="opt-pill" onclick="S.bracketType='single-wall';togglePill(this,'bkt')">Single Wall (1010/1021)</div>
       <div class="opt-pill" onclick="S.bracketType='double-wall';togglePill(this,'bkt')">Double Wall (1028/1030)</div>
-      <div class="opt-pill" onclick="S.bracketType='ceiling';togglePill(this,'bkt')">Ceiling Mount (1100–1106)</div>
+      <div class="opt-pill" onclick="S.bracketType='ceiling';togglePill(this,'bkt')">Ceiling mount (1100–1106)</div>
       <div class="opt-pill" onclick="S.bracketType='support';togglePill(this,'bkt')">Center Support Bracket</div>
       <div class="opt-pill" onclick="S.bracketType='heavy-duty';togglePill(this,'bkt')">Heavy Duty (1028HD/1040HD)</div>
       <div class="opt-pill" onclick="S.bracketType='expandable';togglePill(this,'bkt')">Expandable Projection (1028EXP)</div>

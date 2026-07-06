@@ -619,9 +619,9 @@ function buildStep7(coll,sub){
 
   if(coll==='traverse'){
     html+='<div class="sub-label" style="margin-top:10px">Mount type</div>'
-      +'<div class="opt-row"><button class="opt-btn" onclick="pickBrkt(this,\'Wall mount\',\'Standard adj 3½″–4½″ return (6″ return available at no charge)\',false)">Wall Mount</button>'
-      +'<button class="opt-btn" onclick="pickBrkt(this,\'Ceiling mount\',\'CMBC clip for track-only; CMTB for custom ceiling\',false)">Ceiling Mount</button></div>'
-      +'<div class="step-note">Wall Mount: Standard 3½″–4½″ adj. 6″ available. · Ceiling Mount: CMBC clip (no fascia) or CMTB custom</div>'
+      +'<div class="opt-row"><button class="opt-btn" onclick="pickBrkt(this,\'Wall mount\',\'Standard adj 3½″–4½″ return (6″ return available at no charge)\',false)">Wall mount</button>'
+      +'<button class="opt-btn" onclick="pickBrkt(this,\'Ceiling mount\',\'CMBC clip for track-only; CMTB for custom ceiling\',false)">Ceiling mount</button></div>'
+      +'<div class="step-note">Wall mount: Standard 3½″–4½″ adj. 6″ available. · Ceiling mount: CMBC clip (no fascia) or CMTB custom</div>'
       +'<div class="step-note">Single brackets: HDTB35 (adj 3½″–4½″). Double/single 6″: HDTB. Custom up to 10″: HDTB10. Stationary front pole: order TBKT214 or TBKT300 separately.</div>';
   } else if(coll==='modern-metal'){
     html+='<div class="opt-row">'
@@ -631,7 +631,7 @@ function buildStep7(coll,sub){
       +'<button class="opt-btn" onclick="pickBrkt(this,\'Eyelet single 3½″\',S.sub===\'1-1/8\'?\'TFCM118426\':\'TFCM138426\',false)">Eyelet 3½″</button>'
       +'<button class="opt-btn" onclick="pickBrkt(this,\'Eyelet single 6″\',S.sub===\'1-1/8\'?\'TFCM118427\':\'TFCM138427\',false)">Eyelet 6″</button>'
       +'<button class="opt-btn" onclick="pickBrkt(this,\'Bypass single 3½″\',S.sub===\'1-1/8\'?\'TFCM118428 · CAUTION: add standard brackets at each end\':\'TFCM138428 · CAUTION: add standard brackets at each end\',true)">Bypass 3½″</button>'
-      +'<button class="opt-btn" onclick="pickBrkt(this,\'Inside mount (pairs)\',S.sub===\'1-1/8\'?\'TFCM118401 (1¾″W, 1¼″ deep)\':\'TFCM138401 (2″W, 1⅝″ deep)\',false)">Inside Mount</button>'
+      +'<button class="opt-btn" onclick="pickBrkt(this,\'Inside mount (pairs)\',S.sub===\'1-1/8\'?\'TFCM118401 (1¾″W, 1¼″ deep)\':\'TFCM138401 (2″W, 1⅝″ deep)\',false)">Inside mount</button>'
       +'<button class="opt-btn" onclick="pickBrkt(this,\'Hinged elbow\',S.sub===\'1-1/8\'?\'TFCM118402 (2″L)\':\'TFCM138402 (2″L)\',false)">Hinged Elbow</button>'
       +'</div>'
       +'<div class="step-note">Bypass 3½″: Standard brackets at each end required.</div>';
@@ -642,7 +642,7 @@ function buildStep7(coll,sub){
       +'<button class="opt-btn" onclick="pickBrkt(this,\'Double 6″/3½″\',\'TFCM138404\',false)">Double 6″/3½″</button>'
       +'<button class="opt-btn" onclick="pickBrkt(this,\'Eyelet single 3½″\',\'TFCM138406\',false)">Eyelet 3½″</button>'
       +'<button class="opt-btn" onclick="pickBrkt(this,\'Bypass single 3½″\',\'TFCM138408 · CAUTION: add standard brackets at each end\',true)">Bypass 3½″</button>'
-      +'<button class="opt-btn" onclick="pickBrkt(this,\'Inside mount (pairs)\',\'TFCM138401\',false)">Inside Mount</button>'
+      +'<button class="opt-btn" onclick="pickBrkt(this,\'Inside mount (pairs)\',\'TFCM138401\',false)">Inside mount</button>'
       +'</div>'
       +'<div class="step-note">Bypass 3½″: Standard brackets at each end required.</div>';
   } else {
@@ -651,8 +651,8 @@ function buildStep7(coll,sub){
       +'<button class="opt-btn" onclick="pickBrkt(this,\'Standard single 6″ return\',\'(model depends on profile)\',false)">Single 6″</button>'
       +'<button class="opt-btn" onclick="pickBrkt(this,\'Double bracket 6″ front / 3″ back\',\'(model depends on profile)\',false)">Double 6″/3″</button>'
       +'<button class="opt-btn" onclick="pickBrkt(this,\'Adjustable single bracket\',\'(model depends on profile — various returns)\',false)">Adjustable</button>'
-      +'<button class="opt-btn" onclick="pickBrkt(this,\'Ceiling mount bracket\',\'BL4 or TFCS___MCMBK — specify drop needed\',false)">Ceiling Mount</button>'
-      +'<button class="opt-btn" onclick="pickBrkt(this,\'Inside mount brackets (pairs)\',\'IM125 / IM175 / IMB050 — sold in pairs\',false)">Inside Mount</button>'
+      +'<button class="opt-btn" onclick="pickBrkt(this,\'Ceiling mount bracket\',\'BL4 or TFCS___MCMBK — specify drop needed\',false)">Ceiling mount</button>'
+      +'<button class="opt-btn" onclick="pickBrkt(this,\'Inside mount brackets (pairs)\',\'IM125 / IM175 / IMB050 — sold in pairs\',false)">Inside mount</button>'
       +'<button class="opt-btn" onclick="pickBrkt(this,\'Bypass bracket\',\'SCB35 (3½″) or SCB6 (6″) · Standard brackets at each end required · use with correct c-ring\',true)">Bypass</button>'
       +'<button class="opt-btn" onclick="pickBrkt(this,\'Custom bracket\',\'FBKT / TBKT / DBL1 · Returns over 8″ = additional fees + support arm\',false)">Custom Bracket</button>'
       +'</div>'

@@ -132,7 +132,7 @@ const NORMAN_DISC = 0.35; // 35% off retail subtotal — not applied to shipping
 function updateQuote(){
   const qty=parseInt(document.getElementById('qty').value)||1;
   state.qty=qty;
-  const mountLabel=state.mount==='inside'?'Inside Mount':state.mount==='semi'?'Semi-Inside Mount':state.mount==='outside'?'Outside Mount':'';
+  const mountLabel=state.mount==='inside'?'Inside mount':state.mount==='semi'?'Semi-inside mount':state.mount==='outside'?'Outside mount':'';
   const ready=state.group&&state.colorName&&state.mount&&state.w&&state.h;
   if(!ready){document.getElementById('qp-pending').style.display='block';document.getElementById('qp-detail').style.display='none';return;}
   if(state.w<18||state.w>100||state.h<36||state.h>108){document.getElementById('qp-pending').style.display='block';document.getElementById('qp-pending').textContent='Fix the size error above.';document.getElementById('qp-detail').style.display='none';return;}
@@ -155,7 +155,7 @@ function updateQuote(){
   document.getElementById('qp-detail').style.display='block';
   document.getElementById('qr-group').textContent=(state.collection||'—')+' — '+(state.colorName||'—');
   document.getElementById('qr-vane').textContent=state.vane||'—';
-  document.getElementById('qr-mount').textContent=state.mount==='inside'?'Inside Mount':state.mount==='semi'?'Semi-Inside Mount':'Outside Mount';
+  document.getElementById('qr-mount').textContent=state.mount==='inside'?'Inside mount':state.mount==='semi'?'Semi-inside mount':'Outside mount';
   document.getElementById('qr-dims').textContent=state.w+'″ × '+state.h+'″';
   document.getElementById('qr-qty').textContent=qty+(qty>1?' blinds':' blind');
   document.getElementById('qr-price').innerHTML='<s style="color:var(--text-dark);font-weight:400">$'+pricePerBlind+' retail</s> &rarr; $'+Math.round(pricePerBlind*0.65)+' your price';
@@ -198,7 +198,7 @@ function addSynchronyToCart(){
     {label:'Collection',value:state.collection||'—'},
     {label:'Color',value:state.colorName||'—'},
     {label:'Vane Style',value:state.vane||'—'},
-    {label:'Mount',value:state.mount==='inside'?'Inside Mount':state.mount==='semi'?'Semi-Inside Mount':'Outside Mount'},
+    {label:'Mount',value:state.mount==='inside'?'Inside mount':state.mount==='semi'?'Semi-inside mount':'Outside mount'},
     {label:'Wand Side',value:state.wand||'—'},
     {label:'Width',value:(state.w||'—')+'″'},
     {label:'Height',value:(state.h||'—')+'″'},
@@ -223,7 +223,7 @@ function submitQuote(){
     'Collection: '+(state.collection||'—'),
     'Color: '+(state.colorName||'—'),
     'Vane style: '+(state.vane||'—'),
-    'Mount: '+(state.mount==='inside'?'Inside Mount (fully flushed)':state.mount==='semi'?'Semi-Inside Mount':'Outside Mount'),
+    'Mount: '+(state.mount==='inside'?'Inside mount (fully flushed)':state.mount==='semi'?'Semi-inside mount':'Outside mount'),
     'Wand/control side: '+state.wand,
     'Width: '+state.w+'″',
     'Height: '+state.h+'″',

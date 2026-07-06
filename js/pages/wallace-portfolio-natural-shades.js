@@ -787,7 +787,7 @@ function addWallacePortfolioNaturalToCart(){
     {label:'Pattern',value:W.pattern?W.pattern.name+' ('+W.pattern.code+')':'—'},
     {label:'Color',value:W.pattern?W.pattern.color:'—'},
     {label:'Price Group',value:W.pattern?W.pattern.group:'—'},
-    {label:'Mount',value:W.mount==='inside'?'Inside Mount':'Outside Mount'},
+    {label:'Mount',value:W.mount==='inside'?'Inside mount':'Outside mount'},
     {label:'Width',value:(W.width||'—')+'"'},
     {label:'Height',value:(W.height||'—')+'"'},
     {label:'Style',value:W.style||'—'},

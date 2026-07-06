@@ -19,13 +19,13 @@ const PT_BRACKETS_158 = {
   single:    {label:'Single Bracket (3½&Prime; return)',  price:61.80},
   single6:   {label:'Single 6&Prime; Bracket (6&Prime; return)', price:67.98},
   double:    {label:'Double Bracket (3½/6&Prime;)',       price:74.16},
-  inside:    {label:'Inside Mount (pair)',                price:80.34}
+  inside:    {label:'Inside mount (pair)',                price:80.34}
 };
 const PT_BRACKETS_178 = {
   single:    {label:'Single Bracket (3½&Prime; return)',  price:67.98},
   single6:   {label:'Single 6&Prime; Bracket (6&Prime; return)', price:74.16},
   double:    {label:'Double Bracket (3½/6&Prime;)',       price:80.34},
-  inside:    {label:'Inside Mount (pair)',                price:80.34}
+  inside:    {label:'Inside mount (pair)',                price:80.34}
 };
 const PT_FRENCH_158  = {square:{label:'French Return w/ Square Plate (pair)',price:92.70}, round:{label:'French Return w/ Round Plate (pair)',price:92.70}};
 const PT_RING_158    = 9.27;  // per ring

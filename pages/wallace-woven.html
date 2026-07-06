@@ -217,8 +217,8 @@ textarea.inp-field{resize:vertical;min-height:80px}
       <div class="step-hd"><div class="step-num-circle">3</div><h2 class="step-title">Mount &amp; control</h2></div>
       <label class="inp-label" style="display:block;margin-bottom:6px">Mount type</label>
       <div class="opt-row" id="r-mount-opts">
-        <div class="opt-pill" onclick="rPill(this,'r-mount-opts');rS.mount='Inside Mount'">Inside Mount</div>
-        <div class="opt-pill" onclick="rPill(this,'r-mount-opts');rS.mount='Outside Mount'">Outside Mount</div>
+        <div class="opt-pill" onclick="rPill(this,'r-mount-opts');rS.mount='Inside mount'">Inside mount</div>
+        <div class="opt-pill" onclick="rPill(this,'r-mount-opts');rS.mount='Outside mount'">Outside mount</div>
       </div>
       <label class="inp-label" style="display:block;margin-bottom:6px;margin-top:12px">Control method</label>
       <div class="opt-row" id="r-ctrl-opts">
@@ -373,9 +373,9 @@ textarea.inp-field{resize:vertical;min-height:80px}
     <!-- Mount type -->
     <label class="inp-label" style="display:block;margin:16px 0 6px">Mount type <span style="color:#c00">*</span></label>
     <div class="opt-row" id="mount-opts">
-      <button class="opt-btn" type="button" onclick="pickMount('inside',this)">Inside Mount</button>
+      <button class="opt-btn" type="button" onclick="pickMount('inside',this)">Inside mount</button>
       <button class="opt-btn" type="button" onclick="pickMount('outside',this)">Outside / Face Mount</button>
-      <button class="opt-btn" id="mount-ceiling" type="button" onclick="pickMount('ceiling',this)">Ceiling Mount</button>
+      <button class="opt-btn" id="mount-ceiling" type="button" onclick="pickMount('ceiling',this)">Ceiling mount</button>
     </div>
     <div class="warn-box" id="warn-im-deduction">Inside mount: deduct ¼" from width, ½" from height. Enter your <em>opening</em> measurements — we handle the deduction.</div>
     <div class="step-note">Mount type is required. Inside mount fits inside the window frame; outside / face mount covers the trim; ceiling mount is for sliding panels &amp; draperies.</div>

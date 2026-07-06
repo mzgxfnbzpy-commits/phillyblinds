@@ -393,7 +393,7 @@ function submitQuote(){
     (S.isMotor?'AMP™ motor upcharge: +$621/rod (charger #62201300 included)':''),
     (S.isMotor&&motorAccs.length?'AMP™ accessories: '+motorAccs.join(', '):''),
     'Drapery heading: '+(S.heading==='pleated'?'Pleated':S.heading==='ripplefold'?('Ripplefold™ '+S.fullness+'% fullness'):S.heading||'—'),
-    'Mount type: '+(S.mount==='wall'?'Wall Mount (all components included)':S.mount==='ceiling'?'Ceiling Mount (94130xxx included; order #1796061 separately)':S.mount==='dbl-wall'?'Double Wall Mount (94125xxx + #1796061 + 94130xxx)':S.mount==='dbl-combo'?'2″ Front + 1⅜″ Back Double (94130xxx + #71134110)':S.mount||'—'),
+    'Mount type: '+(S.mount==='wall'?'Wall mount (all components included)':S.mount==='ceiling'?'Ceiling mount (94130xxx included; order #1796061 separately)':S.mount==='dbl-wall'?'Double Wall mount (94125xxx + #1796061 + 94130xxx)':S.mount==='dbl-combo'?'2″ Front + 1⅜″ Back Double (94130xxx + #71134110)':S.mount||'—'),
     (S.brktFinish?'Wall bracket finish: '+S.brktFinish:''),
     'Track length: '+(S.len?S.len+'″ ('+( S.len/12).toFixed(1)+' ft)':'—'),
     'Draw direction: '+(S.dir==='oneway'?'One-Way':'Two-Way (Split Draw)'),

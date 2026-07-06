@@ -73,9 +73,10 @@ const CELL_SZ_IDX = {'38s':0,'916s':1,'12d':2,'34s':3,'34d':4,'114s':5};
 
 // ── Cell size / fabric compatibility (Norman Portrait catalog) ─
 const CELL_COMPAT = {
+  // indices: 0=3⁄8S · 1=9⁄16S · 2=1⁄2D · 3=3⁄4S · 4=3⁄4D · 5=1¼S
   'lf':   [0,1,2,3,4,5],
   'rd':   [  1,2,3,4,5],
-  'sheer':[0],
+  'sheer':[0,  3,  5],   // Sheer single shade: 3⁄8″S, 3⁄4″S, 1¼″S (9⁄16″S is D&N-only; not in double cells) — Norman Portrait chart
   'dn':   [0,1,2,3,4,5]
 };
 
@@ -161,6 +162,23 @@ const CELL_FABRIC_LABELS = {
   'lf':'Light Filtering','rd':'Room Darkening','sheer':'Sheer','dn':'Day & Night'
 };
 
+// ── Day & Night valid fabric combinations (Norman Portrait catalog, p.11) ──
+// Top ("day") shade + Bottom ("night") shade. Exclusions from D&N: Woven Breeze,
+// Ashton, Flame-Resistant (LF & RD), FR Essentials. Top & bottom same cell size.
+// Solus is bottom-shade only. LF+RD (incl. Designer) only in 3⁄4″S or 1¼″S single cell.
+const CELL_DN_COMBOS = [
+  {code:'DN-SL', top:'Sheer',            bottom:'Light Filtering'},
+  {code:'DN-SR', top:'Sheer',            bottom:'Room Darkening'},
+  {code:'DN-SS', top:'Sheer',            bottom:'Solus'},
+  {code:'DN-WL', top:'Woven Windsong',   bottom:'Light Filtering'},
+  {code:'DN-WR', top:'Woven Windsong',   bottom:'Room Darkening'},
+  {code:'DN-WS', top:'Woven Windsong',   bottom:'Solus'},
+  {code:'DN-LL', top:'Light Filtering',  bottom:'Light Filtering'},
+  {code:'DN-LR', top:'Light Filtering',  bottom:'Room Darkening'}
+];
+// Combos that require a 3⁄4″ Single or 1¼″ Single cell (LF + Room Darkening pairings)
+const CELL_DN_RD_LIMITED = { 'DN-LR': true };
+
 const CELL_SIZE_LABELS = {
   '38s':'3⁄8″ Single','916s':'9⁄16″ Single','12d':'1⁄2″ Double',
   '34s':'3⁄4″ Single','34d':'3⁄4″ Double','114s':'1 1⁄4″ Single'
@@ -211,6 +229,7 @@ var CELL = {
   sizeCode: '34s',
   color:    '',
   colorCode:'',
+  dnCombo:  '',      // Day & Night combination code (e.g. 'DN-SR'); '' when not D&N
   qty:      1,
   delivery: 'ship'
 };
@@ -264,18 +283,93 @@ function cellTableLookup(w, h) {
   return {name:name, price:tbl[hi][wi], pricedAt:CELL_W[wi] + '″W × ' + CELL_H[hi] + '″H'};
 }
 
-// ── D&N / TDBU conflict ───────────────────────────────────────
-function cellCheckConflict() {
-  var note = document.getElementById('cell-conflict-note');
-  if (!note) return;
-  var isTDBC = CELL.lift === 'tdbu';
-  var isDN   = CELL.fabric === 'dn';
-  if (isTDBC && isDN) {
-    note.style.display = 'block';
-    note.textContent   = '⚠ Top Down / Bottom Up is not compatible with Day & Night fabric. Switching lift to Bottom Up.';
-    pickCellLift(document.querySelector('#grp-cell-lift .opt-btn[data-lift="bu"]'), 'bu');
+// ── Day & Night combination picker ────────────────────────────
+// (TDBU and Day & Night are now mutually-exclusive options in the same Lift
+//  group, so no cross-step conflict can occur — no conflict check needed.)
+function cellFabricLabel() {
+  if (CELL.fabric === 'dn') {
+    var l = cellDNComboLabel();
+    return 'Day & Night' + (l ? ' — ' + l : '');
+  }
+  return CELL_FABRIC_LABELS[CELL.fabric] || CELL.fabric;
+}
+function cellDNComboLabel() {
+  var c = CELL.dnCombo;
+  for (var i = 0; i < CELL_DN_COMBOS.length; i++) {
+    if (CELL_DN_COMBOS[i].code === c) {
+      return CELL_DN_COMBOS[i].top + ' (day) + ' + CELL_DN_COMBOS[i].bottom + ' (night)';
+    }
+  }
+  return '';
+}
+function cellDNComboObj() {
+  for (var i = 0; i < CELL_DN_COMBOS.length; i++) {
+    if (CELL_DN_COMBOS[i].code === CELL.dnCombo) return CELL_DN_COMBOS[i];
+  }
+  return null;
+}
+// Per-shade fabric surcharge: +20% for Sheer / Room Darkening (blackout) / Solus.
+function cellDNFabAdd(fabName, base) {
+  return (fabName === 'Sheer' || fabName === 'Room Darkening' || fabName === 'Solus')
+    ? Math.round(base * 0.20) : 0;
+}
+// Per-UNIT price (before qty/motor/discount/freight), plus breakdown lines.
+// Day & Night = two shades in one headrail: each shade = table price (+20% if that
+// shade's fabric is Sheer/Room Darkening/Solus), summed, then the D&N surcharge.
+function cellPerShadePrice(tableBase) {
+  var lines = [], perShade;
+  if (CELL.fabric === 'dn') {
+    var combo   = cellDNComboObj();
+    var topName = combo ? combo.top    : 'Sheer';
+    var botName = combo ? combo.bottom : 'Room Darkening';
+    var topShade = tableBase + cellDNFabAdd(topName, tableBase);
+    var botShade = tableBase + cellDNFabAdd(botName, tableBase);
+    perShade = topShade + botShade;
+    lines.push('Day &amp; Night — two shades, priced together:');
+    lines.push('&nbsp;&nbsp;Day / top (' + topName + '): $' + topShade.toLocaleString());
+    lines.push('&nbsp;&nbsp;Night / bottom (' + botName + '): $' + botShade.toLocaleString());
   } else {
-    note.style.display = 'none';
+    perShade = tableBase;
+    var fabAdd = (CELL.fabric === 'rd' || CELL.fabric === 'sheer') ? Math.round(tableBase * 0.20) : 0;
+    if (fabAdd > 0) { perShade += fabAdd; lines.push((CELL_FABRIC_LABELS[CELL.fabric] || '') + ' fabric (+20%): +$' + fabAdd); }
+  }
+  // Operating-system surcharge (Cord Loop +$73, once per unit)
+  if (CELL.opSys === 'Cord Loop') { perShade += 73; lines.push('Cord Loop system: +$73'); }
+  // Configuration surcharge (TDBU or Day & Night +$89, once per unit)
+  if (CELL.lift === 'tdbu' || CELL.lift === 'dn') {
+    perShade += 89;
+    lines.push((CELL.lift === 'tdbu' ? 'Top Down / Bottom Up' : 'Day &amp; Night') + ' surcharge: +$89');
+  }
+  return { price: perShade, lines: lines };
+}
+function renderCellDNCombos() {
+  var wrap = document.getElementById('grp-cell-dn');
+  if (!wrap) return;
+  var html = '';
+  CELL_DN_COMBOS.forEach(function(combo) {
+    var isSel = CELL.dnCombo === combo.code;
+    html += '<button class="opt-btn' + (isSel ? ' sel' : '') + '" style="font-size:12px"'
+          + ' onclick="selCellDNCombo(\'' + combo.code + '\')">'
+          + combo.top + ' <span style="opacity:.5">+</span> ' + combo.bottom + '</button>';
+  });
+  wrap.innerHTML = html;
+}
+function selCellDNCombo(code) {
+  CELL.dnCombo = code;
+  renderCellDNCombos();
+  renderCellColorGrid();   // refreshes the D&N label in the Color step
+  cellCheckDNSize();
+  cellCalcPrice();
+}
+// LF + Room Darkening combos are only offered in 3⁄4″S or 1¼″S single cell.
+function cellCheckDNSize() {
+  var warn = document.getElementById('cell-dn-warn');
+  if (!warn) return;
+  if (CELL_DN_RD_LIMITED[CELL.dnCombo] && CELL.sizeCode !== '34s' && CELL.sizeCode !== '114s') {
+    warn.style.display = 'block';
+    warn.textContent   = 'The Light Filtering + Room Darkening combination is only available in 3⁄4″ Single or 1¼″ Single cell size — please pick one of those cell sizes above.';
+  } else {
+    warn.style.display = 'none';
   }
 }
 
@@ -315,11 +409,24 @@ function filterCellSizes() {
 
 // ── Render color grid ─────────────────────────────────────────
 function renderCellColorGrid() {
-  var colls   = CELL_COLLECTIONS[CELL.fabric] || [];
   var gridEl  = document.getElementById('cell-color-grid');
   if (!gridEl) return;
+  // Day & Night: two fabrics — exact color of each shade is set at consultation.
+  if (CELL.fabric === 'dn') {
+    var lbl = cellDNComboLabel();
+    gridEl.innerHTML = '<div class="step-note"><strong>Day &amp; Night'
+      + (lbl ? ': ' + lbl : '') + '.</strong><br>The exact color for each shade '
+      + '(day &amp; night) is selected at your free in-home consultation.</div>';
+    CELL.color     = lbl || 'Day & Night';
+    CELL.colorCode = CELL.dnCombo || '';
+    document.getElementById('s6val').textContent = lbl || 'At consultation';
+    document.getElementById('qr-cell-color').textContent = lbl || 'At consultation';
+    markDone('step6');
+    return;
+  }
+  var colls = CELL_COLLECTIONS[CELL.fabric] || [];
   if (!colls.length || (colls.length === 1 && !colls[0].colors.length)) {
-    gridEl.innerHTML = '<div class="step-note">Colors confirmed at consultation for Day & Night.</div>';
+    gridEl.innerHTML = '<div class="step-note">Colors confirmed at consultation.</div>';
     return;
   }
   var html = '';
@@ -378,12 +485,16 @@ function cellCalcPrice() {
   var lim  = SYSTEM_LIMITS_CELL[CELL.opSys] || SYSTEM_LIMITS_CELL['Cordless'];
   var sqft = (w / 12) * (h / 12);
   var tdbuOver = CELL.lift === 'tdbu' && sqft > 60;
+  // Cordless in the smallest cells (3⁄8″S, 9⁄16″S) is capped at 96″W, not 108″ (Norman Portrait).
+  var maxW = lim.maxW;
+  if (CELL.opSys === 'Cordless' && (CELL.sizeCode === '38s' || CELL.sizeCode === '916s')) maxW = Math.min(maxW, 96);
 
-  if (w > lim.maxW || h > lim.maxH || tdbuOver) {
+  if (w > maxW || h > lim.maxH || tdbuOver) {
     pn.style.display = 'block';
     pn.textContent = tdbuOver
       ? '⚠ TDBU max area is 60 sqft — current: ' + sqft.toFixed(1) + ' sqft. Reduce dimensions.'
-      : '⚠ Size exceeds ' + CELL.opSys + ' limit (' + lim.maxW + '″W × ' + lim.maxH + '″H).';
+      : '⚠ Size exceeds ' + CELL.opSys + ' limit (' + maxW + '″W × ' + lim.maxH + '″H'
+        + (maxW < lim.maxW ? ' for this cell size' : '') + ').';
     return;
   }
 
@@ -395,26 +506,13 @@ function cellCalcPrice() {
   }
 
   var tableBase = res.price;
-  var lines     = ['Base (' + res.pricedAt + ', ' + res.name + '): $' + tableBase.toLocaleString()];
-  var perShade  = tableBase;
+  var lines     = ['Base (' + res.pricedAt + ', ' + res.name + '): $' + tableBase.toLocaleString()
+                   + (CELL.fabric === 'dn' ? ' per shade' : '')];
 
-  // Fabric surcharge (+20% for RD or Sheer)
-  var fabSurcharge = (CELL.fabric === 'rd' || CELL.fabric === 'sheer') ? Math.round(tableBase * 0.20) : 0;
-  if (fabSurcharge > 0) {
-    perShade += fabSurcharge;
-    lines.push(CELL_FABRIC_LABELS[CELL.fabric] + ' fabric (+20%): +$' + fabSurcharge);
-  }
-
-  // Op system surcharge (CCL +$73)
-  var opAdd = CELL.opSys === 'Cord Loop' ? 73 : 0;
-  if (opAdd) { perShade += opAdd; lines.push('Cord Loop system: +$73'); }
-
-  // Lift direction surcharge (TDBU or D&N +$89)
-  var liftAdd = (CELL.lift === 'tdbu' || CELL.lift === 'dn') ? 89 : 0;
-  if (liftAdd) {
-    perShade += liftAdd;
-    lines.push((CELL.lift === 'tdbu' ? 'Top Down / Bottom Up' : 'Day & Night') + ': +$89');
-  }
+  // Per-unit price (handles Day & Night = two shades, fabric/op/config surcharges)
+  var ps       = cellPerShadePrice(tableBase);
+  var perShade = ps.price;
+  lines = lines.concat(ps.lines);
 
   // Motor
   var motorTotal = cellMotorOn ? cellMotorCost * CELL.qty : 0;
@@ -454,10 +552,7 @@ function cellAddToCart() {
   var res = cellTableLookup(w, h);
   if (!res.price) { alert('Size is out of the pricing table range. Please call us: (609) 742-1720.'); return; }
 
-  var perShade = res.price;
-  if (CELL.fabric === 'rd' || CELL.fabric === 'sheer') perShade += Math.round(res.price * 0.20);
-  if (CELL.opSys === 'Cord Loop') perShade += 73;
-  if (CELL.lift === 'tdbu' || CELL.lift === 'dn') perShade += 89;
+  var perShade    = cellPerShadePrice(res.price).price;
   var motorTotal  = cellMotorOn ? cellMotorCost * CELL.qty : 0;
   var productSub  = perShade * CELL.qty + motorTotal;
   var yourPrice   = productSub - Math.round(productSub * 0.35);
@@ -471,7 +566,7 @@ function cellAddToCart() {
     {label:'Height',        value: h + '″'},
     {label:'Lift direction',value: liftLabel},
     {label:'Operation',     value: CELL.opSys + (cellMotorOn ? ' (motorized)' : '')},
-    {label:'Fabric',        value: CELL_FABRIC_LABELS[CELL.fabric] || CELL.fabric},
+    {label:'Fabric',        value: cellFabricLabel()},
     {label:'Cell size',     value: CELL_SIZE_LABELS[CELL.sizeCode] || CELL.sizeCode},
     {label:'Color',         value: CELL.color + (CELL.colorCode ? ' (' + CELL.colorCode + ')' : '') || '—'},
     {label:'Quantity',      value: String(CELL.qty)}
@@ -505,7 +600,7 @@ async function submitCellQuote(btn) {
     + 'Mount: ' + (CELL.mount || '—') + '\n'
     + 'Lift direction: ' + liftLabel + '\n'
     + 'Operation: ' + CELL.opSys + (cellMotorOn ? ' (motorized)' : '') + '\n'
-    + 'Fabric: ' + (CELL_FABRIC_LABELS[CELL.fabric] || CELL.fabric) + '\n'
+    + 'Fabric: ' + cellFabricLabel() + '\n'
     + 'Cell size: ' + (CELL_SIZE_LABELS[CELL.sizeCode] || CELL.sizeCode) + '\n'
     + 'Color: ' + (CELL.color || '—') + (CELL.colorCode ? ' (' + CELL.colorCode + ')' : '') + '\n'
     + 'Quantity: ' + CELL.qty + '\n'

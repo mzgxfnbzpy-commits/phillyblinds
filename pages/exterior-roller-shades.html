@@ -140,8 +140,8 @@
     <div class="step-subhead" style="font-weight:600;color:#555;margin-top:16px;margin-bottom:4px">Mount type</div>
     <p class="step-subhead" style="margin-top:0">Both use the cassette headrail. Wall mount attaches to wall or fascia above the opening. Ceiling / soffit mount attaches overhead — ideal for pergolas and covered patios.</p>
     <div class="opt-row">
-      <button class="opt-btn" id="mount-wall" onclick="ersPickMount('wall','Wall Mount')">Wall Mount</button>
-      <button class="opt-btn" id="mount-ceiling" onclick="ersPickMount('ceiling','Ceiling / Soffit Mount')">Ceiling / Soffit Mount</button>
+      <button class="opt-btn" id="mount-wall" onclick="ersPickMount('wall','Wall mount')">Wall mount</button>
+      <button class="opt-btn" id="mount-ceiling" onclick="ersPickMount('ceiling','Ceiling / Soffit mount')">Ceiling / Soffit mount</button>
     </div>
 
     <!-- Quantity -->
@@ -407,7 +407,7 @@ function ersUpdatePanel() {
     qr('Openness', ERS.openness + '% solar screen');
     if (ERS.color) qr('Color', ERS.color);
     if (ERS.track) qr('Side track', ERS.track === 'zipper' ? 'Zipper Track' : 'Cables');
-    if (ERS.mount) qr('Mount', ERS.mount === 'wall' ? 'Wall Mount' : 'Ceiling / Soffit Mount');
+    if (ERS.mount) qr('Mount', ERS.mount === 'wall' ? 'Wall mount' : 'Ceiling / Soffit mount');
     if (ERS.operation) qr('Operation', ERS.operation === 'manual' ? 'Manual — hand crank' : 'Motorized');
     if (ERS.width && ERS.height) qr('Size', ERS.width + '″ × ' + ERS.height + '″');
     qr('Qty', ERS.qty + ' shade' + (ERS.qty > 1 ? 's' : ''));
@@ -429,7 +429,7 @@ function addExteriorRollerToCart(){
   if(!ERS.width||!ERS.height){ alert('Please enter dimensions before adding to cart.'); return; }
 
   var trackLabel=ERS.track==='zipper'?'Zipper Track':ERS.track==='cables'?'Cables':'—';
-  var mountLabel=ERS.mount==='wall'?'Wall Mount':ERS.mount==='ceiling'?'Ceiling / Soffit Mount':'—';
+  var mountLabel=ERS.mount==='wall'?'Wall mount':ERS.mount==='ceiling'?'Ceiling / Soffit mount':'—';
   var opLabel=ERS.operation==='manual'?'Manual — hand crank':ERS.operation==='motorized'?'Motorized':'—';
 
   var lines=[
@@ -459,7 +459,7 @@ function ersSubmit() {
   if (!email && !phone) { showErr('Please enter a phone number or email address.'); return; }
 
   var trackLabel = ERS.track === 'zipper' ? 'Zipper Track' : ERS.track === 'cables' ? 'Cables' : '—';
-  var mountLabel = ERS.mount === 'wall' ? 'Wall Mount' : ERS.mount === 'ceiling' ? 'Ceiling / Soffit Mount' : '—';
+  var mountLabel = ERS.mount === 'wall' ? 'Wall mount' : ERS.mount === 'ceiling' ? 'Ceiling / Soffit mount' : '—';
   var opLabel = ERS.operation === 'manual' ? 'Manual — hand crank' : ERS.operation === 'motorized' ? 'Motorized' : '—';
   var dimLabel = (ERS.width && ERS.height) ? (ERS.width + '″W × ' + ERS.height + '″H') : '—';
   var sqft = (ERS.width && ERS.height) ? (ERS.width * ERS.height / 144).toFixed(1) + ' sq ft' : '—';

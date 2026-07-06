@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Homepage -->
   <url><loc>https://www.phillyblinds.com/</loc><lastmod>2026-05-27</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <!-- Local / city landing pages (added 2026-07-05) -->
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-philadelphia-pa.html</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-cherry-hill-nj.html</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-bryn-mawr-pa.html</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-doylestown-pa.html</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-media-pa.html</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-huntingdon-valley-pa.html</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <!-- Main category pages -->
   <url><loc>https://www.phillyblinds.com/pages/shades.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://www.phillyblinds.com/pages/soft-treatments.html</loc><lastmod>2026-05-01</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
@@ -40,8 +47,13 @@
   <url><loc>https://www.phillyblinds.com/pages/wallace-3d-sheer.html</loc><lastmod>2026-05-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.phillyblinds.com/pages/wallace-verticals.html</loc><lastmod>2026-05-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.phillyblinds.com/pages/wallace-woven.html</loc><lastmod>2026-05-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.phillyblinds.com/pages/wallace-dynasty-woven.html</loc><lastmod>2026-05-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.phillyblinds.com/pages/wallace-portfolio-natural-shades.html</loc><lastmod>2026-05-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <!-- Product detail pages (added 2026-07-05) -->
+  <url><loc>https://www.phillyblinds.com/pages/portrait-cellular.html</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/perfectsheer.html</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-roller-shades.html</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/real-wood-blinds.html</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/exterior-roller-shades.html</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <!-- Measure guides -->
   <url><loc>https://www.phillyblinds.com/pages/measure.html</loc><lastmod>2026-05-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.phillyblinds.com/pages/measure-shutters.html</loc><lastmod>2026-05-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>

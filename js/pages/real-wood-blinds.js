@@ -50,7 +50,7 @@ function pickMount(el, val) {
   document.querySelectorAll('#step1 .opt-btn').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
   S.mount = val;
-  $('s1val').textContent = val === 'inside' ? 'Inside Mount' : 'Outside Mount';
+  $('s1val').textContent = val === 'inside' ? 'Inside mount' : 'Outside mount';
   markDone('step1');
   // Show/hide shim note
   const shimNote = $('shim-note');
@@ -284,7 +284,7 @@ function addRealWoodToCart() {
     { label: 'Product',   value: 'Norman Ultimate™ Normandy® Real Wood Blinds' },
     { label: 'Slat Size', value: S.slat === '2.5in' ? '2½"' : '2"' },
     { label: 'Color',     value: S.color + surchargeLabel },
-    { label: 'Mount',     value: S.mount === 'inside' ? 'Inside Mount' : 'Outside Mount' },
+    { label: 'Mount',     value: S.mount === 'inside' ? 'Inside mount' : 'Outside mount' },
     { label: 'Width',     value: S.w + '"' },
     { label: 'Height',    value: S.h + '"' },
     { label: 'Valance',   value: valLabel },
@@ -345,7 +345,7 @@ function submitForm() {
     'PRODUCT SPECS',
     'Product: Norman Ultimate™ Normandy® Cordless Wood Blinds',
     'Slat Size: ' + (S.slat === '2.5in' ? '2½"' : '2"'),
-    'Mount: ' + (S.mount === 'inside' ? 'Inside Mount' : 'Outside Mount'),
+    'Mount: ' + (S.mount === 'inside' ? 'Inside mount' : 'Outside mount'),
     'Width (ordered): ' + S.w + '"',
     'Height (ordered): ' + S.h + '"',
     'Area: ' + (S.w * S.h / 144).toFixed(2) + ' sq ft',

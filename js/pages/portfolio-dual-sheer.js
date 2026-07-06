@@ -652,7 +652,7 @@ function addPortfolioDualSheerToCart(){
     {label:'Price Group',value:f.grp},
     {label:'Width',value:S.width+'"'},
     {label:'Height',value:S.height+'"'},
-    {label:'Mount',value:S.mount==='inside'?'Inside Mount':'Outside Mount'},
+    {label:'Mount',value:S.mount==='inside'?'Inside mount':'Outside mount'},
     {label:'Cassette',value:S.cassette||'—'},
     {label:'Control',value:ctrlLabel},
     {label:'Quantity',value:String(S.qty||1)}
@@ -683,7 +683,7 @@ function submitQuote(){
     'DIMENSIONS',
     'Width: '+S.width+'"',
     'Height: '+S.height+'"',
-    'Mount: '+(S.mount==='inside'?'Inside Mount (¼" deducted from width)':'Outside Mount'),
+    'Mount: '+(S.mount==='inside'?'Inside mount (¼" deducted from width)':'Outside mount'),
     (S.mount==='inside'?'Ordered shade width: '+(S.width-0.25)+'"':''),
     '',
     'CASSETTE & BOTTOM BAR',

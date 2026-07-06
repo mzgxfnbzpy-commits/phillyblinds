@@ -222,7 +222,7 @@ function pickMount(el,m){
     var e=document.getElementById(id); if(e) e.classList.remove('sel');
   });
   el.classList.add('sel');
-  var lbl={'wall':'Wall Mount (L bracket)','ceiling':'Ceiling Mount'}[m]||'Wall Mount (L bracket)';
+  var lbl={'wall':'Wall mount (L bracket)','ceiling':'Ceiling mount'}[m]||'Wall mount (L bracket)';
   sp('sp-mount',lbl);
   openStep('step2');
 }
@@ -451,7 +451,7 @@ function addNormanSheersToCart(){
   if(!S.w||!S.h){ alert('Please enter valid dimensions before adding to cart.'); return; }
 
   var stackLabels={'left':'Left Stack','right':'Right Stack','center':'Traveling Center Stack','copen':'Center Opening'};
-  var mountLabels={'wall':'Wall Mount (L bracket)','ceiling':'Ceiling Mount','pocket':'Ceiling Pocket Mount'};
+  var mountLabels={'wall':'Wall mount (L bracket)','ceiling':'Ceiling mount','pocket':'Ceiling Pocket Mount'};
   var isSBS=document.getElementById('sbs-check')&&document.getElementById('sbs-check').checked;
 
   var lines=[
@@ -481,7 +481,7 @@ async function submitQuote(){
   if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent='Please enter a valid email address.';err.style.display='block';return;}
   err.style.display='none';
   var stackLabels={'left':'Left Stack','right':'Right Stack','center':'Traveling Center Stack','copen':'Center Opening'};
-  var mountLabels={'wall':'Wall Mount (L bracket)','ceiling':'Ceiling Mount'};
+  var mountLabels={'wall':'Wall mount (L bracket)','ceiling':'Ceiling mount'};
   var isSBS=document.getElementById('sbs-check')&&document.getElementById('sbs-check').checked;
   var joints=S.w<=97.625?0:S.w<=189.625?1:2;
   var selections=[
@@ -527,6 +527,6 @@ async function submitQuote(){
   // Step 1 (measurements & mount) is active by default; wall mount pre-selected.
   pickOp('wand');        // operation (step2) → builds stack options
   pickStack('left');     // stack (step3) default
-  sp('sp-mount','Wall Mount (L bracket)');  // reflect pre-selected wall mount in spec panel
+  sp('sp-mount','Wall mount (L bracket)');  // reflect pre-selected wall mount in spec panel
   openStep('step1');
 })();

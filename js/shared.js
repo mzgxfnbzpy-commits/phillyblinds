@@ -2303,6 +2303,7 @@ function _initChatbot() {
 function reqMoreInfo(product) {
   var subj = product ? 'Request for more information: ' + product : 'Request for more information';
   var body = 'Hi, I would like to request more information about ' + (product || 'your products') + '.\n\nName:\nPhone:\nBest time to call:';
+  if (typeof pbTrackEvent === 'function') pbTrackEvent('generate_lead', { lead_type: 'request_info', product: product || '' });
   window.location.href = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
 }
 
@@ -2313,10 +2314,75 @@ function reqMoreInfo(product) {
 (function() {
   var pg = document.body && document.body.getAttribute('data-page');
   if (pg !== null) {
+    renderPromoBar();
     renderNav(pg);
     renderFooter(pg === 'home');
   }
 })();
+
+// ── Promo / announcement bar ──────────────────────────────────────────────
+// Dismissible offer bar shown above the sticky nav. Scrolls away on scroll.
+// Suppressed once dismissed (30 days) via localStorage.
+function renderPromoBar() {
+  try {
+    var KEY = 'pb_promo_dismissed_at';
+    var raw = window.localStorage ? localStorage.getItem(KEY) : null;
+    if (raw && (Date.now() - parseInt(raw, 10)) < 30 * 24 * 60 * 60 * 1000) return;
+  } catch (e) { /* localStorage blocked — still show the bar */ }
+  if (document.querySelector('.pb-promo-bar')) return;
+
+  var isHome = document.body.getAttribute('data-page') === 'home';
+  var consultHref = (isHome ? 'pages/' : '../pages/') + 'consult.html';
+
+  var bar = document.createElement('div');
+  bar.className = 'pb-promo-bar';
+  bar.setAttribute('role', 'region');
+  bar.setAttribute('aria-label', 'Special offer');
+  bar.innerHTML =
+    '<span>✨ <strong>Free in-home consultation &amp; design samples</strong>'
+    + '<span class="pb-promo-sep"> — family-owned, we measure &amp; install everything ourselves.</span> '
+    + '<a class="pb-promo-cta" href="' + consultHref + '">Book yours &rsaquo;</a>'
+    + ' &nbsp;or call/text <a class="pb-promo-tel" href="tel:6097421720">(609) 742-1720</a></span>'
+    + '<button class="pb-promo-close" aria-label="Dismiss offer" onclick="pbDismissPromo()">&times;</button>';
+  document.body.insertBefore(bar, document.body.firstChild);
+}
+
+function pbDismissPromo() {
+  var bar = document.querySelector('.pb-promo-bar');
+  if (bar) bar.remove();
+  try { localStorage.setItem('pb_promo_dismissed_at', String(Date.now())); } catch (e) {}
+}
+
+// ── Conversion event tracking (for Google Analytics + Google Ads) ──────────
+// Fires GA4 events on the actions that matter for advertising ROI:
+//   phone_call_click  — any tel: link tap/click
+//   consult_cta_click — any click through to the free-consultation page
+//   generate_lead     — a quote/consult email actually sent (see pbSendMail)
+// Mark these as conversions in GA4, then import them into Google Ads so
+// campaigns can optimize toward calls and booked consultations.
+// (No PII is sent — only the event name and a short label.)
+function pbTrackEvent(name, params) {
+  try {
+    if (typeof gtag === 'function') gtag('event', name, params || {});
+    else if (window.dataLayer) window.dataLayer.push(Object.assign({ event: name }, params || {}));
+  } catch (e) { /* analytics must never break the page */ }
+}
+
+document.addEventListener('click', function (e) {
+  var tel = e.target.closest && e.target.closest('a[href^="tel:"]');
+  if (tel) {
+    pbTrackEvent('phone_call_click', { link_url: tel.getAttribute('href'), page_path: location.pathname });
+    return;
+  }
+  var link = e.target.closest && e.target.closest('a[href]');
+  if (!link) return;
+  var href = link.getAttribute('href') || '';
+  if (href.indexOf('mailto:') === 0) {
+    pbTrackEvent('generate_lead', { lead_type: 'email_click', page_path: location.pathname });
+  } else if (/consult\.html/.test(href)) {
+    pbTrackEvent('consult_cta_click', { page_path: location.pathname });
+  }
+}, true);
 
 // ── LIVE SITE — CONTACT-FIRST MODE ───────────────────────────────────────────
 // On www.phillyblinds.com, configurator pages are replaced with a contact panel

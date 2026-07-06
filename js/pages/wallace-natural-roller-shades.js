@@ -130,7 +130,7 @@ function selectMount(m) {
   S.mount = m;
   document.getElementById('mc-in').classList.toggle('sel', m === 'inside');
   document.getElementById('mc-out').classList.toggle('sel', m === 'outside');
-  var label = m === 'inside' ? 'Inside Mount' : 'Outside Mount';
+  var label = m === 'inside' ? 'Inside mount' : 'Outside mount';
   updateSpec('sp-mount', label);
   validateSize();
   maybeAdvanceMeasure();
@@ -140,7 +140,7 @@ function selectMount(m) {
 function maybeAdvanceMeasure() {
   if (S.width > 0 && S.height > 0 && S.mount &&
       document.getElementById('size-computed').style.display !== 'none') {
-    var ml = S.mount === 'inside' ? 'Inside Mount' : 'Outside Mount';
+    var ml = S.mount === 'inside' ? 'Inside mount' : 'Outside mount';
     completeStep('step-1', S.width + '" × ' + S.height + '" · ' + ml);
     activateStep('step-4');
   }
@@ -668,7 +668,7 @@ function addWallaceNaturalRollerToCart(){
   var lines=[
     {label:'Product',value:'Wallace Portfolio Collection Natural Roller Shades'},
     {label:'Shade Type',value:S.shadeType==='single'?'Single Natural Roller':'Double Natural Roller'},
-    {label:'Mount',value:S.mount==='inside'?'Inside Mount':'Outside Mount'},
+    {label:'Mount',value:S.mount==='inside'?'Inside mount':'Outside mount'},
     {label:'Width',value:(S.width||'—')+'"'},
     {label:'Height',value:(S.height||'—')+'"'},
     {label:'Quantity',value:String(S.qty||1)},
@@ -714,7 +714,7 @@ function submitQuote() {
     + '── PRODUCT SPECIFICATION ──\n'
     + 'Product: Wallace Portfolio Collection Natural Roller Shades (2026)\n'
     + 'Shade type: ' + (S.shadeType === 'single' ? 'Single Natural Roller' : 'Double Natural Roller') + '\n'
-    + 'Mount: ' + (S.mount === 'inside' ? 'Inside Mount (−1/8" deduction)' : S.mount === 'outside' ? 'Outside Mount' : '—') + '\n'
+    + 'Mount: ' + (S.mount === 'inside' ? 'Inside mount (−1/8" deduction)' : S.mount === 'outside' ? 'Outside mount' : '—') + '\n'
     + 'Ordered width: ' + (S.width || '—') + '"\n'
     + 'Ordered height: ' + (S.height || '—') + '"\n'
     + 'Quantity: ' + S.qty + '\n'
