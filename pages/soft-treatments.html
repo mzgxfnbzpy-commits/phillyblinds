@@ -179,82 +179,7 @@
       </div>
     </div>
 
-    <!-- PINCH PLEAT SUB-OPTIONS (shown only when Pinch Pleat selected) -->
-    <div id="pinch-subopts" style="display:none;margin-top:16px;padding:16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:12px">
-      <div style="font-size:12px;font-weight:600;color:#444;margin-bottom:14px">Pinch pleat details</div>
-
-      <!-- 1: Dimensions + Return -->
-      <div class="dim-box" style="margin-bottom:14px">
-        <div class="dim-box-label">Dimensions</div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Width</label>
-            <div style="display:flex;align-items:center;gap:6px">
-              <input type="number" id="pp-w" placeholder="84" min="12" max="250" oninput="calcDrapePrice()" style="width:80px">
-              <select id="pp-w-frac" onchange="calcDrapePrice()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
-                <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
-                <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
-              </select>
-              <span style="font-size:12px;color:#666">inches</span>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Finished length</label>
-            <div style="display:flex;align-items:center;gap:6px">
-              <input type="number" id="pp-l" placeholder="96" min="12" max="150" oninput="calcDrapePrice()" style="width:80px">
-              <select id="pp-l-frac" onchange="calcDrapePrice()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
-                <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
-                <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
-              </select>
-              <span style="font-size:12px;color:#666">inches</span>
-            </div>
-          </div>
-        </div>
-        <div class="form-group" style="margin-top:10px">
-          <label>Return size <span style="font-weight:400;color:#999">default 4"</span></label>
-          <input type="number" id="pp-return" value="4" min="1" max="24" oninput="calcDrapePrice()" style="width:80px">
-        </div>
-        <div id="pp-min-warn" style="display:none;background:#FFF3CD;border:1px solid #FFC107;border-radius:8px;padding:9px 13px;font-size:12px;color:#7d5a00;margin-top:8px;line-height:1.5"></div>
-      </div>
-
-      <!-- 2: Fullness — auto-sets prong count -->
-      <div style="margin-bottom:14px">
-        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">Fullness</div>
-        <div style="font-size:11px;color:#888;margin-bottom:8px;line-height:1.5">Selecting fullness automatically sets 2-prong (1.5×–2×) or 3-prong (2.5×–3×).</div>
-        <div class="opt-row" id="grp-pp-fullness">
-          <button class="opt-btn" onclick="selOpt(this,'grp-pp-fullness');drapeFullnessHint('1.5');calcDrapePrice()">1.5×</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-pp-fullness');drapeFullnessHint('2.0');calcDrapePrice()">2.0×</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-pp-fullness');drapeFullnessHint('2.5');calcDrapePrice()">2.5×</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-pp-fullness');drapeFullnessHint('3.0');calcDrapePrice()">3.0×</button>
-        </div>
-        <div id="pp-fullness-rec" style="display:none;margin-top:8px;font-size:12px;padding:8px 12px;border-radius:7px"></div>
-      </div>
-
-      <!-- 3: Tack position (auto-populated by fullness) -->
-      <div id="pp-tack-section">
-        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Tack position <span style="font-weight:400;color:var(--gold);text-transform:none;font-size:10px">— tack top recommended</span></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-          <div class="opt-card" id="pp-tack-top" onclick="selectPinchDetail(this,'top')">
-            <div class="opt-art" style="height:72px;overflow:hidden">
-              <img id="pp-tack-top-img" loading="lazy" src="../images/pleat-styles/pinch-2prong-tack-top.png" alt="Tack top" style="width:100%;height:72px;object-fit:cover">
-            </div>
-            <div class="opt-label-bar">
-              <div class="opt-name" id="pp-tack-top-name">2-Prong Tack Top</div>
-              <div class="opt-desc" id="pp-tack-top-desc">Classic, tack at heading</div>
-            </div>
-          </div>
-          <div class="opt-card" id="pp-tack-bot" onclick="selectPinchDetail(this,'bot')">
-            <div class="opt-art" style="height:72px;overflow:hidden">
-              <img id="pp-tack-bot-img" loading="lazy" src="../images/pleat-styles/pinch-2prong-tack-bottom.png" alt="Tack bottom" style="width:100%;height:72px;object-fit:cover">
-            </div>
-            <div class="opt-label-bar">
-              <div class="opt-name" id="pp-tack-bot-name">2-Prong Tack Bottom</div>
-              <div class="opt-desc" id="pp-tack-bot-desc">Tack at base of pleat</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- Pinch pleat fullness + tack are configured in Step 2 (relocated for a consistent flow) -->
 
     <!-- ROD POCKET SUB-OPTIONS (shown only when Rod Pocket / Sheered Pocket selected) -->
     <div id="rodpocket-subopts" style="display:none;margin-top:14px;padding:16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:12px">
@@ -353,90 +278,20 @@
       </div>
     </div>
 
-    <!-- Fixed fullness note (Box, Goblet, Barrel — standard 2.5×) -->
-    <div id="drape-fixed-fullness-note" style="display:none;margin-top:14px;padding:10px 14px;background:#f0f9f8;border:1px solid rgba(45,224,193,.25);border-radius:9px;font-size:12px;color:#0A4A42;line-height:1.5">
-      <strong>Fullness: 2.5× standard</strong> — this pleat style is fabricated at 2.5× fullness for the best structure and appearance. No selection needed.
-    </div>
-
-    <!-- STANDARD FULLNESS section removed — fullness is now embedded in pinch-subopts -->
-
-    <!-- RIPPLE FOLD OPTIONS (shown only when Ripple Fold selected) -->
-    <div id="drape-ripple-opts" style="display:none;margin-top:14px;padding:16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:12px">
-      <div style="font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:14px">Ripple fold options</div>
-
-      <div style="margin-bottom:14px">
-        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px">Panel size</div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Width</label>
-            <div style="display:flex;align-items:center;gap:6px">
-              <input type="number" id="rf-w" placeholder="48" min="12" max="200" oninput="calcDrapePrice()" style="width:70px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px">
-              <span style="font-size:12px;color:#666">in</span>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Finished length</label>
-            <div style="display:flex;align-items:center;gap:6px">
-              <input type="number" id="rf-l" placeholder="84" min="12" max="200" oninput="calcDrapePrice()" style="width:70px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px">
-              <span style="font-size:12px;color:#666">in</span>
-            </div>
-          </div>
-        </div>
-        <div style="font-size:11px;color:#888;margin-top:5px">Width × length for one panel — we confirm measurements during installation planning.</div>
-      </div>
-
-      <div style="margin-bottom:14px">
-        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px">Fullness %</div>
-        <div class="opt-row" id="grp-ripple-fullness">
-          <button class="opt-btn" onclick="selOpt(this,'grp-ripple-fullness')">60%</button>
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-ripple-fullness')">80%</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-ripple-fullness')">100%</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-ripple-fullness')">120%</button>
-        </div>
-        <div style="font-size:11px;color:#888;margin-top:5px">80% is standard. Higher % = more wave depth.</div>
-      </div>
-
-      <div style="margin-bottom:14px">
-        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px">Hardware brand</div>
-        <div class="opt-row" id="grp-ripple-hw">
-          <button class="opt-btn" onclick="selOpt(this,'grp-ripple-hw');drapeRippleHwHint('graber')">Graber</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-ripple-hw');drapeRippleHwHint('kirsch')">Kirsch</button>
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-ripple-hw');drapeRippleHwHint('idk')">I don't know</button>
-        </div>
-        <div id="ripple-hw-note" style="font-size:11px;color:var(--gold);margin-top:6px">No problem — we'll use standard Kirsch hardware.</div>
-      </div>
-
-      <div style="margin-bottom:14px">
-        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px">Do you need us to supply the snaps?</div>
-        <div class="opt-row" id="grp-ripple-snaps">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-ripple-snaps')">Yes — supply snaps</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-ripple-snaps')">No — I have snaps</button>
-        </div>
-      </div>
-
-      <div style="margin-bottom:14px">
-        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px">Panel join type</div>
-        <div class="opt-row" id="grp-ripple-join">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-ripple-join')">Buttmaster</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-ripple-join')">Overlap</button>
-        </div>
-        <div style="font-size:11px;color:#888;margin-top:5px">Buttmaster: panels meet edge to edge. Overlap: panels cross at center seam.</div>
-      </div>
-
-    </div>
-
   </div>
 
-  <!-- STEP 2: DIMENSIONS -->
+  <!-- STEP 2: SIZE, QUANTITY & CONFIGURATION -->
   <div class="step">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
       <div class="step-num">2</div>
-      <div class="step-title" style="margin-bottom:0">Window dimensions</div>
+      <div class="step-title" style="margin-bottom:0">Size &amp; configuration</div>
     </div>
-    <div class="step-sub">Enter your exact measurements — we'll confirm with our own measure at the home visit.</div>
+    <div class="step-sub">Enter your measurements and set up your panels — we'll confirm with our own measure at the home visit.</div>
+
+    <!-- 1. WINDOW DIMENSIONS (Width + Finished length) — pinch & standard pleats -->
     <div id="drape-std-dims">
     <div class="dim-box" style="margin-top:14px">
-      <div class="dim-box-label">Exact measurements</div>
+      <div class="dim-box-label">Window dimensions</div>
       <div class="form-row">
         <div class="form-group">
           <label>Width</label>
@@ -463,23 +318,48 @@
       </div>
       <div id="d-min-warn" style="display:none;background:#FFF3CD;border:1px solid #FFC107;border-radius:8px;padding:9px 13px;font-size:12px;color:#7d5a00;margin-top:8px;line-height:1.5"></div>
     </div>
-    <!-- Returns & Overlaps — shown for non-pinch, non-rod-pocket styles -->
-    <div id="drape-std-returns" class="form-row" style="margin-top:12px">
-      <div class="form-group">
-        <label>Return size (inches) <span style="font-weight:400;color:#999">default 4"</span></label>
-        <input type="number" id="d-return" value="4" min="1" max="24" style="font-size:14px">
-      </div>
-      <div class="form-group">
-        <label>Overlap size (inches) <span style="font-weight:400;color:#999">default 4"</span></label>
-        <input type="number" id="d-overlap" value="4" min="0" max="12" style="font-size:14px">
+    </div><!-- /#drape-std-dims -->
+
+    <!-- 1b. RIPPLE FOLD panel size (shown only for Ripple Fold) -->
+    <div id="ds-ripple-dims" style="display:none">
+      <div class="dim-box" style="margin-top:14px">
+        <div class="dim-box-label">Panel size</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Width</label>
+            <div style="display:flex;align-items:center;gap:6px">
+              <input type="number" id="rf-w" placeholder="48" min="12" max="200" oninput="calcDrapePrice()" style="width:80px">
+              <span style="font-size:12px;color:#666">inches</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Finished length</label>
+            <div style="display:flex;align-items:center;gap:6px">
+              <input type="number" id="rf-l" placeholder="84" min="12" max="200" oninput="calcDrapePrice()" style="width:80px">
+              <span style="font-size:12px;color:#666">inches</span>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:5px">Width × length for one panel — we confirm measurements during installation planning.</div>
       </div>
     </div>
-    </div><!-- /#drape-std-dims -->
-    <!-- Panel configuration — shown for ALL pleat styles, positioned right after the dimensions -->
+
+    <!-- 2. QUANTITY -->
+    <div id="drape-qty-row" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px">
+      <span style="font-size:13px;color:#666">Qty:</span>
+      <div class="qty-btns">
+        <button class="qty-btn" onclick="pbAdjQty('drape-qty',-1,1,20);calcDrapePrice()">&#8722;</button>
+        <input class="qty-num" id="drape-qty" type="number" value="1" min="1" max="20" oninput="calcDrapePrice()">
+        <button class="qty-btn" onclick="pbAdjQty('drape-qty',1,1,20);calcDrapePrice()">&#43;</button>
+      </div>
+      <span style="font-size:13px;color:#666">set(s) / window(s)</span>
+    </div>
+
+    <!-- 3. PANEL CONFIGURATION — single shared block, right after size + qty -->
     <div style="border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-top:14px">
       <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Panel configuration</div>
       <div class="opt-row" id="grp-drape-panels">
-        <button class="opt-btn sel" id="drape-pair-btn" onclick="selOpt(this,'grp-drape-panels');drapeToggleSingle(false)">Pair</button>
+        <button class="opt-btn sel" id="drape-pair-btn" onclick="selOpt(this,'grp-drape-panels');drapeToggleSingle(false)">Pair (split draw)</button>
         <button class="opt-btn" id="drape-single-btn" onclick="selOpt(this,'grp-drape-panels');drapeToggleSingle(true)">Single panel</button>
       </div>
       <div id="drape-single-opts" style="display:none;margin-top:10px">
@@ -491,6 +371,122 @@
         </div>
       </div>
     </div>
+
+    <!-- 4. OVERLAPS & RETURNS — shown for pinch & standard pleats (hidden for ripple / rod pocket) -->
+    <div id="drape-std-returns" style="border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-top:14px">
+      <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Overlaps &amp; returns</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Return size (inches) <span style="font-weight:400;color:#999">default 4"</span></label>
+          <input type="number" id="d-return" value="4" min="1" max="24" step="0.5" oninput="calcDrapePrice()" style="font-size:14px">
+        </div>
+        <div class="form-group">
+          <label>Overlap (inches) <span style="font-weight:400;color:#999">center overlap for a pair — default 3"</span></label>
+          <input type="number" id="d-overlap" value="3" min="0" max="12" step="0.5" oninput="calcDrapePrice()" style="font-size:14px">
+        </div>
+      </div>
+    </div>
+
+    <!-- 5a. RIPPLE FOLD fullness (shown only for Ripple Fold) -->
+    <div id="ds-ripple-fullness" style="display:none;margin-top:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
+      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px">Fullness %</div>
+      <div class="opt-row" id="grp-ripple-fullness">
+        <button class="opt-btn" onclick="selOpt(this,'grp-ripple-fullness');calcDrapePrice()">60%</button>
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-ripple-fullness');calcDrapePrice()">80%</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-ripple-fullness');calcDrapePrice()">100%</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-ripple-fullness');calcDrapePrice()">120%</button>
+      </div>
+      <div style="font-size:11px;color:#888;margin-top:5px">80% is standard. Higher % = more wave depth.</div>
+    </div>
+
+    <!-- 5b. PINCH PLEAT fullness + tack (relocated from Step 1; shown only for Pinch Pleat) -->
+    <div id="pinch-subopts" style="display:none;margin-top:14px;padding:16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:12px">
+      <!-- Fullness — auto-sets prong count -->
+      <div style="margin-bottom:14px">
+        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">Fullness</div>
+        <div style="font-size:11px;color:#888;margin-bottom:8px;line-height:1.5">Selecting fullness automatically sets 2-prong (1.5×–2×) or 3-prong (2.5×–3×).</div>
+        <div class="opt-row" id="grp-pp-fullness">
+          <button class="opt-btn" onclick="selOpt(this,'grp-pp-fullness');drapeFullnessHint('1.5');calcDrapePrice()">1.5×</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-pp-fullness');drapeFullnessHint('2.0');calcDrapePrice()">2.0×</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-pp-fullness');drapeFullnessHint('2.5');calcDrapePrice()">2.5×</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-pp-fullness');drapeFullnessHint('3.0');calcDrapePrice()">3.0×</button>
+        </div>
+        <div id="pp-fullness-rec" style="display:none;margin-top:8px;font-size:12px;padding:8px 12px;border-radius:7px"></div>
+      </div>
+
+      <!-- Tack position (auto-populated by fullness) -->
+      <div id="pp-tack-section">
+        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Tack position <span style="font-weight:400;color:var(--gold);text-transform:none;font-size:10px">— tack top recommended</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div class="opt-card" id="pp-tack-top" onclick="selectPinchDetail(this,'top')">
+            <div class="opt-art" style="height:72px;overflow:hidden">
+              <img id="pp-tack-top-img" loading="lazy" src="../images/pleat-styles/pinch-2prong-tack-top.png" alt="Tack top" style="width:100%;height:72px;object-fit:cover">
+            </div>
+            <div class="opt-label-bar">
+              <div class="opt-name" id="pp-tack-top-name">2-Prong Tack Top</div>
+              <div class="opt-desc" id="pp-tack-top-desc">Classic, tack at heading</div>
+            </div>
+          </div>
+          <div class="opt-card" id="pp-tack-bot" onclick="selectPinchDetail(this,'bot')">
+            <div class="opt-art" style="height:72px;overflow:hidden">
+              <img id="pp-tack-bot-img" loading="lazy" src="../images/pleat-styles/pinch-2prong-tack-bottom.png" alt="Tack bottom" style="width:100%;height:72px;object-fit:cover">
+            </div>
+            <div class="opt-label-bar">
+              <div class="opt-name" id="pp-tack-bot-name">2-Prong Tack Bottom</div>
+              <div class="opt-desc" id="pp-tack-bot-desc">Tack at base of pleat</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5c. Fixed fullness note (Box, Goblet, Barrel — standard 2.5×) -->
+    <div id="drape-fixed-fullness-note" style="display:none;margin-top:14px;padding:10px 14px;background:#f0f9f8;border:1px solid rgba(45,224,193,.25);border-radius:9px;font-size:12px;color:#0A4A42;line-height:1.5">
+      <strong>Fullness: 2.5× standard</strong> — this pleat style is fabricated at 2.5× fullness for the best structure and appearance. No selection needed.
+    </div>
+
+    <!-- 6. RIPPLE FOLD — Butt master / Overlap + hardware (shown only for Ripple Fold) -->
+    <div id="ds-ripple-extra" style="display:none">
+      <div style="margin-top:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
+        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px">Butt master or Overlap</div>
+        <div class="opt-row" id="grp-ripple-join">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-ripple-join')">Butt master</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-ripple-join')">Overlap</button>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:5px">Butt master: panels meet edge to edge. Overlap: panels cross at center seam.</div>
+      </div>
+
+      <div style="margin-top:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
+        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px">Hardware brand</div>
+        <div class="opt-row" id="grp-ripple-hw">
+          <button class="opt-btn" onclick="selOpt(this,'grp-ripple-hw');drapeRippleHwHint('graber')">Graber</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-ripple-hw');drapeRippleHwHint('kirsch')">Kirsch</button>
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-ripple-hw');drapeRippleHwHint('idk')">I don't know</button>
+        </div>
+        <div id="ripple-hw-note" style="font-size:11px;color:var(--gold);margin-top:6px">No problem — we'll use standard Kirsch hardware.</div>
+        <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin:12px 0 7px">Do you need us to supply the snaps?</div>
+        <div class="opt-row" id="grp-ripple-snaps">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-ripple-snaps')">Yes — supply snaps</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-ripple-snaps')">No — I have snaps</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. HEM SIZES — shown for pinch & standard pleats (editable) -->
+    <div id="drape-hems" style="border:1px solid #e8e8e4;border-radius:10px;padding:14px 16px;margin-top:14px">
+      <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Hem sizes</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Side hem (inches) <span style="font-weight:400;color:#999">default 2" — editable</span></label>
+          <input type="number" id="d-side-hem" value="2" min="0.5" max="6" step="0.5" oninput="calcDrapePrice()" style="font-size:14px">
+        </div>
+        <div class="form-group">
+          <label>Bottom hem (inches) <span style="font-weight:400;color:#999">default 4" — editable</span></label>
+          <input type="number" id="d-bottom-hem" value="4" min="0.5" max="12" step="0.5" oninput="calcDrapePrice()" style="font-size:14px">
+        </div>
+      </div>
+    </div>
+
     <div id="drape-price-box" style="display:none;margin-top:14px"></div>
   </div>
 

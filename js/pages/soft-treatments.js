@@ -119,10 +119,7 @@ var _drapePleatCache = {};
 function _drapeGetCurrentDims() {
   var pleat = drapeState.pleat;
   var w = 0, h = 0;
-  if (pleat === 'Pinch Pleat' || (pleat && pleat.indexOf('Pinch Pleat') === 0)) {
-    w = parseFloat((document.getElementById('pp-w') || {}).value) || 0;
-    h = parseFloat((document.getElementById('pp-l') || {}).value) || 0;
-  } else if (pleat === 'Rod Pocket / Sheered Pocket') {
+  if (pleat === 'Rod Pocket / Sheered Pocket') {
     w = parseFloat((document.getElementById('rp-w') || {}).value) || 0;
     h = parseFloat((document.getElementById('rp-l') || {}).value) || 0;
   } else if (pleat === 'Ripple Fold') {
@@ -136,13 +133,9 @@ function _drapeGetCurrentDims() {
 }
 function _drapeSetDims(targetPleat, dims) {
   if (!dims || (!dims.w && !dims.h)) return;
-  var isPinch = targetPleat === 'Pinch Pleat' || (targetPleat && targetPleat.indexOf('Pinch Pleat') === 0);
   var isRP = targetPleat === 'Rod Pocket / Sheered Pocket';
   var isRipple = targetPleat === 'Ripple Fold';
-  if (isPinch) {
-    var pw = document.getElementById('pp-w'); if (pw && dims.w) pw.value = dims.w;
-    var pl = document.getElementById('pp-l'); if (pl && dims.h) pl.value = dims.h;
-  } else if (isRP) {
+  if (isRP) {
     var rw = document.getElementById('rp-w'); if (rw && dims.w) rw.value = dims.w;
     var rl = document.getElementById('rp-l'); if (rl && dims.h) rl.value = dims.h;
   } else if (isRipple) {
@@ -218,17 +211,27 @@ function selectPleat(el, val) {
   var rpOpts = document.getElementById('rodpocket-subopts');
   if (rpOpts) rpOpts.style.display = isRodPocket ? 'block' : 'none';
 
-  // Standard dims — hide for pinch, rod pocket, and ripple fold (each has its own dim inputs)
+  // Standard dims (d-exact-width/length) — used by pinch + standard pleats; hidden for rod pocket & ripple (they have their own dim inputs)
   var stdDims = document.getElementById('drape-std-dims');
-  if (stdDims) stdDims.style.display = (isPinch || isRodPocket || isRipple) ? 'none' : '';
+  if (stdDims) stdDims.style.display = (isRodPocket || isRipple) ? 'none' : '';
 
-  // Return/overlap row — hide for ripple fold (track system, no returns needed)
+  // Ripple fold panel-size block — shown only for ripple
+  var rippleDims = document.getElementById('ds-ripple-dims');
+  if (rippleDims) rippleDims.style.display = isRipple ? '' : 'none';
+
+  // Overlaps & returns — pinch + standard pleats only (hidden for ripple track system & rod pocket)
   var stdReturns = document.getElementById('drape-std-returns');
-  if (stdReturns) stdReturns.style.display = isRipple ? 'none' : '';
+  if (stdReturns) stdReturns.style.display = (isRipple || isRodPocket) ? 'none' : '';
 
-  // Ripple options
-  var rippleOpts = document.getElementById('drape-ripple-opts');
-  if (rippleOpts) rippleOpts.style.display = isRipple ? 'block' : 'none';
+  // Ripple fullness + butt-master/overlap + hardware blocks — shown only for ripple
+  var rippleFullness = document.getElementById('ds-ripple-fullness');
+  if (rippleFullness) rippleFullness.style.display = isRipple ? '' : 'none';
+  var rippleExtra = document.getElementById('ds-ripple-extra');
+  if (rippleExtra) rippleExtra.style.display = isRipple ? '' : 'none';
+
+  // Hem sizes — pinch + standard pleats only (hidden for ripple & rod pocket)
+  var hemBlock = document.getElementById('drape-hems');
+  if (hemBlock) hemBlock.style.display = (isRipple || isRodPocket) ? 'none' : '';
 
   // Fixed fullness note for Box/Goblet/Barrel
   var fixedFullNote = document.getElementById('drape-fixed-fullness-note');
@@ -259,10 +262,9 @@ function selectPleat(el, val) {
 
   // Scroll to reveal the sub-options panel that just appeared
   setTimeout(function() {
-    var target = isPinch ? document.getElementById('pinch-subopts')
-               : isRodPocket ? document.getElementById('rodpocket-subopts')
-               : isRipple ? document.getElementById('drape-ripple-opts')
-               : null;
+    var target = isRodPocket ? document.getElementById('rodpocket-subopts')
+               : isRipple ? document.getElementById('ds-ripple-dims')
+               : document.getElementById('drape-std-dims');
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 120);
 }
@@ -681,19 +683,18 @@ function calcDrapePrice() {
   var isRodPocket  = drapeState.pleat === 'Rod Pocket / Sheered Pocket';
   var isRippleDim  = drapeState.pleat === 'Ripple Fold';
   var w, h;
-  if (isPinchPleat) {
-    w = _getDim('pp-w', 'pp-w-frac');
-    h = _getDim('pp-l', 'pp-l-frac');
-  } else if (isRodPocket) {
+  if (isRodPocket) {
     w = _getDim('rp-w', 'rp-w-frac');
     h = _getDim('rp-l', 'rp-l-frac');
   } else if (isRippleDim) {
     w = parseFloat((document.getElementById('rf-w') || {}).value) || 0;
     h = parseFloat((document.getElementById('rf-l') || {}).value) || 0;
   } else {
+    // Pinch + standard pleats share the same dim inputs
     w = _getDim('d-exact-width',  'd-exact-width-frac');
     h = _getDim('d-exact-length', 'd-exact-length-frac');
   }
+  var qty = parseInt((document.getElementById('drape-qty') || {}).value) || 1;
   var box = document.getElementById('drape-price-box');
   if (!box) return;
   if (!w || !h) { box.style.display = 'none'; return; }
@@ -706,7 +707,7 @@ function calcDrapePrice() {
   if (hwNeed === 'I need hardware' && hwType === 'Motorized track') { _motorCustomMsg(box, 'Motorized Drapery'); return; }
 
   // Minimum dimension guard
-  var minWarnId = isPinchPleat ? 'pp-min-warn' : isRodPocket ? 'rp-min-warn' : 'd-min-warn';
+  var minWarnId = isRodPocket ? 'rp-min-warn' : 'd-min-warn';
   var minWarn = document.getElementById(minWarnId);
   if (minWarn) {
     var tooNarrow = w > 0 && w < 10, tooShort = h > 0 && h < 10;
@@ -839,15 +840,18 @@ function calcDrapePrice() {
     dShipEst = Math.max(75, dShipBase);
   }
 
-  var grandTotal = laborTotal + interlineTotal + fabricCost + liningCost + corniceTotal + valanceTotal + trimTotal + dShipEst;
-  grandTotal = Math.max(200, grandTotal); // $200 minimum for custom drapery
+  var perSetTotal = laborTotal + interlineTotal + fabricCost + liningCost + corniceTotal + valanceTotal + trimTotal + dShipEst;
+  perSetTotal = Math.max(200, perSetTotal); // $200 minimum per drapery set
+  // Quantity multiplies the per-set total (each set = the configured panel/pair for one window)
+  var grandTotal = perSetTotal * qty;
 
   var panels    = getOpt('grp-drape-panels') || '—';
   var panelSide = panels === 'Single panel' ? (getOpt('grp-drape-side') || '—') : '—';
-  var returnSz  = isPinchPleat
-    ? ((document.getElementById('pp-return') || {}).value || '4')
-    : ((document.getElementById('d-return') || {}).value || '4');
-  var overlapSz = (isRodPocket || isPinchPleat) ? '—' : ((document.getElementById('d-overlap') || {}).value || '4');
+  var returnSz  = (document.getElementById('d-return') || {}).value || '4';
+  var overlapSz = isRodPocket ? '—' : ((document.getElementById('d-overlap') || {}).value || '3');
+  var sideHem   = (document.getElementById('d-side-hem') || {}).value || '2';
+  var bottomHem = (document.getElementById('d-bottom-hem') || {}).value || '4';
+  var rippleJoin = isRippleDim ? (getOpt('grp-ripple-join') || '—') : '';
   var dYardsPerWidth = Math.ceil((h + 16) / 36 * 4) / 4;
   var dTotalYards    = Math.ceil(dYardsPerWidth * numWidths * 4) / 4;
   var cornYds = 0;
@@ -867,18 +871,21 @@ function calcDrapePrice() {
   var drapeLines = [
     { label: 'Product',   value: (drapeState.pleat || 'Custom Drapery') },
     { label: 'Size',      value: w + '″ W × ' + h + '″ finished length' },
+    { label: 'Quantity',  value: qty + ' set(s)' },
     { label: 'Panels',    value: (panels || '—') + (panelSide !== '—' ? ' — ' + panelSide : '') },
-    { label: 'Widths',    value: numWidths + ' widths × $' + effectiveRate + (lenSurcharge ? ' (incl. length surcharge)' : '') },
+    { label: 'Widths',    value: numWidths + ' widths × $' + effectiveRate + (lenSurcharge ? ' (incl. length surcharge)' : '') + (qty > 1 ? ' × ' + qty + ' sets' : '') },
     { label: 'Lining',    value: (lining || 'No liner') + (isInterlining ? ' + Interlining' : '') },
     { label: 'Fabric',    value: (drapeState.fabric || '—') }
   ];
-  if (returnSz && !isRodPocket) drapeLines.push({ label: 'Return / Overlap', value: returnSz + '" / ' + overlapSz + '"' });
+  if (!isRodPocket && !isRippleDim) drapeLines.push({ label: 'Return / Overlap', value: returnSz + '" / ' + overlapSz + '"' });
+  if (rippleJoin) drapeLines.push({ label: 'Join', value: rippleJoin });
+  if (!isRodPocket && !isRippleDim) drapeLines.push({ label: 'Hems', value: 'Side ' + sideHem + '" / Bottom ' + bottomHem + '"' });
   if (corniceTotal) drapeLines.push({ label: 'Cornice', value: '$' + corniceTotal.toFixed(0) });
   if (valanceTotal) drapeLines.push({ label: 'Valance', value: '$' + valanceTotal.toFixed(0) });
   if (trimTotal)    drapeLines.push({ label: 'Trim', value: '$' + trimTotal.toFixed(0) });
-  if (dShipEst)     drapeLines.push({ label: 'Shipping est.', value: '~$' + dShipEst });
-  drapeLines.push({ label: 'Fabric needed est.', value: '~' + totalFabYds.toFixed(1) + ' yds (pattern repeats add more)' });
-  if (grandTotal === 200) drapeLines.push({ label: 'Note', value: '$200 minimum for custom drapery' });
+  if (dShipEst)     drapeLines.push({ label: 'Shipping est.', value: '~$' + dShipEst + (qty > 1 ? ' × ' + qty + ' sets' : '') });
+  drapeLines.push({ label: 'Fabric needed est.', value: '~' + (totalFabYds * qty).toFixed(1) + ' yds (pattern repeats add more)' });
+  if (perSetTotal === 200) drapeLines.push({ label: 'Note', value: '$200 minimum per drapery set' });
   pbRenderEstimate('drape-price-box', drapeLines, grandTotal, '', function(checkout) {
     pbCollectItem(drapeState.pleat || 'Custom Drapery', drapeLines, grandTotal, false);
     pbOpenCart();
@@ -1195,15 +1202,17 @@ async function submitDrape() {
   var panelSide  = panels === 'Single panel' ? getOpt('grp-drape-side') : '—';
   var isSubmitPinch  = pleat === 'Pinch Pleat' || (pleat && pleat.indexOf('Pinch Pleat') === 0);
   var isSubmitRP     = pleat === 'Rod Pocket / Sheered Pocket';
-  var returnSz   = isSubmitPinch
-    ? ((document.getElementById('pp-return') || {}).value || '4')
-    : ((document.getElementById('d-return') || {}).value || '4');
-  var overlapSz  = isSubmitRP || isSubmitPinch ? '—' : ((document.getElementById('d-overlap') || {}).value || '4');
+  var isRipple   = pleat === 'Ripple Fold';
+  var qty        = parseInt((document.getElementById('drape-qty') || {}).value) || 1;
+  var returnSz   = isRipple ? '—' : ((document.getElementById('d-return') || {}).value || '4');
+  var overlapSz  = (isSubmitRP || isRipple) ? '—' : ((document.getElementById('d-overlap') || {}).value || '3');
+  var sideHem    = (document.getElementById('d-side-hem') || {}).value || '2';
+  var bottomHem  = (document.getElementById('d-bottom-hem') || {}).value || '4';
+  var showHems   = !isRipple && !isSubmitRP;
   // Fullness (standard pleat styles); Grommet/Box/Goblet/Barrel use a fixed 2.5× standard
   var fullness   = isSubmitPinch ? getOpt('grp-pp-fullness')
                  : (_NO_FULLNESS.indexOf(pleat) !== -1 ? '2.5× (standard)' : (getOpt('grp-drape-fullness') || '—'));
   // Ripple fold specific
-  var isRipple   = pleat === 'Ripple Fold';
   var rippleFull = isRipple ? getOpt('grp-ripple-fullness') : '—';
   var rippleHw   = isRipple ? getOpt('grp-ripple-hw') : '—';
   var rippleSnaps= isRipple ? getOpt('grp-ripple-snaps') : '—';
@@ -1222,6 +1231,7 @@ async function submitDrape() {
     + 'Fabric: ' + fabric + '\n'
     + (fabric === 'We supply the fabric' ? 'Color: ' + (getOpt('grp-drape-color')||'—') + '  Liner: ' + lining + '\n' : '')
     + 'Lining: ' + lining + (interlining ? ' + Interlining' : '') + '\n'
+    + 'Quantity: ' + qty + ' set(s)\n'
     + 'Panels: ' + panels + (panelSide !== '—' ? ' — ' + panelSide : '') + '\n'
     + (!isRipple && pleat !== 'Rod Pocket / Sheered Pocket' && fullness !== '—' ? 'Fullness: ' + fullness + '\n' : '')
     + (pleat === 'Rod Pocket / Sheered Pocket' ? (function(){
@@ -1231,9 +1241,10 @@ async function submitDrape() {
         var rpFull = (function(){ var b=document.querySelector('#grp-rp-fullness .opt-btn.sel'); return b?b.textContent.trim():'2.0×'; })();
         return 'Casing: ' + casing + '  Header: ' + header + '  Placement: ' + placement + '  Fullness: ' + rpFull + '\n';
       }()) : '')
-    + 'Return: ' + returnSz + '"  Overlap: ' + overlapSz + '"\n'
+    + (!isRipple ? 'Return: ' + returnSz + '"  Overlap: ' + overlapSz + (overlapSz === '—' ? '' : '"') + '\n' : '')
+    + (showHems ? 'Hems: side ' + sideHem + '"  bottom ' + bottomHem + '"\n' : '')
     + (isRipple ? 'Ripple fullness: ' + rippleFull + '  Hardware: ' + rippleHw + '  Snaps: ' + rippleSnaps + '\n' +
-       'Join type: ' + rippleJoin + '\n' : '')
+       'Butt master / Overlap: ' + rippleJoin + '\n' : '')
     + (function(){
         var trimSel = document.querySelectorAll('.drape-trim-check:checked');
         if (!trimSel.length) return '';
@@ -1250,12 +1261,10 @@ async function submitDrape() {
     + (document.getElementById('drape-price-total') && document.getElementById('drape-price-box').style.display !== 'none' ?
         'Estimate: ' + document.getElementById('drape-price-total').textContent + '\n' : '')
     + 'Hardware: ' + hwNeed + (hwType !== 'N/A' ? ' — ' + hwType : '') + '\n'
-    + '\nExact width: ' + (isSubmitPinch ? ((document.getElementById('pp-w')||{}).value || '—') + '"'
-        : isSubmitRP ? ((document.getElementById('rp-w')||{}).value || '—') + '"'
+    + '\nExact width: ' + (isSubmitRP ? ((document.getElementById('rp-w')||{}).value || '—') + '"'
         : isRipple ? ((document.getElementById('rf-w')||{}).value || '—') + '"'
         : (document.getElementById('d-exact-width').value ? document.getElementById('d-exact-width').value + '"' : '—'))
-    + '\nFinished length: ' + (isSubmitPinch ? ((document.getElementById('pp-l')||{}).value || '—') + '"'
-        : isSubmitRP ? ((document.getElementById('rp-l')||{}).value || '—') + '"'
+    + '\nFinished length: ' + (isSubmitRP ? ((document.getElementById('rp-l')||{}).value || '—') + '"'
         : isRipple ? ((document.getElementById('rf-l')||{}).value || '—') + '"'
         : (document.getElementById('d-exact-length').value ? document.getElementById('d-exact-length').value + '"' : '—')) + '\n'
     + 'Delivery: ' + delivery + '\n'
@@ -1275,19 +1284,20 @@ async function submitDrape() {
     { label: 'Pleat style', value: drapeState.pleat || '—' },
     { label: 'Fabric', value: drapeState.fabric || '—' },
     { label: 'Lining', value: lining + (interlining ? ' + Interlining' : '') },
+    { label: 'Quantity', value: qty + ' set(s)' },
     { label: 'Panels', value: panels + (panelSide !== '—' ? ' — ' + panelSide : '') },
-    { label: 'Width', value: (isSubmitPinch ? ((document.getElementById('pp-w')||{}).value || '—')
-        : isSubmitRP ? ((document.getElementById('rp-w')||{}).value || '—')
+    { label: 'Width', value: (isSubmitRP ? ((document.getElementById('rp-w')||{}).value || '—')
         : isRipple ? ((document.getElementById('rf-w')||{}).value || '—')
         : (document.getElementById('d-exact-width').value || '—')) + '"' },
-    { label: 'Finished length', value: (isSubmitPinch ? ((document.getElementById('pp-l')||{}).value || '—')
-        : isSubmitRP ? ((document.getElementById('rp-l')||{}).value || '—')
+    { label: 'Finished length', value: (isSubmitRP ? ((document.getElementById('rp-l')||{}).value || '—')
         : isRipple ? ((document.getElementById('rf-l')||{}).value || '—')
         : (document.getElementById('d-exact-length').value || '—')) + '"' },
-    { label: 'Return / Overlap', value: returnSz + '" / ' + overlapSz + (overlapSz === '—' ? '' : '"') },
+    { label: 'Return / Overlap', value: returnSz + (returnSz === '—' ? '' : '"') + ' / ' + overlapSz + (overlapSz === '—' ? '' : '"') },
     { label: 'Hardware', value: hwNeed + (hwType !== 'N/A' ? ' — ' + hwType : '') },
     { label: 'Delivery', value: delivery }
   ];
+  if (showHems) drapeSelections.splice(8, 0, { label: 'Hems', value: 'Side ' + sideHem + '" / Bottom ' + bottomHem + '"' });
+  if (isRipple) drapeSelections.splice(8, 0, { label: 'Butt master / Overlap', value: rippleJoin });
   var drapeNotes = document.getElementById('d-notes').value.trim();
   if (pbInstallRequested(document.getElementById('drape-form'))) drapeSelections.push({ label: 'Installation', value: 'Requested' });
   await _stApiSubmit('drape-form', 'drape-success', name, email, phone, 'Custom Drapery', drapeSelections, drapeNotes);
