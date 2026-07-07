@@ -230,6 +230,8 @@ var CELL = {
   color:    '',
   colorCode:'',
   dnCombo:  '',      // Day & Night combination code (e.g. 'DN-SR'); '' when not D&N
+  dnTop:    '',      // Day & Night day layer (top): Sheer / Woven Windsong / Light Filtering
+  dnBottom: '',      // Day & Night night layer (bottom): Light Filtering / Room Darkening / Solus
   qty:      1,
   delivery: 'ship'
 };
@@ -342,22 +344,74 @@ function cellPerShadePrice(tableBase) {
   }
   return { price: perShade, lines: lines };
 }
+// ── Day & Night: pick a Day layer (top) then a Night layer (bottom) ──
+// Only valid pairings are enabled (Norman Portrait catalog p.11 — see CELL_DN_COMBOS).
+var CELL_DN_TOPS    = ['Sheer', 'Woven Windsong', 'Light Filtering'];
+var CELL_DN_BOTTOMS = ['Light Filtering', 'Room Darkening', 'Solus'];
+var CELL_DN_DESC = {
+  'Sheer':           'See-through weave · soft daytime view',
+  'Woven Windsong':  'Textured woven look · filtered light',
+  'Light Filtering': 'Diffused glow · daytime privacy',
+  'Room Darkening':  'Maximum privacy · blocks most light',
+  'Solus':           'Solar screen · cuts glare & UV (night layer only)'
+};
+function _dnValidBottoms(top) {
+  return CELL_DN_COMBOS.filter(function(c){ return c.top === top; }).map(function(c){ return c.bottom; });
+}
+function _dnComboCode(top, bottom) {
+  for (var i = 0; i < CELL_DN_COMBOS.length; i++) {
+    if (CELL_DN_COMBOS[i].top === top && CELL_DN_COMBOS[i].bottom === bottom) return CELL_DN_COMBOS[i].code;
+  }
+  return '';
+}
+function _dnCardHTML(name, group, selected, disabled) {
+  var handler = group === 'top' ? 'selCellDNTop' : 'selCellDNBottom';
+  var style = 'display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:2px;min-width:150px'
+            + (disabled ? ';opacity:.3;pointer-events:none' : '');
+  return '<button class="opt-btn' + (selected ? ' sel' : '') + '" style="' + style + '"'
+    + ' onclick="' + handler + '(\'' + name + '\')">'
+    + '<span style="font-weight:600">' + name + '</span>'
+    + '<span style="font-size:10px;opacity:.7;font-weight:400">' + (CELL_DN_DESC[name] || '') + '</span>'
+    + '</button>';
+}
 function renderCellDNCombos() {
   var wrap = document.getElementById('grp-cell-dn');
   if (!wrap) return;
-  var html = '';
-  CELL_DN_COMBOS.forEach(function(combo) {
-    var isSel = CELL.dnCombo === combo.code;
-    html += '<button class="opt-btn' + (isSel ? ' sel' : '') + '" style="font-size:12px"'
-          + ' onclick="selCellDNCombo(\'' + combo.code + '\')">'
-          + combo.top + ' <span style="opacity:.5">+</span> ' + combo.bottom + '</button>';
-  });
-  wrap.innerHTML = html;
+  var validBottoms = CELL.dnTop ? _dnValidBottoms(CELL.dnTop) : [];
+  var topHTML = CELL_DN_TOPS.map(function(t){ return _dnCardHTML(t, 'top', CELL.dnTop === t, false); }).join('');
+  var botHTML = CELL_DN_BOTTOMS.map(function(b){
+    var ok = validBottoms.indexOf(b) >= 0;
+    return _dnCardHTML(b, 'bottom', CELL.dnBottom === b, !CELL.dnTop || !ok);
+  }).join('');
+  var summary = (CELL.dnTop && CELL.dnBottom && CELL.dnCombo)
+    ? '<div class="step-note" style="margin-top:12px;color:var(--gold);font-weight:600">&#10003; Your Day &amp; Night: ' + CELL.dnTop + ' (day) over ' + CELL.dnBottom + ' (night)</div>'
+    : '<div class="step-note" style="margin-top:12px">Pick a day layer above, then choose a night layer.</div>';
+  wrap.innerHTML =
+    '<div style="font-size:12px;font-weight:600;color:#555;margin-bottom:6px">Step 1 &middot; Day layer <span style="font-weight:400;color:#888">(top &mdash; filtered light &amp; view)</span></div>'
+    + '<div class="opt-row" style="flex-wrap:wrap;margin-bottom:2px">' + topHTML + '</div>'
+    + '<div style="font-size:12px;font-weight:600;color:#555;margin:14px 0 6px">Step 2 &middot; Night layer <span style="font-weight:400;color:#888">(bottom &mdash; privacy &amp; darkness)</span></div>'
+    + '<div class="opt-row" style="flex-wrap:wrap">' + botHTML + '</div>'
+    + summary;
 }
-function selCellDNCombo(code) {
-  CELL.dnCombo = code;
+function _dnSync() {
+  CELL.dnCombo = (CELL.dnTop && CELL.dnBottom) ? _dnComboCode(CELL.dnTop, CELL.dnBottom) : '';
+}
+function selCellDNTop(top) {
+  CELL.dnTop = top;
+  // if the previously-chosen night layer isn't valid with this day layer, clear it
+  if (CELL.dnBottom && _dnValidBottoms(top).indexOf(CELL.dnBottom) < 0) CELL.dnBottom = '';
+  _dnSync();
   renderCellDNCombos();
   renderCellColorGrid();   // refreshes the D&N label in the Color step
+  cellCheckDNSize();
+  cellCalcPrice();
+}
+function selCellDNBottom(bottom) {
+  if (!CELL.dnTop || _dnValidBottoms(CELL.dnTop).indexOf(bottom) < 0) return; // only valid pairings
+  CELL.dnBottom = bottom;
+  _dnSync();
+  renderCellDNCombos();
+  renderCellColorGrid();
   cellCheckDNSize();
   cellCalcPrice();
 }

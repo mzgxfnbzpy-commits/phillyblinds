@@ -201,9 +201,9 @@
 
       <!-- Day & Night fabric combination (shown when Lift = Day & Night) -->
       <div id="cell-dn-wrap" style="display:none">
-        <div class="sub-label">Day &amp; Night fabric combination</div>
-        <div id="grp-cell-dn" class="opt-row" style="flex-wrap:wrap"></div>
-        <div class="step-note">Each combination pairs a &ldquo;day&rdquo; shade (top) with a &ldquo;night&rdquo; shade (bottom). Exact colors for each are selected at your free in-home consultation. Not available in Day &amp; Night: Woven Breeze, Ashton, Flame-Resistant. Top &amp; bottom use the same cell size.</div>
+        <div class="sub-label">Build your Day &amp; Night combination</div>
+        <div id="grp-cell-dn"></div>
+        <div class="step-note" style="margin-top:8px">A Day &amp; Night shade stacks two fabrics in one headrail &mdash; pick a day layer, then a night layer (only valid pairings are shown). Exact colors for each are chosen at your free in-home consultation. Not available in Day &amp; Night: Woven Breeze, Ashton, Flame-Resistant. Top &amp; bottom use the same cell size.</div>
         <div id="cell-dn-warn" class="msg-box msg-info" style="display:none;margin-top:8px"></div>
       </div>
       <div class="sub-label" style="margin-top:16px">Cell Size</div>
@@ -390,7 +390,7 @@ function enterCellDNMode() {
   document.getElementById('cell-fabric-wrap').style.display = 'none';
   document.getElementById('cell-dn-wrap').style.display     = 'block';
   document.getElementById('qr-cell-fabric').textContent     = 'Day & Night';
-  if (!CELL.dnCombo) CELL.dnCombo = 'DN-SR'; // default: Sheer (day) + Room Darkening (night)
+  if (!CELL.dnTop) { CELL.dnTop = 'Sheer'; CELL.dnBottom = 'Room Darkening'; _dnSync(); } // default: Sheer day + Room Darkening night
   renderCellDNCombos();
   filterCellSizes();
   renderCellColorGrid();
