@@ -232,6 +232,8 @@ var CELL = {
   dnCombo:  '',      // Day & Night combination code (e.g. 'DN-SR'); '' when not D&N
   dnTop:    '',      // Day & Night day layer (top): Sheer / Woven Windsong / Light Filtering
   dnBottom: '',      // Day & Night night layer (bottom): Light Filtering / Room Darkening / Solus
+  dnTopColor:'',     dnTopColorCode:'',     // chosen day-layer color
+  dnBottomColor:'',  dnBottomColorCode:'',  // chosen night-layer color
   qty:      1,
   delivery: 'ship'
 };
@@ -374,6 +376,37 @@ function _dnCardHTML(name, group, selected, disabled) {
     + '<span style="font-size:10px;opacity:.7;font-weight:400">' + (CELL_DN_DESC[name] || '') + '</span>'
     + '</button>';
 }
+// Treatment → color collection key (Woven Windsong & Solus have no online palette).
+function _dnCollKey(treatment) {
+  return { 'Sheer':'sheer', 'Light Filtering':'lf', 'Room Darkening':'rd' }[treatment] || null;
+}
+function _dnColorGridHTML(layer, treatment) {
+  var key = _dnCollKey(treatment);
+  if (!key) return '<div class="step-note" style="margin-top:4px">' + treatment + ' color options are confirmed at your free in-home consultation.</div>';
+  var colls   = CELL_COLLECTIONS[key] || [];
+  var selName = layer === 'top' ? CELL.dnTopColor : CELL.dnBottomColor;
+  var handler = layer === 'top' ? 'selCellDNTopColor' : 'selCellDNBottomColor';
+  var html = '';
+  colls.forEach(function(coll) {
+    if (coll.name) html += '<div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#888;margin:8px 0 4px">' + coll.name + '</div>';
+    html += '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:4px">';
+    coll.colors.forEach(function(color) {
+      if (typeof color !== 'object') return;
+      var isSel = selName === color.n;
+      html += '<button class="opt-btn' + (isSel ? ' sel' : '') + '" style="font-size:11px;display:inline-flex;align-items:center;gap:0"'
+        + ' onclick="' + handler + '(\'' + color.n.replace(/'/g, "\\'") + '\',\'' + (color.c || '') + '\')">'
+        + colorDot(color.n) + color.n + (color.c ? ' <span style="font-size:9px;color:#aaa;margin-left:2px">' + color.c + '</span>' : '') + '</button>';
+    });
+    html += '</div>';
+  });
+  return html;
+}
+function _dnColorPanel(layer, treatment) {
+  var lbl = layer === 'top' ? (treatment + ' color (day)') : (treatment + ' color (night)');
+  return '<div style="margin:6px 0 2px;padding:10px 12px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">'
+    + '<div style="font-size:11px;font-weight:600;color:#555;margin-bottom:2px">' + lbl + '</div>'
+    + _dnColorGridHTML(layer, treatment) + '</div>';
+}
 function renderCellDNCombos() {
   var wrap = document.getElementById('grp-cell-dn');
   if (!wrap) return;
@@ -383,23 +416,28 @@ function renderCellDNCombos() {
     var ok = validBottoms.indexOf(b) >= 0;
     return _dnCardHTML(b, 'bottom', CELL.dnBottom === b, !CELL.dnTop || !ok);
   }).join('');
+  var topColors = CELL.dnTop ? _dnColorPanel('top', CELL.dnTop) : '';
+  var botColors = (CELL.dnTop && CELL.dnBottom) ? _dnColorPanel('bottom', CELL.dnBottom) : '';
   var summary = (CELL.dnTop && CELL.dnBottom && CELL.dnCombo)
-    ? '<div class="step-note" style="margin-top:12px;color:var(--gold);font-weight:600">&#10003; Your Day &amp; Night: ' + CELL.dnTop + ' (day) over ' + CELL.dnBottom + ' (night)</div>'
-    : '<div class="step-note" style="margin-top:12px">Pick a day layer above, then choose a night layer.</div>';
+    ? '<div class="step-note" style="margin-top:12px;color:var(--gold);font-weight:600">&#10003; ' + CELL.dnTop + (CELL.dnTopColor ? ' &mdash; ' + CELL.dnTopColor : '') + ' (day) over ' + CELL.dnBottom + (CELL.dnBottomColor ? ' &mdash; ' + CELL.dnBottomColor : '') + ' (night)</div>'
+    : '<div class="step-note" style="margin-top:12px">Pick a day layer, then a night layer &mdash; then choose a color for each.</div>';
   wrap.innerHTML =
     '<div style="font-size:12px;font-weight:600;color:#555;margin-bottom:6px">Step 1 &middot; Day layer <span style="font-weight:400;color:#888">(top &mdash; filtered light &amp; view)</span></div>'
     + '<div class="opt-row" style="flex-wrap:wrap;margin-bottom:2px">' + topHTML + '</div>'
+    + topColors
     + '<div style="font-size:12px;font-weight:600;color:#555;margin:14px 0 6px">Step 2 &middot; Night layer <span style="font-weight:400;color:#888">(bottom &mdash; privacy &amp; darkness)</span></div>'
     + '<div class="opt-row" style="flex-wrap:wrap">' + botHTML + '</div>'
+    + botColors
     + summary;
 }
 function _dnSync() {
   CELL.dnCombo = (CELL.dnTop && CELL.dnBottom) ? _dnComboCode(CELL.dnTop, CELL.dnBottom) : '';
 }
 function selCellDNTop(top) {
+  if (CELL.dnTop !== top) CELL.dnTopColor = '';   // new day treatment → reset its color
   CELL.dnTop = top;
   // if the previously-chosen night layer isn't valid with this day layer, clear it
-  if (CELL.dnBottom && _dnValidBottoms(top).indexOf(CELL.dnBottom) < 0) CELL.dnBottom = '';
+  if (CELL.dnBottom && _dnValidBottoms(top).indexOf(CELL.dnBottom) < 0) { CELL.dnBottom = ''; CELL.dnBottomColor = ''; }
   _dnSync();
   renderCellDNCombos();
   renderCellColorGrid();   // refreshes the D&N label in the Color step
@@ -408,12 +446,21 @@ function selCellDNTop(top) {
 }
 function selCellDNBottom(bottom) {
   if (!CELL.dnTop || _dnValidBottoms(CELL.dnTop).indexOf(bottom) < 0) return; // only valid pairings
+  if (CELL.dnBottom !== bottom) CELL.dnBottomColor = '';  // new night treatment → reset its color
   CELL.dnBottom = bottom;
   _dnSync();
   renderCellDNCombos();
   renderCellColorGrid();
   cellCheckDNSize();
   cellCalcPrice();
+}
+function selCellDNTopColor(name, code) {
+  CELL.dnTopColor = name; CELL.dnTopColorCode = code;
+  renderCellDNCombos(); renderCellColorGrid(); cellCalcPrice();
+}
+function selCellDNBottomColor(name, code) {
+  CELL.dnBottomColor = name; CELL.dnBottomColorCode = code;
+  renderCellDNCombos(); renderCellColorGrid(); cellCalcPrice();
 }
 // LF + Room Darkening combos are only offered in 3⁄4″S or 1¼″S single cell.
 function cellCheckDNSize() {
@@ -465,16 +512,21 @@ function filterCellSizes() {
 function renderCellColorGrid() {
   var gridEl  = document.getElementById('cell-color-grid');
   if (!gridEl) return;
-  // Day & Night: two fabrics — exact color of each shade is set at consultation.
+  // Day & Night: two fabrics — layers + their colors are chosen in the Fabric step above.
   if (CELL.fabric === 'dn') {
-    var lbl = cellDNComboLabel();
-    gridEl.innerHTML = '<div class="step-note"><strong>Day &amp; Night'
-      + (lbl ? ': ' + lbl : '') + '.</strong><br>The exact color for each shade '
-      + '(day &amp; night) is selected at your free in-home consultation.</div>';
-    CELL.color     = lbl || 'Day & Night';
+    var day   = CELL.dnTop ? (CELL.dnTop + (CELL.dnTopColor ? ' — ' + CELL.dnTopColor : '')) : '—';
+    var night = CELL.dnBottom ? (CELL.dnBottom + (CELL.dnBottomColor ? ' — ' + CELL.dnBottomColor : '')) : '—';
+    // Any layer that has a palette but no color chosen yet → nudge; else consultation note for Windsong/Solus.
+    var needColor = (_dnCollKey(CELL.dnTop) && !CELL.dnTopColor) || (CELL.dnBottom && _dnCollKey(CELL.dnBottom) && !CELL.dnBottomColor);
+    var note = needColor
+      ? 'Choose a color for each layer in the Fabric &amp; combination step above.'
+      : 'Woven Windsong / Solus colors are finalized at your free in-home consultation.';
+    gridEl.innerHTML = '<div class="step-note"><strong>Day &amp; Night</strong><br>Day layer: ' + day
+      + '<br>Night layer: ' + night + '<br><span style="color:#888">' + note + '</span></div>';
+    CELL.color     = day + ' / ' + night;
     CELL.colorCode = CELL.dnCombo || '';
-    document.getElementById('s6val').textContent = lbl || 'At consultation';
-    document.getElementById('qr-cell-color').textContent = lbl || 'At consultation';
+    document.getElementById('s6val').textContent = (CELL.dnTop && CELL.dnBottom) ? (CELL.dnTop + ' + ' + CELL.dnBottom) : 'Day & Night';
+    document.getElementById('qr-cell-color').textContent = CELL.color;
     markDone('step6');
     return;
   }
@@ -560,30 +612,30 @@ function cellCalcPrice() {
   }
 
   var tableBase = res.price;
-  var lines     = ['Base (' + res.pricedAt + ', ' + res.name + '): $' + tableBase.toLocaleString()
-                   + (CELL.fabric === 'dn' ? ' per shade' : '')];
 
-  // Per-unit price (handles Day & Night = two shades, fabric/op/config surcharges)
+  // Per-unit price (handles Day & Night = two shades, fabric/op/config surcharges — details hidden)
   var ps       = cellPerShadePrice(tableBase);
   var perShade = ps.price;
-  lines = lines.concat(ps.lines);
-
-  // Motor
   var motorTotal = cellMotorOn ? cellMotorCost * CELL.qty : 0;
-  if (motorTotal) lines.push('Motorization ($' + cellMotorCost + ' × ' + CELL.qty + '): +$' + motorTotal);
 
-  // Apply 35% Norman discount to product cost
+  // Apply 35% Norman discount to product cost (not to freight)
   var productSub  = perShade * CELL.qty + motorTotal;
   var discountAmt = Math.round(productSub * 0.35);
   var yourPrice   = productSub - discountAmt;
-  lines.push('<span style="color:var(--gold)">Retail: $' + productSub.toLocaleString()
-    + ' → 35% off: −$' + discountAmt.toLocaleString()
-    + ' → Your price: $' + yourPrice.toLocaleString() + '</span>');
-
-  // Freight
   var freight    = w >= 90 ? (80 + Math.max(0, CELL.qty - 1) * 50) : (25 + Math.max(0, CELL.qty - 1) * 11);
   var grandTotal = yourPrice + freight;
-  lines.push('Freight (' + (w >= 90 ? '90″+ oversize' : 'standard') + '): +$' + freight);
+
+  // ── Customer-facing breakdown: only add-on surcharges, then retail → discount → price ──
+  // (base table price, +20% fabric, cord-loop, D&N two-shade math are intentionally hidden)
+  var lines = [];
+  if (CELL.lift === 'tdbu')    lines.push('Top Down / Bottom Up: +$89');
+  else if (CELL.lift === 'dn') lines.push('Day &amp; Night: +$89');
+  if (motorTotal) lines.push('Motorization ($' + cellMotorCost + ' × ' + CELL.qty + '): +$' + motorTotal.toLocaleString());
+  if (lines.length) lines.push('<hr style="border:none;border-top:1px solid rgba(255,255,255,.15);margin:7px 0">');
+  lines.push('Retail: $' + productSub.toLocaleString());
+  lines.push('<span style="color:var(--gold)">35% Norman discount: −$' + discountAmt.toLocaleString() + '</span>');
+  lines.push('<span style="color:var(--gold);font-weight:600">Your price: $' + yourPrice.toLocaleString() + '</span>');
+  lines.push('Freight (not discounted): +$' + freight.toLocaleString());
 
   // Update panel
   document.getElementById('cell-price-per').textContent   = '$' + Math.round(yourPrice / CELL.qty).toLocaleString() + '/shade';
