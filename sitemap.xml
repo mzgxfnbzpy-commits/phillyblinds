@@ -3,12 +3,32 @@
   <!-- Homepage -->
   <url><loc>https://www.phillyblinds.com/</loc><lastmod>2026-05-27</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <!-- Local / city landing pages (added 2026-07-05) -->
+  <url><loc>https://www.phillyblinds.com/pages/service-areas.html</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.phillyblinds.com/pages/custom-blinds-philadelphia-pa.html</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://www.phillyblinds.com/pages/custom-blinds-cherry-hill-nj.html</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.phillyblinds.com/pages/custom-blinds-bryn-mawr-pa.html</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.phillyblinds.com/pages/custom-blinds-doylestown-pa.html</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.phillyblinds.com/pages/custom-blinds-media-pa.html</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.phillyblinds.com/pages/custom-blinds-huntingdon-valley-pa.html</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-voorhees-nj.html</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-moorestown-nj.html</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-marlton-nj.html</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-haddonfield-nj.html</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-mount-laurel-nj.html</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-wayne-pa.html</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-ardmore-pa.html</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-chestnut-hill-pa.html</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-newtown-pa.html</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-blue-bell-pa.html</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-lansdale-pa.html</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-abington-pa.html</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-salt-lake-city-ut.html</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/custom-blinds-park-city-ut.html</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <!-- Buying guides / articles (added 2026-07-06) -->
+  <url><loc>https://www.phillyblinds.com/pages/guides.html</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/guide-plantation-shutters-cost.html</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/guide-motorized-vs-manual-shades.html</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.phillyblinds.com/pages/guide-blackout-shades-nursery.html</loc><lastmod>2026-07-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <!-- Main category pages -->
   <url><loc>https://www.phillyblinds.com/pages/shades.html</loc><lastmod>2026-05-27</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://www.phillyblinds.com/pages/soft-treatments.html</loc><lastmod>2026-05-01</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>

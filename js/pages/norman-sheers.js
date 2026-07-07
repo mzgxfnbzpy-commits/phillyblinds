@@ -189,6 +189,8 @@ function buildStack(){
     {val:'center',label:'Center Stack',    desc:'Vanes stack toward center (added Jan 2026)'},
     {val:'copen', label:'Center Opening',  desc:'Motorized only — two panels part from center outward'}
   ];
+  // Drop a now-invalid stack (e.g. Center Opening after switching Motorized → Wand Tilt).
+  if(S.stack && !opts.some(function(o){return o.val===S.stack;})) S.stack='';
   var stackBtns=opts.map(function(o){
     return '<button class="opt-btn'+(S.stack===o.val?' sel':'')+'" id="stk-'+o.val+'" onclick="pickStack(\''+o.val+'\')">'+o.label+'</button>';
   }).join('');
@@ -430,8 +432,8 @@ function calcPrice(){
   var isMotor=S.op==='motor';
   document.getElementById('pr-motor-row').style.display=isMotor?'flex':'none';
   if(isMotor) per+=642;
-  // 15% Norman discount on product subtotal
-  var NORMAN_DISC_SD=0.15;
+  // 35% Norman discount on product subtotal (not applied to shipping)
+  var NORMAN_DISC_SD=0.35;
   var sdRetailSub=Math.round(per*S.qty);
   var sdDiscountAmt=Math.round(sdRetailSub*NORMAN_DISC_SD);
   var sdYourPrice=sdRetailSub-sdDiscountAmt;

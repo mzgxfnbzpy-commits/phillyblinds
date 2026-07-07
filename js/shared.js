@@ -33,6 +33,17 @@ window.pbCtx = (function() {
 var _PB_GBP_URL    = 'https://maps.app.goo.gl/TRZfYtEAUqKpHvQL7';
 var _PB_REVIEW_URL = 'https://maps.app.goo.gl/TRZfYtEAUqKpHvQL7/review';
 
+// ─── RETARGETING / ADS PIXELS ────────────────────────────────
+// Fill these in to advertise to people who visited the site but didn't call.
+//   Meta (Facebook/Instagram): Events Manager → Data Sources → your Pixel → copy the ID (a number).
+//   Google Ads remarketing:    Google Ads → Tools → Audience manager → Your data sources
+//                              → Google Ads tag → copy the "AW-XXXXXXXXX" ID.
+// Leave as '' to keep them off — nothing loads until an ID is set.
+// Once set, the site auto-fires: PageView on every page, plus Lead/Contact on
+// phone taps, consult clicks, and quote submissions (see pbTrackEvent).
+var _PB_META_PIXEL_ID = '';   // e.g. '1234567890123456'
+var _PB_GOOGLE_ADS_ID = '';   // e.g. 'AW-123456789'
+
 
 function _injectHead(isHome) {
   const prefix = isHome ? '' : '../';
@@ -48,6 +59,29 @@ function _injectHead(isHome) {
     gi.setAttribute('data-ga', '1');
     gi.textContent = 'window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-CBQP5S8CN6");';
     document.head.appendChild(gi);
+  }
+
+  // Meta (Facebook/Instagram) Pixel — retargeting. Loads only if an ID is set.
+  if (_PB_META_PIXEL_ID && !document.querySelector('script[data-meta-pixel]')) {
+    const mp = document.createElement('script');
+    mp.setAttribute('data-meta-pixel', '1');
+    mp.textContent = "!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','" + _PB_META_PIXEL_ID + "');fbq('track','PageView');";
+    document.head.appendChild(mp);
+  }
+
+  // Google Ads remarketing tag — loads only if an ID is set. Reuses gtag.js.
+  if (_PB_GOOGLE_ADS_ID && !document.querySelector('script[data-google-ads]')) {
+    if (!document.querySelector('script[data-ga]') && !document.querySelector('script[data-gads-loader]')) {
+      const gl = document.createElement('script');
+      gl.async = true;
+      gl.src = 'https://www.googletagmanager.com/gtag/js?id=' + _PB_GOOGLE_ADS_ID;
+      gl.setAttribute('data-gads-loader', '1');
+      document.head.appendChild(gl);
+    }
+    const ga2 = document.createElement('script');
+    ga2.setAttribute('data-google-ads', '1');
+    ga2.textContent = "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('config','" + _PB_GOOGLE_ADS_ID + "');";
+    document.head.appendChild(ga2);
   }
 
   // Canonical — derived from og:url, normalized to www.phillyblinds.com
@@ -361,6 +395,7 @@ function renderFooter(isHome) {
         <a href="${pre}measure-shutters.html">How to measure: shutters</a>
         <a href="${pre}measure-drapes.html">How to measure: drapery</a>
         <a href="${pre}gallery.html">Our work</a>
+        <a href="${pre}guides.html">Buying guides</a>
         <a href="${pre}about.html">About us</a>
         <a href="${pre}privacy.html">Privacy policy</a>
       </div>
@@ -370,8 +405,8 @@ function renderFooter(isHome) {
         <a href="${pre}custom-blinds-cherry-hill-nj.html">Cherry Hill, NJ</a>
         <a href="${pre}custom-blinds-bryn-mawr-pa.html">Bryn Mawr / Main Line</a>
         <a href="${pre}custom-blinds-doylestown-pa.html">Doylestown, PA</a>
-        <a href="${pre}custom-blinds-media-pa.html">Media, PA</a>
-        <a href="${pre}custom-blinds-huntingdon-valley-pa.html">Huntingdon Valley, PA</a>
+        <a href="${pre}custom-blinds-salt-lake-city-ut.html">Salt Lake City, UT</a>
+        <a href="${pre}service-areas.html" style="color:var(--gold)">All service areas &rsaquo;</a>
       </div>
     </div>
     <div class="footer-disc">Blindznation is an independent business providing professional installation and consulting services. Product names, logos, and trademarks are the property of their respective owners and are used for identification purposes only. Blindznation is not affiliated with, endorsed by, or sponsored by any manufacturer. &nbsp;·&nbsp; <a href="${pre}privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></div>
@@ -1649,13 +1684,7 @@ function normanMotorSection(containerId, productName, onChange) {
       // Smart home
       '<div>' +
         '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Smart home integration</div>' +
-        '<div class="opt-row" id="nm-grp-smart" style="flex-wrap:wrap">' +
-          '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-smart\')" style="color:#333">None</button>' +
-          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-smart\')" style="color:#333">Amazon Alexa</button>' +
-          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-smart\')" style="color:#333">Google Home</button>' +
-          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-smart\')" style="color:#333">Apple HomeKit</button>' +
-        '</div>' +
-        '<div style="font-size:10px;color:var(--text-faint);margin-top:5px">Hub required for app and voice control. ShadeAuto Hub + Repeater available as add-on. Max 5 repeaters per system.</div>' +
+        '<div style="font-size:11px;color:var(--text-dark);line-height:1.7">Works with <strong>Amazon Alexa, Google Home &amp; Apple HomeKit</strong> — no need to choose; the system integrates with all of them. A hub enables app &amp; voice control (ShadeAuto Hub + Repeater available as an add-on; max 5 repeaters per system).</div>' +
       '</div>' +
     '</div>';
 
@@ -1708,12 +1737,11 @@ function nmGetMotorSummary() {
   var remote  = (document.querySelector('#nm-grp-remote .opt-btn.sel') || {}).textContent || '—';
   var remotes = (document.querySelector('#nm-grp-remotes .opt-btn.sel') || {}).textContent || '';
   var channel = (document.querySelector('#nm-grp-channel .opt-btn.sel') || {}).textContent || '';
-  var smart   = (document.querySelector('#nm-grp-smart .opt-btn.sel') || {}).textContent || 'None';
   return 'Norman Smart — Power: ' + power.replace(/[^\w\s]/g,'').trim() +
     (wire ? ' — ' + wire : '') +
     ' | Remote: ' + remote.replace(/[^\w\s\-]/g,'').trim() +
     (remotes ? ' × ' + remotes + ' (' + channel + ')' : '') +
-    ' | Smart home: ' + smart;
+    ' | Integrates with Alexa, Google Home & Apple HomeKit';
 }
 
 // ---- INSTALLATION ADD-ON — auto-injects into every quote form ----
@@ -2412,6 +2440,13 @@ function pbTrackEvent(name, params) {
     if (typeof gtag === 'function') gtag('event', name, params || {});
     else if (window.dataLayer) window.dataLayer.push(Object.assign({ event: name }, params || {}));
   } catch (e) { /* analytics must never break the page */ }
+  // Also feed the Meta Pixel (if loaded) so ad audiences can optimize toward leads
+  try {
+    if (typeof fbq === 'function') {
+      if (name === 'phone_call_click' || name === 'generate_lead') fbq('track', 'Lead');
+      else if (name === 'consult_cta_click') fbq('track', 'Contact');
+    }
+  } catch (e) {}
 }
 
 document.addEventListener('click', function (e) {

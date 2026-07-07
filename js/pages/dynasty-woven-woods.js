@@ -447,7 +447,8 @@ function pickLinerColor(color,codeBase,el){
 }
 
 function pickEB(el,type){
-  document.querySelectorAll('#step6 .opt-btn').forEach(c=>c.classList.remove('sel'));
+  // EB pills are the first 3 buttons in #step6; valance buttons (index 3+) keep their highlight.
+  document.querySelectorAll('#step6 .opt-btn').forEach((c,i)=>{ if(i<3) c.classList.remove('sel'); });
   el.classList.add('sel');
   S.eb=type;
   updateEBVal();

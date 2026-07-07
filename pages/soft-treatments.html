@@ -445,6 +445,51 @@
       <strong>Fullness: 2.5× standard</strong> — this pleat style is fabricated at 2.5× fullness for the best structure and appearance. No selection needed.
     </div>
 
+    <!-- 5d. BOX PLEAT size (shown only for Box Pleat) -->
+    <div id="box-pleat-opts" style="display:none;margin-top:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:12px">
+      <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Box pleat size</div>
+      <div class="form-group" style="max-width:240px">
+        <label>Pleat width (inches) <span style="font-weight:400;color:#999">default 3" — editable</span></label>
+        <input type="number" id="d-box-pleat-size" value="3" min="1" max="8" step="0.25" oninput="calcDrapePrice()" style="font-size:14px">
+      </div>
+      <div style="font-size:11px;color:#888;margin-top:6px;line-height:1.5">The flat face of each box pleat. 3" is standard — larger makes wider, more spaced pleats.</div>
+    </div>
+
+    <!-- 5e. GROMMET details (shown only for Grommet / Eyelet) -->
+    <div id="grommet-opts" style="display:none;margin-top:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:12px">
+      <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">Grommet details</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Grommet size — inner Ø <span style="font-weight:400;color:#999">default 1¾"</span></label>
+          <select id="d-grommet-size" onchange="calcDrapePrice()" style="font-size:14px">
+            <option value="1.5625">1 9/16"</option>
+            <option value="1.75" selected>1 3/4" (standard)</option>
+            <option value="2">2"</option>
+            <option value="other">Other — specify in notes</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Grommet color / finish</label>
+          <select id="d-grommet-color" onchange="calcDrapePrice()" style="font-size:14px">
+            <option>Brushed Nickel</option>
+            <option>Satin Nickel</option>
+            <option>Antique Brass</option>
+            <option>Antique Bronze</option>
+            <option>Black</option>
+            <option>Chrome / Polished Silver</option>
+            <option>Gold / Brass</option>
+            <option>White</option>
+            <option>Other — specify in notes</option>
+          </select>
+        </div>
+      </div>
+      <div style="font-size:12px;font-weight:600;color:#333;margin:12px 0 6px">Grommets — who supplies them?</div>
+      <div class="opt-row" id="grp-grommet-supply">
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-grommet-supply')">We supply grommets</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-grommet-supply')">Customer supplies grommets</button>
+      </div>
+    </div>
+
     <!-- 6. RIPPLE FOLD — Butt master / Overlap + hardware (shown only for Ripple Fold) -->
     <div id="ds-ripple-extra" style="display:none">
       <div style="margin-top:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
@@ -497,6 +542,18 @@
       <div class="step-title" style="margin-bottom:0">Fabric</div>
     </div>
     <div class="step-sub">We work with your fabric or help you choose from our selections.</div>
+
+    <!-- Lining light control — chosen BEFORE fabric (blackout available in any color) -->
+    <div style="margin-bottom:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
+      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Lining</div>
+      <div class="opt-row" id="grp-drape-lining-type">
+        <button class="opt-btn sel" onclick="setDrapeLiningType('unlined',this)">Unlined</button>
+        <button class="opt-btn" onclick="setDrapeLiningType('lf',this)">Light Filtering</button>
+        <button class="opt-btn" onclick="setDrapeLiningType('blackout',this)">Blackout</button>
+      </div>
+      <div style="font-size:11px;color:#aaa;margin-top:7px;line-height:1.5">Light Filtering softens light &amp; adds privacy. Blackout blocks light for bedrooms &amp; media rooms — available with any fabric color. Choose your lining color below once you pick a fabric.</div>
+    </div>
+
     <div class="fabric-cards" id="drape-fabric-cards">
       <div class="fabric-card" onclick="selectFabric('drape',this,'We supply the fabric')">
         <h3>We supply the fabric</h3>
@@ -540,10 +597,9 @@
 
     <!-- LINING — shown when any fabric path is selected -->
     <div id="drape-lining-section" style="display:none;margin-top:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
-      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Lining</div>
+      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Lining color</div>
       <div class="opt-row" id="grp-drape-liner">
-        <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-liner');drapeLinerToggle();calcDrapePrice()">No liner</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');drapeLinerToggle();calcDrapePrice()">White liner</button>
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-drape-liner');drapeLinerToggle();calcDrapePrice()">White liner</button>
         <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');drapeLinerToggle();calcDrapePrice()">Cream liner</button>
         <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');drapeLinerToggle();calcDrapePrice()">Specific — see notes</button>
         <button class="opt-btn" onclick="selOpt(this,'grp-drape-liner');drapeLinerToggle();calcDrapePrice()" style="font-size:11px">I supply lining</button>
@@ -731,82 +787,10 @@
 </div>
 <div class="step-wrap">
 
-  <!-- STEP 1: WINDOW MEASUREMENTS & MOUNT -->
-  <div class="step" id="roman-step-dims">
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-      <div class="step-num">1</div>
-      <div class="step-title" style="margin-bottom:0">Window measurements &amp; mount</div>
-    </div>
-    <div class="step-sub">Enter your window size — we confirm measurements at the home visit.</div>
-    <div class="configurator" style="margin-top:0">
-      <div>
-        <div class="dim-box">
-          <div class="dim-box-label">Enter your window size</div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Width</label>
-              <div style="display:flex;align-items:center;gap:6px">
-                <input type="number" id="rn-w" placeholder="36" min="12" max="120" oninput="calcRoman()" style="width:70px">
-                <select id="rn-w-frac" onchange="calcRoman()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
-                  <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
-                  <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
-                </select>
-                <span style="font-size:12px;color:#666">in</span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Finished length</label>
-              <div style="display:flex;align-items:center;gap:6px">
-                <input type="number" id="rn-h" placeholder="48" max="120" oninput="calcRoman()" style="width:70px">
-                <select id="rn-h-frac" onchange="calcRoman()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
-                  <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
-                  <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
-                </select>
-                <span style="font-size:12px;color:#666">in</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="step-note" style="margin-top:8px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine — we confirm at the home visit.</div>
-
-        <!-- Mount type (moved from the separate Mounting step) -->
-        <div style="font-size:12px;font-weight:600;color:#333;margin:14px 0 6px">Mount type</div>
-        <div class="opt-row" id="grp-roman-mount">
-          <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-mount');document.getElementById('roman-mount-note-inside').style.display='block';document.getElementById('roman-mount-note-outside').style.display='none'">Inside mount</button>
-          <button class="opt-btn" onclick="selOpt(this,'grp-roman-mount');document.getElementById('roman-mount-note-inside').style.display='none';document.getElementById('roman-mount-note-outside').style.display='block'">Outside mount</button>
-        </div>
-        <div id="roman-mount-note-inside" style="margin-top:8px;font-size:11px;color:#555;line-height:1.5;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px;padding:10px 12px">Shade mounts inside the window frame. We deduct ⅜″ from your ordered width for clearance — best for a clean, built-in look.</div>
-        <div id="roman-mount-note-outside" style="margin-top:8px;font-size:11px;color:#555;line-height:1.5;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px;padding:10px 12px;display:none">Shade mounts outside the frame on the wall or ceiling. Add 3–6″ beyond each side of the window for best light blockage and privacy.</div>
-
-        <!-- Quantity -->
-        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px">
-          <span style="font-size:13px;color:#666">Qty:</span>
-          <div class="qty-btns">
-            <button class="qty-btn" onclick="adjRomanQty(-1)">&#8722;</button>
-            <input class="qty-num" id="rn-qty" type="number" value="1" min="1" max="30" oninput="calcRoman()">
-            <button class="qty-btn" onclick="adjRomanQty(1)">&#43;</button>
-          </div>
-          <span style="font-size:13px;color:#666">window(s)</span>
-        </div>
-      </div>
-      <div>
-        <div class="price-box" id="roman-pricebox" style="display:none">
-          <div class="pb-title">Your configuration</div>
-          <div class="pb-row"><span class="pb-key">Style</span><span class="pb-val" id="rn-pb-style">—</span></div>
-          <div class="pb-row"><span class="pb-key">Size</span><span class="pb-val" id="rn-pb-dims">—</span></div>
-          <div class="pb-row"><span class="pb-key">Qty</span><span class="pb-val" id="rn-pb-qty">1</span></div>
-          <div class="pb-row"><span class="pb-key">Operation</span><span class="pb-val" id="rn-pb-motor">Cordless</span></div>
-          <div id="rn-pb-min-note" style="display:none"></div>
-          <div class="pb-note">All pricing confirmed at order — submit your configuration for a custom quote.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- STEP 2: CHOOSE YOUR STYLE -->
+  <!-- STEP 1: CHOOSE YOUR STYLE -->
   <div class="step" id="roman-step-style">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-      <div class="step-num">2</div>
+      <div class="step-num">1</div>
       <div class="step-title" style="margin-bottom:0">Choose your style</div>
     </div>
     <div class="step-sub">Roman shades fold up into clean horizontal pleats. Each style folds differently when raised.</div>
@@ -882,6 +866,78 @@
 
   </div>
 
+  <!-- STEP 2: WINDOW MEASUREMENTS & MOUNT -->
+  <div class="step" id="roman-step-dims">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <div class="step-num">2</div>
+      <div class="step-title" style="margin-bottom:0">Window measurements &amp; mount</div>
+    </div>
+    <div class="step-sub">Enter your window size — we confirm measurements at the home visit.</div>
+    <div class="configurator" style="margin-top:0">
+      <div>
+        <div class="dim-box">
+          <div class="dim-box-label">Enter your window size</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Width</label>
+              <div style="display:flex;align-items:center;gap:6px">
+                <input type="number" id="rn-w" placeholder="36" min="12" max="120" oninput="calcRoman()" style="width:70px">
+                <select id="rn-w-frac" onchange="calcRoman()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
+                  <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
+                  <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
+                </select>
+                <span style="font-size:12px;color:#666">in</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Finished length</label>
+              <div style="display:flex;align-items:center;gap:6px">
+                <input type="number" id="rn-h" placeholder="48" max="120" oninput="calcRoman()" style="width:70px">
+                <select id="rn-h-frac" onchange="calcRoman()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
+                  <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
+                  <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
+                </select>
+                <span style="font-size:12px;color:#666">in</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="step-note" style="margin-top:8px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine — we confirm at the home visit.</div>
+
+        <!-- Mount type (moved from the separate Mounting step) -->
+        <div style="font-size:12px;font-weight:600;color:#333;margin:14px 0 6px">Mount type</div>
+        <div class="opt-row" id="grp-roman-mount">
+          <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-mount');document.getElementById('roman-mount-note-inside').style.display='block';document.getElementById('roman-mount-note-outside').style.display='none'">Inside mount</button>
+          <button class="opt-btn" onclick="selOpt(this,'grp-roman-mount');document.getElementById('roman-mount-note-inside').style.display='none';document.getElementById('roman-mount-note-outside').style.display='block'">Outside mount</button>
+        </div>
+        <div id="roman-mount-note-inside" style="margin-top:8px;font-size:11px;color:#555;line-height:1.5;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px;padding:10px 12px">Shade mounts inside the window frame. We deduct ⅜″ from your ordered width for clearance — best for a clean, built-in look.</div>
+        <div id="roman-mount-note-outside" style="margin-top:8px;font-size:11px;color:#555;line-height:1.5;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px;padding:10px 12px;display:none">Shade mounts outside the frame on the wall or ceiling. Add 3–6″ beyond each side of the window for best light blockage and privacy.</div>
+
+        <!-- Quantity -->
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px">
+          <span style="font-size:13px;color:#666">Qty:</span>
+          <div class="qty-btns">
+            <button class="qty-btn" onclick="adjRomanQty(-1)">&#8722;</button>
+            <input class="qty-num" id="rn-qty" type="number" value="1" min="1" max="30" oninput="calcRoman()">
+            <button class="qty-btn" onclick="adjRomanQty(1)">&#43;</button>
+          </div>
+          <span style="font-size:13px;color:#666">window(s)</span>
+        </div>
+      </div>
+      <div>
+        <div class="price-box" id="roman-pricebox" style="display:none">
+          <div class="pb-title">Your configuration</div>
+          <div class="pb-row"><span class="pb-key">Style</span><span class="pb-val" id="rn-pb-style">—</span></div>
+          <div class="pb-row"><span class="pb-key">Size</span><span class="pb-val" id="rn-pb-dims">—</span></div>
+          <div class="pb-row"><span class="pb-key">Qty</span><span class="pb-val" id="rn-pb-qty">1</span></div>
+          <div class="pb-row"><span class="pb-key">Operation</span><span class="pb-val" id="rn-pb-motor">Cordless</span></div>
+          <div id="rn-pb-min-note" style="display:none"></div>
+          <div class="pb-note">All pricing confirmed at order — submit your configuration for a custom quote.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Dimensions + Mounting merged into Step 1 (Window measurements & mount) above -->
 
   <!-- ROMAN VALANCE (shown when Roman Valance style selected; replaces steps 4–7) -->
@@ -948,6 +1004,18 @@
       <div class="step-num">3</div>
       <div class="step-title" style="margin-bottom:0">Fabric</div>
     </div>
+
+    <!-- Lining light control — chosen BEFORE fabric (blackout available in any color) -->
+    <div style="margin-bottom:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
+      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Lining</div>
+      <div class="opt-row" id="grp-roman-lining-type">
+        <button class="opt-btn sel" onclick="setRomanLiningType('unlined',this)">Unlined</button>
+        <button class="opt-btn" onclick="setRomanLiningType('lf',this)">Light Filtering</button>
+        <button class="opt-btn" onclick="setRomanLiningType('blackout',this)">Blackout</button>
+      </div>
+      <div style="font-size:11px;color:#aaa;margin-top:7px;line-height:1.5">Light Filtering softens light &amp; adds privacy. Blackout blocks light for bedrooms &amp; media rooms — available with any fabric color. Choose your lining color below once you pick a fabric.</div>
+    </div>
+
     <div class="fabric-cards" id="roman-fabric-cards">
       <div class="fabric-card" onclick="selectFabric('roman',this,'We supply the fabric')">
         <h3>We supply the fabric</h3>
@@ -976,32 +1044,28 @@
         <button class="opt-btn" onclick="selOpt(this,'grp-roman-color');calcRoman()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#1A2744;flex-shrink:0"></span>Navy</button>
         <button class="opt-btn" onclick="selOpt(this,'grp-roman-color');calcRoman()" style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:3px;background:#1A1A1A;flex-shrink:0"></span>Black</button>
       </div>
-      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin:12px 0 8px">Lining (if we supply)</div>
+    </div>
+
+    <!-- Lining color — shown when a lined type (Light Filtering / Blackout) is selected -->
+    <div id="roman-lining-section" style="display:none;margin-top:14px;padding:14px 16px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:10px">
+      <div style="font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Lining color</div>
       <div class="opt-row" id="grp-roman-liner">
-        <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-liner');calcRoman()">No liner</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-roman-liner');calcRoman()">White liner</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-roman-liner');calcRoman()">Cream liner</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-roman-liner');calcRoman()">Specific — see notes</button>
+        <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-liner');romanLinerToggle();calcRoman()">White liner</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-liner');romanLinerToggle();calcRoman()">Cream liner</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-liner');romanLinerToggle();calcRoman()">Specific — see notes</button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-roman-liner');romanLinerToggle();calcRoman()" style="font-size:11px">I supply lining</button>
       </div>
-      <div style="font-size:11px;color:#aaa;margin-top:7px;line-height:1.5">White or Cream lining: $10/yd. Same yardage as face fabric. Confirmed at order.</div>
+      <div id="roman-liner-supply-note" style="display:none;margin-top:7px;font-size:11px;color:#555;background:#fff;border:1px solid #e8e4dc;border-radius:7px;padding:7px 10px;line-height:1.5">We supply this lining — <strong>$10/yd</strong>. Same yardage as your face fabric. Amount confirmed at order.</div>
+      <div id="roman-liner-customer-note" style="display:none;margin-top:7px;font-size:11px;color:#555;background:#f0f7f4;border:1px solid #c8e6d8;border-radius:7px;padding:7px 10px;line-height:1.5">You're supplying your own lining — please describe the material in the <strong>notes</strong> field below.</div>
     </div>
   </div>
 
-  <!-- STEP 4: LINING -->
+  <!-- STEP 4: LIFT RINGS -->
   <div class="step" id="step-roman-4">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
       <div class="step-num">4</div>
-      <div class="step-title" style="margin-bottom:0">Lining</div>
+      <div class="step-title" style="margin-bottom:0">Lift rings</div>
     </div>
-    <div class="opt-row" id="grp-roman-lining" style="margin-top:12px">
-      <button class="opt-btn sel" onclick="selOpt(this,'grp-roman-lining');romanLinerToggle();calcRoman()">Unlined</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining');romanLinerToggle();calcRoman()">White liner</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining');romanLinerToggle();calcRoman()">Cream liner</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining');romanLinerToggle();calcRoman()">Specific — see notes</button>
-      <button class="opt-btn" onclick="selOpt(this,'grp-roman-lining');romanLinerToggle();calcRoman()" style="font-size:11px">I supply lining</button>
-    </div>
-    <div id="roman-liner-supply-note" style="display:none;margin-top:7px;font-size:11px;color:#555;background:#fff;border:1px solid #e8e4dc;border-radius:7px;padding:7px 10px;line-height:1.5">We supply this lining — <strong>$10/yd</strong>. Same yardage as your face fabric. Amount confirmed at order.</div>
-    <div id="roman-liner-customer-note" style="display:none;margin-top:7px;font-size:11px;color:#555;background:#f0f7f4;border:1px solid #c8e6d8;border-radius:7px;padding:7px 10px;line-height:1.5">You're supplying your own lining — please describe the material in the <strong>notes</strong> field below.</div>
 
     <!-- Ring supply section -->
     <div style="margin-top:16px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:9px">
@@ -1325,6 +1389,17 @@
       <!-- Valance: trim only (always open the trim edge picker) -->
       <div id="cv-valance-finish" style="display:none">
         <div style="font-size:12px;color:#555;margin-bottom:8px">Applied trim options:</div>
+      </div>
+      <!-- Self / Double welt placement (shown when Self welt or Double self welt selected) -->
+      <div id="corn-welt-opts" style="margin-top:10px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
+        <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:7px">Where should the welt go?</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff"><input type="checkbox" class="corn-welt-edge" data-loc="top" onchange="calcCornice()"> Top</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff"><input type="checkbox" class="corn-welt-edge" data-loc="bottom" checked onchange="calcCornice()"> Bottom</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff"><input type="checkbox" class="corn-welt-edge" data-loc="sides" onchange="calcCornice()"> Both sides</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:#444;cursor:pointer;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;background:#fff"><input type="checkbox" class="corn-welt-edge" data-loc="returns" onchange="calcCornice()"> Returns</label>
+        </div>
+        <div style="font-size:10px;color:#999;margin-top:6px">Welt is made from your shade fabric — no separate trim to supply.</div>
       </div>
       <div id="corn-trim-opts" style="display:none;margin-top:10px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
         <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:7px">Which edges?</div>

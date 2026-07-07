@@ -59,7 +59,7 @@ function _rnCaptureState(styleName) {
   ['rn-w-frac','rn-h-frac'].forEach(function(id) {
     var el = document.getElementById(id); if (el) s[id] = el.value;
   });
-  ['grp-roman-mount','grp-roman-tdbu','grp-roman-color','grp-roman-liner','grp-roman-lining',
+  ['grp-roman-mount','grp-roman-tdbu','grp-roman-color','grp-roman-liner','grp-roman-lining-type',
    'grp-roman-rings','grp-roman-op','grp-roman-clen','grp-roman-motor-brand',
    'grp-roman-motor-power','grp-roman-motor-hardwire','grp-roman-control',
    'grp-roman-trim-supply','grp-roman-mount-style','grp-roman-back-valance','grp-rn-back-val-h',
@@ -86,7 +86,7 @@ function _rnRestoreState(styleName, fromState) {
   ['rn-w','rn-h','rn-qty','rn-return','roman-clen-in','roman-ring-size','roman-ring-color','val-folds','val-fold-size','rn-w-frac','rn-h-frac'].forEach(function(id) {
     var el = document.getElementById(id); if (el && saved[id] !== undefined) el.value = saved[id];
   });
-  ['grp-roman-mount','grp-roman-tdbu','grp-roman-color','grp-roman-liner','grp-roman-lining',
+  ['grp-roman-mount','grp-roman-tdbu','grp-roman-color','grp-roman-liner','grp-roman-lining-type',
    'grp-roman-rings','grp-roman-op','grp-roman-clen','grp-roman-motor-brand',
    'grp-roman-motor-power','grp-roman-motor-hardwire','grp-roman-control',
    'grp-roman-trim-supply','grp-roman-mount-style','grp-roman-back-valance','grp-rn-back-val-h',
@@ -236,6 +236,14 @@ function selectPleat(el, val) {
   // Fixed fullness note for Box/Goblet/Barrel
   var fixedFullNote = document.getElementById('drape-fixed-fullness-note');
   if (fixedFullNote) fixedFullNote.style.display = noFull && val !== 'Grommet / Eyelet' ? 'block' : 'none';
+
+  // Box pleat size (Box Pleat only)
+  var boxOpts = document.getElementById('box-pleat-opts');
+  if (boxOpts) boxOpts.style.display = (val === 'Box Pleat') ? 'block' : 'none';
+
+  // Grommet details — size / color / who supplies (Grommet / Eyelet only)
+  var gromOpts = document.getElementById('grommet-opts');
+  if (gromOpts) gromOpts.style.display = (val === 'Grommet / Eyelet') ? 'block' : 'none';
 
   // Step 4: hide trim and cornice for rod pocket
   var trimSec = document.getElementById('drape-trim-section');
@@ -434,8 +442,7 @@ function selectFabric(tab, el, val) {
     if (dp) dp.style.display = weSupply ? 'block' : 'none';
     var cn = document.getElementById('drape-cust-fabric-notice');
     if (cn) cn.style.display = custSupply ? 'block' : 'none';
-    var ls = document.getElementById('drape-lining-section');
-    if (ls) ls.style.display = (weSupply || custSupply) ? 'block' : 'none';
+    // (lining color section visibility is driven by the lining-type selector, not the fabric path)
     calcDrapePrice();
   } else {
     romanState.fabric = val;
@@ -451,6 +458,22 @@ function drapeLinerToggle() {
   var custSupply = document.getElementById('drape-liner-customer-note');
   if (weSupply) weSupply.style.display = (lining === 'White liner' || lining === 'Cream liner') ? 'block' : 'none';
   if (custSupply) custSupply.style.display = (lining === 'I supply lining') ? 'block' : 'none';
+}
+// Lining light-control type (chosen before fabric). Shows/hides the lining-color section.
+function setDrapeLiningType(type, el) {
+  drapeState.liningType = type;
+  document.querySelectorAll('#grp-drape-lining-type .opt-btn').forEach(function(b){ b.classList.remove('sel'); });
+  el.classList.add('sel');
+  var sec = document.getElementById('drape-lining-section');
+  if (sec) sec.style.display = (type === 'unlined') ? 'none' : 'block';
+  calcDrapePrice();
+}
+// Full lining description ("Unlined" / "Light Filtering — White liner" / …) for pricing + quote.
+function drapeLiningLabel() {
+  var t = drapeState.liningType || 'unlined';
+  if (t === 'unlined') return 'Unlined';
+  var typeLbl = (t === 'blackout') ? 'Blackout' : 'Light Filtering';
+  return typeLbl + ' — ' + (getOpt('grp-drape-liner') || 'White liner');
 }
 
 // Helper: read shipping estimate from nearest delivery section ZIP input
@@ -489,11 +512,27 @@ function adjRomanQty(d) {
 }
 
 function romanLinerToggle() {
-  var lining = getOpt('grp-roman-lining');
+  var lining = getOpt('grp-roman-liner');
   var weNote = document.getElementById('roman-liner-supply-note');
   var custNote = document.getElementById('roman-liner-customer-note');
   if (weNote) weNote.style.display = (lining === 'White liner' || lining === 'Cream liner') ? 'block' : 'none';
   if (custNote) custNote.style.display = (lining === 'I supply lining') ? 'block' : 'none';
+}
+// Lining light-control type (chosen before fabric). Shows/hides the lining-color section.
+function setRomanLiningType(type, el) {
+  romanState.liningType = type;
+  document.querySelectorAll('#grp-roman-lining-type .opt-btn').forEach(function(b){ b.classList.remove('sel'); });
+  el.classList.add('sel');
+  var sec = document.getElementById('roman-lining-section');
+  if (sec) sec.style.display = (type === 'unlined') ? 'none' : 'block';
+  calcRoman();
+}
+// Full lining description ("Unlined" / "Blackout — Cream liner" / …) for pricing + quote.
+function romanLiningLabel() {
+  var t = romanState.liningType || 'unlined';
+  if (t === 'unlined') return 'Unlined';
+  var typeLbl = (t === 'blackout') ? 'Blackout' : 'Light Filtering';
+  return typeLbl + ' — ' + (getOpt('grp-roman-liner') || 'White liner');
 }
 function romanRingsToggle() {
   var choice = getOpt('grp-roman-rings');
@@ -575,11 +614,11 @@ function calcRoman() {
 
   // Fabric & liner cost if we supply
   var fabricCost = 0; var linerCost = 0;
+  var isRomanLined = (romanState.liningType && romanState.liningType !== 'unlined');
   if (romanState.fabric === 'We supply the fabric') {
     fabricCost = fabricYds * 25;
-    var linerBtn = document.querySelector('#grp-roman-liner .opt-btn.sel');
-    var linerVal = linerBtn ? linerBtn.textContent.trim() : '';
-    if (linerVal === 'White liner' || linerVal === 'Cream liner') {
+    var linerVal = getOpt('grp-roman-liner') || 'White liner';
+    if (isRomanLined && (linerVal === 'White liner' || linerVal === 'Cream liner')) {
       linerCost = liningYdsRn * D_LINING_PER_YD;
     }
   }
@@ -627,7 +666,7 @@ function calcRoman() {
     { label: 'Size',           value: w + '″ W × ' + h + '″ finished length' },
     { label: 'Quantity',       value: qty + ' shade(s)' },
     { label: 'Fabric',         value: (romanState.fabric || '—') },
-    { label: 'Lining',         value: (getOpt('grp-roman-lining') || '—') },
+    { label: 'Lining',         value: romanLiningLabel() },
     { label: 'Operation',      value: (getOpt('grp-roman-op') || '—') },
     { label: 'Mounting',       value: (getOpt('grp-roman-mount-style') || '—') }
   ];
@@ -758,10 +797,12 @@ function calcDrapePrice() {
   // Widths
   var numWidths = Math.max(D_MIN_WIDTHS, Math.ceil((w * fullness) / D_FABRIC_WIDTH));
 
-  // Lining — read from inline liner picker (grp-drape-liner)
-  var lBtn = document.querySelector('#grp-drape-liner .opt-btn.sel');
-  var lining = lBtn ? lBtn.textContent.trim() : 'No liner';
-  var isLined = lining !== 'No liner';
+  // Lining — type chosen before fabric (unlined/lf/blackout); color from inline picker
+  var liningType = drapeState.liningType || 'unlined';
+  var isLined = liningType !== 'unlined';
+  var lColorBtn = document.querySelector('#grp-drape-liner .opt-btn.sel');
+  var lColor = lColorBtn ? lColorBtn.textContent.trim() : 'White liner';
+  var lining = drapeLiningLabel();
   var interCheck = document.getElementById('d-interlining-check');
   var isInterlining = interCheck ? interCheck.checked : false;
   // Goblet and Barrel pleat: +$20/width over base rate
@@ -784,7 +825,7 @@ function calcDrapePrice() {
   }
   // Lining fabric — $10/yd when we supply White or Cream; same yardage as face fabric
   var liningYards = Math.ceil(((h + 16) / 36) * numWidths * 10) / 10;
-  var weSupplyLiner = (lining === 'White liner' || lining === 'Cream liner');
+  var weSupplyLiner = (lColor === 'White liner' || lColor === 'Cream liner');
   var liningCost = (isLined && weSupplyLiner) ? liningYards * D_LINING_PER_YD : 0;
 
   // Cornice
@@ -877,9 +918,17 @@ function calcDrapePrice() {
     { label: 'Quantity',  value: qty + ' set(s)' },
     { label: 'Panels',    value: (panels || '—') + (panelSide !== '—' ? ' — ' + panelSide : '') },
     { label: 'Widths',    value: numWidths + ' widths × $' + effectiveRate + (lenSurcharge ? ' (incl. length surcharge)' : '') + (qty > 1 ? ' × ' + qty + ' sets' : '') },
-    { label: 'Lining',    value: (lining || 'No liner') + (isInterlining ? ' + Interlining' : '') },
+    { label: 'Lining',    value: lining + (isInterlining ? ' + Interlining' : '') },
     { label: 'Fabric',    value: (drapeState.fabric || '—') }
   ];
+  if (drapeState.pleat === 'Box Pleat') {
+    drapeLines.push({ label: 'Box pleat size', value: ((document.getElementById('d-box-pleat-size') || {}).value || '3') + '"' });
+  }
+  if (drapeState.pleat === 'Grommet / Eyelet') {
+    var gSizeSel = document.getElementById('d-grommet-size');
+    var gSizeTxt = gSizeSel ? gSizeSel.options[gSizeSel.selectedIndex].text : '1 3/4" (standard)';
+    drapeLines.push({ label: 'Grommet', value: gSizeTxt + ' · ' + ((document.getElementById('d-grommet-color') || {}).value || '—') + ' · ' + (getOpt('grp-grommet-supply') || 'We supply grommets') });
+  }
   if (!isRodPocket && !isRippleDim) drapeLines.push({ label: 'Return / Overlap', value: returnSz + '" / ' + overlapSz + '"' });
   if (rippleJoin) drapeLines.push({ label: 'Join', value: rippleJoin });
   if (!isRodPocket && !isRippleDim) drapeLines.push({ label: 'Hems', value: 'Side ' + sideHem + '" / Bottom ' + bottomHem + '"' });
@@ -958,12 +1007,12 @@ function cvSetType(type) {
     : 'Fabric soft top treatment. Custom quoted.';
   var cornFin = document.getElementById('cv-cornice-finish');
   var valFin  = document.getElementById('cv-valance-finish');
-  var trimOpts= document.getElementById('corn-trim-opts');
-  if (cornFin) cornFin.style.display = isCorn ? 'block' : 'none';
-  if (valFin)  valFin.style.display  = isCorn ? 'none'  : 'block';
-  // For valance, always show trim edges; for cornice, respect the toggle
-  if (!isCorn && trimOpts) trimOpts.style.display = 'block';
-  if (isCorn  && trimOpts) { trimOpts.style.display = 'none'; }
+  // Both cornice and valance use the same finishing choices: Self welt / Double self welt / Applied trim.
+  if (cornFin) cornFin.style.display = 'block';
+  if (valFin)  valFin.style.display  = 'none';   // legacy valance-only "Applied trim" label — no longer used
+  // Sync the placement pickers (welt vs applied-trim edges) to whichever finishing is selected.
+  var trimSel = document.querySelector('#grp-corn-trim .opt-btn.sel');
+  cornToggleTrim(!!(trimSel && trimSel.textContent.indexOf('Applied trim') !== -1));
   calcCornice();
 }
 // show=true → Applied trim (edge picker + supply). show=false → Self/Double welt (welt-placement picker).
@@ -1114,7 +1163,7 @@ async function submitCornice() {
     { label: 'Return depth', value: (document.getElementById('cv-corn-return').value||'4') + '"' },
     { label: 'Mount',        value: getOpt('grp-cv-corn-mount') || '—' },
     { label: 'Quantity',     value: ((document.getElementById('cv-corn-qty')||{}).value) || '1' },
-    { label: 'Finishing',    value: getOpt('grp-corn-trim') || '—' },
+    { label: 'Finishing',    value: _cvFinishDesc('grp-corn-trim','corn-welt-edge','corn-trim-edge') },
     { label: 'Fabric',       value: getOpt('grp-corn-fabric') || '—' },
     { label: 'Delivery',     value: 'Ship to me (UPS/FedEx)' },
     { label: 'Installation', value: pbInstallRequested(document.getElementById('corn-form')) ? 'Requested' : 'Not requested' }
@@ -1134,7 +1183,7 @@ async function submitValanceCv() {
     { label: 'Return depth', value: (document.getElementById('cv-val-return').value||'4') + '"' },
     { label: 'Mount',        value: getOpt('grp-cv-val-mount') || '—' },
     { label: 'Quantity',     value: ((document.getElementById('cv-val-qty')||{}).value) || '1' },
-    { label: 'Finishing',    value: getOpt('grp-val-trim') || '—' },
+    { label: 'Finishing',    value: _cvFinishDesc('grp-val-trim','val-welt-edge','val-trim-edge') },
     { label: 'Fabric',       value: getOpt('grp-cv-val-fabric') || '—' },
     { label: 'Delivery',     value: 'Ship to me (UPS/FedEx)' }
   ];
@@ -1225,7 +1274,7 @@ async function submitDrape() {
   }
   var pleat      = drapeState.pleat  || getOpt('pleat-cards') || '—';
   var fabric     = drapeState.fabric || '—';
-  var lining     = getOpt('grp-drape-liner') || 'No liner';
+  var lining     = drapeLiningLabel();
   var interCb    = document.getElementById('d-interlining-check');
   var interlining = interCb && interCb.checked;
   var panels     = getOpt('grp-drape-panels');
@@ -1242,6 +1291,15 @@ async function submitDrape() {
   // Fullness (standard pleat styles); Grommet/Box/Goblet/Barrel use a fixed 2.5× standard
   var fullness   = isSubmitPinch ? getOpt('grp-pp-fullness')
                  : (_NO_FULLNESS.indexOf(pleat) !== -1 ? '2.5× (standard)' : (getOpt('grp-drape-fullness') || '—'));
+  // Box pleat size (Box Pleat only)
+  var isSubmitBox = pleat === 'Box Pleat';
+  var boxPleatSz  = (document.getElementById('d-box-pleat-size') || {}).value || '3';
+  // Grommet details (Grommet / Eyelet only)
+  var isSubmitGrommet = pleat === 'Grommet / Eyelet';
+  var gromSizeSel = document.getElementById('d-grommet-size');
+  var gromSize    = gromSizeSel ? (gromSizeSel.options[gromSizeSel.selectedIndex].text) : '1 3/4" (standard)';
+  var gromColor   = (document.getElementById('d-grommet-color') || {}).value || '—';
+  var gromSupply  = getOpt('grp-grommet-supply') || 'We supply grommets';
   // Ripple fold specific
   var rippleFull = isRipple ? getOpt('grp-ripple-fullness') : '—';
   var rippleHw   = isRipple ? getOpt('grp-ripple-hw') : '—';
@@ -1259,11 +1317,13 @@ async function submitDrape() {
     + '\nAddress: ' + (document.getElementById('d-address').value.trim() || '—') + '\n\n'
     + 'Pleat style: ' + (drapeState.pleat || '—') + '\n'
     + 'Fabric: ' + fabric + '\n'
-    + (fabric === 'We supply the fabric' ? 'Color: ' + (getOpt('grp-drape-color')||'—') + '  Liner: ' + lining + '\n' : '')
+    + (fabric === 'We supply the fabric' ? 'Color: ' + (getOpt('grp-drape-color')||'—') + '\n' : '')
     + 'Lining: ' + lining + (interlining ? ' + Interlining' : '') + '\n'
     + 'Quantity: ' + qty + ' set(s)\n'
     + 'Panels: ' + panels + (panelSide !== '—' ? ' — ' + panelSide : '') + '\n'
     + (!isRipple && pleat !== 'Rod Pocket / Sheered Pocket' && fullness !== '—' ? 'Fullness: ' + fullness + '\n' : '')
+    + (isSubmitBox ? 'Box pleat size: ' + boxPleatSz + '"\n' : '')
+    + (isSubmitGrommet ? 'Grommet: ' + gromSize + ' inner Ø — ' + gromColor + ' — ' + gromSupply + '\n' : '')
     + (pleat === 'Rod Pocket / Sheered Pocket' ? (function(){
         var casing = getOpt('grp-rp-casing') || '—';
         var header = getOpt('grp-rp-header') || 'No header';
@@ -1328,6 +1388,8 @@ async function submitDrape() {
   ];
   if (showHems) drapeSelections.splice(8, 0, { label: 'Hems', value: 'Side ' + sideHem + '" / Bottom ' + bottomHem + '"' });
   if (isRipple) drapeSelections.splice(8, 0, { label: 'Butt master / Overlap', value: rippleJoin });
+  if (isSubmitBox) drapeSelections.push({ label: 'Box pleat size', value: boxPleatSz + '"' });
+  if (isSubmitGrommet) drapeSelections.push({ label: 'Grommet', value: gromSize + ' Ø · ' + gromColor + ' · ' + gromSupply });
   var drapeNotes = document.getElementById('d-notes').value.trim();
   if (pbInstallRequested(document.getElementById('drape-form'))) drapeSelections.push({ label: 'Installation', value: 'Requested' });
   await _stApiSubmit('drape-form', 'drape-success', name, email, phone, 'Custom Drapery', drapeSelections, drapeNotes);
@@ -1370,7 +1432,7 @@ async function submitRoman() {
   var motorPower    = (isMotor && motorBrand !== 'Norman') ? (getOpt('grp-roman-motor-power') || '—') : '—';
   var motorHardwire = (motorPower === 'Hardwired') ? (getOpt('grp-roman-motor-hardwire') || '—') : '—';
   var controlSide = isCordless ? '—' : getOpt('grp-roman-control');
-  var lining      = getOpt('grp-roman-lining');
+  var lining      = romanLiningLabel();
   var returnSz    = (document.getElementById('rn-return') || {}).value || '4';
   var mountStyle  = getOpt('grp-roman-mount-style') || 'Waterfall';
   var frontVal    = mountStyle === 'Off Back' ? ((document.getElementById('rn-valance-front') || {}).value || '6') : '—';
@@ -1386,7 +1448,7 @@ async function submitRoman() {
     + 'Mount type: ' + mountType + '\n'
     + 'TDBU: ' + tdbu + '\n'
     + 'Fabric: ' + (romanState.fabric || '—') + '\n'
-    + (romanState.fabric === 'We supply the fabric' ? 'Color: ' + (getOpt('grp-roman-color')||'—') + '  Liner: ' + (getOpt('grp-roman-liner')||'No liner') + '\n' : '')
+    + (romanState.fabric === 'We supply the fabric' ? 'Color: ' + (getOpt('grp-roman-color')||'—') + '\n' : '')
     + 'Lining: ' + lining + '\n'
     + 'Operation: ' + op + '\n'
     + (isMotor
@@ -1416,7 +1478,7 @@ async function submitRoman() {
     { label: 'Mount type',   value: mountType },
     { label: 'TDBU',         value: getOpt('grp-roman-tdbu') || '—' },
     { label: 'Fabric',       value: romanState.fabric || '—' },
-    { label: 'Lining',       value: getOpt('grp-roman-lining') || '—' },
+    { label: 'Lining',       value: romanLiningLabel() },
     { label: 'Operation',    value: op },
     { label: 'Control side', value: controlSide },
     { label: 'Mounting',     value: mountStyle },
