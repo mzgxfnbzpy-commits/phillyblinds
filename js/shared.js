@@ -517,6 +517,45 @@ function pbContactValid(errId) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// TERMS OF AGREEMENT — required acceptance before any "Submit Order for Review".
+// One source of truth for the checkbox markup + validation, reused by the shared
+// contact step (pbContactStepHTML) and the cart checkout modal (pbShowQuoteModal).
+// Adding to cart never requires it — only submitting for review does.
+// ─────────────────────────────────────────────────────────────────────────────
+// Resolve the correct relative path to the terms page from any page depth.
+function pbTermsHref() {
+  var p = location.pathname || '';
+  return /\/pages\//i.test(p) ? 'terms-of-agreement.html' : 'pages/terms-of-agreement.html';
+}
+// Shared checkbox block. id defaults to 'cf-terms'; pass a unique id for other contexts.
+function pbTermsCheckboxHTML(id) {
+  id = id || 'cf-terms';
+  return '<div class="pb-terms-row" style="display:flex;align-items:flex-start;gap:9px;margin:2px 0 12px;padding:11px 13px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:9px">' +
+      '<input type="checkbox" id="' + id + '" class="pb-terms-check" style="margin-top:1px;width:17px;height:17px;flex-shrink:0;cursor:pointer" ' +
+        'onchange="var r=this.closest(\'.pb-terms-row\');if(r){r.style.borderColor=\'#e8e8e4\';r.style.background=\'#fafaf8\';}">' +
+      '<label for="' + id + '" style="font-size:12px;color:#555;line-height:1.55;cursor:pointer">I have read and agree to the ' +
+        '<a href="' + pbTermsHref() + '" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600;text-decoration:underline">Terms of Agreement</a> ' +
+        '<span style="color:#c0392b">*</span>. A copy will be emailed to me when I submit.</label>' +
+    '</div>';
+}
+// Validate the terms checkbox is checked. scope = element to search within (default document).
+// Graceful: if no VISIBLE checkbox is present in scope, returns true (page has no terms gate).
+function pbTermsValid(scope, errId) {
+  var root = scope || document;
+  var boxes = Array.prototype.slice.call(root.querySelectorAll('.pb-terms-check'))
+    .filter(function(b){ return b.offsetParent !== null; }); // visible only
+  if (!boxes.length) return true;
+  var unchecked = boxes.filter(function(b){ return !b.checked; });
+  if (!unchecked.length) return true;
+  var b = unchecked[0];
+  var row = b.closest('.pb-terms-row');
+  if (row) { row.style.borderColor = '#c0392b'; row.style.background = '#fff5f5'; }
+  if (errId) { var el = document.getElementById(errId); if (el) { el.textContent = 'Please check the box to agree to the Terms of Agreement before submitting.'; el.style.display = 'block'; } }
+  try { b.scrollIntoView({ behavior:'smooth', block:'center' }); } catch(e){}
+  return false;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // CANONICAL FINAL STEP — identical "Your details" contact + files step on every
 // product configurator. Mirrors the Norman Soluna Roller Step 7 exactly, so it
 // must always be the LAST step, after all product options are chosen.
@@ -562,6 +601,8 @@ function pbContactStepHTML(opts) {
         '<input type="text" id="pb-hp" name="pb-hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;opacity:0;pointer-events:none">' +
         '<div id="cf-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>' +
         cartBtn +
+        // Required Terms of Agreement acceptance — gates "Submit Order for Review" only (not Add to Cart).
+        pbTermsCheckboxHTML('cf-terms') +
         '<button class="btn-gold" onclick="' + submitFn + '" style="width:100%;padding:13px;margin-top:4px" data-pb-require-contact="cf-contact-err">Submit Order for Review &rarr;</button>' +
       '</div>';
   if (opts.bare) return inner;
@@ -1302,7 +1343,8 @@ function pbShowQuoteModal(lines, productName, estimate, files) {
         '<div class="pb-qm-field"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input id="pbq-address" data-pb-contact="address" type="text" placeholder="Street, City, State" autocomplete="street-address"></div>' +
         '<div class="pb-qm-field"><label>Additional notes <span style="font-weight:400;color:#888">(optional)</span></label><textarea id="pbq-notes" rows="3" placeholder="Anything else — overall timeline, install questions..."></textarea></div>' +
         '<div class="pb-qm-err" id="pbq-err"></div>' +
-        '<button class="pb-qm-submit" id="pbq-submit" onclick="pbSubmitQuote()">Submit Quote Request &#8594;</button>' +
+        pbTermsCheckboxHTML('pbq-terms') +
+        '<button class="pb-qm-submit" id="pbq-submit" onclick="pbSubmitQuote()">Submit Order for Review &#8594;</button>' +
         '<div style="text-align:center;font-size:11px;color:#aaa;margin-top:8px">We\'ll respond by email and phone — no spam, ever.</div>' +
         '<div class="pb-qm-ok" id="pbq-ok">' +
           '<div style="font-size:36px;margin-bottom:8px">&#10003;</div>' +
@@ -1406,6 +1448,8 @@ async function pbSubmitQuote() {
     var _pf = document.getElementById('pbq-phone'); if (_pf) { try { _pf.focus(); } catch(e){} }
     return;
   }
+  // Required Terms of Agreement acceptance before submitting for review.
+  if (!pbTermsValid(document.querySelector('.pb-qm-body') || document, 'pbq-err')) return;
   if (errEl) errEl.style.display = 'none';
   if (submit) { submit.disabled = true; submit.textContent = 'Sending…'; }
 
@@ -1428,6 +1472,8 @@ async function pbSubmitQuote() {
         estimate: _pbQuoteEstimate ? '$' + _pbQuoteEstimate.toFixed(0) + ' (estimate only)' : null,
         notes: notes.trim(),
         attachments: attachments,
+        agreedToTerms: true,
+        agreedToTermsAt: new Date().toISOString(),
         sourceUrl: window.location.href,
         _hp: '',
         _t: Date.now() - _formLoadTime
@@ -2486,6 +2532,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (_hp && _hp.value.trim() !== '') { e.stopImmediatePropagation(); e.preventDefault(); return; }
     var errId = btn.getAttribute('data-pb-require-contact');
     if (!pbContactValid(errId)) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      return;
+    }
+    // Required Terms of Agreement acceptance — block submit-for-review if not checked.
+    var _termsScope = btn.closest('.pb-cart-extras') || btn.closest('.step-block') || document;
+    if (!pbTermsValid(_termsScope, errId)) {
       e.stopImmediatePropagation();
       e.preventDefault();
       return;
