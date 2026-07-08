@@ -167,6 +167,17 @@ function pickOp(op){
   document.getElementById('op-motor').classList.toggle('sel',op==='motor');
   document.getElementById('motor-note').style.display=op==='motor'?'block':'none';
   document.getElementById('acc-charge-row').style.display=op==='motor'?'flex':'none';
+  // Shared Norman Smart motor section (Norman Smart only for SmartDrape — no Rollease/DC/Charging Wand)
+  var motorCfg=document.getElementById('smartdrape-motor-config');
+  if(motorCfg){
+    if(op==='motor'){
+      motorCfg.style.display='block';
+      if(typeof normanMotorSection==='function') normanMotorSection('smartdrape-motor-config','SmartDrape');
+    } else {
+      motorCfg.style.display='none';
+      motorCfg.innerHTML='';
+    }
+  }
   var lbl=op==='wand'?'Wand Tilt':'Motorized (Norman Smart)';
   markDone('step2',lbl); sp('sp-op',lbl);
   // Rebuild stack options
@@ -469,6 +480,9 @@ function addNormanSheersToCart(){
     {label:'Side by Side',value:isSBS?'Yes':'No'},
     {label:'Quantity',value:String(S.qty||1)}
   ];
+  if(S.op==='motor'&&typeof nmGetMotorSummary==='function'){
+    lines.push({label:'Motor options',value:nmGetMotorSummary()});
+  }
   var specs=lines.map(function(l){return l.label+': '+l.value;}).join(' | ');
   pbAddToCart({product:'Norman SmartDrape™',lines:lines,specs:specs,price:null,qty:S.qty||1});
   pbOpenCart();
@@ -504,6 +518,9 @@ async function submitQuote(){
     {label:'Accessories',value:S.accs.length>0?S.accs.join(', '):'None'},
     {label:'Delivery',value:'Ship to me'}
   ];
+  if(S.op==='motor'&&typeof nmGetMotorSummary==='function'){
+    selections.push({label:'Motor options',value:nmGetMotorSummary()});
+  }
   if(S.isDoor) selections.push({label:'Application',value:'Patio door/slider'});
   var notes=document.getElementById('cf-notes').value.trim();
   var btn=document.querySelector('#quote-form .btn-gold');

@@ -444,15 +444,8 @@
           <span style="font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px">NORMAN&reg;</span>
           <span style="font-size:11px;color:rgba(255,255,255,.6)">Norman Centerpiece Roman uses Norman motorization only. Third-party motors are not compatible.</span>
         </div>
-        <div class="opt-row" id="grp-motor">
-          <button class="opt-btn" onclick="setMotor('smart',this)">Norman Smart Motor<br><span style="font-size:10px;font-weight:400;color:#888">App &middot; voice &middot; remote &middot; rechargeable or hardwired</span></button>
-        </div>
-        <div class="step-sub-head">Power source</div>
-        <div class="opt-row" id="grp-power">
-          <button class="opt-btn sel" onclick="selBtn(this,'grp-power')">Rechargeable battery</button>
-          <button class="opt-btn" onclick="selBtn(this,'grp-power')">Hardwired (low-voltage DC)</button>
-        </div>
-        <div style="font-size:11px;color:#888;margin-top:6px">Power source confirmed at your on-site measurement visit. Hardwired requires electrician.</div>
+        <!-- Shared Norman motor section — populated by normanMotorSection('centerpiece-motor-config','Centerpiece Roman') when a motorized lift is selected -->
+        <div id="centerpiece-motor-config" style="margin-top:4px"></div>
       </div>
     </div>
 

@@ -6,7 +6,7 @@ var S = {
   ribbonColor:null, edgeBase:null, edgeBorder:null,
   rollerFabric:null, valance:false, sbs:false,
   holddown:false, pole:false, cordlessPole:false, shims:0,
-  motor:'', power:'Rechargeable battery', delivery:'ship'
+  delivery:'ship'
 };
 
 // ── FABRIC DATA ───────────────────────────────────────────────────────────────
@@ -169,6 +169,14 @@ function setLift(lift, el) {
   var isMotor = lift==='motor'||lift==='motor-dn';
   document.getElementById('step13').style.display    = isMotor ? 'block' : 'none';
   document.getElementById('sp-motor-row').style.display = isMotor ? '' : 'none';
+  if (isMotor) {
+    // Standardized onto the SHARED Norman motor section (Norman Smart only for Centerpiece Roman — no Rollease).
+    if (typeof normanMotorSection === 'function') normanMotorSection('centerpiece-motor-config', 'Centerpiece Roman');
+    sp('sp-motor','Norman Smart Motor');
+    openNext('step13');
+  } else {
+    sp('sp-motor','');
+  }
   var noteEl = document.getElementById('lift-note');
   var notes = {
     'aerolite':       'Min 20″W · max 96″W · max 40 sqft. No cords — child-safe.',
@@ -444,13 +452,8 @@ function adjShims(d) {
 }
 
 // ── MOTOR ─────────────────────────────────────────────────────────────────────
-function setMotor(m, el) {
-  S.motor=m; selBtn(el,'grp-motor');
-  var labels={smart:'Norman Smart Motor',autowand:'AutoWand™',automate:'Automate Home by Norman'};
-  document.getElementById('val13').textContent=labels[m]||m;
-  sp('sp-motor',labels[m]||m);
-  document.getElementById('step13').classList.add('done');
-}
+// Motorization UI is now the SHARED normanMotorSection (see setLift). No custom
+// power-source picker/handler here. Quote summary uses nmGetMotorSummary().
 
 // ── DELIVERY ──────────────────────────────────────────────────────────────────
 function setDelivery(opt,card) {
@@ -539,7 +542,8 @@ function addNormanCenterpieceToCart(){
   if(!S.fabric){ alert('Please select a fabric before adding to cart.'); return; }
 
   var sLabels={flat:'Flat Fold without Seams',batten:'Flat Fold with Batten Back',soft:'Soft Fold'};
-  var motorLabel={smart:'Norman Smart Motor',autowand:'AutoWand™',automate:'Automate Home by Norman'}[S.motor]||'—';
+  var isMotorized=(S.lift==='motor'||S.lift==='motor-dn');
+  var motorSummary=isMotorized?(typeof nmGetMotorSummary==='function'?nmGetMotorSummary():'Norman Smart Motor'):'None';
 
   var lines=[
     {label:'Product',value:'Norman Centerpiece™ Roman Shades — '+(S.type==='dn'?'Day & Night':'Standard')},
@@ -552,7 +556,7 @@ function addNormanCenterpieceToCart(){
     {label:'Fabric',value:S.fabric?S.fabric.name+' · '+S.fabric.coll+' (Group '+S.fabric.g+')':'—'},
     {label:'Lining',value:S.lining||'—'},
     {label:'Banding',value:S.banding==='none'?'None':S.banding},
-    {label:'Motorization',value:(S.lift==='motor'||S.lift==='motor-dn')?motorLabel:'None'}
+    {label:'Motorization',value:motorSummary}
   ];
   var specs=lines.map(function(l){return l.label+': '+l.value;}).join(' | ');
   pbAddToCart({product:'Norman Centerpiece™ Roman Shades',lines:lines,specs:specs,price:null,qty:S.qty||1});
@@ -585,9 +589,8 @@ function submitQuote() {
   var sbs=S.sbs?'Yes':'No';
   var sLabels={flat:'Flat Fold without Seams',batten:'Flat Fold with Batten Back',soft:'Soft Fold'};
   var delivery='Ship (UPS/FedEx)'||S.delivery;
-  var motorLabel={smart:'Norman Smart Motor',autowand:'AutoWand™',automate:'Automate Home by Norman'}[S.motor]||'—';
-  var _powerBtn=document.querySelector('#grp-power .opt-btn.sel');
-  var power=_powerBtn?_powerBtn.textContent.trim():'Rechargeable battery';
+  var isMotorized=(S.lift==='motor'||S.lift==='motor-dn');
+  var motorSummary=isMotorized?(typeof nmGetMotorSummary==='function'?nmGetMotorSummary():'Norman Smart Motor'):('None — '+liftLabel);
   var accList=[(S.holddown?'Magnetic hold-down':''),(S.pole?'Pole attachment':''),(S.cordlessPole?'Cordless operating pole':''),((S.shims||0)>0?S.shims+' shim(s)':'')].filter(Boolean).join(', ')||'None';
   var bandDesc=S.banding==='none'?'None':S.banding==='ribbon'?'Ribbon banding (+15%) — color: '+(S.ribbonColor?S.ribbonColor.name+' '+S.ribbonColor.code:'TBD'):'Edge banding/Border (+30%) — base: '+(S.edgeBase?S.edgeBase.name+' '+S.edgeBase.code:'—')+' / border: '+(S.edgeBorder?S.edgeBorder.name+' '+S.edgeBorder.code:'—');
   var body=[
@@ -604,7 +607,7 @@ function submitQuote() {
     'Lining: '+lining,'Banding: '+bandDesc,'',
     (S.type==='dn'?'DAY & NIGHT\nRear roller fabric: '+(S.rollerFabric?S.rollerFabric.name+' · '+S.rollerFabric.coll+' · '+S.rollerFabric.code+' · max '+S.rollerFabric.maxW+'"W':'—')+'\n':''),
     'EXTRAS','Valance: '+valance,'Side-by-side alignment: '+sbs,'Accessories: '+accList,'',
-    'MOTORIZATION','Motorization: '+((S.lift==='motor'||S.lift==='motor-dn')?motorLabel+' · Power: '+power:'None — '+liftLabel),'',
+    'MOTORIZATION','Motorization: '+motorSummary,'',
     'DELIVERY',delivery,'','NOTES',document.getElementById('cf-notes').value.trim()||'None','',
     '--- Sent from phillyblinds.com/pages/norman-centerpiece-roman.html ---'
   ].join('\n');

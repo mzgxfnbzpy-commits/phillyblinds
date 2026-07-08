@@ -243,6 +243,10 @@ function psAddToCart() {
     {label:'Valance',       value: PS.valance},
     {label:'Quantity',      value: String(PS.qty)}
   ];
+  if (PS.lift !== 'ccl') {
+    var motorSummary = (typeof nmGetMotorSummary === 'function') ? nmGetMotorSummary() : 'Norman Smart Motorization';
+    lines.splice(7, 0, {label:'Motor config', value: motorSummary});
+  }
   var specs = lines.map(function(l){ return l.label + ': ' + l.value; }).join(' | ');
   pbAddToCart({product:'Norman PerfectSheer™', lines:lines, specs:specs, price:yourPrice * PS.qty + freight, qty:PS.qty});
   if (typeof pbOpenCart === 'function') pbOpenCart();
@@ -269,6 +273,11 @@ async function submitPSQuote(btn) {
     if (wvc) woodColor = ' — ' + wvc.value;
   }
   var lg = PS.lgBasic ? 'Basic light guard' : PS.lgPrem ? 'Premium wood light guard' : 'None';
+  var motorLine = '';
+  if (PS.lift !== 'ccl') {
+    var motorSummary = (typeof nmGetMotorSummary === 'function') ? nmGetMotorSummary() : 'Norman Smart Motorization';
+    motorLine = 'Motor config: ' + motorSummary + ' (+$' + PS_MOTOR_COST + '/shade)\n';
+  }
 
   var body = 'NORMAN PERFECTSHEER™ ORDER\n\n'
     + 'Name: ' + name + '\nPhone: ' + phone + '\nEmail: ' + (email || 'not provided') + '\n\n'
@@ -278,6 +287,7 @@ async function submitPSQuote(btn) {
     + 'Light control: ' + (PS.fabric === 'rd' ? 'Room Darkening (+20%)' : 'Light Filtering') + '\n'
     + 'Color: ' + (PS.color || '—') + '\n'
     + 'Lift: ' + (PS.lift === 'ccl' ? 'Continuous Cord Loop' : 'Norman Motorization') + '\n'
+    + motorLine
     + 'Valance: ' + PS.valance + woodColor + '\n'
     + 'Light guard: ' + lg + '\n'
     + 'Hold-down: ' + (PS.holddown ? 'Yes' : 'No') + '\n'

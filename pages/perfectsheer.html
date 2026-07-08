@@ -233,6 +233,7 @@
       </div>
       <div class="step-note">Continuous Cord Loop: max 98″W × 98″H &middot; smooth pull-chain &middot; most popular. Norman Motorization: up to 110″W × 120″H &middot; app, remote &amp; voice control &middot; rechargeable or plug-in.</div>
       <div id="ps-motor-note" class="msg-box msg-info" style="display:none;margin-top:8px">Norman Smart Motorization — rechargeable battery or AC plug-in. Surcharge (+$482) added to your final quote.</div>
+      <div id="ps-motor-config" style="display:none;margin-top:8px"><!-- Populated by normanMotorSection when Motorized is selected --></div>
       <div id="ps-chain-len-wrap" style="margin-top:14px">
         <div class="sub-label">Chain length</div>
         <div class="opt-row">
@@ -454,6 +455,16 @@ function pickLift(el, type) {
   document.getElementById('qr-lift').textContent = type === 'motor' ? 'Norman Motorization' : 'Continuous Cord Loop';
   document.getElementById('ps-motor-note').style.display   = type === 'motor' ? 'block' : 'none';
   document.getElementById('ps-chain-len-wrap').style.display = type === 'ccl'   ? 'block' : 'none';
+  var mc = document.getElementById('ps-motor-config');
+  if (mc) {
+    if (type === 'motor') {
+      mc.style.display = 'block';
+      if (typeof normanMotorSection === 'function') normanMotorSection('ps-motor-config', 'PerfectSheer');
+    } else {
+      mc.style.display = 'none';
+      mc.innerHTML = '';
+    }
+  }
   markDone('step4');
   psCalc();
 }

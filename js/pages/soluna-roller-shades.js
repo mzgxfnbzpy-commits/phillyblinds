@@ -279,78 +279,19 @@ function toggleMotor(on) {
   document.getElementById('motor-sub').classList.toggle('show', on);
   var motorRow = document.getElementById('s-motor-row');
   if (motorRow) motorRow.style.display = on ? 'flex' : 'none';
+  var cfg = document.getElementById('sol-motor-config');
   if (on) {
-    solUpdateMotorBrand();
-    // sync wand qty to shade qty on first open
-    var shadeQty = parseInt((document.getElementById('inp-qty')||{}).value) || 1;
-    var wandQtyEl = document.getElementById('inp-wand-qty');
-    if (wandQtyEl) wandQtyEl.value = shadeQty;
-  } else {
-    ['s-power-row','s-wand-row'].forEach(function(id){
-      var el = document.getElementById(id);
-      if (el) el.style.display = 'none';
-    });
+    // Render the shared Norman motor UI (Soluna is a roller → Rollease + Charging Wand allowed)
+    if (typeof normanMotorSection === 'function') normanMotorSection('sol-motor-config', 'Soluna Roller Shade');
+  } else if (cfg) {
+    cfg.innerHTML = '';
   }
   updateSummary();
-}
-
-function solUpdateMotorBrand() {
-  var brand = (document.getElementById('sel-motor') || {}).value || 'Norman Smart';
-  var isNorman = brand === 'Norman Smart';
-  var powerWrap = document.getElementById('motor-power-wrap');
-  var rolleaseWrap = document.getElementById('motor-rollease-wrap');
-  if (powerWrap) powerWrap.style.display = isNorman ? 'block' : 'none';
-  if (rolleaseWrap) rolleaseWrap.style.display = isNorman ? 'none' : 'block';
-  if (isNorman) {
-    solShowPowerOpts(getOpt('grp-motor-power') === 'Rechargeable battery' ? 'rechargeable' : 'rechargeable');
-  }
-}
-
-function solShowPowerOpts(type) {
-  var wandWrap = document.getElementById('motor-wand-wrap');
-  if (wandWrap) wandWrap.style.display = type === 'rechargeable' ? 'block' : 'none';
-  if (type !== 'rechargeable') {
-    document.querySelectorAll('#grp-wand-type .opt-btn').forEach(function(b,i){ b.classList.toggle('sel', i===0); });
-    solShowWandExt(false);
-  }
-}
-
-function solShowWandExt(show) {
-  var wrap = document.getElementById('wand-ext-wrap');
-  if (wrap) wrap.style.display = show ? 'block' : 'none';
-  if (!show) {
-    var chk = document.getElementById('wand-ext-chk');
-    if (chk) chk.checked = false;
-  }
-}
-
-function solAdjWandQty(d) {
-  var el = document.getElementById('inp-wand-qty');
-  if (!el) return;
-  el.value = Math.min(20, Math.max(1, (parseInt(el.value)||1)+d));
-  updateSummary();
-}
-
-function solGetWandSummary() {
-  var wandWrap = document.getElementById('motor-wand-wrap');
-  if (!wandWrap || wandWrap.style.display === 'none') return null;
-  var type = getOpt('grp-wand-type') || 'Corded';
-  var extChk = document.getElementById('wand-ext-chk');
-  var hasExt = extChk && extChk.checked;
-  var qty = parseInt((document.getElementById('inp-wand-qty')||{}).value) || 1;
-  return qty + '× ' + type + (hasExt ? ' + extension' : '');
 }
 
 function adjustQty(d) {
   const el = document.getElementById('inp-qty');
   el.value = Math.min(20, Math.max(1, (parseInt(el.value) || 1) + d));
-  // keep wand qty in sync with shade qty when rechargeable motor is active
-  var motorSub = document.getElementById('motor-sub');
-  var wandWrap = document.getElementById('motor-wand-wrap');
-  var wandEl = document.getElementById('inp-wand-qty');
-  if (motorSub && motorSub.classList.contains('show') && wandWrap && wandWrap.style.display !== 'none' && wandEl) {
-    wandEl.value = el.value;
-  }
   updateSummary();
 }
 
@@ -455,7 +396,6 @@ function updateSummary() {
   const w         = document.getElementById('inp-width').value;
   const h         = document.getElementById('inp-height').value;
   const qty       = document.getElementById('inp-qty').value || 1;
-  const mBrand    = document.getElementById('sel-motor').value;
   const fabric    = getSelectedFabricColor();
 
   var isDual = shadeType === 'Dual Shade';
@@ -473,26 +413,14 @@ function updateSummary() {
 
   var motorSub = document.getElementById('motor-sub');
   var motorOn = motorSub && motorSub.classList.contains('show');
-  var isNorman = mBrand === 'Norman Smart';
 
-  if (mBrand) {
-    document.getElementById('s-motor-brand').textContent = mBrand;
-  }
-
-  var powerRow = document.getElementById('s-power-row');
-  var powerEl  = document.getElementById('s-power');
-  if (powerRow && powerEl) {
-    var power = (motorOn && isNorman) ? (getOpt('grp-motor-power') || 'Rechargeable battery') : null;
-    powerRow.style.display = power ? '' : 'none';
-    if (power) powerEl.textContent = power;
-  }
-
-  var wandRow = document.getElementById('s-wand-row');
-  var wandEl2 = document.getElementById('s-wand');
-  if (wandRow && wandEl2) {
-    var wSum = motorOn ? solGetWandSummary() : null;
-    wandRow.style.display = wSum ? '' : 'none';
-    if (wSum) wandEl2.textContent = wSum;
+  // Motor summary comes from the shared Norman motor section (nmGetMotorSummary in shared.js)
+  var motorRow = document.getElementById('s-motor-row');
+  var motorBrandEl = document.getElementById('s-motor-brand');
+  if (motorRow && motorBrandEl) {
+    var mSum = (motorOn && typeof nmGetMotorSummary === 'function') ? nmGetMotorSummary() : null;
+    motorRow.style.display = mSum ? '' : 'none';
+    if (mSum) motorBrandEl.textContent = mSum;
   }
 
   const fabricRow = document.getElementById('s-fabric-row');
@@ -550,10 +478,8 @@ function submitQuote() {
   const notes     = document.getElementById('cf-notes').value.trim();
   const motorSub  = document.getElementById('motor-sub');
   const motorOn   = motorSub && motorSub.classList.contains('show');
-  const motorVal  = motorOn ? (document.getElementById('sel-motor').value || '—') : 'None';
-  const isNormanMotor = motorOn && motorVal === 'Norman Smart';
-  const powerSrc = isNormanMotor ? (getOpt('grp-motor-power') || 'Rechargeable battery') : '';
-  const wandLine = isNormanMotor ? (solGetWandSummary() || '') : '';
+  // Motor details come from the shared Norman motor section (nmGetMotorSummary in shared.js)
+  const motorSummary = (motorOn && typeof nmGetMotorSummary === 'function') ? nmGetMotorSummary() : '';
   const addons    = [...document.querySelectorAll('#grp-addons .opt-btn.sel')].map(b => b.textContent.trim());
   const hwColor   = getOpt('grp-hw-color');
   const fasciaStyle = getOpt('grp-fascia-style');
@@ -584,9 +510,8 @@ function submitQuote() {
     (fabricColor && !isDualSubmit ? 'Fabric selection: ' + fabricColor : ''),
     'Shade type: ' + shadeType,
     'Operating system: ' + op,
-    'Motorization: ' + motorVal,
-    (powerSrc ? 'Power source: ' + powerSrc : ''),
-    (wandLine ? 'Charging wand: ' + wandLine : ''),
+    'Motorization: ' + (motorOn ? 'Yes' : 'None'),
+    (motorSummary ? 'Motor details: ' + motorSummary : ''),
     'Mount type: ' + mount,
     'Width: ' + w + '"',
     'Height: ' + h + '"',
@@ -656,11 +581,12 @@ function addSolunaToCart() {
     });
   }
   if (motor && op === 'motor') {
-    var motorMap = { rollease: 'Rollease Acmeda Automate' };
-    var mTarget = motorMap[motor] || 'Norman Smart';
+    // The op click above already rendered the shared Norman motor section; select Rollease brand if requested
     setTimeout(function() {
-      var sel = document.getElementById('sel-motor');
-      if (sel) { sel.value = mTarget; solUpdateMotorBrand(); }
+      if (motor === 'rollease') {
+        var brandBtns = document.querySelectorAll('#nm-grp-brand .opt-btn');
+        if (brandBtns.length > 1) { brandBtns[1].click(); updateSummary(); }
+      }
     }, 100);
   }
   if (w || h || op) updateSummary();
