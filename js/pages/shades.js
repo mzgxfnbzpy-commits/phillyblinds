@@ -1934,10 +1934,10 @@ function rwbCalc() {
   var totalRetail = colorRetail + valRetail;
   var customerEach = Math.round(totalRetail * 0.65);
   var totalCustomer = customerEach * qty;
-  var lines = '<div class="price-line"><span>Retail (1 blind)</span><span>$' + totalRetail.toLocaleString() + '</span></div>';
-  if (colorMult > 1) lines += '<div class="price-line"><span>Color surcharge</span><span>' + (colorMult === 1.5 ? '+50%' : '+10%') + ' included</span></div>';
-  if (valRetail > 0) lines += '<div class="price-line"><span>Valance surcharge</span><span>+$' + valRetail + '</span></div>';
-  lines += '<div class="price-line"><span>Your price (35% off)</span><span style="color:var(--gold)">$' + customerEach.toLocaleString() + ' / blind</span></div>';
+  // Detail hidden per owner request — color/valance surcharges roll into retail (no motor/TDBU/D&N on wood blinds).
+  var lines = '<div class="price-line"><span><s>Retail (1 blind)</s></span><span style="text-decoration:line-through">$' + totalRetail.toLocaleString() + '</span></div>';
+  lines += '<div class="price-line"><span>35% Norman discount</span><span style="color:var(--gold)">&minus;$' + (totalRetail - customerEach).toLocaleString() + '</span></div>';
+  lines += '<div class="price-line"><span>Your price</span><span style="color:var(--gold)">$' + customerEach.toLocaleString() + ' / blind</span></div>';
   if (qty > 1) lines += '<div class="price-line"><span>Quantity</span><span>&times; ' + qty + '</span></div>';
   document.getElementById('rwb-price-lines').innerHTML = lines;
   document.getElementById('rwb-price-total').textContent = '$' + totalCustomer.toLocaleString();
