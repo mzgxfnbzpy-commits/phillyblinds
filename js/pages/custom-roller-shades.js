@@ -109,8 +109,8 @@ function crsPickType(val, label) {
   var solarOpts = _crsEl('solar-opts');
   var colorOpts = _crsEl('color-opts');
   if (solarOpts) solarOpts.classList.toggle('show', val === 'solar');
-  // Blackout shows color immediately; solar shows color after openness picked
-  if (colorOpts) colorOpts.classList.toggle('show', val === 'blackout');
+  // Show colors immediately for both Solar and Blackout
+  if (colorOpts) colorOpts.classList.toggle('show', val === 'solar' || val === 'blackout');
 
   // Ensure swatches are rendered, then reset any prior color selection
   crsRenderColors();
@@ -126,10 +126,12 @@ function crsPickOpenness(val, label) {
   document.querySelectorAll('.openness-btn').forEach(function(b) { b.classList.remove('sel'); });
   var btn = _crsEl('ob-' + val);
   if (btn) btn.classList.add('sel');
-  // Show color options after openness selected
+  // Colors are already visible for solar; keep them shown
   var colorOpts = _crsEl('color-opts');
   if (colorOpts) colorOpts.classList.add('show');
   crsRenderColors();
+  // If a color was already chosen, the step is now complete → finish + advance.
+  if (CRS.color) { crsSelectColor(CRS.color); return; }
   setTimeout(function() { if (colorOpts) colorOpts.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 100);
 }
 
@@ -179,11 +181,17 @@ function crsFallbackColor(btn, color) {
 
 function crsSelectColor(color) {
   CRS.color = color;
+  crsUpdatePanel();
+  // Solar needs an openness % before the step is complete — nudge the openness picker.
+  if (CRS.type === 'solar' && !CRS.openness) {
+    var so = _crsEl('solar-opts');
+    if (so) setTimeout(function() { so.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 100);
+    return;
+  }
   var label = CRS.type === 'solar'
     ? 'Solar · ' + CRS.openness + '% · ' + color
     : 'Blackout · ' + color;
   crsDone('step-2', label);
-  crsUpdatePanel();
   setTimeout(function() { crsOpen('step-3'); }, 350);
 }
 
