@@ -1698,9 +1698,47 @@ function normanMotorSection(containerId, productName, onChange) {
 
   // Rollease info section (only rendered for compatible products)
   var rolleaseSection = isRolleaseCompat
-    ? '<div id="nm-rollease-section" style="display:none;padding:14px 16px;background:rgba(255,255,255,.06);border-radius:8px;margin-top:4px">' +
-        '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:6px">Rollease Acmeda Automate</div>' +
-        '<div style="font-size:11px;color:var(--text-dark);line-height:1.7">Custom priced — for customers integrating with an existing Rollease Acmeda smart home system. Compatible with the Automate Pulse 2 hub, the Automate app, and voice assistants (Alexa, Google Home, Apple HomeKit). Power source and accessories confirmed at your measurement visit.</div>' +
+    ? '<div id="nm-rollease-section" style="display:none">' +
+        '<div style="font-size:11px;background:#2a1c0e;border:1px solid #7a5020;border-radius:7px;padding:8px 12px;color:#e8b060;margin-bottom:12px;line-height:1.5">Rollease Acmeda Automate — <strong>custom priced</strong>. For customers integrating with an existing Rollease Acmeda smart-home system. Final price confirmed at your measurement visit.</div>' +
+
+        // Power source
+        '<div style="margin-bottom:12px">' +
+          '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Power source</div>' +
+          '<div class="opt-row" id="auto-grp-power">' +
+            '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#128267; Rechargeable battery (Li-ion)</button>' +
+            '<button class="opt-btn" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#9889; Hardwired</button>' +
+          '</div>' +
+          '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">Automate Li-ion rechargeable motor (AC wall charger) or hardwired. Confirmed at measurement.</div>' +
+        '</div>' +
+
+        // Remote
+        '<div style="margin-bottom:12px">' +
+          '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Remote control</div>' +
+          '<div class="opt-row" id="auto-grp-remote">' +
+            '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-remote\');nmAutoToggleRemote(true)" style="color:#333">Yes — Automate remote</button>' +
+            '<button class="opt-btn" onclick="selOpt(this,\'auto-grp-remote\');nmAutoToggleRemote(false)" style="color:#333">No (app / hub only)</button>' +
+          '</div>' +
+        '</div>' +
+
+        // Remote detail — Automate DOES offer single-channel (unlike Norman Smart)
+        '<div id="auto-remote-detail" style="padding:10px 12px;background:rgba(255,255,255,.06);border-radius:8px;margin-bottom:12px">' +
+          '<div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px">Channels</div>' +
+          '<div class="opt-row" id="auto-grp-channel">' +
+            '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-channel\')" style="color:#333">Multi channel</button>' +
+            '<button class="opt-btn" onclick="selOpt(this,\'auto-grp-channel\')" style="color:#333">Single channel</button>' +
+          '</div>' +
+          '<div style="font-size:10px;color:var(--text-faint);margin-top:5px">Automate Paradigm remotes come in single-channel and multi-channel (up to 15-channel). Single: all shades move together. Multi: control each shade independently.</div>' +
+        '</div>' +
+
+        // Hub
+        '<div>' +
+          '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Automate Pulse 2 hub</div>' +
+          '<div class="opt-row" id="auto-grp-hub">' +
+            '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-hub\')" style="color:#333">Add hub (app + voice)</button>' +
+            '<button class="opt-btn" onclick="selOpt(this,\'auto-grp-hub\')" style="color:#333">No hub</button>' +
+          '</div>' +
+          '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">The Automate Pulse 2 hub enables the Automate app and voice control (Alexa, Google Home, Apple HomeKit).</div>' +
+        '</div>' +
       '</div>'
     : '';
 
@@ -1736,10 +1774,23 @@ function nmToggleRemote(show) {
   var el = document.getElementById('nm-remote-detail');
   if (el) el.style.display = show ? 'block' : 'none';
 }
+function nmAutoToggleRemote(show) {
+  var el = document.getElementById('auto-remote-detail');
+  if (el) el.style.display = show ? 'block' : 'none';
+}
 function nmGetMotorSummary() {
   var brandBtn = document.querySelector('#nm-grp-brand .opt-btn.sel');
   var isRollease = brandBtn && brandBtn.textContent.toLowerCase().indexOf('rollease') !== -1;
-  if (isRollease) return 'Rollease Acmeda Automate — custom priced (for existing Rollease Acmeda system integration)';
+  if (isRollease) {
+    var aPower  = ((document.querySelector('#auto-grp-power .opt-btn.sel')   || {}).textContent || '').replace(/[^\w\s\-\(\)]/g,'').trim();
+    var aRemote = ((document.querySelector('#auto-grp-remote .opt-btn.sel')  || {}).textContent || '');
+    var aChan   = ((document.querySelector('#auto-grp-channel .opt-btn.sel') || {}).textContent || '').trim();
+    var aHub    = ((document.querySelector('#auto-grp-hub .opt-btn.sel')     || {}).textContent || '').trim();
+    var aHasRemote = aRemote.indexOf('Yes') !== -1;
+    return 'Rollease Acmeda Automate (custom priced) — Power: ' + (aPower || '—') +
+      ' | Remote: ' + (aHasRemote ? 'Yes (' + aChan + ')' : 'No — app/hub only') +
+      ' | Hub: ' + (aHub.indexOf('Add') === 0 ? 'Automate Pulse 2' : 'None');
+  }
   var power   = (document.querySelector('#nm-grp-power .opt-btn.sel') || {}).textContent || '—';
   var wire    = (document.querySelector('#nm-grp-wire .opt-btn.sel') || {}).textContent || '';
   var remote  = (document.querySelector('#nm-grp-remote .opt-btn.sel') || {}).textContent || '—';
