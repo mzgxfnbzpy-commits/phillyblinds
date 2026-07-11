@@ -112,8 +112,10 @@ function crsPickType(val, label) {
   // Blackout shows color immediately; solar shows color after openness picked
   if (colorOpts) colorOpts.classList.toggle('show', val === 'blackout');
 
-  // Reset color selection
+  // Ensure swatches are rendered, then reset any prior color selection
+  crsRenderColors();
   if (window.pbFabricPicker) pbFabricPicker.clearSelection('crs-fabric-picker');
+  document.querySelectorAll('#crs-fabric-picker button.sel').forEach(function(b) { b.classList.remove('sel'); });
 
   if (val === 'solar') return; // wait for openness + color before advancing
   // Blackout: wait for color pick before advancing
@@ -127,6 +129,7 @@ function crsPickOpenness(val, label) {
   // Show color options after openness selected
   var colorOpts = _crsEl('color-opts');
   if (colorOpts) colorOpts.classList.add('show');
+  crsRenderColors();
   setTimeout(function() { if (colorOpts) colorOpts.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 100);
 }
 
@@ -141,14 +144,37 @@ var CRS_BASIC_SOLIDS = [
 
 // Render the shared fabric picker into the color step (single type → no tabs here;
 // Solar vs Blackout is the type-card choice above, openness handled separately).
+// Renders once (idempotent); falls back to plain swatches if the shared
+// component ever fails to load, so colors are NEVER blank.
 function crsRenderColors() {
-  if (!window.pbFabricPicker) return;
-  pbFabricPicker.render('crs-fabric-picker', {
-    hideTabs: true,
-    types: [{ key: 'solids', label: 'Colors' }],
-    collections: [{ type: 'solids', name: '', colors: CRS_BASIC_SOLIDS }],
-    onSelect: function(sel) { crsSelectColor(sel.name); }
-  });
+  var host = document.getElementById('crs-fabric-picker');
+  if (!host) return;
+  if (host.children && host.children.length) return; // already rendered
+  if (window.pbFabricPicker) {
+    pbFabricPicker.render('crs-fabric-picker', {
+      hideTabs: true,
+      types: [{ key: 'solids', label: 'Colors' }],
+      collections: [{ type: 'solids', name: '', colors: CRS_BASIC_SOLIDS }],
+      onSelect: function(sel) { crsSelectColor(sel.name); }
+    });
+  } else {
+    // Fallback — plain swatch buttons (component unavailable)
+    var html = '<div style="display:flex;flex-wrap:wrap;gap:6px">';
+    CRS_BASIC_SOLIDS.forEach(function(c) {
+      html += '<button type="button" class="opt-btn" style="display:inline-flex;align-items:center;gap:7px;padding:5px 10px 5px 6px" ' +
+        'onclick="crsFallbackColor(this,\'' + c.n + '\')">' +
+        '<span style="width:16px;height:16px;border-radius:50%;border:1px solid rgba(0,0,0,.18);background:' + c.hex + '"></span>' +
+        c.n + '</button>';
+    });
+    host.innerHTML = html + '</div>';
+  }
+}
+
+function crsFallbackColor(btn, color) {
+  var host = document.getElementById('crs-fabric-picker');
+  if (host) host.querySelectorAll('button').forEach(function(b) { b.classList.remove('sel'); });
+  btn.classList.add('sel');
+  crsSelectColor(color);
 }
 
 function crsSelectColor(color) {

@@ -451,8 +451,11 @@ function updateSummary() {
   var priceEl2 = document.getElementById('s-price');
   if (priceRow && priceEl2) {
     if (priceResult) {
-      var pTxt = '$' + priceResult.total.toLocaleString();
-      if (priceResult.qty > 1 && !_solCoupledActive) pTxt += ' (' + priceResult.qty + ' × $' + priceResult.unit.toLocaleString() + ')';
+      // Norman retail → 35% off → your price (35% applies to all Norman products; not to shipping).
+      var _solRetail = priceResult.total;
+      var _solYour   = Math.round(_solRetail * 0.65);
+      var pTxt = '$' + _solRetail.toLocaleString() + ' retail → $' + _solYour.toLocaleString() + ' your price (35% off)';
+      if (priceResult.qty > 1 && !_solCoupledActive) pTxt += ' · ' + priceResult.qty + ' × $' + Math.round(priceResult.unit * 0.65).toLocaleString();
       if (priceResult.motor) pTxt += ' + motor est.';
       priceEl2.textContent = pTxt;
       priceRow.style.display = '';
@@ -498,7 +501,7 @@ function submitQuote() {
   const coupledLine = solGetCoupledSummary();
   const priceEst = _solEstimatePrice();
   const priceEstLine = priceEst
-    ? 'Est. retail: $' + priceEst.total.toLocaleString() + (priceEst.motor ? ' (motor priced separately)' : '') + (priceEst.qty > 1 && !_solCoupledActive ? ' (' + priceEst.qty + ' × $' + priceEst.unit.toLocaleString() + ')' : '')
+    ? 'Est. retail: $' + priceEst.total.toLocaleString() + ' → 35% off → your price: $' + Math.round(priceEst.total * 0.65).toLocaleString() + ' (freight/motor additional, not discounted)' + (priceEst.motor ? ' (motor priced separately)' : '') + (priceEst.qty > 1 && !_solCoupledActive ? ' (' + priceEst.qty + ' × $' + priceEst.unit.toLocaleString() + ')' : '')
     : '';
   const body = [
     '=== PREMIER NORMAN ROLLER SHADE QUOTE REQUEST ===',
