@@ -525,12 +525,16 @@ function updateCalc() {
   var isOversized=w>=90;
   var freight=S.delivery==='install'?0:isOversized?(80+(qty>1?(qty-1)*50:0)):(25+(qty>1?(qty-1)*11:0));
   showRow('pr-freight-row',freight>0); if(freight>0)setVal('pr-freight','$'+freight);
+  // Detail hidden per owner request — base/lining/fold/banding/SmartRelease/valance/accessories roll into
+  // retail; only the Day & Night surcharge (an allowed add-on) stays visible.
+  ['pr-lining-row','pr-soft-row','pr-banding-row','pr-sr-row','pr-valance-row','pr-acc-row'].forEach(function(id){showRow(id,false);});
+  var _cpBaseRow=document.getElementById('pr-base'); if(_cpBaseRow&&_cpBaseRow.parentElement)_cpBaseRow.parentElement.style.display='none';
   var NORMAN_DISC_CP=0.35;
   var cpRetailSub=(per*qty)+(srAdd*qty)+(dnAdd*qty)+(vSur*qty)+(accT*qty);
   var cpDiscountAmt=Math.round(cpRetailSub*NORMAN_DISC_CP);
   var cpYourPrice=cpRetailSub-cpDiscountAmt;
   var total=cpYourPrice+freight;
-  setVal('pr-total','~$'+Math.round(total).toLocaleString()+' (Norman retail -35%; shipping at retail rate)');
+  setVal('pr-total','Retail $'+Math.round(cpRetailSub).toLocaleString()+' → 35% off → ~$'+Math.round(total).toLocaleString()+' (freight at retail)');
 }
 
 // ── SUBMIT ────────────────────────────────────────────────────────────────────

@@ -2337,8 +2337,8 @@ function rnLookupPrice(w, h, overrideFabType) {
   return { price: price || null, pricedAt: pW + '″ W × ' + pH + '″ H', group: pg };
 }
 
-var rnMotorUpcharge = 482; // Norman Smart default; updated by rnSetMotorType()
-function rnSetMotorType(price){ rnMotorUpcharge = price; rnUpdatePrice(); }
+var rnMotorUpcharge = 482; // Norman Smart base surcharge ($482/shade). Brand pick now lives in the shared normanMotorSection; Rollease Acmeda is custom priced, so the estimate stays at the $482 base (no double charge).
+function rnSetMotorType(price){ rnMotorUpcharge = price; rnUpdatePrice(); } // retained for pricing wiring; no longer bound to UI buttons
 const RN_MIN       = 85;   // minimum per shade
 
 const RN_SYSTEM_NOTES = {
@@ -2526,9 +2526,21 @@ function rnSetLift(type) {
   const motorWrap = document.getElementById('rn-motor-wrap');
   if (motorWrap) {
     motorWrap.style.display = type === 'motor' ? 'block' : 'none';
+    var rnMotorCfg = document.getElementById('rn-motor-config');
     if (type === 'motor') {
+      // Base surcharge stays Norman Smart $482/shade. The shared section lets the
+      // customer pick Norman Smart vs Rollease Acmeda (Rollease is custom priced),
+      // so it does NOT change the estimate — no double charge.
       rnMotorUpcharge = 482;
-      document.querySelectorAll('#grp-rn-motor-type .opt-btn').forEach(function(b,i){b.classList.toggle('sel',i===0);});
+      // Render the shared Norman motor UI (same as cellular + standalone pages).
+      if (typeof normanMotorSection === 'function') {
+        normanMotorSection('rn-motor-config', 'Roller Shade');
+      } else if (rnMotorCfg) {
+        rnMotorCfg.innerHTML = '<div style="background:var(--espresso-mid);border-radius:8px;padding:12px 14px;margin-top:10px;font-size:12px;color:var(--text-dark)">Norman Smart Motorization: power source (battery/hardwired), remote, and smart home options confirmed at measurement visit.</div>';
+      }
+    } else if (rnMotorCfg) {
+      // Clear the shared section when a non-motor lift is chosen.
+      rnMotorCfg.innerHTML = '';
     }
   }
 

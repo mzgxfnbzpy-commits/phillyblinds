@@ -427,17 +427,16 @@ function calcPrice(){
 
   var per=base;
   document.getElementById('pr-base').textContent='$'+base.toLocaleString();
-  // RD surcharge
+  // Detail hidden per owner request — base + RD/alternating-color surcharges roll into retail.
+  // Only the allowed add-on surcharge (motor) stays visible; customer sees retail → 35% off → price.
+  var _sdBase=document.getElementById('pr-base'); if(_sdBase&&_sdBase.parentElement) _sdBase.parentElement.style.display='none';
   var isRD=S.opacity==='rd';
   var rdAdd=isRD?Math.round(base*0.20):0;
-  document.getElementById('pr-rd-row').style.display=isRD?'flex':'none';
-  if(isRD) document.getElementById('pr-rd').textContent='+$'+rdAdd;
+  document.getElementById('pr-rd-row').style.display='none';
   per+=rdAdd;
-  // Alternating colors
   var isAlt=document.getElementById('acc-alt-colors')&&document.getElementById('acc-alt-colors').checked;
   var altAdd=isAlt?Math.round(base*0.10):0;
-  document.getElementById('pr-alt-row').style.display=isAlt?'flex':'none';
-  if(isAlt) document.getElementById('pr-alt').textContent='+$'+altAdd;
+  document.getElementById('pr-alt-row').style.display='none';
   per+=altAdd;
   // Motor
   var isMotor=S.op==='motor';
