@@ -153,9 +153,28 @@
 <div class="config-layout">
 <div>
 
-<!-- STEP 1: WINDOW MEASUREMENTS & MOUNT -->
-<div class="step-block active" id="step3">
-  <div class="step-head" onclick="tog('step3')"><div class="step-num">1</div><div class="step-head-title">Window measurements &amp; mount</div><div class="step-head-val" id="val3">&mdash;</div></div>
+<!-- STEP 1: PRODUCT COLLECTION (choose before entering size) -->
+<div class="step-block active" id="step1">
+  <div class="step-head" onclick="tog('step1')"><div class="step-num">1</div><div class="step-head-title">Choose your shade</div><div class="step-head-val" id="val1">&mdash;</div></div>
+  <div class="step-body">
+    <div class="product-grid">
+      <div class="product-card" id="prod-2d" onclick="setProd('2d',this)">
+        <h3>Banded 2D Shades <span style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#0A4A42;background:rgba(45,224,193,.15);padding:2px 8px;border-radius:10px;margin-left:6px">BASIC</span></h3>
+        <p>Woven 2D-pattern banded shades. Alternating sheer and solid fabric bands with textured visual depth. Cordless, motorized, and wand options.</p>
+        <span class="product-badge">Custom quote</span>
+      </div>
+      <div class="product-card" id="prod-dual" onclick="setProd('dual',this)">
+        <h3>Portfolio Dual Sheer <span style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#7a5a10;background:rgba(200,151,63,.20);padding:2px 8px;border-radius:10px;margin-left:6px">PREMIUM</span></h3>
+        <p>Classic zebra/dual-sheer. Horizontal bands open for light, close for privacy. 5 price groups, 95 fabrics, up to 110&Prime; wide. Light filtering and Blackout. Live pricing estimate.</p>
+        <span class="product-badge" style="background:rgba(45,224,193,.15);color:#0A4A42">Opens full configurator →</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2: WINDOW MEASUREMENTS & MOUNT -->
+<div class="step-block" id="step3">
+  <div class="step-head" onclick="tog('step3')"><div class="step-num">2</div><div class="step-head-title">Window measurements &amp; mount</div><div class="step-head-val" id="val3">&mdash;</div></div>
   <div class="step-body">
     <div class="dim-box">
       <div class="dim-box-label">Enter your window size</div>
@@ -170,8 +189,8 @@
     <!-- Mount type -->
     <div class="step-sub">Mount type</div>
     <div class="opt-row" id="grp-mount">
-      <button class="opt-btn sel" onclick="selB(this,'grp-mount');updateSpec();validateDims()">Inside mount <span style="font-size:10px;opacity:.7">(&frac14;&Prime; deduction)</span></button>
-      <button class="opt-btn" onclick="selB(this,'grp-mount');updateSpec();validateDims()">Outside mount</button>
+      <button class="opt-btn sel" onclick="selB(this,'grp-mount');updateSpec();validateDims();openNext('step2')">Inside mount <span style="font-size:10px;opacity:.7">(&frac14;&Prime; deduction)</span></button>
+      <button class="opt-btn" onclick="selB(this,'grp-mount');updateSpec();validateDims();openNext('step2')">Outside mount</button>
     </div>
     <div class="step-note">Inside mount fits inside the window frame (manufacturer deducts &frac14;&Prime; automatically). Outside mount covers the opening &mdash; add about 2&frac12;&Prime; each side for best light block.</div>
     <div class="info-box" style="margin-top:10px">Most fabrics max 108&Prime;W. Asher, Briggs, Evlin, Landry, Leigh, Theo max 110&Prime;W. Min height 20&Prime; for clutch; 20&Prime; for cordless.</div>
@@ -184,25 +203,6 @@
       <button class="qty-btn" onclick="adjQty(1)">&#43;</button>
     </div>
     <div class="step-note">Number of shades of this size &amp; fabric.</div>
-  </div>
-</div>
-
-<!-- STEP 2: PRODUCT COLLECTION -->
-<div class="step-block" id="step1">
-  <div class="step-head" onclick="tog('step1')"><div class="step-num">2</div><div class="step-head-title">Product Collection</div><div class="step-head-val" id="val1">&mdash;</div></div>
-  <div class="step-body">
-    <div class="product-grid">
-      <div class="product-card" id="prod-dual" onclick="setProd('dual',this)">
-        <h3>Portfolio Dual Sheer <span style="font-size:10px;font-weight:500;color:var(--gold);margin-left:6px">Full configurator →</span></h3>
-        <p>Classic zebra/dual-sheer. Horizontal bands open for light, close for privacy. 5 price groups, 95 fabrics, up to 110&Prime; wide. Light filtering and Blackout. Live pricing estimate.</p>
-        <span class="product-badge" style="background:rgba(45,224,193,.15);color:#0A4A42">Opens full configurator →</span>
-      </div>
-      <div class="product-card" id="prod-2d" onclick="setProd('2d',this)">
-        <h3>Banded 2D Shades</h3>
-        <p>Woven 2D-pattern banded shades. Alternating sheer and solid fabric bands with textured visual depth. Cordless, motorized, and wand options.</p>
-        <span class="product-badge">Custom quote</span>
-      </div>
-    </div>
   </div>
 </div>
 

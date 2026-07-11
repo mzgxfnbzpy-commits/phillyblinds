@@ -248,18 +248,17 @@ function updateQuote(){
 
   const slatLabels={half:'½″ Micro Slats',one:'1″ Standard Slats',two:'2″ SmartPrivacy®'};
   document.getElementById('qr-slat').textContent=slatLabels[state.slat];
-  document.getElementById('qr-finish').textContent=state.colorName+(state.colorSurcharge?' (+'+state.colorSurcharge+'%)':'');
+  document.getElementById('qr-finish').textContent=state.colorName;
   document.getElementById('qr-mount').textContent=state.mount==='inside'?'Inside mount':'Outside mount';
   document.getElementById('qr-dims').textContent=state.w+'″ × '+state.h+'″';
   document.getElementById('qr-qty').textContent=qty+(qty>1?' blinds':' blind');
   document.getElementById('qr-base').textContent='$'+basePrice.toFixed(0);
 
-  const showRow=(id,show,val)=>{document.getElementById(id).style.display=show?'flex':'none';if(val)document.getElementById(id.replace('-row','-s')).textContent=val;};
-  showRow('qr-slat-row',state.slat!=='one',state.slat==='half'?'+10% (½″ micro)':'+20% (2″ SmartPrivacy)');
-  showRow('qr-finish-row',state.colorSurcharge>0,'+'+state.colorSurcharge+'%');
-  showRow('qr-privacy-row',state.privacy,'+10%');
-  showRow('qr-sm-row',state.sidemount,'+$25');
-  showRow('qr-shim-row',state.shim,'$'+(state.shimQty*7));
+  // Detail hidden per owner request — slat/finish/privacy/side-mount/shim surcharges + base roll silently
+  // into the retail subtotal. Customer sees retail → 35% off → your price → freight. (Cordless-only; no motor/TDBU/D&N.)
+  const _hideRow=(id)=>{const e=document.getElementById(id);if(e)e.style.display='none';};
+  const _qrBase=document.getElementById('qr-base'); if(_qrBase&&_qrBase.closest){const r=_qrBase.closest('.qrow'); if(r)r.style.display='none';}
+  ['qr-slat-row','qr-finish-row','qr-privacy-row','qr-sm-row','qr-shim-row'].forEach(_hideRow);
 
   // Retail subtotal row
   let retailRow=document.getElementById('qr-retail-row');

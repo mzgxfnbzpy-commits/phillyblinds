@@ -162,7 +162,7 @@ function setProd(p,el){
   document.getElementById('s2title').textContent=p==='dual'?'Fabric':'Fabric Preferences';
   spv('sp-prod',p==='dual'?'Portfolio Dual Sheer':'Banded 2D Shades');
   if(p==='2d'){render2dGrid();}
-  updateCalc();openNext('step2');
+  updateCalc();openNext('step3'); // product chosen → open size (Step 2)
 }
 
 // ── BANDED 2D: COLLECTION + COLOR DATA ────────────────────────────────────────

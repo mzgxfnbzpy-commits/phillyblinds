@@ -113,7 +113,7 @@ function crsPickType(val, label) {
   if (colorOpts) colorOpts.classList.toggle('show', val === 'blackout');
 
   // Reset color selection
-  document.querySelectorAll('#crs-grp-color .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
+  if (window.pbFabricPicker) pbFabricPicker.clearSelection('crs-fabric-picker');
 
   if (val === 'solar') return; // wait for openness + color before advancing
   // Blackout: wait for color pick before advancing
@@ -130,10 +130,29 @@ function crsPickOpenness(val, label) {
   setTimeout(function() { if (colorOpts) colorOpts.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 100);
 }
 
-function crsPickColor(btn, color) {
+// Expanded basic solids — same palette for Solar Screen & Blackout lines.
+var CRS_BASIC_SOLIDS = [
+  {n:'White',     hex:'#ffffff'}, {n:'Ivory',    hex:'#f5efe0'}, {n:'Cream',   hex:'#f3e9d2'},
+  {n:'Beige',     hex:'#e8dcc4'}, {n:'Sand',     hex:'#ddcba6'}, {n:'Taupe',   hex:'#b8a98f'},
+  {n:'Linen',     hex:'#d9cbb2'}, {n:'Gray',     hex:'#9e9e9e'}, {n:'Slate',   hex:'#6e7377'},
+  {n:'Charcoal',  hex:'#4a4a4a'}, {n:'Black',    hex:'#1a1a1a'}, {n:'Chocolate',hex:'#4b3a2b'},
+  {n:'Navy',      hex:'#24324a'}
+];
+
+// Render the shared fabric picker into the color step (single type → no tabs here;
+// Solar vs Blackout is the type-card choice above, openness handled separately).
+function crsRenderColors() {
+  if (!window.pbFabricPicker) return;
+  pbFabricPicker.render('crs-fabric-picker', {
+    hideTabs: true,
+    types: [{ key: 'solids', label: 'Colors' }],
+    collections: [{ type: 'solids', name: '', colors: CRS_BASIC_SOLIDS }],
+    onSelect: function(sel) { crsSelectColor(sel.name); }
+  });
+}
+
+function crsSelectColor(color) {
   CRS.color = color;
-  document.querySelectorAll('#crs-grp-color .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
-  btn.classList.add('sel');
   var label = CRS.type === 'solar'
     ? 'Solar · ' + CRS.openness + '% · ' + color
     : 'Blackout · ' + color;
@@ -547,6 +566,7 @@ function crsSubmit() {
   });
 }
 
-// Init — pre-select ship delivery
+// Init — render color swatches + pre-select ship delivery
+crsRenderColors();
 CRS.delivery = 'ship';
 crsUpdatePanel();

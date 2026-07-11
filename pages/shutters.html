@@ -163,12 +163,43 @@
     <!-- LEFT: CONFIGURATOR -->
     <div id="configurator">
 
-      <!-- ── STEP 1: DIMENSIONS ── -->
-      <div class="step-block active" id="sec-dims">
-        <div class="step-head" onclick="pbToggleStep('sec-dims')">
+      <!-- ── STEP 1: SHUTTER LINE (choose before entering size) ── -->
+      <div class="step-block active" id="sec-line">
+        <div class="step-head" onclick="pbToggleStep('sec-line')">
           <span class="step-num" id="badge-1">1</span>
-          <span class="step-head-title">Window dimensions</span>
+          <span class="step-head-title">Which Norman shutter line?</span>
           <span class="step-head-val" id="shv-1"></span>
+        </div>
+        <div class="step-body">
+          <p class="step-subhead">This determines available colors, louver sizes, and max panel widths.</p>
+          <div class="line-cards">
+            <div class="line-card" onclick="selLine('Normandy',this)">
+              <div class="line-card-tag">Real Wood</div>
+              <div class="line-card-name">Normandy®</div>
+              <div class="line-card-sub">Hardwood (paint) or Phoenix wood (stain). Widest color range — 24 paint, 18 stain, 6 OSMO. Largest max panel widths up to 42″. Premium look and feel.</div>
+            </div>
+            <div class="line-card" onclick="selLine('Woodlore',this)">
+              <div class="line-card-tag">Composite</div>
+              <div class="line-card-name">Woodlore®</div>
+              <div class="line-card-sub">Composite wood with polypropylene coating — resists moisture, warping, and UV. 6 classic white/neutral colors. Great value for most windows.</div>
+              <div class="line-card-best">Popular</div>
+            </div>
+            <div class="line-card" onclick="selLine('Woodlore Plus',this)">
+              <div class="line-card-tag">Composite+</div>
+              <div class="line-card-name">Woodlore® Plus</div>
+              <div class="line-card-sub">Composite frame + ABS louvers. 24 color options. Optional full waterproof version with stainless steel hinges. Specialty shapes available.</div>
+            </div>
+          </div>
+          <div id="line-note" style="display:none" class="info-note"></div>
+        </div>
+      </div>
+
+      <!-- ── STEP 2: DIMENSIONS ── -->
+      <div class="step-block" id="sec-dims">
+        <div class="step-head" onclick="pbToggleStep('sec-dims')">
+          <span class="step-num" id="badge-2">2</span>
+          <span class="step-head-title">Window dimensions</span>
+          <span class="step-head-val" id="shv-2"></span>
         </div>
         <div class="step-body">
           <p class="step-subhead">Enter width × height in inches (e.g., 36⅛). Measure to 1/8″ precision. We take 3W × 3H — the installer records final measurements at the home visit.</p>
@@ -218,12 +249,12 @@
         </div>
       </div>
 
-      <!-- ── STEP 2: MOUNT ── -->
+      <!-- ── STEP 3: MOUNT ── -->
       <div class="step-block" id="sec-mount">
         <div class="step-head" onclick="pbToggleStep('sec-mount')">
-          <span class="step-num" id="badge-2">2</span>
+          <span class="step-num" id="badge-3">3</span>
           <span class="step-head-title">Mount &amp; frame situation</span>
-          <span class="step-head-val" id="shv-2"></span>
+          <span class="step-head-val" id="shv-3"></span>
         </div>
         <div class="step-body">
           <p class="step-subhead">Inside mount fits within the window opening. Direct mount frame attaches to the face of the frame. Tracking &amp; sliding systems for bypass, bi-fold, or barn-door configurations.</p>
@@ -237,37 +268,6 @@
             <strong>Inside mount minimum depth</strong>
             Measure the depth of your window opening. 1⅞″ louvers need ~¾″ clearance; 4½″ louvers need ~1¾″. We'll confirm during measurement.
           </div>
-        </div>
-      </div>
-
-      <!-- ── STEP 3: SHUTTER LINE ── -->
-      <div class="step-block" id="sec-line">
-        <div class="step-head" onclick="pbToggleStep('sec-line')">
-          <span class="step-num" id="badge-3">3</span>
-          <span class="step-head-title">Which Norman shutter line?</span>
-          <span class="step-head-val" id="shv-3"></span>
-        </div>
-        <div class="step-body">
-          <p class="step-subhead">This determines available colors, louver sizes, and max panel widths.</p>
-          <div class="line-cards">
-            <div class="line-card" onclick="selLine('Normandy',this)">
-              <div class="line-card-tag">Real Wood</div>
-              <div class="line-card-name">Normandy®</div>
-              <div class="line-card-sub">Hardwood (paint) or Phoenix wood (stain). Widest color range — 24 paint, 18 stain, 6 OSMO. Largest max panel widths up to 42″. Premium look and feel.</div>
-            </div>
-            <div class="line-card" onclick="selLine('Woodlore',this)">
-              <div class="line-card-tag">Composite</div>
-              <div class="line-card-name">Woodlore®</div>
-              <div class="line-card-sub">Composite wood with polypropylene coating — resists moisture, warping, and UV. 6 classic white/neutral colors. Great value for most windows.</div>
-              <div class="line-card-best">Popular</div>
-            </div>
-            <div class="line-card" onclick="selLine('Woodlore Plus',this)">
-              <div class="line-card-tag">Composite+</div>
-              <div class="line-card-name">Woodlore® Plus</div>
-              <div class="line-card-sub">Composite frame + ABS louvers. 24 color options. Optional full waterproof version with stainless steel hinges. Specialty shapes available.</div>
-            </div>
-          </div>
-          <div id="line-note" style="display:none" class="info-note"></div>
         </div>
       </div>
 

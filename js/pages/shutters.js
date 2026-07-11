@@ -141,22 +141,23 @@ function pbToggleStep(secId) {
 }
 
 /* ─── CONTINUE FUNCTIONS ────────────────────────────────── */
-function continueStep1() {
-  pbAdv('sec-dims', 1, 'sec-mount', (S.dims[0].w || '?') + '″W × ' + (S.dims[0].h || '?') + '″H' + (S.exactFrameW ? ' · frame: ' + S.exactFrameW + '″' : ''));
+// Step order: 1 Shutter line → 2 Dimensions → 3 Mount → 4 Opening type → …
+function continueStep1() { // dimensions (step 2) → mount (step 3)
+  pbAdv('sec-dims', 2, 'sec-mount', (S.dims[0].w || '?') + '″W × ' + (S.dims[0].h || '?') + '″H' + (S.exactFrameW ? ' · frame: ' + S.exactFrameW + '″' : ''));
 }
-function continueStep2() {
+function continueStep2() { // mount (step 3) → opening type (step 4)
   if (!S.mount) { alert('Please select a mount type.'); return; }
-  pbAdv('sec-mount', 2, 'sec-line', S.mount.split(' (')[0]);
-}
-function continueStep3() {
-  if (!S.line) { alert('Please select a shutter line.'); return; }
-  pbAdv('sec-line', 3, 'sec-opentype', S.line);
+  pbAdv('sec-mount', 3, 'sec-opentype', S.mount.split(' (')[0]);
   // Auto-advance through opening type if Standard window is already selected
   if (S.opentype === 'Standard window') {
     setTimeout(function() {
       pbAdv('sec-opentype', 4, 'sec-layout', 'Standard window');
     }, 500);
   }
+}
+function continueStep3() { // shutter line (step 1) → dimensions (step 2)
+  if (!S.line) { alert('Please select a shutter line.'); return; }
+  pbAdv('sec-line', 1, 'sec-dims', S.line);
 }
 function continueStep4() {
   if (!S.opentype) { alert('Please select an opening type.'); return; }

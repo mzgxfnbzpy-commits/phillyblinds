@@ -291,14 +291,7 @@
     <!-- Color sub-options (shown after type + openness selected) -->
     <div class="sub-opts" id="color-opts">
       <div class="sub-opts-label">Color</div>
-      <div class="opt-row" id="crs-grp-color">
-        <button class="opt-btn" onclick="crsPickColor(this,'White')">White</button>
-        <button class="opt-btn" onclick="crsPickColor(this,'Off-White')">Off-White</button>
-        <button class="opt-btn" onclick="crsPickColor(this,'Cream')">Cream</button>
-        <button class="opt-btn" onclick="crsPickColor(this,'Gray')">Gray</button>
-        <button class="opt-btn" onclick="crsPickColor(this,'Charcoal')">Charcoal</button>
-        <button class="opt-btn" onclick="crsPickColor(this,'Black')">Black</button>
-      </div>
+      <div id="crs-fabric-picker"></div>
     </div>
   </div>
 </div>
@@ -469,6 +462,7 @@
 
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
+<script src="../js/fabric-picker.js"></script>
 <script src="../js/pages/custom-roller-shades.js"></script>
 <script>
 // Canonical final "Your details" contact + files step — identical on every product.
