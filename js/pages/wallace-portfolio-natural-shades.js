@@ -291,6 +291,27 @@ function renderPatterns(group) {
   // Filter by group
   if(group && group !== 'all') filtered = filtered.filter(p => p.group === group);
 
+  // Consistent shared picker: families grouped into price-group sections.
+  // Colors/codes come straight from PATTERNS — nothing changed, only presentation.
+  if(window.pbFabricPicker){
+    var byFam={};
+    filtered.forEach(function(p){
+      var key=p.group+'|'+p.name;
+      if(!byFam[key]) byFam[key]={grp:p.group,name:p.name,colors:[]};
+      var extra=(p.ebReq?' · Binding Req':'')+(p.edgeSeal?' · Sealed Edge':'');
+      byFam[key].colors.push({n:p.color+extra, c:p.code, hex:colorToCSS(p.color)});
+    });
+    var collections=Object.keys(byFam).map(function(k){ return {type:'nat', pg:byFam[k].grp, name:byFam[k].name, colors:byFam[k].colors}; });
+    pbFabricPicker.render('pattern-grid', {
+      hideTabs:true, showPriceGroups:true,
+      types:[{key:'nat',label:'Natural Woven'}],
+      collections:collections,
+      onSelect:function(sel){ pickPattern(PATTERNS.findIndex(function(p){return p.code===sel.code;})); }
+    });
+    if(W.pattern){ grid.querySelectorAll('.pbfp-sw').forEach(function(b){ if(b.title===W.pattern.code) b.classList.add('sel'); }); }
+    return;
+  }
+
   grid.innerHTML = filtered.map(p => {
     const bg = colorToCSS(p.color);
     const isSelected = W.pattern && W.pattern.code === p.code ? 'sel' : '';

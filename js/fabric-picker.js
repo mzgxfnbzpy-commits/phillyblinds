@@ -104,7 +104,9 @@ window.pbFabricPicker = (function () {
       });
       order.sort(function (a, b) {
         if (a === '_') return 1; if (b === '_') return -1;
-        return (parseFloat(a) || 0) - (parseFloat(b) || 0);
+        var na = parseFloat(a), nb = parseFloat(b);
+        if (!isNaN(na) && !isNaN(nb)) return na - nb;   // numeric groups (1,2,3…)
+        return String(a).localeCompare(String(b));       // letter groups (A,B,C…)
       });
       groups = order.map(function (k) { return byPg[k]; });
     } else {
