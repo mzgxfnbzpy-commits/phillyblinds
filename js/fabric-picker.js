@@ -40,15 +40,15 @@ window.pbFabricPicker = (function () {
       '.pbfp-tab.sel{background:var(--pbfp-accent);border-color:var(--pbfp-accent);color:#231a0d}' +
       '.pbfp-tab .pbfp-tab-sub{display:block;font-size:10px;font-weight:400;opacity:.7;margin-top:2px}' +
       '.pbfp-tab.sel .pbfp-tab-sub{opacity:.85}' +
-      '.pbfp-typedesc{font-size:12px;color:#6a5f50;line-height:1.5;margin:0 0 12px}' +
+      '.pbfp-typedesc{font-size:12px;color:inherit;opacity:.72;line-height:1.5;margin:0 0 12px}' +
       '.pbfp-pg{margin:0 0 14px}' +
       '.pbfp-pg-head{display:flex;align-items:baseline;gap:8px;margin:0 0 8px;padding-top:10px;' +
-        'border-top:1px solid #ece4d6}' +
+        'border-top:1px solid rgba(128,120,105,.28)}' +
       '.pbfp-pg:first-child .pbfp-pg-head{border-top:none;padding-top:0}' +
       '.pbfp-pg-name{font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--pbfp-accent)}' +
-      '.pbfp-pg-tier{font-size:11px;color:#8a7d6a;font-weight:500}' +
+      '.pbfp-pg-tier{font-size:11px;color:inherit;opacity:.6;font-weight:500}' +
       '.pbfp-coll{margin:0 0 10px}' +
-      '.pbfp-coll-name{font-size:10px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:#7a7060;margin:0 0 5px}' +
+      '.pbfp-coll-name{font-size:10px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:inherit;opacity:.6;margin:0 0 5px}' +
       '.pbfp-coll-name .pbfp-warn{color:#e67e22;font-weight:400;text-transform:none;letter-spacing:0;margin-left:5px}' +
       '.pbfp-swatches{display:flex;flex-wrap:wrap;gap:6px}' +
       '.pbfp-sw{appearance:none;display:inline-flex;align-items:center;gap:7px;border:1px solid #ddd4c5;' +
@@ -57,7 +57,7 @@ window.pbFabricPicker = (function () {
       '.pbfp-sw:hover{border-color:var(--pbfp-accent)}' +
       '.pbfp-sw.sel{border-color:var(--pbfp-accent);box-shadow:0 0 0 1px var(--pbfp-accent) inset}' +
       '.pbfp-dot{width:16px;height:16px;border-radius:50%;flex-shrink:0;border:1px solid rgba(0,0,0,.18)}' +
-      '.pbfp-empty{font-size:12px;color:#999;font-style:italic;padding:8px 0}' +
+      '.pbfp-empty{font-size:12px;color:inherit;opacity:.55;font-style:italic;padding:8px 0}' +
       '@media (max-width:520px){.pbfp-tab{flex:1 1 auto;text-align:center}}';
     var s = document.createElement('style');
     s.setAttribute('data-pbfp', '1');
