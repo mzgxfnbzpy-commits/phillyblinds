@@ -1589,26 +1589,32 @@ function normanMotorSection(containerId, productName, onChange) {
   var pn = (productName || '').toLowerCase();
   var isSmartDrape       = pn.indexOf('smartdrape') !== -1 || pn.indexOf('smart drape') !== -1;
   var isRoller           = pn.indexOf('roller') !== -1;
-  var isCellular         = pn.indexOf('cellular') !== -1;
-  var isRolleaseCompat   = isRoller || isCellular;
-  var wandAllowed        = isRolleaseCompat && !isSmartDrape;
+  var isCellular         = pn.indexOf('cellular') !== -1 || pn.indexOf('honeycomb') !== -1;
+  var isRoman            = pn.indexOf('roman') !== -1 || pn.indexOf('centerpiece') !== -1;
+  var isPerfectSheer     = pn.indexOf('perfectsheer') !== -1 || pn.indexOf('perfect sheer') !== -1;
+  // Rollease Acmeda Automate: Honeycomb/Cellular, Soluna Roller, Centerpiece Roman, PerfectSheer
+  // (NOT SmartDrape) — per Norman motorization PDF p.65 availability matrix.
+  var isRolleaseCompat   = (isRoller || isCellular || isRoman || isPerfectSheer) && !isSmartDrape;
+  // Charging Wand recharges the Norman Smart battery — available on Honeycomb + Roller ONLY.
+  var wandAllowed        = (isRoller || isCellular) && !isSmartDrape;
 
   // Battery charging method (roller + cellular). On rollers a charging wand needs a visible control box
   // at the headrail — not recommended; on cellular the wand connects directly at the shade.
   var batteryDetail = wandAllowed
-    ? '<div style="font-size:11px;color:var(--text-dark);line-height:1.6;margin-bottom:6px">Battery charging method:</div>' +
+    ? '<div style="font-size:11px;color:var(--text-dark);line-height:1.6;margin-bottom:6px">How would you like to charge the battery?</div>' +
       '<div class="opt-row" id="nm-grp-battery-type">' +
-        '<button class="opt-btn' + (isCellular ? ' sel' : '') + '" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">Charging Wand (corded)' + (isRoller ? ' <span style="font-size:9px;color:#c77">not rec.</span>' : '') + '</button>' +
-        '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">Cordless Charging Wand' + (isRoller ? ' <span style="font-size:9px;color:#c77">not rec.</span>' : '') + '</button>' +
-        '<button class="opt-btn' + (isRoller ? ' sel' : '') + '" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">AC Adapter Charger' + (isRoller ? ' <span style="font-size:9px;color:var(--gold)">recommended</span>' : '') + '</button>' +
+        '<button class="opt-btn' + (isRoller ? ' sel' : '') + '" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">AC Adapter Charger <span style="font-size:9px;color:var(--gold)">included</span></button>' +
+        '<button class="opt-btn' + (isCellular ? ' sel' : '') + '" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">Wired Charging Wand <span style="font-size:9px;color:var(--text-faint)">+$161</span>' + (isRoller ? ' <span style="font-size:9px;color:#c77">not rec.</span>' : (isCellular ? ' <span style="font-size:9px;color:var(--gold)">recommended</span>' : '')) + '</button>' +
+        '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">Wireless Charging Wand <span style="font-size:9px;color:var(--text-faint)">+$428</span>' + (isRoller ? ' <span style="font-size:9px;color:#c77">not rec.</span>' : '') + '</button>' +
       '</div>' +
       '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">' +
+        'The rechargeable battery comes with an <strong>AC Adapter Charger</strong> at no extra cost — plug it in every few months to top up. ' +
         (isRoller
-          ? 'On roller shades a charging wand needs a small visible control box at the top of the shade — we don\'t recommend it; use the AC Adapter Charger. '
-          : 'On cellular shades the charging wand connects directly at the shade (no visible box). ') +
-        'The corded Charging Wand supports an extension; the Cordless Charging Wand does not. Charging Wand is not available with a Cassette headrail or Dual shades — use the AC Adapter Charger for those.</div>'
-    : '<div style="font-size:11px;color:var(--text-dark);line-height:1.6">Rechargeable battery, recharged with an AC Adapter Charger (plug the charger into the battery periodically). No wiring required — ideal for retrofit installations.' +
-      (isSmartDrape ? ' Charging Wand is not available for SmartDrape.' : ' Charging Wand is not available for this product type.') + '</div>';
+          ? 'On roller shades a charging wand needs a small visible control box at the top of the shade, so we recommend the included charger here. '
+          : 'On cellular shades a Charging Wand recharges the shade with a wand instead of taking it down — recommended. ') +
+        'The <strong>Wired</strong> wand stays plugged in and includes an extension cable for extra reach; the <strong>Wireless</strong> wand is cordless (charge the wand, then charge the shade). A 36&quot; Extension Pole (+$75) is available for either. Charging Wand is not available with a Cassette headrail or Dual shades.</div>'
+    : '<div style="font-size:11px;color:var(--text-dark);line-height:1.6">Rechargeable battery, recharged with the included AC Adapter Charger (plug the charger into the battery every few months). No wiring required — ideal for retrofit installations.' +
+      (isSmartDrape ? ' A Charging Wand is not available for SmartDrape.' : ' A Charging Wand is not available for this product type.') + '</div>';
 
   var dcLowVoltageBtn = isSmartDrape
     ? '<button class="opt-btn" style="color:#aaa;text-decoration:line-through;cursor:not-allowed" disabled title="DC Low Voltage not available for SmartDrape">DC Low Voltage ⚠</button>'
@@ -1679,8 +1685,8 @@ function normanMotorSection(containerId, productName, onChange) {
         '</div>' +
         '<div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px;margin-top:10px">Remote type</div>' +
         '<div class="opt-row" id="nm-grp-remote-type">' +
-          '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-remote-type\')" style="color:#333">Basic Remote</button>' +
-          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-remote-type\')" style="color:#333">SmartDial G2</button>' +
+          '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-remote-type\')" style="color:#333">Basic Remote <span style="font-size:9px;color:var(--text-faint)">$75</span></button>' +
+          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-remote-type\')" style="color:#333">SmartDial G2 <span style="font-size:9px;color:var(--text-faint)">$268</span></button>' +
         '</div>' +
         '<div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px;margin-top:10px">Channels</div>' +
         '<div class="opt-row" id="nm-grp-channel">' +
@@ -1689,10 +1695,14 @@ function normanMotorSection(containerId, productName, onChange) {
         '<div style="font-size:10px;color:var(--text-faint);margin-top:5px">Norman Smart remotes (Basic &amp; SmartDial G2) are multi-channel — control each shade independently, or assign several shades to the same channel to move them together.</div>' +
       '</div>' +
 
-      // Smart home
+      // Smart home hub
       '<div>' +
-        '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Smart home integration</div>' +
-        '<div style="font-size:11px;color:var(--text-dark);line-height:1.7">Works with <strong>Amazon Alexa, Google Home &amp; Apple HomeKit</strong> — no need to choose; the system integrates with all of them. A hub enables app &amp; voice control (ShadeAuto Hub + Repeater available as an add-on; max 5 repeaters per system).</div>' +
+        '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Smart home hub</div>' +
+        '<div class="opt-row" id="nm-grp-hub">' +
+          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-hub\')" style="color:#333">Add ShadeAuto hub <span style="font-size:9px;color:var(--text-faint)">+$321</span></button>' +
+          '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-hub\')" style="color:#333">No hub</button>' +
+        '</div>' +
+        '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.7">The hub connects your shades to your phone and to <strong>Amazon Alexa, Google Home &amp; Apple HomeKit</strong> — no need to pick one, it works with all of them. Without a hub, shades run from the remote. Max 5 repeaters per system.</div>' +
       '</div>' +
     '</div>';
 
@@ -1701,14 +1711,22 @@ function normanMotorSection(containerId, productName, onChange) {
     ? '<div id="nm-rollease-section" style="display:none">' +
         '<div style="font-size:11px;background:#2a1c0e;border:1px solid #7a5020;border-radius:7px;padding:8px 12px;color:#e8b060;margin-bottom:12px;line-height:1.5">Rollease Acmeda Automate — <strong>custom priced</strong>. For customers integrating with an existing Rollease Acmeda smart-home system. Final price confirmed at your measurement visit.</div>' +
 
-        // Power source
+        // Power source (Honeycomb: Battery Pack or AC Adapter, both $682, no DC;
+        //   Roller/Roman/PerfectSheer: Li-ion $682 or Low Voltage DC $814 — PDF p.65)
         '<div style="margin-bottom:12px">' +
           '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Power source</div>' +
           '<div class="opt-row" id="auto-grp-power">' +
-            '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#128267; Rechargeable battery (Li-ion)</button>' +
-            '<button class="opt-btn" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#9889; Hardwired</button>' +
+            (isCellular
+              ? '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#128267; Rechargeable Battery Pack <span style="font-size:9px;color:var(--text-faint)">$682</span></button>' +
+                '<button class="opt-btn" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#128268; AC Adapter <span style="font-size:9px;color:var(--text-faint)">$682</span></button>'
+              : '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#128267; Rechargeable battery (Li-ion) <span style="font-size:9px;color:var(--text-faint)">$682</span></button>' +
+                '<button class="opt-btn" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#9889; Low Voltage DC <span style="font-size:9px;color:var(--text-faint)">$814</span></button>') +
           '</div>' +
-          '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">Automate Li-ion rechargeable motor (AC wall charger) or hardwired. Confirmed at measurement.</div>' +
+          '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">' +
+            (isCellular
+              ? 'Automate motor powered by an external rechargeable battery pack or an AC adapter. '
+              : 'Automate Li-ion rechargeable motor (external battery pack $230 available) or 12V DC low-voltage hardwired (DC connection harness $19). ') +
+            'Custom priced — confirmed at measurement.</div>' +
         '</div>' +
 
         // Remote
@@ -1734,7 +1752,7 @@ function normanMotorSection(containerId, productName, onChange) {
         '<div>' +
           '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Automate Pulse 2 hub</div>' +
           '<div class="opt-row" id="auto-grp-hub">' +
-            '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-hub\')" style="color:#333">Add hub (app + voice)</button>' +
+            '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-hub\')" style="color:#333">Add hub (app + voice) <span style="font-size:9px;color:var(--text-faint)">$483</span></button>' +
             '<button class="opt-btn" onclick="selOpt(this,\'auto-grp-hub\')" style="color:#333">No hub</button>' +
           '</div>' +
           '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">The Automate Pulse 2 hub enables the Automate app and voice control (Alexa, Google Home, Apple HomeKit).</div>' +
@@ -1791,16 +1809,22 @@ function nmGetMotorSummary() {
       ' | Remote: ' + (aHasRemote ? 'Yes (' + aChan + ')' : 'No — app/hub only') +
       ' | Hub: ' + (aHub.indexOf('Add') === 0 ? 'Automate Pulse 2' : 'None');
   }
-  var power   = (document.querySelector('#nm-grp-power .opt-btn.sel') || {}).textContent || '—';
-  var wire    = (document.querySelector('#nm-grp-wire .opt-btn.sel') || {}).textContent || '';
+  function nmClean(t){ return (t||'').replace(/\s*\+?\$[\d,]+/g,'').replace(/\b(included|recommended|not rec\.?)\b/gi,'').replace(/[^\w\s\-]/g,'').replace(/\s+/g,' ').trim(); }
+  var power   = nmClean((document.querySelector('#nm-grp-power .opt-btn.sel') || {}).textContent) || '—';
+  var charge  = nmClean((document.querySelector('#nm-grp-battery-type .opt-btn.sel') || {}).textContent);
+  var wire    = nmClean((document.querySelector('#nm-grp-wire .opt-btn.sel') || {}).textContent);
   var remote  = (document.querySelector('#nm-grp-remote .opt-btn.sel') || {}).textContent || '—';
-  var remotes = (document.querySelector('#nm-grp-remotes .opt-btn.sel') || {}).textContent || '';
-  var channel = (document.querySelector('#nm-grp-channel .opt-btn.sel') || {}).textContent || '';
-  return 'Norman Smart — Power: ' + power.replace(/[^\w\s]/g,'').trim() +
+  var remotes = nmClean((document.querySelector('#nm-grp-remotes .opt-btn.sel') || {}).textContent);
+  var rtype   = nmClean((document.querySelector('#nm-grp-remote-type .opt-btn.sel') || {}).textContent);
+  var channel = nmClean((document.querySelector('#nm-grp-channel .opt-btn.sel') || {}).textContent);
+  var hub     = (document.querySelector('#nm-grp-hub .opt-btn.sel') || {}).textContent || '';
+  var isBattery = power.toLowerCase().indexOf('battery') !== -1;
+  var noRemote  = remote.toLowerCase().indexOf('no') === 0;
+  return 'Norman Smart — Power: ' + power +
+    (isBattery && charge ? ' (' + charge + ')' : '') +
     (wire ? ' — ' + wire : '') +
-    ' | Remote: ' + remote.replace(/[^\w\s\-]/g,'').trim() +
-    (remotes ? ' × ' + remotes + ' (' + channel + ')' : '') +
-    ' | Integrates with Alexa, Google Home & Apple HomeKit';
+    ' | Remote: ' + (noRemote ? 'None (app only)' : (rtype || 'Basic Remote') + (remotes ? ' ×' + remotes : '') + (channel ? ' ' + channel : '')) +
+    ' | Hub: ' + (hub.toLowerCase().indexOf('add') !== -1 ? 'ShadeAuto hub' : 'None');
 }
 
 // ---- INSTALLATION ADD-ON — auto-injects into every quote form ----
