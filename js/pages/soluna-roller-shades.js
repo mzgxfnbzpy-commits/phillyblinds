@@ -485,7 +485,13 @@ function updateSummary() {
       var _solYour   = Math.round(_solRetail * 0.65);
       var pTxt = '$' + _solRetail.toLocaleString() + ' retail → $' + _solYour.toLocaleString() + ' your price (35% off)';
       if (priceResult.qty > 1 && !_solCoupledActive) pTxt += ' · ' + priceResult.qty + ' × $' + Math.round(priceResult.unit * 0.65).toLocaleString();
-      if (priceResult.motor) pTxt += ' + motor est.';
+      if (priceResult.motor && typeof nmGetMotorPrice === 'function') {
+        var _mShades = (_solCoupledActive ? _solCoupledCount : (priceResult.qty || 1)) * (shadeType === 'Dual Shade' ? 2 : 1);
+        var _mPrice = nmGetMotorPrice('Soluna Roller Shade', _mShades);
+        if (_mPrice > 0) {
+          pTxt += ' + motor & accessories $' + _mPrice.toLocaleString() + ' (not discounted) = $' + (_solYour + _mPrice).toLocaleString() + ' total';
+        }
+      }
       priceEl2.textContent = pTxt;
       priceRow.style.display = '';
     } else {
@@ -532,7 +538,14 @@ function submitQuote() {
   const priceEstLine = (priceEst && priceEst.review)
     ? 'Size exceeds standard price chart (max 120"W x 144"H) — MANUAL QUOTE REQUIRED'
     : priceEst
-    ? 'Est. retail: $' + priceEst.total.toLocaleString() + ' → 35% off → your price: $' + Math.round(priceEst.total * 0.65).toLocaleString() + ' (freight/motor additional, not discounted)' + (priceEst.motor ? ' (motor priced separately)' : '') + (priceEst.qty > 1 && !_solCoupledActive ? ' (' + priceEst.qty + ' × $' + priceEst.unit.toLocaleString() + ')' : '')
+    ? 'Est. retail: $' + priceEst.total.toLocaleString() + ' → 35% off → shade price: $' + Math.round(priceEst.total * 0.65).toLocaleString() + (function(){
+        if (priceEst.motor && typeof nmGetMotorPrice === 'function') {
+          var _ms = (_solCoupledActive ? _solCoupledCount : (priceEst.qty || 1)) * (shadeType === 'Dual Shade' ? 2 : 1);
+          var _mp = nmGetMotorPrice('Soluna Roller Shade', _ms);
+          if (_mp > 0) return ' + motor & accessories: $' + _mp.toLocaleString() + ' (not discounted) = TOTAL $' + (Math.round(priceEst.total * 0.65) + _mp).toLocaleString();
+        }
+        return '';
+      })() + ' (freight additional)' + (priceEst.qty > 1 && !_solCoupledActive ? ' (' + priceEst.qty + ' × $' + priceEst.unit.toLocaleString() + ')' : '')
     : '';
   const body = [
     '=== PREMIER NORMAN ROLLER SHADE QUOTE REQUEST ===',

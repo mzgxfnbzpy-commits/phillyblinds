@@ -175,20 +175,20 @@ function psCalc() {
   if (PS.holddown)  total += 28;
   if (PS.shims > 0) total += PS.shims * 7;
 
-  // ── Customer-facing breakdown: only allowed add-on surcharges (motor), then retail → 35% off → price ──
+  // ── Customer-facing breakdown: retail → 35% off → price; motor+accessories at full price ──
   // (base table price, +20% fabric, valance, light-guard, hold-down, shims are intentionally hidden)
   var lines = [];
-  if (!isCCL) lines.push('Motorization ($' + PS_MOTOR_COST + '/shade): added to final quote');
-  if (lines.length) lines.push('<hr style="border:none;border-top:1px solid rgba(255,255,255,.15);margin:7px 0">');
-
   var discAmt   = Math.round(total * PS_NORM_DISC);
   var yourPrice = total - discAmt;
   lines.push('Retail: $' + total.toLocaleString());
   lines.push('<span style="color:var(--gold)">35% Norman discount: −$' + discAmt.toLocaleString() + '</span>');
-  lines.push('<span style="color:var(--gold);font-weight:600">Your price: $' + yourPrice.toLocaleString() + '/shade</span>');
+  lines.push('<span style="color:var(--gold);font-weight:600">Your shade price: $' + yourPrice.toLocaleString() + '/shade</span>');
 
+  // Motor charged at full Norman retail (NOT discounted) via shared nmGetMotorPrice
+  var psMotor    = (!isCCL && typeof nmGetMotorPrice === 'function') ? nmGetMotorPrice('PerfectSheer', PS.qty) : 0;
   var freight    = w >= 90 ? (80 + Math.max(0, PS.qty - 1) * 50) : (25 + Math.max(0, PS.qty - 1) * 11);
-  var grandTotal = (yourPrice * PS.qty) + freight;
+  var grandTotal = (yourPrice * PS.qty) + psMotor + freight;
+  if (psMotor) lines.push('Motor &amp; accessories (not discounted): +$' + psMotor.toLocaleString());
   lines.push('Freight (not discounted): +$' + freight.toLocaleString());
 
   document.getElementById('ps-price-num').textContent   = '$' + yourPrice.toLocaleString() + '/shade';
@@ -238,8 +238,9 @@ function psAddToCart() {
     var motorSummary = (typeof nmGetMotorSummary === 'function') ? nmGetMotorSummary() : 'Norman Smart Motorization';
     lines.splice(7, 0, {label:'Motor config', value: motorSummary});
   }
+  var psMotor = (PS.lift !== 'ccl' && typeof nmGetMotorPrice === 'function') ? nmGetMotorPrice('PerfectSheer', PS.qty) : 0;
   var specs = lines.map(function(l){ return l.label + ': ' + l.value; }).join(' | ');
-  pbAddToCart({product:'Norman PerfectSheer™', lines:lines, specs:specs, price:yourPrice * PS.qty + freight, qty:PS.qty});
+  pbAddToCart({product:'Norman PerfectSheer™', lines:lines, specs:specs, price:yourPrice * PS.qty + psMotor + freight, qty:PS.qty});
   if (typeof pbOpenCart === 'function') pbOpenCart();
 }
 

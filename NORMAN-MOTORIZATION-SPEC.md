@@ -106,6 +106,30 @@ For every motorizable Norman product:
 3. **Roll-Ease Automate** → power (rechargeable Li-ion / DC low-voltage), remote **single OR multi-channel** (15-ch $140), wall switch $163, **hub? yes/no** ($483). Motor $682 (rech.) / $814 (DC). Custom-priced note.
 4. **No AutoWand motor** — not offered.
 
+## 💲 PRICING MODEL — what the customer is actually charged (`nmGetMotorPrice()`)
+
+All prices = Norman **suggested retail**, added **at full price (NOT discounted)** on top of the shade price (the 35%-off applies to the shade only; motor/freight are additional per the book note).
+
+**NO FREE ITEMS** (owner rule 2026-07-13) — every accessory is charged, including the charger. The only $0 case is choosing **"No remote (app only)"** or **AC plug-in power** (no battery = no charger).
+
+**CHARGED (added to the estimate):**
+| Item | Price | Notes |
+|---|---|---|
+| Norman Smart motor | **$482 / shade** | SmartDrape $642. ×2 for Dual roller / D&N honeycomb. |
+| AC Adapter Charger (charging kit) | +$43 / shade | when on rechargeable battery (default) w/o a wand |
+| Wired Charging Wand | +$161 / shade | Honeycomb + Roller only (replaces the $43 charger) |
+| Wireless Charging Wand | +$428 / shade | Honeycomb + Roller only |
+| DC Connection Harness | +$11 / shade | when DC-hardwired power chosen |
+| ShadeAuto Hub | +$321 | once per order |
+| Basic Remote | +$75 × qty | remote(s) — first one charged too; "No remote" = $0 |
+| SmartDial G2 Remote | +$268 × qty | upgrade |
+| **Rollease** motor | **$682** (rech) / **$814** (DC) / shade | Honeycomb = Battery-Pack/AC $682 only |
+| Rollease charging kit / DC harness | +$103 / +$19 / shade | kit on rechargeable, harness on DC |
+| Rollease Hub | +$483 | once |
+| Rollease 15-ch Remote | +$140 | |
+
+Implemented as shared `nmGetMotorPrice(productName, count, baseOverride)` in shared.js (mirrors `nmGetMotorSummary`). **Wired into all Norman price calcs (2026-07-13):** Soluna Roller, Portrait Cellular (standalone + shades.js inline), Centerpiece Roman, PerfectSheer, SmartDrape, and the Norman roller (rn-) in shades.js. In every one the motor + accessories are now added at **full retail (not discounted)** on top of the 35%-off shade price (previously the motor was either ignored or folded into the discount). Cellular/Roman **D&N/TDBU pass baseOverride 642** (dual motor); dual roller passes count×2. `baseOverride` defaults to 482 (SmartDrape 642). 10/10 unit tests pass. **TODO: mirror to BZ.** Advanced accessories (repeater $107/$272, DC harness $11/$19, power dist panel $931/$1,133, ext pole $75, ext cable $43, ext battery $230, solar $242, wall switch $163) are on the price sheet but not yet in the UI — add if the owner wants them selectable.
+
 ## Products with NO motorization at all
 Synchrony Verticals, City Lights Aluminum, SmartPrivacy Faux Wood (cordless only) — confirmed in site CLAUDE.md, not in this PDF.
 

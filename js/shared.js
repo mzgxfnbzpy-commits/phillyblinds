@@ -1603,17 +1603,17 @@ function normanMotorSection(containerId, productName, onChange) {
   var batteryDetail = wandAllowed
     ? '<div style="font-size:11px;color:var(--text-dark);line-height:1.6;margin-bottom:6px">How would you like to charge the battery?</div>' +
       '<div class="opt-row" id="nm-grp-battery-type">' +
-        '<button class="opt-btn' + (isRoller ? ' sel' : '') + '" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">AC Adapter Charger <span style="font-size:9px;color:var(--gold)">included</span></button>' +
+        '<button class="opt-btn' + (isRoller ? ' sel' : '') + '" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">AC Adapter Charger <span style="font-size:9px;color:var(--text-faint)">+$43</span></button>' +
         '<button class="opt-btn' + (isCellular ? ' sel' : '') + '" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">Wired Charging Wand <span style="font-size:9px;color:var(--text-faint)">+$161</span>' + (isRoller ? ' <span style="font-size:9px;color:#c77">not rec.</span>' : (isCellular ? ' <span style="font-size:9px;color:var(--gold)">recommended</span>' : '')) + '</button>' +
         '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">Wireless Charging Wand <span style="font-size:9px;color:var(--text-faint)">+$428</span>' + (isRoller ? ' <span style="font-size:9px;color:#c77">not rec.</span>' : '') + '</button>' +
       '</div>' +
       '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">' +
-        'The rechargeable battery comes with an <strong>AC Adapter Charger</strong> at no extra cost — plug it in every few months to top up. ' +
+        'The rechargeable battery recharges with an <strong>AC Adapter Charger</strong> (+$43) — plug it in every few months to top up. ' +
         (isRoller
           ? 'On roller shades a charging wand needs a small visible control box at the top of the shade, so we recommend the included charger here. '
           : 'On cellular shades a Charging Wand recharges the shade with a wand instead of taking it down — recommended. ') +
         'The <strong>Wired</strong> wand stays plugged in and includes an extension cable for extra reach; the <strong>Wireless</strong> wand is cordless (charge the wand, then charge the shade). A 36&quot; Extension Pole (+$75) is available for either. Charging Wand is not available with a Cassette headrail or Dual shades.</div>'
-    : '<div style="font-size:11px;color:var(--text-dark);line-height:1.6">Rechargeable battery, recharged with the included AC Adapter Charger (plug the charger into the battery every few months). No wiring required — ideal for retrofit installations.' +
+    : '<div style="font-size:11px;color:var(--text-dark);line-height:1.6">Rechargeable battery, recharged with an AC Adapter Charger (+$43; plug the charger into the battery every few months). No wiring required — ideal for retrofit installations.' +
       (isSmartDrape ? ' A Charging Wand is not available for SmartDrape.' : ' A Charging Wand is not available for this product type.') + '</div>';
 
   var dcLowVoltageBtn = isSmartDrape
@@ -1663,7 +1663,7 @@ function normanMotorSection(containerId, productName, onChange) {
           dcLowVoltageBtn +
           (isSmartDrape ? '' : '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-wire\')" style="color:#333">DC Low Voltage hard wire</button>') +
         '</div>' +
-        '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">DC hard wire (15V). Licensed electrician install recommended. Confirmed at measurement visit.' +
+        '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">DC hard wire (15V, +$11 DC connection harness). Licensed electrician install recommended. Confirmed at measurement visit.' +
           (isSmartDrape ? ' DC Low Voltage is NOT available for SmartDrape.' : '') + '</div>' +
       '</div>' +
 
@@ -1825,6 +1825,53 @@ function nmGetMotorSummary() {
     (wire ? ' — ' + wire : '') +
     ' | Remote: ' + (noRemote ? 'None (app only)' : (rtype || 'Basic Remote') + (remotes ? ' ×' + remotes : '') + (channel ? ' ' + channel : '')) +
     ' | Hub: ' + (hub.toLowerCase().indexOf('add') !== -1 ? 'ShadeAuto hub' : 'None');
+}
+
+// Returns the motorization surcharge (Norman suggested retail, NOT discounted) for the
+// currently-selected motor options. Charger (AC adapter) is INCLUDED/free; motor, charging
+// wands, hub, remotes & the SmartDial G2 upgrade are all charged. Prices verified vs the
+// Norman motorization PDF (Norman Smart p.5; Rollease Acmeda Automate p.63–65).
+//   productName  — same string passed to normanMotorSection (for base motor by product)
+//   count        — number of motorized shades (caller passes qty, ×2 for dual/D&N, etc.)
+//   baseOverride — optional Norman Smart motor base (e.g. 642 dual motor for cellular D&N/TDBU)
+function nmGetMotorPrice(productName, count, baseOverride) {
+  count = count || 1;
+  var sel = function(id){ var b = document.querySelector('#' + id + ' .opt-btn.sel'); return b ? b.textContent : ''; };
+  var brandBtn = document.querySelector('#nm-grp-brand .opt-btn.sel');
+  var isRollease = brandBtn && /rollease/i.test(brandBtn.textContent);
+
+  if (isRollease) {
+    // Rollease Acmeda Automate (custom priced). Honeycomb has no DC motor. No free items:
+    var pwrA = sel('auto-grp-power');
+    var dc = /dc|low voltage/i.test(pwrA);
+    var total = (dc ? 814 : 682) * count;                         // motor per shade
+    if (dc) total += 19 * count;                                  // DC connection harness
+    else if (/battery|rechargeable/i.test(pwrA) || !pwrA) total += 103 * count; // charging kit (AC Adapter = plug-in, no kit)
+    if (/add/i.test(sel('auto-grp-hub'))) total += 483;           // hub (once)
+    if (/yes/i.test(sel('auto-grp-remote'))) total += 140;        // 15-channel remote
+    return total;
+  }
+
+  // Norman Smart — no free items: every power source carries its charger/harness cost.
+  var pn = (productName || '').toLowerCase();
+  var base = baseOverride || ((pn.indexOf('smartdrape') !== -1 || pn.indexOf('smart drape') !== -1) ? 642 : 482);
+  var total = base * count;                                       // motor per shade
+  var power = sel('nm-grp-power');                                // power source
+  if (/battery|rechargeable/i.test(power) || !power) {            // rechargeable battery (default)
+    var ch = sel('nm-grp-battery-type');                          // charging method
+    if (/wired/i.test(ch))         total += 161 * count;          // Wired Charging Wand
+    else if (/wireless/i.test(ch)) total += 428 * count;          // Wireless Charging Wand
+    else                           total += 43 * count;           // AC Adapter Charger / charging kit (charged)
+  } else if (/dc|hardwire/i.test(power)) {
+    total += 11 * count;                                          // DC Connection Harness
+  }                                                               // AC plug-in = permanent power, no charger
+  if (/add/i.test(sel('nm-grp-hub'))) total += 321;               // ShadeAuto hub (once)
+  if (/include remote/i.test(sel('nm-grp-remote'))) {             // remote(s) — "No remote (app only)" charges nothing
+    var unit = /g2/i.test(sel('nm-grp-remote-type')) ? 268 : 75;  // SmartDial G2 vs Basic
+    var rc = parseInt((sel('nm-grp-remotes') || '1').replace(/\D/g, ''), 10) || 1;
+    total += unit * rc;
+  }
+  return total;
 }
 
 // ---- INSTALLATION ADD-ON — auto-injects into every quote form ----
