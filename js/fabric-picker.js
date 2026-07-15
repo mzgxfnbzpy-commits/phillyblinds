@@ -56,6 +56,7 @@ window.pbFabricPicker = (function () {
         'cursor:pointer;transition:border-color .12s,box-shadow .12s;line-height:1.1}' +
       '.pbfp-sw:hover{border-color:var(--pbfp-accent)}' +
       '.pbfp-sw.sel{border-color:var(--pbfp-accent);box-shadow:0 0 0 1px var(--pbfp-accent) inset}' +
+      '.pbfp-sw:focus-visible,.pbfp-tab:focus-visible{outline:2px solid var(--pbfp-accent);outline-offset:2px}' +
       '.pbfp-dot{width:16px;height:16px;border-radius:50%;flex-shrink:0;border:1px solid rgba(0,0,0,.18)}' +
       '.pbfp-empty{font-size:12px;color:inherit;opacity:.55;font-style:italic;padding:8px 0}' +
       '@media (max-width:520px){.pbfp-tab{flex:1 1 auto;text-align:center}}';
@@ -153,10 +154,14 @@ window.pbFabricPicker = (function () {
           var btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'pbfp-sw';
+          btn.setAttribute('aria-pressed', 'false');
+          btn.setAttribute('aria-label',
+            color.n + (color.c ? ', ' + color.c : '') + (coll.name ? ', ' + _clean(coll.name) : ''));
           if (color.hex) {
             var dot = document.createElement('span');
             dot.className = 'pbfp-dot';
             dot.style.background = color.hex;
+            dot.setAttribute('aria-hidden', 'true');
             btn.appendChild(dot);
           }
           var lbl = document.createElement('span');
@@ -164,8 +169,9 @@ window.pbFabricPicker = (function () {
           btn.appendChild(lbl);
           if (color.c) btn.title = color.c;
           btn.onclick = function () {
-            container.querySelectorAll('.pbfp-sw.sel').forEach(function (b) { b.classList.remove('sel'); });
+            container.querySelectorAll('.pbfp-sw.sel').forEach(function (b) { b.classList.remove('sel'); b.setAttribute('aria-pressed', 'false'); });
             btn.classList.add('sel');
+            btn.setAttribute('aria-pressed', 'true');
             container._pbfpSel = {
               type: typeKey,
               collection: _clean(coll.name || ''),
@@ -193,23 +199,30 @@ window.pbFabricPicker = (function () {
     container.innerHTML = '';
     container._pbfpSel = null;
     container._pbfpConfig = config;
+    if (!container.getAttribute('role')) container.setAttribute('role', 'group');
+    if (!container.getAttribute('aria-label')) container.setAttribute('aria-label', 'Fabric color selection');
 
     var tabs = null;
     // Hide the tab bar for single-type products (type is chosen elsewhere).
     if (!config.hideTabs && config.types.length > 1) {
       tabs = document.createElement('div');
       tabs.className = 'pbfp-tabs';
+      tabs.setAttribute('role', 'tablist');
+      tabs.setAttribute('aria-label', 'Fabric type');
       config.types.forEach(function (t, i) {
         var b = document.createElement('button');
         b.type = 'button';
         b.className = 'pbfp-tab';
         b.setAttribute('data-key', t.key);
+        b.setAttribute('role', 'tab');
+        b.setAttribute('aria-selected', 'false');
         var main = document.createElement('span');
         main.textContent = t.label;
         b.appendChild(main);
         b.onclick = function () {
-          tabs.querySelectorAll('.pbfp-tab').forEach(function (x) { x.classList.remove('sel'); });
+          tabs.querySelectorAll('.pbfp-tab').forEach(function (x) { x.classList.remove('sel'); x.setAttribute('aria-selected', 'false'); });
           b.classList.add('sel');
+          b.setAttribute('aria-selected', 'true');
           _renderType(container, config, t.key);
         };
         tabs.appendChild(b);
@@ -225,7 +238,7 @@ window.pbFabricPicker = (function () {
     if (startKey) {
       if (tabs) {
         var startTab = tabs.querySelector('.pbfp-tab[data-key="' + startKey + '"]');
-        if (startTab) startTab.classList.add('sel');
+        if (startTab) { startTab.classList.add('sel'); startTab.setAttribute('aria-selected', 'true'); }
       }
       _renderType(container, config, startKey);
     }
