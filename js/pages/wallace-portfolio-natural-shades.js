@@ -66,7 +66,6 @@ const PATTERNS = [
   {code:'ZH-55E',name:'Eze',     color:'Teak',          group:'B',comp:'60% Jute, 40% Bamboo',                    sp:true,nd:false,ebReq:false,edgeSeal:false,ebColor:['Cedar'],      motorSqFtLiner:36,motorSqFtNoLiner:44,book:'R21'},
   {code:'ZH-010',name:'Lille',   color:'Mocha',         group:'B',comp:'50% Jute, 50% Polyester',                 sp:true,nd:false,ebReq:true, edgeSeal:false,ebColor:['Linen'],      motorSqFtLiner:56,motorSqFtNoLiner:64,book:'L25'},
   {code:'ZH-027',name:'Lyon',    color:'Gray Mist',     group:'B',comp:'100% Jute',                               sp:true,nd:true, ebReq:false,edgeSeal:true, ebColor:['Linen'],      motorSqFtLiner:56,motorSqFtNoLiner:64,book:'R12'},
-  {code:'ZH-030',name:'Maddox',  color:'Earth',         group:'B',comp:'80% Paper, 20% Ramie',                    sp:true,nd:false,ebReq:true, edgeSeal:false,ebColor:['Silver Gray'], motorSqFtLiner:56,motorSqFtNoLiner:64,book:'L32'},
   // ── Group C ─────────────────────────────────────────────────────────────────
   {code:'ZH-193',name:'Acacia',  color:'Chalk',         group:'C',comp:'80% Flax, 20% Jute',                      sp:true,nd:true, ebReq:true, edgeSeal:false,ebColor:['Ivory'],      motorSqFtLiner:56,motorSqFtNoLiner:64,book:'L8'},
   {code:'ZH-243',name:'Acacia',  color:'Mist',          group:'C',comp:'80% Flax, 20% Jute',                      sp:true,nd:true, ebReq:true, edgeSeal:false,ebColor:['Marble'],     motorSqFtLiner:56,motorSqFtNoLiner:64,book:'L16'},
