@@ -478,6 +478,8 @@ document.addEventListener('click', function(e) {
 function selOpt(el, groupId) {
   document.querySelectorAll('#' + groupId + ' .opt-btn').forEach(b => b.classList.remove('sel'));
   el.classList.add('sel');
+  // Live price refresh: motor option groups (nm-… / auto-…) re-run the page's recalc.
+  if (/^(nm-|auto-)/.test(groupId)) nmFireChange(el);
 }
 function getOpt(groupId) {
   const s = document.querySelector('#' + groupId + ' .opt-btn.sel');
@@ -1580,7 +1582,31 @@ function pbCloseCheckout() {
  * @param {string} productName  — e.g. 'Cellular Shade', 'Roller Shade'
  * @param {Function} onChange   — called when any option changes
  */
+// Live-refresh plumbing: pages pass their price-recalc fn as normanMotorSection's `onChange`.
+// Motor option clicks (selOpt on nm-/auto- groups) and accessory toggles call nmFireChange()
+// so the displayed total updates immediately when any motor sub-option changes.
+// Fallback for callers that fire without an originating element.
+var _nmMotorChangeCb = null;
+/**
+ * Re-run the price calc for the motor section the change happened in.
+ * @param {Element} [el] — the element that changed; we walk up to its motor section
+ *                         so the right product recalcs on multi-configurator pages.
+ */
+function nmFireChange(el) {
+  var cb = null;
+  if (el && el.closest) {
+    var root = el.closest('[data-nm-root]');
+    if (root && typeof root._nmCb === 'function') cb = root._nmCb;
+  }
+  if (!cb && typeof _nmMotorChangeCb === 'function') cb = _nmMotorChangeCb;
+  if (cb) { try { cb(); } catch (e) {} }
+}
+// Multi-select accessory toggle (not mutually exclusive — unlike selOpt). Each accessory button
+// carries data-nm-price; nmGetMotorPrice sums the selected ones.
+function nmToggleAcc(btn) { btn.classList.toggle('sel'); nmFireChange(btn); }
+
 function normanMotorSection(containerId, productName, onChange) {
+  if (typeof onChange === 'function') _nmMotorChangeCb = onChange;
   // Norman motor options (2026):
   //   Norman Smart — default/recommended for all motorizable Norman products
   //   Rollease Acmeda Automate — available on Roller + Cellular only (Norman's rebranded Rollease offering)
@@ -1631,6 +1657,33 @@ function normanMotorSection(containerId, productName, onChange) {
         '<div style="font-size:10px;color:var(--text-faint);margin-top:4px;line-height:1.5">Rollease Acmeda Automate is available for customers integrating with an existing Rollease Acmeda smart home system.</div>' +
       '</div>'
     : '<div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px">&#9889; Norman Smart Motorization</div>';
+
+  // Optional advanced add-ons (multi-select; nmGetMotorPrice sums selected data-nm-price)
+  var _accBtn = function(key, label, price) {
+    return '<button class="opt-btn" data-nm-acc="' + key + '" data-nm-price="' + price + '" onclick="nmToggleAcc(this)" style="color:#333">' + label + ' <span style="font-size:9px;color:var(--text-faint)">+$' + price + '</span></button>';
+  };
+  var extCableOk = (isRoller || isRoman || isPerfectSheer) && !isSmartDrape;
+  var nmAddons =
+    '<div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.1)">' +
+      '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Optional add-ons <span style="font-size:10px;font-weight:400;color:var(--text-faint)">(tap to add)</span></div>' +
+      '<div class="opt-row">' +
+        _accBtn('repeater', 'Signal repeater', 107) +
+        (wandAllowed ? _accBtn('extpole', '36&quot; extension pole', 75) : '') +
+        (extCableOk ? _accBtn('extcable', 'Extension cable', 43) : '') +
+      '</div>' +
+      '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">Repeater extends wireless range in larger homes. Extension pole lengthens the charging wand for high windows. Extension cable helps reach high or recessed installs.</div>' +
+    '</div>';
+  var autoAddons =
+    '<div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.1)">' +
+      '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Optional add-ons <span style="font-size:10px;font-weight:400;color:var(--text-faint)">(tap to add)</span></div>' +
+      '<div class="opt-row">' +
+        _accBtn('auto-wallswitch', '5-channel wall switch', 163) +
+        _accBtn('auto-repeater', 'Signal repeater', 272) +
+        _accBtn('auto-battery', 'External battery pack', 230) +
+        _accBtn('auto-solar', 'Solar panel', 242) +
+      '</div>' +
+      '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">Wall switch adds a hardwired control point. Repeater extends range. External battery pack and solar panel extend/maintain charge between recharges.</div>' +
+    '</div>';
 
   var normanSmartSection =
     '<div id="nm-smart-section">' +
@@ -1704,6 +1757,7 @@ function normanMotorSection(containerId, productName, onChange) {
         '</div>' +
         '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.7">The hub connects your shades to your phone and to <strong>Amazon Alexa, Google Home &amp; Apple HomeKit</strong> — no need to pick one, it works with all of them. Without a hub, shades run from the remote. Max 5 repeaters per system.</div>' +
       '</div>' +
+      nmAddons +
     '</div>';
 
   // Rollease info section (only rendered for compatible products)
@@ -1757,6 +1811,7 @@ function normanMotorSection(containerId, productName, onChange) {
           '</div>' +
           '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">The Automate Pulse 2 hub enables the Automate app and voice control (Alexa, Google Home, Apple HomeKit).</div>' +
         '</div>' +
+        autoAddons +
       '</div>'
     : '';
 
@@ -1769,7 +1824,14 @@ function normanMotorSection(containerId, productName, onChange) {
 
   if (containerId) {
     var el = document.getElementById(containerId);
-    if (el) el.innerHTML = html;
+    if (el) {
+      el.innerHTML = html;
+      // Bind this section's recalc to its own container. A page can render more than one
+      // Norman motor section (shades.html does: cellular + roller), so a single global
+      // callback would make the last-rendered product steal everyone else's recalc.
+      el.setAttribute('data-nm-root', '1');
+      el._nmCb = (typeof onChange === 'function') ? onChange : null;
+    }
   }
   return html;
 }
@@ -1805,9 +1867,12 @@ function nmGetMotorSummary() {
     var aChan   = ((document.querySelector('#auto-grp-channel .opt-btn.sel') || {}).textContent || '').trim();
     var aHub    = ((document.querySelector('#auto-grp-hub .opt-btn.sel')     || {}).textContent || '').trim();
     var aHasRemote = aRemote.indexOf('Yes') !== -1;
+    var aAcc = [];
+    document.querySelectorAll('#nm-rollease-section .opt-btn[data-nm-acc].sel').forEach(function(b){ aAcc.push(b.textContent.replace(/\s*\+?\$[\d,]+/g, '').trim()); });
     return 'Rollease Acmeda Automate (custom priced) — Power: ' + (aPower || '—') +
       ' | Remote: ' + (aHasRemote ? 'Yes (' + aChan + ')' : 'No — app/hub only') +
-      ' | Hub: ' + (aHub.indexOf('Add') === 0 ? 'Automate Pulse 2' : 'None');
+      ' | Hub: ' + (aHub.indexOf('Add') === 0 ? 'Automate Pulse 2' : 'None') +
+      (aAcc.length ? ' | Add-ons: ' + aAcc.join(', ') : '');
   }
   function nmClean(t){ return (t||'').replace(/\s*\+?\$[\d,]+/g,'').replace(/\b(included|recommended|not rec\.?)\b/gi,'').replace(/[^\w\s\-]/g,'').replace(/\s+/g,' ').trim(); }
   var power   = nmClean((document.querySelector('#nm-grp-power .opt-btn.sel') || {}).textContent) || '—';
@@ -1820,11 +1885,14 @@ function nmGetMotorSummary() {
   var hub     = (document.querySelector('#nm-grp-hub .opt-btn.sel') || {}).textContent || '';
   var isBattery = power.toLowerCase().indexOf('battery') !== -1;
   var noRemote  = remote.toLowerCase().indexOf('no') === 0;
+  var nmAcc = [];
+  document.querySelectorAll('#nm-smart-section .opt-btn[data-nm-acc].sel').forEach(function(b){ nmAcc.push(nmClean(b.textContent)); });
   return 'Norman Smart — Power: ' + power +
     (isBattery && charge ? ' (' + charge + ')' : '') +
     (wire ? ' — ' + wire : '') +
     ' | Remote: ' + (noRemote ? 'None (app only)' : (rtype || 'Basic Remote') + (remotes ? ' ×' + remotes : '') + (channel ? ' ' + channel : '')) +
-    ' | Hub: ' + (hub.toLowerCase().indexOf('add') !== -1 ? 'ShadeAuto hub' : 'None');
+    ' | Hub: ' + (hub.toLowerCase().indexOf('add') !== -1 ? 'ShadeAuto hub' : 'None') +
+    (nmAcc.length ? ' | Add-ons: ' + nmAcc.join(', ') : '');
 }
 
 // Returns the motorization surcharge (Norman suggested retail, NOT discounted) for the
@@ -1849,6 +1917,7 @@ function nmGetMotorPrice(productName, count, baseOverride) {
     else if (/battery|rechargeable/i.test(pwrA) || !pwrA) total += 103 * count; // charging kit (AC Adapter = plug-in, no kit)
     if (/add/i.test(sel('auto-grp-hub'))) total += 483;           // hub (once)
     if (/yes/i.test(sel('auto-grp-remote'))) total += 140;        // 15-channel remote
+    document.querySelectorAll('#nm-rollease-section .opt-btn[data-nm-acc].sel').forEach(function(b){ total += parseInt(b.getAttribute('data-nm-price'), 10) || 0; }); // optional add-ons
     return total;
   }
 
@@ -1871,6 +1940,7 @@ function nmGetMotorPrice(productName, count, baseOverride) {
     var rc = parseInt((sel('nm-grp-remotes') || '1').replace(/\D/g, ''), 10) || 1;
     total += unit * rc;
   }
+  document.querySelectorAll('#nm-smart-section .opt-btn[data-nm-acc].sel').forEach(function(b){ total += parseInt(b.getAttribute('data-nm-price'), 10) || 0; }); // optional add-ons
   return total;
 }
 
@@ -2741,4 +2811,46 @@ async function _apiSubmit(name, email, phone, productName, configText, successId
     if (btn && btn.parentElement) btn.insertAdjacentElement('afterend', eDiv);
     setTimeout(function(){ if (eDiv.parentElement) eDiv.remove(); }, 15000);
   }
+}
+
+// ════════════════════════════════════════════════════════════════
+// NORMAN COMPONENT COLOR PALETTES (May 2026 book)
+// Single source of truth — Soluna standalone page, shades.js Norman inline (rn-),
+// and Basic Roller (pb-) all read from here so the shared parts stay in sync.
+// NOTE: these are NOT the open-roll "Premium hardware" finishes (Brass/Bronze/
+// Brushed Black/Matte Silver/White) — that is a separate upgrade program and is
+// open-roll only. Metal fascia, side rails and plain hem bars use the lists below.
+// ════════════════════════════════════════════════════════════════
+var PB_SWATCH = {
+  'White':          '#f8f8f5',
+  'Cottage White':  '#efe9dc',
+  'Black':          'linear-gradient(135deg,#3a3a3a,#111)',
+  'Silver':         'linear-gradient(135deg,#dcdcdc,#a4a4a4)',
+  'Anodized Silver':'linear-gradient(135deg,#d8dade,#9aa0a6)',
+  'Bronze':         'linear-gradient(135deg,#a06f3e,#5e3f23)',
+  'Chocolate':      'linear-gradient(135deg,#6b4a33,#3b271a)'
+};
+// Per-component option lists — mirrors COLOR_OPTIONS in js/pages/shades.js.
+var PB_PALETTES = {
+  metalFascia: ['White','Cottage White','Black','Anodized Silver'],
+  plainHemBar: ['White','Cottage White','Black','Anodized Silver'],
+  lightGuard360:['White','Cottage White','Black','Silver','Bronze'],
+  cassette:    ['White','Cottage White','Black','Silver'],
+  endCaps:     ['White','Cottage White','Black','Silver','Chocolate']
+};
+/**
+ * Render a color-swatch option row.
+ * @param {string} groupId  — id for the opt-row (selOpt/getOpt group)
+ * @param {string} palette  — key into PB_PALETTES
+ * @param {string} recalcFn — name of the page's recalc fn, called on click
+ * @param {number} selIdx   — index pre-selected (default 0); -1 for none
+ */
+function pbColorRow(groupId, palette, recalcFn, selIdx) {
+  var list = PB_PALETTES[palette] || [];
+  if (selIdx === undefined) selIdx = 0;
+  return '<div class="opt-row" id="' + groupId + '" style="flex-wrap:wrap">' +
+    list.map(function(name, i) {
+      return '<button class="opt-btn' + (i === selIdx ? ' sel' : '') + '" onclick="selOpt(this,\'' + groupId + '\');' + recalcFn + '()">' +
+             '<span class="hw-sw" style="background:' + (PB_SWATCH[name] || '#ccc') + '"></span>' + name + '</button>';
+    }).join('') + '</div>';
 }

@@ -358,7 +358,7 @@ function pickCellOp(el, sysName) {
     note.textContent   = 'Norman Smart Motorization — power source, remote, and smart home confirmed at measurement visit. (+$' + cellMotorCost + '/shade)';
     // Show motor step
     document.getElementById('step7').style.display = 'block';
-    if (typeof normanMotorSection === 'function') normanMotorSection('cell-motor-config', 'Cellular Shade');
+    if (typeof normanMotorSection === 'function') normanMotorSection('cell-motor-config', 'Cellular Shade', typeof cellCalcPrice === 'function' ? cellCalcPrice : null);
   } else {
     note.style.display = 'none';
     document.getElementById('step7').style.display = 'none';

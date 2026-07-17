@@ -172,7 +172,7 @@ function pickOp(op){
   if(motorCfg){
     if(op==='motor'){
       motorCfg.style.display='block';
-      if(typeof normanMotorSection==='function') normanMotorSection('smartdrape-motor-config','SmartDrape');
+      if(typeof normanMotorSection==='function') normanMotorSection('smartdrape-motor-config','SmartDrape', typeof calcPrice==='function'?calcPrice:null);
     } else {
       motorCfg.style.display='none';
       motorCfg.innerHTML='';

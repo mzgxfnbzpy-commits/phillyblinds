@@ -171,7 +171,7 @@ function setLift(lift, el) {
   document.getElementById('sp-motor-row').style.display = isMotor ? '' : 'none';
   if (isMotor) {
     // Standardized onto the SHARED Norman motor section (Norman Smart only for Centerpiece Roman — no Rollease).
-    if (typeof normanMotorSection === 'function') normanMotorSection('centerpiece-motor-config', 'Centerpiece Roman');
+    if (typeof normanMotorSection === 'function') normanMotorSection('centerpiece-motor-config', 'Centerpiece Roman', typeof updateCalc === 'function' ? updateCalc : null);
     sp('sp-motor','Norman Smart Motor');
     openNext('step13');
   } else {

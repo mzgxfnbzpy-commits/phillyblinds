@@ -483,7 +483,7 @@ function cellularOpChange(type) {
       var noteEl = document.getElementById('cellular-op-note');
       if (noteEl && noteEl.parentElement) noteEl.after(cellMotorWrap);
     }
-    if (typeof normanMotorSection === 'function') normanMotorSection('cell-motor-section', 'Cellular Shade');
+    if (typeof normanMotorSection === 'function') normanMotorSection('cell-motor-section', 'Cellular Shade', typeof updatePrice === 'function' ? updatePrice : null);
     else cellMotorWrap.innerHTML = '<div style="background:var(--espresso-mid);border-radius:8px;padding:12px 14px;margin-top:10px;font-size:12px;color:var(--text-dark)">Norman Smart Motorization: power source (battery/hardwired), remote, and smart home options confirmed at measurement visit.</div>';
   } else {
     if (motorOn) toggleMotor(false);
@@ -2536,7 +2536,7 @@ function rnSetLift(type) {
       rnMotorUpcharge = 482;
       // Render the shared Norman motor UI (same as cellular + standalone pages).
       if (typeof normanMotorSection === 'function') {
-        normanMotorSection('rn-motor-config', 'Roller Shade');
+        normanMotorSection('rn-motor-config', 'Roller Shade', typeof rnUpdatePrice === 'function' ? rnUpdatePrice : null);
       } else if (rnMotorCfg) {
         rnMotorCfg.innerHTML = '<div style="background:var(--espresso-mid);border-radius:8px;padding:12px 14px;margin-top:10px;font-size:12px;color:var(--text-dark)">Norman Smart Motorization: power source (battery/hardwired), remote, and smart home options confirmed at measurement visit.</div>';
       }
