@@ -232,8 +232,8 @@ NEVER a separate top-level page, product, or nav item.
 ### Motorization brand compatibility — CRITICAL
 | Product | Motor options |
 |---------|--------------|
-| Norman Soluna Roller + Portrait Cellular | **Norman Smart (default/recommended)** OR **Rollease Acmeda Automate** (for existing Rollease systems, custom priced). These are the ONLY two options. No AutoWand, no Automate Home branding, no Lutron/Somfy. |
-| Norman PerfectSheer + SmartDrape + Centerpiece Roman | **Norman Smart only.** Rollease Acmeda Automate NOT available for these products. |
+| Norman Soluna Roller, Portrait Cellular, Centerpiece Roman, PerfectSheer | **Norman Smart (default/recommended)** OR **Rollease Acmeda Automate** (for existing Rollease systems, custom priced). These are the ONLY two options. No AutoWand, no "Automate Home" branding, no Lutron/Somfy. *(Automate scope widened to these 4 per Norman motorization PDF p.60/p.65 availability matrix — 2026-07-12.)* |
+| Norman SmartDrape | **Norman Smart only.** Rollease Acmeda Automate NOT available (not in PDF matrix). |
 | Norman Synchrony Verticals, City Lights, SmartPrivacy Faux Wood | No motorization — cordless only. |
 | Custom Roller Shades (Philly Blinds custom fab) | Lutron, Somfy, or Rollease Acmeda Automate — custom priced. Customer can note other brand preference. |
 | Custom Roman Shades (Philly Blinds custom fab) | **Operation = Cordless / Manual chain / Motorized.** Motorized brand = **Somfy / Lutron / Rollease Acmeda / Norman** — custom priced. Picking **Norman** redirects to the Norman Centerpiece Roman form (norman-centerpiece-roman.html, size carried via ?w=&h=&qty=) — Norman motorization only. Somfy/Lutron/Rollease then choose **Power: Rechargeable battery or Hardwired**; Hardwired splits into **Low voltage / Standard 110V plug-in**. (Updated June 2026 — Terminal 3 Roman cleanup. Replaces old "Lutron Serena/Somfy/Automate/Rollease" brand-only picker.) |
@@ -323,7 +323,7 @@ Available on: Soluna Roller, Portrait Cellular, PerfectSheer, SmartDrape, Center
 
 **Option 2 — Rollease Acmeda Automate** — custom priced (was previously labeled "Automate Home™ by Norman" — Norman resells the Rollease Acmeda Automate system under that name).
 For customers integrating with an existing Rollease Acmeda smart home system.
-Available on: Soluna Roller and Portrait Cellular ONLY. NOT available for PerfectSheer, SmartDrape, or Centerpiece Roman.
+Available on: **Soluna Roller, Portrait Cellular/Honeycomb, Centerpiece Roman, and PerfectSheer** (widened 2026-07-12 per PDF p.60/p.65 availability matrix). NOT available for SmartDrape or SmartFold. Honeycomb power = External Battery Pack or AC Adapter only ($682); Roman/Roller/PerfectSheer = Li-ion ARC Motor $682 or 12V DC Low Voltage $814.
 
 **Removed from all pages: AutoWand** (no longer offered).
 **Removed from all pages: "Automate Home" branding** (replaced with "Rollease Acmeda Automate").
