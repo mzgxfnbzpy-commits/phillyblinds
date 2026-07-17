@@ -18,6 +18,8 @@
 //       ...
 //     ],
 //     showPriceGroups: true,          // group collections under price-tier headers
+//     priceGroupTabs: true,           // …and put each price group behind its own tab
+//                                     // instead of stacking them (keeps long lists short)
 //     defaultType: 'lf',              // which tab opens first (optional)
 //     onSelect: function(sel){ ... }  // sel = {type, collection, name, code, hex}
 //   });
@@ -40,6 +42,9 @@ window.pbFabricPicker = (function () {
       '.pbfp-tab.sel{background:var(--pbfp-accent);border-color:var(--pbfp-accent);color:#231a0d}' +
       '.pbfp-tab .pbfp-tab-sub{display:block;font-size:10px;font-weight:400;opacity:.7;margin-top:2px}' +
       '.pbfp-tab.sel .pbfp-tab-sub{opacity:.85}' +
+      // Price-group tab bar sits under the type tabs — lighter so the type stays primary.
+      '.pbfp-subtabs{gap:5px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #ece5d8}' +
+      '.pbfp-subtabs .pbfp-tab{padding:5px 10px;font-size:11px}' +
       '.pbfp-typedesc{font-size:12px;color:inherit;opacity:.72;line-height:1.5;margin:0 0 12px}' +
       '.pbfp-pg{margin:0 0 14px}' +
       '.pbfp-pg-head{display:flex;align-items:baseline;gap:8px;margin:0 0 8px;padding-top:10px;' +
@@ -114,25 +119,75 @@ window.pbFabricPicker = (function () {
       groups = [{ pg: null, colls: colls }];
     }
 
+    _paintGroups(container, config, typeKey, panel, groups);
+  }
+
+  // Either stack every price group down the page (default), or put the groups behind
+  // their own tab bar so a long fabric list collapses to one group at a time.
+  function _paintGroups(container, config, typeKey, panel, groups) {
+    if (!(config.priceGroupTabs && groups.length > 1)) {
+      groups.forEach(function (grp) {
+        panel.appendChild(_renderGroup(container, config, typeKey, grp, !!config.showPriceGroups));
+      });
+      return;
+    }
+    var sub = document.createElement('div');
+    sub.className = 'pbfp-tabs pbfp-subtabs';
+    sub.setAttribute('role', 'tablist');
+    sub.setAttribute('aria-label', 'Price group');
+    var body = document.createElement('div');
     groups.forEach(function (grp) {
-      var gDiv = document.createElement('div');
-      gDiv.className = 'pbfp-pg';
-      if (config.showPriceGroups && grp.pg !== undefined && grp.pg !== null) {
-        var head = document.createElement('div');
-        head.className = 'pbfp-pg-head';
-        var nm = document.createElement('span');
-        nm.className = 'pbfp-pg-name';
-        nm.textContent = 'Group ' + grp.pg;
-        head.appendChild(nm);
-        if (grp.pgLabel) {
-          var tr = document.createElement('span');
-          tr.className = 'pbfp-pg-tier';
-          tr.textContent = grp.pgLabel;
-          head.appendChild(tr);
-        }
-        gDiv.appendChild(head);
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'pbfp-tab';
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-selected', 'false');
+      var main = document.createElement('span');
+      main.textContent = (grp.pg === undefined || grp.pg === null) ? 'Other' : 'Group ' + grp.pg;
+      b.appendChild(main);
+      if (grp.pgLabel) {
+        var s = document.createElement('span');
+        s.className = 'pbfp-tab-sub';
+        s.textContent = grp.pgLabel;
+        b.appendChild(s);
       }
-      grp.colls.forEach(function (coll) {
+      b.onclick = function () {
+        sub.querySelectorAll('.pbfp-tab').forEach(function (x) {
+          x.classList.remove('sel'); x.setAttribute('aria-selected', 'false');
+        });
+        b.classList.add('sel');
+        b.setAttribute('aria-selected', 'true');
+        body.innerHTML = '';
+        // Group head is redundant once the tab itself names the group.
+        body.appendChild(_renderGroup(container, config, typeKey, grp, false));
+      };
+      sub.appendChild(b);
+    });
+    panel.appendChild(sub);
+    panel.appendChild(body);
+    sub.querySelector('.pbfp-tab').click();
+  }
+
+  // Renders one price group (optional header + its collections and swatches).
+  function _renderGroup(container, config, typeKey, grp, showHead) {
+    var gDiv = document.createElement('div');
+    gDiv.className = 'pbfp-pg';
+    if (showHead && grp.pg !== undefined && grp.pg !== null) {
+      var head = document.createElement('div');
+      head.className = 'pbfp-pg-head';
+      var nm = document.createElement('span');
+      nm.className = 'pbfp-pg-name';
+      nm.textContent = 'Group ' + grp.pg;
+      head.appendChild(nm);
+      if (grp.pgLabel) {
+        var tr = document.createElement('span');
+        tr.className = 'pbfp-pg-tier';
+        tr.textContent = grp.pgLabel;
+        head.appendChild(tr);
+      }
+      gDiv.appendChild(head);
+    }
+    grp.colls.forEach(function (coll) {
         var cDiv = document.createElement('div');
         cDiv.className = 'pbfp-coll';
         if (coll.name) {
@@ -184,11 +239,10 @@ window.pbFabricPicker = (function () {
           };
           row.appendChild(btn);
         });
-        cDiv.appendChild(row);
-        gDiv.appendChild(cDiv);
-      });
-      panel.appendChild(gDiv);
+      cDiv.appendChild(row);
+      gDiv.appendChild(cDiv);
     });
+    return gDiv;
   }
 
   function render(containerId, config) {

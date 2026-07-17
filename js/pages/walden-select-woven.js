@@ -79,7 +79,7 @@ function wsBuildPicker(){
   WS_PATTERNS.forEach(function(p){ if(!byG[p.g]) byG[p.g]={g:p.g,colors:[]}; byG[p.g].colors.push({n:p.n,c:p.c}); });
   var collections=Object.keys(byG).map(function(k){ return {type:"w", pg:byG[k].g, name:"", colors:byG[k].colors}; });
   pbFabricPicker.render("ws-fabric-picker", {
-    hideTabs:true, showPriceGroups:true,
+    hideTabs:true, showPriceGroups:true, priceGroupTabs:true,
     types:[{key:"w",label:"Pattern"}],
     collections:collections,
     onSelect:function(sel){ var el=document.getElementById("ws-pattern"); if(el){ el.value=sel.name+" ("+sel.code+")"; } }

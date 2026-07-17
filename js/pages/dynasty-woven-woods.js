@@ -353,7 +353,7 @@ function dynBuildPicker(){
     gh.style.display='none'; if(grid) grid.style.display='none';
   });
   pbFabricPicker.render('dynasty-pattern-picker', {
-    hideTabs:true, showPriceGroups:true,
+    hideTabs:true, showPriceGroups:true, priceGroupTabs:true,
     types:[{key:'woven',label:'Pattern'}],
     collections:collections,
     onSelect:function(sel){ pickDynastyPattern(sel.code); }
