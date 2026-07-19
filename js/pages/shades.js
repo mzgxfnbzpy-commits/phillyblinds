@@ -1026,6 +1026,7 @@ async function submitPBForm(btn) {
     'Operation:      ' + gPB('pb-grp-operation') + '\n' +
     'Control side:   ' + gPB('pb-grp-control') + '\n' +
     'Fascia type:    ' + gPB('pb-grp-fascia') + '\n' +
+    (gPB('pb-grp-fascia') === 'Metal fascia' ? 'Fascia color:   ' + gPB('pb-grp-fascia-color') + '\n' : '') +
     'Hardware color: ' + gPB('pb-grp-hw-color') + '\n' +
     'End caps:       ' + gPB('pb-grp-endcap') + '\n' +
     'Fabric type:    ' + gPB('pb-grp-fabric-type') + '\n' +
@@ -2111,7 +2112,7 @@ function pbCalcPrice() {
     { label:'Fabric type', value: fabType },
     { label:'Size',        value: w+'″ W × '+h+'″ H → '+result.rw+'″ × '+result.rh+'"' },
     { label:'Operation',   value: gPB('pb-grp-operation') || '—' },
-    { label:'Fascia',      value: gPB('pb-grp-fascia') || '—' },
+    { label:'Fascia',      value: (gPB('pb-grp-fascia') || '—') + (gPB('pb-grp-fascia') === 'Metal fascia' && gPB('pb-grp-fascia-color') ? ' (' + gPB('pb-grp-fascia-color') + ')' : '') },
     { label:'End caps',    value: gPB('pb-grp-endcap') || '—' },
     { label:'Mount',       value: gPB('pb-grp-mount') || '—' },
     { label:'Quantity',    value: (parseInt(document.getElementById('pb-qty-inp').value)||1)+' shade(s)' },
@@ -2133,10 +2134,16 @@ const PB_FABRICS = {
   'Blackout':        ['White','Black','Cream','Off-White','Gray','Charcoal']
 };
 function pbToggleFasciaColor(isMetal) {
-  var lbl  = document.getElementById('pb-hw-color-label');
   var note = document.getElementById('pb-hw-color-note');
-  if (lbl)  lbl.textContent  = isMetal ? 'Hardware & metal fascia color' : 'Hardware color';
   if (note) note.style.display = isMetal ? 'block' : 'none';
+  // Metal fascia gets its own color picker (shared Norman metal-fascia palette),
+  // separate from the decorative hardware color for brackets/hem bar/end caps.
+  var wrap = document.getElementById('pb-fascia-color-wrap');
+  var slot = document.getElementById('pb-fascia-color-slot');
+  if (wrap) wrap.style.display = isMetal ? 'block' : 'none';
+  if (isMetal && slot && !slot.hasChildNodes() && typeof pbColorRow === 'function') {
+    slot.innerHTML = pbColorRow('pb-grp-fascia-color', 'metalFascia', 'pbCalcPrice');
+  }
 }
 function pbToggleMotor(show) {
   var el = document.getElementById('pb-motor-system-wrap');
@@ -3266,6 +3273,14 @@ function showCartForm() {
 function extToggleMotor(show) {
   var el = document.getElementById('ext-motor-note');
   if (el) el.style.display = show ? 'block' : 'none';
+  // The Left/Right side selector applies to both operation modes — only its wording changes:
+  // hand crank side when manual, motor side when motorized.
+  var lbl  = document.getElementById('ext-side-label');
+  var note = document.getElementById('ext-side-note');
+  if (lbl)  lbl.textContent  = show ? 'Motor side' : 'Hand crank side';
+  if (note) note.textContent = show
+    ? 'Which side of the window the motor head sits on (also where the charging port / power lead exits).'
+    : 'Which side of the window you want the hand crank on.';
 }
 function extChannelNote(btn) {
   var note = document.getElementById('ext-channel-note');
@@ -3300,7 +3315,7 @@ async function submitExteriorForm(btn) {
     'Side channels: '+ gExt('ext-grp-channels') + '\n' +
     'Operation: '   + gExt('ext-grp-op')       + '\n' +
     (motorReq ? 'Motor preference: ' + motorReq + '\n' : '') +
-    'Control side: '+ gExt('ext-grp-control')  + '\n' +
+    (/motor/i.test(gExt('ext-grp-op')) ? 'Motor side: ' : 'Hand crank side: ') + gExt('ext-grp-control')  + '\n' +
     'Fabric: '      + gExt('ext-grp-fabric')   + '\n' +
     'Delivery: '    + delivery                  + '\n\n' +
     'Notes:\n' + (document.getElementById('ext-notes').value.trim() || 'None');

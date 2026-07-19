@@ -1441,12 +1441,18 @@
         <button class="opt-btn" onclick="selOpt(this,'pb-grp-fascia');pbToggleFasciaColor(false)">Fabric Wrapped fascia</button>
         <button class="opt-btn" onclick="selOpt(this,'pb-grp-fascia');pbToggleFasciaColor(true)">Metal fascia</button>
       </div>
-      <div class="tooltip-note" style="margin-top:4px">Open Roll: exposed tube, minimal profile. Fabric Wrapped: fabric-covered headrail. Metal: aluminum fascia — select color below.</div>
+      <div class="tooltip-note" style="margin-top:4px">Open Roll: exposed tube, minimal profile. Fabric Wrapped: fabric-covered headrail (matches your shade fabric). Metal: aluminum fascia — select its color below.</div>
 
-      <!-- Hardware color — always shown; fascia color also applies when Metal Fascia selected -->
+      <!-- Metal fascia color — shown only for Metal fascia; uses the shared Norman metal-fascia palette -->
+      <div id="pb-fascia-color-wrap" style="display:none;margin-top:12px;padding:10px 12px;background:#faf7f2;border:1px solid #ece5d8;border-radius:8px">
+        <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Metal fascia color</div>
+        <div id="pb-fascia-color-slot"></div>
+      </div>
+
+      <!-- Hardware color — decorative finish for brackets, hem bar & end caps -->
       <div style="margin-top:12px">
         <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:4px" id="pb-hw-color-label">Hardware color</div>
-        <div id="pb-hw-color-note" style="display:none;font-size:11px;color:#888;margin-bottom:6px">Also applies to metal fascia finish.</div>
+        <div id="pb-hw-color-note" style="display:none;font-size:11px;color:#888;margin-bottom:6px">Decorative finish for brackets, hem bar &amp; end caps. The metal fascia has its own color above.</div>
         <div class="opt-row" id="pb-grp-hw-color" style="flex-wrap:wrap">
           <button class="opt-btn" onclick="selOpt(this,'pb-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#C8A84A;flex-shrink:0;display:inline-block;border:1px solid rgba(0,0,0,.1)"></span>Brass</button>
           <button class="opt-btn" onclick="selOpt(this,'pb-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#6B4423;flex-shrink:0;display:inline-block"></span>Bronze</button>
@@ -1454,7 +1460,7 @@
           <button class="opt-btn" onclick="selOpt(this,'pb-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#B0B0B0;flex-shrink:0;display:inline-block"></span>Matte Silver</button>
           <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#F5F5F5;flex-shrink:0;display:inline-block;border:1px solid #ddd"></span>White</button>
         </div>
-        <div class="tooltip-note" style="margin-top:4px">Applies to: brackets, hem bar, end caps, and hardware. Metal fascia matches this color.</div>
+        <div class="tooltip-note" style="margin-top:4px">Applies to: brackets, hem bar, end caps, and hardware.</div>
       </div>
 
       <!-- End caps -->
@@ -1682,6 +1688,15 @@
       <div class="opt-row" id="ext-grp-op">
         <button class="opt-btn sel" onclick="selOpt(this,'ext-grp-op');extToggleMotor(false)">Manual — handcrank</button>
         <button class="opt-btn" onclick="selOpt(this,'ext-grp-op');extToggleMotor(true)">Motorized</button>
+      </div>
+      <!-- Side selector: hand crank side (manual) or motor side (motorized) -->
+      <div id="ext-side-wrap" style="margin-top:10px">
+        <div id="ext-side-label" style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Hand crank side</div>
+        <div class="opt-row" id="ext-grp-control">
+          <button class="opt-btn sel" onclick="selOpt(this,'ext-grp-control')">Left</button>
+          <button class="opt-btn" onclick="selOpt(this,'ext-grp-control')">Right</button>
+        </div>
+        <div id="ext-side-note" style="font-size:11px;color:#888;margin-top:5px">Which side of the window you want the hand crank on.</div>
       </div>
       <div id="ext-motor-note" style="display:none;margin-top:10px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
         <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:6px">Motor preference (optional)</div>
