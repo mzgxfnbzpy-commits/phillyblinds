@@ -2129,9 +2129,11 @@ function pbCalcPrice() {
   });
 }
 
+// Basic Roller core palette — same five on both light-filtering and blackout,
+// and identical to CRS_BASIC_SOLIDS on the standalone Basic Roller page.
 const PB_FABRICS = {
-  'Light Filtering': ['White','Cream','Off-White','Gray','Linen','Beige'],
-  'Blackout':        ['White','Black','Cream','Off-White','Gray','Charcoal']
+  'Light Filtering': ['White','Off-White','Gray','Black','Brown'],
+  'Blackout':        ['White','Off-White','Gray','Black','Brown']
 };
 function pbToggleFasciaColor(isMetal) {
   var note = document.getElementById('pb-hw-color-note');

@@ -136,12 +136,11 @@ function crsPickOpenness(val, label) {
 }
 
 // Expanded basic solids — same palette for Solar Screen & Blackout lines.
+// Basic Roller keeps a deliberately short core palette. Hexes match the shared
+// COLOR_HEX map in shades.js so the same colour looks identical on both surfaces.
 var CRS_BASIC_SOLIDS = [
-  {n:'White',     hex:'#ffffff'}, {n:'Ivory',    hex:'#f5efe0'}, {n:'Cream',   hex:'#f3e9d2'},
-  {n:'Beige',     hex:'#e8dcc4'}, {n:'Sand',     hex:'#ddcba6'}, {n:'Taupe',   hex:'#b8a98f'},
-  {n:'Linen',     hex:'#d9cbb2'}, {n:'Gray',     hex:'#9e9e9e'}, {n:'Slate',   hex:'#6e7377'},
-  {n:'Charcoal',  hex:'#4a4a4a'}, {n:'Black',    hex:'#1a1a1a'}, {n:'Chocolate',hex:'#4b3a2b'},
-  {n:'Navy',      hex:'#24324a'}
+  {n:'White',   hex:'#FFFFFF'}, {n:'Off-White', hex:'#F3EEE6'}, {n:'Gray', hex:'#888888'},
+  {n:'Black',   hex:'#1C1C1C'}, {n:'Brown',     hex:'#885030'}
 ];
 
 // Render the shared fabric picker into the color step (single type → no tabs here;
