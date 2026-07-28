@@ -706,9 +706,7 @@
           </div>
         </div>
       </div>
-      <div class="form-group"><label>Notes — fabric preference, rod type, timeline, or anything else</label>
-        <textarea id="d-notes" style="min-height:90px" placeholder="e.g. Ripple fold panels, customer-supplied linen fabric, 3 windows in master bedroom..."></textarea>
-      </div>
+      <!-- Notes now live in the canonical final step below (id d-notes, unchanged). -->
 
       <!-- CORNICE / VALANCE → CV TAB RECOMMENDATION -->
       <div id="drape-cv-rec" style="display:none;background:#FFF3CD;border:1px solid #FFC107;border-radius:10px;padding:14px 16px;margin-bottom:16px">
@@ -749,16 +747,10 @@
       </div>
 
       <div style="border-top:1px solid #e8e8e4;margin:20px 0 16px"></div>
-      <div class="form-row">
-        <div class="form-group"><label>Name *</label><input type="text" id="d-name" data-pb-contact="name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="d-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
-      </div>
-      <div class="form-group"><label>Email *</label><input type="email" id="d-email" data-pb-contact="email" placeholder="jane@example.com"></div>
-      <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="d-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
-      <div id="drape-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
       <button onclick="reqMoreInfo('Custom Drapery')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Custom Drapery →</button>
-        <button class="btn-cart-add" onclick="addDrapeToCart()" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
-        <button class="btn-gold" onclick="submitDrape()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:16px" data-pb-require-contact="drape-contact-err">Submit Order for Review &rarr;</button>
+      <!-- Canonical final step — injected at the bottom of this page with idPrefix 'd-',
+           which reproduces the original d-name/d-phone/d-email/d-address/d-notes ids. -->
+      <div id="drape-final-step"></div>
     </div>
     <div class="success-box" id="drape-success">
       <strong>Order submitted!</strong><br>
@@ -1669,5 +1661,17 @@
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script src="../js/pages/soft-treatments.js"></script>
+<script>
+// Canonical final "Your details" step, one per tab. idPrefix keeps each tab's ids
+// unique and reproduces the ids this page's submit functions already read, so the
+// drape tab also picks up the Terms checkbox, honeypot and file upload.
+document.getElementById('drape-final-step').innerHTML = pbContactStepHTML({
+  bare: true,
+  idPrefix: 'd-',
+  errId: 'drape-contact-err',
+  cartFn: 'addDrapeToCart()',
+  submitFn: 'submitDrape()'
+});
+</script>
 </body>
 </html>
