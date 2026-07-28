@@ -1012,7 +1012,11 @@ async function submitPBForm(btn) {
   const w     = document.getElementById('pb-width').value;   // fixed: was inp-width
   const h     = document.getElementById('pb-height').value;  // fixed: was inp-height
   const gPB   = function(id) { const b = document.querySelector('#' + id + ' .opt-btn.sel'); return b ? b.textContent.trim() : '—'; };
-  const notes = (document.getElementById('pb-fabric-notes') || {}).value || '';
+  // Two note fields on this product: the fabric description mid-form, and the
+  // general notes in the canonical final step. Send both.
+  const fabricNotes = (document.getElementById('pb-fabric-notes') || {}).value || '';
+  const generalNotes = (document.getElementById('pb-notes') || {}).value || '';
+  const notes = [fabricNotes, generalNotes].filter(function (s) { return s.trim(); }).join('\n');
   const body =
     'CUSTOM ROLLER SHADE REQUEST\n' +
     '══════════════════════════════════════════\n' +
