@@ -616,35 +616,42 @@ function pbContactStepHTML(opts) {
   opts = opts || {};
   var stepNum  = opts.stepNum != null ? opts.stepNum : '';
   var submitFn = opts.submitFn || 'submitQuote()';
+  // idPrefix lets one page host several contact steps without duplicate ids —
+  // soft-treatments keeps a separate form per tab. Omitting it leaves the markup
+  // byte-identical to before, so the 33 single-form pages are untouched.
+  var p        = opts.idPrefix || 'cf-';
+  var errId    = opts.errId || (p + 'contact-err');
+  var hpId     = opts.idPrefix ? p + 'hp' : 'pb-hp';
+  var blockId  = opts.idPrefix ? p + 'contact-block' : 'contact-block';
   var cartBtn  = opts.cartFn
     ? '<button class="btn-cart-add" onclick="' + opts.cartFn + '" style="width:100%;margin-bottom:8px">+ Add to Cart</button>'
     : '';
   var inner = '' +
       '<div class="pb-cart-extras">' +
         '<div class="dim-row">' +
-          '<div class="form-group"><label>Name *</label><input type="text" id="cf-name" data-pb-contact="name" placeholder="Jane Smith"></div>' +
-          '<div class="form-group"><label>Phone *</label><input type="tel" id="cf-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>' +
+          '<div class="form-group"><label>Name *</label><input type="text" id="' + p + 'name" data-pb-contact="name" placeholder="Jane Smith"></div>' +
+          '<div class="form-group"><label>Phone *</label><input type="tel" id="' + p + 'phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>' +
         '</div>' +
-        '<div class="form-group"><label>Email *</label><input type="email" id="cf-email" data-pb-contact="email" placeholder="jane@example.com"></div>' +
-        '<div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="cf-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>' +
-        '<div class="form-group"><label>Notes</label><textarea id="cf-notes" placeholder="Room name, ceiling height, fabric ideas, timeline &mdash; anything helpful" style="min-height:60px"></textarea></div>' +
+        '<div class="form-group"><label>Email *</label><input type="email" id="' + p + 'email" data-pb-contact="email" placeholder="jane@example.com"></div>' +
+        '<div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="' + p + 'address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>' +
+        '<div class="form-group"><label>Notes</label><textarea id="' + p + 'notes" data-pb-contact="notes" placeholder="Room name, ceiling height, fabric ideas, timeline &mdash; anything helpful" style="min-height:60px"></textarea></div>' +
         '<div style="border:1.5px dashed #ddd;border-radius:10px;padding:14px 16px;margin-bottom:12px;background:#fafaf8">' +
           '<div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">&#128206; Attach photos or files <span style="font-weight:400;color:#999">(optional)</span></div>' +
-          '<input type="file" id="cf-files" class="pb-ce-files" multiple accept="image/*,.pdf,.heic,.png,.jpg,.jpeg" style="width:100%;font-size:12px;color:#555;font-family:inherit;cursor:pointer;padding:4px 0" onchange="pbShowFileNames(this,\'cf-files-names\')">' +
-          '<div id="cf-files-names" style="font-size:11px;color:#555;margin-top:6px;line-height:1.8"></div>' +
+          '<input type="file" id="' + p + 'files" class="pb-ce-files" multiple accept="image/*,.pdf,.heic,.png,.jpg,.jpeg" style="width:100%;font-size:12px;color:#555;font-family:inherit;cursor:pointer;padding:4px 0" onchange="pbShowFileNames(this,\'' + p + 'files-names\')">' +
+          '<div id="' + p + 'files-names" style="font-size:11px;color:#555;margin-top:6px;line-height:1.8"></div>' +
           '<div style="font-size:11px;color:#aaa;margin-top:5px;line-height:1.5">Window photos, room photos, measurements, inspiration &mdash; anything that helps.</div>' +
         '</div>' +
         // Honeypot — hidden from humans; bots that fill it are blocked in the submit interceptor.
-        '<input type="text" id="pb-hp" name="pb-hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;opacity:0;pointer-events:none">' +
-        '<div id="cf-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>' +
+        '<input type="text" id="' + hpId + '" name="pb-hp" class="pb-hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;opacity:0;pointer-events:none">' +
+        '<div id="' + errId + '" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>' +
         cartBtn +
         // Required Terms of Agreement acceptance — gates "Submit Order for Review" only (not Add to Cart).
-        pbTermsCheckboxHTML('cf-terms') +
-        '<button class="btn-gold" onclick="' + submitFn + '" style="width:100%;padding:13px;margin-top:4px" data-pb-require-contact="cf-contact-err">Submit Order for Review &rarr;</button>' +
+        pbTermsCheckboxHTML(p + 'terms') +
+        '<button class="btn-gold" onclick="' + submitFn + '" style="width:100%;padding:13px;margin-top:4px" data-pb-require-contact="' + errId + '">Submit Order for Review &rarr;</button>' +
       '</div>';
   if (opts.bare) return inner;
   return '' +
-    '<div class="step-block" id="contact-block">' +
+    '<div class="step-block" id="' + blockId + '">' +
       '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">' +
         '<div class="step-num">' + stepNum + '</div>' +
         '<div class="step-title" style="margin-bottom:0">Your details</div>' +
@@ -2763,7 +2770,9 @@ document.addEventListener('DOMContentLoaded', function() {
     var btn = e.target.closest('[data-pb-require-contact]');
     if (!btn || btn.disabled) return;
     // Honeypot: a filled hidden field means a bot — silently block submission.
-    var _hp = document.getElementById('pb-hp');
+    // Scoped to the clicked form, since a page may carry one contact step per tab.
+    var _hpScope = btn.closest('.pb-cart-extras') || document;
+    var _hp = _hpScope.querySelector('.pb-hp') || document.getElementById('pb-hp');
     if (_hp && _hp.value.trim() !== '') { e.stopImmediatePropagation(); e.preventDefault(); return; }
     var errId = btn.getAttribute('data-pb-require-contact');
     if (!pbContactValid(errId)) {
@@ -2780,7 +2789,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     // Fold per-unit labels into the notes so they reach the quote email/cart.
     var _lbl = pbGetShadeLabels();
-    var _n = document.getElementById('cf-notes');
+    var _n = (btn.closest('.pb-cart-extras') || document).querySelector('[data-pb-contact="notes"]')
+             || document.getElementById('cf-notes');
     if (_lbl && _n && (_n.value || '').indexOf(_lbl) < 0) {
       _n.value = (_n.value ? _n.value.replace(/\n?Labels: .*/,'') + '\n' : '') + 'Labels: ' + _lbl;
     }
