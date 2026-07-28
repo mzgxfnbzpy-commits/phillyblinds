@@ -1731,19 +1731,13 @@
     <div class="step-block">
       <div class="step-label">Step 9</div>
       <div class="step-title">Your details</div>
-      <div class="form-row">
-        <div class="form-group"><label>Your name *</label><input type="text" id="ext-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="ext-phone" placeholder="(215) 555-0100"></div>
-      </div>
-      <div class="form-group"><label>Email</label><input type="email" id="ext-email" placeholder="jane@example.com"></div>
-      <div class="form-group"><label>Notes</label><textarea id="ext-notes" placeholder="Deck, patio, porch, pergola — any special mounting requirements..."></textarea></div>
       <div class="delivery-opt-grid" id="grp-del-ext">
         <div class="delivery-opt-card sel" onclick="pickDelCard(this)">
           <div class="delivery-opt-title">Ship to me</div>
           <div class="delivery-opt-body">UPS or FedEx.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
         </div>
       </div>
-      <button class="btn-gold" onclick="submitExteriorForm(this)" style="width:100%;padding:13px;margin-top:12px">Request exterior shade quote &rarr;</button>
+      <div id="ext-final-step"></div>
     </div>
 
     <div class="success-state" id="ext-success">
@@ -1902,19 +1896,13 @@
     <div class="step-block">
       <div class="step-label">Step 6</div>
       <div class="step-title">Your details</div>
-      <div class="form-row">
-        <div class="form-group"><label>Your name *</label><input type="text" id="fwb-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="fwb-phone" placeholder="(215) 555-0100"></div>
-      </div>
-      <div class="form-group"><label>Email</label><input type="email" id="fwb-email" placeholder="jane@example.com"></div>
-      <div class="form-group"><label>Notes</label><textarea id="fwb-notes" placeholder="e.g. specific color, existing hardware to reuse, special installation requirements"></textarea></div>
       <div class="delivery-opt-grid" id="grp-del-fwb">
         <div class="delivery-opt-card sel" onclick="pickDelCard(this)">
           <div class="delivery-opt-title">Ship to me</div>
           <div class="delivery-opt-body">UPS or FedEx.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
         </div>
       </div>
-      <button class="btn-gold" onclick="submitFWBForm(this)" style="width:100%;padding:13px;margin-top:12px">Request faux wood blinds quote &rarr;</button>
+      <div id="fwb-final-step"></div>
     </div>
 
     <div class="success-state" id="fwb-success">
@@ -2061,19 +2049,13 @@
     <div class="step-block">
       <div class="step-label">Step 7</div>
       <div class="step-title">Your details</div>
-      <div class="form-row">
-        <div class="form-group"><label>Your name *</label><input type="text" id="rwb-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="rwb-phone" placeholder="(215) 555-0100"></div>
-      </div>
-      <div class="form-group"><label>Email</label><input type="email" id="rwb-email" placeholder="jane@example.com"></div>
-      <div class="form-group"><label>Notes</label><textarea id="rwb-notes" placeholder="e.g. specific color, existing hardware to reuse, special installation requirements"></textarea></div>
       <div class="delivery-opt-grid" id="grp-del-rwb">
         <div class="delivery-opt-card sel" onclick="pickDelCard(this)">
           <div class="delivery-opt-title">Ship to me</div>
           <div class="delivery-opt-body">UPS or FedEx.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
         </div>
       </div>
-      <button class="btn-gold" onclick="submitRWBForm(this)" style="width:100%;padding:13px;margin-top:12px">Submit Order for Review &rarr;</button>
+      <div id="rwb-final-step"></div>
     </div>
 
     <div class="success-state" id="rwb-success">
@@ -2474,6 +2456,27 @@
 <script src="../js/shared.js"></script>
 <script src="../js/pages/shades.js"></script>
 <script>
+// Canonical final "Your details" step. This page hosts several product
+// configurators, so each gets its own idPrefix — which regenerates the same
+// {prefix}-name/phone/email/notes ids the submit functions already read, and
+// adds the address field, Terms checkbox, honeypot and file upload none of
+// them had. Before this, these forms carried no data-pb-require-contact at
+// all, so the shared submit guard never ran on them.
+[
+  { mount: 'ext-final-step', prefix: 'ext-', submit: 'submitExteriorForm(this)' },
+  { mount: 'fwb-final-step', prefix: 'fwb-', submit: 'submitFWBForm(this)' },
+  { mount: 'rwb-final-step', prefix: 'rwb-', submit: 'submitRWBForm(this)' }
+].forEach(function (t) {
+  var el = document.getElementById(t.mount);
+  if (!el) return;
+  el.innerHTML = pbContactStepHTML({
+    bare: true,
+    idPrefix: t.prefix,
+    errId: t.prefix + 'contact-err',
+    submitFn: t.submit
+  });
+});
+
 function selectSheerCat(cat, el) {
   if (cat === 'hd') {
     pbShowContact('Hunter Douglas Sheer Shadings — Silhouette · Pirouette · Luminette · Vignette — free consultation & custom quote');
