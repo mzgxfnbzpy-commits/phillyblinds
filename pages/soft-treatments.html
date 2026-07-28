@@ -192,22 +192,14 @@
           <div class="form-group">
             <label>Width</label>
             <div style="display:flex;align-items:center;gap:6px">
-              <input type="number" id="rp-w" placeholder="84" min="12" max="250" oninput="calcDrapePrice()" style="width:80px">
-              <select id="rp-w-frac" onchange="calcDrapePrice()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
-                <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
-                <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
-              </select>
+              <input type="number" id="rp-w" step="0.125" placeholder="84" min="12" max="250" oninput="calcDrapePrice()" style="width:90px">
               <span style="font-size:12px;color:#666">inches</span>
             </div>
           </div>
           <div class="form-group">
             <label>Finished length</label>
             <div style="display:flex;align-items:center;gap:6px">
-              <input type="number" id="rp-l" placeholder="96" min="12" max="150" oninput="calcDrapePrice()" style="width:80px">
-              <select id="rp-l-frac" onchange="calcDrapePrice()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
-                <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
-                <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
-              </select>
+              <input type="number" id="rp-l" step="0.125" placeholder="96" min="12" max="150" oninput="calcDrapePrice()" style="width:90px">
               <span style="font-size:12px;color:#666">inches</span>
             </div>
           </div>
@@ -296,22 +288,14 @@
         <div class="form-group">
           <label>Width</label>
           <div style="display:flex;align-items:center;gap:6px">
-            <input type="number" id="d-exact-width" placeholder="84" min="10" max="200" oninput="calcDrapePrice()" style="width:80px">
-            <select id="d-exact-width-frac" onchange="calcDrapePrice()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
-              <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
-              <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
-            </select>
+            <input type="number" id="d-exact-width" step="0.125" placeholder="84" min="10" max="200" oninput="calcDrapePrice()" style="width:90px">
             <span style="font-size:12px;color:#666">inches</span>
           </div>
         </div>
         <div class="form-group">
           <label>Finished length</label>
           <div style="display:flex;align-items:center;gap:6px">
-            <input type="number" id="d-exact-length" placeholder="96" min="12" max="150" oninput="calcDrapePrice()" style="width:80px">
-            <select id="d-exact-length-frac" onchange="calcDrapePrice()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
-              <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
-              <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
-            </select>
+            <input type="number" id="d-exact-length" step="0.125" placeholder="96" min="12" max="150" oninput="calcDrapePrice()" style="width:90px">
             <span style="font-size:12px;color:#666">inches</span>
           </div>
         </div>
@@ -873,22 +857,14 @@
             <div class="form-group">
               <label>Width</label>
               <div style="display:flex;align-items:center;gap:6px">
-                <input type="number" id="rn-w" placeholder="36" min="12" max="120" oninput="calcRoman()" style="width:70px">
-                <select id="rn-w-frac" onchange="calcRoman()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
-                  <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
-                  <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
-                </select>
+                <input type="number" id="rn-w" step="0.125" placeholder="36" min="12" max="120" oninput="calcRoman()" style="width:90px">
                 <span style="font-size:12px;color:#666">in</span>
               </div>
             </div>
             <div class="form-group">
               <label>Finished length</label>
               <div style="display:flex;align-items:center;gap:6px">
-                <input type="number" id="rn-h" placeholder="48" max="120" oninput="calcRoman()" style="width:70px">
-                <select id="rn-h-frac" onchange="calcRoman()" style="padding:8px 6px;border:1px solid #ddd;border-radius:8px;font-size:12px;background:#fff">
-                  <option value="0">0"</option><option value="0.125">⅛"</option><option value="0.25">¼"</option><option value="0.375">⅜"</option>
-                  <option value="0.5">½"</option><option value="0.625">⅝"</option><option value="0.75">¾"</option><option value="0.875">⅞"</option>
-                </select>
+                <input type="number" id="rn-h" step="0.125" placeholder="48" max="120" oninput="calcRoman()" style="width:90px">
                 <span style="font-size:12px;color:#666">in</span>
               </div>
             </div>
