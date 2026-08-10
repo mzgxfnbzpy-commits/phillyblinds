@@ -633,7 +633,9 @@ function pbContactStepHTML(opts) {
           '<div class="form-group"><label>Phone *</label><input type="tel" id="' + p + 'phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>' +
         '</div>' +
         '<div class="form-group"><label>Email *</label><input type="email" id="' + p + 'email" data-pb-contact="email" placeholder="jane@example.com"></div>' +
-        '<div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="' + p + 'address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>' +
+        // ZIP prompted here rather than as a separate field, so every product asks
+        // for the same thing (shutters used to carry its own city/zip inputs).
+        '<div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="' + p + 'address" data-pb-contact="address" autocomplete="street-address" placeholder="123 Main St, Philadelphia PA 19106"></div>' +
         '<div class="form-group"><label>Notes</label><textarea id="' + p + 'notes" data-pb-contact="notes" placeholder="Room name, ceiling height, fabric ideas, timeline &mdash; anything helpful" style="min-height:60px"></textarea></div>' +
         '<div style="border:1.5px dashed #ddd;border-radius:10px;padding:14px 16px;margin-bottom:12px;background:#fafaf8">' +
           '<div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">&#128206; Attach photos or files <span style="font-weight:400;color:#999">(optional)</span></div>' +
@@ -1384,7 +1386,7 @@ function pbShowQuoteModal(lines, productName, estimate, files) {
         '</div>' +
         '<div class="pb-qm-field"><label>Email address *</label><input id="pbq-email" type="email" placeholder="jane@example.com" autocomplete="email"></div>' +
         '<div class="pb-qm-field"><label>Phone number *</label><input id="pbq-phone" data-pb-contact="phone" type="tel" placeholder="(215) 555-0100" autocomplete="tel"></div>' +
-        '<div class="pb-qm-field"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input id="pbq-address" data-pb-contact="address" type="text" placeholder="Street, City, State" autocomplete="street-address"></div>' +
+        '<div class="pb-qm-field"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input id="pbq-address" data-pb-contact="address" type="text" placeholder="123 Main St, Philadelphia PA 19106" autocomplete="street-address"></div>' +
         '<div class="pb-qm-field"><label>Additional notes <span style="font-weight:400;color:#888">(optional)</span></label><textarea id="pbq-notes" rows="3" placeholder="Anything else — overall timeline, install questions..."></textarea></div>' +
         '<div class="pb-qm-err" id="pbq-err"></div>' +
         pbTermsCheckboxHTML('pbq-terms') +
