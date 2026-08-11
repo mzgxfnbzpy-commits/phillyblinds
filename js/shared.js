@@ -646,10 +646,12 @@ function pbContactStepHTML(opts) {
         // Honeypot — hidden from humans; bots that fill it are blocked in the submit interceptor.
         '<input type="text" id="' + hpId + '" name="pb-hp" class="pb-hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;opacity:0;pointer-events:none">' +
         '<div id="' + errId + '" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>' +
-        cartBtn +
-        // Required Terms of Agreement acceptance — gates "Submit Order for Review" only (not Add to Cart).
+        // Required Terms of Agreement acceptance — gates "Submit Order for Review" only
+        // (not Add to Cart). It sits above both buttons rather than between them, so the
+        // two buttons stay one directly on top of the other on every surface.
         pbTermsCheckboxHTML(p + 'terms') +
-        '<button class="btn-gold" onclick="' + submitFn + '" style="width:100%;padding:13px;margin-top:4px" data-pb-require-contact="' + errId + '">Submit Order for Review &rarr;</button>' +
+        cartBtn +
+        '<button class="btn-gold" onclick="' + submitFn + '" style="width:100%;padding:13px" data-pb-require-contact="' + errId + '">Submit Order for Review &rarr;</button>' +
       '</div>';
   if (opts.bare) return inner;
   return '' +
@@ -1246,7 +1248,9 @@ function pbRenderEstimate(priceBoxId, lines, subtotal, conflictMsg, onCheckout) 
         '<input type="file" id="' + priceBoxId + '-files" multiple accept="image/*,.pdf,.heic,.png,.jpg,.jpeg" style="width:100%;font-size:11px;color:#555;font-family:inherit;cursor:pointer;padding:3px 0" onchange="pbShowFileNames(this,\'' + priceBoxId + '-fnames\')">' +
         '<div id="' + priceBoxId + '-fnames" style="font-size:11px;color:#555;margin-top:4px;line-height:1.7"></div>' +
       '</div>' +
-      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' +
+      // Add to Cart sits directly above Submit — same stacked pair as the shared
+      // final step, so the two buttons read the same way on every surface.
+      '<div style="display:grid;gap:10px">' +
         '<button onclick="pbEstimateAddCart(\'' + priceBoxId + '\')" style="padding:11px;border:2px solid var(--espresso);border-radius:8px;background:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--espresso)">+ Add to Cart</button>' +
         '<button onclick="pbPanelSubmit(\'' + priceBoxId + '\')" ' +
           (hasConflict ? 'disabled style="padding:11px;border-radius:8px;background:#e5e5e5;font-size:13px;font-weight:700;cursor:not-allowed;font-family:inherit;color:#aaa;border:none"' :
@@ -1638,17 +1642,17 @@ function normanMotorSection(containerId, productName, onChange) {
   var batteryDetail = wandAllowed
     ? '<div style="font-size:11px;color:var(--text-dark);line-height:1.6;margin-bottom:6px">How would you like to charge the battery?</div>' +
       '<div class="opt-row" id="nm-grp-battery-type">' +
-        '<button class="opt-btn' + (isRoller ? ' sel' : '') + '" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">AC Adapter Charger <span style="font-size:9px;color:var(--text-faint)">+$43</span></button>' +
-        '<button class="opt-btn' + (isCellular ? ' sel' : '') + '" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">Wired Charging Wand <span style="font-size:9px;color:var(--text-faint)">+$161</span>' + (isRoller ? ' <span style="font-size:9px;color:#c77">not rec.</span>' : (isCellular ? ' <span style="font-size:9px;color:var(--gold)">recommended</span>' : '')) + '</button>' +
-        '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">Wireless Charging Wand <span style="font-size:9px;color:var(--text-faint)">+$428</span>' + (isRoller ? ' <span style="font-size:9px;color:#c77">not rec.</span>' : '') + '</button>' +
+        '<button class="opt-btn' + (isRoller ? ' sel' : '') + '" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">AC Adapter Charger</button>' +
+        '<button class="opt-btn' + (isCellular ? ' sel' : '') + '" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">Wired Charging Wand' + (isRoller ? ' <span style="font-size:9px;color:#c77">not rec.</span>' : (isCellular ? ' <span style="font-size:9px;color:var(--gold)">recommended</span>' : '')) + '</button>' +
+        '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">Wireless Charging Wand' + (isRoller ? ' <span style="font-size:9px;color:#c77">not rec.</span>' : '') + '</button>' +
       '</div>' +
       '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">' +
-        'The rechargeable battery recharges with an <strong>AC Adapter Charger</strong> (+$43) — plug it in every few months to top up. ' +
+        'The rechargeable battery recharges with an <strong>AC Adapter Charger</strong> — plug it in every few months to top up. ' +
         (isRoller
           ? 'On roller shades a charging wand needs a small visible control box at the top of the shade, so we recommend the included charger here. '
           : 'On cellular shades a Charging Wand recharges the shade with a wand instead of taking it down — recommended. ') +
-        'The <strong>Wired</strong> wand stays plugged in and includes an extension cable for extra reach; the <strong>Wireless</strong> wand is cordless (charge the wand, then charge the shade). A 36&quot; Extension Pole (+$75) is available for either. Charging Wand is not available with a Cassette headrail or Dual shades.</div>'
-    : '<div style="font-size:11px;color:var(--text-dark);line-height:1.6">Rechargeable battery, recharged with an AC Adapter Charger (+$43; plug the charger into the battery every few months). No wiring required — ideal for retrofit installations.' +
+        'The <strong>Wired</strong> wand stays plugged in and includes an extension cable for extra reach; the <strong>Wireless</strong> wand is cordless (charge the wand, then charge the shade). A 36&quot; Extension Pole is available for either. Charging Wand is not available with a Cassette headrail or Dual shades.</div>'
+    : '<div style="font-size:11px;color:var(--text-dark);line-height:1.6">Rechargeable battery, recharged with an AC Adapter Charger (plug the charger into the battery every few months). No wiring required — ideal for retrofit installations.' +
       (isSmartDrape ? ' A Charging Wand is not available for SmartDrape.' : ' A Charging Wand is not available for this product type.') + '</div>';
 
   var dcLowVoltageBtn = isSmartDrape
@@ -1669,7 +1673,8 @@ function normanMotorSection(containerId, productName, onChange) {
 
   // Optional advanced add-ons (multi-select; nmGetMotorPrice sums selected data-nm-price)
   var _accBtn = function(key, label, price) {
-    return '<button class="opt-btn" data-nm-acc="' + key + '" data-nm-price="' + price + '" onclick="nmToggleAcc(this)" style="color:#333">' + label + ' <span style="font-size:9px;color:var(--text-faint)">+$' + price + '</span></button>';
+    // Price rides along in data-nm-price for nmGetMotorPrice — it is not shown here.
+    return '<button class="opt-btn" data-nm-acc="' + key + '" data-nm-price="' + price + '" onclick="nmToggleAcc(this)" style="color:#333">' + label + '</button>';
   };
   var extCableOk = (isRoller || isRoman || isPerfectSheer) && !isSmartDrape;
   var nmAddons =
@@ -1725,7 +1730,7 @@ function normanMotorSection(containerId, productName, onChange) {
           dcLowVoltageBtn +
           (isSmartDrape ? '' : '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-wire\')" style="color:#333">DC Low Voltage hard wire</button>') +
         '</div>' +
-        '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">DC hard wire (15V, +$11 DC connection harness). Licensed electrician install recommended. Confirmed at measurement visit.' +
+        '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">DC hard wire (15V). Licensed electrician install recommended. Confirmed at measurement visit.' +
           (isSmartDrape ? ' DC Low Voltage is NOT available for SmartDrape.' : '') + '</div>' +
       '</div>' +
 
@@ -1747,8 +1752,8 @@ function normanMotorSection(containerId, productName, onChange) {
         '</div>' +
         '<div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px;margin-top:10px">Remote type</div>' +
         '<div class="opt-row" id="nm-grp-remote-type">' +
-          '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-remote-type\')" style="color:#333">Basic Remote <span style="font-size:9px;color:var(--text-faint)">$75</span></button>' +
-          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-remote-type\')" style="color:#333">SmartDial G2 <span style="font-size:9px;color:var(--text-faint)">$268</span></button>' +
+          '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-remote-type\')" style="color:#333">Basic Remote</button>' +
+          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-remote-type\')" style="color:#333">SmartDial G2</button>' +
         '</div>' +
         '<div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px;margin-top:10px">Channels</div>' +
         '<div class="opt-row" id="nm-grp-channel">' +
@@ -1761,7 +1766,7 @@ function normanMotorSection(containerId, productName, onChange) {
       '<div>' +
         '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Smart home hub</div>' +
         '<div class="opt-row" id="nm-grp-hub">' +
-          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-hub\')" style="color:#333">Add ShadeAuto hub <span style="font-size:9px;color:var(--text-faint)">+$321</span></button>' +
+          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-hub\')" style="color:#333">Add ShadeAuto hub</button>' +
           '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-hub\')" style="color:#333">No hub</button>' +
         '</div>' +
         '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.7">The hub connects your shades to your phone and to <strong>Amazon Alexa, Google Home &amp; Apple HomeKit</strong> — no need to pick one, it works with all of them. Without a hub, shades run from the remote. Max 5 repeaters per system.</div>' +
@@ -1780,15 +1785,15 @@ function normanMotorSection(containerId, productName, onChange) {
           '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Power source</div>' +
           '<div class="opt-row" id="auto-grp-power">' +
             (isCellular
-              ? '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#128267; Rechargeable Battery Pack <span style="font-size:9px;color:var(--text-faint)">$682</span></button>' +
-                '<button class="opt-btn" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#128268; AC Adapter <span style="font-size:9px;color:var(--text-faint)">$682</span></button>'
-              : '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#128267; Rechargeable battery (Li-ion) <span style="font-size:9px;color:var(--text-faint)">$682</span></button>' +
-                '<button class="opt-btn" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#9889; Low Voltage DC <span style="font-size:9px;color:var(--text-faint)">$814</span></button>') +
+              ? '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#128267; Rechargeable Battery Pack</button>' +
+                '<button class="opt-btn" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#128268; AC Adapter</button>'
+              : '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#128267; Rechargeable battery (Li-ion)</button>' +
+                '<button class="opt-btn" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#9889; Low Voltage DC</button>') +
           '</div>' +
           '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">' +
             (isCellular
               ? 'Automate motor powered by an external rechargeable battery pack or an AC adapter. '
-              : 'Automate Li-ion rechargeable motor (external battery pack $230 available) or 12V DC low-voltage hardwired (DC connection harness $19). ') +
+              : 'Automate Li-ion rechargeable motor or 12V DC low-voltage hardwired. ') +
             'Custom priced — confirmed at measurement.</div>' +
         '</div>' +
 
@@ -1815,7 +1820,7 @@ function normanMotorSection(containerId, productName, onChange) {
         '<div>' +
           '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Automate Pulse 2 hub</div>' +
           '<div class="opt-row" id="auto-grp-hub">' +
-            '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-hub\')" style="color:#333">Add hub (app + voice) <span style="font-size:9px;color:var(--text-faint)">$483</span></button>' +
+            '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-hub\')" style="color:#333">Add hub (app + voice)</button>' +
             '<button class="opt-btn" onclick="selOpt(this,\'auto-grp-hub\')" style="color:#333">No hub</button>' +
           '</div>' +
           '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">The Automate Pulse 2 hub enables the Automate app and voice control (Alexa, Google Home, Apple HomeKit).</div>' +
@@ -1951,6 +1956,26 @@ function nmGetMotorPrice(productName, count, baseOverride) {
   }
   document.querySelectorAll('#nm-smart-section .opt-btn[data-nm-acc].sel').forEach(function(b){ total += parseInt(b.getAttribute('data-nm-price'), 10) || 0; }); // optional add-ons
   return total;
+}
+
+/**
+ * The single "Motorization" figure for a quote or estimate box.
+ *
+ * Motor, charger, remotes, hub and accessories are summed internally by
+ * nmGetMotorPrice and shown here as ONE line — the per-option prices are
+ * deliberately not displayed anywhere in the configurator. Motorization is
+ * always full Norman / Rollease Acmeda retail (never discounted), which is why
+ * it stays a separate line from the discounted shade price.
+ *
+ * @param {number} total — motor total for the whole order (from nmGetMotorPrice)
+ * @param {number} count — number of motorized shades
+ * @returns {string} e.g. "$600/shade · $1,200 total", or "$600" for a single shade
+ */
+function nmMotorLineText(total, count) {
+  if (!total) return '';
+  var n = count && count > 1 ? count : 1;
+  if (n === 1) return '$' + total.toLocaleString();
+  return '$' + Math.round(total / n).toLocaleString() + '/shade · $' + total.toLocaleString() + ' total';
 }
 
 // ---- INSTALLATION ADD-ON — auto-injects into every quote form ----

@@ -900,7 +900,7 @@ function updatePrice() {
     document.getElementById('pb-base').textContent = '$' + tableBase + '/shade retail (Norman Portrait' + String.fromCharCode(0x2122) + ' MSRP)';
     if (motorOn) {
       document.getElementById('pb-motor-row').style.display = 'flex';
-      document.getElementById('pb-motor').textContent = '+$' + motorCost.toLocaleString() + ' (not discounted)';
+      document.getElementById('pb-motor').textContent = nmMotorLineText(motorCost, qty);
     } else {
       document.getElementById('pb-motor-row').style.display = 'none';
     }
@@ -923,7 +923,7 @@ function updatePrice() {
   document.getElementById('pb-sqft').textContent = sqft.toFixed(2) + ' sqft';
   document.getElementById('pb-base').textContent = '$' + rate + '/sqft → $' + basePerShade.toFixed(0) + ' est.';
   if (motorOn) {
-    document.getElementById('pb-motor').textContent = '+$' + activeMotorUp + ' × ' + qty + ' = $' + (activeMotorUp * qty).toFixed(0);
+    document.getElementById('pb-motor').textContent = nmMotorLineText(motorCost, qty);
   }
   document.getElementById('pb-total').textContent = '$' + total.toFixed(0) + ' est.';
 
@@ -3013,7 +3013,7 @@ function rnUpdatePrice() {
     document.getElementById('rn-pb-sqft').textContent = '—';
     document.getElementById('rn-pb-base').textContent = '—';
     document.getElementById('rn-pb-total').textContent = '—';
-    if (isMotor) { document.getElementById('rn-pb-motor-row').style.display = 'flex'; document.getElementById('rn-pb-motor').textContent = '+$' + rnMotorUpcharge + '/shade'; }
+    if (isMotor) { document.getElementById('rn-pb-motor-row').style.display = 'flex'; document.getElementById('rn-pb-motor').textContent = '—'; }
     else { document.getElementById('rn-pb-motor-row').style.display = 'none'; }
     return;
   }
@@ -3169,7 +3169,8 @@ function rnUpdatePrice() {
   document.getElementById('rn-pb-min-note').style.display = (perShade === RN_MIN) ? 'block' : 'none';
   if (isMotor) {
     document.getElementById('rn-pb-motor-row').style.display = 'flex';
-    document.getElementById('rn-pb-motor').textContent = '+\$' + motorCost.toLocaleString() + ' (motor & accessories, not discounted)';
+    // Divided by shades, not motors — a dual system carries two motors per shade.
+    document.getElementById('rn-pb-motor').textContent = nmMotorLineText(motorCost, qty);
   } else {
     document.getElementById('rn-pb-motor-row').style.display = 'none';
   }

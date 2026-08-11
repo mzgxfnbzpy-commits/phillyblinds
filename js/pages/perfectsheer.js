@@ -188,7 +188,7 @@ function psCalc() {
   var psMotor    = (!isCCL && typeof nmGetMotorPrice === 'function') ? nmGetMotorPrice('PerfectSheer', PS.qty) : 0;
   var freight    = w >= 90 ? (80 + Math.max(0, PS.qty - 1) * 50) : (25 + Math.max(0, PS.qty - 1) * 11);
   var grandTotal = (yourPrice * PS.qty) + psMotor + freight;
-  if (psMotor) lines.push('Motor &amp; accessories (not discounted): +$' + psMotor.toLocaleString());
+  if (psMotor) lines.push('Motorization: ' + nmMotorLineText(psMotor, PS.qty));
   lines.push('Freight (not discounted): +$' + freight.toLocaleString());
 
   document.getElementById('ps-price-num').textContent   = '$' + yourPrice.toLocaleString() + '/shade';
@@ -196,7 +196,6 @@ function psCalc() {
   document.getElementById('ps-price-breakdown').innerHTML = lines.join('<br>');
   pb.style.display = 'block';
   document.getElementById('qp-pending').style.display    = 'none';
-  document.getElementById('ps-cart-wrap').style.display  = 'block';
 }
 
 // ── Add to cart ───────────────────────────────────────────────

@@ -580,7 +580,7 @@ function updateSummary() {
         var _mShades = (_solCoupledActive ? _solCoupledCount : (priceResult.qty || 1)) * (shadeType === 'Dual Shade' ? 2 : 1);
         var _mPrice = nmGetMotorPrice('Soluna Roller Shade', _mShades);
         if (_mPrice > 0) {
-          pTxt += ' + motor & accessories $' + _mPrice.toLocaleString() + ' (not discounted) = $' + (_solYour + _mPrice).toLocaleString() + ' total';
+          pTxt += ' + motorization ' + nmMotorLineText(_mPrice, priceResult.qty || 1) + ' = $' + (_solYour + _mPrice).toLocaleString() + ' total';
         }
       }
       priceEl2.textContent = pTxt;
@@ -632,7 +632,7 @@ function submitQuote() {
         if (priceEst.motor && typeof nmGetMotorPrice === 'function') {
           var _ms = (_solCoupledActive ? _solCoupledCount : (priceEst.qty || 1)) * (shadeType === 'Dual Shade' ? 2 : 1);
           var _mp = nmGetMotorPrice('Soluna Roller Shade', _ms);
-          if (_mp > 0) return ' + motor & accessories: $' + _mp.toLocaleString() + ' (not discounted) = TOTAL $' + (Math.round(priceEst.total * 0.65) + _mp).toLocaleString();
+          if (_mp > 0) return ' + motorization ' + nmMotorLineText(_mp, priceEst.qty || 1) + ' = TOTAL $' + (Math.round(priceEst.total * 0.65) + _mp).toLocaleString();
         }
         return '';
       })() + ' (freight additional)' + (priceEst.qty > 1 && !_solCoupledActive ? ' (' + priceEst.qty + ' × $' + priceEst.unit.toLocaleString() + ')' : '')

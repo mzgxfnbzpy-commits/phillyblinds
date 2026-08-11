@@ -444,7 +444,7 @@ function calcPrice(){
   var isMotor=S.op==='motor';
   var sdMotor=(isMotor&&typeof nmGetMotorPrice==='function')?nmGetMotorPrice('SmartDrape', S.qty):0;
   document.getElementById('pr-motor-row').style.display=isMotor?'flex':'none';
-  var _sdMotorEl=document.getElementById('pr-motor'); if(_sdMotorEl&&isMotor)_sdMotorEl.textContent='+$'+sdMotor.toLocaleString();
+  var _sdMotorEl=document.getElementById('pr-motor'); if(_sdMotorEl&&isMotor)_sdMotorEl.textContent=nmMotorLineText(sdMotor,S.qty);
   // 35% Norman discount on product subtotal (not applied to shipping/motor)
   var NORMAN_DISC_SD=0.35;
   var sdRetailSub=Math.round(per*S.qty);

@@ -639,7 +639,7 @@ function cellCalcPrice() {
   lines.push('Retail: $' + productSub.toLocaleString());
   lines.push('<span style="color:var(--gold)">35% Norman discount: −$' + discountAmt.toLocaleString() + '</span>');
   lines.push('<span style="color:var(--gold);font-weight:600">Your shade price: $' + yourPrice.toLocaleString() + '</span>');
-  if (motorTotal) lines.push('Motor &amp; accessories (not discounted): +$' + motorTotal.toLocaleString());
+  if (motorTotal) lines.push('Motorization: ' + nmMotorLineText(motorTotal, CELL.qty));
   lines.push('Freight (not discounted): +$' + freight.toLocaleString());
 
   // Update panel
@@ -650,7 +650,6 @@ function cellCalcPrice() {
   document.getElementById('cell-size-info').style.display  = 'block';
   pb.style.display = 'block';
   document.getElementById('qp-cell-pending').style.display = 'none';
-  document.getElementById('cell-cart-wrap').style.display  = 'block';
 }
 
 // ── Add to cart ───────────────────────────────────────────────
