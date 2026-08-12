@@ -21,7 +21,7 @@ const PS_PRICES  = [
 ];
 const PS_WOOD_V   = [117,122,133,139,150,161,171,188,204,216,232,249,277,282,304];
 const PS_FABRIC_V = [133,139,155,161,171,183,199,216,232,249,271,288,315,326,349];
-const PS_NORM_DISC  = 0.35;
+const PS_NORM_DISC  = 0.25;
 const PS_MOTOR_COST = 482;
 
 // ── State ─────────────────────────────────────────────────────
@@ -175,13 +175,13 @@ function psCalc() {
   if (PS.holddown)  total += 28;
   if (PS.shims > 0) total += PS.shims * 7;
 
-  // ── Customer-facing breakdown: retail → 35% off → price; motor+accessories at full price ──
+  // ── Customer-facing breakdown: retail → 25% off → price; motor+accessories at full price ──
   // (base table price, +20% fabric, valance, light-guard, hold-down, shims are intentionally hidden)
   var lines = [];
   var discAmt   = Math.round(total * PS_NORM_DISC);
   var yourPrice = total - discAmt;
   lines.push('Retail: $' + total.toLocaleString());
-  lines.push('<span style="color:var(--gold)">35% Norman discount: −$' + discAmt.toLocaleString() + '</span>');
+  lines.push('<span style="color:var(--gold)">25% Norman discount: −$' + discAmt.toLocaleString() + '</span>');
   lines.push('<span style="color:var(--gold);font-weight:600">Your shade price: $' + yourPrice.toLocaleString() + '/shade</span>');
 
   // Motor charged at full Norman retail (NOT discounted) via shared nmGetMotorPrice

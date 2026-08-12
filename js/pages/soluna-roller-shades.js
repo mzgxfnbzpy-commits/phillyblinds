@@ -571,11 +571,11 @@ function updateSummary() {
       priceEl2.textContent = 'Size exceeds our standard price chart (max 120″W × 144″H) — we’ll prepare a manual quote.';
       priceRow.style.display = '';
     } else if (priceResult) {
-      // Norman retail → 35% off → your price (35% applies to all Norman products; not to shipping).
+      // Norman retail → 25% off → your price (35% applies to all Norman products; not to shipping).
       var _solRetail = priceResult.total;
-      var _solYour   = Math.round(_solRetail * 0.65);
-      var pTxt = '$' + _solRetail.toLocaleString() + ' retail → $' + _solYour.toLocaleString() + ' your price (35% off)';
-      if (priceResult.qty > 1 && !_solCoupledActive) pTxt += ' · ' + priceResult.qty + ' × $' + Math.round(priceResult.unit * 0.65).toLocaleString();
+      var _solYour   = Math.round(_solRetail * 0.75);
+      var pTxt = '$' + _solRetail.toLocaleString() + ' retail → $' + _solYour.toLocaleString() + ' your price (25% off)';
+      if (priceResult.qty > 1 && !_solCoupledActive) pTxt += ' · ' + priceResult.qty + ' × $' + Math.round(priceResult.unit * 0.75).toLocaleString();
       if (priceResult.motor && typeof nmGetMotorPrice === 'function') {
         var _mShades = (_solCoupledActive ? _solCoupledCount : (priceResult.qty || 1)) * (shadeType === 'Dual Shade' ? 2 : 1);
         var _mPrice = nmGetMotorPrice('Soluna Roller Shade', _mShades);
@@ -628,11 +628,11 @@ function submitQuote() {
   const priceEstLine = (priceEst && priceEst.review)
     ? 'Size exceeds standard price chart (max 120"W x 144"H) — MANUAL QUOTE REQUIRED'
     : priceEst
-    ? 'Est. retail: $' + priceEst.total.toLocaleString() + ' → 35% off → shade price: $' + Math.round(priceEst.total * 0.65).toLocaleString() + (function(){
+    ? 'Est. retail: $' + priceEst.total.toLocaleString() + ' → 25% off → shade price: $' + Math.round(priceEst.total * 0.75).toLocaleString() + (function(){
         if (priceEst.motor && typeof nmGetMotorPrice === 'function') {
           var _ms = (_solCoupledActive ? _solCoupledCount : (priceEst.qty || 1)) * (shadeType === 'Dual Shade' ? 2 : 1);
           var _mp = nmGetMotorPrice('Soluna Roller Shade', _ms);
-          if (_mp > 0) return ' + motorization ' + nmMotorLineText(_mp, priceEst.qty || 1) + ' = TOTAL $' + (Math.round(priceEst.total * 0.65) + _mp).toLocaleString();
+          if (_mp > 0) return ' + motorization ' + nmMotorLineText(_mp, priceEst.qty || 1) + ' = TOTAL $' + (Math.round(priceEst.total * 0.75) + _mp).toLocaleString();
         }
         return '';
       })() + ' (freight additional)' + (priceEst.qty > 1 && !_solCoupledActive ? ' (' + priceEst.qty + ' × $' + priceEst.unit.toLocaleString() + ')' : '')

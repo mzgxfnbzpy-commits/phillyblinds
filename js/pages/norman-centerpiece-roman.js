@@ -529,14 +529,14 @@ function updateCalc() {
   // retail; only the Day & Night surcharge (an allowed add-on) stays visible.
   ['pr-lining-row','pr-soft-row','pr-banding-row','pr-sr-row','pr-valance-row','pr-acc-row'].forEach(function(id){showRow(id,false);});
   var _cpBaseRow=document.getElementById('pr-base'); if(_cpBaseRow&&_cpBaseRow.parentElement)_cpBaseRow.parentElement.style.display='none';
-  var NORMAN_DISC_CP=0.35;
+  var NORMAN_DISC_CP=0.25;
   var cpRetailSub=(per*qty)+(srAdd*qty)+(dnAdd*qty)+(vSur*qty)+(accT*qty);
   var cpDiscountAmt=Math.round(cpRetailSub*NORMAN_DISC_CP);
   var cpYourPrice=cpRetailSub-cpDiscountAmt;
   var isMotCp=(S.lift==='motor'||S.lift==='motor-dn');
   var cpMotor=(isMotCp&&typeof nmGetMotorPrice==='function')?nmGetMotorPrice('Centerpiece Roman', qty*(isDN?2:1)):0;
   var total=cpYourPrice+freight+cpMotor;
-  setVal('pr-total','Retail $'+Math.round(cpRetailSub).toLocaleString()+' → 35% off → ~$'+Math.round(cpYourPrice+freight).toLocaleString()+(cpMotor>0?' + motorization '+nmMotorLineText(cpMotor,qty)+' = ~$'+Math.round(total).toLocaleString()+' total':'')+' (freight at retail)');
+  setVal('pr-total','Retail $'+Math.round(cpRetailSub).toLocaleString()+' → 25% off → ~$'+Math.round(cpYourPrice+freight).toLocaleString()+(cpMotor>0?' + motorization '+nmMotorLineText(cpMotor,qty)+' = ~$'+Math.round(total).toLocaleString()+' total':'')+' (freight at retail)');
 }
 
 // ── SUBMIT ────────────────────────────────────────────────────────────────────

@@ -428,7 +428,7 @@ function calcPrice(){
   var per=base;
   document.getElementById('pr-base').textContent='$'+base.toLocaleString();
   // Detail hidden per owner request — base + RD/alternating-color surcharges roll into retail.
-  // Only the allowed add-on surcharge (motor) stays visible; customer sees retail → 35% off → price.
+  // Only the allowed add-on surcharge (motor) stays visible; customer sees retail → 25% off → price.
   var _sdBase=document.getElementById('pr-base'); if(_sdBase&&_sdBase.parentElement) _sdBase.parentElement.style.display='none';
   var isRD=S.opacity==='rd';
   var rdAdd=isRD?Math.round(base*0.20):0;
@@ -445,8 +445,8 @@ function calcPrice(){
   var sdMotor=(isMotor&&typeof nmGetMotorPrice==='function')?nmGetMotorPrice('SmartDrape', S.qty):0;
   document.getElementById('pr-motor-row').style.display=isMotor?'flex':'none';
   var _sdMotorEl=document.getElementById('pr-motor'); if(_sdMotorEl&&isMotor)_sdMotorEl.textContent=nmMotorLineText(sdMotor,S.qty);
-  // 35% Norman discount on product subtotal (not applied to shipping/motor)
-  var NORMAN_DISC_SD=0.35;
+  // 25% Norman discount on product subtotal (not applied to shipping/motor)
+  var NORMAN_DISC_SD=0.25;
   var sdRetailSub=Math.round(per*S.qty);
   var sdDiscountAmt=Math.round(sdRetailSub*NORMAN_DISC_SD);
   var sdYourPrice=sdRetailSub-sdDiscountAmt;
