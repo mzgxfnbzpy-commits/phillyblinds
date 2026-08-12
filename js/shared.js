@@ -628,14 +628,16 @@ function pbContactStepHTML(opts) {
     : '';
   var inner = '' +
       '<div class="pb-cart-extras">' +
-        '<div class="dim-row">' +
-          '<div class="form-group"><label>Name *</label><input type="text" id="' + p + 'name" data-pb-contact="name" placeholder="Jane Smith"></div>' +
-          '<div class="form-group"><label>Phone *</label><input type="tel" id="' + p + 'phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>' +
-        '</div>' +
-        '<div class="form-group"><label>Email *</label><input type="email" id="' + p + 'email" data-pb-contact="email" placeholder="jane@example.com"></div>' +
-        // ZIP prompted here rather than as a separate field, so every product asks
-        // for the same thing (shutters used to carry its own city/zip inputs).
+        // Field order is fixed for every product: name, address, phone, email,
+        // notes, files. ZIP is prompted inside the address rather than as a
+        // separate field, so every product asks for the same thing (shutters
+        // used to carry its own city/zip inputs).
+        '<div class="form-group"><label>Name *</label><input type="text" id="' + p + 'name" data-pb-contact="name" autocomplete="name" placeholder="Jane Smith"></div>' +
         '<div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="' + p + 'address" data-pb-contact="address" autocomplete="street-address" placeholder="123 Main St, Philadelphia PA 19106"></div>' +
+        '<div class="dim-row">' +
+          '<div class="form-group"><label>Phone *</label><input type="tel" id="' + p + 'phone" data-pb-contact="phone" autocomplete="tel" placeholder="(215) 555-0100"></div>' +
+          '<div class="form-group"><label>Email *</label><input type="email" id="' + p + 'email" data-pb-contact="email" autocomplete="email" placeholder="jane@example.com"></div>' +
+        '</div>' +
         '<div class="form-group"><label>Notes</label><textarea id="' + p + 'notes" data-pb-contact="notes" placeholder="Room name, ceiling height, fabric ideas, timeline &mdash; anything helpful" style="min-height:60px"></textarea></div>' +
         '<div style="border:1.5px dashed #ddd;border-radius:10px;padding:14px 16px;margin-bottom:12px;background:#fafaf8">' +
           '<div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">&#128206; Attach photos or files <span style="font-weight:400;color:#999">(optional)</span></div>' +
@@ -2017,14 +2019,25 @@ function nmGetMotorSummary() {
     (nmAcc.length ? ' | Add-ons: ' + nmAcc.join(', ') : '');
 }
 
-// Returns the motorization surcharge (Norman suggested retail, NOT discounted) for the
-// currently-selected motor options. Charger (AC adapter) is INCLUDED/free; motor, charging
-// wands, hub, remotes & the SmartDial G2 upgrade are all charged. Prices verified vs the
-// Norman motorization PDF (Norman Smart p.5; Rollease Acmeda Automate p.63–65).
+// Motorization discount — 20% off retail, for BOTH Norman Smart and Rollease
+// Acmeda Automate (Justin, 2026-08). Shades are 25% off; motorization is 20%.
+var NM_MOTOR_DISC = 0.20;
+
+// The customer's motorization price: retail less the 20% motor discount.
+// Every total on the site adds this figure, so the discount is applied once, here,
+// rather than at each of the eight places motor cost feeds a total.
 //   productName  — same string passed to normanMotorSection (for base motor by product)
 //   count        — number of motorized shades (caller passes qty, ×2 for dual/D&N, etc.)
 //   baseOverride — optional Norman Smart motor base (e.g. 642 dual motor for cellular D&N/TDBU)
 function nmGetMotorPrice(productName, count, baseOverride) {
+  return Math.round(nmGetMotorRetail(productName, count, baseOverride) * (1 - NM_MOTOR_DISC));
+}
+
+// Returns the motorization surcharge at Norman suggested RETAIL for the currently-selected
+// motor options. Charger (AC adapter) is INCLUDED/free; motor, charging wands, hub, remotes
+// & the SmartDial G2 upgrade are all charged. Prices verified vs the Norman motorization
+// PDF (Norman Smart p.5; Rollease Acmeda Automate p.63–65).
+function nmGetMotorRetail(productName, count, baseOverride) {
   count = count || 1;
   var sel = function(id){ var b = document.querySelector('#' + id + ' .opt-btn.sel'); return b ? b.textContent : ''; };
   var brandBtn = document.querySelector('#nm-grp-brand .opt-btn.sel');
@@ -2069,21 +2082,23 @@ function nmGetMotorPrice(productName, count, baseOverride) {
 /**
  * The single "Motorization" figure for a quote or estimate box.
  *
- * Motor, charger, remotes, hub and accessories are summed internally by
- * nmGetMotorPrice and shown here as ONE line — the per-option prices are
- * deliberately not displayed anywhere in the configurator. Motorization is
- * always full Norman / Rollease Acmeda retail (never discounted), which is why
- * it stays a separate line from the discounted shade price.
+ * Motor, charger, remotes, hub and accessories are summed internally — the
+ * per-option prices are deliberately not displayed anywhere in the configurator.
+ * Motorization carries its own 20% discount (shades are 25%), so the line shows
+ * retail struck through and the customer's price beside it.
  *
- * @param {number} total — motor total for the whole order (from nmGetMotorPrice)
+ * @param {number} net   — discounted motor total for the order (from nmGetMotorPrice)
  * @param {number} count — number of motorized shades
- * @returns {string} e.g. "$600/shade · $1,200 total", or "$600" for a single shade
+ * @returns {string} e.g. "$750 retail → $600 (20% off) · $300/shade"
  */
-function nmMotorLineText(total, count) {
-  if (!total) return '';
+function nmMotorLineText(net, count) {
+  if (!net) return '';
   var n = count && count > 1 ? count : 1;
-  if (n === 1) return '$' + total.toLocaleString();
-  return '$' + Math.round(total / n).toLocaleString() + '/shade · $' + total.toLocaleString() + ' total';
+  var retail = Math.round(net / (1 - NM_MOTOR_DISC));
+  var txt = '$' + retail.toLocaleString() + ' retail → $' + net.toLocaleString() +
+            ' (' + Math.round(NM_MOTOR_DISC * 100) + '% off)';
+  if (n > 1) txt += ' · $' + Math.round(net / n).toLocaleString() + '/shade';
+  return txt;
 }
 
 // ---- INSTALLATION ADD-ON — auto-injects into every quote form ----
