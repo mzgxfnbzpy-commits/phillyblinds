@@ -279,7 +279,7 @@ function solPickAddon(type, btn) {
   var hemNote = document.getElementById('sol-hembar-note');
   if (hemWrap) hemWrap.style.display = (activeType === 'openroll') ? 'none' : 'block';
   if (hemNote && activeType === 'lightguard') {
-    hemNote.textContent = 'LightGuard 360™ hem bar — fabric wrapped (matches shade fabric) or metal in the color you pick.';
+    hemNote.textContent = 'Full Blackout Side Channels hem bar — fabric wrapped (matches shade fabric) or metal in the color you pick.';
   } else if (hemNote) {
     hemNote.textContent = 'Fabric wrapped: front matches your shade fabric, back matches the standard hardware color. Metal: painted hem bar in the color you pick above.';
   }

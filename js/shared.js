@@ -396,6 +396,7 @@ function renderFooter(isHome) {
         <a href="${pre}measure-drapes.html">How to measure: drapery</a>
         <a href="${pre}gallery.html">Our work</a>
         <a href="${pre}guides.html">Buying guides</a>
+        <a href="${pre}blackout-disclaimer.html">What blackout really means</a>
         <a href="${pre}about.html">About us</a>
         <a href="${pre}privacy.html">Privacy policy</a>
       </div>
@@ -564,6 +565,156 @@ function pbTermsHref() {
   var p = location.pathname || '';
   return /\/pages\//i.test(p) ? 'terms-of-agreement.html' : 'pages/terms-of-agreement.html';
 }
+
+// ── Blackout terminology — DISPLAY ONLY ──────────────────────────────────────
+// Norman (and the rest of the trade) call this fabric "Room Darkening". Customers
+// call it blackout, so that is what we show them. This is a rendering layer ONLY:
+// price keys, the +20% surcharge lookup, the T-suffix fabric colour codes and the
+// CELL_COMPAT tables all still say "Room Darkening" and must keep saying it.
+// Map at the moment of display; never rewrite the stored value.
+var PB_LIGHT_LABELS = {
+  'Room Darkening': 'Blackout',
+  'Room-Darkening': 'Blackout',
+  'room darkening': 'blackout'
+};
+function pbLightLabel(name) {
+  if (name == null) return name;
+  var s = String(name);
+  if (PB_LIGHT_LABELS[s]) return PB_LIGHT_LABELS[s];
+  // Also handles composite labels such as "Sheer + Room Darkening".
+  return s.replace(/Room[- ]Darkening/g, 'Blackout').replace(/room[- ]darkening/g, 'blackout');
+}
+// Recognises a light-control label as the blackout/room-darkening one, whichever
+// wording it is written in. Use this instead of comparing against a literal
+// string — several price calcs read the SELECTED BUTTON'S TEXT to decide whether
+// to add the +20% surcharge, so a label change must never break the match.
+function pbIsBlackoutLabel(txt) {
+  return /(^|\b)(room[- ]darkening|blackout)(\b|$)/i.test(String(txt || '').trim());
+}
+// Norman's "LightGuard 360™" side-channel system is sold to customers as
+// "Full Blackout Side Channels". Same landmine as above — the $364 surcharge and
+// the fabric-compatibility check both read the selected button's text.
+function pbIsFullBlackoutLabel(txt) {
+  return /lightguard\s*360|full\s+blackout\s+side\s+channels/i.test(String(txt || ''));
+}
+var PB_LIGHTGUARD_LABEL = 'Full Blackout Side Channels';
+function pbBlackoutHref() {
+  var p = location.pathname || '';
+  return /\/pages\//i.test(p) ? 'blackout-disclaimer.html' : 'pages/blackout-disclaimer.html';
+}
+// Small muted note shown only while a blackout option is selected. One shared
+// sentence + one shared page — do not paste long disclaimer copy per product.
+function pbBlackoutNoteHTML() {
+  return '<div class="pb-blackout-note" style="font-size:11.5px;color:#666;margin-top:8px;line-height:1.6">' +
+    'Blackout describes the fabric. Light can still enter around the edges of any window treatment &mdash; ' +
+    '<a href="' + pbBlackoutHref() + '" target="_blank" rel="noopener" style="color:#666;text-decoration:underline">' +
+    'what to expect from blackout</a>.' +
+  '</div>';
+}
+// Show/hide that note inside a container, driven by whether blackout is selected.
+function pbToggleBlackoutNote(containerId, isBlackout) {
+  var box = document.getElementById(containerId);
+  if (!box) return;
+  if (isBlackout) {
+    if (!box.innerHTML) box.innerHTML = pbBlackoutNoteHTML();
+    box.style.display = '';
+  } else {
+    box.style.display = 'none';
+  }
+}
+// ── LIVE PRICING SCOPE (Justin, Sept 2026) ──────────────────────────────────
+// The site quotes a real price for six products only:
+//   soft treatments · Basic Roller · Norman Soluna roller · Norman Portrait
+//   cellular · Norman faux wood blinds · Norman real wood blinds
+// Every other product collects the full spec and goes out as a quote request —
+// no dollar figure on the page, in the cart line, or in the total we email.
+//
+// The price ENGINES are deliberately left running. This gates DISPLAY only, so
+// turning a product back on is a one-line edit here rather than a rebuild. The
+// main thing it switches off is the placeholder $/sqft rates in shades.js
+// (roller / zebra / woven), which were never real vendor numbers.
+//
+// Pages listed here get their price box removed on load. shades.html is mixed —
+// priced and quote-only forms live side by side — so it gates per form inside
+// shades.js instead of appearing in this list.
+var PB_QUOTE_ONLY_PAGES = {
+  'perfectsheer'                    : ['#ps-price-box'],
+  'norman-sheers'                   : ['#price-box', '#price-pending'],
+  'portfolio-dual-sheer'            : ['#price-box-final', '.price-box'],
+  'wallace-banded-shades'           : ['#pr-total-row', '#pr-total'],
+  'wallace-3d-sheer'                : ['#sp-price', '#sp-price-breakdown'],
+  'wallace-aluminum-blinds'         : ['#al-price-box'],
+  'city-lights-aluminum-blinds'     : ['#qr-total-row', '#qr-total'],
+  'custom-roller-shades'            : ['#qp-price', '#qp-price-rows', '#qp-total'],
+  'galaxy-woven-woods'              : ['#qr-total-row', '#qr-total'],
+  'dynasty-woven-woods'             : ['#qr-total-row', '#qr-total'],
+  'synchrony-verticals'             : ['#cv-price', '#qr-price', '#qr-total-row', '#qr-total'],
+  'norman-centerpiece-roman'        : ['#pr-total-row', '#pr-total'],
+  'wallace-natural-roller-shades'   : [],
+  'wallace-portfolio-natural-shades': [],
+  'wallace-portfolio-roman'         : [],
+  'exterior-roller-shades'          : [],
+  'walden-premier-woven'            : [],
+  'walden-select-woven'             : [],
+  'wallace-woven'                   : [],
+  'wallace-verticals'               : [],
+  'shutters'                        : [],
+  'hardware'                        : [],
+  'hardware-quote'                  : [],
+  'kirsch-rods'                     : [],
+  'kirsch-estate-traverse'          : [],
+  'kirsch-2in-estate-traverse'      : [],
+  'kirsch-spec-complete'            : [],
+  'orion-rods'                      : [],
+  'paris-texas-rods'                : [],
+  'select-rods'                     : [],
+  'finial-company'                  : [],
+  'upholstery'                      : []
+};
+// Current page's filename with no extension — 'perfectsheer' for /pages/perfectsheer.html.
+function pbPageKey() {
+  var last = (location.pathname || '').split('/').pop() || '';
+  return last.replace(/\.html?$/i, '').toLowerCase();
+}
+// True when the CURRENT page shows no prices at all. shades.html always returns
+// false here — it decides per form, since it hosts both kinds.
+function pbPageIsQuoteOnly() {
+  return Object.prototype.hasOwnProperty.call(PB_QUOTE_ONLY_PAGES, pbPageKey());
+}
+// Hide every price surface a quote-only page declares. Safe to call more than
+// once, and silently skips selectors the page doesn't have — the lists above
+// cover several page generations and not every id exists everywhere.
+function pbApplyPricingScope() {
+  // The rule goes in on every page, not just the quote-only ones: shades.html
+  // hosts both kinds of form and flips the attribute per product as you switch.
+  // It has to be a stylesheet rule rather than an inline style, because the price
+  // calcs re-run on every keystroke and several of them do box.style.display=
+  // 'block'. An !important rule in a stylesheet outranks that inline write.
+  if (!document.getElementById('pb-quote-only-css')) {
+    var st = document.createElement('style');
+    st.id = 'pb-quote-only-css';
+    st.textContent = '[data-pb-price-hidden]{display:none !important}';
+    document.head.appendChild(st);
+  }
+  if (!pbPageIsQuoteOnly()) return;
+  // On <html>, not <body> — this runs the moment shared.js is parsed, before
+  // <body> necessarily exists, so the CSS above is already in force by the time
+  // the price markup is laid out. Putting it on body instead let a price flash
+  // on screen until DOMContentLoaded.
+  document.documentElement.classList.add('pb-quote-only');
+  (PB_QUOTE_ONLY_PAGES[pbPageKey()] || []).forEach(function(sel) {
+    var nodes;
+    try { nodes = document.querySelectorAll(sel); } catch (e) { return; }
+    Array.prototype.forEach.call(nodes, function(el) {
+      el.setAttribute('data-pb-price-hidden', '1');
+    });
+  });
+}
+// Run once as soon as this file is parsed so the class and the stylesheet rule
+// land before any price markup renders, then again on DOMContentLoaded to tag
+// the elements themselves (they do not exist yet on this first pass).
+try { pbApplyPricingScope(); } catch (e) {}
+
 // Shared checkbox block. id defaults to 'cf-terms'; pass a unique id for other contexts.
 function pbTermsCheckboxHTML(id) {
   id = id || 'cf-terms';
@@ -881,6 +1032,11 @@ var _pbPendingExtras = null;
 
 function pbAddToCart(item) {
   item.cartId = Date.now() + '-' + Math.floor(Math.random()*9999);
+  // Quote-only product → drop the price before it ever reaches the cart. The cart
+  // and checkout already render a priceless item as "Custom quote" and leave it
+  // out of the estimated total, so this is all it takes. Pages set item.quoteOnly
+  // themselves when one page mixes priced and quote-only forms (shades.html).
+  if (item.quoteOnly || pbPageIsQuoteOnly()) { item.price = 0; item.quoteOnly = true; }
   // Merge any extras captured from the estimate panel (notes/files) if the item didn't set them
   if (_pbPendingExtras) {
     if (!item.notes && _pbPendingExtras.notes) item.notes = _pbPendingExtras.notes;
@@ -2914,6 +3070,7 @@ document.addEventListener('click', function (e) {
 // Runs on every page that includes shared.js.
 document.addEventListener('DOMContentLoaded', function() {
   pbAutoFillContact();
+  pbApplyPricingScope();
   // Intercept clicks on [data-pb-require-contact] buttons (capture phase = before onclick handler).
   // Prevents submission when name / phone / email are missing.
   document.addEventListener('click', function(e) {
