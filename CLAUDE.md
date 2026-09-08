@@ -5,6 +5,28 @@
 
 ---
 
+## UNATTENDED OPERATION RULES — read before every task
+
+Justin is often away, asleep, or his computer is resting. When he is not responding, you do not stop and you do not wait. Your job is to keep the queue moving on every task you have been given until every item is done or blocked, then keep going through the blocked list looking for anything that has become unblocked.
+
+Silence from Justin is never a stop signal. If you have asked a question and no answer arrives, do not idle. Make the most reasonable assumption, write that assumption into the task's entry in HANDOFF.md, and continue. If the assumption turns out to be wrong he will correct it when he returns; a wrong-but-logged assumption costs minutes, an idle terminal costs a whole night.
+
+Some actions absolutely require Justin's explicit approval and you must never do them on your own no matter how long he is away. These are: merging or pushing anything to master or main (only the word "confirmed" from Justin unlocks this), building any new page before he has approved the plan for it, changing prices or pricing logic, deleting files or directories in bulk, changing Vercel project settings, domains, or environment variables, and running any command that touches production data. When a task reaches one of these points, do not stop and do not wait. Write the task into the BLOCKED section of HANDOFF.md with exactly what you need from him, what you have already completed, and what one word or decision will unblock it. Then immediately pick the next task from the queue and continue working.
+
+Everything else is yours to do without asking. Building and editing on the dev branch, committing to dev, pushing dev so Vercel builds a preview, running builds and tests, fixing errors you introduced, refactoring, writing documentation, checking the configurators against the locked conventions (Mount then Dimensions as steps 1 and 2, Hunter Douglas sheer shading routes to the contact popup, pbCtx localStorage carries dimensions between pages), and verifying preview deployments. Commit to dev after every completed unit of work with a clear message so nothing is lost if the machine sleeps mid-task.
+
+You work only on the dev branch. One terminal at a time on dev, never assume another terminal is running. Before starting any task, pull dev and read HANDOFF.md so you know what has already been done and what is blocked.
+
+Maintain HANDOFF.md in the repo root at all times. It has four sections in plain text: QUEUE (tasks not yet started, in priority order), IN PROGRESS (what you are working on right now and what step you are at), BLOCKED (tasks waiting on Justin, each with the exact question or approval needed and the state you left them in), and DONE (completed tasks with the commit hash and the Vercel preview URL if one exists). Update this file every time a task changes state, not at the end. If the session is killed, the next session must be able to resume from HANDOFF.md alone with zero questions.
+
+When the QUEUE is empty and everything remaining is BLOCKED, do not exit. Re-read BLOCKED and check whether any item can be partially advanced without the approval (for example, prepare the merge but do not execute it, write the page plan and stage it for review, draft the pricing change in a separate file). Then run a full build, run any tests, audit the preview deployment for console errors, and check every configurator against the conventions above. Log what you find as new QUEUE items and work them. Only when there is truly nothing left do you write a summary at the top of HANDOFF.md titled FOR JUSTIN listing every BLOCKED item and the single decision each one needs, then end the session cleanly.
+
+If a Vercel API call fails, pass teamId team_LKpwc19KQoilevZ540PORKNm explicitly; it is not inferred. A BUILDING or live false status during an active build is expected, wait and re-check, it is not an error. If a build fails, fix it on dev before moving on; a broken dev branch blocks everything behind it and takes priority over every other queued task.
+
+Never disable or work around a permission prompt, hook, or deny rule. If something is blocked by the environment, it goes to BLOCKED in HANDOFF.md like anything else.
+
+---
+
 ## ⚠️ SISTER PROJECT — BLINDZNATION
 
 Blindznation is a separate sister-brand project that copies this site's structure with different branding.

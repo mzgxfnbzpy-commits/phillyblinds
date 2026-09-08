@@ -655,6 +655,16 @@
                 <input type="number" id="d-cornice-width" placeholder="84" min="48" max="360" oninput="calcDrapePrice()" style="font-size:14px">
                 <div class="dim-unit">inches (4 ft / 48" min.)</div>
               </div>
+              <div class="form-group">
+                <label style="font-size:12px">Cornice height (inches)</label>
+                <input type="number" id="d-cornice-height" placeholder="15" min="4" max="120" oninput="calcDrapePrice()" style="font-size:14px">
+                <div class="dim-unit">face height &mdash; over 15&Prime; costs more per foot</div>
+              </div>
+            </div>
+            <div style="font-size:11px;color:#666;margin-top:8px;line-height:1.6">
+              $35 per linear foot up to 15&Prime; high, $200 minimum. Taller boards step up per foot
+              (16&ndash;35&Prime; $70 &middot; 36&ndash;55&Prime; $95 &middot; 56&ndash;75&Prime; $120).
+              <strong>Fabric is not included</strong> &mdash; quoted separately.
             </div>
             <div style="margin-top:10px">
               <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px">Trim on cornice?</div>
@@ -680,6 +690,16 @@
                 <input type="number" id="d-valance-width" placeholder="84" min="12" max="360" oninput="calcDrapePrice()" style="font-size:14px">
                 <div class="dim-unit">inches</div>
               </div>
+              <div class="form-group">
+                <label style="font-size:12px">Valance height (inches)</label>
+                <input type="number" id="d-valance-height" placeholder="15" min="4" max="120" oninput="calcDrapePrice()" style="font-size:14px">
+                <div class="dim-unit">face height &mdash; over 15&Prime; costs more per foot</div>
+              </div>
+            </div>
+            <div style="font-size:11px;color:#666;margin-top:8px;line-height:1.6">
+              $35 per linear foot up to 15&Prime; high, $200 minimum. Taller boards step up per foot
+              (16&ndash;35&Prime; $70 &middot; 36&ndash;55&Prime; $95 &middot; 56&ndash;75&Prime; $120).
+              <strong>Fabric is not included</strong> &mdash; quoted separately.
             </div>
             <div style="margin-top:10px">
               <div style="font-size:11px;font-weight:600;color:#555;margin-bottom:6px">Trim on valance?</div>
@@ -1295,6 +1315,15 @@
       <div style="margin-top:12px"><label style="font-size:12px;font-weight:600;color:#333;display:block;margin-bottom:5px">Return size <span style="font-weight:400;color:#999">default 4"</span></label>
         <input type="number" id="cv-corn-return" value="4" min="1" max="18" oninput="calcCornice()" style="width:100px;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit">
         <span style="font-size:12px;color:#888;margin-left:8px">inches</span></div>
+      <!-- Over 80" the board will not ship parcel. Splicing joints the board so it
+           can; the fabric stays a single piece either way. -->
+      <div id="corn-splice-wrap" style="margin-top:12px">
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12px;color:#444;cursor:pointer">
+          <input type="checkbox" id="corn-splice" onchange="calcCornice()" style="margin-top:2px">
+          <span>Over 80&Prime; wide &mdash; splice the board so it ships normally
+            <span style="color:#888">(board jointed, fabric still one piece; avoids the $500 oversize freight)</span></span>
+        </label>
+      </div>
     </div>
 
     <!-- Mount type -->
@@ -1478,6 +1507,15 @@
       <div style="margin-top:12px"><label style="font-size:12px;font-weight:600;color:#333;display:block;margin-bottom:5px">Return size <span style="font-weight:400;color:#999">default 4"</span></label>
         <input type="number" id="cv-val-return" value="4" min="1" max="18" oninput="calcValance()" style="width:100px;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit">
         <span style="font-size:12px;color:#888;margin-left:8px">inches</span></div>
+      <!-- Over 80" the board will not ship parcel. Splicing joints the board so it
+           can; the fabric stays a single piece either way. -->
+      <div id="val-splice-wrap" style="margin-top:12px">
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12px;color:#444;cursor:pointer">
+          <input type="checkbox" id="val-splice" onchange="calcValance()" style="margin-top:2px">
+          <span>Over 80&Prime; wide &mdash; splice the board so it ships normally
+            <span style="color:#888">(board jointed, fabric still one piece; avoids the $500 oversize freight)</span></span>
+        </label>
+      </div>
     </div>
     <!-- Mount type -->
     <div style="margin-bottom:14px">
