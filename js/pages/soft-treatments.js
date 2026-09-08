@@ -499,14 +499,12 @@ var RN_RATES = {
 // Lining a Roman adds $5/sqft on top of the style rate (Justin, Sept 2026).
 var RN_LINING_PER_SQFT = 5;
 
-// ── Oversize freight — Justin, Sept 2026 ────────────────────────────────────
-// Anything wider than 80″ ships oversize, at a $500 minimum. This is our own
-// freight: NORMAN products are excluded, they carry Norman's own freight table
-// ($25 first + $11 each, or $80 + $50 each over 90″) and must not get this.
-// A cornice or valance over 80″ can avoid it by being spliced — the fabric
-// stays one piece, only the board is jointed — so we ask before charging it.
-var D_OVERSIZE_W    = 80;
-var D_OVERSIZE_MIN  = 500;
+// Oversize freight: defined once in shared.js (PB_OVERSIZE_W / PB_OVERSIZE_MIN)
+// so the $500 cannot drift between here and shades.js. Applies to Romans and to
+// cornices/valances — NOT to drapery, which folds into a carton and ships parcel
+// at any width (Justin, 2026-09-07). Falls back if shared.js has not loaded.
+var D_OVERSIZE_W    = (typeof PB_OVERSIZE_W   !== 'undefined') ? PB_OVERSIZE_W   : 80;
+var D_OVERSIZE_MIN  = (typeof PB_OVERSIZE_MIN !== 'undefined') ? PB_OVERSIZE_MIN : 500;
 
 function rnGetRate() {
   var style = romanState.style || 'Flat Roman';

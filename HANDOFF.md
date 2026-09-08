@@ -60,24 +60,19 @@ the panel, cart line and quote email. Verified on both sites.
 1. **Norman Soluna fabric list.** Justin said the fabric choices have changed and
    he will send the update. Nothing to do until that data arrives. Everything
    else on the Soluna page is current.
-2. **$500 oversize freight — scope.** Justin said "all products over 80 inches
-   wide except the Norman products". Applied to romans and to cornice/valance.
-   Unclear whether it should also hit **drapery** (soft goods fold into a box and
-   arguably ship parcel) and **Basic Roller** (in-house, so non-Norman by the
-   letter of the rule, but it would jump an 84" roller from $25 freight to $500).
-   Currently NOT applied to either. One word from Justin — "yes both", "drapes
-   only", "boards only" — unblocks it.
-3. **Width allowance beyond Justin's two numbers.** He gave 4" return → +12" and
-   6" → +18". Both are exactly 3× the return, so `dWidthAllowance` uses ×3. If a
-   5" return should be +15" this is right; if not, he needs to give the rule.
-4. **Wallace Aluminum colour names.** Still placeholders. The chart is an image
+2. **Wallace Aluminum colour names.** Still placeholders. The chart is an image
    in the PDF and there is no OCR in this environment. Needs Justin to paste the
    names or send a screenshot.
-5. **Soluna Item-1 swatches** (Verona / Sumatra / Lake Tahoe / NA300 / W120).
+3. **Soluna Item-1 swatches** (Verona / Sumatra / Lake Tahoe / NA300 / W120).
    W120 is discontinued, the NA300 codes contradict the book, and F0874 collides
    with Clarissa "Burlap". Needs a visual PDF or Justin's call.
-6. **Merge to master / main.** Everything below is on dev only. Only the word
+4. **Merge to master / main.** Everything below is on dev only. Only the word
    "confirmed" from Justin unlocks a live merge.
+
+### Resolved 2026-09-07
+- Oversize freight scope: **Basic Roller yes, drapery no** (Justin). Romans and
+  cornice/valance already had it. Norman keeps its own table.
+- Width allowance: **return × 3 confirmed** (4"→12", 6"→18").
 
 ## DONE
 
