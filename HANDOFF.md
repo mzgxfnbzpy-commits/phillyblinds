@@ -12,8 +12,9 @@ branch is `main`, not `master`.
 
 ## QUEUE
 
-1. Mirror the soft-treatment pricing rewrite to Blindznation (see IN PROGRESS —
-   PB is done, BZ has had none of it).
+1. Mirror the soft-treatment pricing rewrite to Blindznation — PB is done, BZ
+   has had none of it. Includes the 185" length cap, which must NOT be raised on
+   BZ before the ladder lands or a 180" drape prices at the old rate.
 2. Woven wood: condense the fabric lists into tabs by price group, Soluna style.
    Affects galaxy-woven-woods, dynasty-woven-woods, walden-premier-woven,
    walden-select-woven. None of the four has tabs today.
@@ -29,31 +30,24 @@ branch is `main`, not `master`.
 
 ## IN PROGRESS
 
-**Soft-treatment pricing rewrite — Philly Blinds only, UNCOMMITTED.**
-All of it is in `js/pages/soft-treatments.js` plus the cornice/valance height
-inputs in `pages/soft-treatments.html`. Verified with jsdom; all of Justin's
-stated numbers reproduce exactly.
+Nothing mid-flight. Next item is QUEUE #1, the Blindznation soft-treatment port.
 
-- Drapery: $125 unlined / $135 lined per cut, goblet+barrel +$20. Length bands
-  add 0 / 20 / 35 / 70 then +$35 per further 10" to 185". Over 185" returns null
-  from `dDrapeRatePerWidth` and the page shows no price at all.
-- Cuts: `(rod + allowance) × fullness ÷ 54`, allowance = return × 3 (4"→12",
-  6"→18" per Justin). Yards: `(length + 16) ÷ 36` per cut.
-- Cornice / valance: $35/LF, $200 minimum per piece, fabric NOT included.
-  Rate steps on HEIGHT: ≤15" $35 · 16–35" $70 · 36–55" $95 · 56–75" $120 · +$25
-  per further 20". Both the dedicated tabs and the drapery add-on share
-  `dBoardRatePerFt`.
-- Romans: lining adds $5/sqft.
-- Oversize freight: over 80" wide, $500 minimum, non-Norman only. Cornice and
-  valance can avoid it by splicing (board jointed, fabric one piece) — the
-  splice checkbox is read as `<prefix>-splice` but **the checkbox is not in the
-  HTML yet**, so it currently always reads false and freight always applies.
-  Finish that before committing.
+**Current Philly Blinds soft-treatment pricing, for reference** (all committed
+and verified against the numbers Justin gave in session):
 
-**Exterior roller crank/motor side — BOTH SITES, UNCOMMITTED.**
-Step 5 now asks which side the crank (manual) or motor (motorized) sits on. Label
-follows the operation and the answer resets if the operation changes. Flows into
-the panel, cart line and quote email. Verified on both sites.
+- Drapery per cut: $125 unlined / $135 lined, goblet+barrel +$20. Length bands
+  add 0/20/35/70 then +$35 per further 10" to 185". Ladder verified reachable at
+  every band; over 185" is a custom quote with no price shown.
+- Cuts: `(rod + allowance) × fullness ÷ 54`, allowance = return × 3.
+  Yards: `(length + 16) ÷ 36` per cut.
+- Cornice / valance: $35/LF, $200 minimum per piece, fabric NOT included. Rate
+  steps on HEIGHT: ≤15" $35 · 16–35" $70 · 36–55" $95 · 56–75" $120 · +$25 per
+  further 20". Splice checkbox over 80" wide avoids the $500 board freight.
+- Romans: lining +$5/sqft; over 80" wide is $500 freight.
+- Basic Roller freight: tiered by WIDTH only — ≤80" parcel, 81–100" $200,
+  101–150" $300, 151"+ $500 min. (Chart stops at 120" wide, so the top two tiers
+  are not reachable through the form yet.)
+- Drapery never takes oversize freight at any width.
 
 ## BLOCKED
 
@@ -73,6 +67,10 @@ the panel, cart line and quote email. Verified on both sites.
 - Oversize freight scope: **Basic Roller yes, drapery no** (Justin). Romans and
   cornice/valance already had it. Norman keeps its own table.
 - Width allowance: **return × 3 confirmed** (4"→12", 6"→18").
+- Roller freight is TIERED by width, not flat: <=80" parcel, 81-100" $200,
+  101-150" $300, 151"+ $500 min. Width only — length never affects it.
+- Drapery length cap raised 150" -> 185" so the top four ladder bands are
+  reachable. Cap now reads D_LEN_MAX_AUTO so it cannot drift from the ladder.
 
 ## DONE
 
@@ -88,7 +86,15 @@ the panel, cart line and quote email. Verified on both sites.
   no body scope, so it hid `.price-box` / `.addon-price` / `#q-total` on every
   page. Faux wood was priced correctly in JS but silenced by that CSS. Now scoped
   to `.pb-quote-only`.
-- Fixed (UNCOMMITTED, both sites): the live-site hostname gate in shared.js had
+- `1cba5a6` (PB) · `a92111c` (BZ) — soft-treatment pricing rebuild, exterior
+  roller crank/motor side, and CONF_PAGES emptied. BZ got only the roller and
+  CONF_PAGES halves; the pricing is still queued there.
+- `de43383` (PB) · `d9da63e` (BZ) — oversize freight scope, plus a pre-existing
+  Basic Roller crash: pbCalcPrice declared its option reader as `gPBs` while
+  every line called `gPB`, so it threw at selLines and the estimate panel and
+  Add to Cart never rendered on a priced product.
+- `747dd94` (PB) · `bdf3971` (BZ) — roller freight tiered by width.
+- Fixed: the live-site hostname gate in shared.js had
   33 pages (32 on BZ) whose configurator was deleted on load and replaced with a
   "call us" panel — which is why cellular, Soluna roller and faux wood appeared
   to have no pricing on the live domain. `CONF_PAGES` is now empty; pricing is

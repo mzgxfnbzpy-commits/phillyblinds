@@ -547,8 +547,20 @@ function romanRingsToggle() {
   if (opts) opts.style.display = (choice === 'We supply rings') ? 'block' : 'none';
   if (custNote) custNote.style.display = (choice === 'I supply rings') ? 'block' : 'none';
 }
+// pbRenderEstimate builds a sibling panel (<boxId>-checkout-panel) holding the
+// line items, the total and Add to Cart. Rewriting the price box alone leaves
+// that panel on screen still showing the LAST price that calculated — so a
+// customer who types an out-of-range size sees "custom quote required" with a
+// stale dollar total sitting right underneath it. Clear it whenever we bail out.
+function _clearEstimatePanel(box) {
+  if (!box || !box.id) return;
+  var panel = document.getElementById(box.id + '-checkout-panel');
+  if (panel) { panel.innerHTML = ''; panel.style.display = 'none'; }
+}
+
 function _motorCustomMsg(box, label) {
   if (!box) return;
+  _clearEstimatePanel(box);
   box.style.display = 'block';
   box.innerHTML =
     '<div style="padding:2px 0">' +
@@ -559,6 +571,7 @@ function _motorCustomMsg(box, label) {
 
 function _customSizeMsg(box, label, maxW, maxH) {
   if (!box) return;
+  _clearEstimatePanel(box);
   box.style.display = 'block';
   box.innerHTML =
     '<div style="padding:2px 0">' +
@@ -844,18 +857,21 @@ function calcDrapePrice() {
     } else if (tooShort) {
       minWarn.textContent = '⚠ Minimum finished length is 10″. Call (609) 742-1720 to confirm.';
       minWarn.style.display = 'block';
-    } else if (w > 200 || h > 150) {
+    } else if (w > 200 || h > D_LEN_MAX_AUTO) {
       minWarn.textContent = w > 200
         ? '⚠ Width over 200″ exceeds our standard range — custom pricing required. Submit your order and we\'ll quote it.'
-        : '⚠ Length over 150″ exceeds our standard range — custom pricing required. Submit your order and we\'ll quote it.';
+        : '⚠ Length over ' + D_LEN_MAX_AUTO + '″ exceeds our standard range — custom pricing required. Submit your order and we\'ll quote it.';
       minWarn.style.display = 'block';
     } else {
       minWarn.style.display = 'none';
     }
   }
 
-  // Oversized → custom quote (max 200″ wide × 150″ tall)
-  if (w > 200 || h > 150) { _customSizeMsg(box, 'Custom Drapery', 200, 150); return; }
+  // Oversized → custom quote. The length limit is D_LEN_MAX_AUTO, the same 185″
+  // the rate ladder tops out at, so the cap and the pricing cannot drift apart:
+  // raise one and the other follows. It was 150″, which put the top four bands
+  // of the ladder (152–161, 162–171, 172–181, 182–185) out of reach.
+  if (w > 200 || h > D_LEN_MAX_AUTO) { _customSizeMsg(box, 'Custom Drapery', 200, D_LEN_MAX_AUTO); return; }
 
   // Fullness factor
   var isRipple   = drapeState.pleat === 'Ripple Fold';
