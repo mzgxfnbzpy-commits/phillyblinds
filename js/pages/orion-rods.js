@@ -343,15 +343,15 @@ function buildMountStep(){
   el.innerHTML=`
     <div class="sec-label" style="margin-top:0">Mount type</div>
     <div class="opt-row" id="mount-row">
-      <div class="opt-pill" onclick="S.mount='wall';togglePill(this,'mnt')">Wall Mount</div>
-      <div class="opt-pill" onclick="S.mount='ceiling';togglePill(this,'mnt')">Ceiling Mount</div>
-      ${!isTrav?'<div class="opt-pill" onclick="S.mount=\'inside\';togglePill(this,\'mnt\')">Inside Mount Socket</div>':''}
+      <div class="opt-pill" onclick="S.mount='wall';togglePill(this,'mnt')">Wall mount</div>
+      <div class="opt-pill" onclick="S.mount='ceiling';togglePill(this,'mnt')">Ceiling mount</div>
+      ${!isTrav?'<div class="opt-pill" onclick="S.mount=\'inside\';togglePill(this,\'mnt\')">Inside mount Socket</div>':''}
     </div>
     <div class="sec-label" style="margin-top:12px">Bracket type</div>
     <div class="opt-row">
       <div class="opt-pill" onclick="S.bracketType='single-wall';togglePill(this,'bkt')">Single Wall (1010/1021)</div>
       <div class="opt-pill" onclick="S.bracketType='double-wall';togglePill(this,'bkt')">Double Wall (1028/1030)</div>
-      <div class="opt-pill" onclick="S.bracketType='ceiling';togglePill(this,'bkt')">Ceiling Mount (1100–1106)</div>
+      <div class="opt-pill" onclick="S.bracketType='ceiling';togglePill(this,'bkt')">Ceiling mount (1100–1106)</div>
       <div class="opt-pill" onclick="S.bracketType='support';togglePill(this,'bkt')">Center Support Bracket</div>
       <div class="opt-pill" onclick="S.bracketType='heavy-duty';togglePill(this,'bkt')">Heavy Duty (1028HD/1040HD)</div>
       <div class="opt-pill" onclick="S.bracketType='expandable';togglePill(this,'bkt')">Expandable Projection (1028EXP)</div>
@@ -467,6 +467,14 @@ function buildSummary(){
     rows.map(r=>`<div class="summary-row"><span>${r[0]}</span><strong>${r[1]}</strong></div>`).join('');
 }
 
+/* ── QUANTITY STEPPER (canonical Step 1 qty, reuses id m-qty) ── */
+function adjQty(d){
+  var el=$('m-qty'); if(!el) return;
+  var v=(parseInt(el.value,10)||1)+d;
+  if(v<1) v=1; if(v>50) v=50;
+  el.value=v;
+}
+
 /* ── DELIVERY ── */
 function pickDel(opt){
   S.delivery=opt;
@@ -502,7 +510,7 @@ function addOrionToCart(){
 }
 
 function submitQuote(){
-  var name=$('q-name').value.trim(), contact=$('q-contact').value.trim();
+  var name=$('cf-name').value.trim(), contact=$('cf-phone').value.trim(), email=$('cf-email').value.trim();
   if(!name||!contact){alert('Please enter your name and contact info.');return;}
 
   var typeLabel={decorative:'Decorative Rod',traverse:'Traversing System',motorized:'Motorized Traversing','3d':'3D Hardware',cornice:'Cornice/Crown/Scroll',tieback:'Tieback/Swing Arm'}[S.type]||S.type;
@@ -513,8 +521,9 @@ function submitQuote(){
     '',
     'CONTACT',
     'Name: '+name,
-    'Phone/Email: '+contact,
-    'Location: '+($('q-address').value||'Not provided'),
+    'Phone: '+contact,
+    'Email: '+(email||'Not provided'),
+    'Location: '+($('cf-address').value||'Not provided'),
     '',
     'CONFIGURATION',
     'Hardware Type: '+typeLabel,
@@ -538,7 +547,6 @@ function submitQuote(){
     'Rod/Track Length: '+($('m-length').value||'N/A')+'"',
     'Projection/Return: '+($('m-return').value||'N/A')+'"',
     'Quantity: '+($('m-qty').value||'1'),
-    'Room/Label: '+($('m-label').value||'N/A'),
     '',
     'PRICING NOTE: Orion — Request Quote Only (catalog pricing to be confirmed)',
     '',
@@ -546,7 +554,7 @@ function submitQuote(){
     'Preference: '+(S.delivery==='install'?'Professional Installation':'Ship to Customer'),
     '',
     'NOTES',
-    $('q-notes').value||'None',
+    $('cf-notes').value||'None',
     '',
     '--- Sent from phillyblinds.com/pages/orion-rods.html ---'
   ].filter(l=>l!==undefined&&l!==null).join('\n');

@@ -109,11 +109,13 @@ function crsPickType(val, label) {
   var solarOpts = _crsEl('solar-opts');
   var colorOpts = _crsEl('color-opts');
   if (solarOpts) solarOpts.classList.toggle('show', val === 'solar');
-  // Blackout shows color immediately; solar shows color after openness picked
-  if (colorOpts) colorOpts.classList.toggle('show', val === 'blackout');
+  // Show colors immediately for both Solar and Blackout
+  if (colorOpts) colorOpts.classList.toggle('show', val === 'solar' || val === 'blackout');
 
-  // Reset color selection
-  document.querySelectorAll('#crs-grp-color .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
+  // Ensure swatches are rendered, then reset any prior color selection
+  crsRenderColors();
+  if (window.pbFabricPicker) pbFabricPicker.clearSelection('crs-fabric-picker');
+  document.querySelectorAll('#crs-fabric-picker button.sel').forEach(function(b) { b.classList.remove('sel'); });
 
   if (val === 'solar') return; // wait for openness + color before advancing
   // Blackout: wait for color pick before advancing
@@ -124,28 +126,78 @@ function crsPickOpenness(val, label) {
   document.querySelectorAll('.openness-btn').forEach(function(b) { b.classList.remove('sel'); });
   var btn = _crsEl('ob-' + val);
   if (btn) btn.classList.add('sel');
-  // Show color options after openness selected
+  // Colors are already visible for solar; keep them shown
   var colorOpts = _crsEl('color-opts');
   if (colorOpts) colorOpts.classList.add('show');
+  crsRenderColors();
+  // If a color was already chosen, the step is now complete → finish + advance.
+  if (CRS.color) { crsSelectColor(CRS.color); return; }
   setTimeout(function() { if (colorOpts) colorOpts.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 100);
 }
 
-function crsPickColor(btn, color) {
-  CRS.color = color;
-  document.querySelectorAll('#crs-grp-color .opt-btn').forEach(function(b) { b.classList.remove('sel'); });
+// Expanded basic solids — same palette for Solar Screen & Blackout lines.
+// Basic Roller keeps a deliberately short core palette. Hexes match the shared
+// COLOR_HEX map in shades.js so the same colour looks identical on both surfaces.
+var CRS_BASIC_SOLIDS = [
+  {n:'White',   hex:'#FFFFFF'}, {n:'Off-White', hex:'#F3EEE6'}, {n:'Gray', hex:'#888888'},
+  {n:'Black',   hex:'#1C1C1C'}, {n:'Brown',     hex:'#885030'}
+];
+
+// Render the shared fabric picker into the color step (single type → no tabs here;
+// Solar vs Blackout is the type-card choice above, openness handled separately).
+// Renders once (idempotent); falls back to plain swatches if the shared
+// component ever fails to load, so colors are NEVER blank.
+function crsRenderColors() {
+  var host = document.getElementById('crs-fabric-picker');
+  if (!host) return;
+  if (host.children && host.children.length) return; // already rendered
+  if (window.pbFabricPicker) {
+    pbFabricPicker.render('crs-fabric-picker', {
+      hideTabs: true,
+      types: [{ key: 'solids', label: 'Colors' }],
+      collections: [{ type: 'solids', name: '', colors: CRS_BASIC_SOLIDS }],
+      onSelect: function(sel) { crsSelectColor(sel.name); }
+    });
+  } else {
+    // Fallback — plain swatch buttons (component unavailable)
+    var html = '<div style="display:flex;flex-wrap:wrap;gap:6px">';
+    CRS_BASIC_SOLIDS.forEach(function(c) {
+      html += '<button type="button" class="opt-btn" style="display:inline-flex;align-items:center;gap:7px;padding:5px 10px 5px 6px" ' +
+        'onclick="crsFallbackColor(this,\'' + c.n + '\')">' +
+        '<span style="width:16px;height:16px;border-radius:50%;border:1px solid rgba(0,0,0,.18);background:' + c.hex + '"></span>' +
+        c.n + '</button>';
+    });
+    host.innerHTML = html + '</div>';
+  }
+}
+
+function crsFallbackColor(btn, color) {
+  var host = document.getElementById('crs-fabric-picker');
+  if (host) host.querySelectorAll('button').forEach(function(b) { b.classList.remove('sel'); });
   btn.classList.add('sel');
+  crsSelectColor(color);
+}
+
+function crsSelectColor(color) {
+  CRS.color = color;
+  crsUpdatePanel();
+  // Solar needs an openness % before the step is complete — nudge the openness picker.
+  if (CRS.type === 'solar' && !CRS.openness) {
+    var so = _crsEl('solar-opts');
+    if (so) setTimeout(function() { so.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 100);
+    return;
+  }
   var label = CRS.type === 'solar'
     ? 'Solar · ' + CRS.openness + '% · ' + color
     : 'Blackout · ' + color;
   crsDone('step-2', label);
-  crsUpdatePanel();
   setTimeout(function() { crsOpen('step-3'); }, 350);
 }
 
 // ── STEP 1: MOUNT ────────────────────────────────────────────
 function crsPickMount(val, label) {
   CRS.mount = val;
-  document.querySelectorAll('#step-1 .opt-card').forEach(function(c) { c.classList.remove('sel'); });
+  document.querySelectorAll('#crs-grp-mount .opt-btn').forEach(function(c) { c.classList.remove('sel'); });
   var card = _crsEl('mc-' + val);
   if (card) card.classList.add('sel');
 
@@ -165,7 +217,7 @@ function crsPickMount(val, label) {
 function crsPickHeadrail(val, label) {
   CRS.headrail = val;
   CRS.hwColor = '';
-  document.querySelectorAll('#step-3 .opt-card:not(.disabled)').forEach(function(c) { c.classList.remove('sel'); });
+  document.querySelectorAll('#crs-grp-headrail .opt-btn:not(.disabled)').forEach(function(c) { c.classList.remove('sel'); });
   var card = _crsEl('hc-' + val);
   if (card && !card.classList.contains('disabled')) card.classList.add('sel');
   // Show hardware color picker; update label for fascia
@@ -254,7 +306,7 @@ function crsPickFabric(val, label) {
 function crsPickMotor(val, label) {
   CRS.motor = val;
   // Clear top-level cards only
-  document.querySelectorAll('.opt-grid-3 .opt-card').forEach(function(c) { c.classList.remove('sel'); });
+  document.querySelectorAll('#crs-grp-motor .opt-btn').forEach(function(c) { c.classList.remove('sel'); });
   var card = _crsEl('motor-' + val);
   if (card) card.classList.add('sel');
 
@@ -267,7 +319,7 @@ function crsPickMotor(val, label) {
   if (solunaRedir) solunaRedir.style.display = 'none';
 
   // Clear sub-option selections when switching away from motorized
-  document.querySelectorAll('#motor-subopts .opt-card').forEach(function(c) { c.classList.remove('sel'); });
+  document.querySelectorAll('#motor-subopts .opt-btn').forEach(function(c) { c.classList.remove('sel'); });
 
   if (val !== 'motorized') {
     crsDone('step-5', label);
@@ -282,7 +334,7 @@ function crsPickMotor(val, label) {
 
 function crsPickMotorSub(val, label) {
   CRS.motor = val;
-  document.querySelectorAll('#motor-subopts .opt-card').forEach(function(c) { c.classList.remove('sel'); });
+  document.querySelectorAll('#motor-subopts .opt-btn').forEach(function(c) { c.classList.remove('sel'); });
   var idMap = { 'norman-motor': 'msub-norman', 'rollease-motor': 'msub-rollease', lutron: 'msub-lutron', somfy: 'msub-somfy', other: 'msub-other' };
   var card = _crsEl(idMap[val]);
   if (card) card.classList.add('sel');
@@ -444,7 +496,7 @@ function addCustomRollerToCart(){
   var lines=[
     {label:'Product',value:'Custom Roller Shades'},
     {label:'Shade Type',value:typeLabel},
-    {label:'Mount',value:CRS.mount==='inside'?'Inside Mount':'Outside Mount'},
+    {label:'Mount',value:CRS.mount==='inside'?'Inside mount':'Outside mount'},
     {label:'Headrail',value:(hMap[CRS.headrail]||CRS.headrail||'—')+(CRS.hwColor?' — '+CRS.hwColor:'')},
     {label:'Width',value:(CRS.w||'—')+'"'},
     {label:'Height',value:(CRS.h||'—')+'"'},
@@ -458,10 +510,10 @@ function addCustomRollerToCart(){
 }
 
 function crsSubmit() {
-  var name  = ((_crsEl('q-name')  || {}).value || '').trim();
-  var email = ((_crsEl('q-email') || {}).value || '').trim();
-  var phone = ((_crsEl('q-phone') || {}).value || '').trim();
-  var notes = ((_crsEl('q-notes') || {}).value || '').trim();
+  var name  = ((_crsEl('cf-name')  || {}).value || '').trim();
+  var email = ((_crsEl('cf-email') || {}).value || '').trim();
+  var phone = ((_crsEl('cf-phone') || {}).value || '').trim();
+  var notes = ((_crsEl('cf-notes') || {}).value || '').trim();
   var hp    = ((_crsEl('q-hp')    || {}).value || '');
 
   if (!name)              { alert('Please enter your name.'); return; }
@@ -513,7 +565,7 @@ function crsSubmit() {
   .then(function(r) { return r.json(); })
   .then(function(data) {
     if (data.ok) {
-      var form = _crsEl('contact-form');
+      var form = _crsEl('pb-final-step');
       var sbox = _crsEl('success-box');
       var sw   = _crsEl('submit-wrap');
       if (form) form.style.display = 'none';
@@ -547,6 +599,7 @@ function crsSubmit() {
   });
 }
 
-// Init — pre-select ship delivery
+// Init — render color swatches + pre-select ship delivery
+crsRenderColors();
 CRS.delivery = 'ship';
 crsUpdatePanel();

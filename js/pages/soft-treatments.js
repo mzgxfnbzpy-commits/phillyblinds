@@ -56,10 +56,7 @@ function _rnCaptureState(styleName) {
   ['rn-w','rn-h','rn-qty','rn-return','roman-clen-in','roman-ring-size','roman-ring-color','val-folds','val-fold-size'].forEach(function(id) {
     var el = document.getElementById(id); if (el) s[id] = el.value;
   });
-  ['rn-w-frac','rn-h-frac'].forEach(function(id) {
-    var el = document.getElementById(id); if (el) s[id] = el.value;
-  });
-  ['grp-roman-mount','grp-roman-tdbu','grp-roman-color','grp-roman-liner','grp-roman-lining',
+  ['grp-roman-mount','grp-roman-tdbu','grp-roman-color','grp-roman-liner','grp-roman-lining-type',
    'grp-roman-rings','grp-roman-op','grp-roman-clen','grp-roman-motor-brand',
    'grp-roman-motor-power','grp-roman-motor-hardwire','grp-roman-control',
    'grp-roman-trim-supply','grp-roman-mount-style','grp-roman-back-valance','grp-rn-back-val-h',
@@ -77,16 +74,16 @@ function _rnRestoreState(styleName, fromState) {
   var saved = _rnStyleCache[styleName];
   if (!saved) {
     if (fromState) {
-      ['rn-w','rn-h','rn-qty','rn-w-frac','rn-h-frac'].forEach(function(id) {
+      ['rn-w','rn-h','rn-qty'].forEach(function(id) {
         var el = document.getElementById(id); if (el && fromState[id] !== undefined) el.value = fromState[id];
       });
     }
     return;
   }
-  ['rn-w','rn-h','rn-qty','rn-return','roman-clen-in','roman-ring-size','roman-ring-color','val-folds','val-fold-size','rn-w-frac','rn-h-frac'].forEach(function(id) {
+  ['rn-w','rn-h','rn-qty','rn-return','roman-clen-in','roman-ring-size','roman-ring-color','val-folds','val-fold-size'].forEach(function(id) {
     var el = document.getElementById(id); if (el && saved[id] !== undefined) el.value = saved[id];
   });
-  ['grp-roman-mount','grp-roman-tdbu','grp-roman-color','grp-roman-liner','grp-roman-lining',
+  ['grp-roman-mount','grp-roman-tdbu','grp-roman-color','grp-roman-liner','grp-roman-lining-type',
    'grp-roman-rings','grp-roman-op','grp-roman-clen','grp-roman-motor-brand',
    'grp-roman-motor-power','grp-roman-motor-hardwire','grp-roman-control',
    'grp-roman-trim-supply','grp-roman-mount-style','grp-roman-back-valance','grp-rn-back-val-h',
@@ -119,10 +116,7 @@ var _drapePleatCache = {};
 function _drapeGetCurrentDims() {
   var pleat = drapeState.pleat;
   var w = 0, h = 0;
-  if (pleat === 'Pinch Pleat' || (pleat && pleat.indexOf('Pinch Pleat') === 0)) {
-    w = parseFloat((document.getElementById('pp-w') || {}).value) || 0;
-    h = parseFloat((document.getElementById('pp-l') || {}).value) || 0;
-  } else if (pleat === 'Rod Pocket / Sheered Pocket') {
+  if (pleat === 'Rod Pocket / Sheered Pocket') {
     w = parseFloat((document.getElementById('rp-w') || {}).value) || 0;
     h = parseFloat((document.getElementById('rp-l') || {}).value) || 0;
   } else if (pleat === 'Ripple Fold') {
@@ -136,13 +130,9 @@ function _drapeGetCurrentDims() {
 }
 function _drapeSetDims(targetPleat, dims) {
   if (!dims || (!dims.w && !dims.h)) return;
-  var isPinch = targetPleat === 'Pinch Pleat' || (targetPleat && targetPleat.indexOf('Pinch Pleat') === 0);
   var isRP = targetPleat === 'Rod Pocket / Sheered Pocket';
   var isRipple = targetPleat === 'Ripple Fold';
-  if (isPinch) {
-    var pw = document.getElementById('pp-w'); if (pw && dims.w) pw.value = dims.w;
-    var pl = document.getElementById('pp-l'); if (pl && dims.h) pl.value = dims.h;
-  } else if (isRP) {
+  if (isRP) {
     var rw = document.getElementById('rp-w'); if (rw && dims.w) rw.value = dims.w;
     var rl = document.getElementById('rp-l'); if (rl && dims.h) rl.value = dims.h;
   } else if (isRipple) {
@@ -218,21 +208,39 @@ function selectPleat(el, val) {
   var rpOpts = document.getElementById('rodpocket-subopts');
   if (rpOpts) rpOpts.style.display = isRodPocket ? 'block' : 'none';
 
-  // Standard dims — hide for pinch, rod pocket, and ripple fold (each has its own dim inputs)
+  // Standard dims (d-exact-width/length) — used by pinch + standard pleats; hidden for rod pocket & ripple (they have their own dim inputs)
   var stdDims = document.getElementById('drape-std-dims');
-  if (stdDims) stdDims.style.display = (isPinch || isRodPocket || isRipple) ? 'none' : '';
+  if (stdDims) stdDims.style.display = (isRodPocket || isRipple) ? 'none' : '';
 
-  // Return/overlap row — hide for ripple fold (track system, no returns needed)
+  // Ripple fold panel-size block — shown only for ripple
+  var rippleDims = document.getElementById('ds-ripple-dims');
+  if (rippleDims) rippleDims.style.display = isRipple ? '' : 'none';
+
+  // Overlaps & returns — pinch + standard pleats only (hidden for ripple track system & rod pocket)
   var stdReturns = document.getElementById('drape-std-returns');
-  if (stdReturns) stdReturns.style.display = isRipple ? 'none' : '';
+  if (stdReturns) stdReturns.style.display = (isRipple || isRodPocket) ? 'none' : '';
 
-  // Ripple options
-  var rippleOpts = document.getElementById('drape-ripple-opts');
-  if (rippleOpts) rippleOpts.style.display = isRipple ? 'block' : 'none';
+  // Ripple fullness + butt-master/overlap + hardware blocks — shown only for ripple
+  var rippleFullness = document.getElementById('ds-ripple-fullness');
+  if (rippleFullness) rippleFullness.style.display = isRipple ? '' : 'none';
+  var rippleExtra = document.getElementById('ds-ripple-extra');
+  if (rippleExtra) rippleExtra.style.display = isRipple ? '' : 'none';
+
+  // Hem sizes — pinch + standard pleats only (hidden for ripple & rod pocket)
+  var hemBlock = document.getElementById('drape-hems');
+  if (hemBlock) hemBlock.style.display = (isRipple || isRodPocket) ? 'none' : '';
 
   // Fixed fullness note for Box/Goblet/Barrel
   var fixedFullNote = document.getElementById('drape-fixed-fullness-note');
   if (fixedFullNote) fixedFullNote.style.display = noFull && val !== 'Grommet / Eyelet' ? 'block' : 'none';
+
+  // Box pleat size (Box Pleat only)
+  var boxOpts = document.getElementById('box-pleat-opts');
+  if (boxOpts) boxOpts.style.display = (val === 'Box Pleat') ? 'block' : 'none';
+
+  // Grommet details — size / color / who supplies (Grommet / Eyelet only)
+  var gromOpts = document.getElementById('grommet-opts');
+  if (gromOpts) gromOpts.style.display = (val === 'Grommet / Eyelet') ? 'block' : 'none';
 
   // Step 4: hide trim and cornice for rod pocket
   var trimSec = document.getElementById('drape-trim-section');
@@ -259,10 +267,9 @@ function selectPleat(el, val) {
 
   // Scroll to reveal the sub-options panel that just appeared
   setTimeout(function() {
-    var target = isPinch ? document.getElementById('pinch-subopts')
-               : isRodPocket ? document.getElementById('rodpocket-subopts')
-               : isRipple ? document.getElementById('drape-ripple-opts')
-               : null;
+    var target = isRodPocket ? document.getElementById('rodpocket-subopts')
+               : isRipple ? document.getElementById('ds-ripple-dims')
+               : document.getElementById('drape-std-dims');
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 120);
 }
@@ -432,8 +439,7 @@ function selectFabric(tab, el, val) {
     if (dp) dp.style.display = weSupply ? 'block' : 'none';
     var cn = document.getElementById('drape-cust-fabric-notice');
     if (cn) cn.style.display = custSupply ? 'block' : 'none';
-    var ls = document.getElementById('drape-lining-section');
-    if (ls) ls.style.display = (weSupply || custSupply) ? 'block' : 'none';
+    // (lining color section visibility is driven by the lining-type selector, not the fabric path)
     calcDrapePrice();
   } else {
     romanState.fabric = val;
@@ -449,6 +455,22 @@ function drapeLinerToggle() {
   var custSupply = document.getElementById('drape-liner-customer-note');
   if (weSupply) weSupply.style.display = (lining === 'White liner' || lining === 'Cream liner') ? 'block' : 'none';
   if (custSupply) custSupply.style.display = (lining === 'I supply lining') ? 'block' : 'none';
+}
+// Lining light-control type (chosen before fabric). Shows/hides the lining-color section.
+function setDrapeLiningType(type, el) {
+  drapeState.liningType = type;
+  document.querySelectorAll('#grp-drape-lining-type .opt-btn').forEach(function(b){ b.classList.remove('sel'); });
+  el.classList.add('sel');
+  var sec = document.getElementById('drape-lining-section');
+  if (sec) sec.style.display = (type === 'unlined') ? 'none' : 'block';
+  calcDrapePrice();
+}
+// Full lining description ("Unlined" / "Light Filtering — White liner" / …) for pricing + quote.
+function drapeLiningLabel() {
+  var t = drapeState.liningType || 'unlined';
+  if (t === 'unlined') return 'Unlined';
+  var typeLbl = (t === 'blackout') ? 'Blackout' : 'Light Filtering';
+  return typeLbl + ' — ' + (getOpt('grp-drape-liner') || 'White liner');
 }
 
 // Helper: read shipping estimate from nearest delivery section ZIP input
@@ -474,6 +496,15 @@ var RN_RATES = {
   'Relaxed Roman':            40,
   'Roman Valance':            40
 };
+// Lining a Roman adds $5/sqft on top of the style rate (Justin, Sept 2026).
+var RN_LINING_PER_SQFT = 5;
+
+// Oversize freight: defined once in shared.js (PB_OVERSIZE_W / PB_OVERSIZE_MIN)
+// so the $500 cannot drift between here and shades.js. Applies to Romans and to
+// cornices/valances — NOT to drapery, which folds into a carton and ships parcel
+// at any width (Justin, 2026-09-07). Falls back if shared.js has not loaded.
+var D_OVERSIZE_W    = (typeof PB_OVERSIZE_W   !== 'undefined') ? PB_OVERSIZE_W   : 80;
+var D_OVERSIZE_MIN  = (typeof PB_OVERSIZE_MIN !== 'undefined') ? PB_OVERSIZE_MIN : 500;
 
 function rnGetRate() {
   var style = romanState.style || 'Flat Roman';
@@ -487,11 +518,27 @@ function adjRomanQty(d) {
 }
 
 function romanLinerToggle() {
-  var lining = getOpt('grp-roman-lining');
+  var lining = getOpt('grp-roman-liner');
   var weNote = document.getElementById('roman-liner-supply-note');
   var custNote = document.getElementById('roman-liner-customer-note');
   if (weNote) weNote.style.display = (lining === 'White liner' || lining === 'Cream liner') ? 'block' : 'none';
   if (custNote) custNote.style.display = (lining === 'I supply lining') ? 'block' : 'none';
+}
+// Lining light-control type (chosen before fabric). Shows/hides the lining-color section.
+function setRomanLiningType(type, el) {
+  romanState.liningType = type;
+  document.querySelectorAll('#grp-roman-lining-type .opt-btn').forEach(function(b){ b.classList.remove('sel'); });
+  el.classList.add('sel');
+  var sec = document.getElementById('roman-lining-section');
+  if (sec) sec.style.display = (type === 'unlined') ? 'none' : 'block';
+  calcRoman();
+}
+// Full lining description ("Unlined" / "Blackout — Cream liner" / …) for pricing + quote.
+function romanLiningLabel() {
+  var t = romanState.liningType || 'unlined';
+  if (t === 'unlined') return 'Unlined';
+  var typeLbl = (t === 'blackout') ? 'Blackout' : 'Light Filtering';
+  return typeLbl + ' — ' + (getOpt('grp-roman-liner') || 'White liner');
 }
 function romanRingsToggle() {
   var choice = getOpt('grp-roman-rings');
@@ -500,8 +547,20 @@ function romanRingsToggle() {
   if (opts) opts.style.display = (choice === 'We supply rings') ? 'block' : 'none';
   if (custNote) custNote.style.display = (choice === 'I supply rings') ? 'block' : 'none';
 }
+// pbRenderEstimate builds a sibling panel (<boxId>-checkout-panel) holding the
+// line items, the total and Add to Cart. Rewriting the price box alone leaves
+// that panel on screen still showing the LAST price that calculated — so a
+// customer who types an out-of-range size sees "custom quote required" with a
+// stale dollar total sitting right underneath it. Clear it whenever we bail out.
+function _clearEstimatePanel(box) {
+  if (!box || !box.id) return;
+  var panel = document.getElementById(box.id + '-checkout-panel');
+  if (panel) { panel.innerHTML = ''; panel.style.display = 'none'; }
+}
+
 function _motorCustomMsg(box, label) {
   if (!box) return;
+  _clearEstimatePanel(box);
   box.style.display = 'block';
   box.innerHTML =
     '<div style="padding:2px 0">' +
@@ -512,6 +571,7 @@ function _motorCustomMsg(box, label) {
 
 function _customSizeMsg(box, label, maxW, maxH) {
   if (!box) return;
+  _clearEstimatePanel(box);
   box.style.display = 'block';
   box.innerHTML =
     '<div style="padding:2px 0">' +
@@ -539,11 +599,14 @@ function calcRoman() {
   // Custom quote for over 120″
   if (w > 120 || h > 120) { _customSizeMsg(box, 'Roman Shade', 120, 120); return; }
 
-  // Oversized freight flag (>96″ wide = 8 ft)
-  var isRomanOversized = w > 96;
+  // Oversized freight flag — anything over 80″ wide (see D_OVERSIZE_W).
+  var isRomanOversized = w > D_OVERSIZE_W;
 
   var rate     = rnGetRate();
   var isPleated = romanState.style === 'Permanently Pleated Roman';
+  // Lining adds $5/sqft on top of the style rate (Justin, Sept 2026).
+  var romanLined = (romanState.liningType && romanState.liningType !== 'unlined');
+  if (romanLined) rate += RN_LINING_PER_SQFT;
   var sqft     = (w / 12) * (h / 12);
   var perShade = Math.max(rnGetMin(), sqft * rate);
   var laborTotal = perShade * qty;
@@ -573,11 +636,11 @@ function calcRoman() {
 
   // Fabric & liner cost if we supply
   var fabricCost = 0; var linerCost = 0;
+  var isRomanLined = (romanState.liningType && romanState.liningType !== 'unlined');
   if (romanState.fabric === 'We supply the fabric') {
     fabricCost = fabricYds * 25;
-    var linerBtn = document.querySelector('#grp-roman-liner .opt-btn.sel');
-    var linerVal = linerBtn ? linerBtn.textContent.trim() : '';
-    if (linerVal === 'White liner' || linerVal === 'Cream liner') {
+    var linerVal = getOpt('grp-roman-liner') || 'White liner';
+    if (isRomanLined && (linerVal === 'White liner' || linerVal === 'Cream liner')) {
       linerCost = liningYdsRn * D_LINING_PER_YD;
     }
   }
@@ -587,7 +650,7 @@ function calcRoman() {
   var shipEst = 0;
   if (isShippingRn) {
     if (isRomanOversized) {
-      shipEst = 200;
+      shipEst = D_OVERSIZE_MIN;
     } else {
       var rnShipBase = Math.ceil((w / 12) * (h / 12) * qty * 3 / 5) * 5;
       shipEst = Math.max(75, rnShipBase);
@@ -625,7 +688,7 @@ function calcRoman() {
     { label: 'Size',           value: w + '″ W × ' + h + '″ finished length' },
     { label: 'Quantity',       value: qty + ' shade(s)' },
     { label: 'Fabric',         value: (romanState.fabric || '—') },
-    { label: 'Lining',         value: (getOpt('grp-roman-lining') || '—') },
+    { label: 'Lining',         value: romanLiningLabel() },
     { label: 'Operation',      value: (getOpt('grp-roman-op') || '—') },
     { label: 'Mounting',       value: (getOpt('grp-roman-mount-style') || '—') }
   ];
@@ -642,7 +705,7 @@ function calcRoman() {
     }
   }
   if (trimTotal) rnLines.push({ label: 'Trim', value: getOpt('grp-roman-trim') || 'Selected' });
-  if (shipEst)   rnLines.push({ label: isRomanOversized ? 'Oversized freight est. (>96″ wide)' : 'Shipping est. (FedEx/UPS, Philadelphia)', value: '~$' + shipEst });
+  if (shipEst)   rnLines.push({ label: isRomanOversized ? 'Oversized freight (over ' + D_OVERSIZE_W + '″ wide)' : 'Shipping est. (FedEx/UPS, Philadelphia)', value: '~$' + shipEst });
   var rnAtMin = perShade === rnGetMin();
   if (rnAtMin) rnLines.push({ label: 'Note', value: 'At ' + (isPleated ? 'pleated' : 'flat/relaxed') + ' minimum — $' + rnGetMin() + '/shade' });
   pbRenderEstimate('roman-pricebox', rnLines, grandTotal, '', function(checkout) {
@@ -655,20 +718,93 @@ function calcRoman() {
 }
 
 // ── DRAPERY PRICING CALCULATOR ───────────────────────────────
-// Rates (Justin confirmed): $120/width unlined · $130/width lined (liner included, BO=LF same price)
-// Goblet/Barrel: +$20/width · Interlining: +$10/width · Height >100": +$10/width per 10"
-// Width = ceil((rod width × fullness) ÷ 54), min 2
-var D_RATE_UNLINED = 120;   // per cut/width — unlined
-var D_RATE_LINED   = 130;   // per cut/width — liner included (BO or LF, same price)
+// ── Drapery rates — Justin, Sept 2026 ───────────────────────────────────────
+// Priced per cut (one 54" width of fabric). The rate climbs with finished
+// length, because a longer drape is more fabric handling and more labour per
+// cut. Bands, on top of whichever base applies:
+//   ≤ 99″     base            (125 unlined / 135 lined)
+//   100–115″  +$20            (145 / 155)
+//   116–130″  +$35            (160 / 170)
+//   131–141″  +$70            (195 / 205)
+//   142–151″  +$105           (230 / 240)   ← +$35 per further 10″
+//   152–161″  +$140  … and so on to 185″
+//   over 185″ NOT auto-priced — quoted by hand
+var D_RATE_UNLINED = 125;   // per cut/width — unlined
+var D_RATE_LINED   = 135;   // per cut/width — liner included (BO or LF, same price)
+var D_SPECIALTY_PLEAT_ADD = 20;  // Goblet / Barrel, on top of the base rate
+var D_LEN_BAND_ADD = 35;    // added per 10" band above 141"
+var D_LEN_MAX_AUTO = 185;   // longer than this is a manual quote, no number shown
 var D_MIN_WIDTHS   = 2;
 var D_FABRIC_WIDTH = 54;    // standard fabric width (inches)
-var D_LEN_SURCHARGE = 10;   // per width per 10" over 100"
+
+// ── Width (cut) calculation ─────────────────────────────────────────────────
+// Rod width × fullness is only the visible face. A real cut list also has to
+// cover the returns back to the wall and the centre overlap on a pair, and each
+// 54" cut does not yield 54" of finished panel — side hems and the seams
+// between widths eat into it. Under-counting here loses a whole width on jobs
+// that sit just over a boundary, which is money out of pocket every time.
+// Justin's workroom formula:
+//   cuts = ceil( (rod width + allowance) × fullness ÷ fabric width )
+// The allowance covers returns/leads and side hems, and it is added BEFORE the
+// fullness multiplier — that ordering matters, it is what the fullness is
+// actually applied to. Standard 4″ returns with 2″ hems = +12″; 6″ returns = +18″.
+var D_RETURN_IN    = 4;     // standard return/lead
+var D_SIDE_HEM_IN  = 2;     // standard side hem
+var D_FABRIC_CUT_W = 54;    // solid goods; 118″ fabric and railroading are quoted by hand
+var D_YARD_ALLOW   = 16;    // added to finished length for header + hems, before ÷36
+
+// Width allowance for a given return size. Anchored on Justin's two numbers —
+// 4″ returns → +12″, 6″ returns → +18″ — which is three times the return.
+// Anything larger scales the same way; "more than that, accommodate it" per Justin.
+function dWidthAllowance(returnIn) {
+  var r = parseFloat(returnIn) || D_RETURN_IN;
+  return r * 3;
+}
+
+// Per-cut rate for a finished length, or null when it is past the auto-price
+// ceiling and has to be quoted by hand.
+function dDrapeRatePerWidth(heightIn, baseRate) {
+  var h = parseFloat(heightIn) || 0;
+  if (h <= 99)  return baseRate;
+  if (h <= 115) return baseRate + 20;
+  if (h <= 130) return baseRate + 35;
+  if (h <= 141) return baseRate + 70;
+  if (h >  D_LEN_MAX_AUTO) return null;
+  // Every further 10" past the 131–141 band adds another $35.
+  return baseRate + 70 + Math.ceil((h - 141) / 10) * D_LEN_BAND_ADD;
+}
 var D_INTERLINING_PER_WIDTH = 10; // interlining surcharge per width (on top of lined rate)
 var D_LINING_PER_YD = 10;   // when we supply lining (White or Cream) — same yardage as face fabric
 var D_FABRIC_PER_YD = 25;   // placeholder — face fabric custom per spec
-var D_CORNICE_PER_FT = 38.50; // per linear ft (cost $25 ÷ 0.65)
+// ── Cornice / valance — Justin, Sept 2026 ───────────────────────────────────
+// $35 per linear foot at standard height, $200 minimum per piece, and the rate
+// steps up with the face height: a deeper board is more material and more
+// labour per running foot.
+//   ≤ 15″   $35/ft
+//   16–35″  $70/ft   (doubles once past 15″)
+//   36–55″  $95/ft   (+$25)
+//   56–75″  $120/ft  (+$25 for each further 20″, and so on)
+// FABRIC IS NOT INCLUDED in these rates — it is quoted separately, same as the
+// drapery face fabric. Do not fold a fabric estimate into these totals.
+var D_CORNICE_PER_FT = 35;    // base rate, standard height
 var D_CORNICE_MIN_FT = 4;
-var D_VALANCE_PER_FT = 38.50; // same as cornice
+var D_VALANCE_PER_FT = 35;    // same as cornice
+var D_BOARD_MIN      = 200;   // minimum per cornice / per valance
+var D_BOARD_STD_H    = 15;    // at or under this height, the base rate applies
+var D_BOARD_STEP_IN  = 20;    // height band width above the standard
+var D_BOARD_STEP_ADD = 25;    // added per band after the initial doubling
+
+// Per-linear-foot rate for a cornice/valance of a given face height (inches).
+// Height 0 / blank falls back to the base rate so a half-filled form still
+// shows a sensible number.
+function dBoardRatePerFt(heightIn, baseRate) {
+  var base = baseRate || D_CORNICE_PER_FT;
+  var h = parseFloat(heightIn) || 0;
+  if (h <= D_BOARD_STD_H) return base;
+  // First band past the standard height doubles; each further band adds $25.
+  var band = Math.floor((h - (D_BOARD_STD_H + 1)) / D_BOARD_STEP_IN);
+  return (base * 2) + (band * D_BOARD_STEP_ADD);
+}
 var D_TRIM_PER_FT   = 15;
 
 function _getDim(wholeId, fracId) {
@@ -681,19 +817,18 @@ function calcDrapePrice() {
   var isRodPocket  = drapeState.pleat === 'Rod Pocket / Sheered Pocket';
   var isRippleDim  = drapeState.pleat === 'Ripple Fold';
   var w, h;
-  if (isPinchPleat) {
-    w = _getDim('pp-w', 'pp-w-frac');
-    h = _getDim('pp-l', 'pp-l-frac');
-  } else if (isRodPocket) {
+  if (isRodPocket) {
     w = _getDim('rp-w', 'rp-w-frac');
     h = _getDim('rp-l', 'rp-l-frac');
   } else if (isRippleDim) {
     w = parseFloat((document.getElementById('rf-w') || {}).value) || 0;
     h = parseFloat((document.getElementById('rf-l') || {}).value) || 0;
   } else {
+    // Pinch + standard pleats share the same dim inputs
     w = _getDim('d-exact-width',  'd-exact-width-frac');
     h = _getDim('d-exact-length', 'd-exact-length-frac');
   }
+  var qty = parseInt((document.getElementById('drape-qty') || {}).value) || 1;
   var box = document.getElementById('drape-price-box');
   if (!box) return;
   if (!w || !h) { box.style.display = 'none'; return; }
@@ -706,7 +841,7 @@ function calcDrapePrice() {
   if (hwNeed === 'I need hardware' && hwType === 'Motorized track') { _motorCustomMsg(box, 'Motorized Drapery'); return; }
 
   // Minimum dimension guard
-  var minWarnId = isPinchPleat ? 'pp-min-warn' : isRodPocket ? 'rp-min-warn' : 'd-min-warn';
+  var minWarnId = isRodPocket ? 'rp-min-warn' : 'd-min-warn';
   var minWarn = document.getElementById(minWarnId);
   if (minWarn) {
     var tooNarrow = w > 0 && w < 10, tooShort = h > 0 && h < 10;
@@ -719,18 +854,21 @@ function calcDrapePrice() {
     } else if (tooShort) {
       minWarn.textContent = '⚠ Minimum finished length is 10″. Call (609) 742-1720 to confirm.';
       minWarn.style.display = 'block';
-    } else if (w > 200 || h > 150) {
+    } else if (w > 200 || h > D_LEN_MAX_AUTO) {
       minWarn.textContent = w > 200
         ? '⚠ Width over 200″ exceeds our standard range — custom pricing required. Submit your order and we\'ll quote it.'
-        : '⚠ Length over 150″ exceeds our standard range — custom pricing required. Submit your order and we\'ll quote it.';
+        : '⚠ Length over ' + D_LEN_MAX_AUTO + '″ exceeds our standard range — custom pricing required. Submit your order and we\'ll quote it.';
       minWarn.style.display = 'block';
     } else {
       minWarn.style.display = 'none';
     }
   }
 
-  // Oversized → custom quote (max 200″ wide × 150″ tall)
-  if (w > 200 || h > 150) { _customSizeMsg(box, 'Custom Drapery', 200, 150); return; }
+  // Oversized → custom quote. The length limit is D_LEN_MAX_AUTO, the same 185″
+  // the rate ladder tops out at, so the cap and the pricing cannot drift apart:
+  // raise one and the other follows. It was 150″, which put the top four bands
+  // of the ladder (152–161, 162–171, 172–181, 182–185) out of reach.
+  if (w > 200 || h > D_LEN_MAX_AUTO) { _customSizeMsg(box, 'Custom Drapery', 200, D_LEN_MAX_AUTO); return; }
 
   // Fullness factor
   var isRipple   = drapeState.pleat === 'Ripple Fold';
@@ -746,29 +884,46 @@ function calcDrapePrice() {
   } else if (isPinchPleat) {
     var ppBtn = document.querySelector('#grp-pp-fullness .opt-btn.sel');
     fullness = ppBtn ? (parseFloat(ppBtn.textContent) || 2.5) : 2.5;
+  } else if (_NO_FULLNESS.indexOf(drapeState.pleat) !== -1) {
+    // Grommet/Eyelet, Box, Goblet & Barrel pleats have no fullness selector — fixed 2.5× standard
+    fullness = 2.5;
   } else {
     var fBtn = document.querySelector('#grp-drape-fullness .opt-btn.sel');
     fullness = fBtn ? (parseFloat(fBtn.textContent) || 2.0) : 2.0;
   }
 
-  // Widths
-  var numWidths = Math.max(D_MIN_WIDTHS, Math.ceil((w * fullness) / D_FABRIC_WIDTH));
+  // Widths (cuts) — Justin's workroom formula:
+  //   (rod width + allowance) × fullness ÷ 54″ , rounded up
+  // The allowance covers returns/leads and side hems and goes on BEFORE the
+  // fullness multiplier. It follows the return size the customer picked
+  // (4″ → +12″, 6″ → +18″), because that is the number that decides whether a
+  // job needs one more width of fabric.
+  var _retEl = document.getElementById('d-return');
+  var returnEach  = parseFloat(_retEl && _retEl.value) || D_RETURN_IN;
+  var widthAllowance = dWidthAllowance(returnEach);
+  // Allowance goes on BEFORE the fullness multiplier, then divide by the cut width.
+  var faceWidthNeeded = (w + widthAllowance) * fullness;
+  var numWidths = Math.max(D_MIN_WIDTHS, Math.ceil(faceWidthNeeded / D_FABRIC_CUT_W));
 
-  // Lining — read from inline liner picker (grp-drape-liner)
-  var lBtn = document.querySelector('#grp-drape-liner .opt-btn.sel');
-  var lining = lBtn ? lBtn.textContent.trim() : 'No liner';
-  var isLined = lining !== 'No liner';
+  // Lining — type chosen before fabric (unlined/lf/blackout); color from inline picker
+  var liningType = drapeState.liningType || 'unlined';
+  var isLined = liningType !== 'unlined';
+  var lColorBtn = document.querySelector('#grp-drape-liner .opt-btn.sel');
+  var lColor = lColorBtn ? lColorBtn.textContent.trim() : 'White liner';
+  var lining = drapeLiningLabel();
   var interCheck = document.getElementById('d-interlining-check');
   var isInterlining = interCheck ? interCheck.checked : false;
   // Goblet and Barrel pleat: +$20/width over base rate
   var isSpecialtyPleat = drapeState.pleat === 'Goblet Pleat' || drapeState.pleat === 'Barrel Pleat';
-  var ratePerWidth = isSpecialtyPleat
-    ? (isLined ? 150 : 140)
-    : (isLined ? D_RATE_LINED : D_RATE_UNLINED);
+  var ratePerWidth = (isLined ? D_RATE_LINED : D_RATE_UNLINED)
+                   + (isSpecialtyPleat ? D_SPECIALTY_PLEAT_ADD : 0);
 
-  // Length surcharge (over 100")
-  var lenSurcharge = h > 100 ? Math.ceil((h - 100) / 10) * D_LEN_SURCHARGE : 0;
-  var effectiveRate = ratePerWidth + lenSurcharge;
+  // Length bands. Past 185" there is no published rate — the job is quoted by
+  // hand, so we show no number rather than inventing one.
+  var effectiveRate = dDrapeRatePerWidth(h, ratePerWidth);
+  var overMaxLength = (effectiveRate === null);
+  var lenSurcharge  = overMaxLength ? 0 : (effectiveRate - ratePerWidth);
+  if (overMaxLength) effectiveRate = 0;
   var laborTotal = numWidths * effectiveRate;
   var interlineTotal = isInterlining ? numWidths * D_INTERLINING_PER_WIDTH : 0;
 
@@ -780,7 +935,7 @@ function calcDrapePrice() {
   }
   // Lining fabric — $10/yd when we supply White or Cream; same yardage as face fabric
   var liningYards = Math.ceil(((h + 16) / 36) * numWidths * 10) / 10;
-  var weSupplyLiner = (lining === 'White liner' || lining === 'Cream liner');
+  var weSupplyLiner = (lColor === 'White liner' || lColor === 'Cream liner');
   var liningCost = (isLined && weSupplyLiner) ? liningYards * D_LINING_PER_YD : 0;
 
   // Cornice
@@ -788,8 +943,12 @@ function calcDrapePrice() {
   var corniceCheck = document.getElementById('d-cornice-check');
   if (corniceCheck && corniceCheck.checked) {
     var cw = parseFloat(document.getElementById('d-cornice-width').value) || 0;
+    var chEl = document.getElementById('d-cornice-height');
+    var ch  = chEl ? (parseFloat(chEl.value) || 0) : 0;
     var cFt = Math.max(D_CORNICE_MIN_FT, cw / 12);
-    corniceTotal = Math.ceil(cFt) * D_CORNICE_PER_FT;
+    var cRate = dBoardRatePerFt(ch, D_CORNICE_PER_FT);
+    // $200 minimum applies to the board itself, before trim is added.
+    corniceTotal = Math.max(D_BOARD_MIN, Math.ceil(cFt) * cRate);
     // Cornice trim
     if (document.getElementById('d-cornice-trim-check') && document.getElementById('d-cornice-trim-check').checked) {
       corniceTotal += Math.ceil(cFt) * D_TRIM_PER_FT;
@@ -801,12 +960,13 @@ function calcDrapePrice() {
   var valanceCheck = document.getElementById('d-valance-check');
   if (valanceCheck && valanceCheck.checked) {
     var vw = parseFloat(document.getElementById('d-valance-width').value) || 0;
+    var vhEl = document.getElementById('d-valance-height');
+    var vh  = vhEl ? (parseFloat(vhEl.value) || 0) : 0;
     var vFt = Math.max(1, vw / 12);
-    valanceTotal = Math.ceil(vFt) * D_VALANCE_PER_FT;
-    if (drapeState.fabric === 'We supply the fabric') {
-      var vYards = Math.ceil(vFt * 0.75); // rough valance yardage estimate
-      valanceTotal += vYards * D_FABRIC_PER_YD;
-    }
+    var vRate = dBoardRatePerFt(vh, D_VALANCE_PER_FT);
+    // $200 minimum applies to the board itself, before trim is added.
+    // Fabric is deliberately NOT added here — it is not included in the rate.
+    valanceTotal = Math.max(D_BOARD_MIN, Math.ceil(vFt) * vRate);
     // Valance trim
     if (document.getElementById('d-valance-trim-check') && document.getElementById('d-valance-trim-check').checked) {
       valanceTotal += Math.ceil(vFt) * D_TRIM_PER_FT;
@@ -832,19 +992,25 @@ function calcDrapePrice() {
   var isShippingDrape = true;
   var dShipEst = 0;
   if (isShippingDrape) {
-    var dShipBase = Math.ceil(numWidths * 12 / 5) * 5;
+    // one shipment sized to the TOTAL number of widths across all sets
+    var dShipBase = Math.ceil(numWidths * qty * 12 / 5) * 5;
     dShipEst = Math.max(75, dShipBase);
   }
 
-  var grandTotal = laborTotal + interlineTotal + fabricCost + liningCost + corniceTotal + valanceTotal + trimTotal + dShipEst;
-  grandTotal = Math.max(200, grandTotal); // $200 minimum for custom drapery
+  // Per-window costs (labor, fabric, lining, trim) scale with quantity; the $200 minimum
+  // applies per set. Cornice/valance are single shared pieces and shipping is one estimate —
+  // added ONCE, not multiplied by quantity.
+  var perSetTotal = laborTotal + interlineTotal + fabricCost + liningCost + trimTotal;
+  perSetTotal = Math.max(200, perSetTotal); // $200 minimum per drapery set
+  var grandTotal = perSetTotal * qty + corniceTotal + valanceTotal + dShipEst;
 
   var panels    = getOpt('grp-drape-panels') || '—';
   var panelSide = panels === 'Single panel' ? (getOpt('grp-drape-side') || '—') : '—';
-  var returnSz  = isPinchPleat
-    ? ((document.getElementById('pp-return') || {}).value || '4')
-    : ((document.getElementById('d-return') || {}).value || '4');
-  var overlapSz = (isRodPocket || isPinchPleat) ? '—' : ((document.getElementById('d-overlap') || {}).value || '4');
+  var returnSz  = (document.getElementById('d-return') || {}).value || '4';
+  var overlapSz = isRodPocket ? '—' : ((document.getElementById('d-overlap') || {}).value || '3');
+  var sideHem   = (document.getElementById('d-side-hem') || {}).value || '2';
+  var bottomHem = (document.getElementById('d-bottom-hem') || {}).value || '4';
+  var rippleJoin = isRippleDim ? (getOpt('grp-ripple-join') || '—') : '';
   var dYardsPerWidth = Math.ceil((h + 16) / 36 * 4) / 4;
   var dTotalYards    = Math.ceil(dYardsPerWidth * numWidths * 4) / 4;
   var cornYds = 0;
@@ -864,19 +1030,40 @@ function calcDrapePrice() {
   var drapeLines = [
     { label: 'Product',   value: (drapeState.pleat || 'Custom Drapery') },
     { label: 'Size',      value: w + '″ W × ' + h + '″ finished length' },
+    { label: 'Quantity',  value: qty + ' set(s)' },
     { label: 'Panels',    value: (panels || '—') + (panelSide !== '—' ? ' — ' + panelSide : '') },
-    { label: 'Widths',    value: numWidths + ' widths × $' + effectiveRate + (lenSurcharge ? ' (incl. length surcharge)' : '') },
-    { label: 'Lining',    value: (lining || 'No liner') + (isInterlining ? ' + Interlining' : '') },
+    { label: 'Widths',    value: numWidths + ' widths × $' + effectiveRate + (lenSurcharge ? ' (incl. length surcharge)' : '') + (qty > 1 ? ' × ' + qty + ' sets' : '') },
+    { label: 'Lining',    value: lining + (isInterlining ? ' + Interlining' : '') },
     { label: 'Fabric',    value: (drapeState.fabric || '—') }
   ];
-  if (returnSz && !isRodPocket) drapeLines.push({ label: 'Return / Overlap', value: returnSz + '" / ' + overlapSz + '"' });
+  if (drapeState.pleat === 'Box Pleat') {
+    drapeLines.push({ label: 'Box pleat size', value: ((document.getElementById('d-box-pleat-size') || {}).value || '3') + '"' });
+  }
+  if (drapeState.pleat === 'Grommet / Eyelet') {
+    var gSizeSel = document.getElementById('d-grommet-size');
+    var gSizeTxt = gSizeSel ? gSizeSel.options[gSizeSel.selectedIndex].text : '1 3/4" (standard)';
+    drapeLines.push({ label: 'Grommet', value: gSizeTxt + ' · ' + ((document.getElementById('d-grommet-color') || {}).value || '—') + ' · ' + (getOpt('grp-grommet-supply') || 'We supply grommets') });
+  }
+  if (!isRodPocket && !isRippleDim) drapeLines.push({ label: 'Return / Overlap', value: returnSz + '" / ' + overlapSz + '"' });
+  if (rippleJoin) drapeLines.push({ label: 'Join', value: rippleJoin });
+  if (!isRodPocket && !isRippleDim) drapeLines.push({ label: 'Hems', value: 'Side ' + sideHem + '" / Bottom ' + bottomHem + '"' });
   if (corniceTotal) drapeLines.push({ label: 'Cornice', value: '$' + corniceTotal.toFixed(0) });
   if (valanceTotal) drapeLines.push({ label: 'Valance', value: '$' + valanceTotal.toFixed(0) });
   if (trimTotal)    drapeLines.push({ label: 'Trim', value: '$' + trimTotal.toFixed(0) });
-  if (dShipEst)     drapeLines.push({ label: 'Shipping est.', value: '~$' + dShipEst });
-  drapeLines.push({ label: 'Fabric needed est.', value: '~' + totalFabYds.toFixed(1) + ' yds (pattern repeats add more)' });
-  if (grandTotal === 200) drapeLines.push({ label: 'Note', value: '$200 minimum for custom drapery' });
-  pbRenderEstimate('drape-price-box', drapeLines, grandTotal, '', function(checkout) {
+  if (dShipEst)     drapeLines.push({ label: 'Shipping est.', value: '~$' + dShipEst + (qty > 1 ? ' × ' + qty + ' sets' : '') });
+  drapeLines.push({ label: 'Fabric needed est.', value: '~' + (totalFabYds * qty).toFixed(1) + ' yds (pattern repeats add more)' });
+  if (perSetTotal === 200) drapeLines.push({ label: 'Note', value: '$200 minimum per drapery set' });
+  // Past the published length ladder there is no rate to apply, so show the
+  // spec without a price rather than a number we would have to walk back.
+  if (overMaxLength) {
+    drapeLines.push({ label: 'Length', value: h + '″ — over ' + D_LEN_MAX_AUTO + '″' });
+  }
+  pbRenderEstimate('drape-price-box', drapeLines,
+    overMaxLength ? null : grandTotal,
+    overMaxLength
+      ? 'Drapery longer than ' + D_LEN_MAX_AUTO + '″ is priced by hand — send your specs and we\'ll quote it, usually within one business day.'
+      : '',
+    function(checkout) {
     pbCollectItem(drapeState.pleat || 'Custom Drapery', drapeLines, grandTotal, false);
     pbOpenCart();
     if (checkout) setTimeout(function(){
@@ -911,12 +1098,14 @@ function drapeToggleSingle(show) {
   if (el) el.style.display = show ? 'block' : 'none';
 }
 // ── CORNICE & VALANCE PRICING ─────────────────────────────
-// Cost $25/linear ft incl. returns ÷ 0.65 margin = $38.50/ft
-var CV_PER_FT     = 38.50; // cost $25/LF ÷ 0.65
+// Justin, Sept 2026: $35/linear ft at standard height with a $200 minimum per
+// piece, and the per-foot rate steps up with face height — see dBoardRatePerFt
+// above for the ladder (35 / 70 / 95 / 120 …). Fabric is NOT included at these
+// rates; when we supply it, it is quoted separately rather than estimated here.
+var CV_PER_FT     = 35;    // base rate at standard height
 var CV_MIN_FT     = 4;
-var CV_MIN_PRICE  = 154;   // 4 ft × $38.50
+var CV_MIN_PRICE  = 200;   // minimum per cornice / per valance
 var CV_TRIM_PER_FT= 15;
-var CV_FABRIC_YD  = 30;    // placeholder — fabric custom per spec
 
 function cvSetType(type) {
   var isCorn = type === 'cornice';
@@ -945,21 +1134,42 @@ function cvSetType(type) {
     : 'Fabric soft top treatment. Custom quoted.';
   var cornFin = document.getElementById('cv-cornice-finish');
   var valFin  = document.getElementById('cv-valance-finish');
-  var trimOpts= document.getElementById('corn-trim-opts');
-  if (cornFin) cornFin.style.display = isCorn ? 'block' : 'none';
-  if (valFin)  valFin.style.display  = isCorn ? 'none'  : 'block';
-  // For valance, always show trim edges; for cornice, respect the toggle
-  if (!isCorn && trimOpts) trimOpts.style.display = 'block';
-  if (isCorn  && trimOpts) { trimOpts.style.display = 'none'; }
+  // Both cornice and valance use the same finishing choices: Self welt / Double self welt / Applied trim.
+  if (cornFin) cornFin.style.display = 'block';
+  if (valFin)  valFin.style.display  = 'none';   // legacy valance-only "Applied trim" label — no longer used
+  // Sync the placement pickers (welt vs applied-trim edges) to whichever finishing is selected.
+  var trimSel = document.querySelector('#grp-corn-trim .opt-btn.sel');
+  cornToggleTrim(!!(trimSel && trimSel.textContent.indexOf('Applied trim') !== -1));
   calcCornice();
 }
+// show=true → Applied trim (edge picker + supply). show=false → Self/Double welt (welt-placement picker).
 function cornToggleTrim(show) {
-  var el = document.getElementById('corn-trim-opts');
-  if (el) el.style.display = show ? 'block' : 'none';
+  var trim = document.getElementById('corn-trim-opts');
+  var welt = document.getElementById('corn-welt-opts');
+  if (trim) trim.style.display = show ? 'block' : 'none';
+  if (welt) welt.style.display = show ? 'none'  : 'block';
 }
 function valToggleTrim(show) {
-  var el = document.getElementById('val-trim-opts');
-  if (el) el.style.display = show ? 'block' : 'none';
+  var trim = document.getElementById('val-trim-opts');
+  var welt = document.getElementById('val-welt-opts');
+  if (trim) trim.style.display = show ? 'block' : 'none';
+  if (welt) welt.style.display = show ? 'none'  : 'block';
+}
+// Readable list of checked edge locations for a given checkbox class ('Top, Bottom, …')
+function _cvEdges(cls) {
+  var m = {top:'Top', bottom:'Bottom', sides:'Both sides', returns:'Returns'};
+  var locs = [];
+  document.querySelectorAll('.' + cls + ':checked').forEach(function(cb) {
+    locs.push(m[cb.getAttribute('data-loc')] || cb.getAttribute('data-loc'));
+  });
+  return locs.join(', ');
+}
+// Finishing description including placement (welt edges, or applied-trim edges)
+function _cvFinishDesc(trimGrp, weltCls, trimCls) {
+  var t = getOpt(trimGrp) || '—';
+  if (t.indexOf('Applied trim') !== -1) { var e = _cvEdges(trimCls); return t + (e ? ' (' + e + ')' : ''); }
+  if (t.toLowerCase().indexOf('welt') !== -1) { var w = _cvEdges(weltCls); return t + (w ? ' (' + w + ')' : ''); }
+  return t;
 }
 
 function _cvTrimFt(edgeClass, w, h, ret) {
@@ -981,7 +1191,9 @@ function _cvPriceBox(boxId, rowsId, totalId, noteId, w, h, ret, trimClass, trimG
   // Total linear footage includes width + both end returns, always round UP to full foot
   var rawFt   = (w + ret * 2) / 12;
   var ft      = Math.max(CV_MIN_FT, Math.ceil(rawFt));
-  var labor   = Math.max(CV_MIN_PRICE, ft * CV_PER_FT);
+  // Per-foot rate steps up with face height; $200 minimum applies to the board.
+  var cvRate  = dBoardRatePerFt(h, CV_PER_FT);
+  var labor   = Math.max(CV_MIN_PRICE, ft * cvRate);
   var selTrimBtn = document.querySelector('#' + trimGrp + ' .opt-btn.sel');
   var selTrimTxt = selTrimBtn ? selTrimBtn.textContent.trim() : '';
   var hasTrim  = selTrimTxt.indexOf('Applied trim') !== -1;
@@ -991,36 +1203,41 @@ function _cvPriceBox(boxId, rowsId, totalId, noteId, w, h, ret, trimClass, trimG
   var trimCost = Math.ceil(trimFt) * CV_TRIM_PER_FT;
   var fabricSup = document.querySelector('#' + fabricGrp + ' .opt-btn.sel');
   var weSupply  = fabricSup && fabricSup.textContent.trim() === 'We supply fabric';
-  var fabricCost = 0; var fabricYds = 0;
-  if (weSupply) {
-    // Cornice: wrap width + 2 returns + 2 depths (est 12" depth)
-    // Valance: width + 2 returns + 1.5x fullness
-    var perimInches = isCorn ? (w + ret*2 + 24) : (w + ret*2);
-    fabricYds = Math.ceil((perimInches * (h + 12)) / 1296 * 4) / 4;
-    fabricYds = Math.max(fabricYds, 1);
-    // Add welt fabric: self welt ~0.25 yd per 10ft of perimeter; double welt ~0.5 yd
-    if (isCorn && isSelfWelt) {
-      var weltPerim = (w + ret * 2) / 12;
-      var weltYds = Math.ceil(weltPerim * (isDblWelt ? 0.05 : 0.025) * 4) / 4;
-      fabricYds = Math.round((fabricYds + weltYds) * 4) / 4;
-    }
-    fabricCost = fabricYds * CV_FABRIC_YD;
-  }
-  var heightSurcharge = 0;
-  if (h > 15) {
-    var heightMult = Math.ceil((h - 15) / 10);
-    heightSurcharge = heightMult * 10 * ft;
-  }
-  var total = labor + trimCost + fabricCost + heightSurcharge;
+  // Fabric is not included in the per-foot rate and is not estimated here — it
+  // is quoted separately once the fabric is chosen. Estimating it off a
+  // placeholder yard price produced a number we could not stand behind.
+  //
+  // Over 80″ the board will not ship parcel. It can be spliced — jointed board,
+  // fabric still one piece — or shipped whole at oversize freight. The customer
+  // answers that in the form; default is unspliced, so we quote the freight
+  // rather than quietly leaving it out of the price.
+  var spliceEl   = document.getElementById(boxId.replace('-price-box', '') + '-splice');
+  var willSplice = spliceEl ? spliceEl.checked : false;
+  var isOversizeCV = (w > D_OVERSIZE_W) && !willSplice;
+  var oversizeFreight = isOversizeCV ? D_OVERSIZE_MIN : 0;
+  var total = labor + trimCost + oversizeFreight;
   var rows = '';
-  rows += '<div style="font-size:12px;color:var(--text-dark);padding:4px 0">' + ft + ' linear ft (incl. ends) × $' + CV_PER_FT.toFixed(2) + '/ft</div>';
-  if (heightSurcharge) {
-    var hMult = Math.ceil((h - 15) / 10);
-    rows += '<div style="font-size:12px;color:var(--text-dark);padding:3px 0">Height over 15″ (+' + hMult + ' × $10/ft) <span style="color:var(--gold)">+$' + heightSurcharge.toFixed(2) + '</span></div>';
+  rows += '<div style="font-size:12px;color:var(--text-dark);padding:4px 0">' + ft + ' linear ft (incl. ends) × $' + cvRate + '/ft' +
+          (h > 15 ? ' <span style="color:var(--gold)">(' + h + '″ high)</span>' : '') + '</div>';
+  if (labor > ft * cvRate) {
+    rows += '<div style="font-size:12px;color:var(--text-dark);padding:3px 0">$' + CV_MIN_PRICE + ' minimum applied</div>';
   }
-  if (hasTrim) rows += '<div style="font-size:12px;color:var(--text-dark);padding:3px 0">' + selTrimTxt + '</div>';
-  if (fabricCost) rows += '<div style="font-size:12px;color:var(--text-dark);padding:3px 0">We supply fabric (~' + fabricYds + ' yds est.)</div>';
-  rows += '<div style="font-size:11px;font-weight:700;color:var(--cream);padding-top:8px;margin-top:6px;border-top:1px solid rgba(255,255,255,.1)">Est. total: $' + total.toFixed(2) + '</div>';
+  if (hasTrim) {
+    var trimEdges = _cvEdges(trimClass);
+    rows += '<div style="font-size:12px;color:var(--text-dark);padding:3px 0">' + selTrimTxt + (trimEdges ? ' — ' + trimEdges : '') + '</div>';
+  } else if (isSelfWelt) {
+    var weltEdges = _cvEdges(trimClass.replace('-trim-', '-welt-'));
+    rows += '<div style="font-size:12px;color:var(--text-dark);padding:3px 0">' + selTrimTxt + (weltEdges ? ' — ' + weltEdges : '') + '</div>';
+  }
+  rows += '<div style="font-size:12px;color:var(--text-dark);padding:3px 0">Fabric ' +
+          (weSupply ? '(we supply)' : '(you supply)') +
+          ' <span style="color:var(--gold)">not included &mdash; quoted separately</span></div>';
+  if (w > D_OVERSIZE_W) {
+    rows += willSplice
+      ? '<div style="font-size:12px;color:var(--text-dark);padding:3px 0">Spliced board &mdash; ships parcel <span style="color:var(--gold)">(no oversize freight)</span></div>'
+      : '<div style="font-size:12px;color:var(--text-dark);padding:3px 0">Oversize freight (over ' + D_OVERSIZE_W + '&Prime;, not spliced) <span style="color:var(--gold)">+$' + D_OVERSIZE_MIN + '</span></div>';
+  }
+  rows += '<div style="font-size:11px;font-weight:700;color:var(--cream);padding-top:8px;margin-top:6px;border-top:1px solid rgba(255,255,255,.1)">Est. total: $' + total.toFixed(2) + '<span style="font-weight:400;color:var(--text-dark)"> + fabric</span></div>';
   document.getElementById(rowsId).innerHTML = rows;
   var noteEl = document.getElementById(noteId);
   if (noteEl) noteEl.textContent = 'Estimated pricing — confirmed at order. Fabric and trim pricing confirmed during consultation.';
@@ -1037,7 +1254,7 @@ function calcValance() {
   var w   = parseFloat(document.getElementById('cv-val-w').value) || 0;
   var h   = parseFloat(document.getElementById('cv-val-h').value) || 14;
   var ret = parseFloat(document.getElementById('cv-val-return').value) || 4;
-  _cvPriceBox('val-price-box','val-price-rows','val-price-total','val-fabric-note', w, h, ret, 'val-trim-edge','grp-val-trim','grp-val-fabric', false);
+  _cvPriceBox('val-price-box','val-price-rows','val-price-total','val-fabric-note', w, h, ret, 'val-trim-edge','grp-val-trim','grp-cv-val-fabric', false);
 }
 
 // Shared API submit helper for all soft-treatment forms
@@ -1072,9 +1289,11 @@ async function submitCornice() {
     { label: 'Width',        value: (document.getElementById('cv-corn-w').value||'—') + '"' },
     { label: 'Height',       value: (document.getElementById('cv-corn-h').value||'—') + '"' },
     { label: 'Return depth', value: (document.getElementById('cv-corn-return').value||'4') + '"' },
-    { label: 'Finishing',    value: getOpt('grp-corn-trim') || '—' },
+    { label: 'Mount',        value: getOpt('grp-cv-corn-mount') || '—' },
+    { label: 'Quantity',     value: ((document.getElementById('cv-corn-qty')||{}).value) || '1' },
+    { label: 'Finishing',    value: _cvFinishDesc('grp-corn-trim','corn-welt-edge','corn-trim-edge') },
     { label: 'Fabric',       value: getOpt('grp-corn-fabric') || '—' },
-    { label: 'Delivery',     value: 'Ship to me (UPS/FedEx from Huntingdon Valley, PA)' },
+    { label: 'Delivery',     value: 'Ship to me (UPS/FedEx)' },
     { label: 'Installation', value: pbInstallRequested(document.getElementById('corn-form')) ? 'Requested' : 'Not requested' }
   ];
   await _stApiSubmit('corn-form', 'corn-success', name, email, phone, 'Cornice', selections, document.getElementById('cn-notes').value.trim());
@@ -1090,9 +1309,11 @@ async function submitValanceCv() {
     { label: 'Width',        value: (document.getElementById('cv-val-w').value||'—') + '"' },
     { label: 'Height',       value: (document.getElementById('cv-val-h').value||'—') + '"' },
     { label: 'Return depth', value: (document.getElementById('cv-val-return').value||'4') + '"' },
-    { label: 'Finishing',    value: getOpt('grp-val-trim') || '—' },
-    { label: 'Fabric',       value: getOpt('grp-val-fabric') || '—' },
-    { label: 'Delivery',     value: 'Ship to me (UPS/FedEx from Huntingdon Valley, PA)' }
+    { label: 'Mount',        value: getOpt('grp-cv-val-mount') || '—' },
+    { label: 'Quantity',     value: ((document.getElementById('cv-val-qty')||{}).value) || '1' },
+    { label: 'Finishing',    value: _cvFinishDesc('grp-val-trim','val-welt-edge','val-trim-edge') },
+    { label: 'Fabric',       value: getOpt('grp-cv-val-fabric') || '—' },
+    { label: 'Delivery',     value: 'Ship to me (UPS/FedEx)' }
   ];
   await _stApiSubmit('val-form', 'val-cv-success', name, email, phone, 'Valance', selections, document.getElementById('vn-notes').value.trim());
 }
@@ -1181,28 +1402,40 @@ async function submitDrape() {
   }
   var pleat      = drapeState.pleat  || getOpt('pleat-cards') || '—';
   var fabric     = drapeState.fabric || '—';
-  var lining     = getOpt('grp-drape-liner') || 'No liner';
+  var lining     = drapeLiningLabel();
   var interCb    = document.getElementById('d-interlining-check');
   var interlining = interCb && interCb.checked;
   var panels     = getOpt('grp-drape-panels');
   var panelSide  = panels === 'Single panel' ? getOpt('grp-drape-side') : '—';
   var isSubmitPinch  = pleat === 'Pinch Pleat' || (pleat && pleat.indexOf('Pinch Pleat') === 0);
   var isSubmitRP     = pleat === 'Rod Pocket / Sheered Pocket';
-  var returnSz   = isSubmitPinch
-    ? ((document.getElementById('pp-return') || {}).value || '4')
-    : ((document.getElementById('d-return') || {}).value || '4');
-  var overlapSz  = isSubmitRP || isSubmitPinch ? '—' : ((document.getElementById('d-overlap') || {}).value || '4');
-  // Fullness (standard pleat styles)
-  var fullness   = isSubmitPinch ? getOpt('grp-pp-fullness') : getOpt('grp-drape-fullness') || '—';
-  // Ripple fold specific
   var isRipple   = pleat === 'Ripple Fold';
+  var qty        = parseInt((document.getElementById('drape-qty') || {}).value) || 1;
+  var returnSz   = isRipple ? '—' : ((document.getElementById('d-return') || {}).value || '4');
+  var overlapSz  = (isSubmitRP || isRipple) ? '—' : ((document.getElementById('d-overlap') || {}).value || '3');
+  var sideHem    = (document.getElementById('d-side-hem') || {}).value || '2';
+  var bottomHem  = (document.getElementById('d-bottom-hem') || {}).value || '4';
+  var showHems   = !isRipple && !isSubmitRP;
+  // Fullness (standard pleat styles); Grommet/Box/Goblet/Barrel use a fixed 2.5× standard
+  var fullness   = isSubmitPinch ? getOpt('grp-pp-fullness')
+                 : (_NO_FULLNESS.indexOf(pleat) !== -1 ? '2.5× (standard)' : (getOpt('grp-drape-fullness') || '—'));
+  // Box pleat size (Box Pleat only)
+  var isSubmitBox = pleat === 'Box Pleat';
+  var boxPleatSz  = (document.getElementById('d-box-pleat-size') || {}).value || '3';
+  // Grommet details (Grommet / Eyelet only)
+  var isSubmitGrommet = pleat === 'Grommet / Eyelet';
+  var gromSizeSel = document.getElementById('d-grommet-size');
+  var gromSize    = gromSizeSel ? (gromSizeSel.options[gromSizeSel.selectedIndex].text) : '1 3/4" (standard)';
+  var gromColor   = (document.getElementById('d-grommet-color') || {}).value || '—';
+  var gromSupply  = getOpt('grp-grommet-supply') || 'We supply grommets';
+  // Ripple fold specific
   var rippleFull = isRipple ? getOpt('grp-ripple-fullness') : '—';
   var rippleHw   = isRipple ? getOpt('grp-ripple-hw') : '—';
   var rippleSnaps= isRipple ? getOpt('grp-ripple-snaps') : '—';
   var rippleJoin = isRipple ? getOpt('grp-ripple-join') : '—';
   var hwNeed     = getOpt('grp-drape-hardware');
   var hwType     = hwNeed === 'I need hardware' ? getOpt('grp-drape-hw-type') : 'N/A';
-  var delivery   = 'Ship to me (UPS/FedEx from Huntingdon Valley, PA)';
+  var delivery   = 'Ship to me (UPS/FedEx)';
   var custFabricFlag = fabric === 'Customer supplies fabric'
     ? '*** CUSTOMER SUPPLYING FABRIC ***\nDO NOT PROCESS PAYMENT UNTIL FABRIC RECEIVED AT SHOP.\nContact customer with shipping address before fabrication begins.\n\n'
     : '';
@@ -1212,10 +1445,13 @@ async function submitDrape() {
     + '\nAddress: ' + (document.getElementById('d-address').value.trim() || '—') + '\n\n'
     + 'Pleat style: ' + (drapeState.pleat || '—') + '\n'
     + 'Fabric: ' + fabric + '\n'
-    + (fabric === 'We supply the fabric' ? 'Color: ' + (getOpt('grp-drape-color')||'—') + '  Liner: ' + lining + '\n' : '')
+    + (fabric === 'We supply the fabric' ? 'Color: ' + (getOpt('grp-drape-color')||'—') + '\n' : '')
     + 'Lining: ' + lining + (interlining ? ' + Interlining' : '') + '\n'
+    + 'Quantity: ' + qty + ' set(s)\n'
     + 'Panels: ' + panels + (panelSide !== '—' ? ' — ' + panelSide : '') + '\n'
     + (!isRipple && pleat !== 'Rod Pocket / Sheered Pocket' && fullness !== '—' ? 'Fullness: ' + fullness + '\n' : '')
+    + (isSubmitBox ? 'Box pleat size: ' + boxPleatSz + '"\n' : '')
+    + (isSubmitGrommet ? 'Grommet: ' + gromSize + ' inner Ø — ' + gromColor + ' — ' + gromSupply + '\n' : '')
     + (pleat === 'Rod Pocket / Sheered Pocket' ? (function(){
         var casing = getOpt('grp-rp-casing') || '—';
         var header = getOpt('grp-rp-header') || 'No header';
@@ -1223,9 +1459,10 @@ async function submitDrape() {
         var rpFull = (function(){ var b=document.querySelector('#grp-rp-fullness .opt-btn.sel'); return b?b.textContent.trim():'2.0×'; })();
         return 'Casing: ' + casing + '  Header: ' + header + '  Placement: ' + placement + '  Fullness: ' + rpFull + '\n';
       }()) : '')
-    + 'Return: ' + returnSz + '"  Overlap: ' + overlapSz + '"\n'
+    + (!isRipple ? 'Return: ' + returnSz + '"  Overlap: ' + overlapSz + (overlapSz === '—' ? '' : '"') + '\n' : '')
+    + (showHems ? 'Hems: side ' + sideHem + '"  bottom ' + bottomHem + '"\n' : '')
     + (isRipple ? 'Ripple fullness: ' + rippleFull + '  Hardware: ' + rippleHw + '  Snaps: ' + rippleSnaps + '\n' +
-       'Join type: ' + rippleJoin + '\n' : '')
+       'Butt master / Overlap: ' + rippleJoin + '\n' : '')
     + (function(){
         var trimSel = document.querySelectorAll('.drape-trim-check:checked');
         if (!trimSel.length) return '';
@@ -1242,12 +1479,10 @@ async function submitDrape() {
     + (document.getElementById('drape-price-total') && document.getElementById('drape-price-box').style.display !== 'none' ?
         'Estimate: ' + document.getElementById('drape-price-total').textContent + '\n' : '')
     + 'Hardware: ' + hwNeed + (hwType !== 'N/A' ? ' — ' + hwType : '') + '\n'
-    + '\nExact width: ' + (isSubmitPinch ? ((document.getElementById('pp-w')||{}).value || '—') + '"'
-        : isSubmitRP ? ((document.getElementById('rp-w')||{}).value || '—') + '"'
+    + '\nExact width: ' + (isSubmitRP ? ((document.getElementById('rp-w')||{}).value || '—') + '"'
         : isRipple ? ((document.getElementById('rf-w')||{}).value || '—') + '"'
         : (document.getElementById('d-exact-width').value ? document.getElementById('d-exact-width').value + '"' : '—'))
-    + '\nFinished length: ' + (isSubmitPinch ? ((document.getElementById('pp-l')||{}).value || '—') + '"'
-        : isSubmitRP ? ((document.getElementById('rp-l')||{}).value || '—') + '"'
+    + '\nFinished length: ' + (isSubmitRP ? ((document.getElementById('rp-l')||{}).value || '—') + '"'
         : isRipple ? ((document.getElementById('rf-l')||{}).value || '—') + '"'
         : (document.getElementById('d-exact-length').value ? document.getElementById('d-exact-length').value + '"' : '—')) + '\n'
     + 'Delivery: ' + delivery + '\n'
@@ -1267,19 +1502,22 @@ async function submitDrape() {
     { label: 'Pleat style', value: drapeState.pleat || '—' },
     { label: 'Fabric', value: drapeState.fabric || '—' },
     { label: 'Lining', value: lining + (interlining ? ' + Interlining' : '') },
+    { label: 'Quantity', value: qty + ' set(s)' },
     { label: 'Panels', value: panels + (panelSide !== '—' ? ' — ' + panelSide : '') },
-    { label: 'Width', value: (isSubmitPinch ? ((document.getElementById('pp-w')||{}).value || '—')
-        : isSubmitRP ? ((document.getElementById('rp-w')||{}).value || '—')
+    { label: 'Width', value: (isSubmitRP ? ((document.getElementById('rp-w')||{}).value || '—')
         : isRipple ? ((document.getElementById('rf-w')||{}).value || '—')
         : (document.getElementById('d-exact-width').value || '—')) + '"' },
-    { label: 'Finished length', value: (isSubmitPinch ? ((document.getElementById('pp-l')||{}).value || '—')
-        : isSubmitRP ? ((document.getElementById('rp-l')||{}).value || '—')
+    { label: 'Finished length', value: (isSubmitRP ? ((document.getElementById('rp-l')||{}).value || '—')
         : isRipple ? ((document.getElementById('rf-l')||{}).value || '—')
         : (document.getElementById('d-exact-length').value || '—')) + '"' },
-    { label: 'Return / Overlap', value: returnSz + '" / ' + overlapSz + (overlapSz === '—' ? '' : '"') },
+    { label: 'Return / Overlap', value: returnSz + (returnSz === '—' ? '' : '"') + ' / ' + overlapSz + (overlapSz === '—' ? '' : '"') },
     { label: 'Hardware', value: hwNeed + (hwType !== 'N/A' ? ' — ' + hwType : '') },
     { label: 'Delivery', value: delivery }
   ];
+  if (showHems) drapeSelections.splice(8, 0, { label: 'Hems', value: 'Side ' + sideHem + '" / Bottom ' + bottomHem + '"' });
+  if (isRipple) drapeSelections.splice(8, 0, { label: 'Butt master / Overlap', value: rippleJoin });
+  if (isSubmitBox) drapeSelections.push({ label: 'Box pleat size', value: boxPleatSz + '"' });
+  if (isSubmitGrommet) drapeSelections.push({ label: 'Grommet', value: gromSize + ' Ø · ' + gromColor + ' · ' + gromSupply });
   var drapeNotes = document.getElementById('d-notes').value.trim();
   if (pbInstallRequested(document.getElementById('drape-form'))) drapeSelections.push({ label: 'Installation', value: 'Requested' });
   await _stApiSubmit('drape-form', 'drape-success', name, email, phone, 'Custom Drapery', drapeSelections, drapeNotes);
@@ -1297,7 +1535,7 @@ async function submitValance() {
     { label: 'Height / drop',     value: (_getDim('rn-h','rn-h-frac') || '—') + '"' },
     { label: 'Number of folds',   value: document.getElementById('val-folds').value || '—' },
     { label: 'Fold section size', value: (document.getElementById('val-fold-size').value || '—') + '"' },
-    { label: 'Delivery',          value: 'Ship to me (UPS/FedEx from Huntingdon Valley, PA)' }
+    { label: 'Delivery',          value: 'Ship to me (UPS/FedEx)' }
   ];
   await _stApiSubmit('valance-form-fields', 'valance-success', name, email, phone, 'Roman Valance',
     selections, document.getElementById('val-notes').value.trim());
@@ -1322,13 +1560,13 @@ async function submitRoman() {
   var motorPower    = (isMotor && motorBrand !== 'Norman') ? (getOpt('grp-roman-motor-power') || '—') : '—';
   var motorHardwire = (motorPower === 'Hardwired') ? (getOpt('grp-roman-motor-hardwire') || '—') : '—';
   var controlSide = isCordless ? '—' : getOpt('grp-roman-control');
-  var lining      = getOpt('grp-roman-lining');
+  var lining      = romanLiningLabel();
   var returnSz    = (document.getElementById('rn-return') || {}).value || '4';
   var mountStyle  = getOpt('grp-roman-mount-style') || 'Waterfall';
   var frontVal    = mountStyle === 'Off Back' ? ((document.getElementById('rn-valance-front') || {}).value || '6') : '—';
   var backVal     = mountStyle === 'Off Back' ? getOpt('grp-roman-back-valance') : '—';
   var backValSz   = backVal === 'Add back valance' ? ((document.getElementById('rn-valance-back') || {}).value || '4') : '—';
-  var delivery    = 'Ship to me (UPS/FedEx from Huntingdon Valley, PA)';
+  var delivery    = 'Ship to me (UPS/FedEx)';
   var mountType   = getOpt('grp-roman-mount') || 'Inside mount';
   var body = 'ROMAN SHADE QUOTE REQUEST\n\n'
     + 'Name: ' + name + '\nPhone: ' + phone
@@ -1338,7 +1576,7 @@ async function submitRoman() {
     + 'Mount type: ' + mountType + '\n'
     + 'TDBU: ' + tdbu + '\n'
     + 'Fabric: ' + (romanState.fabric || '—') + '\n'
-    + (romanState.fabric === 'We supply the fabric' ? 'Color: ' + (getOpt('grp-roman-color')||'—') + '  Liner: ' + (getOpt('grp-roman-liner')||'No liner') + '\n' : '')
+    + (romanState.fabric === 'We supply the fabric' ? 'Color: ' + (getOpt('grp-roman-color')||'—') + '\n' : '')
     + 'Lining: ' + lining + '\n'
     + 'Operation: ' + op + '\n'
     + (isMotor
@@ -1368,7 +1606,7 @@ async function submitRoman() {
     { label: 'Mount type',   value: mountType },
     { label: 'TDBU',         value: getOpt('grp-roman-tdbu') || '—' },
     { label: 'Fabric',       value: romanState.fabric || '—' },
-    { label: 'Lining',       value: getOpt('grp-roman-lining') || '—' },
+    { label: 'Lining',       value: romanLiningLabel() },
     { label: 'Operation',    value: op },
     { label: 'Control side', value: controlSide },
     { label: 'Mounting',     value: mountStyle },

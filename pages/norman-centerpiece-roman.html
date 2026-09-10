@@ -149,10 +149,47 @@
       <strong>&#9888; Fabric &amp; pricing data needs verification:</strong> The Norman Centerpiece Roman PDF is image-based and machine-unreadable. All fabric codes, colorways, and price group assignments are based on known Norman fabric data and are marked <strong>PDF CONFIRM</strong>. Owner must verify against the Norman Centerpiece Roman PDF pages 6&ndash;7 (pricing) and 23&ndash;30 (fabrics) before final quoting.
     </div>
 
-    <!-- STEP 1 -->
-    <div class="step-block active" id="step1">
-      <div class="step-head" onclick="toggleStep('step1')">
+    <!-- STEP 1: WINDOW MEASUREMENTS & MOUNT -->
+    <div class="step-block active" id="step4">
+      <div class="step-head" onclick="toggleStep('step4')">
         <div class="step-num">1</div>
+        <div class="step-head-title">Window measurements &amp; mount</div>
+        <div class="step-head-val" id="val4">&mdash;</div>
+      </div>
+      <div class="step-body">
+        <div class="dim-box">
+          <div class="dim-box-label">Enter your window size</div>
+          <div class="form-row">
+            <div class="form-group"><label>Width</label><input type="number" id="inp-width" min="12" max="96" step="0.125" placeholder="48" oninput="validateDims()"><div class="dim-unit">inches &middot; to nearest 1/8&Prime;</div></div>
+            <div class="form-group"><label>Height</label><input type="number" id="inp-height" min="24" max="96" step="0.125" placeholder="60" oninput="validateDims()"><div class="dim-unit">inches &middot; to nearest 1/8&Prime;</div></div>
+          </div>
+        </div>
+        <div class="step-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; For inside mount, give the exact window opening &mdash; we apply the standard deduction. Approximate is fine; we confirm at the home visit.</div>
+        <div id="dim-feedback" style="margin-top:10px"></div>
+
+        <!-- Mount type -->
+        <div style="font-size:12px;font-weight:600;color:#555;margin:14px 0 6px">Mount type</div>
+        <div class="opt-row" id="grp-mount">
+          <button class="opt-btn sel" onclick="setMount('inside',this)">Inside mount</button>
+          <button class="opt-btn" onclick="setMount('outside',this)">Outside mount</button>
+        </div>
+        <div class="step-note" style="margin-bottom:12px">Inside mount requires minimum 2&frac34;&Prime; window depth. Outside mount covers the opening &mdash; overlap recommended.</div>
+
+        <!-- Quantity -->
+        <div style="font-size:12px;font-weight:600;color:#555;margin:14px 0 6px">Quantity</div>
+        <div class="qty-btns">
+          <button class="qty-btn" onclick="adjQty(-1)">&#8722;</button>
+          <input class="qty-num" type="number" id="qty-inp" value="1" min="1" max="50" oninput="setQtyVal(parseInt(this.value)||1)">
+          <button class="qty-btn" onclick="adjQty(1)">&#43;</button>
+        </div>
+        <div class="step-note">Number of shades of this size. Note any size differences in the notes field.</div>
+      </div>
+    </div>
+
+    <!-- STEP 2: PRODUCT TYPE -->
+    <div class="step-block" id="step1">
+      <div class="step-head" onclick="toggleStep('step1')">
+        <div class="step-num">2</div>
         <div class="step-head-title">Product Type</div>
         <div class="step-head-val" id="val1">&mdash;</div>
       </div>
@@ -171,32 +208,7 @@
       </div>
     </div>
 
-    <!-- STEP 2 -->
-    <div class="step-block" id="step2">
-      <div class="step-head" onclick="toggleStep('step2')">
-        <div class="step-num">2</div>
-        <div class="step-head-title">Quantity</div>
-        <div class="step-head-val" id="val2">1 shade</div>
-      </div>
-      <div class="step-body">
-        <div class="form-row" style="margin-top:8px">
-          <div class="form-group">
-            <label>Number of shades</label>
-            <div style="display:flex;align-items:center;gap:0">
-              <button onclick="adjQty(-1)" style="width:36px;height:36px;border:1.5px solid #ddd;border-radius:8px 0 0 8px;background:#fff;font-size:20px;cursor:pointer;color:#333;font-family:inherit">−</button>
-              <input type="number" id="qty-inp" value="1" min="1" max="50" oninput="setQtyVal(parseInt(this.value)||1)" style="width:52px;height:36px;text-align:center;border-top:1.5px solid #ddd;border-bottom:1.5px solid #ddd;border-left:none;border-right:none;font-size:14px;font-weight:500;font-family:inherit;background:#fff">
-              <button onclick="adjQty(1)" style="width:36px;height:36px;border:1.5px solid #ddd;border-radius:0 8px 8px 0;background:#fff;font-size:20px;cursor:pointer;color:#333;font-family:inherit">+</button>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Room / window label</label>
-            <input type="text" id="room-label" placeholder="e.g. Living room &mdash; north window" oninput="updateSpec()">
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- STEP 3 -->
+    <!-- STEP 3: LIFT SYSTEM -->
     <div class="step-block" id="step3">
       <div class="step-head" onclick="toggleStep('step3')">
         <div class="step-num">3</div>
@@ -231,44 +243,10 @@
       </div>
     </div>
 
-    <!-- STEP 4 -->
-    <div class="step-block" id="step4">
-      <div class="step-head" onclick="toggleStep('step4')">
-        <div class="step-num">4</div>
-        <div class="step-head-title">Dimensions &amp; Mount</div>
-        <div class="step-head-val" id="val4">&mdash;</div>
-      </div>
-      <div class="step-body">
-        <div class="dim-row">
-          <div class="dim-field">
-            <div class="dim-label">Width (inches)</div>
-            <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
-              <input class="dim-input" type="number" id="inp-width" min="12" max="96" step="0.125" placeholder="48" oninput="validateDims();updateCalc()">
-              <span class="dim-unit">in</span>
-            </div>
-          </div>
-          <div class="dim-field">
-            <div class="dim-label">Height (inches)</div>
-            <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
-              <input class="dim-input" type="number" id="inp-height" min="24" max="96" step="0.125" placeholder="60" oninput="validateDims();updateCalc()">
-              <span class="dim-unit">in</span>
-            </div>
-          </div>
-        </div>
-        <div class="step-sub-head" style="margin-top:16px">Mount type</div>
-        <div class="opt-row" id="grp-mount">
-          <button class="opt-btn sel" onclick="selBtn(this,'grp-mount');updateSpec()">Inside mount</button>
-          <button class="opt-btn" onclick="selBtn(this,'grp-mount');updateSpec()">Outside mount</button>
-        </div>
-        <div style="font-size:11px;color:#888;margin-top:5px">Inside mount requires minimum 2&frac34;&Prime; window depth.</div>
-        <div id="dim-feedback" style="margin-top:10px"></div>
-      </div>
-    </div>
-
     <!-- STEP 5 -->
     <div class="step-block" id="step5">
       <div class="step-head" onclick="toggleStep('step5')">
-        <div class="step-num">5</div>
+        <div class="step-num">4</div>
         <div class="step-head-title">Shade Style</div>
         <div class="step-head-val" id="val5">&mdash;</div>
       </div>
@@ -286,7 +264,7 @@
     <!-- STEP 6 -->
     <div class="step-block" id="step6">
       <div class="step-head" onclick="toggleStep('step6')">
-        <div class="step-num">6</div>
+        <div class="step-num">5</div>
         <div class="step-head-title">Main Roman Fabric</div>
         <div class="step-head-val" id="val6">&mdash;</div>
       </div>
@@ -314,7 +292,7 @@
     <!-- STEP 7 -->
     <div class="step-block" id="step7">
       <div class="step-head" onclick="toggleStep('step7')">
-        <div class="step-num">7</div>
+        <div class="step-num">6</div>
         <div class="step-head-title">Lining</div>
         <div class="step-head-val" id="val7">Translucent</div>
       </div>
@@ -330,7 +308,7 @@
     <!-- STEP 8 -->
     <div class="step-block" id="step8">
       <div class="step-head" onclick="toggleStep('step8')">
-        <div class="step-num">8</div>
+        <div class="step-num">7</div>
         <div class="step-head-title">Banding / Border</div>
         <div class="step-head-val" id="val8">None</div>
       </div>
@@ -359,7 +337,7 @@
     <!-- STEP 9: D&N Roller -->
     <div class="step-block" id="step9" style="display:none">
       <div class="step-head" onclick="toggleStep('step9')">
-        <div class="step-num">9</div>
+        <div class="step-num">8</div>
         <div class="step-head-title">Day &amp; Night &mdash; Rear Roller Fabric</div>
         <div class="step-head-val" id="val9">&mdash;</div>
       </div>
@@ -379,7 +357,7 @@
     <!-- STEP 10: Valance -->
     <div class="step-block" id="step10">
       <div class="step-head" onclick="toggleStep('step10')">
-        <div class="step-num">10</div>
+        <div class="step-num">9</div>
         <div class="step-head-title">Valance</div>
         <div class="step-head-val" id="val10">None</div>
       </div>
@@ -396,7 +374,7 @@
     <!-- STEP 11: Side-by-Side -->
     <div class="step-block" id="step11">
       <div class="step-head" onclick="toggleStep('step11')">
-        <div class="step-num">11</div>
+        <div class="step-num">10</div>
         <div class="step-head-title">Side-by-Side Alignment</div>
         <div class="step-head-val" id="val11">No</div>
       </div>
@@ -412,7 +390,7 @@
     <!-- STEP 12: Accessories -->
     <div class="step-block" id="step12">
       <div class="step-head" onclick="toggleStep('step12')">
-        <div class="step-num">12</div>
+        <div class="step-num">11</div>
         <div class="step-head-title">Accessories</div>
         <div class="step-head-val" id="val12">None</div>
       </div>
@@ -457,7 +435,7 @@
     <!-- STEP 13: Motorization -->
     <div class="step-block" id="step13" style="display:none">
       <div class="step-head" onclick="toggleStep('step13')">
-        <div class="step-num">13</div>
+        <div class="step-num">12</div>
         <div class="step-head-title">Motorization</div>
         <div class="step-head-val" id="val13">&mdash;</div>
       </div>
@@ -466,22 +444,15 @@
           <span style="font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px">NORMAN&reg;</span>
           <span style="font-size:11px;color:rgba(255,255,255,.6)">Norman Centerpiece Roman uses Norman motorization only. Third-party motors are not compatible.</span>
         </div>
-        <div class="opt-row" id="grp-motor">
-          <button class="opt-btn" onclick="setMotor('smart',this)">Norman Smart Motor<br><span style="font-size:10px;font-weight:400;color:#888">App &middot; voice &middot; remote &middot; rechargeable or hardwired</span></button>
-        </div>
-        <div class="step-sub-head">Power source</div>
-        <div class="opt-row" id="grp-power">
-          <button class="opt-btn sel" onclick="selBtn(this,'grp-power')">Rechargeable battery</button>
-          <button class="opt-btn" onclick="selBtn(this,'grp-power')">Hardwired (low-voltage DC)</button>
-        </div>
-        <div style="font-size:11px;color:#888;margin-top:6px">Power source confirmed at your on-site measurement visit. Hardwired requires electrician.</div>
+        <!-- Shared Norman motor section — populated by normanMotorSection('centerpiece-motor-config','Centerpiece Roman') when a motorized lift is selected -->
+        <div id="centerpiece-motor-config" style="margin-top:4px"></div>
       </div>
     </div>
 
     <!-- STEP 14: Delivery -->
     <div class="step-block" id="step14">
       <div class="step-head" onclick="toggleStep('step14')">
-        <div class="step-num">14</div>
+        <div class="step-num">13</div>
         <div class="step-head-title">Delivery</div>
         <div class="step-head-val" id="val14">Ship to me</div>
       </div>
@@ -491,7 +462,7 @@
           <div class="delivery-opt-grid">
             <div class="delivery-opt-card sel" onclick="setDelivery('ship',this)">
               <div class="delivery-opt-title">Ship to me</div>
-              <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA. Freight: $25 first shade + $11 each additional. Shades 90″+ carry $80 oversize surcharge. Tariffs additional.</div>
+              <div class="delivery-opt-body">UPS or FedEx. Freight: $25 first shade + $11 each additional. Shades 90″+ carry $80 oversize surcharge. Tariffs additional.</div>
             </div>
             <div class="delivery-opt-card" style="grid-column:1/-1" onclick="setDelivery('install',this)">
               <div class="delivery-opt-title">Professional installation (Philadelphia / South Jersey)</div>
@@ -505,25 +476,14 @@
     <!-- STEP 15: Quote -->
     <div class="step-block" id="step15">
       <div class="step-head" onclick="toggleStep('step15')">
-        <div class="step-num">15</div>
+        <div class="step-num">14</div>
         <div class="step-head-title">Your Quote Request</div>
         <div class="step-head-val" id="val15">&mdash;</div>
       </div>
       <div class="step-body" id="step15-body">
-        <div id="submit-errors" class="warn-box warn-box-red" style="display:none;margin-bottom:14px"></div>
-        <div class="form-row">
-          <div class="form-group"><label>Your name *</label><input type="text" id="q-name" data-pb-contact="name" placeholder="Jane Smith"></div>
-          <div class="form-group"><label>Phone *</label><input type="tel" id="q-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
-        </div>
-        <div class="form-group"><label>Email *</label><input type="email" id="q-email" data-pb-contact="email" placeholder="jane@example.com"></div>
-        <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="q-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
-        <div class="form-group">
-          <label>Notes / special requests</label>
-          <textarea id="q-notes" placeholder="e.g. three windows side by side, need fabric samples, ceiling height 9ft..."></textarea>
-        </div>
         <button onclick="reqMoreInfo('Norman Centerpiece&trade; Roman Shades')" class="req-info-link" style="display:block;margin-bottom:12px">Request more information about Norman Centerpiece&trade; Roman Shades &rarr;</button>
-        <button class="btn-cart-add" onclick="addNormanCenterpieceToCart()" style="margin-bottom:8px">+ Add to Cart</button>
-        <button class="submit-btn" onclick="submitQuote()" data-pb-require-contact="submit-errors">Submit Order for Review &rarr;</button>
+        <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->
+        <div id="pb-final-step"></div>
         <div class="success-box" id="success-box">
           <h3>&#10003; Quote request sent!</h3>
           <p>We&rsquo;ll follow up within 1 business day with pricing and lead time.<br><strong>Questions? <a href="tel:6097421720" style="color:#2e7d32">(609) 742-1720</a> &mdash; 24/7.</strong></p>
@@ -587,5 +547,10 @@
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script src="../js/pages/norman-centerpiece-roman.js"></script>
+<script>
+// Canonical final "Your details" contact + files step — identical on every product.
+document.getElementById('pb-final-step').innerHTML =
+  pbContactStepHTML({ bare: true, cartFn: 'addNormanCenterpieceToCart()', submitFn: 'submitQuote()' });
+</script>
 </body>
 </html>

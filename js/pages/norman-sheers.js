@@ -167,12 +167,23 @@ function pickOp(op){
   document.getElementById('op-motor').classList.toggle('sel',op==='motor');
   document.getElementById('motor-note').style.display=op==='motor'?'block':'none';
   document.getElementById('acc-charge-row').style.display=op==='motor'?'flex':'none';
+  // Shared Norman Smart motor section (Norman Smart only for SmartDrape — no Rollease/DC/Charging Wand)
+  var motorCfg=document.getElementById('smartdrape-motor-config');
+  if(motorCfg){
+    if(op==='motor'){
+      motorCfg.style.display='block';
+      if(typeof normanMotorSection==='function') normanMotorSection('smartdrape-motor-config','SmartDrape', typeof calcPrice==='function'?calcPrice:null);
+    } else {
+      motorCfg.style.display='none';
+      motorCfg.innerHTML='';
+    }
+  }
   var lbl=op==='wand'?'Wand Tilt':'Motorized (Norman Smart)';
-  markDone('step1',lbl); sp('sp-op',lbl);
+  markDone('step2',lbl); sp('sp-op',lbl);
   // Rebuild stack options
   buildStack();
   calcPrice();
-  openStep('step2');
+  openStep('step3');
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -189,10 +200,13 @@ function buildStack(){
     {val:'center',label:'Center Stack',    desc:'Vanes stack toward center (added Jan 2026)'},
     {val:'copen', label:'Center Opening',  desc:'Motorized only — two panels part from center outward'}
   ];
-  document.getElementById('stack-opts').innerHTML=opts.map(function(o){
-    return '<div class="opt-card'+(S.stack===o.val?' sel':'')+'" id="stk-'+o.val+'" onclick="pickStack(\''+o.val+'\')">'
-      +'<div class="opt-card-title">'+o.label+'</div><div class="opt-card-desc">'+o.desc+'</div></div>';
+  // Drop a now-invalid stack (e.g. Center Opening after switching Motorized → Wand Tilt).
+  if(S.stack && !opts.some(function(o){return o.val===S.stack;})) S.stack='';
+  var stackBtns=opts.map(function(o){
+    return '<button class="opt-btn'+(S.stack===o.val?' sel':'')+'" id="stk-'+o.val+'" onclick="pickStack(\''+o.val+'\')">'+o.label+'</button>';
   }).join('');
+  var stackNote=opts.map(function(o){return o.label+': '+o.desc+'.';}).join(' ');
+  document.getElementById('stack-opts').innerHTML='<div class="opt-row">'+stackBtns+'</div><div class="step-note">'+stackNote+'</div>';
   // SBS toggle: wand only
   var sbsWrap=document.getElementById('sbs-wrap');
   if(sbsWrap) sbsWrap.style.display=S.op==='wand'?'flex':'none';
@@ -201,13 +215,13 @@ function buildStack(){
 
 function pickStack(v){
   S.stack=v;
-  document.querySelectorAll('#stack-opts .opt-card').forEach(function(c){c.classList.remove('sel');});
+  document.querySelectorAll('#stack-opts .opt-btn').forEach(function(c){c.classList.remove('sel');});
   var el=document.getElementById('stk-'+v);
   if(el) el.classList.add('sel');
   var labels={'left':'Left Stack','right':'Right Stack','center':'Traveling Center Stack','copen':'Center Opening'};
-  markDone('step2',labels[v]||v); sp('sp-stack',labels[v]||v);
+  markDone('step3',labels[v]||v); sp('sp-stack',labels[v]||v);
   calcDims();
-  openStep('step3');
+  openStep('step4');
 }
 
 function onSBSChange(){calcDims();}
@@ -221,9 +235,9 @@ function pickMount(el,m){
     var e=document.getElementById(id); if(e) e.classList.remove('sel');
   });
   el.classList.add('sel');
-  var lbl={'wall':'Wall Mount (L bracket)','ceiling':'Ceiling Mount'}[m]||'Wall Mount (L bracket)';
-  markDone('step3',lbl); sp('sp-mount',lbl);
-  openStep('step4');
+  var lbl={'wall':'Wall mount (L bracket)','ceiling':'Ceiling mount'}[m]||'Wall mount (L bracket)';
+  sp('sp-mount',lbl);
+  openStep('step2');
 }
 
 function onDoorChange(){
@@ -267,10 +281,20 @@ function calcDims(){
   document.getElementById('cp-joints').textContent=joints===0?'None (track ≤97⅝″)':joints===1?'1 SmartJoint™':'2 SmartJoints™';
   document.getElementById('cp-area').textContent=area.toFixed(1)+' sq ft';
   var dimsText=S.w+'″ × '+S.h+'″';
-  markDone('step4',dimsText);
+  markDone('step1',dimsText);
   sp('sp-dims',dimsText); sp('sp-qty',S.qty+' shade'+(S.qty>1?'s':''));
   calcPrice();
-  openStep('step5');
+  openStep('step2');
+}
+
+// Quantity stepper (shared .qty-btns) — reuses inp-qty id + calcDims handler
+function adjQty(d){
+  var el=document.getElementById('inp-qty');
+  if(!el) return;
+  var v=(parseInt(el.value)||1)+d;
+  if(v<1) v=1; if(v>50) v=50;
+  el.value=v;
+  calcDims();
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -283,13 +307,13 @@ function pickOpacity(o){
   document.getElementById('oc-rd').classList.toggle('sel',o==='rd');
   document.getElementById('rd-warn').style.display=o==='rd'?'block':'none';
   var lbl=o==='lf'?'Light Filtering':'Blackout (+20%)';
-  markDone('step5',lbl); sp('sp-opacity',lbl);
+  markDone('step4',lbl); sp('sp-opacity',lbl);
   sp('sp-fabric','—');
-  document.getElementById('s6val').textContent='—';
-  document.getElementById('step6').classList.remove('done');
+  document.getElementById('s5val').textContent='—';
+  document.getElementById('step5').classList.remove('done');
   buildFabricGrid();
   calcPrice();
-  openStep('step6');
+  openStep('step5');
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -298,7 +322,7 @@ function pickOpacity(o){
 var activeColl='';
 function buildFabricGrid(){
   var body=document.getElementById('fabric-body');
-  if(!S.opacity){body.innerHTML='<div class="msg-info">Select light control first (step 5).</div>';return;}
+  if(!S.opacity){body.innerHTML='<div class="msg-info">Select light control first (step 4).</div>';return;}
   var colls=Object.keys(SD_FABRICS[S.opacity]);
   activeColl=activeColl&&SD_FABRICS[S.opacity][activeColl]?activeColl:colls[0];
   // Collection filter buttons
@@ -333,11 +357,11 @@ function pickFabric(code,name,coll,hw,hex){
   S.fabric={code:code,name:name,coll:coll,hw:hw,hex:hex};
   if(!S.hw) S.hw=hw; // Set hardware default from fabric
   buildFabricGrid();
-  markDone('step6',name+' · '+coll);
+  markDone('step5',name+' · '+coll);
   sp('sp-fabric',name+' ('+code+') · '+coll);
   sp('sp-hw',S.hw||'Fabric default ('+hw+')');
   calcPrice();
-  openStep('step7');
+  openStep('step6');
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -345,9 +369,9 @@ function pickFabric(code,name,coll,hw,hex){
 // ═══════════════════════════════════════════════════════════
 function pickHW(el,color){
   S.hw=color;
-  document.querySelectorAll('#hw-color-grid .opt-card').forEach(function(c){c.classList.remove('sel');});
+  document.querySelectorAll('#hw-color-grid .opt-btn').forEach(function(c){c.classList.remove('sel');});
   el.classList.add('sel');
-  markDone('step7',color); sp('sp-hw',color);
+  markDone('step6',color); sp('sp-hw',color);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -403,31 +427,33 @@ function calcPrice(){
 
   var per=base;
   document.getElementById('pr-base').textContent='$'+base.toLocaleString();
-  // RD surcharge
+  // Detail hidden per owner request — base + RD/alternating-color surcharges roll into retail.
+  // Only the allowed add-on surcharge (motor) stays visible; customer sees retail → 25% off → price.
+  var _sdBase=document.getElementById('pr-base'); if(_sdBase&&_sdBase.parentElement) _sdBase.parentElement.style.display='none';
   var isRD=S.opacity==='rd';
   var rdAdd=isRD?Math.round(base*0.20):0;
-  document.getElementById('pr-rd-row').style.display=isRD?'flex':'none';
-  if(isRD) document.getElementById('pr-rd').textContent='+$'+rdAdd;
+  document.getElementById('pr-rd-row').style.display='none';
   per+=rdAdd;
-  // Alternating colors
   var isAlt=document.getElementById('acc-alt-colors')&&document.getElementById('acc-alt-colors').checked;
   var altAdd=isAlt?Math.round(base*0.10):0;
-  document.getElementById('pr-alt-row').style.display=isAlt?'flex':'none';
-  if(isAlt) document.getElementById('pr-alt').textContent='+$'+altAdd;
+  document.getElementById('pr-alt-row').style.display='none';
   per+=altAdd;
-  // Motor
+  // Motor — priced at full Norman retail (NOT discounted), added AFTER the shade discount.
+  // (Previously $642 was folded into the discounted subtotal; now motor + accessories are
+  //  charged at full price via the shared nmGetMotorPrice.)
   var isMotor=S.op==='motor';
+  var sdMotor=(isMotor&&typeof nmGetMotorPrice==='function')?nmGetMotorPrice('SmartDrape', S.qty):0;
   document.getElementById('pr-motor-row').style.display=isMotor?'flex':'none';
-  if(isMotor) per+=642;
-  // 15% Norman discount on product subtotal
-  var NORMAN_DISC_SD=0.15;
+  var _sdMotorEl=document.getElementById('pr-motor'); if(_sdMotorEl&&isMotor)_sdMotorEl.textContent=nmMotorLineText(sdMotor,S.qty);
+  // 25% Norman discount on product subtotal (not applied to shipping/motor)
+  var NORMAN_DISC_SD=0.25;
   var sdRetailSub=Math.round(per*S.qty);
   var sdDiscountAmt=Math.round(sdRetailSub*NORMAN_DISC_SD);
   var sdYourPrice=sdRetailSub-sdDiscountAmt;
   document.getElementById('pr-qty').textContent=S.qty+' shade'+(S.qty>1?'s':'');
   document.getElementById('pr-retail').textContent='$'+sdRetailSub.toLocaleString();
   document.getElementById('pr-disc').textContent='−$'+sdDiscountAmt.toLocaleString();
-  document.getElementById('pr-total').textContent='~$'+sdYourPrice.toLocaleString();
+  document.getElementById('pr-total').textContent='~$'+(sdYourPrice+sdMotor).toLocaleString();
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -440,7 +466,7 @@ function addNormanSheersToCart(){
   if(!S.w||!S.h){ alert('Please enter valid dimensions before adding to cart.'); return; }
 
   var stackLabels={'left':'Left Stack','right':'Right Stack','center':'Traveling Center Stack','copen':'Center Opening'};
-  var mountLabels={'wall':'Wall Mount (L bracket)','ceiling':'Ceiling Mount','pocket':'Ceiling Pocket Mount'};
+  var mountLabels={'wall':'Wall mount (L bracket)','ceiling':'Ceiling mount','pocket':'Ceiling Pocket Mount'};
   var isSBS=document.getElementById('sbs-check')&&document.getElementById('sbs-check').checked;
 
   var lines=[
@@ -456,21 +482,24 @@ function addNormanSheersToCart(){
     {label:'Side by Side',value:isSBS?'Yes':'No'},
     {label:'Quantity',value:String(S.qty||1)}
   ];
+  if(S.op==='motor'&&typeof nmGetMotorSummary==='function'){
+    lines.push({label:'Motor options',value:nmGetMotorSummary()});
+  }
   var specs=lines.map(function(l){return l.label+': '+l.value;}).join(' | ');
   pbAddToCart({product:'Norman SmartDrape™',lines:lines,specs:specs,price:null,qty:S.qty||1});
   pbOpenCart();
 }
 
 async function submitQuote(){
-  var name=document.getElementById('q-name').value.trim();
-  var email=document.getElementById('q-email').value.trim();
-  var phone=document.getElementById('q-phone').value.trim();
-  var err=document.getElementById('q-err');
+  var name=document.getElementById('cf-name').value.trim();
+  var email=document.getElementById('cf-email').value.trim();
+  var phone=document.getElementById('cf-phone').value.trim();
+  var err=document.getElementById('cf-contact-err');
   if(!name){err.textContent='Please enter your name.';err.style.display='block';return;}
   if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent='Please enter a valid email address.';err.style.display='block';return;}
   err.style.display='none';
   var stackLabels={'left':'Left Stack','right':'Right Stack','center':'Traveling Center Stack','copen':'Center Opening'};
-  var mountLabels={'wall':'Wall Mount (L bracket)','ceiling':'Ceiling Mount'};
+  var mountLabels={'wall':'Wall mount (L bracket)','ceiling':'Ceiling mount'};
   var isSBS=document.getElementById('sbs-check')&&document.getElementById('sbs-check').checked;
   var joints=S.w<=97.625?0:S.w<=189.625?1:2;
   var selections=[
@@ -491,8 +520,11 @@ async function submitQuote(){
     {label:'Accessories',value:S.accs.length>0?S.accs.join(', '):'None'},
     {label:'Delivery',value:'Ship to me'}
   ];
+  if(S.op==='motor'&&typeof nmGetMotorSummary==='function'){
+    selections.push({label:'Motor options',value:nmGetMotorSummary()});
+  }
   if(S.isDoor) selections.push({label:'Application',value:'Patio door/slider'});
-  var notes=document.getElementById('q-notes').value.trim();
+  var notes=document.getElementById('cf-notes').value.trim();
   var btn=document.querySelector('#quote-form .btn-gold');
   if(btn){btn.disabled=true;btn.textContent='Sending…';}
   try{
@@ -513,10 +545,9 @@ async function submitQuote(){
 // INIT — called AFTER all function and state definitions
 // ═══════════════════════════════════════════════════════════
 (function(){
-  // Pre-select defaults and mark step3 done (wall mount pre-selected)
-  pickOp('wand');        // operation → builds stack options → opens step2
-  pickStack('left');     // stack → opens step3
-  // Mount is pre-selected (wall) — mark done
-  markDone('step3','Wall Mount (L bracket)');
-  openStep('step4');
+  // Step 1 (measurements & mount) is active by default; wall mount pre-selected.
+  pickOp('wand');        // operation (step2) → builds stack options
+  pickStack('left');     // stack (step3) default
+  sp('sp-mount','Wall mount (L bracket)');  // reflect pre-selected wall mount in spec panel
+  openStep('step1');
 })();

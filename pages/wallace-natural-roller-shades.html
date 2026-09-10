@@ -168,35 +168,12 @@
 <div class="config-layout">
 <div id="configurator">
 
-<!-- STEP 1: MOUNT -->
+<!-- STEP 1: WINDOW MEASUREMENTS & MOUNT -->
 <div class="step-block active open" id="step-1">
   <div class="step-head" onclick="toggleStep('step-1')">
     <div class="step-num-circle">1</div>
-    <div class="step-head-title">Mount type</div>
+    <div class="step-head-title">Window measurements &amp; mount</div>
     <div class="step-head-val" id="s1-val"></div>
-  </div>
-  <div class="step-body">
-    <div class="opt-grid-2">
-      <div class="opt-card" id="mc-in" onclick="selectMount('inside')">
-        <div class="opt-card-icon">⬛</div>
-        <div class="opt-card-title">Inside Mount</div>
-        <div class="opt-card-desc">Fits within the window frame. 1/8" deduction applied.</div>
-      </div>
-      <div class="opt-card" id="mc-out" onclick="selectMount('outside')">
-        <div class="opt-card-icon">🔲</div>
-        <div class="opt-card-title">Outside Mount</div>
-        <div class="opt-card-desc">Mounts on the wall above or around the frame.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- STEP 2: WIDTH & HEIGHT -->
-<div class="step-block" id="step-2">
-  <div class="step-head" onclick="toggleStep('step-2')">
-    <div class="step-num-circle">2</div>
-    <div class="step-head-title">Width &amp; height</div>
-    <div class="step-head-val" id="s2-val"></div>
   </div>
   <div class="step-body">
     <div id="size-type-note" class="info-box" style="display:none"></div>
@@ -215,33 +192,30 @@
         </div>
       </div>
     </div>
-    <div class="tooltip-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine — we confirm at the home visit.</div>
+    <div class="step-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine — we confirm at the home visit.</div>
     <div id="size-msgs" style="margin-top:8px"></div>
     <div id="size-computed" class="computed-info" style="display:none">
       <div class="computed-row"><span class="computed-key">Fabric width (approx.)</span><span class="computed-val" id="cp-fabW">—</span></div>
       <div class="computed-row"><span class="computed-key">Note</span><span class="computed-val" style="color:#888;font-size:10px">Exact deduction confirmed at quote based on top treatment + control</span></div>
     </div>
-  </div>
-</div>
 
-<!-- STEP 3: QTY & ROOM -->
-<div class="step-block" id="step-3">
-  <div class="step-head" onclick="toggleStep('step-3')">
-    <div class="step-num-circle">3</div>
-    <div class="step-head-title">Quantity &amp; room</div>
-    <div class="step-head-val" id="s3-val"></div>
-  </div>
-  <div class="step-body">
-    <div style="margin-top:4px">
-      <div class="dim-label">Quantity</div>
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:12px">
-        <input class="dim-input" type="number" id="inp-qty" min="1" max="50" value="1" oninput="validateQty()">
-        <span class="dim-unit">shades</span>
+    <!-- Mount type -->
+    <div style="font-size:12px;font-weight:600;color:#555;margin:14px 0 6px">Mount type</div>
+    <div class="opt-row">
+      <button class="opt-btn" id="mc-in" onclick="selectMount('inside')">Inside mount</button>
+      <button class="opt-btn" id="mc-out" onclick="selectMount('outside')">Outside mount</button>
+    </div>
+    <div class="step-note" style="font-size:11px;color:#888;margin-top:6px"><strong>Inside mount:</strong> fits within the window frame. 1/8" deduction applied. <strong>Outside mount:</strong> mounts on the wall above or around the frame.</div>
+
+    <!-- Quantity (shared stepper) -->
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px">
+      <span style="font-size:12px;color:#666">Qty:</span>
+      <div class="qty-btns">
+        <button class="qty-btn" onclick="var e=document.getElementById('inp-qty');e.value=Math.max(1,(parseInt(e.value)||1)-1);validateQty()">&#8722;</button>
+        <input class="qty-num" type="number" id="inp-qty" min="1" max="50" value="1" oninput="validateQty()">
+        <button class="qty-btn" onclick="var e=document.getElementById('inp-qty');e.value=Math.min(50,(parseInt(e.value)||1)+1);validateQty()">&#43;</button>
       </div>
-      <div id="room-labels-wrap">
-        <div class="dim-label">Room / window label <span style="font-weight:400;color:#999">(optional)</span></div>
-        <input type="text" id="inp-room" placeholder="e.g. Master Bedroom Left" style="padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;width:100%;box-sizing:border-box" oninput="validateQty()">
-      </div>
+      <span style="font-size:12px;color:#666">shade(s) of this size</span>
     </div>
   </div>
 </div>
@@ -249,31 +223,24 @@
 <!-- STEP 4: SHADE TYPE -->
 <div class="step-block" id="step-4">
   <div class="step-head" onclick="toggleStep('step-4')">
-    <div class="step-num-circle">4</div>
+    <div class="step-num-circle">2</div>
     <div class="step-head-title">Shade type</div>
     <div class="step-head-val" id="s4-val"></div>
   </div>
   <div class="step-body">
     <div style="font-size:12px;color:#666;margin-bottom:12px;line-height:1.6">Single shade uses one natural fabric. Double shade adds a light-filtering or blackout back fabric on a dual bracket.</div>
-    <div class="opt-grid-2">
-      <div class="opt-card" id="tc-single" onclick="selectType('single')">
-        <div class="opt-card-title">Single Natural Roller</div>
-        <div class="opt-card-desc">One natural fabric. Open roll, cassette, or valance. All control types available.</div>
-        <span class="type-badge" style="display:inline-block;margin-top:6px">All controls · Up to 108" tall</span>
-      </div>
-      <div class="opt-card" id="tc-double" onclick="selectType('double')">
-        <div class="opt-card-title">Double Natural Roller</div>
-        <div class="opt-card-desc">Natural front + LF or blackout back on dual bracket. No cassette, no Pro Wand.</div>
-        <span class="type-badge" style="display:inline-block;margin-top:6px">Max 96" tall</span>
-      </div>
+    <div class="opt-row">
+      <button class="opt-btn" id="tc-single" onclick="selectType('single')">Single Natural Roller</button>
+      <button class="opt-btn" id="tc-double" onclick="selectType('double')">Double Natural Roller</button>
     </div>
+    <div class="step-note" style="font-size:11px;color:#888;margin-top:6px"><strong>Single Natural Roller:</strong> one natural fabric. Open roll, cassette, or valance. All control types available. (All controls · Up to 108" tall) <strong>Double Natural Roller:</strong> natural front + LF or blackout back on dual bracket. No cassette, no Pro Wand. (Max 96" tall)</div>
   </div>
 </div>
 
 <!-- STEP 5: FRONT FABRIC -->
 <div class="step-block" id="step-5">
   <div class="step-head" onclick="toggleStep('step-5')">
-    <div class="step-num-circle">5</div>
+    <div class="step-num-circle">3</div>
     <div class="step-head-title">Front fabric pattern</div>
     <div class="step-head-val" id="s5-val"></div>
   </div>
@@ -288,11 +255,12 @@
       <button class="fab-tab" onclick="filterFab('E',this)">Group E</button>
     </div>
     <div class="fab-grid" id="fab-grid"></div>
+    <div id="rhea-warn" class="err-box" style="display:none;margin-top:8px"><span>⚠️</span><span>Rhea is not available with Square Cassette fabric wrap or Fabric-Wrapped Box Valance. These options will be blocked.</span></div>
+    <!-- Free-text color entry retained as fallback only (picker fills the color now) -->
     <div id="fab-color-wrap" style="display:none;margin-top:14px">
       <div style="font-size:12px;font-weight:500;color:#444;margin-bottom:6px">Fabric color / PR code</div>
       <div style="font-size:11px;color:#888;margin-bottom:6px;line-height:1.6">Enter the specific color name and PR code from the Wallace sample book or swatch card. Call us for swatches if needed.</div>
       <input type="text" id="fab-color-inp" placeholder="e.g. Ash · PR-017" style="width:100%;padding:9px 11px;border:1px solid #ddd;border-radius:8px;font-size:13px" oninput="updateFabColor(this.value)">
-      <div id="rhea-warn" class="err-box" style="display:none;margin-top:8px"><span>⚠️</span><span>Rhea is not available with Square Cassette fabric wrap or Fabric-Wrapped Box Valance. These options will be blocked.</span></div>
     </div>
   </div>
 </div>
@@ -300,7 +268,7 @@
 <!-- STEP 6: BACK FABRIC (double only) -->
 <div class="step-block" id="step-6" style="display:none">
   <div class="step-head" onclick="toggleStep('step-6')">
-    <div class="step-num-circle">6</div>
+    <div class="step-num-circle">4</div>
     <div class="step-head-title">Back fabric</div>
     <div class="step-head-val" id="s6-val"></div>
   </div>
@@ -317,7 +285,7 @@
 <!-- STEP 7: TOP TREATMENT -->
 <div class="step-block" id="step-7">
   <div class="step-head" onclick="toggleStep('step-7')">
-    <div class="step-num-circle">7</div>
+    <div class="step-num-circle">5</div>
     <div class="step-head-title">Top treatment / bracket style</div>
     <div class="step-head-val" id="s7-val"></div>
   </div>
@@ -329,7 +297,7 @@
 <!-- STEP 8: ROLL DIRECTION -->
 <div class="step-block" id="step-8">
   <div class="step-head" onclick="toggleStep('step-8')">
-    <div class="step-num-circle">8</div>
+    <div class="step-num-circle">6</div>
     <div class="step-head-title">Roll direction</div>
     <div class="step-head-val" id="s8-val"></div>
   </div>
@@ -341,7 +309,7 @@
 <!-- STEP 9: CONTROL TYPE -->
 <div class="step-block" id="step-9">
   <div class="step-head" onclick="toggleStep('step-9')">
-    <div class="step-num-circle">9</div>
+    <div class="step-num-circle">7</div>
     <div class="step-head-title">Control type</div>
     <div class="step-head-val" id="s9-val"></div>
   </div>
@@ -353,7 +321,7 @@
 <!-- STEP 10: CONTROL DETAILS -->
 <div class="step-block" id="step-10" style="display:none">
   <div class="step-head" onclick="toggleStep('step-10')">
-    <div class="step-num-circle">10</div>
+    <div class="step-num-circle">8</div>
     <div class="step-head-title" id="s10-title">Control details</div>
     <div class="step-head-val" id="s10-val"></div>
   </div>
@@ -365,7 +333,7 @@
 <!-- STEP 11: MOTOR ACCESSORIES -->
 <div class="step-block" id="step-11" style="display:none">
   <div class="step-head" onclick="toggleStep('step-11')">
-    <div class="step-num-circle">11</div>
+    <div class="step-num-circle">9</div>
     <div class="step-head-title">Motor accessories</div>
     <div class="step-head-val" id="s11-val">Optional</div>
   </div>
@@ -377,7 +345,7 @@
 <!-- STEP 12: OPTIONS -->
 <div class="step-block" id="step-12">
   <div class="step-head" onclick="toggleStep('step-12')">
-    <div class="step-num-circle">12</div>
+    <div class="step-num-circle">10</div>
     <div class="step-head-title">Hold-downs &amp; spacer blocks <span style="font-size:11px;color:#aaa;font-weight:400">(optional)</span></div>
     <div class="step-head-val" id="s12-val">None</div>
   </div>
@@ -401,32 +369,19 @@
 <!-- STEP 13: QUOTE FORM -->
 <div class="step-block open" id="step-13">
   <div class="step-head" onclick="toggleStep('step-13')">
-    <div class="step-num-circle">13</div>
+    <div class="step-num-circle">11</div>
     <div class="step-head-title">Get your custom quote</div>
   </div>
   <div class="step-body">
-    <div class="form-row" style="margin-top:12px">
-      <div class="form-group"><label>Name *</label><input type="text" id="q-name" data-pb-contact="name" placeholder="Jane Smith"></div>
-      <div class="form-group"><label>Phone *</label><input type="tel" id="q-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
-    </div>
-    <div class="form-group"><label>Email *</label><input type="email" id="q-email" data-pb-contact="email" placeholder="jane@example.com"></div>
-    <div class="form-group"><label>Address <span style="font-weight:400;color:#999">(optional)</span></label><input type="text" id="q-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
-    <div class="form-group"><label>Additional notes / questions</label><textarea id="q-notes" style="min-height:70px" placeholder="Timeline, room details, swatch requests, anything else..."></textarea></div>
-
     <div class="delivery-section" style="margin-top:12px">
-      <div class="opt-grid-2">
-        <div class="opt-card sel" id="del-ship" onclick="selectDelivery('ship')">
-          <div class="opt-card-icon">📦</div>
-          <div class="opt-card-title">Ship to me</div>
-          <div class="opt-card-desc">UPS or FedEx from Huntingdon Valley, PA</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn sel" id="del-ship" onclick="selectDelivery('ship')">Ship to me</button>
       </div>
-      <div id="del-ship-note" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA. <div class="delivery-tariff">Tariffs and import fees are additional.</div></div>
+      <div id="del-ship-note" class="delivery-note">Shipped via <strong>UPS or FedEx</strong>. <div class="delivery-tariff">Tariffs and import fees are additional.</div></div>
     </div>
 
-    <div id="wnr-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
-    <button class="btn-cart-add" onclick="addWallaceNaturalRollerToCart()" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
-    <button class="btn-gold" onclick="submitQuote()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:0" data-pb-require-contact="wnr-contact-err">Submit Order for Review &rarr;</button>
+    <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->
+    <div id="pb-final-step"></div>
 
     <div id="quote-success" style="display:none;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:10px;padding:20px;color:#2e7d32;font-size:14px;line-height:1.7;margin-top:12px">
       <strong>Specification submitted!</strong><br>Your email app opened with the complete spec pre-filled. Our team will review and follow up within a few hours.<br><br>
@@ -493,6 +448,12 @@
 
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
+<script src="../js/fabric-picker.js"></script>
 <script src="../js/pages/wallace-natural-roller-shades.js"></script>
+<script>
+// Canonical final "Your details" contact + files step — identical on every product.
+document.getElementById('pb-final-step').innerHTML =
+  pbContactStepHTML({ bare: true, cartFn: 'addWallaceNaturalRollerToCart()', submitFn: 'submitQuote()' });
+</script>
 </body>
 </html>

@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Exterior roller shades for decks, patios, pergolas and outdoor spaces. Cassette headrail standard. Solar screen 5% and 10% — instant quote online. Serving Philadelphia area.">
+<meta name="description" content="Exterior roller shades for decks, patios, pergolas and outdoor spaces. Cassette headrail standard. Solar screen 5% and 10% — free quote online. Serving Philadelphia area.">
 <meta property="og:title" content="Exterior Roller Shades | Philly Blinds">
-<meta property="og:description" content="Outdoor roller shades — cassette headrail, solar screen 5% & 10%, zipper track or cable options. Instant quotes online.">
+<meta property="og:description" content="Outdoor roller shades — cassette headrail, solar screen 5% & 10%, zipper track or cable options. Free quotes online.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.phillyblinds.com/pages/exterior-roller-shades.html">
 <meta property="og:site_name" content="Philly Blinds">
@@ -75,10 +75,10 @@
 <div class="page-hero">
   <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <a href="roller-shades.html">Roller Shades</a> &rsaquo; Exterior</div>
   <h1>Exterior Roller Shades</h1>
-  <p class="sub">Deck, patio, pergola, and outdoor living spaces. Cassette headrail standard. Solar screen 5% &amp; 10% — instant quote online.</p>
+  <p class="sub">Deck, patio, pergola, and outdoor living spaces. Cassette headrail standard. Solar screen 5% &amp; 10% — free quote online.</p>
   <div class="hero-pills">
     <span class="hero-pill hero-pill-gold">Cassette included</span>
-    <span class="hero-pill hero-pill-gold">Instant quote — 5% &amp; 10%</span>
+    <span class="hero-pill">Free quote — 5% &amp; 10%</span>
     <span class="hero-pill">Zipper track &amp; cable options</span>
     <span class="hero-pill">Manual or motorized</span>
     <span class="hero-pill">Call/text (609) 742-1720</span>
@@ -116,7 +116,7 @@
   <div class="step-body">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
       <div class="step-num">1</div>
-      <div class="step-title" style="margin-bottom:0">Opening measurements &amp; mount</div>
+      <div class="step-title" style="margin-bottom:0">Window measurements &amp; mount</div>
     </div>
     <p class="step-subhead">Measure the opening you want to cover. Zipper track: measure the exact opening width. Without track: add 2–4″ per side for coverage.</p>
     <div class="dim-box">
@@ -134,14 +134,17 @@
         </div>
       </div>
     </div>
+    <div style="margin-top:8px;font-size:11px;color:#8a6d1f;background:#fdf6e3;border:1px solid #ecdca8;border-radius:8px;padding:9px 12px;line-height:1.55">
+      <strong>Please note:</strong> exterior roller shades are built to the <strong>exact size you enter</strong> — we do <strong>not</strong> take any deductions. Make sure your width and drop already include any clearances you need. The finished shade will be manufactured to these exact measurements.
+    </div>
     <div id="ers-dim-msg" class="dim-msg"></div>
 
     <!-- Mount type -->
     <div class="step-subhead" style="font-weight:600;color:#555;margin-top:16px;margin-bottom:4px">Mount type</div>
     <p class="step-subhead" style="margin-top:0">Both use the cassette headrail. Wall mount attaches to wall or fascia above the opening. Ceiling / soffit mount attaches overhead — ideal for pergolas and covered patios.</p>
     <div class="opt-row">
-      <button class="opt-btn" id="mount-wall" onclick="ersPickMount('wall','Wall Mount')">Wall Mount</button>
-      <button class="opt-btn" id="mount-ceiling" onclick="ersPickMount('ceiling','Ceiling / Soffit Mount')">Ceiling / Soffit Mount</button>
+      <button class="opt-btn" id="mount-wall" onclick="ersPickMount('wall','Wall mount')">Wall mount</button>
+      <button class="opt-btn" id="mount-ceiling" onclick="ersPickMount('ceiling','Ceiling / Soffit mount')">Ceiling / Soffit mount</button>
     </div>
 
     <!-- Quantity -->
@@ -214,9 +217,21 @@
       <div class="step-title" style="margin-bottom:0">Operation</div>
     </div>
     <p class="step-subhead">Manual uses a hand crank — no power required, reliable and low-maintenance. Motor brand and specs are confirmed at quote; add your preference in the notes.</p>
-    <div class="opt-row">
+    <div class="opt-row" id="ers-op-row">
       <button class="opt-btn" id="op-manual" onclick="ersPickOperation('manual','Manual — hand crank')">Manual &mdash; hand crank</button>
       <button class="opt-btn" id="op-motorized" onclick="ersPickOperation('motorized','Motorized')">Motorized</button>
+    </div>
+
+    <!-- Which end of the shade the hardware sits on. The wording follows the
+         operation — a hand crank has a crank side, a motor has a motor side —
+         but it is the same field either way, and fabrication needs it. -->
+    <div id="ers-side-wrap" style="display:none;margin-top:16px">
+      <div class="step-title" style="font-size:13px;margin-bottom:4px" id="ers-side-label">Crank side</div>
+      <p class="step-subhead" style="margin-bottom:8px" id="ers-side-hint">Standing outside and facing the shade, which side should the crank be on?</p>
+      <div class="opt-row" id="ers-side-row">
+        <button class="opt-btn" id="ers-side-left"  onclick="ersPickSide('left')">Left</button>
+        <button class="opt-btn" id="ers-side-right" onclick="ersPickSide('right')">Right</button>
+      </div>
     </div>
   </div>
 </div>
@@ -231,7 +246,7 @@
     <div class="delivery-opt-grid" style="grid-template-columns:1fr">
       <div class="delivery-opt-card sel" id="del-ship" onclick="ersPickDelivery('ship')">
         <div class="delivery-opt-title">Shipped to me</div>
-        <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA. Lead time provided at quote.</div>
+        <div class="delivery-opt-body">UPS or FedEx. Lead time provided at quote.</div>
         <div class="delivery-opt-body" style="margin-top:4px;font-size:10px;color:#bbb">Note: U.S. import tariffs may apply on some products. Any applicable duties are disclosed in your quote before payment.</div>
       </div>
     </div>
@@ -245,36 +260,8 @@
       <div class="step-num">7</div>
       <div class="step-title" style="margin-bottom:0">Your contact info</div>
     </div>
-    <div id="contact-form">
-      <div class="form-group">
-        <label>Your name *</label>
-        <input type="text" id="q-name" data-pb-contact="name" placeholder="Jane Smith" autocomplete="name">
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Email *</label>
-          <input type="email" id="q-email" data-pb-contact="email" placeholder="jane@example.com" autocomplete="email">
-        </div>
-        <div class="form-group">
-          <label>Phone *</label>
-          <input type="tel" id="q-phone" data-pb-contact="phone" placeholder="(215) 555-0100" autocomplete="tel">
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Address <span style="font-weight:400;color:#888">(optional)</span></label>
-        <input type="text" id="q-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA" autocomplete="street-address">
-      </div>
-      <div class="form-group">
-        <label>Notes / questions</label>
-        <textarea id="q-notes" placeholder="Location of shades, motor brand preference, mounting surface, timeline, any questions…"></textarea>
-      </div>
-      <div class="form-group">
-        <label>Photos / files <span style="font-weight:400;color:#888">(optional)</span></label>
-        <input type="file" id="q-files" multiple accept="image/*,.pdf" style="font-size:12px;color:#555">
-        <div style="font-size:10px;color:#999;margin-top:4px;line-height:1.5">Attach photos of your space, measurements, or reference images. You'll also be able to email them directly after submitting.</div>
-      </div>
-      <input type="text" id="q-hp" style="display:none" tabindex="-1" autocomplete="off">
-    </div>
+    <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->
+    <div id="pb-final-step"></div>
     <div class="success-box" id="success-box">
       <h3>Request for Quote Submitted!</h3>
       <p>Your email opened with your full spec pre-filled — just hit Send. We'll review your order and send you an invoice within a few hours.</p>
@@ -293,10 +280,7 @@
   <div class="qdiv" id="qp-div" style="display:none"></div>
   <div class="qnote" id="qp-note" style="display:none">Fill in your details above and submit — Justin will send you a custom quote.</div>
   <div id="submit-wrap">
-    <div id="ers-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
-    <button onclick="addExteriorRollerToCart()" class="btn-cart-add" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
-    <button onclick="ersSubmit()" id="submit-btn" class="btn-gold" style="width:100%;padding:14px;font-size:15px;font-weight:600;margin-top:16px;border:none;cursor:pointer;border-radius:10px" data-pb-require-contact="ers-contact-err">Submit Order for Review &rarr;</button>
-    <div class="submit-note">No payment required now. Justin reviews your specs and sends a custom quote.</div>
+    <div class="submit-note">No payment required now. Complete your details on the left and submit — Justin reviews your specs and sends a custom quote.</div>
   </div>
 </div>
 
@@ -305,10 +289,14 @@
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script>
+// Canonical final "Your details" contact + files step — identical on every product.
+document.getElementById('pb-final-step').innerHTML =
+  pbContactStepHTML({ bare: true, cartFn: 'addExteriorRollerToCart()', submitFn: 'ersSubmit()' });
+
 renderNav('Shades & blinds');
 renderFooter(false);
 
-var ERS = { openness:'', color:'', track:'cables', mount:'', operation:'', width:0, height:0, qty:1, delivery:'ship' };
+var ERS = { openness:'', color:'', track:'cables', mount:'', operation:'', side:'', width:0, height:0, qty:1, delivery:'ship' };
 
 function ersOpen(id) {
   var el = document.getElementById(id);
@@ -367,12 +355,46 @@ function ersPickTrack(val, label) {
 
 function ersPickOperation(val, label) {
   ERS.operation = val;
-  document.querySelectorAll('#step-5 .opt-btn').forEach(function(c) { c.classList.remove('sel'); });
+  // Scoped to the operation row — an unscoped query here would also clear the
+  // crank/motor side buttons that now live in this same step.
+  document.querySelectorAll('#ers-op-row .opt-btn').forEach(function(c) { c.classList.remove('sel'); });
   var card = document.getElementById('op-' + val);
   if (card) card.classList.add('sel');
+
+  // Switching operation invalidates any side already chosen — the question is
+  // "crank side" or "motor side" depending on this answer.
+  ERS.side = '';
+  document.querySelectorAll('#ers-side-row .opt-btn').forEach(function(c) { c.classList.remove('sel'); });
+  var isManual = (val === 'manual');
+  var lbl  = document.getElementById('ers-side-label');
+  var hint = document.getElementById('ers-side-hint');
+  var wrap = document.getElementById('ers-side-wrap');
+  if (lbl)  lbl.textContent  = isManual ? 'Crank side' : 'Motor side';
+  if (hint) hint.textContent = isManual
+    ? 'Standing outside and facing the shade, which side should the crank be on?'
+    : 'Standing outside and facing the shade, which side should the motor be on?';
+  if (wrap) wrap.style.display = 'block';
+
+  ersUpdatePanel();
+  // Step 5 stays open until the side is picked — closing here would hide the
+  // question we just revealed.
+}
+
+// Crank side (manual) or motor side (motorized) — same field, label follows Step 5.
+function ersPickSide(val) {
+  ERS.side = val;
+  document.querySelectorAll('#ers-side-row .opt-btn').forEach(function(c) { c.classList.remove('sel'); });
+  var b = document.getElementById('ers-side-' + val);
+  if (b) b.classList.add('sel');
   ersDone('step-5');
   ersUpdatePanel();
   setTimeout(function() { ersOpen('step-6'); }, 300);
+}
+// "Left"/"Right" plus the word for whichever hardware it is — used by the panel,
+// the cart line and the quote email so all three read the same.
+function ersSideLabel() {
+  if (!ERS.side) return '';
+  return (ERS.side === 'left' ? 'Left' : 'Right') + ' (' + (ERS.operation === 'motorized' ? 'motor' : 'crank') + ' side)';
 }
 
 function ersDimChange() {
@@ -434,8 +456,9 @@ function ersUpdatePanel() {
     qr('Openness', ERS.openness + '% solar screen');
     if (ERS.color) qr('Color', ERS.color);
     if (ERS.track) qr('Side track', ERS.track === 'zipper' ? 'Zipper Track' : 'Cables');
-    if (ERS.mount) qr('Mount', ERS.mount === 'wall' ? 'Wall Mount' : 'Ceiling / Soffit Mount');
+    if (ERS.mount) qr('Mount', ERS.mount === 'wall' ? 'Wall mount' : 'Ceiling / Soffit mount');
     if (ERS.operation) qr('Operation', ERS.operation === 'manual' ? 'Manual — hand crank' : 'Motorized');
+    if (ERS.side) qr(ERS.operation === 'motorized' ? 'Motor side' : 'Crank side', ERS.side === 'left' ? 'Left' : 'Right');
     if (ERS.width && ERS.height) qr('Size', ERS.width + '″ × ' + ERS.height + '″');
     qr('Qty', ERS.qty + ' shade' + (ERS.qty > 1 ? 's' : ''));
     if (ERS.delivery) qr('Delivery', ERS.delivery === 'ship' ? 'Ship to me' : 'Pickup');
@@ -456,7 +479,7 @@ function addExteriorRollerToCart(){
   if(!ERS.width||!ERS.height){ alert('Please enter dimensions before adding to cart.'); return; }
 
   var trackLabel=ERS.track==='zipper'?'Zipper Track':ERS.track==='cables'?'Cables':'—';
-  var mountLabel=ERS.mount==='wall'?'Wall Mount':ERS.mount==='ceiling'?'Ceiling / Soffit Mount':'—';
+  var mountLabel=ERS.mount==='wall'?'Wall mount':ERS.mount==='ceiling'?'Ceiling / Soffit mount':'—';
   var opLabel=ERS.operation==='manual'?'Manual — hand crank':ERS.operation==='motorized'?'Motorized':'—';
 
   var lines=[
@@ -466,6 +489,7 @@ function addExteriorRollerToCart(){
     {label:'Side Track',value:trackLabel},
     {label:'Mount',value:mountLabel},
     {label:'Operation',value:opLabel},
+    {label:(ERS.operation==='motorized'?'Motor side':'Crank side'),value:(ERS.side?(ERS.side==='left'?'Left':'Right'):'—')},
     {label:'Width',value:(ERS.width||'—')+'″'},
     {label:'Height',value:(ERS.height||'—')+'″'},
     {label:'Quantity',value:String(ERS.qty||1)}
@@ -476,15 +500,17 @@ function addExteriorRollerToCart(){
 }
 
 function ersSubmit() {
-  if (document.getElementById('q-hp').value) return;
-  var name = (document.getElementById('q-name').value || '').trim();
-  if (!name) { alert('Please enter your name.'); return; }
-  var email = (document.getElementById('q-email').value || '').trim();
-  var phone = (document.getElementById('q-phone').value || '').trim();
-  if (!email && !phone) { alert('Please enter at least an email or phone number.'); return; }
+  var errEl = document.getElementById('cf-contact-err');
+  if (errEl) errEl.style.display = 'none';
+  function showErr(m) { if (errEl) { errEl.textContent = m; errEl.style.display = 'block'; } else { alert(m); } }
+  var name = (document.getElementById('cf-name').value || '').trim();
+  if (!name) { showErr('Please enter your name.'); return; }
+  var email = (document.getElementById('cf-email').value || '').trim();
+  var phone = (document.getElementById('cf-phone').value || '').trim();
+  if (!email && !phone) { showErr('Please enter a phone number or email address.'); return; }
 
   var trackLabel = ERS.track === 'zipper' ? 'Zipper Track' : ERS.track === 'cables' ? 'Cables' : '—';
-  var mountLabel = ERS.mount === 'wall' ? 'Wall Mount' : ERS.mount === 'ceiling' ? 'Ceiling / Soffit Mount' : '—';
+  var mountLabel = ERS.mount === 'wall' ? 'Wall mount' : ERS.mount === 'ceiling' ? 'Ceiling / Soffit mount' : '—';
   var opLabel = ERS.operation === 'manual' ? 'Manual — hand crank' : ERS.operation === 'motorized' ? 'Motorized' : '—';
   var dimLabel = (ERS.width && ERS.height) ? (ERS.width + '″W × ' + ERS.height + '″H') : '—';
   var sqft = (ERS.width && ERS.height) ? (ERS.width * ERS.height / 144).toFixed(1) + ' sq ft' : '—';
@@ -497,14 +523,15 @@ function ersSubmit() {
     'Side track:     ' + trackLabel + '\n' +
     'Mount:          ' + mountLabel + '\n' +
     'Operation:      ' + opLabel + '\n' +
+    (ERS.operation === 'motorized' ? 'Motor side:     ' : 'Crank side:     ') + (ersSideLabel() || '—') + '\n' +
     'Dimensions:     ' + dimLabel + ' (' + sqft + ')\n' +
     'Quantity:       ' + ERS.qty + ' shade' + (ERS.qty > 1 ? 's' : '') + '\n' +
-    'Delivery:       Ship to me (UPS/FedEx from Huntingdon Valley PA)\n' +
+    'Delivery:       Ship to me (UPS/FedEx)\n' +
     '── CUSTOMER ─────────────────────────────\n' +
     'Name:           ' + name + '\n' +
     'Email:          ' + (email || '—') + '\n' +
     'Phone:          ' + (phone || '—') + '\n' +
-    'Notes:          ' + (document.getElementById('q-notes').value || '—') + '\n\n' +
+    'Notes:          ' + (document.getElementById('cf-notes').value || '—') + '\n\n' +
     '── SOURCE ───────────────────────────────\n' +
     'Form:           phillyblinds.com/pages/exterior-roller-shades.html';
 
@@ -513,9 +540,8 @@ function ersSubmit() {
     '&body=' + encodeURIComponent(body);
   window.location.href = mailto;
 
-  document.getElementById('contact-form').style.display = 'none';
   document.getElementById('success-box').style.display = 'block';
-  document.getElementById('submit-wrap').style.display = 'none';
+  if (errEl) errEl.style.display = 'none';
 }
 </script>
 </body>

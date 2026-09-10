@@ -99,7 +99,7 @@ function sp(id,val){var e=document.getElementById(id);if(e){e.textContent=val||'
 // ═══════════════════════════════════════════════════════════
 function pickColl(el,coll){
   S.coll=coll; S.finish=null;
-  document.querySelectorAll('#step1 .opt-card').forEach(function(c){c.classList.remove('sel');});
+  document.querySelectorAll('#step1 .opt-btn').forEach(function(c){c.classList.remove('sel');});
   el.classList.add('sel');
   ['fin-dm','fin-wt','fin-wi'].forEach(function(id){document.getElementById(id).style.display='none';});
   document.getElementById('fin-'+coll).style.display='block';
@@ -124,7 +124,7 @@ function clearFinChips(id){document.querySelectorAll('#'+id+' .fin-chip').forEac
 // ═══════════════════════════════════════════════════════════
 function pickDraw(el,key,label){
   S.draw=key; S.isMotor=(key==='motor');
-  document.querySelectorAll('#step2 .opt-card').forEach(function(c){c.classList.remove('sel');});
+  document.querySelectorAll('#step2 .opt-btn').forEach(function(c){c.classList.remove('sel');});
   el.classList.add('sel');
   document.getElementById('motor-detail').style.display=S.isMotor?'block':'none';
   markDone('step2',label); sp('sp-draw',label);
@@ -143,20 +143,20 @@ function toggleAddon(el,key){
 // ═══════════════════════════════════════════════════════════
 function pickHeading(el,key,label){
   S.heading=key; S.fullness=null;
-  document.querySelectorAll('#step3 .opt-card').forEach(function(c){if(!c.closest('#ripplefold-opts'))c.classList.remove('sel');});
+  document.querySelectorAll('#step3 .opt-btn').forEach(function(c){if(!c.closest('#ripplefold-opts'))c.classList.remove('sel');});
   el.classList.add('sel');
   document.getElementById('ripplefold-opts').style.display=key==='ripplefold'?'block':'none';
   if(key==='ripplefold'){document.getElementById('s3val').textContent='Ripplefold™ — select fullness';}
-  else{markDone('step3',label);sp('sp-heading',label);updateSpec();openStep('step4');}
+  else{markDone('step3',label);sp('sp-heading',label);updateSpec();if(S.len>0)buildStackback(S.len);openStep('step4');}
   document.getElementById('sp-fullness-row').style.display=key==='ripplefold'?'flex':'none';
 }
 function pickFullness(el,pct){
   S.fullness=pct;
-  document.querySelectorAll('#ripplefold-opts .opt-card').forEach(function(c){c.classList.remove('sel');});
+  document.querySelectorAll('#ripplefold-opts .opt-btn').forEach(function(c){c.classList.remove('sel');});
   el.classList.add('sel');
   var lbl='Ripplefold™ '+pct+'%';
   markDone('step3',lbl); sp('sp-heading','Ripplefold™'); sp('sp-fullness',pct+'% fullness');
-  updateSpec(); openStep('step4');
+  updateSpec(); if(S.len>0)buildStackback(S.len); openStep('step4');
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -164,14 +164,14 @@ function pickFullness(el,pct){
 // ═══════════════════════════════════════════════════════════
 function pickMount(el,key,label){
   S.mount=key;
-  document.querySelectorAll('#step4 .opt-card').forEach(function(c){c.classList.remove('sel');});
+  document.querySelectorAll('#step4 .opt-btn').forEach(function(c){c.classList.remove('sel');});
   el.classList.add('sel');
   document.getElementById('wall-bracket-opts').style.display=key==='wall'?'block':'none';
   document.getElementById('ceiling-mount-note').style.display=key==='ceiling'?'block':'none';
   document.getElementById('dbl-wall-note').style.display=key==='dbl-wall'?'block':'none';
   document.getElementById('dbl-combo-note').style.display=key==='dbl-combo'?'block':'none';
   markDone('step4',label); sp('sp-mount',label);
-  updateSpec(); openStep('step5');
+  updateSpec(); openStep('step6');
 }
 function pickBrktFinish(el,name){
   document.querySelectorAll('#wall-bracket-opts .fin-chip').forEach(function(c){c.classList.remove('sel');});
@@ -216,7 +216,7 @@ function calcTrack(){
   sp('sp-dir',S.dir==='oneway'?'One-Way':'Two-Way (Split)');
   markDone('step5',len+'″ · '+(S.dir==='oneway'?'One-Way':'Two-Way'));
   updateSpec();
-  openStep('step6');
+  openStep('step1');
 }
 
 function buildBracketPlan(len){
@@ -291,7 +291,7 @@ function buildStackback(len){
 // ═══════════════════════════════════════════════════════════
 function pickFinial(el,key,label){
   S.finial=key;
-  document.querySelectorAll('#step6 > .step-body > .opt-grid .opt-card').forEach(function(c){c.classList.remove('sel');});
+  document.querySelectorAll('#step6 > .step-body > .opt-row .opt-btn').forEach(function(c){c.classList.remove('sel');});
   el.classList.add('sel');
   document.getElementById('stratta-finishes').style.display=key==='stratta'?'block':'none';
   if(key==='none'){markDone('step6','No finial / endcap only');sp('sp-finial','Endcap only');updateSpec();openStep('step7');}
@@ -339,7 +339,7 @@ function calcWeight(){
 // ═══════════════════════════════════════════════════════════
 function pickDel(el,key){
   S.del=key;
-  document.querySelectorAll('#step8 .opt-card').forEach(function(c){c.classList.remove('sel');});
+  document.querySelectorAll('#step8 .opt-btn').forEach(function(c){c.classList.remove('sel');});
   el.classList.add('sel');
   markDone('step8',(parseInt(document.getElementById('qty').value)||1)+' rod(s) · '+(key==='ship'?'Ship':'Pickup'));
   updateSpec();
@@ -353,15 +353,22 @@ function updateSpec(){
   sp('sp-qty',qty+' rod'+(qty>1?'s':''));
   document.getElementById('s8val').textContent=qty+' rod'+(qty>1?'s':'')+' · '+'Ship';
 }
+// Shared canonical qty stepper — reuses id "qty" + updateSpec handler
+function adjQty(d){
+  var el=document.getElementById('qty'); if(!el) return;
+  var v=(parseInt(el.value,10)||1)+d;
+  if(v<1)v=1; if(v>50)v=50;
+  el.value=v; updateSpec();
+}
 
 // ═══════════════════════════════════════════════════════════
 // SUBMIT
 // ═══════════════════════════════════════════════════════════
 function submitQuote(){
-  var name=document.getElementById('q-name').value.trim();
-  var phone=document.getElementById('q-phone').value.trim();
-  var err=document.getElementById('q-err');
-  if(!name||!phone){err.style.display='block';return;}
+  var name=document.getElementById('cf-name').value.trim();
+  var phone=document.getElementById('cf-phone').value.trim();
+  var err=document.getElementById('cf-contact-err');
+  if(!name||!phone){err.textContent='Please enter your name and phone number.';err.style.display='block';return;}
   err.style.display='none';
   var qty=parseInt(document.getElementById('qty').value)||1;
   var motorAccs=[];
@@ -386,7 +393,7 @@ function submitQuote(){
     (S.isMotor?'AMP™ motor upcharge: +$621/rod (charger #62201300 included)':''),
     (S.isMotor&&motorAccs.length?'AMP™ accessories: '+motorAccs.join(', '):''),
     'Drapery heading: '+(S.heading==='pleated'?'Pleated':S.heading==='ripplefold'?('Ripplefold™ '+S.fullness+'% fullness'):S.heading||'—'),
-    'Mount type: '+(S.mount==='wall'?'Wall Mount (all components included)':S.mount==='ceiling'?'Ceiling Mount (94130xxx included; order #1796061 separately)':S.mount==='dbl-wall'?'Double Wall Mount (94125xxx + #1796061 + 94130xxx)':S.mount==='dbl-combo'?'2″ Front + 1⅜″ Back Double (94130xxx + #71134110)':S.mount||'—'),
+    'Mount type: '+(S.mount==='wall'?'Wall mount (all components included)':S.mount==='ceiling'?'Ceiling mount (94130xxx included; order #1796061 separately)':S.mount==='dbl-wall'?'Double Wall mount (94125xxx + #1796061 + 94130xxx)':S.mount==='dbl-combo'?'2″ Front + 1⅜″ Back Double (94130xxx + #71134110)':S.mount||'—'),
     (S.brktFinish?'Wall bracket finish: '+S.brktFinish:''),
     'Track length: '+(S.len?S.len+'″ ('+( S.len/12).toFixed(1)+' ft)':'—'),
     'Draw direction: '+(S.dir==='oneway'?'One-Way':'Two-Way (Split Draw)'),
@@ -396,15 +403,14 @@ function submitQuote(){
     '',
     'QUANTITY & DELIVERY:',
     'Qty: '+qty+' rod'+(qty>1?'s':''),
-    'Room/window: '+(document.getElementById('room-label').value.trim()||'—'),
-    'Delivery: '+'Ship (UPS/FedEx from Huntingdon Valley, PA)',
+    'Delivery: '+'Ship (UPS/FedEx)',
     '',
     'NOTES:',
-    document.getElementById('q-notes').value.trim()||'None',
+    document.getElementById('cf-notes').value.trim()||'None',
     '',
     'CUSTOMER:',
     'Name: '+name,'Phone: '+phone,
-    'Email: '+(document.getElementById('q-email').value.trim()||'—')
+    'Email: '+(document.getElementById('cf-email').value.trim()||'—')
   ].filter(function(l){return l!==null&&l!==undefined;}).join('\n');
   window.location.href='mailto:blindznation@gmail.com?subject='+encodeURIComponent('Kirsch 2″ Estate Traverse Rod — '+name)+'&body='+encodeURIComponent(lines);
   document.getElementById('success-box').style.display='block';

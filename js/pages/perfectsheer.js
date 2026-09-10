@@ -21,7 +21,7 @@ const PS_PRICES  = [
 ];
 const PS_WOOD_V   = [117,122,133,139,150,161,171,188,204,216,232,249,277,282,304];
 const PS_FABRIC_V = [133,139,155,161,171,183,199,216,232,249,271,288,315,326,349];
-const PS_NORM_DISC  = 0.35;
+const PS_NORM_DISC  = 0.25;
 const PS_MOTOR_COST = 482;
 
 // ── State ─────────────────────────────────────────────────────
@@ -84,7 +84,7 @@ function psUpdateColors(type) {
   }
   PS.color = sel.value;
   document.getElementById('qr-color').textContent  = PS.color.split('(')[0].trim();
-  document.getElementById('qr-opacity').textContent = type === 'rd' ? 'Room Darkening (+20%)' : 'Light Filtering';
+  document.getElementById('qr-opacity').textContent = type === 'rd' ? 'Blackout (+20%)' : 'Light Filtering';
   psCalc();
 }
 
@@ -142,8 +142,8 @@ function psCalc() {
       val35Btn.disabled = true; val35Btn.style.opacity = '0.4';
       if (PS.valance === 'Fabric valance 3½″') {
         PS.valance = 'Fabric valance 4½″';
-        document.querySelectorAll('#grp-ps-valance .opt-card').forEach(function(c){ c.classList.remove('sel'); });
-        var v45 = Array.from(document.querySelectorAll('#grp-ps-valance .opt-card')).find(function(c){ return c.textContent.indexOf('4½') >= 0 && c.textContent.indexOf('Fabric') >= 0; });
+        document.querySelectorAll('#grp-ps-valance .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
+        var v45 = Array.from(document.querySelectorAll('#grp-ps-valance .opt-btn')).find(function(c){ return c.textContent.indexOf('4½') >= 0 && c.textContent.indexOf('Fabric') >= 0; });
         if (v45) v45.classList.add('sel');
         document.getElementById('s6val').textContent = 'Fabric valance 4½″';
         document.getElementById('qr-valance').textContent = 'Fabric valance 4½″';
@@ -158,54 +158,44 @@ function psCalc() {
   var hi = psGetIdx(PS_HEIGHTS, h); if (hi < 0) hi = PS_HEIGHTS.length - 1;
 
   var base  = PS_PRICES[hi][wi];
-  var lines = ['Base (' + PS_WIDTHS[wi] + '″W × ' + PS_HEIGHTS[hi] + '″H): $' + base.toLocaleString()];
   var total = base;
 
-  // Room Darkening +20%
+  // Room Darkening +20% (hidden — rolls into retail)
   var isRD = PS.fabric === 'rd';
-  if (isRD) {
-    var rdAdd = Math.round(base * 0.20);
-    total += rdAdd;
-    lines.push('Room Darkening (+20%): +$' + rdAdd.toLocaleString());
-  }
+  if (isRD) total += Math.round(base * 0.20);
 
-  // Valance
+  // Valance (hidden)
   var vi = psGetIdx(PS_WIDTHS, w); if (vi < 0) vi = PS_WIDTHS.length - 1;
-  if (PS.valance.indexOf('Fabric valance') >= 0) {
-    var fv = PS_FABRIC_V[vi]; total += fv;
-    lines.push('Fabric valance: +$' + fv.toLocaleString());
-  } else if (PS.valance.indexOf('Wood valance') >= 0) {
-    var wv = PS_WOOD_V[vi]; total += wv;
-    lines.push('Wood valance: +$' + wv.toLocaleString());
-  }
+  if (PS.valance.indexOf('Fabric valance') >= 0) total += PS_FABRIC_V[vi];
+  else if (PS.valance.indexOf('Wood valance') >= 0) total += PS_WOOD_V[vi];
 
-  // Accessories
-  if (PS.lgBasic)   { total += 45;  lines.push('Basic light guard: +$45'); }
-  if (PS.lgPrem)    { total += 117; lines.push('Premium wood light guard: +$117'); }
-  if (PS.holddown)  { total += 28;  lines.push('Magnetic hold-down: +$28'); }
-  if (PS.shims > 0) { var sv = PS.shims * 7; total += sv; lines.push('Shims (' + PS.shims + '×$7): +$' + sv); }
+  // Accessories (hidden)
+  if (PS.lgBasic)   total += 45;
+  if (PS.lgPrem)    total += 117;
+  if (PS.holddown)  total += 28;
+  if (PS.shims > 0) total += PS.shims * 7;
 
-  if (!isCCL) {
-    lines.push('Motorization (+$' + PS_MOTOR_COST + '/shade): added to final quote');
-  }
-
+  // ── Customer-facing breakdown: retail → 25% off → price; motor+accessories at full price ──
+  // (base table price, +20% fabric, valance, light-guard, hold-down, shims are intentionally hidden)
+  var lines = [];
   var discAmt   = Math.round(total * PS_NORM_DISC);
   var yourPrice = total - discAmt;
-  lines.push('<span style="color:var(--gold)">Retail: $' + total.toLocaleString()
-    + ' → 35% off: −$' + discAmt.toLocaleString()
-    + ' → Your price: $' + yourPrice.toLocaleString() + '/shade</span>');
+  lines.push('Retail: $' + total.toLocaleString());
+  lines.push('<span style="color:var(--gold)">25% Norman discount: −$' + discAmt.toLocaleString() + '</span>');
+  lines.push('<span style="color:var(--gold);font-weight:600">Your shade price: $' + yourPrice.toLocaleString() + '/shade</span>');
 
+  // Motor charged at full Norman retail (NOT discounted) via shared nmGetMotorPrice
+  var psMotor    = (!isCCL && typeof nmGetMotorPrice === 'function') ? nmGetMotorPrice('PerfectSheer', PS.qty) : 0;
   var freight    = w >= 90 ? (80 + Math.max(0, PS.qty - 1) * 50) : (25 + Math.max(0, PS.qty - 1) * 11);
-  var grandTotal = (yourPrice * PS.qty) + freight;
-
-  lines.push('Freight (' + (w >= 90 ? '90″+ oversize' : 'standard') + '): +$' + freight);
+  var grandTotal = (yourPrice * PS.qty) + psMotor + freight;
+  if (psMotor) lines.push('Motorization: ' + nmMotorLineText(psMotor, PS.qty));
+  lines.push('Freight (not discounted): +$' + freight.toLocaleString());
 
   document.getElementById('ps-price-num').textContent   = '$' + yourPrice.toLocaleString() + '/shade';
   document.getElementById('ps-price-total').textContent = '$' + grandTotal.toLocaleString();
   document.getElementById('ps-price-breakdown').innerHTML = lines.join('<br>');
   pb.style.display = 'block';
   document.getElementById('qp-pending').style.display    = 'none';
-  document.getElementById('ps-cart-wrap').style.display  = 'block';
 }
 
 // ── Add to cart ───────────────────────────────────────────────
@@ -237,26 +227,36 @@ function psAddToCart() {
     {label:'Mount',         value: PS.mount},
     {label:'Width',         value: w + '″'},
     {label:'Height',        value: h + '″'},
-    {label:'Light control', value: isRD ? 'Room Darkening (+20%)' : 'Light Filtering'},
+    {label:'Light control', value: isRD ? 'Blackout (+20%)' : 'Light Filtering'},
     {label:'Color',         value: PS.color || '—'},
     {label:'Lift',          value: PS.lift === 'ccl' ? 'Continuous Cord Loop' : 'Norman Motorization'},
     {label:'Valance',       value: PS.valance},
     {label:'Quantity',      value: String(PS.qty)}
   ];
+  if (PS.lift !== 'ccl') {
+    var motorSummary = (typeof nmGetMotorSummary === 'function') ? nmGetMotorSummary() : 'Norman Smart Motorization';
+    lines.splice(7, 0, {label:'Motor config', value: motorSummary});
+  }
+  var psMotor = (PS.lift !== 'ccl' && typeof nmGetMotorPrice === 'function') ? nmGetMotorPrice('PerfectSheer', PS.qty) : 0;
   var specs = lines.map(function(l){ return l.label + ': ' + l.value; }).join(' | ');
-  pbAddToCart({product:'Norman PerfectSheer™', lines:lines, specs:specs, price:yourPrice * PS.qty + freight, qty:PS.qty});
+  pbAddToCart({product:'Norman PerfectSheer™', lines:lines, specs:specs, price:yourPrice * PS.qty + psMotor + freight, qty:PS.qty});
   if (typeof pbOpenCart === 'function') pbOpenCart();
 }
 
 // ── Quote form submit ─────────────────────────────────────────
 async function submitPSQuote(btn) {
-  var name  = document.getElementById('ps-name').value.trim();
-  var phone = document.getElementById('ps-phone').value.trim();
-  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  var name  = document.getElementById('cf-name').value.trim();
+  var phone = document.getElementById('cf-phone').value.trim();
+  if (!name || !phone) {
+    var errEl = document.getElementById('cf-contact-err');
+    if (errEl) { errEl.textContent = 'Please enter your name and phone number.'; errEl.style.display = 'block'; }
+    else { alert('Please enter your name and phone number.'); }
+    return;
+  }
   var w     = document.getElementById('ps-width').value   || '?';
   var h     = document.getElementById('ps-height').value  || '?';
-  var email = document.getElementById('ps-email').value;
-  var notes = document.getElementById('ps-notes').value;
+  var email = document.getElementById('cf-email').value;
+  var notes = document.getElementById('cf-notes').value;
   var price = document.getElementById('ps-price-total').textContent;
   var woodColor = '';
   if (PS.valance.indexOf('Wood') >= 0) {
@@ -264,15 +264,21 @@ async function submitPSQuote(btn) {
     if (wvc) woodColor = ' — ' + wvc.value;
   }
   var lg = PS.lgBasic ? 'Basic light guard' : PS.lgPrem ? 'Premium wood light guard' : 'None';
+  var motorLine = '';
+  if (PS.lift !== 'ccl') {
+    var motorSummary = (typeof nmGetMotorSummary === 'function') ? nmGetMotorSummary() : 'Norman Smart Motorization';
+    motorLine = 'Motor config: ' + motorSummary + ' (+$' + PS_MOTOR_COST + '/shade)\n';
+  }
 
   var body = 'NORMAN PERFECTSHEER™ ORDER\n\n'
     + 'Name: ' + name + '\nPhone: ' + phone + '\nEmail: ' + (email || 'not provided') + '\n\n'
     + 'SPECS\n'
     + 'Width: ' + w + '"  Height: ' + h + '"\n'
     + 'Mount: ' + (PS.mount || '—') + '\n'
-    + 'Light control: ' + (PS.fabric === 'rd' ? 'Room Darkening (+20%)' : 'Light Filtering') + '\n'
+    + 'Light control: ' + (PS.fabric === 'rd' ? 'Blackout (+20%)' : 'Light Filtering') + '\n'
     + 'Color: ' + (PS.color || '—') + '\n'
     + 'Lift: ' + (PS.lift === 'ccl' ? 'Continuous Cord Loop' : 'Norman Motorization') + '\n'
+    + motorLine
     + 'Valance: ' + PS.valance + woodColor + '\n'
     + 'Light guard: ' + lg + '\n'
     + 'Hold-down: ' + (PS.holddown ? 'Yes' : 'No') + '\n'

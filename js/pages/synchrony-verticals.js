@@ -15,7 +15,7 @@ function toggleStep(id){
   b.classList.toggle('open',!b.classList.contains('open'));
   b.classList.toggle('active',!b.classList.contains('active')||b.classList.contains('open'));
 }
-function markDone(id){document.getElementById(id).classList.add('done');}
+function markDone(id){const e=document.getElementById(id);if(e)e.classList.add('done');}
 
 function pickFabric(el,collection,colorName,group){
   document.querySelectorAll('#step1 .color-card').forEach(c=>c.classList.remove('sel'));
@@ -31,8 +31,52 @@ function pickFabric(el,collection,colorName,group){
 
 // Legacy alias in case anything still references pickGroup
 function pickGroup(el,g,label){}
+
+// Consistent shared picker — parse the existing HTML fabric sections (data read
+// straight from the correct markup) and render as swatches grouped into
+// price-group sections. Original sections hidden; used as fallback.
+function synBuildPicker(){
+  if(!window.pbFabricPicker) return;
+  var sections=Array.prototype.slice.call(document.querySelectorAll('.fabric-section'));
+  if(!sections.length || document.getElementById('syn-fabric-picker')) return;
+  var collections=[]; window._synMap={};
+  var container=document.createElement('div'); container.id='syn-fabric-picker';
+  sections[0].parentNode.insertBefore(container, sections[0]);
+  sections.forEach(function(sec){
+    var cards=sec.querySelectorAll('.color-card'); if(!cards.length) return;
+    var collName=null, grp=null, colors=[];
+    Array.prototype.forEach.call(cards, function(card){
+      var oc=card.getAttribute('onclick')||'';
+      var m=oc.match(/pickFabric\(this,\s*'([^']*)'\s*,\s*'([^']*)'\s*,\s*(\d+)\)/);
+      if(!m) return;
+      var coll=m[1], color=m[2], g=parseInt(m[3]);
+      var vane=card.getAttribute('data-vane')||'Traditional Curved';
+      var swEl=card.querySelector('.color-swatch'); var hex='';
+      if(swEl){ var hm=(swEl.getAttribute('style')||'').match(/background:\s*([^;]+)/); if(hm) hex=hm[1].trim(); }
+      collName=coll; grp=g;
+      colors.push({n:color, hex:hex});
+      window._synMap[coll+'|'+color]={collection:coll,colorName:color,group:g,vane:vane};
+    });
+    if(collName && colors.length) collections.push({type:'vert', pg:grp, name:collName, colors:colors});
+    sec.style.display='none';
+  });
+  pbFabricPicker.render('syn-fabric-picker', {
+    hideTabs:true, showPriceGroups:true,
+    types:[{key:'vert',label:'Fabric'}],
+    collections:collections,
+    onSelect:function(sel){ pickSynFabric(sel.collection, sel.name); }
+  });
+}
+function pickSynFabric(collection,colorName){
+  var m=(window._synMap||{})[collection+'|'+colorName]; if(!m) return;
+  state.group=m.group; state.collection=m.collection; state.colorName=m.colorName; state.vane=m.vane;
+  document.getElementById('s1val').textContent=m.collection+' — '+m.colorName;
+  markDone('step1'); calcPrice();
+}
+synBuildPicker();
+
 function pickMount(el,key,label){
-  document.querySelectorAll('#step2 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step2 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   state.mount=key;
   document.getElementById('s2val').textContent=label;
@@ -61,11 +105,8 @@ function pickMount(el,key,label){
 }
 
 function calcPrice(){
-  const wW=parseFloat(document.getElementById('w-whole').value)||0;
-  const wF=parseFloat(document.getElementById('w-frac').value)||0;
-  const hW=parseFloat(document.getElementById('h-whole').value)||0;
-  const hF=parseFloat(document.getElementById('h-frac').value)||0;
-  state.w=wW+wF; state.h=hW+hF;
+  state.w=parseFloat(document.getElementById('w-whole').value)||0;
+  state.h=parseFloat(document.getElementById('h-whole').value)||0;
   const dimMsg=document.getElementById('dim-msg');
   const sizeBox=document.getElementById('size-box');
   dimMsg.style.display='none'; sizeBox.style.display='none';
@@ -84,8 +125,7 @@ function calcPrice(){
     dimMsg.style.display='block';
     updateQuote();return;
   }
-  document.getElementById('s3val').textContent=state.w+'″ × '+state.h+'″';
-  markDone('step3');
+  markDone('step2');
   let price=null;
   if(state.group){price=MATRICES[state.group][hRow][W_COLS.indexOf(wCol)];}
   sizeBox.style.display='block';
@@ -115,8 +155,6 @@ function adjQty(d){
   const el=document.getElementById('qty');
   el.value=Math.max(1,Math.min(99,(parseInt(el.value)||1)+d));
   state.qty=parseInt(el.value);
-  document.getElementById('s5val').textContent=state.qty+' blind'+(state.qty>1?'s':'');
-  markDone('step5');
   calcPrice();
 }
 function pickWand(btn,side){
@@ -133,13 +171,12 @@ function pickDel(btn,key){
   calcPrice();
 }
 
-const NORMAN_DISC = 0.35; // 35% off retail subtotal — not applied to shipping
+const NORMAN_DISC = 0.25; // 25% off retail subtotal — not applied to shipping
 
 function updateQuote(){
   const qty=parseInt(document.getElementById('qty').value)||1;
   state.qty=qty;
-  document.getElementById('s5val').textContent=qty+' blind'+(qty>1?'s':'');
-  const mountLabel=state.mount==='inside'?'Inside Mount':state.mount==='semi'?'Semi-Inside Mount':state.mount==='outside'?'Outside Mount':'';
+  const mountLabel=state.mount==='inside'?'Inside mount':state.mount==='semi'?'Semi-inside mount':state.mount==='outside'?'Outside mount':'';
   const ready=state.group&&state.colorName&&state.mount&&state.w&&state.h;
   if(!ready){document.getElementById('qp-pending').style.display='block';document.getElementById('qp-detail').style.display='none';return;}
   if(state.w<18||state.w>100||state.h<36||state.h>108){document.getElementById('qp-pending').style.display='block';document.getElementById('qp-pending').textContent='Fix the size error above.';document.getElementById('qp-detail').style.display='none';return;}
@@ -162,10 +199,10 @@ function updateQuote(){
   document.getElementById('qp-detail').style.display='block';
   document.getElementById('qr-group').textContent=(state.collection||'—')+' — '+(state.colorName||'—');
   document.getElementById('qr-vane').textContent=state.vane||'—';
-  document.getElementById('qr-mount').textContent=state.mount==='inside'?'Inside Mount':state.mount==='semi'?'Semi-Inside Mount':'Outside Mount';
+  document.getElementById('qr-mount').textContent=state.mount==='inside'?'Inside mount':state.mount==='semi'?'Semi-inside mount':'Outside mount';
   document.getElementById('qr-dims').textContent=state.w+'″ × '+state.h+'″';
   document.getElementById('qr-qty').textContent=qty+(qty>1?' blinds':' blind');
-  document.getElementById('qr-price').innerHTML='<s style="color:var(--text-dark);font-weight:400">$'+pricePerBlind+' retail</s> &rarr; $'+Math.round(pricePerBlind*0.65)+' your price';
+  document.getElementById('qr-price').innerHTML='<s style="color:var(--text-dark);font-weight:400">$'+pricePerBlind+' retail</s> &rarr; $'+Math.round(pricePerBlind*0.75)+' your price';
   const showRow=(id,show,val)=>{document.getElementById(id).style.display=show?'flex':'none';if(val)document.getElementById(id.replace('-row','-s')).textContent=val;};
   showRow('qr-shim-row',state.shim,'$'+(state.shimQty*7));
 
@@ -176,7 +213,7 @@ function updateQuote(){
   if(!discRow){
     discRow=document.createElement('div');
     discRow.className='qrow';discRow.id='qr-disc-row';
-    discRow.innerHTML='<span class="qrow-label" style="color:#2DE0C1">35% Norman discount</span><span class="qrow-val" style="color:#2DE0C1" id="qr-disc-s">—</span>';
+    discRow.innerHTML='<span class="qrow-label" style="color:#2DE0C1">25% Norman discount</span><span class="qrow-val" style="color:#2DE0C1" id="qr-disc-s">—</span>';
     qdiv.parentNode.insertBefore(discRow,qdiv);
     yourPriceRow=document.createElement('div');
     yourPriceRow.className='qrow';yourPriceRow.id='qr-yourprice-row';
@@ -205,7 +242,7 @@ function addSynchronyToCart(){
     {label:'Collection',value:state.collection||'—'},
     {label:'Color',value:state.colorName||'—'},
     {label:'Vane Style',value:state.vane||'—'},
-    {label:'Mount',value:state.mount==='inside'?'Inside Mount':state.mount==='semi'?'Semi-Inside Mount':'Outside Mount'},
+    {label:'Mount',value:state.mount==='inside'?'Inside mount':state.mount==='semi'?'Semi-inside mount':'Outside mount'},
     {label:'Wand Side',value:state.wand||'—'},
     {label:'Width',value:(state.w||'—')+'″'},
     {label:'Height',value:(state.h||'—')+'″'},
@@ -218,9 +255,9 @@ function addSynchronyToCart(){
 }
 
 function submitQuote(){
-  const name=document.getElementById('f-name').value.trim();
-  const phone=document.getElementById('f-phone').value.trim();
-  const err=document.getElementById('form-err');
+  const name=document.getElementById('cf-name').value.trim();
+  const phone=document.getElementById('cf-phone').value.trim();
+  const err=document.getElementById('cf-contact-err');
   if(!name||!phone){err.style.display='block';return;}
   err.style.display='none';
   const qty=parseInt(document.getElementById('qty').value)||1;
@@ -230,7 +267,7 @@ function submitQuote(){
     'Collection: '+(state.collection||'—'),
     'Color: '+(state.colorName||'—'),
     'Vane style: '+(state.vane||'—'),
-    'Mount: '+(state.mount==='inside'?'Inside Mount (fully flushed)':state.mount==='semi'?'Semi-Inside Mount':'Outside Mount'),
+    'Mount: '+(state.mount==='inside'?'Inside mount (fully flushed)':state.mount==='semi'?'Semi-inside mount':'Outside mount'),
     'Wand/control side: '+state.wand,
     'Width: '+state.w+'″',
     'Height: '+state.h+'″',
@@ -238,9 +275,9 @@ function submitQuote(){
     'Quantity: '+qty,
     'Delivery: '+(state.del==='ship'?'Ship to me':'Pick up'),
     '',
-    'Notes: '+(document.getElementById('f-notes').value.trim()||'None'),
+    'Notes: '+(document.getElementById('cf-notes').value.trim()||'None'),
     '','Name: '+name,'Phone: '+phone,
-    'Email: '+(document.getElementById('f-email').value.trim()||'—')
+    'Email: '+(document.getElementById('cf-email').value.trim()||'—')
   ];
   const body=encodeURIComponent(lines.join('\n'));
   const subject=encodeURIComponent('Synchrony Verticals Quote — '+name);

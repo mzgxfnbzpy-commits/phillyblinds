@@ -9,6 +9,7 @@ const W = {
   mount: 'inside',
   width: 0,
   height: 0,
+  qty: 1,
   style: 'standard',
   control: 'cordless',
   controlSide: 'right',
@@ -65,7 +66,6 @@ const PATTERNS = [
   {code:'ZH-55E',name:'Eze',     color:'Teak',          group:'B',comp:'60% Jute, 40% Bamboo',                    sp:true,nd:false,ebReq:false,edgeSeal:false,ebColor:['Cedar'],      motorSqFtLiner:36,motorSqFtNoLiner:44,book:'R21'},
   {code:'ZH-010',name:'Lille',   color:'Mocha',         group:'B',comp:'50% Jute, 50% Polyester',                 sp:true,nd:false,ebReq:true, edgeSeal:false,ebColor:['Linen'],      motorSqFtLiner:56,motorSqFtNoLiner:64,book:'L25'},
   {code:'ZH-027',name:'Lyon',    color:'Gray Mist',     group:'B',comp:'100% Jute',                               sp:true,nd:true, ebReq:false,edgeSeal:true, ebColor:['Linen'],      motorSqFtLiner:56,motorSqFtNoLiner:64,book:'R12'},
-  {code:'ZH-030',name:'Maddox',  color:'Earth',         group:'B',comp:'80% Paper, 20% Ramie',                    sp:true,nd:false,ebReq:true, edgeSeal:false,ebColor:['Silver Gray'], motorSqFtLiner:56,motorSqFtNoLiner:64,book:'L32'},
   // ── Group C ─────────────────────────────────────────────────────────────────
   {code:'ZH-193',name:'Acacia',  color:'Chalk',         group:'C',comp:'80% Flax, 20% Jute',                      sp:true,nd:true, ebReq:true, edgeSeal:false,ebColor:['Ivory'],      motorSqFtLiner:56,motorSqFtNoLiner:64,book:'L8'},
   {code:'ZH-243',name:'Acacia',  color:'Mist',          group:'C',comp:'80% Flax, 20% Jute',                      sp:true,nd:true, ebReq:true, edgeSeal:false,ebColor:['Marble'],     motorSqFtLiner:56,motorSqFtNoLiner:64,book:'L16'},
@@ -290,6 +290,27 @@ function renderPatterns(group) {
   // Filter by group
   if(group && group !== 'all') filtered = filtered.filter(p => p.group === group);
 
+  // Consistent shared picker: families grouped into price-group sections.
+  // Colors/codes come straight from PATTERNS — nothing changed, only presentation.
+  if(window.pbFabricPicker){
+    var byFam={};
+    filtered.forEach(function(p){
+      var key=p.group+'|'+p.name;
+      if(!byFam[key]) byFam[key]={grp:p.group,name:p.name,colors:[]};
+      var extra=(p.ebReq?' · Binding Req':'')+(p.edgeSeal?' · Sealed Edge':'');
+      byFam[key].colors.push({n:p.color+extra, c:p.code, hex:colorToCSS(p.color)});
+    });
+    var collections=Object.keys(byFam).map(function(k){ return {type:'nat', pg:byFam[k].grp, name:byFam[k].name, colors:byFam[k].colors}; });
+    pbFabricPicker.render('pattern-grid', {
+      hideTabs:true, showPriceGroups:true,
+      types:[{key:'nat',label:'Natural Woven'}],
+      collections:collections,
+      onSelect:function(sel){ pickPattern(PATTERNS.findIndex(function(p){return p.code===sel.code;})); }
+    });
+    if(W.pattern){ grid.querySelectorAll('.pbfp-sw').forEach(function(b){ if(b.title===W.pattern.code) b.classList.add('sel'); }); }
+    return;
+  }
+
   grid.innerHTML = filtered.map(p => {
     const bg = colorToCSS(p.color);
     const isSelected = W.pattern && W.pattern.code === p.code ? 'sel' : '';
@@ -310,7 +331,6 @@ function renderPatterns(group) {
 function pickPattern(idx) {
   W.pattern = PATTERNS[idx];
   renderPatterns(currentGroup);
-  showStep('sec-mount');
 
   // Edge binding warnings
   warn('warn-ebreq', W.pattern.ebReq && W.binding === '' );
@@ -337,7 +357,20 @@ function pickMount(m, btn) {
 
   // TDBU + returns warning
   validateReturns();
-  showStep('sec-dims');
+  updateSummary();
+}
+
+// ── Quantity ────────────────────────────────────────────────
+function adjQty(d) {
+  const el = document.getElementById('qty-input');
+  let v = (parseInt(el.value, 10) || 1) + d;
+  v = Math.max(1, Math.min(50, v));
+  el.value = v;
+  updateQty();
+}
+function updateQty() {
+  const v = Math.max(1, Math.min(50, parseInt(document.getElementById('qty-input').value, 10) || 1));
+  W.qty = v;
   updateSummary();
 }
 
@@ -644,7 +677,7 @@ function updateSummary() {
   setText('s-color',   W.pattern ? W.pattern.color : '—');
   setText('s-group',   W.pattern ? `Group ${W.pattern.group} · ${W.pattern.comp}` : '—');
   setText('s-mount',   W.mount ? W.mount.charAt(0).toUpperCase() + W.mount.slice(1) + ' Mount' : '—');
-  setText('s-size',    W.width && W.height ? `${W.width}″ W × ${W.height}″ H` : '—');
+  setText('s-size',    W.width && W.height ? `${W.width}″ W × ${W.height}″ H${W.qty > 1 ? ` · Qty ${W.qty}` : ''}` : '—');
   setText('s-style',   W.style || '—');
   setText('s-control', W.type === 'shade' ? (CTRL_LABELS[W.control] || '—') + (W.controlSide ? ` · ${W.controlSide} side` : '') : 'N/A');
   setText('s-liner',   W.liner || '—');
@@ -694,10 +727,10 @@ function buildQuote() {
   if(W.pattern && W.pattern.ebReq && W.bindingCode === '') warnings.push('NOTE: Fabric requires edge binding — frayed-edge warranty voided without binding');
   if(W.width > 94 && W.type === 'panel') warnings.push('NOTE: Track over 94″ — will be spliced for shipping');
 
-  const name  = document.getElementById('wf-name').value.trim();
-  const phone = document.getElementById('wf-phone').value.trim();
-  const email = document.getElementById('wf-email').value.trim();
-  const notes = document.getElementById('wf-notes').value.trim();
+  const name  = document.getElementById('cf-name').value.trim();
+  const phone = document.getElementById('cf-phone').value.trim();
+  const email = document.getElementById('cf-email').value.trim();
+  const notes = document.getElementById('cf-notes').value.trim();
 
   return `QUOTE REQUEST — Wallace Portfolio Collection Natural Shades
 ================================================
@@ -719,6 +752,7 @@ DIMENSIONS & MOUNT
 Mount:  ${W.mount ? W.mount.charAt(0).toUpperCase() + W.mount.slice(1) + ' Mount' : '—'}
 Width:  ${W.width || '—'}″
 Height: ${W.height || '—'}″
+Qty:    ${W.qty}
 
 STYLE & CONTROL
 Style:        ${W.style || '—'}
@@ -773,24 +807,25 @@ function addWallacePortfolioNaturalToCart(){
     {label:'Pattern',value:W.pattern?W.pattern.name+' ('+W.pattern.code+')':'—'},
     {label:'Color',value:W.pattern?W.pattern.color:'—'},
     {label:'Price Group',value:W.pattern?W.pattern.group:'—'},
-    {label:'Mount',value:W.mount==='inside'?'Inside Mount':'Outside Mount'},
+    {label:'Mount',value:W.mount==='inside'?'Inside mount':'Outside mount'},
     {label:'Width',value:(W.width||'—')+'"'},
     {label:'Height',value:(W.height||'—')+'"'},
     {label:'Style',value:W.style||'—'},
     {label:'Control',value:W.control||'—'},
     {label:'Liner',value:W.liner||'No Liner'},
     {label:'Binding',value:W.binding||'No Binding'},
-    {label:'Valance',value:W.valance||'—'}
+    {label:'Valance',value:W.valance||'—'},
+    {label:'Quantity',value:String(W.qty)}
   ];
   const specs=lines.map(l=>l.label+': '+l.value).join(' | ');
-  pbAddToCart({product:'Wallace Portfolio Natural Woven Wood Shades',lines:lines,specs:specs,price:null,qty:1});
+  pbAddToCart({product:'Wallace Portfolio Natural Woven Wood Shades',lines:lines,specs:specs,price:null,qty:W.qty});
   pbOpenCart();
 }
 
 function submitQuote() {
-  const name  = document.getElementById('wf-name').value.trim();
-  const phone = document.getElementById('wf-phone').value.trim();
-  const errEl = document.getElementById('wf-error');
+  const name  = document.getElementById('cf-name').value.trim();
+  const phone = document.getElementById('cf-phone').value.trim();
+  const errEl = document.getElementById('cf-contact-err');
 
   if(!name || !phone) {
     errEl.textContent = 'Please enter your name and phone number.';

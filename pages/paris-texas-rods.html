@@ -438,16 +438,26 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <!-- Length limits info -->
     <div id="length-info" class="info-banner" style="display:none"></div>
 
-    <div class="inp-row">
-      <div class="inp-group">
-        <label class="inp-label">Width / Track Length (inches)</label>
-        <input class="inp-field" type="number" id="width-in" placeholder="e.g. 96" min="1" max="480">
-        <span class="inp-hint" id="width-hint">Enter the finished rod or track length in inches. Poles are cut to length; fascia is ¼" longer at each end.</span>
+    <!-- Rod width (drapery hardware = width / rod length only) -->
+    <div class="dim-box">
+      <div class="dim-box-label">Enter your rod width</div>
+      <div class="form-group">
+        <label>Width / Track Length</label>
+        <input type="number" id="width-in" min="1" max="480" step="0.125" placeholder="96" oninput="updatePriceEstimate()">
+        <div class="dim-unit" id="width-hint">inches &middot; finished rod / track length</div>
       </div>
-      <div class="inp-group">
-        <label class="inp-label">Quantity</label>
-        <input class="inp-field" type="number" id="qty-in" value="1" min="1" max="50">
+    </div>
+    <div class="step-note" style="margin-bottom:14px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Drapery hardware is measured by rod width (length) only.</div>
+
+    <!-- Quantity (shared stepper) -->
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px">
+      <span style="font-size:12px;color:#666">Qty:</span>
+      <div class="qty-btns">
+        <button class="qty-btn" onclick="adjQty(-1)">&#8722;</button>
+        <input class="qty-num" type="number" id="qty-in" value="1" min="1" max="50" oninput="updatePriceEstimate()">
+        <button class="qty-btn" onclick="adjQty(1)">&#43;</button>
       </div>
+      <span style="font-size:12px;color:#666">rod(s) of this size &amp; finish</span>
     </div>
 
     <!-- Traverse-only options -->
@@ -483,10 +493,10 @@ textarea.inp-field{resize:vertical;min-height:90px}
 
       <div class="sub-section">Mounting</div>
       <div class="opt-row">
-        <div class="opt-pill" onclick="pick1('mount','Wall Mount 3½&quot; return',this)">Wall Mount 3½"</div>
-        <div class="opt-pill" onclick="pick1('mount','Wall Mount 6&quot; return',this)">Wall Mount 6"</div>
-        <div class="opt-pill" onclick="pick1('mount','Ceiling Mount',this)">Ceiling Mount</div>
-        <div class="opt-pill" id="low-profile-opt" onclick="pick1('mount','Low-Profile Ceiling Mount',this)" style="display:none">Low-Profile Ceiling</div>
+        <div class="opt-pill" onclick="pick1('mount','Wall mount 3½&quot; return',this)">Wall mount 3½"</div>
+        <div class="opt-pill" onclick="pick1('mount','Wall mount 6&quot; return',this)">Wall mount 6"</div>
+        <div class="opt-pill" onclick="pick1('mount','Ceiling mount',this)">Ceiling mount</div>
+        <div class="opt-pill" id="low-profile-opt" onclick="pick1('mount','Low-Profile Ceiling mount',this)" style="display:none">Low-Profile Ceiling</div>
         <div class="opt-pill" onclick="pick1('mount','Double Track',this)">Double Track</div>
       </div>
     </div>
@@ -513,16 +523,16 @@ textarea.inp-field{resize:vertical;min-height:90px}
         <div class="opt-row">
           <div class="opt-pill" onclick="pick1('motor','Corded (cord draw)',this)">Corded draw</div>
           <div class="opt-pill" onclick="pick1('motor','Baton draw (wand)',this)">Baton draw (wand)</div>
-          <div class="opt-pill" onclick="pick1('motor','R-TEC Motorized (110 lbs max, 36&apos; max)',this)">R-TEC Motorized</div>
+          <div class="opt-pill" onclick="pick1('motor','R-TEC Motorized (110 lbs max, 36\' max)',this)">R-TEC Motorized</div>
           <div class="opt-pill" id="somfy-opt" onclick="pick1('motor','Somfy Motorized',this)">Somfy Motorized</div>
         </div>
         <div id="somfy-motor-opts" style="display:none">
           <div class="sub-section">Somfy Motor Model</div>
           <div class="opt-row">
-            <div class="opt-pill" onclick="pick1('somfyMotor','Glydea ULTRA 35e (77 lbs max, 32&apos; max)',this)">Glydea ULTRA 35e<br><span style="font-size:10px">77 lbs · 32' max</span></div>
-            <div class="opt-pill" onclick="pick1('somfyMotor','Glydea ULTRA 60e (132 lbs max, 36&apos; max)',this)">Glydea ULTRA 60e<br><span style="font-size:10px">132 lbs · 36' max</span></div>
-            <div class="opt-pill" onclick="pick1('somfyMotor','Irismo 35 Mini (77 lbs max, 32&apos; max)',this)">Irismo 35 Mini<br><span style="font-size:10px">77 lbs · 32' max</span></div>
-            <div class="opt-pill" onclick="pick1('somfyMotor','Irismo 45 (99 lbs max, 32&apos; max, rechargeable battery)',this)">Irismo 45<br><span style="font-size:10px">99 lbs · 32' max · rechargeable</span></div>
+            <div class="opt-pill" onclick="pick1('somfyMotor','Glydea ULTRA 35e (77 lbs max, 32\' max)',this)">Glydea ULTRA 35e<br><span style="font-size:10px">77 lbs · 32' max</span></div>
+            <div class="opt-pill" onclick="pick1('somfyMotor','Glydea ULTRA 60e (132 lbs max, 36\' max)',this)">Glydea ULTRA 60e<br><span style="font-size:10px">132 lbs · 36' max</span></div>
+            <div class="opt-pill" onclick="pick1('somfyMotor','Irismo 35 Mini (77 lbs max, 32\' max)',this)">Irismo 35 Mini<br><span style="font-size:10px">77 lbs · 32' max</span></div>
+            <div class="opt-pill" onclick="pick1('somfyMotor','Irismo 45 (99 lbs max, 32\' max, rechargeable battery)',this)">Irismo 45<br><span style="font-size:10px">99 lbs · 32' max · rechargeable</span></div>
           </div>
           <div class="warn-banner">Somfy curved track available with minimum 11.8" (30 cm) radius; curving fees apply. Fascia available in 1⅞" and 2¼" profiles only — <strong>1⅜" fascia is NOT available with Somfy systems</strong> (PDF spec). System minimum: 6ft. Track sold in 1ft increments. Somfy Ripplefold glides: 80%, 100%, 120% fullness. Orders with Somfy traverse incur a $25 packaging fee.</div>
         </div>
@@ -622,31 +632,6 @@ textarea.inp-field{resize:vertical;min-height:90px}
       <div class="summary-title">Configuration Summary</div>
     </div>
 
-    <div class="inp-row">
-      <div class="inp-group">
-        <label class="inp-label">Your Name *</label>
-        <input class="inp-field" type="text" id="q-name" data-pb-contact="name" placeholder="Full name">
-      </div>
-      <div class="inp-group">
-        <label class="inp-label">Phone *</label>
-        <input class="inp-field" type="tel" id="q-contact" data-pb-contact="phone" placeholder="(215) 555-0100">
-      </div>
-    </div>
-    <div class="inp-group" style="margin-bottom:14px">
-      <label class="inp-label">Email *</label>
-      <input class="inp-field" type="email" id="q-email" data-pb-contact="email" placeholder="jane@example.com">
-    </div>
-
-    <div class="inp-group" style="margin-bottom:14px">
-      <label class="inp-label">Project Address <span style="font-weight:400;color:#888">(optional)</span></label>
-      <input class="inp-field" type="text" id="q-address" data-pb-contact="address" placeholder="City, State or full address">
-    </div>
-
-    <div class="inp-group" style="margin-bottom:14px">
-      <label class="inp-label">Notes / Special Requests</label>
-      <textarea class="inp-field" id="q-notes" placeholder="Fabric weight, room details, curved track needs, matching other hardware, Benjamin Moore color number (for PTH Perfect Match), etc."></textarea>
-    </div>
-
     <div class="delivery-section">
       <div class="delivery-title">Installation or Delivery?</div>
       <div class="delivery-opt" id="del-install" onclick="selectDelivery('install')">
@@ -662,10 +647,12 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <div class="btn-row">
       <button class="btn-back" onclick="goStep(7)">← Back</button>
       <button onclick="reqMoreInfo('Paris Texas Hardware')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Paris Texas Hardware →</button>
-      <div id="ptx-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
-      <button class="btn-cart-add" onclick="addParisTexasToCart()" style="margin-bottom:8px">+ Add to Cart</button>
-      <button class="btn-submit" onclick="submitQuote()" data-pb-require-contact="ptx-contact-err">Submit Order for Review &rarr;</button>
     </div>
+
+    <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->
+        <!-- Exact rod length + editable bracket count (shared.js pbRodSpecHTML) -->
+    <div id="pb-rod-spec"></div>
+    <div id="pb-final-step"></div>
   </div>
 
   <!-- UNSURE FLOW -->
@@ -711,6 +698,13 @@ textarea.inp-field{resize:vertical;min-height:90px}
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script src="../js/pages/paris-texas-rods.js"></script>
+<script>
+// Canonical final "Your details" contact + files step — identical on every product.
+document.getElementById('pb-final-step').innerHTML =
+  pbContactStepHTML({ bare: true, cartFn: 'addParisTexasToCart()', submitFn: 'submitQuote()' });
+
+document.getElementById('pb-rod-spec').innerHTML = pbRodSpecHTML({ title: 'Rod length &amp; brackets' });
+</script>
 </body>
 </html>
 

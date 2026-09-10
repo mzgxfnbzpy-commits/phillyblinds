@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Configure and price Norman Citylights™ Aluminum Blinds. Cordless, 33 colors, ½″ micro to 2″ slats. Instant pricing. Serving Philadelphia area.">
+<meta name="description" content="Configure Norman Citylights™ Aluminum Blinds. Cordless, 33 colors, ½″ micro to 2″ slats. Free custom quote. Serving Philadelphia area.">
 <meta property="og:url" content="https://www.phillyblinds.com/pages/city-lights-aluminum-blinds.html">
 <meta property="og:title" content="Citylights™ Aluminum Blinds — Philly Blinds">
-<meta property="og:description" content="Configure and price Norman Citylights™ Aluminum Blinds. Cordless, 33 colors, ½″ micro to 2″ slats. Instant pricing. Serving Philadelphia area.">
+<meta property="og:description" content="Configure Norman Citylights™ Aluminum Blinds. Cordless, 33 colors, ½″ micro to 2″ slats. Free custom quote. Serving Philadelphia area.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Philly Blinds">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Citylights™ Aluminum Blinds — Philly Blinds">
-<meta name="twitter:description" content="Configure and price Norman Citylights™ Aluminum Blinds. Cordless, 33 colors, ½″ micro to 2″ slats. Instant pricing. Serving Philadelphia area.">
+<meta name="twitter:description" content="Configure Norman Citylights™ Aluminum Blinds. Cordless, 33 colors, ½″ micro to 2″ slats. Free custom quote. Serving Philadelphia area.">
 <meta property="og:image" content="https://www.phillyblinds.com/img/social-preview.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -103,10 +103,9 @@
 .success-box{background:#EEFBE8;border:1px solid #86EFAC;border-radius:12px;padding:22px;text-align:center;display:none}
 .success-box h3{font-size:15px;font-weight:600;color:#14532d;margin-bottom:6px}
 .success-box p{font-size:13px;color:#166534;line-height:1.6}
-/* Step reorder: mount+dims first */
+/* Step order: measurements+mount first */
 #config-left-cl{display:flex;flex-direction:column}
-#step3{order:1}#step4{order:2}#step1{order:3}#step2{order:4}
-#step5,#step6,#step7,#step8{order:5}
+#step3{order:1}#step1{order:2}#step2{order:3}#step5{order:4}#step7{order:5}#step8{order:6}
 </style>
 </head>
 <body data-page="Shades & blinds">
@@ -116,9 +115,9 @@
   <div class="hero-inner">
     <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <a href="shades.html">Shades &amp; Blinds</a> &rsaquo; Citylights™ Aluminum Blinds</div>
     <h1>Citylights™<br>Aluminum Blinds</h1>
-    <p class="sub">Norman's premium aluminum blind — cordless, child-safe, and built to last. Choose from ½&Prime; micro, 1&Prime;, or 2&Prime; SmartPrivacy® slats in 33 colors. See your price instantly.</p>
+    <p class="sub">Norman's premium aluminum blind — cordless, child-safe, and built to last. Choose from ½&Prime; micro, 1&Prime;, or 2&Prime; SmartPrivacy® slats in 33 colors. Configure your specs and we&rsquo;ll send your quote.</p>
     <div class="hero-pills">
-      <span class="hero-pill hero-pill-gold">Instant pricing</span>
+      <span class="hero-pill">Free custom quote</span>
       <span class="hero-pill">Cordless — no extra charge</span>
       <span class="hero-pill">SmartPrivacy® standard on 2&Prime;</span>
       <span class="hero-pill">33 colors</span>
@@ -133,35 +132,24 @@
   <!-- STEP 1: SLAT SIZE -->
   <div class="step-block" id="step1">
     <div class="step-head" onclick="toggleStep('step1')">
-      <div class="step-num">3</div>
+      <div class="step-num">2</div>
       <div class="step-head-title">Slat Size</div>
       <div class="step-head-val" id="s1val">—</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-3">
-        <div class="opt-card" onclick="pickSlat(this,'half','½&Prime; Micro')">
-          <div class="opt-card-title">½&Prime; Micro</div>
-          <div class="opt-card-desc">Minimal profile &middot; max privacy &middot; max width 78&Prime;</div>
-          <div class="opt-card-badge">+10%</div>
-        </div>
-        <div class="opt-card" onclick="pickSlat(this,'one','1&Prime; Standard')">
-          <div class="opt-card-title">1&Prime; Standard</div>
-          <div class="opt-card-desc">Most popular &middot; 30 colors &middot; max width 78&Prime;</div>
-        </div>
-        <div class="opt-card" onclick="pickSlat(this,'two','2&Prime; SmartPrivacy')">
-          <div class="opt-card-title">2&Prime; SmartPrivacy®</div>
-          <div class="opt-card-desc">Widest look &middot; SmartPrivacy® included &middot; up to 96&Prime; wide</div>
-          <div class="opt-card-badge">+20%</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn" onclick="pickSlat(this,'half','½&Prime; Micro')">½&Prime; Micro</button>
+        <button class="opt-btn" onclick="pickSlat(this,'one','1&Prime; Standard')">1&Prime; Standard</button>
+        <button class="opt-btn" onclick="pickSlat(this,'two','2&Prime; SmartPrivacy')">2&Prime; SmartPrivacy®</button>
       </div>
-      <div class="step-note">Base price is for 1&Prime; slats. ½&Prime; micro adds 10%; 2&Prime; SmartPrivacy® adds 20%. Cordless operation is standard on all sizes at no extra charge.</div>
+      <div class="step-note"><strong>½&Prime; Micro:</strong> minimal profile &middot; max privacy &middot; max width 78&Prime; (+10%). <strong>1&Prime; Standard:</strong> most popular &middot; 30 colors &middot; max width 78&Prime; (base price). <strong>2&Prime; SmartPrivacy®:</strong> widest look &middot; SmartPrivacy® included &middot; up to 96&Prime; wide (+20%). Cordless operation is standard on all sizes at no extra charge.</div>
     </div>
   </div>
 
   <!-- STEP 2: COLOR -->
   <div class="step-block" id="step2">
     <div class="step-head" onclick="toggleStep('step2')">
-      <div class="step-num">4</div>
+      <div class="step-num">3</div>
       <div class="step-head-title">Color</div>
       <div class="step-head-val" id="s2val">—</div>
     </div>
@@ -314,72 +302,22 @@
     </div>
   </div>
 
-  <!-- STEP 3: MOUNT TYPE -->
+  <!-- STEP 1: WINDOW MEASUREMENTS & MOUNT -->
   <div class="step-block active" id="step3">
     <div class="step-head" onclick="toggleStep('step3')">
       <div class="step-num">1</div>
-      <div class="step-head-title">Mount Type</div>
+      <div class="step-head-title">Window measurements &amp; mount</div>
       <div class="step-head-val" id="s3val">—</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-2">
-        <div class="opt-card" onclick="pickMount(this,'inside','Inside Mount')">
-          <div class="opt-card-title">Inside Mount</div>
-          <div class="opt-card-desc">Fits inside the window frame &middot; clean, flush look<br><br>Mfr deducts 3/8&Prime; from width automatically</div>
-        </div>
-        <div class="opt-card" onclick="pickMount(this,'outside','Outside Mount')">
-          <div class="opt-card-title">Outside Mount</div>
-          <div class="opt-card-desc">Mounts above or outside the frame &middot; better light block<br><br>Shim available for trim clearance</div>
+      <div class="dim-box">
+        <div class="dim-box-label">Enter your window size</div>
+        <div class="form-row">
+          <div class="form-group"><label>Width</label><input type="number" id="w-whole" min="9" max="96" step="0.125" placeholder="36" oninput="calcPrice()"><div class="dim-unit">inches &mdash; 9&Prime; min &middot; 78&Prime; max (96&Prime; for 2&Prime; slats)</div></div>
+          <div class="form-group"><label>Height</label><input type="number" id="h-whole" min="10" max="96" step="0.125" placeholder="48" oninput="calcPrice()"><div class="dim-unit">inches &mdash; 10&Prime; min &middot; 96&Prime; max</div></div>
         </div>
       </div>
-      <div id="mount-note" class="msg-box msg-info" style="display:none"></div>
-    </div>
-  </div>
-
-  <!-- STEP 4: DIMENSIONS -->
-  <div class="step-block" id="step4">
-    <div class="step-head" onclick="toggleStep('step4')">
-      <div class="step-num">2</div>
-      <div class="step-head-title">Dimensions</div>
-      <div class="step-head-val" id="s4val">—</div>
-    </div>
-    <div class="step-body">
-      <div class="dim-row">
-        <div>
-          <div class="dim-label">Width (inches)</div>
-          <div class="dim-inputs">
-            <input class="dim-whole" type="number" id="w-whole" min="9" max="96" placeholder="36" oninput="calcPrice()">
-            <select class="dim-frac" id="w-frac" onchange="calcPrice()">
-              <option value="0">0</option>
-              <option value="0.125">1/8</option>
-              <option value="0.25">1/4</option>
-              <option value="0.375">3/8</option>
-              <option value="0.5">1/2</option>
-              <option value="0.625">5/8</option>
-              <option value="0.75">3/4</option>
-              <option value="0.875">7/8</option>
-            </select>
-            <span class="dim-unit">&Prime;</span>
-          </div>
-        </div>
-        <div>
-          <div class="dim-label">Height (inches)</div>
-          <div class="dim-inputs">
-            <input class="dim-whole" type="number" id="h-whole" min="10" max="96" placeholder="48" oninput="calcPrice()">
-            <select class="dim-frac" id="h-frac" onchange="calcPrice()">
-              <option value="0">0</option>
-              <option value="0.125">1/8</option>
-              <option value="0.25">1/4</option>
-              <option value="0.375">3/8</option>
-              <option value="0.5">1/2</option>
-              <option value="0.625">5/8</option>
-              <option value="0.75">3/4</option>
-              <option value="0.875">7/8</option>
-            </select>
-            <span class="dim-unit">&Prime;</span>
-          </div>
-        </div>
-      </div>
+      <div class="step-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm at the home visit.</div>
       <div id="dim-msg" class="msg-box" style="display:none"></div>
       <div class="computed-box" id="size-box" style="display:none">
         <div class="cv-row"><span class="cv-key">Order size</span><span class="cv-val" id="cv-size">—</span></div>
@@ -388,13 +326,33 @@
         <div class="cv-row"><span class="cv-key">Base price (1&Prime; slat)</span><span class="cv-val" id="cv-base">—</span></div>
       </div>
       <div class="step-note" id="size-limits-note">Enter your window measurements as ordered. Mfr applies deductions automatically.</div>
+
+      <!-- Mount type -->
+      <div style="font-size:12px;font-weight:600;color:#555;margin:14px 0 6px">Mount type</div>
+      <div class="opt-row" style="margin-bottom:6px">
+        <button class="opt-btn" onclick="pickMount(this,'inside','Inside mount')">Inside mount</button>
+        <button class="opt-btn" onclick="pickMount(this,'outside','Outside mount')">Outside mount</button>
+      </div>
+      <div class="step-note" style="margin-bottom:12px"><strong>Inside mount:</strong> fits inside the window frame for a clean, flush look — mfr deducts 3/8&Prime; from width automatically. <strong>Outside mount:</strong> mounts above or outside the frame for better light block — shim available for trim clearance.</div>
+      <div id="mount-note" class="msg-box msg-info" style="display:none"></div>
+
+      <!-- Quantity (shared stepper) -->
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px">
+        <span style="font-size:12px;color:#666">Qty:</span>
+        <div class="qty-btns">
+          <button class="qty-btn" onclick="adjQty(-1)">&#8722;</button>
+          <input class="qty-num" type="number" id="qty" value="1" min="1" max="99" oninput="calcPrice()">
+          <button class="qty-btn" onclick="adjQty(1)">&#43;</button>
+        </div>
+        <span style="font-size:12px;color:#666">blinds (same size)</span>
+      </div>
     </div>
   </div>
 
   <!-- STEP 5: OPTIONS -->
   <div class="step-block" id="step5">
     <div class="step-head" onclick="toggleStep('step5')">
-      <div class="step-num">5</div>
+      <div class="step-num">4</div>
       <div class="step-head-title">Options &amp; Add-ons</div>
       <div class="step-head-val" id="s5val">—</div>
     </div>
@@ -456,28 +414,10 @@
     </div>
   </div>
 
-  <!-- STEP 6: QUANTITY -->
-  <div class="step-block" id="step6">
-    <div class="step-head" onclick="toggleStep('step6')">
-      <div class="step-num">6</div>
-      <div class="step-head-title">Quantity</div>
-      <div class="step-head-val" id="s6val">1 blind</div>
-    </div>
-    <div class="step-body">
-      <div class="spinner-row">
-        <button class="spin-btn" onclick="adjQty(-1)">−</button>
-        <input class="spin-num" type="number" id="qty" value="1" min="1" max="99" oninput="calcPrice()">
-        <button class="spin-btn" onclick="adjQty(1)">+</button>
-        <span class="spin-label">blinds (same size)</span>
-      </div>
-      <div class="step-note">Each blind is priced individually at the same size. For different sizes, submit separate quote requests.</div>
-    </div>
-  </div>
-
   <!-- STEP 7: DELIVERY -->
   <div class="step-block" id="step7">
     <div class="step-head" onclick="toggleStep('step7')">
-      <div class="step-num">7</div>
+      <div class="step-num">5</div>
       <div class="step-head-title">Delivery</div>
       <div class="step-head-val" id="s7val">—</div>
     </div>
@@ -486,7 +426,7 @@
         <div class="delivery-opt-grid">
         <div class="delivery-opt-card sel" onclick="pickDel(this,'ship')">
           <div class="delivery-opt-title">Ship to me</div>
-          <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA. Freight: $25 first blind + $11 each additional. Blinds 90&#x2033;+ wide: $80 oversize. Tariffs additional.</div>
+          <div class="delivery-opt-body">UPS or FedEx. Freight: $25 first blind + $11 each additional. Blinds 90&#x2033;+ wide: $80 oversize. Tariffs additional.</div>
         </div>
       </div>
       </div>
@@ -496,21 +436,13 @@
   <!-- STEP 8: QUOTE FORM -->
   <div class="step-block" id="step8">
     <div class="step-head" onclick="toggleStep('step8')">
-      <div class="step-num">8</div>
+      <div class="step-num">6</div>
       <div class="step-head-title">Request Your Quote</div>
       <div class="step-head-val" id="s8val">—</div>
     </div>
     <div class="step-body">
-      <div class="form-err" id="form-err"></div>
-      <div class="form-row">
-        <div class="form-group"><label>Your name *</label><input type="text" id="f-name" data-pb-contact="name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="f-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
-      </div>
-      <div class="form-group"><label>Email *</label><input type="email" id="f-email" data-pb-contact="email" placeholder="jane@example.com"></div>
-      <div class="form-group"><label>Address <span style="font-weight:400;color:#999">(optional)</span></label><input type="text" id="f-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
-      <div class="form-group"><label>Notes / color preference</label><textarea id="f-notes" placeholder="e.g. want 1″ slats in Pure White, bedroom window, prefer inside mount"></textarea></div>
-      <button class="btn-cart-add" onclick="addCityLightsToCart()" style="margin-bottom:8px">+ Add to Cart</button>
-      <button class="submit-btn" onclick="submitQuote()" data-pb-require-contact="form-err">Submit Order for Review &rarr;</button>
+      <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->
+      <div id="pb-final-step"></div>
       <div class="success-box" id="success-box">
         <h3>Quote request sent!</h3>
         <p>We'll confirm your exact price within a few hours. For anything urgent, call us at <strong>(609) 742-1720</strong> &mdash; available 24/7.</p>
@@ -524,7 +456,7 @@
 <div>
   <div class="quote-panel" id="quote-panel">
     <div class="qp-title">Your Estimate</div>
-    <div class="qp-pending" id="qp-pending">Complete the steps on the left to see your live price estimate.</div>
+    <div class="qp-pending" id="qp-pending">Complete the steps on the left and we&rsquo;ll prepare your quote.</div>
     <div id="qp-detail" style="display:none">
       <div class="qrow"><span class="qrow-label">Product</span><span class="qrow-val">Citylights™ Aluminum Blind</span></div>
       <div class="qrow"><span class="qrow-label">Slat size</span><span class="qrow-val" id="qr-slat">—</span></div>
@@ -554,5 +486,10 @@
 
 
 <script src="../js/pages/city-lights-aluminum-blinds.js"></script>
+<script>
+// Canonical final "Your details" contact + files step — identical on every product.
+document.getElementById('pb-final-step').innerHTML =
+  pbContactStepHTML({ bare: true, cartFn: 'addCityLightsToCart()', submitFn: 'submitQuote()' });
+</script>
 </body>
 </html>

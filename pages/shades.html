@@ -224,7 +224,7 @@
     <h1>Shades &amp; Blinds</h1>
     <p>From airy roller shades to premium Hunter Douglas silhouettes — we custom-fabricate and install every window treatment we sell.</p>
     <div class="hero-badges">
-      <span class="badge badge-instant">Instant pricing on most products</span>
+      <span class="badge badge-instant">Instant pricing on select products</span>
       <span class="badge badge-motor">+ motorization on every product</span>
     </div>
     <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
@@ -294,7 +294,19 @@
           <div class="product-body">
             <div class="product-name">Citylights™ Aluminum Blinds</div>
             <div class="product-sub">Norman — ½&Prime;, 1&Prime; &amp; 2&Prime; SmartPrivacy® slats</div>
-            <span class="badge badge-instant">Instant price</span>
+            <span class="badge badge-quote">Custom quote</span>
+          </div>
+        </a>
+
+        <!-- Wallace Aluminum Mini-Blinds -->
+        <a class="product-card" href="wallace-aluminum-blinds.html">
+          <div class="product-img-photo">
+            <img src="../images/thumbnails/MINIBLIND.JPEG" alt="Wallace Aluminum Mini-Blinds" loading="lazy" style="object-position:center center">
+          </div>
+          <div class="product-body">
+            <div class="product-name">Wallace Aluminum Mini-Blinds</div>
+            <div class="product-sub">Wallace — 1&Prime; aluminum · bracket &amp; valance options</div>
+            <span class="badge badge-quote">Custom quote</span>
           </div>
         </a>
 
@@ -661,8 +673,8 @@
                 <div class="rn-fc-desc">Bamboo, jute, paper blends · organic look · light filtering · max 96″W or 78″W by collection</div>
               </button>
 <button class="rn-fabric-card" onclick="selRnFabric(this,'rd')">
-                <div class="rn-fc-name">Room Darkening</div>
-                <div class="rn-fc-desc">High privacy · coated backing · blocks most light — add LightGuard 360™ for true blackout</div>
+                <div class="rn-fc-name">Blackout</div>
+                <div class="rn-fc-desc">High privacy · coated backing · blocks most light — add Full Blackout Side Channels for true blackout</div>
               </button>
               <button class="rn-fabric-card" onclick="selRnFabric(this,'solar')">
                 <div class="rn-fc-name">Solar Screen</div>
@@ -688,7 +700,7 @@
                 <button class="opt-btn" onclick="selOpt(this,'rn-grp-solar');rnUpdatePrice()">7–10% — high visibility</button>
               </div>
             </div>
-            <div id="rn-rd-note" class="tooltip-note" style="display:none;margin-top:8px;color:var(--gold)">⚠ Room Darkening alone still allows edge light gaps. Add <strong>LightGuard 360™</strong> in Step 5 for true blackout.</div>
+            <div id="rn-rd-note" class="tooltip-note" style="display:none;margin-top:8px;color:var(--gold)">⚠ Blackout fabric alone still allows edge light gaps. Add <strong>Full Blackout Side Channels</strong> in Step 5 to get as close to dark as we can.</div>
             <div id="rn-fabric-note" class="tooltip-note" style="margin-top:6px;color:#666"></div>
           </div>
 
@@ -721,7 +733,7 @@
 
             <!-- Back shade: always Blackout -->
             <div>
-              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:4px">Back shade — Blackout <span style="font-weight:400;color:#888">(faces glass · always Room Darkening)</span></div>
+              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:4px">Back shade — Blackout <span style="font-weight:400;color:#888">(faces glass · always blackout)</span></div>
               <div id="rn-night-summary" style="font-size:11px;color:#888;margin-bottom:6px;line-height:1.5"></div>
               <div id="rn-night-grid"></div>
             </div>
@@ -737,14 +749,11 @@
               <button class="opt-btn" onclick="selOpt(this,'rn-grp-lift');rnSetLift('smart')">AutoLift™</button>
               <button class="opt-btn" onclick="selOpt(this,'rn-grp-lift');rnSetLift('motor')">Motorized</button>
             </div>
-            <div id="rn-lift-note" class="tooltip-note" style="margin-top:5px">Continuous Cord Loop handles large widths &amp; heavy fabrics — child-safe tensioner required. Cordless max width varies by fabric weight. AutoLift™ is Norman's spring-tension pull system (+$89 AutoLift™ upgrade available for controlled descent).</div>
+            <div id="rn-lift-note" class="tooltip-note" style="margin-top:5px">Continuous Cord Loop handles large widths &amp; heavy fabrics — child-safe tensioner required. Cordless max width varies by fabric weight. AutoLift™ is Norman's spring-tension pull system (+$86 AutoLift™ upgrade available for controlled descent).</div>
             <div id="rn-motor-wrap" style="display:none;margin-top:8px">
-              <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:8px">Motor system:</div>
-              <div class="opt-row" id="grp-rn-motor-type">
-                <button class="opt-btn sel" onclick="selOpt(this,'grp-rn-motor-type');rnSetMotorType(482)">Norman Smart — $482 <span style="font-size:9px;background:var(--gold);color:var(--espresso);padding:1px 6px;border-radius:4px;font-weight:700;vertical-align:middle">Recommended</span><br><span style="font-size:10px;font-weight:400;color:#888">App, voice, remote &middot; rechargeable or hardwired</span></button>
-                <button class="opt-btn" onclick="selOpt(this,'grp-rn-motor-type');rnSetMotorType(682)">Rollease Acmeda Automate — $682<br><span style="font-size:10px;font-weight:400;color:#888">For existing Rollease smart home systems &middot; rechargeable or hardwired</span></button>
-              </div>
-              <div class="tooltip-note" style="color:var(--gold);margin-top:8px">&#9889; Motor surcharge per shade. Power source (battery/hardwired) and remote confirmed at your measurement visit.</div>
+              <!-- Shared Norman Smart motor section (matches cellular + standalone pages). Rendered by rnSetLift('motor') via normanMotorSection('rn-motor-config','Roller Shade'). -->
+              <div id="rn-motor-config"></div>
+              <div class="tooltip-note" style="color:var(--gold);margin-top:8px">&#9889; Norman Smart motorization is $482/shade. Rollease Acmeda Automate is custom-priced (for customers integrating an existing Rollease smart-home system). Power source (battery/hardwired) and remote confirmed at your measurement visit.</div>
             </div>
           </div>
 
@@ -789,16 +798,16 @@
               <div class="opt-row" id="rn-grp-cassette">
                 <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-cassette')">Full cassette</button>
               </div>
-              <div class="tooltip-note" style="margin-top:5px">Full cassette encloses the tube completely — required for LightGuard 360™ and Room Darkening fabric. Larger sizes may need an upgraded tube diameter.</div>
+              <div class="tooltip-note" style="margin-top:5px">Full cassette encloses the tube completely — required for Full Blackout Side Channels and blackout fabric. Larger sizes may need an upgraded tube diameter.</div>
             </div>
 
             <!-- Side channels / LightGuard -->
-            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:7px">Side channels (LightGuard)</div>
+            <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:7px">Side channels</div>
             <div class="opt-row" id="rn-grp-lg">
               <button class="opt-btn sel" onclick="selOpt(this,'rn-grp-lg');rnSetLG('none')">None</button>
-              <button class="opt-btn" onclick="selOpt(this,'rn-grp-lg');rnSetLG('360')">LightGuard 360™</button>
+              <button class="opt-btn" onclick="selOpt(this,'rn-grp-lg');rnSetLG('360')">Full Blackout Side Channels</button>
             </div>
-            <div id="rn-lg-note" class="tooltip-note" style="display:none;margin-top:5px;margin-bottom:4px;color:var(--gold)">LightGuard 360™ = true blackout (full side channels + top seal). <strong>Requires:</strong> Room Darkening fabric + Cassette System. Not compatible with Open Roll or Fascia System.</div>
+            <div id="rn-lg-note" class="tooltip-note" style="display:none;margin-top:5px;margin-bottom:4px;color:var(--gold)">Full Blackout Side Channels — channels down both sides plus a sealed top. <strong>Requires:</strong> a Blackout fabric + Cassette System. Not compatible with Open Roll or Fascia System.</div>
             <div style="margin-bottom:12px"></div>
 
             <!-- Hem bar — fabric wrapped or sealed pocket only (no exposed aluminum in this system) -->
@@ -917,7 +926,7 @@
               <div class="price-line" id="rn-pb-freight-row" style="display:none"><span>Freight est.</span><span id="rn-pb-freight">—</span></div>
               <hr class="price-divider">
               <div class="price-total"><span>Est. total</span><span id="rn-pb-total">—</span></div>
-              <div class="price-note">Norman retail — 35% off. ⓘ Estimated price only — tariffs, import fees, and shipping confirmed at order. No charge until Justin reviews.</div>
+              <div class="price-note">Norman retail — 25% off. ⓘ Estimated price only — tariffs, import fees, and shipping confirmed at order. No charge until Justin reviews.</div>
               <div class="price-min-note" id="rn-pb-min-note" style="display:none">Minimum order applied.</div>
             </div>
           </div>
@@ -926,20 +935,14 @@
           <button class="btn-gold" onclick="rnShowForm()" style="width:100%;padding:13px;margin-top:4px">Get exact quote &rarr;</button>
           <div class="submit-form" id="rn-submit-form">
             <div class="step-title" style="margin-bottom:14px">Your contact details</div>
-            <div class="form-row">
-              <div class="form-group"><label>Your name *</label><input type="text" id="rn-sf-name" placeholder="Jane Smith"></div>
-              <div class="form-group"><label>Phone *</label><input type="tel" id="rn-sf-phone" placeholder="(215) 555-0100"></div>
-            </div>
-            <div class="form-group"><label>Email</label><input type="email" id="rn-sf-email" placeholder="jane@example.com"></div>
-            <div class="form-group"><label>Notes / fabric preference</label><textarea id="rn-sf-notes" placeholder="e.g. prefer neutral tone, looking for blackout, interested in motorization"></textarea></div>
             <div class="delivery-opt-grid" id="grp-del-rn">
               <div class="delivery-opt-card sel" onclick="pickDelCard(this)">
                 <div class="delivery-opt-title">Ship to me</div>
-                <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
+                <div class="delivery-opt-body">UPS or FedEx.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
               </div>
             </div>
             <button onclick="reqMoreInfo('Norman Roller Shades')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Norman Roller Shades →</button>
-        <button class="btn-gold" onclick="rnSubmitForm(this)" style="width:100%;padding:13px">Submit Order for Review &rarr;</button>
+            <div id="rn-sf-final-step"></div>
           </div>
           <div class="success-state" id="rn-success">
             <h3>Quote request sent!</h3>
@@ -950,6 +953,40 @@
 
         <!-- Wrapper hidden when Norman roller active (rn-wrap takes over) -->
         <div id="shared-steps-wrap">
+
+        <!-- Step 1: Dimensions -->
+        <div class="step-block" style="margin-bottom:14px">
+          <div class="step-label">Step 1</div>
+          <div class="step-title">Window measurements &amp; mount</div>
+          <div class="dim-box">
+            <div class="dim-box-label">Enter your window size</div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Width</label>
+                <input type="number" id="inp-width" min="12" max="144" step="0.5" placeholder="36" oninput="updatePrice()">
+                <div class="dim-unit">inches &nbsp;·&nbsp; halves OK (e.g. 36.5)</div>
+              </div>
+              <div class="form-group">
+                <label>Height</label>
+                <input type="number" id="inp-height" min="12" max="132" step="0.5" placeholder="48" oninput="updatePrice()">
+                <div class="dim-unit">inches</div>
+              </div>
+            </div>
+          </div>
+          <div class="tooltip-note" id="size-note" style="margin-top:-4px;margin-bottom:8px;color:var(--gold)"></div>
+          <div class="step-title" style="font-size:12px;margin-bottom:8px">Mount type</div>
+          <div class="opt-row" id="grp-mount">
+            <button class="opt-btn sel" onclick="selOpt(this,'grp-mount');updatePrice()">Inside mount</button>
+            <button class="opt-btn" onclick="selOpt(this,'grp-mount');updatePrice()">Outside mount</button>
+          </div>
+          <div class="tooltip-note" style="margin-top:-8px;margin-bottom:12px">Inside mount requires a minimum 2&frac34;&rdquo; window depth.</div>
+          <div class="step-title" style="font-size:12px;margin-bottom:8px">Quantity</div>
+          <div class="qty-btns">
+            <button class="qty-btn" onclick="adjustQty(-1)">&#8722;</button>
+            <input class="qty-num" type="number" id="inp-qty" value="1" min="1" max="10" oninput="clampQty();updatePrice()">
+            <button class="qty-btn" onclick="adjustQty(1)">&#43;</button>
+          </div>
+        </div>
 
         <!-- OPERATING SYSTEM (shown per product, drives size limits) -->
         <div class="step-block" id="op-system-block" style="display:none">
@@ -990,9 +1027,9 @@
             <div class="opt-row" id="grp-cellular-lift">
               <button class="opt-btn sel" onclick="selOpt(this,'grp-cellular-lift');updateSizeLimits();showCellularLiftNote('bu');cellCheckConflict('bu')">Bottom Up</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-cellular-lift');updateSizeLimits();showCellularLiftNote('tdbu');cellCheckConflict('tdbu')">Top Down / Bottom Up</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cellular-lift');updateSizeLimits();showCellularLiftNote('dn');cellCheckConflict('dn')">Day &amp; Night</button>
             </div>
             <div id="tdbu-note" class="tooltip-note" style="display:none;margin-top:4px;margin-bottom:6px">TDBU: shade raises from bottom <em>and</em> lowers from top — privacy with natural light. Max height 96″ · max 60 sq ft. (FR 3/8″S fabric: max height 86″.)</div>
+            <div class="tooltip-note" style="margin-top:4px;margin-bottom:6px">Day &amp; Night (two fabrics in one headrail — a day shade + a night shade) is chosen under <strong>Fabric category → Day &amp; Night</strong> below.</div>
             <div id="dn-note" class="tooltip-note" style="display:none;margin-top:4px;margin-bottom:6px">Day &amp; Night: two shades in one headrail. Valid top: Sheer, Windsong, LF, Designer LF. Valid bottom: LF, RD, Designer, Solus. <strong>Not available in D&amp;N:</strong> Woven Breeze, Ashton, FR/FR Essentials. Top &amp; bottom must use the same cell size.</div>
             <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:7px;margin-top:10px">Operating system</div>
             <div class="opt-row" id="grp-op-cellular">
@@ -1039,40 +1076,6 @@
           <div id="op-system-note" class="tooltip-note" style="margin-top:6px;color:var(--gold);font-weight:500"></div>
         </div>
 
-        <!-- Step B: Dimensions -->
-        <div class="step-block" style="margin-bottom:14px">
-          <div class="step-label">Step 2</div>
-          <div class="step-title">Window measurements</div>
-          <div class="dim-box">
-            <div class="dim-box-label">Enter your window size</div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Width</label>
-                <input type="number" id="inp-width" min="12" max="144" step="0.5" placeholder="36" oninput="updatePrice()">
-                <div class="dim-unit">inches &nbsp;·&nbsp; halves OK (e.g. 36.5)</div>
-              </div>
-              <div class="form-group">
-                <label>Height</label>
-                <input type="number" id="inp-height" min="12" max="132" step="0.5" placeholder="48" oninput="updatePrice()">
-                <div class="dim-unit">inches</div>
-              </div>
-            </div>
-          </div>
-          <div class="tooltip-note" id="size-note" style="margin-top:-4px;margin-bottom:8px;color:var(--gold)"></div>
-          <div class="step-title" style="font-size:12px;margin-bottom:8px">Mount type</div>
-          <div class="opt-row" id="grp-mount">
-            <button class="opt-btn sel" onclick="selOpt(this,'grp-mount');updatePrice()">Inside mount</button>
-            <button class="opt-btn" onclick="selOpt(this,'grp-mount');updatePrice()">Outside mount</button>
-          </div>
-          <div class="tooltip-note" style="margin-top:-8px;margin-bottom:12px">Inside mount requires a minimum 2&frac34;&rdquo; window depth.</div>
-          <div class="step-title" style="font-size:12px;margin-bottom:8px">Quantity</div>
-          <div class="qty-btns">
-            <button class="qty-btn" onclick="adjustQty(-1)">&#8722;</button>
-            <input class="qty-num" type="number" id="inp-qty" value="1" min="1" max="10" oninput="clampQty();updatePrice()">
-            <button class="qty-btn" onclick="adjustQty(1)">&#43;</button>
-          </div>
-        </div>
-
         <!-- Step C: Light / fabric options — per product -->
         <div class="step-block" id="step-light">
           <div class="step-label">Step 3</div>
@@ -1084,10 +1087,10 @@
               <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);toggleLightGuardNote(false);updatePrice()">Sheer</button>
               <button class="opt-btn sel" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);toggleLightGuardNote(false);updatePrice()">Light Filtering</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);toggleLightGuardNote(true);updatePrice()">Blackout</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);toggleLightGuardNote(false);updatePrice()">LightGuard 360™</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(false);toggleLightGuardNote(false);updatePrice()">Full Blackout Side Channels</button>
               <button class="opt-btn" onclick="selOpt(this,'grp-light-roller');toggleSolar(true);toggleLightGuardNote(false);updatePrice()">Solar Screen</button>
             </div>
-            <div id="lightguard-note" class="tooltip-note" style="display:none;margin-top:6px">Blackout fabric alone reduces but does not eliminate light. For true blackout add <strong>LightGuard 360™</strong> — full side channels + top seal. Select "LightGuard 360™" above to include it.</div>
+            <div id="lightguard-note" class="tooltip-note" style="display:none;margin-top:6px">Blackout fabric alone reduces but does not eliminate light. For the darkest result add <strong>Full Blackout Side Channels</strong> — channels down both sides plus a sealed top. Select it above to include it.</div>
             <div id="solar-openness" style="display:none;margin-top:10px">
               <div class="tooltip-note" style="margin-bottom:6px">Openness factor — lower % = less light &amp; more privacy:</div>
               <div class="opt-row" id="grp-solar">
@@ -1165,7 +1168,7 @@
             <div class="step-title" style="font-size:12px;margin-bottom:6px">② Fabric category</div>
             <div class="opt-row" id="grp-cell-fabric" data-goto="cell-fabric-inline">
               <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('lf');cellCheckConflict('fab-clear')">Light Filtering</button>
-              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('rd');cellCheckConflict('fab-clear')">Room Darkening</button>
+              <button class="opt-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('rd');cellCheckConflict('fab-clear')">Blackout</button>
               <button class="opt-btn" id="cell-fab-sheer-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('sheer');cellCheckConflict('fab-clear')">Sheer</button>
               <button class="opt-btn" id="cell-fab-dn-btn" onclick="selOpt(this,'grp-cell-fabric');filterCellSizes('dn');cellCheckConflict('fab-dn')">Day &amp; Night</button>
             </div>
@@ -1193,7 +1196,7 @@
                 <div>
                   <div class="step-title" style="font-size:12px;margin-bottom:6px">Bottom fabric (Night side)</div>
                   <div class="opt-row" id="grp-cell-dn-bottom">
-                    <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-dn-bottom');cellDnRender('bottom','rd')">Room Darkening</button>
+                    <button class="opt-btn sel" onclick="selOpt(this,'grp-cell-dn-bottom');cellDnRender('bottom','rd')">Blackout</button>
                     <button class="opt-btn" onclick="selOpt(this,'grp-cell-dn-bottom');cellDnRender('bottom','lf')">Light Filtering</button>
                   </div>
                   <div id="cell-dn-bottom-grid" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px"></div>
@@ -1313,32 +1316,24 @@
             <div class="price-line" id="pb-freight-row" style="display:none"><span>Freight est.</span><span id="pb-freight">—</span></div>
             <hr class="price-divider">
             <div class="price-total"><span>Est. total</span><span id="pb-total">—</span></div>
-            <div class="price-note">Norman retail — 35% off. ⓘ Estimated price only — tariffs, import fees, and shipping confirmed at order. No charge until Justin reviews.</div>
+            <div class="price-note">Norman retail — 25% off. ⓘ Estimated price only — tariffs, import fees, and shipping confirmed at order. No charge until Justin reviews.</div>
             <div class="price-min-note" id="pb-min-note" style="display:none">Minimum order applied.</div>
           </div>
         </div>
 
-        <!-- Step F: Add to quote / submit -->
-        <button class="btn-gold" onclick="addToCart()" style="width:100%;padding:13px;margin-top:4px;font-size:14px">+ Add to cart</button>
-        <div style="text-align:center;margin-top:8px">
-          <button onclick="showShadeForm()" style="font-size:12px;color:var(--gold);border:none;background:none;cursor:pointer;text-decoration:underline;font-family:var(--font)">Or request a quote for just this shade &rarr;</button>
-        </div>
-        <div class="submit-form" id="shade-submit-form">
+        <!-- Step F: Your details — always visible at the bottom of the configurator,
+             same as every other product. Add to Cart and Submit Order for Review are
+             rendered by pbContactStepHTML below so they stay stacked as one pair. -->
+        <div class="submit-form show" id="shade-submit-form">
           <div class="step-title" style="margin-bottom:14px">Your contact details</div>
-          <div class="form-row">
-            <div class="form-group"><label>Your name *</label><input type="text" id="sf-name" placeholder="Jane Smith"></div>
-            <div class="form-group"><label>Phone *</label><input type="tel" id="sf-phone" placeholder="(215) 555-0100"></div>
-          </div>
-          <div class="form-group"><label>Email</label><input type="email" id="sf-email" placeholder="jane@example.com"></div>
-          <div class="form-group"><label>Any notes?</label><textarea id="sf-notes" placeholder="e.g. looking for blackout in bedroom, open to fabric samples"></textarea></div>
           <div class="delivery-opt-grid" id="grp-del-sf">
             <div class="delivery-opt-card sel" onclick="pickDelCard(this)">
               <div class="delivery-opt-title">Ship to me</div>
-              <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
+              <div class="delivery-opt-body">UPS or FedEx.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
             </div>
           </div>
           <button onclick="reqMoreInfo('Norman Cellular / Zebra / Woven Wood Shades')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Norman Cellular / Zebra / Woven Wood Shades →</button>
-        <button class="btn-gold" onclick="submitShadeForm(this)" style="width:100%;padding:13px">Submit Order for Review &rarr;</button>
+          <div id="sf-final-step"></div>
         </div>
         <div class="success-state" id="shade-success">
           <h3>Quote request sent!</h3>
@@ -1432,12 +1427,18 @@
         <button class="opt-btn" onclick="selOpt(this,'pb-grp-fascia');pbToggleFasciaColor(false)">Fabric Wrapped fascia</button>
         <button class="opt-btn" onclick="selOpt(this,'pb-grp-fascia');pbToggleFasciaColor(true)">Metal fascia</button>
       </div>
-      <div class="tooltip-note" style="margin-top:4px">Open Roll: exposed tube, minimal profile. Fabric Wrapped: fabric-covered headrail. Metal: aluminum fascia — select color below.</div>
+      <div class="tooltip-note" style="margin-top:4px">Open Roll: exposed tube, minimal profile. Fabric Wrapped: fabric-covered headrail (matches your shade fabric). Metal: aluminum fascia — select its color below.</div>
 
-      <!-- Hardware color — always shown; fascia color also applies when Metal Fascia selected -->
+      <!-- Metal fascia color — shown only for Metal fascia; uses the shared Norman metal-fascia palette -->
+      <div id="pb-fascia-color-wrap" style="display:none;margin-top:12px;padding:10px 12px;background:#faf7f2;border:1px solid #ece5d8;border-radius:8px">
+        <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Metal fascia color</div>
+        <div id="pb-fascia-color-slot"></div>
+      </div>
+
+      <!-- Hardware color — decorative finish for brackets, hem bar & end caps -->
       <div style="margin-top:12px">
         <div style="font-size:12px;font-weight:500;color:#333;margin-bottom:4px" id="pb-hw-color-label">Hardware color</div>
-        <div id="pb-hw-color-note" style="display:none;font-size:11px;color:#888;margin-bottom:6px">Also applies to metal fascia finish.</div>
+        <div id="pb-hw-color-note" style="display:none;font-size:11px;color:#888;margin-bottom:6px">Decorative finish for brackets, hem bar &amp; end caps. The metal fascia has its own color above.</div>
         <div class="opt-row" id="pb-grp-hw-color" style="flex-wrap:wrap">
           <button class="opt-btn" onclick="selOpt(this,'pb-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#C8A84A;flex-shrink:0;display:inline-block;border:1px solid rgba(0,0,0,.1)"></span>Brass</button>
           <button class="opt-btn" onclick="selOpt(this,'pb-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#6B4423;flex-shrink:0;display:inline-block"></span>Bronze</button>
@@ -1445,7 +1446,7 @@
           <button class="opt-btn" onclick="selOpt(this,'pb-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#B0B0B0;flex-shrink:0;display:inline-block"></span>Matte Silver</button>
           <button class="opt-btn sel" onclick="selOpt(this,'pb-grp-hw-color')" style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:#F5F5F5;flex-shrink:0;display:inline-block;border:1px solid #ddd"></span>White</button>
         </div>
-        <div class="tooltip-note" style="margin-top:4px">Applies to: brackets, hem bar, end caps, and hardware. Metal fascia matches this color.</div>
+        <div class="tooltip-note" style="margin-top:4px">Applies to: brackets, hem bar, end caps, and hardware.</div>
       </div>
 
       <!-- End caps -->
@@ -1499,19 +1500,14 @@
 
       <!-- Contact + Delivery -->
       <hr class="price-divider" style="margin:18px 0">
-      <div class="form-row">
-        <div class="form-group"><label>Your name *</label><input type="text" id="pb-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="pb-phone" placeholder="(215) 555-0100"></div>
-      </div>
-      <div class="form-group"><label>Email</label><input type="email" id="pb-email" placeholder="jane@example.com"></div>
       <div class="delivery-opt-grid" id="grp-del-pb">
         <div class="delivery-opt-card sel" onclick="pickDelCard(this)">
           <div class="delivery-opt-title">Ship to me</div>
-          <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
+          <div class="delivery-opt-body">UPS or FedEx.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
         </div>
       </div>
       <button onclick="reqMoreInfo('Basic Roller Shades')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Basic Roller Shades →</button>
-        <button class="btn-gold" onclick="submitPBForm(this)" style="width:100%;padding:13px;margin-top:4px">Send custom fabrication request &rarr;</button>
+      <div id="pb-final-step"></div>
       <div class="success-state" id="pb-success">
         <h3>Request received!</h3>
         <p>We'll follow up within a few hours with fabric options and a quote. Call <strong>(609) 742-1720</strong> for anything urgent — available 24/7.</p>
@@ -1536,14 +1532,6 @@
         <a href="mailto:justin@phillyblinds.com" style="display:inline-flex;align-items:center;font-size:13px;color:var(--gold);padding:11px 0;text-decoration:none;font-weight:500">justin@phillyblinds.com</a>
       </div>
     </div>
-    <div class="form-group">
-      <label>Your name *</label>
-      <input type="text" id="hd-name" placeholder="Jane Smith">
-    </div>
-    <div class="form-row">
-      <div class="form-group"><label>Phone *</label><input type="tel" id="hd-phone" placeholder="(215) 555-0100"></div>
-      <div class="form-group"><label>Email</label><input type="email" id="hd-email" placeholder="jane@example.com"></div>
-    </div>
     <div class="form-row">
       <div class="form-group">
         <label>Product interested in</label>
@@ -1566,18 +1554,14 @@
         </select>
       </div>
     </div>
-    <div class="form-group">
-      <label>Notes / questions</label>
-      <textarea id="hd-notes" placeholder="e.g. interested in PowerView motorization, have 3 large arch windows in living room"></textarea>
-    </div>
     <div class="delivery-opt-grid" id="grp-del-hd">
       <div class="delivery-opt-card sel" onclick="pickDelCard(this)">
         <div class="delivery-opt-title">Ship to me</div>
-        <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
+        <div class="delivery-opt-body">UPS or FedEx.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
       </div>
     </div>
     <button onclick="reqMoreInfo('Hunter Douglas Silhouette / Pirouette Shadings')" class="req-info-link" style="display:block;margin-bottom:10px">Request more information about Hunter Douglas Silhouette / Pirouette Shadings →</button>
-        <button class="btn-gold" onclick="submitQuoteForm(this)" style="width:100%;padding:13px">Request custom quote</button>
+    <div id="hd-final-step"></div>
     <div class="success-state" id="hd-success">
       <h3>Quote request received!</h3>
       <p>A Hunter Douglas specialist will reach out within 24 hours. For anything urgent, call <strong>(609) 742-1720</strong> &mdash; available 24/7.</p>
@@ -1674,6 +1658,15 @@
         <button class="opt-btn sel" onclick="selOpt(this,'ext-grp-op');extToggleMotor(false)">Manual — handcrank</button>
         <button class="opt-btn" onclick="selOpt(this,'ext-grp-op');extToggleMotor(true)">Motorized</button>
       </div>
+      <!-- Side selector: hand crank side (manual) or motor side (motorized) -->
+      <div id="ext-side-wrap" style="margin-top:10px">
+        <div id="ext-side-label" style="font-size:12px;font-weight:500;color:#333;margin-bottom:6px">Hand crank side</div>
+        <div class="opt-row" id="ext-grp-control">
+          <button class="opt-btn sel" onclick="selOpt(this,'ext-grp-control')">Left</button>
+          <button class="opt-btn" onclick="selOpt(this,'ext-grp-control')">Right</button>
+        </div>
+        <div id="ext-side-note" style="font-size:11px;color:#888;margin-top:5px">Which side of the window you want the hand crank on.</div>
+      </div>
       <div id="ext-motor-note" style="display:none;margin-top:10px;padding:12px 14px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:8px">
         <div style="font-size:12px;font-weight:600;color:#333;margin-bottom:6px">Motor preference (optional)</div>
         <input type="text" id="ext-motor-req" placeholder="e.g. Somfy, Rollease Acmeda — or leave blank and we'll recommend one" style="width:100%;padding:8px 10px;border:1px solid #e8e8e4;border-radius:7px;font-size:13px;font-family:inherit">
@@ -1707,19 +1700,13 @@
     <div class="step-block">
       <div class="step-label">Step 9</div>
       <div class="step-title">Your details</div>
-      <div class="form-row">
-        <div class="form-group"><label>Your name *</label><input type="text" id="ext-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="ext-phone" placeholder="(215) 555-0100"></div>
-      </div>
-      <div class="form-group"><label>Email</label><input type="email" id="ext-email" placeholder="jane@example.com"></div>
-      <div class="form-group"><label>Notes</label><textarea id="ext-notes" placeholder="Deck, patio, porch, pergola — any special mounting requirements..."></textarea></div>
       <div class="delivery-opt-grid" id="grp-del-ext">
         <div class="delivery-opt-card sel" onclick="pickDelCard(this)">
           <div class="delivery-opt-title">Ship to me</div>
-          <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
+          <div class="delivery-opt-body">UPS or FedEx.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
         </div>
       </div>
-      <button class="btn-gold" onclick="submitExteriorForm(this)" style="width:100%;padding:13px;margin-top:12px">Request exterior shade quote &rarr;</button>
+      <div id="ext-final-step"></div>
     </div>
 
     <div class="success-state" id="ext-success">
@@ -1878,19 +1865,13 @@
     <div class="step-block">
       <div class="step-label">Step 6</div>
       <div class="step-title">Your details</div>
-      <div class="form-row">
-        <div class="form-group"><label>Your name *</label><input type="text" id="fwb-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="fwb-phone" placeholder="(215) 555-0100"></div>
-      </div>
-      <div class="form-group"><label>Email</label><input type="email" id="fwb-email" placeholder="jane@example.com"></div>
-      <div class="form-group"><label>Notes</label><textarea id="fwb-notes" placeholder="e.g. specific color, existing hardware to reuse, special installation requirements"></textarea></div>
       <div class="delivery-opt-grid" id="grp-del-fwb">
         <div class="delivery-opt-card sel" onclick="pickDelCard(this)">
           <div class="delivery-opt-title">Ship to me</div>
-          <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
+          <div class="delivery-opt-body">UPS or FedEx.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
         </div>
       </div>
-      <button class="btn-gold" onclick="submitFWBForm(this)" style="width:100%;padding:13px;margin-top:12px">Request faux wood blinds quote &rarr;</button>
+      <div id="fwb-final-step"></div>
     </div>
 
     <div class="success-state" id="fwb-success">
@@ -2018,7 +1999,7 @@
         <div id="rwb-price-lines"></div>
         <hr class="price-divider">
         <div class="price-total"><span>Est. total</span><span id="rwb-price-total">—</span></div>
-        <div class="price-note">MSRP estimates — 35% off retail. ⓘ Estimated price only — tariffs, import fees, and exact shipping confirmed at order. No charge until Justin reviews your order.</div>
+        <div class="price-note">MSRP estimates — 25% off retail. ⓘ Estimated price only — tariffs, import fees, and exact shipping confirmed at order. No charge until Justin reviews your order.</div>
       </div>
     </div>
 
@@ -2037,19 +2018,13 @@
     <div class="step-block">
       <div class="step-label">Step 7</div>
       <div class="step-title">Your details</div>
-      <div class="form-row">
-        <div class="form-group"><label>Your name *</label><input type="text" id="rwb-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="rwb-phone" placeholder="(215) 555-0100"></div>
-      </div>
-      <div class="form-group"><label>Email</label><input type="email" id="rwb-email" placeholder="jane@example.com"></div>
-      <div class="form-group"><label>Notes</label><textarea id="rwb-notes" placeholder="e.g. specific color, existing hardware to reuse, special installation requirements"></textarea></div>
       <div class="delivery-opt-grid" id="grp-del-rwb">
         <div class="delivery-opt-card sel" onclick="pickDelCard(this)">
           <div class="delivery-opt-title">Ship to me</div>
-          <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
+          <div class="delivery-opt-body">UPS or FedEx.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
         </div>
       </div>
-      <button class="btn-gold" onclick="submitRWBForm(this)" style="width:100%;padding:13px;margin-top:12px">Submit Order for Review &rarr;</button>
+      <div id="rwb-final-step"></div>
     </div>
 
     <div class="success-state" id="rwb-success">
@@ -2063,18 +2038,18 @@
     <div class="config-head">
       <button class="config-back" onclick="clearProduct()">&#8592; Change product</button>
       <div class="config-title">Norman PerfectSheer™ Shades</div>
-      <span class="badge badge-instant">Instant price</span>
+      <span class="badge badge-quote">Custom quote</span>
     </div>
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;padding:10px 14px;background:var(--espresso);border-radius:8px">
       <span style="font-size:10px;font-weight:600;color:var(--gold);letter-spacing:1px">NORMAN®</span>
       <span style="font-size:11px;color:rgba(255,255,255,0.6)">Made in USA &middot; Lifetime Warranty &middot; Norman Motorization only</span>
     </div>
-    <p style="font-size:13px;color:#555;margin-bottom:20px;line-height:1.6">Soft horizontal vanes that tilt open and closed like blinds while riding on sheer fabric — diffusing light beautifully. 100% polyester, 32 fabric colors in light filtering or Room Darkening.</p>
+    <p style="font-size:13px;color:#555;margin-bottom:20px;line-height:1.6">Soft horizontal vanes that tilt open and closed like blinds while riding on sheer fabric — diffusing light beautifully. 100% polyester, 32 fabric colors in light filtering or blackout.</p>
 
     <!-- Step 1: Dimensions -->
     <div class="step-block">
       <div class="step-label">Step 1</div>
-      <div class="step-title">Dimensions</div>
+      <div class="step-title">Window measurements</div>
       <div class="dim-box">
         <div class="dim-box-label">Enter your window size</div>
         <div class="form-row">
@@ -2110,9 +2085,9 @@
       <div class="step-title">Light control</div>
       <div class="opt-row" id="grp-ps-opacity">
         <button class="opt-btn sel" onclick="selOpt(this,'grp-ps-opacity');psUpdateColors('lf');psCalc()">Light filtering &mdash; 22 colors</button>
-        <button class="opt-btn" onclick="selOpt(this,'grp-ps-opacity');psUpdateColors('rd');psCalc()">Room Darkening &mdash; 10 colors <span style="font-size:10px;opacity:.7">+20%</span></button>
+        <button class="opt-btn" onclick="selOpt(this,'grp-ps-opacity');psUpdateColors('rd');psCalc()">Blackout &mdash; 10 colors <span style="font-size:10px;opacity:.7">+20%</span></button>
       </div>
-      <div class="tooltip-note" style="margin-top:8px">Room Darkening provides more privacy when closed but is not a true blackout.</div>
+      <div class="tooltip-note" style="margin-top:8px">This is a blackout fabric, but the vane construction means it is not a true blackout shade.</div>
     </div>
 
     <!-- Step 4: Fabric color -->
@@ -2145,7 +2120,7 @@
             <option value="Frosty Asphalt">Frosty Asphalt (F1194) — sheer dark</option>
             <option value="Nightfall">Nightfall (F1191) — deep charcoal</option>
           </optgroup>
-          <optgroup label="Room Darkening (10 colors — +20%)" id="ps-rd-group" style="display:none">
+          <optgroup label="Blackout (10 colors — +20%)" id="ps-rd-group" style="display:none">
             <option value="Moon">Moon (F1200) — white</option>
             <option value="Silk">Silk (F1201) — warm white</option>
             <option value="Chai Latte">Chai Latte (F1202) — blush cream</option>
@@ -2250,9 +2225,9 @@
         </div>
       </div>
       <div id="ps-price-box" style="display:none;background:var(--espresso);border-radius:12px;padding:18px 20px">
-        <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:6px">Your price — 35% off Norman retail</div>
+        <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:6px">Your price — 25% off Norman retail</div>
         <div style="font-size:32px;font-weight:600;color:#fff;letter-spacing:-0.5px" id="ps-price-num">—</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:4px">Norman retail pricing with 35% discount. Shipping at retail rate. Confirmed at order.</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:4px">Norman retail pricing with 25% discount. Shipping at retail rate. Confirmed at order.</div>
         <div id="ps-price-breakdown" style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.65);line-height:1.8"></div>
       </div>
       <div id="ps-price-note" style="display:none;background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:12px 14px;font-size:12px;color:#856404;margin-top:10px"></div>
@@ -2262,43 +2237,24 @@
     <div class="step-block">
       <div class="step-label">Step 8</div>
       <div class="step-title">Your details</div>
-      <div class="form-group">
-        <label>Your name *</label>
-        <input type="text" id="ps-name" placeholder="Jane Smith">
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Phone *</label><input type="tel" id="ps-phone" placeholder="(215) 555-0100"></div>
-        <div class="form-group"><label>Email</label><input type="email" id="ps-email" placeholder="jane@example.com"></div>
-      </div>
       <div class="form-row">
         <div class="form-group">
           <label>Number of shades</label>
-          <select id="ps-qty">
-            <option value="1">1 shade</option>
-            <option value="2">2 shades</option>
-            <option value="3">3 shades</option>
-            <option value="4">4 shades</option>
-            <option value="5">5 shades</option>
-            <option value="6+">6 or more</option>
-          </select>
+          <div class="qty-btns">
+            <button class="qty-btn" type="button" onclick="var n=document.getElementById('ps-qty');n.value=Math.max(1,(parseInt(n.value)||1)-1);psCalc()">&#8722;</button>
+            <input class="qty-num" type="number" id="ps-qty" min="1" max="10" value="1" oninput="psCalc()">
+            <button class="qty-btn" type="button" onclick="var n=document.getElementById('ps-qty');n.value=Math.min(10,(parseInt(n.value)||1)+1);psCalc()">&#43;</button>
+          </div>
         </div>
-        <div class="form-group">
-          <label>Room / window location</label>
-          <input type="text" id="ps-location" placeholder="e.g. Living room — east window">
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Notes / questions</label>
-        <textarea id="ps-notes" placeholder="e.g. three windows side by side, open to common valance, prefer right cord side"></textarea>
       </div>
       <div class="delivery-opt-grid" id="grp-del-ps">
         <div class="delivery-opt-card sel" onclick="pickDelCard(this)">
           <div class="delivery-opt-title">Ship to me</div>
-          <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA. Freight: $25 first + $11 ea (90&Prime;+: $80 min + $50 ea).<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
+          <div class="delivery-opt-body">UPS or FedEx. Freight: $25 first + $11 ea (90&Prime;+: $80 min + $50 ea).<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
         </div>
       </div>
       <button onclick="reqMoreInfo('Norman PerfectSheer™ Shades')" class="req-info-link" style="display:block;margin-top:10px;margin-bottom:10px">Request more information about Norman PerfectSheer™ Shades →</button>
-      <button class="btn-gold" onclick="submitPSForm(this)" style="width:100%;padding:13px;margin-top:4px">Send quote request &rarr;</button>
+      <div id="ps-final-step"></div>
     </div>
 
     <div class="success-state" id="ps-success" style="display:none">
@@ -2333,13 +2289,7 @@
         <div id="cart-contact-wrap" style="display:none">
           <div class="cart-contact">
             <div class="cart-contact-head">Your contact details</div>
-            <div class="form-row">
-              <div class="form-group"><label style="color:var(--text-dark)">Name *</label><input type="text" id="cq-name" placeholder="Jane Smith" style="background:#fff"></div>
-              <div class="form-group"><label style="color:var(--text-dark)">Phone *</label><input type="tel" id="cq-phone" placeholder="(215) 555-0100" style="background:#fff"></div>
-            </div>
-            <div class="form-group"><label style="color:var(--text-dark)">Email</label><input type="email" id="cq-email" placeholder="jane@example.com" style="background:#fff"></div>
-            <div class="form-group"><label style="color:var(--text-dark)">Notes</label><textarea id="cq-notes" placeholder="Room names, timeline, any special instructions" style="background:#fff"></textarea></div>
-            <button class="btn-gold" onclick="submitCart(this)" style="width:100%;padding:13px">Send full quote request &rarr;</button>
+            <div id="cq-final-step"></div>
           </div>
           <div class="success-state" id="cart-success">
             <h3>Quote request sent!</h3>
@@ -2457,6 +2407,34 @@
 <script src="../js/shared.js"></script>
 <script src="../js/pages/shades.js"></script>
 <script>
+// Canonical final "Your details" step. This page hosts several product
+// configurators, so each gets its own idPrefix — which regenerates the same
+// {prefix}-name/phone/email/notes ids the submit functions already read, and
+// adds the address field, Terms checkbox, honeypot and file upload none of
+// them had. Before this, these forms carried no data-pb-require-contact at
+// all, so the shared submit guard never ran on them.
+[
+  { mount: 'ext-final-step',   prefix: 'ext-',   submit: 'submitExteriorForm(this)' },
+  { mount: 'fwb-final-step',   prefix: 'fwb-',   submit: 'submitFWBForm(this)' },
+  { mount: 'rwb-final-step',   prefix: 'rwb-',   submit: 'submitRWBForm(this)' },
+  { mount: 'rn-sf-final-step', prefix: 'rn-sf-', submit: 'rnSubmitForm(this)' },
+  { mount: 'sf-final-step',    prefix: 'sf-',    submit: 'submitShadeForm(this)', cart: 'addToCart()' },
+  { mount: 'pb-final-step',    prefix: 'pb-',    submit: 'submitPBForm(this)' },
+  { mount: 'hd-final-step',    prefix: 'hd-',    submit: 'submitQuoteForm(this)' },
+  { mount: 'ps-final-step',    prefix: 'ps-',    submit: 'submitPSForm(this)' },
+  { mount: 'cq-final-step',    prefix: 'cq-',    submit: 'submitCart(this)' }
+].forEach(function (t) {
+  var el = document.getElementById(t.mount);
+  if (!el) return;
+  el.innerHTML = pbContactStepHTML({
+    bare: true,
+    idPrefix: t.prefix,
+    errId: t.prefix + 'contact-err',
+    submitFn: t.submit,
+    cartFn: t.cart || null
+  });
+});
+
 function selectSheerCat(cat, el) {
   if (cat === 'hd') {
     pbShowContact('Hunter Douglas Sheer Shadings — Silhouette · Pirouette · Luminette · Vignette — free consultation & custom quote');

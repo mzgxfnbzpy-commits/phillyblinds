@@ -74,7 +74,7 @@ var DEDUCTIONS = {
 var S = {
   shadeType: '',    // 'single' | 'double'
   mount: '',
-  width: 0, height: 0, qty: 1, room: '',
+  width: 0, height: 0, qty: 1,
   fabric: null, fabColor: '',
   backFabric: null,
   topTreatment: '',
@@ -130,11 +130,20 @@ function selectMount(m) {
   S.mount = m;
   document.getElementById('mc-in').classList.toggle('sel', m === 'inside');
   document.getElementById('mc-out').classList.toggle('sel', m === 'outside');
-  var label = m === 'inside' ? 'Inside Mount' : 'Outside Mount';
-  completeStep('step-1', label);
+  var label = m === 'inside' ? 'Inside mount' : 'Outside mount';
   updateSpec('sp-mount', label);
   validateSize();
-  activateStep('step-2');
+  maybeAdvanceMeasure();
+}
+
+// Step 1 combines width/height + mount + quantity — advance once size is valid and mount picked.
+function maybeAdvanceMeasure() {
+  if (S.width > 0 && S.height > 0 && S.mount &&
+      document.getElementById('size-computed').style.display !== 'none') {
+    var ml = S.mount === 'inside' ? 'Inside mount' : 'Outside mount';
+    completeStep('step-1', S.width + '" × ' + S.height + '" · ' + ml);
+    activateStep('step-4');
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -160,7 +169,7 @@ function validateSize() {
     if (!errors.length) {
       msgs.innerHTML += '<div class="size-ok">✓ Dimensions within specification.</div>';
       updateSpec('sp-dims', w + '" × ' + h + '"');
-      document.getElementById('s2-val').textContent = w + '" × ' + h + '"';
+      document.getElementById('s1-val').textContent = w + '" × ' + h + '"';
 
       // Approximate fabric width
       var ded = getDeduction();
@@ -169,7 +178,7 @@ function validateSize() {
       document.getElementById('cp-fabW').textContent = fabW + '"';
       document.getElementById('size-computed').style.display = 'block';
 
-      if (!document.getElementById('step-3').classList.contains('done')) activateStep('step-3');
+      maybeAdvanceMeasure();
     } else {
       document.getElementById('size-computed').style.display = 'none';
     }
@@ -180,46 +189,11 @@ function validateSize() {
 
 function validateQty() {
   var qty = parseInt(document.getElementById('inp-qty').value) || 1;
+  if (qty < 1) qty = 1;
   S.qty = qty;
-  updateRoomLabels(qty);
-  S.room = getRoomLabels();
-  var label = qty + ' shade' + (qty !== 1 ? 's' : '') + (S.room ? ' · ' + S.room : '');
-  document.getElementById('s3-val').textContent = label;
+  // Per-unit room/window labels are now handled by the shared label block
+  // (auto-injected after .qty-btns by shared.js) — no ad-hoc field here.
   updateSpec('sp-qty', qty);
-  completeStep('step-3', label);
-  activateStep('step-4');
-}
-
-function updateRoomLabels(qty) {
-  var wrap = document.getElementById('room-labels-wrap');
-  if (!wrap) return;
-  if (qty <= 1) {
-    wrap.innerHTML = '<div class="dim-label">Room / window label <span style="font-weight:400;color:#999">(optional)</span></div>' +
-      '<input type="text" id="inp-room" placeholder="e.g. Master Bedroom Left" style="padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;width:100%;box-sizing:border-box" oninput="validateQty()">';
-  } else {
-    var html = '<div class="dim-label">Room / window labels <span style="font-weight:400;color:#999">(optional — one per shade)</span></div>';
-    for (var i = 1; i <= qty; i++) {
-      var prev = (document.getElementById('inp-room-' + i) || {}).value || '';
-      html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">' +
-        '<span style="font-size:11px;font-weight:600;color:#777;min-width:56px">Shade ' + i + '</span>' +
-        '<input type="text" id="inp-room-' + i + '" placeholder="e.g. Living room left" value="' + prev.replace(/"/g, '&quot;') + '" style="flex:1;padding:7px 10px;border:1px solid #ddd;border-radius:7px;font-size:12px" oninput="validateQty()">' +
-        '</div>';
-    }
-    wrap.innerHTML = html;
-  }
-}
-
-function getRoomLabels() {
-  var qty = parseInt((document.getElementById('inp-qty') || {}).value) || 1;
-  if (qty <= 1) {
-    return (document.getElementById('inp-room') || {}).value || '';
-  }
-  var parts = [];
-  for (var i = 1; i <= qty; i++) {
-    var v = ((document.getElementById('inp-room-' + i) || {}).value || '').trim();
-    if (v) parts.push('Shade ' + i + ': ' + v);
-  }
-  return parts.join(' | ');
 }
 
 function getDeduction() {
@@ -234,8 +208,29 @@ function getDeduction() {
 // ═══════════════════════════════════════════════════════════════
 function buildFabGrid(filter) {
   var grid = document.getElementById('fab-grid');
-  var list = filter === 'all' ? FABRICS : FABRICS.filter(function(f){ return f.group === filter; });
-  grid.innerHTML = list.map(function(f, i) {
+  // Consistent shared picker: family collections grouped into price-group sections.
+  // Real colors from Wallace Natural Woven Rollers PDF; pattern metadata preserved.
+  if (window.pbFabricPicker && typeof WNR_COLORS !== 'undefined') {
+    var list = (!filter || filter === 'all') ? WNR_COLORS : WNR_COLORS.filter(function(c){ return c.g === filter; });
+    var byKey = {};
+    list.forEach(function(c){
+      var k = c.g + '|' + c.f;
+      if (!byKey[k]) byKey[k] = { g:c.g, f:c.f, colors:[] };
+      byKey[k].colors.push({ n: (c.n.slice(c.f.length).trim() || c.n), c: c.c });
+    });
+    var collections = Object.keys(byKey).map(function(k){ return { type:'w', pg:byKey[k].g, name:byKey[k].f, colors:byKey[k].colors }; });
+    pbFabricPicker.render('fab-grid', {
+      hideTabs:true, showPriceGroups:true,
+      types:[{key:'w',label:'Natural Roller'}],
+      collections:collections,
+      onSelect:function(sel){ wnrPickColor(sel.code); }
+    });
+    if (S.fabColorCode) grid.querySelectorAll('.pbfp-sw').forEach(function(b){ if (b.title === S.fabColorCode) b.classList.add('sel'); });
+    return;
+  }
+  // Fallback — original pattern cards
+  var flist = filter === 'all' ? FABRICS : FABRICS.filter(function(f){ return f.group === filter; });
+  grid.innerHTML = flist.map(function(f, i) {
     var idx = FABRICS.indexOf(f);
     var sel = S.fabric && S.fabric.name === f.name ? ' sel' : '';
     return '<div class="fab-card' + sel + '" onclick="selectFabric(' + idx + ')">' +
@@ -244,6 +239,26 @@ function buildFabGrid(filter) {
       '<div class="fab-meta">Max ' + f.maxW + '"W × ' + f.maxH + '"H' + (f.note ? '<br>' + f.note : '') + '</div>' +
     '</div>';
   }).join('');
+}
+
+// Select a specific pattern-color from the shared picker (real PDF colors).
+// Sets S.fabric to the pattern family (for size validation + Rhea rules) and
+// S.fabColor to the exact color + PR code, then runs the same downstream logic.
+function wnrPickColor(code){
+  var c = WNR_COLORS.find(function(x){ return x.c === code; });
+  if (!c) return;
+  var isRhea = (c.f === 'Rhea');
+  S.fabric = { name:c.f, group:c.g, maxW:c.mw, maxH:c.mh, rhea:isRhea };
+  S.fabColor = (c.n.slice(c.f.length).trim()) + ' (' + c.c + ')';
+  S.fabColorCode = c.c;
+  var fcInp = document.getElementById('fab-color-inp'); if (fcInp) fcInp.value = S.fabColor;
+  var rw = document.getElementById('rhea-warn'); if (rw) rw.style.display = isRhea ? 'flex' : 'none';
+  updateSpec('sp-front', c.n + ' · Group ' + c.g);
+  updateSpec('sp-group', 'Group ' + c.g);
+  validateSize();
+  buildTopTreatmentStep();
+  completeStep('step-5', c.n);
+  if (S.shadeType === 'double') activateStep('step-6'); else activateStep('step-7');
 }
 
 function filterFab(f, btn) {
@@ -324,17 +339,19 @@ function buildTopTreatmentStep() {
     {key:'trad-valance',icon:'🪵', title:'Traditional Valance',               desc:'Wood headrail + fabric · 6" single / 8" double · Returns available', show:true}
   ];
 
-  body.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:4px">' +
-    items.filter(function(i){ return i.show; }).map(function(item) {
+  var shown = items.filter(function(i){ return i.show; });
+  body.innerHTML = '<div class="opt-row">' +
+    shown.map(function(item) {
       var sel = S.topTreatment === item.key ? ' sel' : '';
       var blocked = item.blocked ? ' blocked' : '';
       var onclick = item.blocked ? '' : 'onclick="selectTopTreatment(\'' + item.key + '\')"';
-      return '<div class="opt-card' + sel + blocked + '" id="tt-' + item.key + '" ' + onclick + '>' +
-        '<div class="opt-card-icon">' + item.icon + '</div>' +
-        '<div class="opt-card-title">' + item.title + '</div>' +
-        '<div class="opt-card-desc">' + item.desc + '</div>' +
-      '</div>';
-    }).join('') + '</div>';
+      return '<button class="opt-btn' + sel + blocked + '" id="tt-' + item.key + '" ' + onclick + '>' +
+        item.title +
+      '</button>';
+    }).join('') + '</div>' +
+    '<div class="step-note" style="font-size:11px;color:#888;margin-top:6px">' +
+    shown.map(function(item){ return '<strong>' + item.title + ':</strong> ' + item.desc; }).join('<br>') +
+    '</div>';
 
   // Sub-options appear below when a treatment is selected
   body.innerHTML += '<div id="tt-sub-opts" style="margin-top:14px"></div>';
@@ -369,27 +386,28 @@ function buildTopSubOpts(key) {
         return '<div class="hw-color-opt' + (c === S.cassetteColor ? ' sel' : '') + '" onclick="selCassetteColor(\'' + c + '\',this)"><span class="hw-dot" style="background:' + dots[c] + '"></span>' + c + '</div>';
       }).join('') + '</div>' +
       '<div style="font-size:12px;font-weight:500;color:#444;margin:12px 0 8px">Fabric wrap</div>' +
-      '<div class="opt-grid-2">' +
-      '<div class="opt-card' + (S.cassetteWrap ? ' sel' : '') + '" onclick="selCassetteWrap(true)"><div class="opt-card-title">Wrapped</div><div class="opt-card-desc">Fabric-covered cassette housing</div></div>' +
-      '<div class="opt-card' + (!S.cassetteWrap ? ' sel' : '') + '" onclick="selCassetteWrap(false)"><div class="opt-card-title">Unwrapped</div><div class="opt-card-desc">Solid color cassette housing</div></div>' +
-      '</div>';
+      '<div class="opt-row">' +
+      '<button class="opt-btn' + (S.cassetteWrap ? ' sel' : '') + '" onclick="selCassetteWrap(true)">Wrapped</button>' +
+      '<button class="opt-btn' + (!S.cassetteWrap ? ' sel' : '') + '" onclick="selCassetteWrap(false)">Unwrapped</button>' +
+      '</div>' +
+      '<div class="step-note" style="font-size:11px;color:#888;margin-top:6px"><strong>Wrapped:</strong> fabric-covered cassette housing. <strong>Unwrapped:</strong> solid color cassette housing.</div>';
     if (S.fabric && S.fabric.rhea) html = '<div class="err-box"><span>⚠️</span><span>Rhea fabric cannot use square cassette fabric wrap.</span></div>';
   } else if (key === 'open-metal') {
     html += '<div style="font-size:12px;font-weight:500;color:#444;margin-bottom:8px">Bracket color</div>' +
-      '<div class="opt-grid-3">' +
+      '<div class="opt-row">' +
       ['Antique Brass','Satin Nickel','Black'].map(function(c) {
-        return '<div class="opt-card' + (S.metalBracketColor === c ? ' sel' : '') + '" onclick="selMetalBracket(\'' + c + '\')">' +
-          '<div class="opt-card-title">' + c + '</div></div>';
+        return '<button class="opt-btn' + (S.metalBracketColor === c ? ' sel' : '') + '" onclick="selMetalBracket(\'' + c + '\')">' + c + '</button>';
       }).join('') + '</div>';
   } else if (key === 'box-valance') {
     if (S.fabric && S.fabric.rhea) {
       html = '<div class="err-box"><span>⚠️</span><span>Rhea fabric cannot use fabric-wrapped box valance.</span></div>';
     } else {
       html += '<div style="font-size:12px;font-weight:500;color:#444;margin-bottom:6px">Valance height</div>' +
-        '<div class="opt-grid-2">' +
-        '<div class="opt-card' + (S.shadeType === 'double' ? '' : ' sel') + '" onclick="this.classList.add(\'sel\');this.nextElementSibling.classList.remove(\'sel\')"><div class="opt-card-title">4" height</div><div class="opt-card-desc">Single shades</div></div>' +
-        '<div class="opt-card' + (S.shadeType === 'double' ? ' sel' : '') + '" onclick="this.classList.add(\'sel\');this.previousElementSibling.classList.remove(\'sel\')"><div class="opt-card-title">6" height</div><div class="opt-card-desc">Double shades — recommended</div></div>' +
+        '<div class="opt-row">' +
+        '<button class="opt-btn' + (S.shadeType === 'double' ? '' : ' sel') + '" onclick="this.classList.add(\'sel\');this.nextElementSibling.classList.remove(\'sel\')">4" height</button>' +
+        '<button class="opt-btn' + (S.shadeType === 'double' ? ' sel' : '') + '" onclick="this.classList.add(\'sel\');this.previousElementSibling.classList.remove(\'sel\')">6" height</button>' +
         '</div>' +
+        '<div class="step-note" style="font-size:11px;color:#888;margin-top:6px"><strong>4" height:</strong> single shades. <strong>6" height:</strong> double shades — recommended.</div>' +
         '<div class="info-box" style="margin-top:10px">Returns from 1"–6". Outside mount recommended: 3¼" single, 4" double. Not recommended inside mount. If returns used, valance must be ≥1⅞" wider than shade.</div>';
       document.getElementById('box-val-return-wrap').style.display = 'block';
     }
@@ -404,7 +422,7 @@ function selCassetteColor(c, el) {
 }
 function selCassetteWrap(v) {
   S.cassetteWrap = v;
-  document.querySelectorAll('#tt-cassette ~ #tt-sub-opts .opt-card').forEach(function(e,i){ e.classList.toggle('sel', i === (v ? 0 : 1)); });
+  document.querySelectorAll('#tt-cassette ~ #tt-sub-opts .opt-btn').forEach(function(e,i){ e.classList.toggle('sel', i === (v ? 0 : 1)); });
   buildTopSubOpts('cassette');
 }
 function selMetalBracket(c) {
@@ -431,16 +449,11 @@ function buildRollStep() {
   var reverseBlocked = tt === 'cassette' || tt === 'trad-valance';
   var whyBlocked = tt === 'cassette' ? 'Not available with square cassette' : tt === 'trad-valance' ? 'Not available with traditional valance' : '';
 
-  body.innerHTML = '<div class="opt-grid-2">' +
-    '<div class="opt-card' + (S.rollDir === 'standard' ? ' sel' : '') + '" id="rd-std" onclick="selectRoll(\'standard\')">' +
-      '<div class="opt-card-title">Standard Roll</div>' +
-      '<div class="opt-card-desc">Fabric off back of roll — best for privacy and light blocking</div>' +
-    '</div>' +
-    '<div class="opt-card' + (reverseBlocked ? ' blocked' : (S.rollDir === 'reverse' ? ' sel' : '')) + '" id="rd-rev" onclick="selectRoll(\'reverse\')">' +
-      '<div class="opt-card-title">Reverse Roll</div>' +
-      '<div class="opt-card-desc">' + (reverseBlocked ? '<span style="color:#dc2626;font-weight:600">' + whyBlocked + '</span>' : 'Fabric off front — best for clearing obstructions') + '</div>' +
-    '</div>' +
-  '</div>';
+  body.innerHTML = '<div class="opt-row">' +
+    '<button class="opt-btn' + (S.rollDir === 'standard' ? ' sel' : '') + '" id="rd-std" onclick="selectRoll(\'standard\')">Standard Roll</button>' +
+    '<button class="opt-btn' + (reverseBlocked ? ' blocked' : (S.rollDir === 'reverse' ? ' sel' : '')) + '" id="rd-rev" onclick="selectRoll(\'reverse\')">Reverse Roll</button>' +
+  '</div>' +
+  '<div class="step-note" style="font-size:11px;color:#888;margin-top:6px"><strong>Standard Roll:</strong> fabric off back of roll — best for privacy and light blocking. <strong>Reverse Roll:</strong> ' + (reverseBlocked ? '<span style="color:#dc2626;font-weight:600">' + whyBlocked + '</span>' : 'fabric off front — best for clearing obstructions') + '</div>';
 
   if (reverseBlocked && S.rollDir === 'reverse') {
     S.rollDir = 'standard';
@@ -481,18 +494,22 @@ function buildControlStep() {
     return;
   }
 
-  body.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:4px">' +
+  body.innerHTML = '<div class="opt-row">' +
     controls.map(function(c) {
       var isBlocked = c.blocked || (tt === 'open-metal' && c.key === 'clutch');
       var sel = S.control === c.key && !isBlocked ? ' sel' : '';
       var blocked = isBlocked ? ' blocked' : '';
+      return '<button class="opt-btn' + sel + blocked + '" id="ctrl-' + c.key + '" onclick="selectControl(\'' + c.key + '\')">' +
+        c.title +
+      '</button>';
+    }).join('') + '</div>' +
+    '<div class="step-note" style="font-size:11px;color:#888;margin-top:6px">' +
+    controls.map(function(c) {
+      var isBlocked = c.blocked || (tt === 'open-metal' && c.key === 'clutch');
       var desc = isBlocked && c.blockedReason ? '<span style="color:#dc2626;font-weight:600">' + c.blockedReason + '</span>' : c.desc;
-      return '<div class="opt-card' + sel + blocked + '" id="ctrl-' + c.key + '" onclick="selectControl(\'' + c.key + '\')">' +
-        '<div class="opt-card-icon">' + c.icon + '</div>' +
-        '<div class="opt-card-title">' + c.title + '</div>' +
-        '<div class="opt-card-desc">' + desc + '</div>' +
-      '</div>';
-    }).join('') + '</div>';
+      return '<strong>' + c.title + ':</strong> ' + desc;
+    }).join('<br>') +
+    '</div>';
 }
 
 function selectControl(key) {
@@ -522,9 +539,9 @@ function buildControlDetails(key) {
   titleEl.textContent = 'Control side' + (key === 'clutch' ? ' + chain' : key === 'prowand' ? ' + wand length' : key === 'motor' ? ' + motor type' : '');
 
   var sideHTML = '<div style="font-size:12px;font-weight:500;color:#444;margin-bottom:8px">Control side</div>' +
-    '<div class="opt-grid-2">' +
-    '<div class="opt-card' + (S.controlSide === 'Right' ? ' sel' : '') + '" id="side-right" onclick="selectSide(\'Right\')"><div class="opt-card-title">Right</div></div>' +
-    '<div class="opt-card' + (S.controlSide === 'Left' ? ' sel' : '') + '" id="side-left" onclick="selectSide(\'Left\')"><div class="opt-card-title">Left</div></div>' +
+    '<div class="opt-row">' +
+    '<button class="opt-btn' + (S.controlSide === 'Right' ? ' sel' : '') + '" id="side-right" onclick="selectSide(\'Right\')">Right</button>' +
+    '<button class="opt-btn' + (S.controlSide === 'Left' ? ' sel' : '') + '" id="side-left" onclick="selectSide(\'Left\')">Left</button>' +
     '</div>';
 
   var extraHTML = '';
@@ -537,41 +554,43 @@ function buildControlDetails(key) {
         return '<div class="hw-color-opt' + (c === S.chainColor ? ' sel' : '') + '" onclick="selChainColor(\'' + c + '\',this)"><span class="hw-dot" style="background:' + dots[c] + '"></span>' + c + '</div>';
       }).join('') + '</div>' +
       '<div style="font-size:12px;font-weight:500;color:#444;margin:14px 0 8px">Chain drop length</div>' +
-      '<div class="opt-grid-3">' +
+      '<div class="opt-row">' +
       ['2 ft','3 ft','4 ft','5 ft'].map(function(l){
         var isClosest = S.height > 0 && isChainDefault(l);
-        return '<div class="opt-card' + (S.chainDrop === l ? ' sel' : '') + '" onclick="selChainDrop(\'' + l + '\')">' +
-          '<div class="opt-card-title">' + l + (isClosest ? ' ✓' : '') + '</div>' +
-          (isClosest ? '<div class="opt-card-desc">Default (≈2/3 height)</div>' : '') +
-        '</div>';
+        return '<button class="opt-btn' + (S.chainDrop === l ? ' sel' : '') + '" onclick="selChainDrop(\'' + l + '\')">' + l + (isClosest ? ' ✓' : '') + '</button>';
       }).join('') + '</div>' +
+      '<div class="step-note" style="font-size:11px;color:#888;margin-top:6px">✓ marks the default (≈2/3 height).</div>' +
       '<div class="info-box" style="margin-top:10px">Default chain is closest to 2/3 of shade height. Compliant cord tensioner included. Metal chain available — note in quote.</div>';
   }
 
   if (key === 'prowand') {
     extraHTML = '<div style="font-size:12px;font-weight:500;color:#444;margin:14px 0 8px">Wand length</div>' +
-      '<div class="opt-grid-2">' +
+      '<div class="opt-row">' +
       ['24"','36"','48"','60"'].map(function(l) {
-        return '<div class="opt-card' + (S.wandLength === l ? ' sel' : '') + '" onclick="selWandLength(\'' + l + '\')">' +
-          '<div class="opt-card-title">' + l + '</div></div>';
+        return '<button class="opt-btn' + (S.wandLength === l ? ' sel' : '') + '" onclick="selWandLength(\'' + l + '\')">' + l + '</button>';
       }).join('') + '</div>' +
       (S.topTreatment === 'open-metal' ? '<div class="info-box" style="margin-top:10px">Pro Wand with decorative metal bracket requires top mount installation.</div>' : '');
   }
 
   if (key === 'motor') {
+    var motors = [
+      {v:'li-std',   label:'LI Rechargeable',     desc:'Standard lift — rechargeable lithium ion'},
+      {v:'li-power', label:'LI Power Lift',        desc:'Heavy fabric/oversized — rechargeable LI'},
+      {v:'dc-12v',   label:'12V DC Hardwired',     desc:'Hardwired to 12V DC power'},
+      {v:'dc-ext',   label:'12V DC External',      desc:'External 12V DC power supply'},
+      {v:'ac-100',   label:'AC 100–240V Hardwired',desc:'Requires licensed electrician'}
+    ];
     extraHTML = '<div style="font-size:12px;font-weight:500;color:#444;margin:14px 0 8px">Motor type</div>' +
-      '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px">' +
-      [
-        {v:'li-std',   label:'LI Rechargeable',     desc:'Standard lift — rechargeable lithium ion'},
-        {v:'li-power', label:'LI Power Lift',        desc:'Heavy fabric/oversized — rechargeable LI'},
-        {v:'dc-12v',   label:'12V DC Hardwired',     desc:'Hardwired to 12V DC power'},
-        {v:'dc-ext',   label:'12V DC External',      desc:'External 12V DC power supply'},
-        {v:'ac-100',   label:'AC 100–240V Hardwired',desc:'Requires licensed electrician'}
-      ].map(function(m) {
-        var warn = m.v === 'ac-100' ? '<div class="opt-card-desc" style="color:#dc2626">Electrician required</div>' : '<div class="opt-card-desc">' + m.desc + '</div>';
-        return '<div class="opt-card' + (S.motorType === m.v ? ' sel' : '') + '" onclick="selMotorType(\'' + m.v + '\')">' +
-          '<div class="opt-card-title">' + m.label + '</div>' + warn + '</div>';
-      }).join('') + '</div>';
+      '<div class="opt-row">' +
+      motors.map(function(m) {
+        return '<button class="opt-btn' + (S.motorType === m.v ? ' sel' : '') + '" onclick="selMotorType(\'' + m.v + '\')">' + m.label + '</button>';
+      }).join('') + '</div>' +
+      '<div class="step-note" style="font-size:11px;color:#888;margin-top:6px">' +
+      motors.map(function(m){
+        var d = m.v === 'ac-100' ? '<span style="color:#dc2626">Electrician required</span>' : m.desc;
+        return '<strong>' + m.label + ':</strong> ' + d;
+      }).join('<br>') +
+      '</div>';
   }
 
   if (key === 'cordless') {
@@ -690,7 +709,7 @@ function addWallaceNaturalRollerToCart(){
   var lines=[
     {label:'Product',value:'Wallace Portfolio Collection Natural Roller Shades'},
     {label:'Shade Type',value:S.shadeType==='single'?'Single Natural Roller':'Double Natural Roller'},
-    {label:'Mount',value:S.mount==='inside'?'Inside Mount':'Outside Mount'},
+    {label:'Mount',value:S.mount==='inside'?'Inside mount':'Outside mount'},
     {label:'Width',value:(S.width||'—')+'"'},
     {label:'Height',value:(S.height||'—')+'"'},
     {label:'Quantity',value:String(S.qty||1)},
@@ -706,8 +725,8 @@ function addWallaceNaturalRollerToCart(){
 }
 
 function submitQuote() {
-  var name  = document.getElementById('q-name').value.trim();
-  var phone = document.getElementById('q-phone').value.trim();
+  var name  = document.getElementById('cf-name').value.trim();
+  var phone = document.getElementById('cf-phone').value.trim();
   if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
 
   var fab = S.fabric;
@@ -715,7 +734,7 @@ function submitQuote() {
   var ctrl = S.control;
   var ctrllabels = {clutch:'Clutch', cordless:'Cordless', prowand:'Pro Wand Motor', motor:'Remote Motor'};
   var ttlabels = {'open-std':'Open Roll — Standard Bracket','open-metal':'Open Roll — Decorative Metal Bracket','open-dual':'Open Roll — Dual Bracket','cassette':'Square Cassette','box-valance':'Fabric-Wrapped Box Valance','trad-valance':'Traditional Valance'};
-  var delivery = 'Ship to me (UPS/FedEx from Huntingdon Valley, PA)';
+  var delivery = 'Ship to me (UPS/FedEx)';
 
   var warns = [];
   if (fab && S.width > fab.maxW) warns.push('Width exceeds fabric max (' + fab.maxW + '")');
@@ -731,13 +750,12 @@ function submitQuote() {
   var body = 'WALLACE PORTFOLIO COLLECTION NATURAL ROLLER SHADES — SPECIFICATION REQUEST\n\n'
     + '── CUSTOMER ──\n'
     + 'Name: ' + name + '\nPhone: ' + phone
-    + '\nEmail: ' + (document.getElementById('q-email').value.trim() || '—')
-    + '\nAddress: ' + (document.getElementById('q-address').value.trim() || '—') + '\n\n'
+    + '\nEmail: ' + (document.getElementById('cf-email').value.trim() || '—')
+    + '\nAddress: ' + (document.getElementById('cf-address').value.trim() || '—') + '\n\n'
     + '── PRODUCT SPECIFICATION ──\n'
     + 'Product: Wallace Portfolio Collection Natural Roller Shades (2026)\n'
     + 'Shade type: ' + (S.shadeType === 'single' ? 'Single Natural Roller' : 'Double Natural Roller') + '\n'
-    + 'Room / window: ' + (S.room || '—') + '\n'
-    + 'Mount: ' + (S.mount === 'inside' ? 'Inside Mount (−1/8" deduction)' : S.mount === 'outside' ? 'Outside Mount' : '—') + '\n'
+    + 'Mount: ' + (S.mount === 'inside' ? 'Inside mount (−1/8" deduction)' : S.mount === 'outside' ? 'Outside mount' : '—') + '\n'
     + 'Ordered width: ' + (S.width || '—') + '"\n'
     + 'Ordered height: ' + (S.height || '—') + '"\n'
     + 'Quantity: ' + S.qty + '\n'
@@ -773,7 +791,7 @@ function submitQuote() {
     + '\n── DELIVERY ──\n'
     + delivery + '\n\n'
     + '── NOTES ──\n'
-    + (document.getElementById('q-notes').value.trim() || 'None');
+    + (document.getElementById('cf-notes').value.trim() || 'None');
 
   window.location.href = 'mailto:blindznation@gmail.com'
     + '?subject=' + encodeURIComponent('Wallace Natural Roller Spec — ' + name + (fab ? ' · ' + fab.name : ''))
@@ -787,3 +805,10 @@ buildFabGrid('all');
 buildBackGrids();
 buildTopTreatmentStep();
 buildControlStep();
+
+
+// ── Real colors from Wallace Natural Woven Rollers PDF (53 pattern-colors, groups A-E) ──
+// {c:PR code, n:full name, f:family, g:price group, mw:maxW, mh:maxH}
+var WNR_COLORS = [{c:"PR-017",n:"Alston Ash",f:"Alston",g:"A",mw:90,mh:108},{c:"PR-015",n:"Alston Peppered White",f:"Alston",g:"A",mw:90,mh:108},{c:"PR-016",n:"Alston Russet",f:"Alston",g:"A",mw:90,mh:108},{c:"PR-031",n:"Easton Charcoal",f:"Easton",g:"A",mw:90,mh:108},{c:"PR-032",n:"Easton Iron",f:"Easton",g:"A",mw:90,mh:108},{c:"PR-030",n:"Easton Smoke",f:"Easton",g:"A",mw:90,mh:108},{c:"PR-025",n:"Hampton Graphite",f:"Hampton",g:"A",mw:90,mh:108},{c:"PR-024",n:"Hampton Pebble",f:"Hampton",g:"A",mw:90,mh:108},{c:"PR-023",n:"Hampton Snowfall",f:"Hampton",g:"A",mw:90,mh:108},{c:"PR-022",n:"Isla Rockside",f:"Isla",g:"A",mw:90,mh:108},{c:"PR-026",n:"Isla Seashell",f:"Isla",g:"A",mw:90,mh:108},{c:"PR-021",n:"Marco Contrast",f:"Marco",g:"A",mw:90,mh:108},{c:"PR-018",n:"Mason Grove",f:"Mason",g:"A",mw:90,mh:108},{c:"PR-019",n:"Mason Lumber",f:"Mason",g:"A",mw:90,mh:108},{c:"PR-020",n:"Mason Shade",f:"Mason",g:"A",mw:90,mh:108},{c:"PR-027",n:"Clifton Silver",f:"Clifton",g:"B",mw:90,mh:108},{c:"PR-013",n:"Iris Cream",f:"Iris",g:"B",mw:72,mh:108},{c:"PR-131",n:"Iris Fossil",f:"Iris",g:"B",mw:72,mh:108},{c:"PR-014",n:"Iris Khaki",f:"Iris",g:"B",mw:72,mh:108},{c:"PR-093",n:"Keys Almond",f:"Keys",g:"B",mw:90,mh:108},{c:"PR-094",n:"Keys Harbor Gray",f:"Keys",g:"B",mw:90,mh:108},{c:"PR-095",n:"Keys Hazelnut",f:"Keys",g:"B",mw:90,mh:108},{c:"PR-034",n:"Seville Earth",f:"Seville",g:"B",mw:90,mh:108},{c:"PR-033",n:"Seville Wisp",f:"Seville",g:"B",mw:90,mh:108},{c:"PR-291",n:"Cyprus Crystal",f:"Cyprus",g:"C",mw:90,mh:96},{c:"PR-292",n:"Cyprus Morning Mist",f:"Cyprus",g:"C",mw:90,mh:96},{c:"PR-029",n:"Cyprus Thunder",f:"Cyprus",g:"C",mw:90,mh:96},{c:"PR-028",n:"Lace Snow",f:"Lace",g:"C",mw:90,mh:108},{c:"PR-089",n:"Layla Natural White",f:"Layla",g:"C",mw:90,mh:108},{c:"PR-090",n:"Layla Truffle",f:"Layla",g:"C",mw:90,mh:108},{c:"PR-881",n:"Wyatt Almond",f:"Wyatt",g:"C",mw:90,mh:96},{c:"PR-883",n:"Wyatt Antique White",f:"Wyatt",g:"C",mw:90,mh:96},{c:"PR-088",n:"Wyatt Marble",f:"Wyatt",g:"C",mw:90,mh:96},{c:"PR-882",n:"Wyatt Slate",f:"Wyatt",g:"C",mw:90,mh:96},{c:"PR-Z4C",n:"Ashton Camel",f:"Ashton",g:"D",mw:114,mh:108},{c:"PR-Z4A",n:"Ashton Dove",f:"Ashton",g:"D",mw:114,mh:108},{c:"PR-Z3A",n:"Brenna Cloud",f:"Brenna",g:"D",mw:114,mh:108},{c:"PR-Z3B",n:"Brenna Mirage",f:"Brenna",g:"D",mw:114,mh:108},{c:"PR-Y3C",n:"Mallory Fog",f:"Mallory",g:"D",mw:114,mh:108},{c:"PR-Y3A",n:"Mallory Frost",f:"Mallory",g:"D",mw:114,mh:108},{c:"PR-Z1D",n:"Torrey Twine",f:"Torrey",g:"D",mw:114,mh:108},{c:"PR-M8A",n:"Rhea Champagne",f:"Rhea",g:"E",mw:90,mh:108},{c:"PR-M8C",n:"Rhea Moonlight",f:"Rhea",g:"E",mw:90,mh:108},{c:"PR-M8E",n:"Rhea Sapphire",f:"Rhea",g:"E",mw:90,mh:108},{c:"PR-Z5F",n:"Sophie Birch",f:"Sophie",g:"E",mw:114,mh:108},{c:"PR-Z5J",n:"Sophie Limestone",f:"Sophie",g:"E",mw:114,mh:108},{c:"PR-Z5K",n:"Sophie Linen",f:"Sophie",g:"E",mw:114,mh:108},{c:"PR-Z5B",n:"Sophie Papyrus",f:"Sophie",g:"E",mw:114,mh:108},{c:"PR-Z5A",n:"Sophie Pearl",f:"Sophie",g:"E",mw:114,mh:108},{c:"PR-Z5E",n:"Sophie Sand",f:"Sophie",g:"E",mw:114,mh:108},{c:"PR-Z5G",n:"Sophie Sea Breeze",f:"Sophie",g:"E",mw:114,mh:108},{c:"PR-Z5M",n:"Sophie Skyline",f:"Sophie",g:"E",mw:114,mh:108},{c:"PR-Z5H",n:"Sophie Twig",f:"Sophie",g:"E",mw:114,mh:108}];
+// Render the picker now that color data is defined
+if (document.getElementById("fab-grid")) buildFabGrid("all");

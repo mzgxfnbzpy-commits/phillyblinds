@@ -279,11 +279,14 @@
     <div class="delivery-section">
       <div style="font-size:13px;font-weight:500;color:#111;margin-bottom:8px">Delivery</div>
       <div class="delivery-note">
-        Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA — shipping estimate included with your quote.
+        Shipped via <strong>UPS or FedEx</strong> — shipping estimate included with your quote.
         <div class="delivery-tariff">Note: tariffs, duties, and applicable import fees are additional and will be itemized separately in your quote.</div>
       </div>
     </div>
     <div id="inst-contact-err" class="warn-box warn-box-red" style="display:none;margin-bottom:8px"></div>
+    <!-- Terms acceptance — required before any "Submit Order for Review", same as
+         every other form on the site. -->
+    <div id="inst-terms-wrap"></div>
     <button class="btn-gold" onclick="submitInstall()" data-pb-require-contact="inst-contact-err" style="width:100%;padding:14px;font-size:14px;font-weight:600">Submit Order for Review &rarr;</button>
   </div>
 
@@ -316,6 +319,11 @@
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script src="../js/pages/installation.js"></script>
+<script>
+// Terms acceptance for the installation form — the only "Submit Order for Review"
+// on the site that wasn't gated.
+document.getElementById('inst-terms-wrap').innerHTML = pbTermsCheckboxHTML('inst-terms');
+</script>
 </body>
 </html>
 

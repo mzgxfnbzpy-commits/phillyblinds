@@ -35,8 +35,13 @@
 .product-card{border:1.5px solid #e8e8e4;border-radius:14px;padding:22px 18px;cursor:pointer;transition:all .15s;background:#fff}
 .product-card:hover{border-color:var(--gold);box-shadow:0 2px 14px rgba(45,224,193,.12)}
 .product-card.sel{border:2px solid var(--gold);background:var(--gold-mid)}
-.product-card h3{font-size:15px;font-weight:500;color:#111;margin-bottom:5px}
-.product-card p{font-size:12px;color:#555;line-height:1.6}
+.product-card{padding:0;overflow:hidden}
+.product-card h3{font-size:15px;font-weight:500;color:#111;margin-bottom:5px;padding:0 18px}
+.product-card p{font-size:12px;color:#555;line-height:1.6;padding:0 18px}
+.product-card .product-badge{margin:8px 18px 18px}
+.product-thumb{width:100%;aspect-ratio:16/10;overflow:hidden;background:#f0ece4;margin-bottom:12px}
+.product-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.product-card h3{margin-top:14px}
 .product-badge{font-size:10px;padding:2px 8px;border-radius:6px;background:var(--gold-mid);color:#0A4A42;font-weight:500;display:inline-block;margin-top:8px}
 .opt-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .opt-btn{padding:8px 16px;border:1.5px solid #e8e8e4;border-radius:24px;font-size:13px;color:#333;cursor:pointer;background:#fff;font-family:inherit;transition:.15s;white-space:nowrap}
@@ -128,7 +133,7 @@
   <div class="hero-pills">
     <span class="hero-pill hero-pill-gold">Wallace&reg;</span>
     <span class="hero-pill">Banded 2D &mdash; custom quote</span>
-    <span class="hero-pill">Portfolio Dual Sheer &mdash; instant pricing</span>
+    <span class="hero-pill">Portfolio Dual Sheer</span>
     <span class="hero-pill">Cordless &middot; Pro Wand &middot; Motorized</span>
     <span class="hero-pill">Lifetime Warranty</span>
   </div>
@@ -145,36 +150,73 @@
   <button class="tier-btn tier-active" id="tier-basic" onclick="selectTier('basic')">
     <span class="tier-badge tier-badge-basic">Basic</span> Banded 2D
   </button>
-  <a class="tier-btn" href="portfolio-dual-sheer.html">
+  <button class="tier-btn" id="tier-dual" onclick="selectTier('premium')">
     <span class="tier-badge tier-badge-premium">Premium</span> Portfolio Dual Sheer
-  </a>
+  </button>
 </div>
 
 <div class="config-layout">
 <div>
 
-<!-- STEP 1 -->
+<!-- STEP 1: PRODUCT COLLECTION (choose before entering size) -->
 <div class="step-block active" id="step1">
-  <div class="step-head" onclick="tog('step1')"><div class="step-num">1</div><div class="step-head-title">Product Collection</div><div class="step-head-val" id="val1">&mdash;</div></div>
+  <div class="step-head" onclick="tog('step1')"><div class="step-num">1</div><div class="step-head-title">Choose your shade</div><div class="step-head-val" id="val1">&mdash;</div></div>
   <div class="step-body">
+    <p class="step-note" style="margin:0 0 12px">Both options stay on this page — switch between them any time; your size and options carry over.</p>
     <div class="product-grid">
-      <div class="product-card" id="prod-dual" onclick="setProd('dual',this)">
-        <h3>Portfolio Dual Sheer <span style="font-size:10px;font-weight:500;color:var(--gold);margin-left:6px">Full configurator →</span></h3>
-        <p>Classic zebra/dual-sheer. Horizontal bands open for light, close for privacy. 5 price groups, 95 fabrics, up to 110&Prime; wide. Light filtering and Blackout. Live pricing estimate.</p>
-        <span class="product-badge" style="background:rgba(45,224,193,.15);color:#0A4A42">Opens full configurator →</span>
-      </div>
-      <div class="product-card" id="prod-2d" onclick="setProd('2d',this)">
-        <h3>Banded 2D Shades</h3>
+      <div class="product-card sel" id="prod-2d" onclick="setProd('2d',this)">
+        <div class="product-thumb"><img loading="lazy" src="../images/thumbnails/ZEBRA SHADE.JPEG" alt="Banded 2D zebra shades"></div>
+        <h3>Banded 2D Shades <span style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#0A4A42;background:rgba(45,224,193,.15);padding:2px 8px;border-radius:10px;margin-left:6px">BASIC</span></h3>
         <p>Woven 2D-pattern banded shades. Alternating sheer and solid fabric bands with textured visual depth. Cordless, motorized, and wand options.</p>
-        <span class="product-badge">Custom quote</span>
+        <span class="product-badge">Great value</span>
+      </div>
+      <div class="product-card" id="prod-dual" onclick="setProd('dual',this)">
+        <div class="product-thumb"><img loading="lazy" src="../images/thumbnails/ZEBRA SHADES.JPEG" alt="Portfolio Dual Sheer premium zebra shades"></div>
+        <h3>Portfolio Dual Sheer <span style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#7a5a10;background:rgba(200,151,63,.20);padding:2px 8px;border-radius:10px;margin-left:6px">PREMIUM</span></h3>
+        <p>Classic zebra/dual-sheer. Horizontal bands open for light, close for privacy. 5 price groups, 95 fabrics, up to 110&Prime; wide. Light filtering and Blackout. Live pricing estimate.</p>
+        <span class="product-badge" style="background:rgba(200,151,63,.20);color:#7a5a10">Premium fabric &amp; finish</span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- STEP 2: FABRIC -->
+<!-- STEP 2: WINDOW MEASUREMENTS & MOUNT -->
+<div class="step-block" id="step3">
+  <div class="step-head" onclick="tog('step3')"><div class="step-num">2</div><div class="step-head-title">Window measurements &amp; mount</div><div class="step-head-val" id="val3">&mdash;</div></div>
+  <div class="step-body">
+    <div class="dim-box">
+      <div class="dim-box-label">Enter your window size</div>
+      <div class="form-row">
+        <div class="form-group"><label>Width</label><input type="number" id="inp-w" min="12" max="110" step="0.125" placeholder="48" oninput="validateDims()"><div class="dim-unit">inches &middot; 12&Prime; min &middot; 110&Prime; max</div></div>
+        <div class="form-group"><label>Height</label><input type="number" id="inp-h" min="20" max="108" step="0.125" placeholder="60" oninput="validateDims()"><div class="dim-unit">inches &middot; 20&Prime; min &middot; 108&Prime; max</div></div>
+      </div>
+    </div>
+    <div class="step-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm at the home visit.</div>
+    <div id="dim-fb" style="margin-top:10px"></div>
+
+    <!-- Mount type -->
+    <div class="step-sub">Mount type</div>
+    <div class="opt-row" id="grp-mount">
+      <button class="opt-btn sel" onclick="selB(this,'grp-mount');updateSpec();validateDims();openNext('step2')">Inside mount <span style="font-size:10px;opacity:.7">(&frac14;&Prime; deduction)</span></button>
+      <button class="opt-btn" onclick="selB(this,'grp-mount');updateSpec();validateDims();openNext('step2')">Outside mount</button>
+    </div>
+    <div class="step-note">Inside mount fits inside the window frame (manufacturer deducts &frac14;&Prime; automatically). Outside mount covers the opening &mdash; add about 2&frac12;&Prime; each side for best light block.</div>
+    <div class="info-box" style="margin-top:10px">Most fabrics max 108&Prime;W. Asher, Briggs, Evlin, Landry, Leigh, Theo max 110&Prime;W. Min height 20&Prime; for clutch; 20&Prime; for cordless.</div>
+
+    <!-- Quantity -->
+    <div class="step-sub">Quantity</div>
+    <div class="qty-btns">
+      <button class="qty-btn" onclick="adjQty(-1)">&#8722;</button>
+      <input class="qty-num" type="number" id="qty-inp" value="1" min="1" max="50" oninput="setQtyInp(this.value)">
+      <button class="qty-btn" onclick="adjQty(1)">&#43;</button>
+    </div>
+    <div class="step-note">Number of shades of this size &amp; fabric.</div>
+  </div>
+</div>
+
+<!-- STEP 3: FABRIC -->
 <div class="step-block" id="step2">
-  <div class="step-head" onclick="tog('step2')"><div class="step-num">2</div><div class="step-head-title" id="s2title">Fabric</div><div class="step-head-val" id="val2">&mdash;</div></div>
+  <div class="step-head" onclick="tog('step2')"><div class="step-num">3</div><div class="step-head-title" id="s2title">Fabric</div><div class="step-head-val" id="val2">&mdash;</div></div>
   <div class="step-body">
     <div id="step2-dual">
       <div class="step-sub" style="margin-top:0">Opacity</div>
@@ -211,30 +253,6 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- STEP 3: DIMS -->
-<div class="step-block" id="step3">
-  <div class="step-head" onclick="tog('step3')"><div class="step-num">3</div><div class="step-head-title">Width &amp; Height</div><div class="step-head-val" id="val3">&mdash;</div></div>
-  <div class="step-body">
-    <div class="dim-row">
-      <div>
-        <div class="dim-label" style="margin-bottom:8px">Width (inches)</div>
-        <div style="display:flex;align-items:center;gap:8px"><input class="dim-input" type="number" id="inp-w" min="12" max="110" step="0.125" placeholder="48" oninput="validateDims()"><span style="font-size:12px;color:#888">in</span></div>
-      </div>
-      <div>
-        <div class="dim-label" style="margin-bottom:8px">Height (inches)</div>
-        <div style="display:flex;align-items:center;gap:8px"><input class="dim-input" type="number" id="inp-h" min="20" max="108" step="0.125" placeholder="60" oninput="validateDims()"><span style="font-size:12px;color:#888">in</span></div>
-      </div>
-    </div>
-    <div class="step-sub">Mount type</div>
-    <div class="opt-row" id="grp-mount">
-      <button class="opt-btn sel" onclick="selB(this,'grp-mount');updateSpec();validateDims()">Inside mount <span style="font-size:10px;opacity:.7">(&frac14;&Prime; deduction)</span></button>
-      <button class="opt-btn" onclick="selB(this,'grp-mount');updateSpec();validateDims()">Outside mount</button>
-    </div>
-    <div id="dim-fb" style="margin-top:10px"></div>
-    <div class="info-box" style="margin-top:10px">Most fabrics max 108&Prime;W. Asher, Briggs, Evlin, Landry, Leigh, Theo max 110&Prime;W. Min height 20&Prime; for clutch; 20&Prime; for cordless.</div>
   </div>
 </div>
 
@@ -342,17 +360,9 @@
 
 <!-- STEP 6: OPTIONS -->
 <div class="step-block" id="step6">
-  <div class="step-head" onclick="tog('step6')"><div class="step-num">6</div><div class="step-head-title">Options</div><div class="step-head-val" id="val6">1 shade</div></div>
+  <div class="step-head" onclick="tog('step6')"><div class="step-num">6</div><div class="step-head-title">Options</div><div class="step-head-val" id="val6">&mdash;</div></div>
   <div class="step-body">
-    <div class="step-sub" style="margin-top:0">Quantity</div>
-    <div style="display:flex;align-items:center;gap:0;margin-bottom:12px">
-      <button onclick="adjQty(-1)" style="width:36px;height:36px;border:1.5px solid #ddd;border-radius:8px 0 0 8px;background:#fff;font-size:20px;cursor:pointer;color:#333;font-family:inherit">−</button>
-      <input type="number" id="qty-inp" value="1" min="1" max="50" oninput="setQtyInp(this.value)" style="width:52px;height:36px;text-align:center;border-top:1.5px solid #ddd;border-bottom:1.5px solid #ddd;border-left:none;border-right:none;font-size:14px;font-weight:500;font-family:inherit;background:#fff">
-      <button onclick="adjQty(1)" style="width:36px;height:36px;border:1.5px solid #ddd;border-radius:0 8px 8px 0;background:#fff;font-size:20px;cursor:pointer;color:#333;font-family:inherit">+</button>
-    </div>
-    <div class="step-sub">Room / window label</div>
-    <input type="text" id="room-lbl" placeholder="e.g. Living room &mdash; east window" style="width:100%;padding:9px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box" oninput="updateSpec()">
-    <div class="step-sub">Side-by-side pattern matching</div>
+    <div class="step-sub" style="margin-top:0">Side-by-side pattern matching</div>
     <div class="opt-row" id="grp-sbs">
       <button class="opt-btn sel" onclick="selB(this,'grp-sbs')">No</button>
       <button class="opt-btn" onclick="selB(this,'grp-sbs');document.getElementById('sbs-note').style.display=''">Yes &mdash; pattern matched</button>
@@ -369,7 +379,7 @@
       <div class="delivery-opt-grid">
         <div class="delivery-opt-card sel" onclick="setDel('ship',this)">
           <div class="delivery-opt-title">Ship to me</div>
-          <div class="delivery-opt-body">UPS or FedEx from Huntingdon Valley, PA.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
+          <div class="delivery-opt-body">UPS or FedEx.<br><em style="font-size:10px;color:#999">Tariffs and import fees additional.</em></div>
         </div>
         <div class="delivery-opt-card" style="grid-column:1/-1" onclick="setDel('install',this)">
           <div class="delivery-opt-title">Professional installation (Philadelphia / South Jersey)</div>
@@ -384,17 +394,9 @@
 <div class="step-block" id="step8">
   <div class="step-head" onclick="tog('step8')"><div class="step-num">8</div><div class="step-head-title">Your Quote Request</div><div class="step-head-val" id="val8">&mdash;</div></div>
   <div class="step-body" id="step8-body">
-    <div id="sub-err" class="warn-box warn-box-red" style="display:none;margin-bottom:12px"></div>
-    <div class="form-row">
-      <div class="form-group"><label>Name *</label><input type="text" id="q-name" data-pb-contact="name" placeholder="Jane Smith"></div>
-      <div class="form-group"><label>Phone *</label><input type="tel" id="q-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
-    </div>
-    <div class="form-group"><label>Email *</label><input type="email" id="q-email" data-pb-contact="email" placeholder="jane@example.com"></div>
-    <div class="form-group"><label>Address <span style="font-weight:400;color:#999">(optional)</span></label><input type="text" id="q-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
-    <div class="form-group"><label>Notes</label><textarea id="q-notes" placeholder="e.g. three windows side by side, door application, need pattern matching..."></textarea></div>
     <button onclick="reqMoreInfo('Wallace Zebra &amp; Banded Shades')" class="req-info-link" style="display:block;margin-bottom:12px">Request more information &rarr;</button>
-    <button class="btn-cart-add" onclick="addBandedShadesToCart()" style="margin-bottom:8px">+ Add to Cart</button>
-    <button class="submit-btn" onclick="submitQ()" data-pb-require-contact="sub-err">Submit Order for Review &rarr;</button>
+    <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->
+    <div id="pb-final-step"></div>
     <div class="success-box" id="success-box"><h3>&#10003; Quote sent!</h3><p>We&rsquo;ll follow up within 1 business day.<br><strong>(609) 742-1720 &mdash; 24/7</strong></p></div>
   </div>
 </div>
@@ -444,11 +446,19 @@
 <script src="../js/shared.js"></script>
 <script src="../js/pages/wallace-banded-shades.js"></script>
 <script>
+// Canonical final "Your details" contact + files step — identical on every product.
+document.getElementById('pb-final-step').innerHTML =
+  pbContactStepHTML({ bare: true, cartFn: 'addBandedShadesToCart()', submitFn: 'submitQ()' });
 (function() {
   pbCtx.prefill('inp-w',   'w',   function(v) { validateDims(); });
   pbCtx.prefill('inp-h',   'h',   function(v) { validateDims(); });
   pbCtx.prefill('qty-inp', 'qty', function(v) { setQtyInp(v); });
-  pbCtx.prefill('room-lbl','room', null);
+  // Deep-link: ?tier=dual|premium opens straight into Portfolio Dual Sheer (Premium).
+  // Entry points that used to navigate to portfolio-dual-sheer.html now land here.
+  try {
+    var tier = new URLSearchParams(window.location.search).get('tier');
+    if (/dual|premium/i.test(tier || '')) setProd('dual', document.getElementById('prod-dual'));
+  } catch (e) {}
 })();
 </script>
 </body>

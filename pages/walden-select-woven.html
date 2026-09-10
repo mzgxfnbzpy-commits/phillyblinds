@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -98,44 +98,66 @@
     <h2>Request a Quote</h2>
     <div class="sub">Tell us what you're looking for and we'll provide a confirmed price within 24 hours.</div>
 
+    <!-- Step 1: Window measurements & mount (canonical dim-box) -->
+    <div class="step-block active" style="margin-bottom:18px">
+      <div style="display:flex;align-items:center;gap:10px;padding:16px 20px 0">
+        <div class="step-num">1</div>
+        <div class="step-title" style="margin-bottom:0">Window measurements &amp; mount</div>
+      </div>
+      <div style="padding:12px 20px 18px">
+        <div class="dim-box">
+          <div class="dim-box-label">Enter your window size</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Width</label>
+              <input type="number" id="ws-width" min="10" max="96" step="0.5" placeholder="36">
+              <div class="dim-unit">inches &mdash; 10″ min · 96″ max</div>
+            </div>
+            <div class="form-group">
+              <label>Height</label>
+              <input type="number" id="ws-height" min="12" max="96" step="0.5" placeholder="72">
+              <div class="dim-unit">inches &mdash; 12″ min · 96″ max</div>
+            </div>
+          </div>
+        </div>
+        <div class="step-note"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine — we confirm at the home visit.</div>
+
+        <!-- Mount type -->
+        <div style="font-size:12px;font-weight:600;color:#555;margin:12px 0 6px">Mount type <span style="color:#c0392b">*</span></div>
+        <div class="opt-row" id="ws-mount-grp" style="margin-bottom:14px">
+          <button type="button" class="opt-btn" onclick="selOpt(this,'ws-mount-grp');wsSetMount('Inside mount')">Inside mount</button>
+          <button type="button" class="opt-btn" onclick="selOpt(this,'ws-mount-grp');wsSetMount('Outside mount')">Outside mount</button>
+        </div>
+        <input type="hidden" id="ws-mount">
+
+        <!-- Quantity -->
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span style="font-size:12px;color:#555;font-weight:600">Quantity:</span>
+          <div class="qty-btns">
+            <button type="button" class="qty-btn" onclick="wsAdjustQty(-1)">&#8722;</button>
+            <input class="qty-num" type="number" id="ws-qty" value="1" min="1" max="20">
+            <button type="button" class="qty-btn" onclick="wsAdjustQty(1)">&#43;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="field-row">
       <div class="field-group">
-        <label>Your Name <span style="color:#e07070">*</span></label>
-        <input type="text" id="ws-name" data-pb-contact="name" placeholder="First &amp; last name">
-      </div>
-      <div class="field-group">
-        <label>Phone Number <span style="color:#e07070">*</span></label>
-        <input type="tel" id="ws-phone" data-pb-contact="phone" placeholder="(215) 555-0100">
+        <label>Choose your pattern &amp; color</label>
+        <div id="ws-fabric-picker"></div>
+        <input type="hidden" id="ws-pattern">
       </div>
     </div>
     <div class="field-row">
       <div class="field-group">
-        <label>Email Address *</label>
-        <input type="email" id="ws-email" data-pb-contact="email" placeholder="you@example.com">
-      </div>
-      <div class="field-group">
-        <label>Address <span style="font-weight:400;color:#888">(optional)</span></label>
-        <input type="text" id="ws-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA">
-      </div>
-    </div>
-    <div class="field-row">
-      <div class="field-group">
-        <label>Pattern Name / Color Preference</label>
-        <input type="text" id="ws-pattern" placeholder="e.g. gray-white bamboo, or describe the look you want">
-      </div>
-    </div>
-    <div class="field-row">
-      <div class="field-group">
-        <label>Width (inches)</label>
-        <input type="number" id="ws-width" placeholder="e.g. 36" min="10" max="96">
-      </div>
-      <div class="field-group">
-        <label>Height (inches)</label>
-        <input type="number" id="ws-height" placeholder="e.g. 72" min="12" max="96">
-      </div>
-      <div class="field-group">
-        <label>Quantity</label>
-        <input type="number" id="ws-qty" value="1" min="1">
+        <label>Product Type</label>
+        <select id="ws-type">
+          <option value="">-- Select product --</option>
+          <option>Roman Shade</option>
+          <option>Sliding Panel</option>
+          <option>Natural Drapery</option>
+        </select>
       </div>
     </div>
     <div class="field-row">
@@ -159,59 +181,32 @@
         </select>
       </div>
     </div>
-    <div class="field-row">
-      <div class="field-group">
-        <label>Mount Type</label>
-        <select id="ws-mount">
-          <option value="">-- Select mount --</option>
-          <option>Inside Mount</option>
-          <option>Outside Mount</option>
-          <option>Ceiling Mount</option>
-        </select>
-      </div>
-      <div class="field-group">
-        <label>Product Type</label>
-        <select id="ws-type">
-          <option value="">-- Select product --</option>
-          <option>Roman Shade</option>
-          <option>Sliding Panel</option>
-          <option>Natural Drapery</option>
-        </select>
-      </div>
-    </div>
-    <div class="field-row">
-      <div class="field-group">
-        <label>Additional Notes</label>
-        <textarea id="ws-notes" rows="3" placeholder="Liner options, edge binding/seal, window location, special requirements..."></textarea>
-      </div>
-    </div>
-
     <div class="delivery-section">
       <div class="delivery-title">Delivery</div>
       <div class="delivery-opts">
         <div class="del-opt sel" id="ws-del-ship" onclick="wsSetDelivery('ship')">
           <h4>&#x1F4E6; Ship to me</h4>
-          <p>UPS or FedEx from Huntingdon Valley, PA. Shipping calculated at order.</p>
-        </div>
-        <div class="del-opt" id="ws-del-pickup" onclick="wsSetDelivery('pickup')">
-          <h4>&#x1F3E0; I'll pick up</h4>
-          <p>Huntingdon Valley, PA. We'll provide the exact address after order review.</p>
+          <p>UPS or FedEx. Shipping calculated at order.</p>
         </div>
       </div>
       <div class="tariff-note"><strong>Tariff notice:</strong> Products may be subject to U.S. government import tariffs. Surcharges disclosed at order confirmation.</div>
     </div>
 
-    <div id="ws-contact-err" class="warn-box warn-box-red" style="display:none;margin-bottom:12px"></div>
-    <button class="btn-cart-add" onclick="addWaldenSelectToCart()" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
-    <button class="submit-btn" onclick="submitWSQuote()" data-pb-require-contact="ws-contact-err">Submit Order for Review &rarr;</button>
+    <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->
+    <div id="pb-final-step"></div>
     <div class="req-note">* Required fields. Opens your email client with your selections pre-filled.</div>
   </div>
 </div>
 
-<div id="footer-root"></div>
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
+<script src="../js/fabric-picker.js"></script>
 <script src="../js/pages/walden-select-woven.js"></script>
+<script>
+// Canonical final "Your details" contact + files step — identical on every product.
+document.getElementById('pb-final-step').innerHTML =
+  pbContactStepHTML({ bare: true, cartFn: 'addWaldenSelectToCart()', submitFn: 'submitWSQuote()' });
+</script>
 </body>
 </html>
 

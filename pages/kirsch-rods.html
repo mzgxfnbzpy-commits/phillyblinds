@@ -741,16 +741,23 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <div id="sz-stationary" style="display:none">
       <div class="sec-label" style="margin-top:12px">Pole Length</div>
       <div class="info-banner" id="pole-length-info"></div>
-      <div class="inp-row">
-        <div class="inp-group">
-          <label class="inp-label">Width (inches)</label>
-          <input class="inp-field" type="number" id="rod-width" placeholder="e.g. 96" min="1" max="300">
-          <span class="inp-hint">Measure your window width + overhang. Most poles extend 6"–12" per side beyond the frame.</span>
+      <div class="dim-box">
+        <div class="dim-box-label">Enter your rod width</div>
+        <div class="form-group">
+          <label>Width</label>
+          <input type="number" id="rod-width" placeholder="96" min="1" max="300" step="0.125">
+          <div class="dim-unit">inches &middot; rod length. Most poles extend 6"–12" per side beyond the window frame.</div>
         </div>
-        <div class="inp-group">
-          <label class="inp-label">Quantity of Rods / Windows</label>
-          <input class="inp-field" type="number" id="rod-qty" placeholder="e.g. 2" min="1" max="50" value="1">
+      </div>
+      <div class="step-note" style="margin-bottom:12px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm at the home visit.</div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px">
+        <span style="font-size:12px;color:#666">Qty:</span>
+        <div class="qty-btns">
+          <button class="qty-btn" type="button" onclick="kAdjQty('rod-qty',-1)">&#8722;</button>
+          <input class="qty-num" type="number" id="rod-qty" value="1" min="1" max="50">
+          <button class="qty-btn" type="button" onclick="kAdjQty('rod-qty',1)">&#43;</button>
         </div>
+        <span style="font-size:12px;color:#666">rod(s) / window(s) of this size</span>
       </div>
 
       <!-- ══ DM STATIONARY DETAIL SECTIONS ══════════════════════════════ -->
@@ -761,9 +768,9 @@ textarea.inp-field{resize:vertical;min-height:90px}
         <div id="dm-pole-1-note" style="display:none" class="info-banner"><strong>1" poles:</strong> Fixed lengths only — 4' (48"), 6' (72"), 8' (96"). No telescoping for 1". Poles join with internal splice #1042812 (Bright Zinc) for spans beyond 8'.</div>
         <div id="dm-pole-138-note" style="display:none" class="info-banner"><strong>1⅜" poles:</strong> Fixed 4'/6'/8' <em>or</em> Telescoping 36"–66", 66"–120", 120"–180". Telescoping cuts to any exact length within its range. Internal splice #73304061 for spans over 180". All 8 finishes available in both fixed and telescoping.</div>
         <div class="opt-row" id="grp-dm-pole-type">
-          <div class="opt-pill" onclick="selectDMPoleType(&quot;Fixed 4' (48&quot;&quot;)&quot;,this)">Fixed 4' <span style="font-size:10px;color:#888">48"</span></div>
-          <div class="opt-pill" onclick="selectDMPoleType(&quot;Fixed 6' (72&quot;&quot;)&quot;,this)">Fixed 6' <span style="font-size:10px;color:#888">72"</span></div>
-          <div class="opt-pill" onclick="selectDMPoleType(&quot;Fixed 8' (96&quot;&quot;)&quot;,this)">Fixed 8' <span style="font-size:10px;color:#888">96"</span></div>
+          <div class="opt-pill" onclick="selectDMPoleType(&quot;Fixed 4' (48”)&quot;,this)">Fixed 4' <span style="font-size:10px;color:#888">48"</span></div>
+          <div class="opt-pill" onclick="selectDMPoleType(&quot;Fixed 6' (72”)&quot;,this)">Fixed 6' <span style="font-size:10px;color:#888">72"</span></div>
+          <div class="opt-pill" onclick="selectDMPoleType(&quot;Fixed 8' (96”)&quot;,this)">Fixed 8' <span style="font-size:10px;color:#888">96"</span></div>
           <div class="opt-pill dm-tele-only" id="dm-tele-36-66" style="display:none" onclick="selectDMPoleType('Telescoping 36–66”',this)">Telescoping 36"–66"</div>
           <div class="opt-pill dm-tele-only" id="dm-tele-66-120" style="display:none" onclick="selectDMPoleType('Telescoping 66–120”',this)">Telescoping 66"–120"</div>
           <div class="opt-pill dm-tele-only" id="dm-tele-120-180" style="display:none" onclick="selectDMPoleType('Telescoping 120–180”',this)">Telescoping 120"–180"</div>
@@ -796,15 +803,15 @@ textarea.inp-field{resize:vertical;min-height:90px}
             <div class="opt-pill" onclick="selectDMBracket('6&quot; Return — 16 lbs/bracket · wall 4¾&quot;',this)">6" Return <span style="font-size:10px;color:#888">wall 4¾" · max 16 lbs</span></div>
             <div class="opt-pill" onclick="selectDMBracket('Decorative Return 3&quot;–4&quot; (adjustable projection)',this)">Decorative Return 3"–4" <span style="font-size:10px;color:#888">adj projection</span></div>
             <div class="opt-pill" onclick="selectDMBracket('Decorative Bypass 3&quot;–4&quot;',this)">Decorative Bypass <span style="font-size:10px;color:#888">two poles · adj 3"–4"</span></div>
-            <div class="opt-pill" onclick="selectDMBracket('Decorative Ceiling Mount',this)">Ceiling Mount <span style="font-size:10px;color:#888">pole hangs from ceiling</span></div>
+            <div class="opt-pill" onclick="selectDMBracket('Decorative Ceiling mount',this)">Ceiling mount <span style="font-size:10px;color:#888">pole hangs from ceiling</span></div>
             <div class="opt-pill" onclick="selectDMBracket('Decorative Double Rod — inner 3&quot;–4&quot; + outer 6&quot;–7&quot;',this)">Double Rod Bracket <span style="font-size:10px;color:#888">two poles, one wall point</span></div>
             <div class="opt-pill" onclick="selectDMBracket('Deep Standard 5¼&quot;–7&quot; projection',this)">Deep Bracket 5¼"–7" <span style="font-size:10px;color:#888">large trim clearance</span></div>
-            <div class="opt-pill" onclick="selectDMBracket('Inside Mount Socket #1832218',this)">Inside Mount Socket <span style="font-size:10px;color:#888">rod seats inside casing</span></div>
+            <div class="opt-pill" onclick="selectDMBracket('Inside mount Socket #1832218',this)">Inside mount Socket <span style="font-size:10px;color:#888">rod seats inside casing</span></div>
             <div class="opt-pill" onclick="selectDMBracket('Swivel Socket #1831428',this)">Swivel Socket <span style="font-size:10px;color:#888">angled/bay windows</span></div>
             <div class="opt-pill" onclick="selectDMBracket('French Return 3&quot; — 32 lbs · arm 3¼&quot; · back plate 3&quot;',this)">French Return 3" <span style="font-size:10px;color:#888">arm 3¼" · 32 lbs</span></div>
             <div class="opt-pill" onclick="selectDMBracket('French Return 6&quot; — 16 lbs',this)">French Return 6" <span style="font-size:10px;color:#888">16 lbs</span></div>
           </div>
-          <div class="info-banner" style="font-size:11px;margin-top:6px;line-height:1.6"><strong>Inside Mount Socket (#1832218):</strong> Rod rests inside casing — no wall holes. Requires ≈1½" casing depth minimum. <strong>Swivel Socket (#1831428):</strong> Allows rod to angle for bay or angled frames. <strong>Double Rod bracket:</strong> Both a front and back pole mount from one wall bracket — inner 3"–4" projection, outer 6"–7". <strong>Baton with Bypass C-Ring (#1831558, 36"):</strong> Mention in notes if needed.</div>
+          <div class="info-banner" style="font-size:11px;margin-top:6px;line-height:1.6"><strong>Inside mount Socket (#1832218):</strong> Rod rests inside casing — no wall holes. Requires ≈1½" casing depth minimum. <strong>Swivel Socket (#1831428):</strong> Allows rod to angle for bay or angled frames. <strong>Double Rod bracket:</strong> Both a front and back pole mount from one wall bracket — inner 3"–4" projection, outer 6"–7". <strong>Baton with Bypass C-Ring (#1831558, 36"):</strong> Mention in notes if needed.</div>
         </div>
       </div>
 
@@ -848,16 +855,23 @@ textarea.inp-field{resize:vertical;min-height:90px}
     <div id="sz-traverse" style="display:none">
       <div class="sec-label" style="margin-top:0">Track Length</div>
       <div id="traverse-limits-info" class="info-banner"></div>
-      <div class="inp-row">
-        <div class="inp-group">
-          <label class="inp-label">Track Width / Length (inches)</label>
-          <input class="inp-field" type="number" id="trav-width" placeholder="e.g. 120" min="18" max="480">
-          <span class="inp-hint">Measure from bracket to bracket (finished wall opening + any desired overlap). Estate min 18", max 192" (16ft).</span>
+      <div class="dim-box">
+        <div class="dim-box-label">Enter your track width</div>
+        <div class="form-group">
+          <label>Width</label>
+          <input type="number" id="trav-width" placeholder="120" min="18" max="480" step="0.125">
+          <div class="dim-unit">inches &middot; measure bracket to bracket (finished opening + overlap). Estate min 18", max 192" (16ft).</div>
         </div>
-        <div class="inp-group">
-          <label class="inp-label">Quantity of Tracks / Windows</label>
-          <input class="inp-field" type="number" id="trav-qty" placeholder="e.g. 1" min="1" max="20" value="1">
+      </div>
+      <div class="step-note" style="margin-bottom:12px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm at the home visit.</div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px">
+        <span style="font-size:12px;color:#666">Qty:</span>
+        <div class="qty-btns">
+          <button class="qty-btn" type="button" onclick="kAdjQty('trav-qty',-1)">&#8722;</button>
+          <input class="qty-num" type="number" id="trav-qty" value="1" min="1" max="20">
+          <button class="qty-btn" type="button" onclick="kAdjQty('trav-qty',1)">&#43;</button>
         </div>
+        <span style="font-size:12px;color:#666">track(s) / window(s) of this size</span>
       </div>
 
       <div class="sec-label" style="margin-top:12px">Draw Type</div>
@@ -886,8 +900,8 @@ textarea.inp-field{resize:vertical;min-height:90px}
 
       <div class="sec-label" style="margin-top:12px">Mounting Location</div>
       <div class="opt-row">
-        <div class="opt-pill" onclick="selectMount('Wall Mount');toggleOptPill(this,'mount')">Wall Mount</div>
-        <div class="opt-pill" onclick="selectMount('Ceiling Mount');toggleOptPill(this,'mount')">Ceiling Mount</div>
+        <div class="opt-pill" onclick="selectMount('Wall mount');toggleOptPill(this,'mount')">Wall mount</div>
+        <div class="opt-pill" onclick="selectMount('Ceiling mount');toggleOptPill(this,'mount')">Ceiling mount</div>
         <div class="opt-pill" id="mount-recessed" onclick="selectMount('Recessed Mount');toggleOptPill(this,'mount')">Recessed Mount</div>
         <div class="opt-pill" onclick="selectMount('Double Rod (two panels at different depths)');toggleOptPill(this,'mount')">Double Rod</div>
       </div>
@@ -908,16 +922,23 @@ textarea.inp-field{resize:vertical;min-height:90px}
 
     <!-- BASIC rod specs -->
     <div id="sz-basic" style="display:none">
-      <div class="inp-row">
-        <div class="inp-group">
-          <label class="inp-label">Window Width (inches)</label>
-          <input class="inp-field" type="number" id="basic-width" placeholder="e.g. 60" min="1" max="228">
-          <span class="inp-hint">We'll select the right telescoping size for your measurement.</span>
+      <div class="dim-box">
+        <div class="dim-box-label">Enter your rod width</div>
+        <div class="form-group">
+          <label>Width</label>
+          <input type="number" id="basic-width" placeholder="60" min="1" max="228" step="0.125">
+          <div class="dim-unit">inches &middot; we'll select the right telescoping size for your measurement.</div>
         </div>
-        <div class="inp-group">
-          <label class="inp-label">Quantity</label>
-          <input class="inp-field" type="number" id="basic-qty" value="1" min="1" max="50">
+      </div>
+      <div class="step-note" style="margin-bottom:12px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm at the home visit.</div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px">
+        <span style="font-size:12px;color:#666">Qty:</span>
+        <div class="qty-btns">
+          <button class="qty-btn" type="button" onclick="kAdjQty('basic-qty',-1)">&#8722;</button>
+          <input class="qty-num" type="number" id="basic-qty" value="1" min="1" max="50">
+          <button class="qty-btn" type="button" onclick="kAdjQty('basic-qty',1)">&#43;</button>
         </div>
+        <span style="font-size:12px;color:#666">rod(s) / window(s) of this size</span>
       </div>
 
       <div id="sz-superfine-opts" style="display:none">
@@ -1021,7 +1042,7 @@ textarea.inp-field{resize:vertical;min-height:90px}
       <div class="sec-sub" style="font-size:12px;margin-bottom:14px">Check anything you'd like to include. We'll add pricing to your quote. All items available in your chosen finish.</div>
       <div style="font-size:11px;color:#888;margin-bottom:10px;line-height:1.7;background:#fafaf8;border-radius:8px;padding:10px 12px;border:1px solid #e8e8e4">
         <strong style="color:#111">Restriction notes:</strong>
-        Ceiling Mount bracket and Double Bracket are <strong>not available in Unfinished finish</strong> — specify a stained or painted finish when adding these.
+        Ceiling mount bracket and Double Bracket are <strong>not available in Unfinished finish</strong> — specify a stained or painted finish when adding these.
         The <strong>Double Bracket for 2" poles</strong> mounts a 2" front rod and a 1⅜" back rod simultaneously from one wall point — you must order both pole sizes.
         Wood <strong>Elbows are Unfinished only</strong> (natural bare wood, paint/stain yourself to match).
         The <strong>4¼" Return bracket is 1⅜" only</strong> — not available for 2" poles.
@@ -1033,9 +1054,9 @@ textarea.inp-field{resize:vertical;min-height:90px}
         <div class="opt-pill" onclick="toggleWTAccessory(this,'bracket-3.5')">3½" Return Bracket <span style="font-size:10px;color:#888">1⅜"=$11.77 ea · 2"=$17.24 ea · 9 finishes</span></div>
         <div class="opt-pill" onclick="toggleWTAccessory(this,'bracket-4.25')">4¼" Return Bracket <span style="font-size:10px;color:#888">1⅜" ONLY · $12.44 ea · 9 finishes</span></div>
         <div class="opt-pill" onclick="toggleWTAccessory(this,'bracket-6')">6" Return Bracket <span style="font-size:10px;color:#888">1⅜"=$35.25/5-pair box · 2"=$18.04 ea · 9 finishes</span></div>
-        <div class="opt-pill" onclick="toggleWTAccessory(this,'ceiling-bracket')">Ceiling Mount Bracket <span style="font-size:10px;color:#888">1⅜"=$21.77 · 2"=$23.79 · 8 finishes (no Unfinished)</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'ceiling-bracket')">Ceiling mount Bracket <span style="font-size:10px;color:#888">1⅜"=$21.77 · 2"=$23.79 · 8 finishes (no Unfinished)</span></div>
         <div class="opt-pill" onclick="toggleWTAccessory(this,'double-bracket')">Double Bracket — front 2" + back 1⅜" <span style="font-size:10px;color:#888">$24.86 ea · 8 finishes (no Unfinished) · requires 2 pole sizes</span></div>
-        <div class="opt-pill" onclick="toggleWTAccessory(this,'inside-socket')">Inside Mount Socket (1⅜" only) <span style="font-size:10px;color:#888">$9.89/pair · 9 finishes · rod seats inside window casing</span></div>
+        <div class="opt-pill" onclick="toggleWTAccessory(this,'inside-socket')">Inside mount Socket (1⅜" only) <span style="font-size:10px;color:#888">$9.89/pair · 9 finishes · rod seats inside window casing</span></div>
         <div class="opt-pill" onclick="toggleWTAccessory(this,'swivel-socket')">Swivel Socket — angled / bay window <span style="font-size:10px;color:#888">1⅜"=$26.72 · 2"=$32.73 · 9 finishes</span></div>
         <div class="opt-pill" onclick="toggleWTAccessory(this,'holdback')">3¾" Holdback Medallion <span style="font-size:10px;color:#888">$42.47/pair · 8 finishes (no Unfinished) · adj 3" or 5" clearance</span></div>
         <div class="opt-pill" onclick="toggleWTAccessory(this,'elbow')">Wood Elbow Kit — wrap-around bay <span style="font-size:10px;color:#888">Unfinished only · 3½"–5½" or 6"–8" clearance · includes metal bracket &amp; hidden support</span></div>
@@ -1064,32 +1085,6 @@ textarea.inp-field{resize:vertical;min-height:90px}
       <!-- filled by JS -->
     </div>
 
-    <!-- Contact form -->
-    <div class="inp-row">
-      <div class="inp-group">
-        <label class="inp-label">Your Name *</label>
-        <input class="inp-field" type="text" id="q-name" data-pb-contact="name" placeholder="Full name">
-      </div>
-      <div class="inp-group">
-        <label class="inp-label">Phone *</label>
-        <input class="inp-field" type="tel" id="q-contact" data-pb-contact="phone" placeholder="(215) 555-0100">
-      </div>
-    </div>
-    <div class="inp-group" style="margin-bottom:14px">
-      <label class="inp-label">Email *</label>
-      <input class="inp-field" type="email" id="q-email" data-pb-contact="email" placeholder="jane@example.com">
-    </div>
-
-    <div class="inp-group" style="margin-bottom:14px">
-      <label class="inp-label">Project Address <span style="font-weight:400;color:#888">(optional)</span></label>
-      <input class="inp-field" type="text" id="q-address" data-pb-contact="address" placeholder="City, State (or full address)">
-    </div>
-
-    <div class="inp-group" style="margin-bottom:14px">
-      <label class="inp-label">Notes / Special Requests</label>
-      <textarea class="inp-field" id="q-notes" placeholder="Fabric weight, room details, drapery stack requirements, curved track needs, etc."></textarea>
-    </div>
-
     <!-- Delivery -->
     <div class="delivery-section">
       <div class="delivery-title">Installation or Pick-Up?</div>
@@ -1099,7 +1094,7 @@ textarea.inp-field{resize:vertical;min-height:90px}
       </div>
       <div class="delivery-opt" id="del-ship" onclick="selectDelivery('ship')">
         <div class="delivery-opt-title">Ship to Me</div>
-        <div class="delivery-opt-sub">We ship Kirsch hardware directly to you. UPS / FedEx from Huntingdon Valley, PA 19006. Tariffs, duties, and freight charges apply on top of product pricing and will be disclosed at quote stage.</div>
+        <div class="delivery-opt-sub">We ship Kirsch hardware directly to you. UPS / FedEx. Tariffs, duties, and freight charges apply on top of product pricing and will be disclosed at quote stage.</div>
       </div>
     </div>
 
@@ -1107,12 +1102,10 @@ textarea.inp-field{resize:vertical;min-height:90px}
       <button class="btn-back" onclick="goStep(6)">← Back</button>
     </div>
     <button onclick="reqMoreInfo('Kirsch Drapery Hardware')" class="req-info-link" style="display:block;margin-bottom:14px">Request more information about Kirsch hardware →</button>
-    <div id="kirsch-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
-    <button class="btn-cart-add" onclick="addKirschToCart()" style="margin-bottom:8px">+ Add to Cart</button>
-    <button class="btn-submit-cta" onclick="submitQuote()" style="font-family:var(--font)" data-pb-require-contact="kirsch-contact-err">
-      Submit Order for Review &rarr;
-      <span class="cta-sub">We'll follow up within a few hours · (609) 742-1720</span>
-    </button>
+    <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->
+        <!-- Exact rod length + editable bracket count (shared.js pbRodSpecHTML) -->
+    <div id="pb-rod-spec"></div>
+    <div id="pb-final-step"></div>
   </div>
 
   <!-- UNSURE / HELP FORM (separate flow) -->
@@ -1159,5 +1152,12 @@ textarea.inp-field{resize:vertical;min-height:90px}
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script src="../js/pages/kirsch-rods.js"></script>
+<script>
+// Canonical final "Your details" contact + files step — identical on every product.
+document.getElementById('pb-final-step').innerHTML =
+  pbContactStepHTML({ bare: true, cartFn: 'addKirschToCart()', submitFn: 'submitQuote()' });
+
+document.getElementById('pb-rod-spec').innerHTML = pbRodSpecHTML({ title: 'Rod length &amp; brackets' });
+</script>
 </body>
 </html>

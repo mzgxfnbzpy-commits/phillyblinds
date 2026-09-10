@@ -97,14 +97,14 @@ const LAYOUTS = {
 /* ─── STATE ─────────────────────────────────────────────── */
 const S = {
   line:'', count:1,
-  opentype:'Standard window', mount:'', dims:[{w:'',h:'',label:''}],
+  opentype:'Standard window', mount:'', measureType:'Inside mount (frame-to-frame)', dims:[{w:'',h:'',label:''}],
   exactFrameW:'',
   layout:'', tpostV:'', tpostH:'',
   louver:'', tilt:'InvisibleTilt™ (hidden in stile)', frame:'', divider:'',
   frameSides:'4-sided (standard)',
   colorType:'', color:'',
-  specs:[], delivery:'Ship (UPS/FedEx from Huntingdon Valley PA)',
-  room:'', notes:''
+  specs:[], delivery:'Ship (UPS/FedEx)',
+  notes:''
 };
 
 /* ─── STEP SYSTEM ───────────────────────────────────────── */
@@ -141,22 +141,23 @@ function pbToggleStep(secId) {
 }
 
 /* ─── CONTINUE FUNCTIONS ────────────────────────────────── */
-function continueStep1() {
-  pbAdv('sec-dims', 1, 'sec-mount', (S.dims[0].w || '?') + '″W × ' + (S.dims[0].h || '?') + '″H' + (S.exactFrameW ? ' · frame: ' + S.exactFrameW + '″' : ''));
+// Step order: 1 Shutter line → 2 Dimensions → 3 Mount → 4 Opening type → …
+function continueStep1() { // dimensions (step 2) → mount (step 3)
+  pbAdv('sec-dims', 2, 'sec-mount', (S.dims[0].w || '?') + '″W × ' + (S.dims[0].h || '?') + '″H' + (S.exactFrameW ? ' · frame: ' + S.exactFrameW + '″' : ''));
 }
-function continueStep2() {
+function continueStep2() { // mount (step 3) → opening type (step 4)
   if (!S.mount) { alert('Please select a mount type.'); return; }
-  pbAdv('sec-mount', 2, 'sec-line', S.mount.split(' (')[0]);
-}
-function continueStep3() {
-  if (!S.line) { alert('Please select a shutter line.'); return; }
-  pbAdv('sec-line', 3, 'sec-opentype', S.line);
+  pbAdv('sec-mount', 3, 'sec-opentype', S.mount.split(' (')[0]);
   // Auto-advance through opening type if Standard window is already selected
   if (S.opentype === 'Standard window') {
     setTimeout(function() {
       pbAdv('sec-opentype', 4, 'sec-layout', 'Standard window');
     }, 500);
   }
+}
+function continueStep3() { // shutter line (step 1) → dimensions (step 2)
+  if (!S.line) { alert('Please select a shutter line.'); return; }
+  pbAdv('sec-line', 1, 'sec-dims', S.line);
 }
 function continueStep4() {
   if (!S.opentype) { alert('Please select an opening type.'); return; }
@@ -201,26 +202,32 @@ function continueStep12() {
   pbAdv('sec-special', 12, 'sec-notes', S.specs.length ? S.specs.length + ' add-on' + (S.specs.length !== 1 ? 's' : '') : 'None');
 }
 function continueStep13() {
-  var room = (document.getElementById('field-room').value || '').trim();
-  pbAdv('sec-notes', 13, 'sec-qty', room || 'No room entered');
-}
-function continueStep14() {
-  if (!S.count || S.count < 1) S.count = 1;
-  var summary = S.count + ' window' + (S.count !== 1 ? 's' : '');
-  pbAdv('sec-qty', 14, 'sec-delivery', summary);
-  pbAdv('sec-delivery', 15, 'sec-contact', 'Ship to me');
+  var notes = ((document.getElementById('field-notes') || {}).value || '').trim();
+  pbAdv('sec-notes', 13, 'sec-delivery', notes ? 'Notes added' : 'No notes');
+  pbAdv('sec-delivery', 14, 'sec-contact', 'Ship to me');
 }
 function continueStep15() {
-  pbAdv('sec-delivery', 15, 'sec-contact', 'Ship to me');
+  pbAdv('sec-delivery', 14, 'sec-contact', 'Ship to me');
 }
 
 /* ─── HELPERS ───────────────────────────────────────────── */
 function qs(id) { return document.getElementById(id); }
 function setText(id, v) { var e = qs(id); if (e) e.textContent = v || '—'; }
+function syncQtyInputs(srcId) {
+  ['shutter-qty'].forEach(function(id) {
+    if (id === srcId) return;
+    var e = qs(id);
+    if (e) e.value = S.count;
+  });
+}
 function adjQty(d) {
-  var el = qs('qty-input');
-  el.value = Math.max(1, Math.min(50, (parseInt(el.value) || 1) + d));
-  S.count = parseInt(el.value);
+  S.count = Math.max(1, Math.min(50, (parseInt(S.count) || 1) + d));
+  syncQtyInputs();
+  updateQuote();
+}
+function onQtyInput(v, srcId) {
+  S.count = Math.max(1, Math.min(50, parseInt(v) || 1));
+  syncQtyInputs(srcId);
   updateQuote();
 }
 function selOpt(btn, group) {
@@ -439,7 +446,7 @@ function toggleSpec(btn, val) {
 function selDelivery(type, card) {
   document.querySelectorAll('.delivery-opt-card').forEach(function(c) { c.classList.remove('sel'); });
   card.classList.add('sel');
-  S.delivery = type === 'ship' ? 'Ship (UPS/FedEx from Huntingdon Valley PA)' : 'Pickup (Huntingdon Valley PA — address provided after order confirmation)';
+  S.delivery = type === 'ship' ? 'Ship (UPS/FedEx)' : 'Pickup (Huntingdon Valley PA — address provided after order confirmation)';
   qs('ship-note').style.display = type === 'ship' ? 'block' : 'none';
   updateQuote();
   setTimeout(continueStep15, 400);
@@ -451,6 +458,7 @@ function updateQuote() {
   setText('qs-count', S.count ? S.count + ' window' + (S.count !== 1 ? 's' : '') : '—');
   setText('qs-opentype', S.opentype || '—');
   setText('qs-mount', S.mount || '—');
+  setText('qs-measure', S.measureType || '—');
   setText('qs-layout', S.layout || '—');
   var tpost = [S.tpostV, S.tpostH].filter(Boolean).join(' · ');
   setText('qs-tpost', tpost || '—');
@@ -482,7 +490,8 @@ function addShuttersToCart(){
     {label:'Louver Size',value:S.louver||'—'},
     {label:'Tilt Type',value:S.tilt||'—'},
     {label:'Mount',value:S.mount||'—'},
-    {label:'Openings',value:String(S.count||1)},
+    {label:'Measurement Type',value:S.measureType||'—'},
+    {label:'Quantity',value:String(S.count||1)},
     {label:'Dimensions',value:dimsText||'—'},
     {label:'Panel Layout',value:S.layout||'—'},
     {label:'Color / Finish',value:(S.colorType?S.colorType+' — ':'')+S.color}
@@ -493,11 +502,21 @@ function addShuttersToCart(){
 }
 
 async function submitQuote() {
-  var name  = qs('field-name').value.trim();
-  var phone = qs('field-phone').value.trim();
-  var email = qs('field-email').value.trim();
-  if (!name || !phone || !email) { alert('Please fill in your name, phone, and email.'); return; }
-  if (!S.line) { alert('Please select a shutter line first.'); return; }
+  var name  = qs('cf-name').value.trim();
+  var phone = qs('cf-phone').value.trim();
+  var email = qs('cf-email').value.trim();
+  var errEl = qs('cf-contact-err');
+  if (errEl) errEl.style.display = 'none';
+  if (!name || !phone || !email) {
+    if (errEl) { errEl.textContent = 'Please fill in your name, phone, and email.'; errEl.style.display = 'block'; }
+    else alert('Please fill in your name, phone, and email.');
+    return;
+  }
+  if (!S.line) {
+    if (errEl) { errEl.textContent = 'Please select a shutter line first.'; errEl.style.display = 'block'; }
+    else alert('Please select a shutter line first.');
+    return;
+  }
   var btn = document.querySelector('.btn-submit-quote') || document.querySelector('[onclick*="submitQuote"]');
   if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
   var dimsText = S.dims.map(function(d, i) {
@@ -507,6 +526,7 @@ async function submitQuote() {
     { label: 'Line', value: S.line },
     { label: 'Quantity', value: S.count+' window'+(S.count!==1?'s':'') },
     { label: 'Mount', value: S.mount||'—' },
+    { label: 'Measurement type', value: S.measureType||'—' },
     { label: 'Dimensions', value: dimsText||'—' },
     { label: 'Exact frame width', value: S.exactFrameW||'N/A' },
     { label: 'Opening type', value: S.opentype||'—' },
@@ -521,22 +541,24 @@ async function submitQuote() {
     { label: 'Color / Finish', value: (S.colorType?S.colorType+' — ':'')+S.color },
     { label: 'Specialty options', value: S.specs&&S.specs.length?S.specs.join(', '):'None' },
     { label: 'Delivery', value: S.delivery||'Not specified' },
-    { label: 'Room', value: qs('field-room').value||'—' },
-    { label: 'City / ZIP', value: qs('field-zip').value||'—' },
   ];
+  var combinedNotes = [
+    (qs('field-notes') && qs('field-notes').value.trim()) || '',
+    (qs('cf-notes') && qs('cf-notes').value.trim()) || ''
+  ].filter(Boolean).join(' — ');
   try {
     var resp = await fetch('/api/quote', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: name, email: email, phone: phone,
         product: 'Norman Plantation Shutters — '+S.line,
-        selections: selections, notes: qs('field-notes').value.trim()||'',
+        selections: selections, notes: combinedNotes,
         sourceUrl: window.location.href })
     });
     var data = {}; try { data = await resp.json(); } catch(ex) {}
     if (!resp.ok) throw new Error(data.error||'Server error');
     qs('success-box').classList.add('show');
   } catch(err) {
-    if (btn) { btn.disabled = false; btn.textContent = 'Request Quote →'; }
+    if (btn) { btn.disabled = false; btn.textContent = 'Submit Order for Review →'; }
     alert('Something went wrong. Please call (609) 742-1720 or email blindznation@gmail.com');
   }
 }

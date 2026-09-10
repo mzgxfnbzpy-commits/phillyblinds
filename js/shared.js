@@ -33,6 +33,17 @@ window.pbCtx = (function() {
 var _PB_GBP_URL    = 'https://maps.app.goo.gl/TRZfYtEAUqKpHvQL7';
 var _PB_REVIEW_URL = 'https://maps.app.goo.gl/TRZfYtEAUqKpHvQL7/review';
 
+// ─── RETARGETING / ADS PIXELS ────────────────────────────────
+// Fill these in to advertise to people who visited the site but didn't call.
+//   Meta (Facebook/Instagram): Events Manager → Data Sources → your Pixel → copy the ID (a number).
+//   Google Ads remarketing:    Google Ads → Tools → Audience manager → Your data sources
+//                              → Google Ads tag → copy the "AW-XXXXXXXXX" ID.
+// Leave as '' to keep them off — nothing loads until an ID is set.
+// Once set, the site auto-fires: PageView on every page, plus Lead/Contact on
+// phone taps, consult clicks, and quote submissions (see pbTrackEvent).
+var _PB_META_PIXEL_ID = '';   // e.g. '1234567890123456'
+var _PB_GOOGLE_ADS_ID = '';   // e.g. 'AW-123456789'
+
 
 function _injectHead(isHome) {
   const prefix = isHome ? '' : '../';
@@ -48,6 +59,29 @@ function _injectHead(isHome) {
     gi.setAttribute('data-ga', '1');
     gi.textContent = 'window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-CBQP5S8CN6");';
     document.head.appendChild(gi);
+  }
+
+  // Meta (Facebook/Instagram) Pixel — retargeting. Loads only if an ID is set.
+  if (_PB_META_PIXEL_ID && !document.querySelector('script[data-meta-pixel]')) {
+    const mp = document.createElement('script');
+    mp.setAttribute('data-meta-pixel', '1');
+    mp.textContent = "!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','" + _PB_META_PIXEL_ID + "');fbq('track','PageView');";
+    document.head.appendChild(mp);
+  }
+
+  // Google Ads remarketing tag — loads only if an ID is set. Reuses gtag.js.
+  if (_PB_GOOGLE_ADS_ID && !document.querySelector('script[data-google-ads]')) {
+    if (!document.querySelector('script[data-ga]') && !document.querySelector('script[data-gads-loader]')) {
+      const gl = document.createElement('script');
+      gl.async = true;
+      gl.src = 'https://www.googletagmanager.com/gtag/js?id=' + _PB_GOOGLE_ADS_ID;
+      gl.setAttribute('data-gads-loader', '1');
+      document.head.appendChild(gl);
+    }
+    const ga2 = document.createElement('script');
+    ga2.setAttribute('data-google-ads', '1');
+    ga2.textContent = "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('config','" + _PB_GOOGLE_ADS_ID + "');";
+    document.head.appendChild(ga2);
   }
 
   // Canonical — derived from og:url, normalized to www.phillyblinds.com
@@ -361,13 +395,24 @@ function renderFooter(isHome) {
         <a href="${pre}measure-shutters.html">How to measure: shutters</a>
         <a href="${pre}measure-drapes.html">How to measure: drapery</a>
         <a href="${pre}gallery.html">Our work</a>
+        <a href="${pre}guides.html">Buying guides</a>
+        <a href="${pre}blackout-disclaimer.html">What blackout really means</a>
         <a href="${pre}about.html">About us</a>
         <a href="${pre}privacy.html">Privacy policy</a>
+      </div>
+      <div class="footer-col">
+        <h4>Service Areas</h4>
+        <a href="${pre}custom-blinds-philadelphia-pa.html">Philadelphia, PA</a>
+        <a href="${pre}custom-blinds-cherry-hill-nj.html">Cherry Hill, NJ</a>
+        <a href="${pre}custom-blinds-bryn-mawr-pa.html">Bryn Mawr / Main Line</a>
+        <a href="${pre}custom-blinds-doylestown-pa.html">Doylestown, PA</a>
+        <a href="${pre}custom-blinds-salt-lake-city-ut.html">Salt Lake City, UT</a>
+        <a href="${pre}service-areas.html" style="color:var(--gold)">All service areas &rsaquo;</a>
       </div>
     </div>
     <div class="footer-disc">Blindznation is an independent business providing professional installation and consulting services. Product names, logos, and trademarks are the property of their respective owners and are used for identification purposes only. Blindznation is not affiliated with, endorsed by, or sponsored by any manufacturer. &nbsp;·&nbsp; <a href="${pre}privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></div>
   `;
-  setTimeout(function(){ _initShippingEstimators(); _initFileUploads(); _initInstallationAddons(); }, 0);
+  setTimeout(function(){ _initShippingEstimators(); _initCartExtras(); _initFileUploads(); _initInstallationAddons(); _initShadeLabels(); }, 0);
 }
 
 // ── STEP AUTO-ADVANCE (accordion + wizard) ───────────────────────────────────
@@ -434,6 +479,8 @@ document.addEventListener('click', function(e) {
 function selOpt(el, groupId) {
   document.querySelectorAll('#' + groupId + ' .opt-btn').forEach(b => b.classList.remove('sel'));
   el.classList.add('sel');
+  // Live price refresh: motor option groups (nm-… / auto-…) re-run the page's recalc.
+  if (/^(nm-|auto-)/.test(groupId)) nmFireChange(el);
 }
 function getOpt(groupId) {
   const s = document.querySelector('#' + groupId + ' .opt-btn.sel');
@@ -478,11 +525,21 @@ function pbAutoFillContact() {
   });
 }
 
+// Returns the first VISIBLE [data-pb-contact=key] input, falling back to the first match.
+// Pages can have more than one contact form in the DOM (e.g. a hidden secondary "not sure"
+// or wood-branch form); without the visibility preference, validation would read the hidden
+// form's empty fields and wrongly block the active form's submit.
+function _pbContactEl(key) {
+  var els = document.querySelectorAll('[data-pb-contact="' + key + '"]');
+  for (var i = 0; i < els.length; i++) { if (els[i].offsetParent !== null) return els[i]; }
+  return els[0] || null;
+}
+
 // Returns true when name + phone + email are filled; shows error in element with id=errId.
 function pbContactValid(errId) {
-  var nameEl  = document.querySelector('[data-pb-contact="name"]');
-  var phoneEl = document.querySelector('[data-pb-contact="phone"]');
-  var emailEl = document.querySelector('[data-pb-contact="email"]');
+  var nameEl  = _pbContactEl('name');
+  var phoneEl = _pbContactEl('phone');
+  var emailEl = _pbContactEl('email');
   var errEl   = errId ? document.getElementById(errId) : null;
   function _fail(msg, focusEl) {
     if (errEl) { errEl.textContent = msg; errEl.style.display = 'block'; }
@@ -495,6 +552,510 @@ function pbContactValid(errId) {
     return _fail('Please enter a valid email address.', emailEl);
   if (errEl) errEl.style.display = 'none';
   return true;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TERMS OF AGREEMENT — required acceptance before any "Submit Order for Review".
+// One source of truth for the checkbox markup + validation, reused by the shared
+// contact step (pbContactStepHTML) and the cart checkout modal (pbShowQuoteModal).
+// Adding to cart never requires it — only submitting for review does.
+// ─────────────────────────────────────────────────────────────────────────────
+// Resolve the correct relative path to the terms page from any page depth.
+function pbTermsHref() {
+  var p = location.pathname || '';
+  return /\/pages\//i.test(p) ? 'terms-of-agreement.html' : 'pages/terms-of-agreement.html';
+}
+
+// ── Blackout terminology — DISPLAY ONLY ──────────────────────────────────────
+// Norman (and the rest of the trade) call this fabric "Room Darkening". Customers
+// call it blackout, so that is what we show them. This is a rendering layer ONLY:
+// price keys, the +20% surcharge lookup, the T-suffix fabric colour codes and the
+// CELL_COMPAT tables all still say "Room Darkening" and must keep saying it.
+// Map at the moment of display; never rewrite the stored value.
+var PB_LIGHT_LABELS = {
+  'Room Darkening': 'Blackout',
+  'Room-Darkening': 'Blackout',
+  'room darkening': 'blackout'
+};
+function pbLightLabel(name) {
+  if (name == null) return name;
+  var s = String(name);
+  if (PB_LIGHT_LABELS[s]) return PB_LIGHT_LABELS[s];
+  // Also handles composite labels such as "Sheer + Room Darkening".
+  return s.replace(/Room[- ]Darkening/g, 'Blackout').replace(/room[- ]darkening/g, 'blackout');
+}
+// Recognises a light-control label as the blackout/room-darkening one, whichever
+// wording it is written in. Use this instead of comparing against a literal
+// string — several price calcs read the SELECTED BUTTON'S TEXT to decide whether
+// to add the +20% surcharge, so a label change must never break the match.
+function pbIsBlackoutLabel(txt) {
+  return /(^|\b)(room[- ]darkening|blackout)(\b|$)/i.test(String(txt || '').trim());
+}
+// Norman's "LightGuard 360™" side-channel system is sold to customers as
+// "Full Blackout Side Channels". Same landmine as above — the $364 surcharge and
+// the fabric-compatibility check both read the selected button's text.
+function pbIsFullBlackoutLabel(txt) {
+  return /lightguard\s*360|full\s+blackout\s+side\s+channels/i.test(String(txt || ''));
+}
+var PB_LIGHTGUARD_LABEL = 'Full Blackout Side Channels';
+function pbBlackoutHref() {
+  var p = location.pathname || '';
+  return /\/pages\//i.test(p) ? 'blackout-disclaimer.html' : 'pages/blackout-disclaimer.html';
+}
+// Small muted note shown only while a blackout option is selected. One shared
+// sentence + one shared page — do not paste long disclaimer copy per product.
+function pbBlackoutNoteHTML() {
+  return '<div class="pb-blackout-note" style="font-size:11.5px;color:#666;margin-top:8px;line-height:1.6">' +
+    'Blackout describes the fabric. Light can still enter around the edges of any window treatment &mdash; ' +
+    '<a href="' + pbBlackoutHref() + '" target="_blank" rel="noopener" style="color:#666;text-decoration:underline">' +
+    'what to expect from blackout</a>.' +
+  '</div>';
+}
+// Show/hide that note inside a container, driven by whether blackout is selected.
+function pbToggleBlackoutNote(containerId, isBlackout) {
+  var box = document.getElementById(containerId);
+  if (!box) return;
+  if (isBlackout) {
+    if (!box.innerHTML) box.innerHTML = pbBlackoutNoteHTML();
+    box.style.display = '';
+  } else {
+    box.style.display = 'none';
+  }
+}
+// ── LIVE PRICING SCOPE (Justin, Sept 2026) ──────────────────────────────────
+// The site quotes a real price for six products only:
+//   soft treatments · Basic Roller · Norman Soluna roller · Norman Portrait
+//   cellular · Norman faux wood blinds · Norman real wood blinds
+// Every other product collects the full spec and goes out as a quote request —
+// no dollar figure on the page, in the cart line, or in the total we email.
+//
+// The price ENGINES are deliberately left running. This gates DISPLAY only, so
+// turning a product back on is a one-line edit here rather than a rebuild. The
+// main thing it switches off is the placeholder $/sqft rates in shades.js
+// (roller / zebra / woven), which were never real vendor numbers.
+//
+// Pages listed here get their price box removed on load. shades.html is mixed —
+// priced and quote-only forms live side by side — so it gates per form inside
+// shades.js instead of appearing in this list.
+var PB_QUOTE_ONLY_PAGES = {
+  'perfectsheer'                    : ['#ps-price-box'],
+  'norman-sheers'                   : ['#price-box', '#price-pending'],
+  'portfolio-dual-sheer'            : ['#price-box-final', '.price-box'],
+  'wallace-banded-shades'           : ['#pr-total-row', '#pr-total'],
+  'wallace-3d-sheer'                : ['#sp-price', '#sp-price-breakdown'],
+  'wallace-aluminum-blinds'         : ['#al-price-box'],
+  'city-lights-aluminum-blinds'     : ['#qr-total-row', '#qr-total'],
+  'custom-roller-shades'            : ['#qp-price', '#qp-price-rows', '#qp-total'],
+  'galaxy-woven-woods'              : ['#qr-total-row', '#qr-total'],
+  'dynasty-woven-woods'             : ['#qr-total-row', '#qr-total'],
+  'synchrony-verticals'             : ['#cv-price', '#qr-price', '#qr-total-row', '#qr-total'],
+  'norman-centerpiece-roman'        : ['#pr-total-row', '#pr-total'],
+  'wallace-natural-roller-shades'   : [],
+  'wallace-portfolio-natural-shades': [],
+  'wallace-portfolio-roman'         : [],
+  'exterior-roller-shades'          : [],
+  'walden-premier-woven'            : [],
+  'walden-select-woven'             : [],
+  'wallace-woven'                   : [],
+  'wallace-verticals'               : [],
+  'shutters'                        : [],
+  'hardware'                        : [],
+  'hardware-quote'                  : [],
+  'kirsch-rods'                     : [],
+  'kirsch-estate-traverse'          : [],
+  'kirsch-2in-estate-traverse'      : [],
+  'kirsch-spec-complete'            : [],
+  'orion-rods'                      : [],
+  'paris-texas-rods'                : [],
+  'select-rods'                     : [],
+  'finial-company'                  : [],
+  'upholstery'                      : []
+};
+// ── Oversize freight — Justin, Sept 2026 ────────────────────────────────────
+// Anything wider than 80″ ships oversize, at a $500 minimum. This is OUR freight
+// and applies to what we fabricate in house: Basic Roller, Romans, cornices and
+// valances. It does NOT apply to:
+//   · Norman products — they carry Norman's own table ($25 first + $11 each, or
+//     $80 + $50 each over 90″) and must never get this on top.
+//   · Drapery — soft goods fold into a carton and ship parcel at any width
+//     (Justin, 2026-09-07, asked and answered explicitly).
+// A cornice or valance can also avoid it by being spliced: the board is jointed,
+// the fabric stays one piece.
+// Lives here rather than per page so the $500 is defined once — it was about to
+// be duplicated across shades.js and soft-treatments.js.
+var PB_OVERSIZE_W   = 80;
+var PB_OVERSIZE_MIN = 500;
+
+// ── Roller shade oversize freight — Justin, Sept 2026 ───────────────────────
+// A roller ships in a tube, so the carton is set by WIDTH alone: the length is
+// rolled up and never changes the freight. Tiers, by ordered width:
+//   ≤ 80″      standard parcel ($25 first + $11 each additional)
+//   81–100″    $200
+//   101–150″   $300
+//   151″+      $500 minimum, confirmed at order (Justin: "500 or more, TBD")
+// Norman rollers are NOT priced from this — they carry Norman's own freight.
+var PB_ROLLER_FREIGHT = [
+  { maxW: 100,      fee: 200 },
+  { maxW: 150,      fee: 300 },
+  { maxW: Infinity, fee: 500, tbd: true }
+];
+// Returns { fee, oversize, tbd, label } for an ordered width and quantity.
+function pbRollerFreight(widthIn, qty) {
+  var w = parseFloat(widthIn) || 0;
+  var n = parseInt(qty, 10) || 1;
+  if (w <= PB_OVERSIZE_W) {
+    return { fee: 25 + Math.max(0, n - 1) * 11, oversize: false, tbd: false,
+             label: 'Standard freight — ' + n + ' shade' + (n > 1 ? 's' : '') };
+  }
+  for (var i = 0; i < PB_ROLLER_FREIGHT.length; i++) {
+    var t = PB_ROLLER_FREIGHT[i];
+    if (w <= t.maxW) {
+      return { fee: t.fee, oversize: true, tbd: !!t.tbd,
+               label: 'Oversize freight (' + Math.round(w) + '″ wide)' +
+                      (t.tbd ? ' — minimum, confirmed at order' : '') };
+    }
+  }
+  return { fee: 500, oversize: true, tbd: true, label: 'Oversize freight — confirmed at order' };
+}
+
+// Current page's filename with no extension — 'perfectsheer' for /pages/perfectsheer.html.
+function pbPageKey() {
+  var last = (location.pathname || '').split('/').pop() || '';
+  return last.replace(/\.html?$/i, '').toLowerCase();
+}
+// True when the CURRENT page shows no prices at all. shades.html always returns
+// false here — it decides per form, since it hosts both kinds.
+function pbPageIsQuoteOnly() {
+  return Object.prototype.hasOwnProperty.call(PB_QUOTE_ONLY_PAGES, pbPageKey());
+}
+// Hide every price surface a quote-only page declares. Safe to call more than
+// once, and silently skips selectors the page doesn't have — the lists above
+// cover several page generations and not every id exists everywhere.
+function pbApplyPricingScope() {
+  // The rule goes in on every page, not just the quote-only ones: shades.html
+  // hosts both kinds of form and flips the attribute per product as you switch.
+  // It has to be a stylesheet rule rather than an inline style, because the price
+  // calcs re-run on every keystroke and several of them do box.style.display=
+  // 'block'. An !important rule in a stylesheet outranks that inline write.
+  if (!document.getElementById('pb-quote-only-css')) {
+    var st = document.createElement('style');
+    st.id = 'pb-quote-only-css';
+    st.textContent = '[data-pb-price-hidden]{display:none !important}';
+    document.head.appendChild(st);
+  }
+  if (!pbPageIsQuoteOnly()) return;
+  // On <html>, not <body> — this runs the moment shared.js is parsed, before
+  // <body> necessarily exists, so the CSS above is already in force by the time
+  // the price markup is laid out. Putting it on body instead let a price flash
+  // on screen until DOMContentLoaded.
+  document.documentElement.classList.add('pb-quote-only');
+  (PB_QUOTE_ONLY_PAGES[pbPageKey()] || []).forEach(function(sel) {
+    var nodes;
+    try { nodes = document.querySelectorAll(sel); } catch (e) { return; }
+    Array.prototype.forEach.call(nodes, function(el) {
+      el.setAttribute('data-pb-price-hidden', '1');
+    });
+  });
+}
+// Run once as soon as this file is parsed so the class and the stylesheet rule
+// land before any price markup renders, then again on DOMContentLoaded to tag
+// the elements themselves (they do not exist yet on this first pass).
+try { pbApplyPricingScope(); } catch (e) {}
+
+// Shared checkbox block. id defaults to 'cf-terms'; pass a unique id for other contexts.
+function pbTermsCheckboxHTML(id) {
+  id = id || 'cf-terms';
+  return '<div class="pb-terms-row" style="display:flex;align-items:flex-start;gap:9px;margin:2px 0 12px;padding:11px 13px;background:#fafaf8;border:1px solid #e8e8e4;border-radius:9px">' +
+      '<input type="checkbox" id="' + id + '" class="pb-terms-check" style="margin-top:1px;width:17px;height:17px;flex-shrink:0;cursor:pointer" ' +
+        'onchange="var r=this.closest(\'.pb-terms-row\');if(r){r.style.borderColor=\'#e8e8e4\';r.style.background=\'#fafaf8\';}">' +
+      '<label for="' + id + '" style="font-size:12px;color:#555;line-height:1.55;cursor:pointer">I have read and agree to the ' +
+        '<a href="' + pbTermsHref() + '" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600;text-decoration:underline">Terms of Agreement</a> ' +
+        '<span style="color:#c0392b">*</span>. A copy will be emailed to me when I submit.</label>' +
+    '</div>';
+}
+// Validate the terms checkbox is checked. scope = element to search within (default document).
+// Graceful: if no VISIBLE checkbox is present in scope, returns true (page has no terms gate).
+function pbTermsValid(scope, errId) {
+  var root = scope || document;
+  var boxes = Array.prototype.slice.call(root.querySelectorAll('.pb-terms-check'))
+    .filter(function(b){ return b.offsetParent !== null; }); // visible only
+  if (!boxes.length) return true;
+  var unchecked = boxes.filter(function(b){ return !b.checked; });
+  if (!unchecked.length) return true;
+  var b = unchecked[0];
+  var row = b.closest('.pb-terms-row');
+  if (row) { row.style.borderColor = '#c0392b'; row.style.background = '#fff5f5'; }
+  if (errId) { var el = document.getElementById(errId); if (el) { el.textContent = 'Please check the box to agree to the Terms of Agreement before submitting.'; el.style.display = 'block'; } }
+  try { b.scrollIntoView({ behavior:'smooth', block:'center' }); } catch(e){}
+  return false;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CANONICAL FINAL STEP — identical "Your details" contact + files step on every
+// product configurator. Mirrors the Norman Soluna Roller Step 7 exactly, so it
+// must always be the LAST step, after all product options are chosen.
+// One source of truth: change here → updates on every product.
+//
+// Usage on a page:
+//   <div id="pb-final-step"></div>
+//   <script>document.getElementById('pb-final-step').innerHTML =
+//       pbContactStepHTML({ stepNum: 7, cartFn: "addFooToCart()", submitFn: "submitFooQuote()" });
+//   </script>
+// The contact inputs (cf-name/phone/email/address/notes) feed pbGetContact()/
+// pbContactValid(); the file input feeds the cart via _pbMergeCartExtras. Wrapping
+// the fields in .pb-cart-extras makes the shared file/install auto-injectors skip
+// this block (no duplicate uploader).
+//
+// opts: { stepNum (number|string, required unless bare), submitFn (string, default "submitQuote()"),
+//         cartFn (string|null — omit to hide the "+ Add to Cart" button),
+//         bare (bool — return just the fields/files/buttons with no step-block wrapper or
+//               "Your details" header, for pages that supply their own step chrome/accordion) }
+function pbContactStepHTML(opts) {
+  opts = opts || {};
+  var stepNum  = opts.stepNum != null ? opts.stepNum : '';
+  var submitFn = opts.submitFn || 'submitQuote()';
+  // idPrefix lets one page host several contact steps without duplicate ids —
+  // soft-treatments keeps a separate form per tab. Omitting it leaves the markup
+  // byte-identical to before, so the 33 single-form pages are untouched.
+  var p        = opts.idPrefix || 'cf-';
+  var errId    = opts.errId || (p + 'contact-err');
+  var hpId     = opts.idPrefix ? p + 'hp' : 'pb-hp';
+  var blockId  = opts.idPrefix ? p + 'contact-block' : 'contact-block';
+  var cartBtn  = opts.cartFn
+    ? '<button class="btn-cart-add" onclick="' + opts.cartFn + '" style="width:100%;margin-bottom:8px">+ Add to Cart</button>'
+    : '';
+  var inner = '' +
+      '<div class="pb-cart-extras">' +
+        // Field order is fixed for every product: name, address, phone, email,
+        // notes, files. ZIP is prompted inside the address rather than as a
+        // separate field, so every product asks for the same thing (shutters
+        // used to carry its own city/zip inputs).
+        '<div class="form-group"><label>Name *</label><input type="text" id="' + p + 'name" data-pb-contact="name" autocomplete="name" placeholder="Jane Smith"></div>' +
+        '<div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="' + p + 'address" data-pb-contact="address" autocomplete="street-address" placeholder="123 Main St, Philadelphia PA 19106"></div>' +
+        '<div class="dim-row">' +
+          '<div class="form-group"><label>Phone *</label><input type="tel" id="' + p + 'phone" data-pb-contact="phone" autocomplete="tel" placeholder="(215) 555-0100"></div>' +
+          '<div class="form-group"><label>Email *</label><input type="email" id="' + p + 'email" data-pb-contact="email" autocomplete="email" placeholder="jane@example.com"></div>' +
+        '</div>' +
+        '<div class="form-group"><label>Notes</label><textarea id="' + p + 'notes" data-pb-contact="notes" placeholder="Room name, ceiling height, fabric ideas, timeline &mdash; anything helpful" style="min-height:60px"></textarea></div>' +
+        '<div style="border:1.5px dashed #ddd;border-radius:10px;padding:14px 16px;margin-bottom:12px;background:#fafaf8">' +
+          '<div style="font-size:12px;font-weight:600;color:#333;margin-bottom:8px">&#128206; Attach photos or files <span style="font-weight:400;color:#999">(optional)</span></div>' +
+          '<input type="file" id="' + p + 'files" class="pb-ce-files" multiple accept="image/*,.pdf,.heic,.png,.jpg,.jpeg" style="width:100%;font-size:12px;color:#555;font-family:inherit;cursor:pointer;padding:4px 0" onchange="pbShowFileNames(this,\'' + p + 'files-names\')">' +
+          '<div id="' + p + 'files-names" style="font-size:11px;color:#555;margin-top:6px;line-height:1.8"></div>' +
+          '<div style="font-size:11px;color:#aaa;margin-top:5px;line-height:1.5">Window photos, room photos, measurements, inspiration &mdash; anything that helps.</div>' +
+        '</div>' +
+        // Honeypot — hidden from humans; bots that fill it are blocked in the submit interceptor.
+        '<input type="text" id="' + hpId + '" name="pb-hp" class="pb-hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;opacity:0;pointer-events:none">' +
+        '<div id="' + errId + '" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>' +
+        // Required Terms of Agreement acceptance — gates "Submit Order for Review" only
+        // (not Add to Cart). It sits above both buttons rather than between them, so the
+        // two buttons stay one directly on top of the other on every surface.
+        pbTermsCheckboxHTML(p + 'terms') +
+        cartBtn +
+        '<button class="btn-gold" onclick="' + submitFn + '" style="width:100%;padding:13px" data-pb-require-contact="' + errId + '">Submit Order for Review &rarr;</button>' +
+      '</div>';
+  if (opts.bare) return inner;
+  return '' +
+    '<div class="step-block" id="' + blockId + '">' +
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">' +
+        '<div class="step-num">' + stepNum + '</div>' +
+        '<div class="step-title" style="margin-bottom:0">Your details</div>' +
+      '</div>' +
+      inner +
+    '</div>';
+}
+
+// Adjust a numeric quantity <input id=id> by delta, clamped to [min,max]. Shared by every
+// canonical Step-1 quantity stepper so the +/- behaviour is identical on every product.
+function pbAdjQty(id, delta, min, max) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  min = (min == null ? 1 : min); max = (max == null ? 50 : max);
+  var v = (parseInt(el.value, 10) || min) + delta;
+  if (v < min) v = min; if (v > max) v = max;
+  el.value = v;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ROD SPEC — exact finished rod length + bracket count, shared by every hardware
+// configurator (Kirsch, Paris Texas, Orion, Select, Finial Company, Architrac,
+// Estate Traverse, hardware quote).
+//
+// Window width alone does not tell the workroom how long to cut a rod: returns,
+// overlap, stack-back and centre supports all move the number. So the customer
+// gets to state the exact rod length, and the bracket count is a recommendation
+// they can override — some installs need an extra centre support (heavy drapery,
+// a bay, a stud that won't cooperate), some need fewer.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Recommended bracket count for a finished rod/track length in inches.
+ * Reproduces the Select spacing table (≤57″=2, 58–85″=3, 86–113″=4, 114–140″=5,
+ * 141–168″=6, 169–192″=7) and keeps ~28″ centres beyond it.
+ */
+function pbRecommendedBrackets(lengthIn) {
+  var len = parseFloat(lengthIn);
+  if (!len || len <= 0) return 2;
+  var BREAKS = [57, 85, 113, 140, 168, 192];
+  for (var i = 0; i < BREAKS.length; i++) if (len <= BREAKS[i]) return i + 2;
+  return 8 + Math.floor((len - 193) / 28);
+}
+
+/**
+ * The shared "Rod length & brackets" block.
+ * opts: { idPrefix ('rod-'), stepNum, title, calc (expr run on change),
+ *         widthId (field to seed the length hint from), bare(false),
+ *         note (extra guidance line) }
+ */
+function pbRodSpecHTML(opts) {
+  opts = opts || {};
+  var p    = opts.idPrefix || 'rod-';
+  var calc = opts.calc || '';
+  var onCh = calc ? (';' + calc) : '';
+  var inner =
+    '<div class="dim-box">' +
+      '<div class="form-row">' +
+        '<div class="form-group">' +
+          '<label>Exact rod length <span style="font-weight:400;color:#888">(inches)</span></label>' +
+          '<input type="number" step="0.125" min="12" max="480" id="' + p + 'length" ' +
+            'data-pb-rod="length" placeholder="e.g. 96.5" ' +
+            'oninput="pbSyncRodBrackets(\'' + p + '\')' + onCh + '">' +
+          '<div class="dim-unit">Finished rod, end to end &mdash; not the window width.</div>' +
+        '</div>' +
+        '<div class="form-group">' +
+          '<label>Brackets</label>' +
+          '<div class="qty-btns">' +
+            '<button type="button" class="qty-btn" onclick="pbAdjQty(\'' + p + 'brackets\',-1,2,20)' + onCh + '">&minus;</button>' +
+            '<input type="number" class="qty-num" id="' + p + 'brackets" data-pb-rod="brackets" ' +
+              'value="2" min="2" max="20" oninput="' + (calc || 'void 0') + '">' +
+            '<button type="button" class="qty-btn" onclick="pbAdjQty(\'' + p + 'brackets\',1,2,20)' + onCh + '">+</button>' +
+          '</div>' +
+          '<div class="dim-unit" id="' + p + 'brackets-hint">Ends only &mdash; add centre supports for heavy drapery.</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="step-note">Leave the length blank and we will cut to your window width plus standard returns. ' +
+      'The bracket count starts from the recommended spacing for the length you enter &mdash; adjust it if your install needs more or fewer.' +
+      (opts.note ? ' ' + opts.note : '') + '</div>';
+  if (opts.bare) return inner;
+  return '' +
+    '<div class="step-block">' +
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">' +
+        (opts.stepNum != null ? '<div class="step-num">' + opts.stepNum + '</div>' : '') +
+        '<div class="step-title" style="margin-bottom:0">' + (opts.title || 'Rod length &amp; brackets') + '</div>' +
+      '</div>' + inner +
+    '</div>';
+}
+
+// Re-seed the bracket count from the entered length, but never fight a customer
+// who has already set it by hand.
+function pbSyncRodBrackets(prefix) {
+  var p   = prefix || 'rod-';
+  var len = document.getElementById(p + 'length');
+  var br  = document.getElementById(p + 'brackets');
+  if (!len || !br) return;
+  var rec = pbRecommendedBrackets(len.value);
+  var hint = document.getElementById(p + 'brackets-hint');
+  if (!br._pbTouched) br.value = rec;
+  if (hint) {
+    hint.textContent = len.value
+      ? 'Recommended for ' + len.value + '″: ' + rec + ' brackets.'
+      : 'Ends only — add centre supports for heavy drapery.';
+  }
+}
+
+// Read the rod spec for a quote body. Returns '' when the page has no rod block.
+function pbGetRodSpec(prefix) {
+  var p   = prefix || 'rod-';
+  var len = document.getElementById(p + 'length');
+  var br  = document.getElementById(p + 'brackets');
+  if (!len && !br) return '';
+  var lenTxt = (len && len.value) ? len.value + '"' : 'Not specified — cut to window width plus standard returns';
+  var brTxt  = (br && br.value) ? br.value : '—';
+  var rec    = (len && len.value) ? pbRecommendedBrackets(len.value) : null;
+  var flag   = (rec != null && br && parseInt(br.value, 10) !== rec)
+    ? ' (customer override — recommended ' + rec + ')' : '';
+  return 'Exact rod length: ' + lenTxt + '\nBrackets: ' + brTxt + flag;
+}
+
+// Mark a bracket field as hand-set so length changes stop overwriting it.
+document.addEventListener('input', function (e) {
+  var t = e.target;
+  if (t && t.getAttribute && t.getAttribute('data-pb-rod') === 'brackets') t._pbTouched = true;
+}, true);
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CANONICAL STEP 1 — "Window measurements & mount". Identical dim-box on every hard
+// window treatment (shades, blinds, cellular, roller, roman, woven, cornices, valances):
+// Width + Height in the teal dim-box, a "How to measure" note, Inside/Outside mount pills,
+// and the shared quantity stepper. One source of truth so Step 1 looks the same everywhere.
+//
+// Rules baked in:
+//  • Inside/Outside mount on everything EXCEPT drapes  → pass noMount:true for drapery.
+//  • Coupled Shades ONLY on the Norman Soluna roller    → pass coupled:'solToggleCoupled()'
+//    there; never anywhere else (default = no coupled button).
+//  • Quantity +/- is always the shared .qty-btns stepper.
+//
+// Canonical ids (override via opts if a page's JS already reads different ids):
+//   width  = inp-width, height = inp-height, qty = inp-qty, mount group = grp-mount.
+// opts: { stepNum(1), title, widthId, heightId, qtyId, mountGroupId,
+//         widthMin/Max/Placeholder/Hint, heightMin/Max/Placeholder/Hint,
+//         calc (oninput expr, default 'updateSummary()'),
+//         mountOnclick (default selOpt+calc), qtyMin(1)/qtyMax(50),
+//         measureHref('measure.html'), extraFieldsHTML, coupled(false|onclick),
+//         noMount(false), noQty(false), bare(false) }
+function pbSizeMountStepHTML(opts) {
+  opts = opts || {};
+  var stepNum = (opts.stepNum != null ? opts.stepNum : 1);
+  var title   = opts.title || 'Window measurements &amp; mount';
+  var calc    = opts.calc || 'updateSummary()';
+  var wId = opts.widthId || 'inp-width', hId = opts.heightId || 'inp-height', qId = opts.qtyId || 'inp-qty';
+  var wMin = (opts.widthMin != null ? opts.widthMin : 12),  wMax = (opts.widthMax != null ? opts.widthMax : 144);
+  var hMin = (opts.heightMin != null ? opts.heightMin : 12), hMax = (opts.heightMax != null ? opts.heightMax : 144);
+  var wPh = opts.widthPlaceholder || '36', hPh = opts.heightPlaceholder || '60';
+  var wHint = opts.widthHint  || ('inches &mdash; ' + wMin + '&Prime; min &middot; ' + wMax + '&Prime; max');
+  var hHint = opts.heightHint || ('inches &mdash; ' + hMin + '&Prime; min &middot; ' + hMax + '&Prime; max');
+  var measureHref = opts.measureHref || 'measure.html';
+  var grp = opts.mountGroupId || 'grp-mount';
+  var mountOnclick = opts.mountOnclick || ("selOpt(this,'" + grp + "');" + calc);
+  var qMin = (opts.qtyMin != null ? opts.qtyMin : 1), qMax = (opts.qtyMax != null ? opts.qtyMax : 50);
+
+  var mount = opts.noMount ? '' :
+    '<div style="font-size:12px;font-weight:600;color:#555;margin:14px 0 6px">Mount type</div>' +
+    '<div class="opt-row" id="' + grp + '" style="margin-bottom:14px">' +
+      '<button class="opt-btn sel" onclick="' + mountOnclick + '">Inside mount</button>' +
+      '<button class="opt-btn" onclick="' + mountOnclick + '">Outside mount</button>' +
+    '</div>';
+
+  var coupledBtn = opts.coupled
+    ? '<button id="coupled-toggle-btn" class="opt-btn" style="font-size:11px;padding:5px 12px" onclick="' + opts.coupled + '">+ Coupled Shades</button>'
+    : '';
+  var qty = opts.noQty ? '' :
+    '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">' +
+      '<span style="font-size:12px;color:#666">Qty:</span>' +
+      '<div class="qty-btns">' +
+        '<button class="qty-btn" onclick="pbAdjQty(\'' + qId + '\',-1,' + qMin + ',' + qMax + ');' + calc + '">&#8722;</button>' +
+        '<input class="qty-num" type="number" id="' + qId + '" value="1" min="' + qMin + '" max="' + qMax + '" oninput="' + calc + '">' +
+        '<button class="qty-btn" onclick="pbAdjQty(\'' + qId + '\',1,' + qMin + ',' + qMax + ');' + calc + '">&#43;</button>' +
+      '</div>' + coupledBtn +
+    '</div>';
+
+  var inner =
+    '<div class="dim-box">' +
+      '<div class="dim-box-label">Enter your window size</div>' +
+      '<div class="form-row">' +
+        '<div class="form-group"><label>Width</label><input type="number" id="' + wId + '" min="' + wMin + '" max="' + wMax + '" step="0.125" placeholder="' + wPh + '" oninput="' + calc + '"><div class="dim-unit">' + wHint + '</div></div>' +
+        '<div class="form-group"><label>Height</label><input type="number" id="' + hId + '" min="' + hMin + '" max="' + hMax + '" step="0.125" placeholder="' + hPh + '" oninput="' + calc + '"><div class="dim-unit">' + hHint + '</div></div>' +
+      '</div>' + (opts.extraFieldsHTML || '') +
+    '</div>' +
+    '<div class="step-note" style="margin-bottom:10px"><a href="' + measureHref + '" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm at the home visit.</div>' +
+    mount + qty;
+
+  if (opts.bare) return inner;
+  return '<div class="step-block" id="size-mount-block">' +
+    '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">' +
+      '<div class="step-num">' + stepNum + '</div>' +
+      '<div class="step-title" style="margin-bottom:0">' + title + '</div>' +
+    '</div>' + inner + '</div>';
 }
 
 // ============================================================
@@ -518,12 +1079,19 @@ var _pbPendingExtras = null;
 
 function pbAddToCart(item) {
   item.cartId = Date.now() + '-' + Math.floor(Math.random()*9999);
+  // Quote-only product → drop the price before it ever reaches the cart. The cart
+  // and checkout already render a priceless item as "Custom quote" and leave it
+  // out of the estimated total, so this is all it takes. Pages set item.quoteOnly
+  // themselves when one page mixes priced and quote-only forms (shades.html).
+  if (item.quoteOnly || pbPageIsQuoteOnly()) { item.price = 0; item.quoteOnly = true; }
   // Merge any extras captured from the estimate panel (notes/files) if the item didn't set them
   if (_pbPendingExtras) {
     if (!item.notes && _pbPendingExtras.notes) item.notes = _pbPendingExtras.notes;
     if ((!item._files || !item._files.length) && _pbPendingExtras.files && _pbPendingExtras.files.length) item._files = _pbPendingExtras.files;
     _pbPendingExtras = null;
   }
+  // Merge extras from the in-form "files / notes + professional installation" block (Add-to-Cart flow)
+  _pbMergeCartExtras(item);
   if (item.notes == null) item.notes = '';
   // Move pending File objects into the per-item in-memory store; keep lightweight metadata on the item
   if (item._files && item._files.length) {
@@ -993,7 +1561,9 @@ function pbRenderEstimate(priceBoxId, lines, subtotal, conflictMsg, onCheckout) 
         '<input type="file" id="' + priceBoxId + '-files" multiple accept="image/*,.pdf,.heic,.png,.jpg,.jpeg" style="width:100%;font-size:11px;color:#555;font-family:inherit;cursor:pointer;padding:3px 0" onchange="pbShowFileNames(this,\'' + priceBoxId + '-fnames\')">' +
         '<div id="' + priceBoxId + '-fnames" style="font-size:11px;color:#555;margin-top:4px;line-height:1.7"></div>' +
       '</div>' +
-      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' +
+      // Add to Cart sits directly above Submit — same stacked pair as the shared
+      // final step, so the two buttons read the same way on every surface.
+      '<div style="display:grid;gap:10px">' +
         '<button onclick="pbEstimateAddCart(\'' + priceBoxId + '\')" style="padding:11px;border:2px solid var(--espresso);border-radius:8px;background:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--espresso)">+ Add to Cart</button>' +
         '<button onclick="pbPanelSubmit(\'' + priceBoxId + '\')" ' +
           (hasConflict ? 'disabled style="padding:11px;border-radius:8px;background:#e5e5e5;font-size:13px;font-weight:700;cursor:not-allowed;font-family:inherit;color:#aaa;border:none"' :
@@ -1133,10 +1703,11 @@ function pbShowQuoteModal(lines, productName, estimate, files) {
         '</div>' +
         '<div class="pb-qm-field"><label>Email address *</label><input id="pbq-email" type="email" placeholder="jane@example.com" autocomplete="email"></div>' +
         '<div class="pb-qm-field"><label>Phone number *</label><input id="pbq-phone" data-pb-contact="phone" type="tel" placeholder="(215) 555-0100" autocomplete="tel"></div>' +
-        '<div class="pb-qm-field"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input id="pbq-address" data-pb-contact="address" type="text" placeholder="Street, City, State" autocomplete="street-address"></div>' +
+        '<div class="pb-qm-field"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input id="pbq-address" data-pb-contact="address" type="text" placeholder="123 Main St, Philadelphia PA 19106" autocomplete="street-address"></div>' +
         '<div class="pb-qm-field"><label>Additional notes <span style="font-weight:400;color:#888">(optional)</span></label><textarea id="pbq-notes" rows="3" placeholder="Anything else — overall timeline, install questions..."></textarea></div>' +
         '<div class="pb-qm-err" id="pbq-err"></div>' +
-        '<button class="pb-qm-submit" id="pbq-submit" onclick="pbSubmitQuote()">Submit Quote Request &#8594;</button>' +
+        pbTermsCheckboxHTML('pbq-terms') +
+        '<button class="pb-qm-submit" id="pbq-submit" onclick="pbSubmitQuote()">Submit Order for Review &#8594;</button>' +
         '<div style="text-align:center;font-size:11px;color:#aaa;margin-top:8px">We\'ll respond by email and phone — no spam, ever.</div>' +
         '<div class="pb-qm-ok" id="pbq-ok">' +
           '<div style="font-size:36px;margin-bottom:8px">&#10003;</div>' +
@@ -1240,6 +1811,8 @@ async function pbSubmitQuote() {
     var _pf = document.getElementById('pbq-phone'); if (_pf) { try { _pf.focus(); } catch(e){} }
     return;
   }
+  // Required Terms of Agreement acceptance before submitting for review.
+  if (!pbTermsValid(document.querySelector('.pb-qm-body') || document, 'pbq-err')) return;
   if (errEl) errEl.style.display = 'none';
   if (submit) { submit.disabled = true; submit.textContent = 'Sending…'; }
 
@@ -1262,6 +1835,8 @@ async function pbSubmitQuote() {
         estimate: _pbQuoteEstimate ? '$' + _pbQuoteEstimate.toFixed(0) + ' (estimate only)' : null,
         notes: notes.trim(),
         attachments: attachments,
+        agreedToTerms: true,
+        agreedToTermsAt: new Date().toISOString(),
         sourceUrl: window.location.href,
         _hp: '',
         _t: Date.now() - _formLoadTime
@@ -1333,7 +1908,31 @@ function pbCloseCheckout() {
  * @param {string} productName  — e.g. 'Cellular Shade', 'Roller Shade'
  * @param {Function} onChange   — called when any option changes
  */
+// Live-refresh plumbing: pages pass their price-recalc fn as normanMotorSection's `onChange`.
+// Motor option clicks (selOpt on nm-/auto- groups) and accessory toggles call nmFireChange()
+// so the displayed total updates immediately when any motor sub-option changes.
+// Fallback for callers that fire without an originating element.
+var _nmMotorChangeCb = null;
+/**
+ * Re-run the price calc for the motor section the change happened in.
+ * @param {Element} [el] — the element that changed; we walk up to its motor section
+ *                         so the right product recalcs on multi-configurator pages.
+ */
+function nmFireChange(el) {
+  var cb = null;
+  if (el && el.closest) {
+    var root = el.closest('[data-nm-root]');
+    if (root && typeof root._nmCb === 'function') cb = root._nmCb;
+  }
+  if (!cb && typeof _nmMotorChangeCb === 'function') cb = _nmMotorChangeCb;
+  if (cb) { try { cb(); } catch (e) {} }
+}
+// Multi-select accessory toggle (not mutually exclusive — unlike selOpt). Each accessory button
+// carries data-nm-price; nmGetMotorPrice sums the selected ones.
+function nmToggleAcc(btn) { btn.classList.toggle('sel'); nmFireChange(btn); }
+
 function normanMotorSection(containerId, productName, onChange) {
+  if (typeof onChange === 'function') _nmMotorChangeCb = onChange;
   // Norman motor options (2026):
   //   Norman Smart — default/recommended for all motorizable Norman products
   //   Rollease Acmeda Automate — available on Roller + Cellular only (Norman's rebranded Rollease offering)
@@ -1341,18 +1940,33 @@ function normanMotorSection(containerId, productName, onChange) {
   // Charging Wand (battery charging method, not a motor type) still applies to Roller + Cellular with Norman Smart
   var pn = (productName || '').toLowerCase();
   var isSmartDrape       = pn.indexOf('smartdrape') !== -1 || pn.indexOf('smart drape') !== -1;
-  var isRolleaseCompat   = pn.indexOf('roller') !== -1 || pn.indexOf('cellular') !== -1;
-  var wandAllowed        = isRolleaseCompat && !isSmartDrape;
+  var isRoller           = pn.indexOf('roller') !== -1;
+  var isCellular         = pn.indexOf('cellular') !== -1 || pn.indexOf('honeycomb') !== -1;
+  var isRoman            = pn.indexOf('roman') !== -1 || pn.indexOf('centerpiece') !== -1;
+  var isPerfectSheer     = pn.indexOf('perfectsheer') !== -1 || pn.indexOf('perfect sheer') !== -1;
+  // Rollease Acmeda Automate: Honeycomb/Cellular, Soluna Roller, Centerpiece Roman, PerfectSheer
+  // (NOT SmartDrape) — per Norman motorization PDF p.65 availability matrix.
+  var isRolleaseCompat   = (isRoller || isCellular || isRoman || isPerfectSheer) && !isSmartDrape;
+  // Charging Wand recharges the Norman Smart battery — available on Honeycomb + Roller ONLY.
+  var wandAllowed        = (isRoller || isCellular) && !isSmartDrape;
 
+  // Battery charging method (roller + cellular). On rollers a charging wand needs a visible control box
+  // at the headrail — not recommended; on cellular the wand connects directly at the shade.
   var batteryDetail = wandAllowed
-    ? '<div style="font-size:11px;color:var(--text-dark);line-height:1.6;margin-bottom:6px">Battery charging method:</div>' +
+    ? '<div style="font-size:11px;color:var(--text-dark);line-height:1.6;margin-bottom:6px">How would you like to charge the battery?</div>' +
       '<div class="opt-row" id="nm-grp-battery-type">' +
-        '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">Charging Wand</button>' +
-        '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">AC Adapter Charger</button>' +
+        '<button class="opt-btn' + (isRoller ? ' sel' : '') + '" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">AC Adapter Charger</button>' +
+        '<button class="opt-btn' + (isCellular ? ' sel' : '') + '" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">Wired Charging Wand' + (isRoller ? ' <span style="font-size:9px;color:#c77">not rec.</span>' : (isCellular ? ' <span style="font-size:9px;color:var(--gold)">recommended</span>' : '')) + '</button>' +
+        '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-battery-type\')" style="color:#333">Wireless Charging Wand' + (isRoller ? ' <span style="font-size:9px;color:#c77">not rec.</span>' : '') + '</button>' +
       '</div>' +
-      '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">Charging Wand: NOT available with Cassette headrail or Dual shades. Use AC Adapter Charger for those configurations.</div>'
-    : '<div style="font-size:11px;color:var(--text-dark);line-height:1.6">Rechargeable battery with AC Adapter Charger. No wiring required — ideal for retrofit installations.' +
-      (isSmartDrape ? ' Charging Wand is not available for SmartDrape.' : ' Charging Wand is not available for this product type.') + '</div>';
+      '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">' +
+        'The rechargeable battery recharges with an <strong>AC Adapter Charger</strong> — plug it in every few months to top up. ' +
+        (isRoller
+          ? 'On roller shades a charging wand needs a small visible control box at the top of the shade, so we recommend the included charger here. '
+          : 'On cellular shades a Charging Wand recharges the shade with a wand instead of taking it down — recommended. ') +
+        'The <strong>Wired</strong> wand stays plugged in and includes an extension cable for extra reach; the <strong>Wireless</strong> wand is cordless (charge the wand, then charge the shade). A 36&quot; Extension Pole is available for either. Charging Wand is not available with a Cassette headrail or Dual shades.</div>'
+    : '<div style="font-size:11px;color:var(--text-dark);line-height:1.6">Rechargeable battery, recharged with an AC Adapter Charger (plug the charger into the battery every few months). No wiring required — ideal for retrofit installations.' +
+      (isSmartDrape ? ' A Charging Wand is not available for SmartDrape.' : ' A Charging Wand is not available for this product type.') + '</div>';
 
   var dcLowVoltageBtn = isSmartDrape
     ? '<button class="opt-btn" style="color:#aaa;text-decoration:line-through;cursor:not-allowed" disabled title="DC Low Voltage not available for SmartDrape">DC Low Voltage ⚠</button>'
@@ -1369,6 +1983,34 @@ function normanMotorSection(containerId, productName, onChange) {
         '<div style="font-size:10px;color:var(--text-faint);margin-top:4px;line-height:1.5">Rollease Acmeda Automate is available for customers integrating with an existing Rollease Acmeda smart home system.</div>' +
       '</div>'
     : '<div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px">&#9889; Norman Smart Motorization</div>';
+
+  // Optional advanced add-ons (multi-select; nmGetMotorPrice sums selected data-nm-price)
+  var _accBtn = function(key, label, price) {
+    // Price rides along in data-nm-price for nmGetMotorPrice — it is not shown here.
+    return '<button class="opt-btn" data-nm-acc="' + key + '" data-nm-price="' + price + '" onclick="nmToggleAcc(this)" style="color:#333">' + label + '</button>';
+  };
+  var extCableOk = (isRoller || isRoman || isPerfectSheer) && !isSmartDrape;
+  var nmAddons =
+    '<div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.1)">' +
+      '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Optional add-ons <span style="font-size:10px;font-weight:400;color:var(--text-faint)">(tap to add)</span></div>' +
+      '<div class="opt-row">' +
+        _accBtn('repeater', 'Signal repeater', 107) +
+        (wandAllowed ? _accBtn('extpole', '36&quot; extension pole', 75) : '') +
+        (extCableOk ? _accBtn('extcable', 'Extension cable', 43) : '') +
+      '</div>' +
+      '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">Repeater extends wireless range in larger homes. Extension pole lengthens the charging wand for high windows. Extension cable helps reach high or recessed installs.</div>' +
+    '</div>';
+  var autoAddons =
+    '<div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.1)">' +
+      '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Optional add-ons <span style="font-size:10px;font-weight:400;color:var(--text-faint)">(tap to add)</span></div>' +
+      '<div class="opt-row">' +
+        _accBtn('auto-wallswitch', '5-channel wall switch', 163) +
+        _accBtn('auto-repeater', 'Signal repeater', 272) +
+        _accBtn('auto-battery', 'External battery pack', 230) +
+        _accBtn('auto-solar', 'Solar panel', 242) +
+      '</div>' +
+      '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">Wall switch adds a hardwired control point. Repeater extends range. External battery pack and solar panel extend/maintain charge between recharges.</div>' +
+    '</div>';
 
   var normanSmartSection =
     '<div id="nm-smart-section">' +
@@ -1426,32 +2068,77 @@ function normanMotorSection(containerId, productName, onChange) {
           '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-remote-type\')" style="color:#333">Basic Remote</button>' +
           '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-remote-type\')" style="color:#333">SmartDial G2</button>' +
         '</div>' +
-        '<div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px;margin-top:10px">Channel assignment</div>' +
+        '<div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px;margin-top:10px">Channels</div>' +
         '<div class="opt-row" id="nm-grp-channel">' +
-          '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-channel\')" style="color:#333">Single channel</button>' +
-          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-channel\')" style="color:#333">Multi channel</button>' +
+          '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-channel\')" style="color:#333">Multi channel</button>' +
         '</div>' +
-        '<div style="font-size:10px;color:var(--text-faint);margin-top:5px">Single: all shades respond together. Multi: control each shade independently. Shades default to Ch 1 if not assigned.</div>' +
+        '<div style="font-size:10px;color:var(--text-faint);margin-top:5px">Norman Smart remotes (Basic &amp; SmartDial G2) are multi-channel — control each shade independently, or assign several shades to the same channel to move them together.</div>' +
       '</div>' +
 
-      // Smart home
+      // Smart home hub
       '<div>' +
-        '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Smart home integration</div>' +
-        '<div class="opt-row" id="nm-grp-smart" style="flex-wrap:wrap">' +
-          '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-smart\')" style="color:#333">None</button>' +
-          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-smart\')" style="color:#333">Amazon Alexa</button>' +
-          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-smart\')" style="color:#333">Google Home</button>' +
-          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-smart\')" style="color:#333">Apple HomeKit</button>' +
+        '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Smart home hub</div>' +
+        '<div class="opt-row" id="nm-grp-hub">' +
+          '<button class="opt-btn" onclick="selOpt(this,\'nm-grp-hub\')" style="color:#333">Add ShadeAuto hub</button>' +
+          '<button class="opt-btn sel" onclick="selOpt(this,\'nm-grp-hub\')" style="color:#333">No hub</button>' +
         '</div>' +
-        '<div style="font-size:10px;color:var(--text-faint);margin-top:5px">Hub required for app and voice control. ShadeAuto Hub + Repeater available as add-on. Max 5 repeaters per system.</div>' +
+        '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.7">The hub connects your shades to your phone and to <strong>Amazon Alexa, Google Home &amp; Apple HomeKit</strong> — no need to pick one, it works with all of them. Without a hub, shades run from the remote. Max 5 repeaters per system.</div>' +
       '</div>' +
+      nmAddons +
     '</div>';
 
   // Rollease info section (only rendered for compatible products)
   var rolleaseSection = isRolleaseCompat
-    ? '<div id="nm-rollease-section" style="display:none;padding:14px 16px;background:rgba(255,255,255,.06);border-radius:8px;margin-top:4px">' +
-        '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:6px">Rollease Acmeda Automate</div>' +
-        '<div style="font-size:11px;color:var(--text-dark);line-height:1.7">Custom priced — for customers integrating with an existing Rollease Acmeda smart home system. Compatible with the Automate Pulse 2 hub, the Automate app, and voice assistants (Alexa, Google Home, Apple HomeKit). Power source and accessories confirmed at your measurement visit.</div>' +
+    ? '<div id="nm-rollease-section" style="display:none">' +
+        '<div style="font-size:11px;background:#2a1c0e;border:1px solid #7a5020;border-radius:7px;padding:8px 12px;color:#e8b060;margin-bottom:12px;line-height:1.5">Rollease Acmeda Automate — <strong>custom priced</strong>. For customers integrating with an existing Rollease Acmeda smart-home system. Final price confirmed at your measurement visit.</div>' +
+
+        // Power source (Honeycomb: Battery Pack or AC Adapter, both $682, no DC;
+        //   Roller/Roman/PerfectSheer: Li-ion $682 or Low Voltage DC $814 — PDF p.65)
+        '<div style="margin-bottom:12px">' +
+          '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Power source</div>' +
+          '<div class="opt-row" id="auto-grp-power">' +
+            (isCellular
+              ? '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#128267; Rechargeable Battery Pack</button>' +
+                '<button class="opt-btn" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#128268; AC Adapter</button>'
+              : '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#128267; Rechargeable battery (Li-ion)</button>' +
+                '<button class="opt-btn" onclick="selOpt(this,\'auto-grp-power\')" style="color:#333">&#9889; Low Voltage DC</button>') +
+          '</div>' +
+          '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">' +
+            (isCellular
+              ? 'Automate motor powered by an external rechargeable battery pack or an AC adapter. '
+              : 'Automate Li-ion rechargeable motor or 12V DC low-voltage hardwired. ') +
+            'Custom priced — confirmed at measurement.</div>' +
+        '</div>' +
+
+        // Remote
+        '<div style="margin-bottom:12px">' +
+          '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Remote control</div>' +
+          '<div class="opt-row" id="auto-grp-remote">' +
+            '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-remote\');nmAutoToggleRemote(true)" style="color:#333">Yes — Automate remote</button>' +
+            '<button class="opt-btn" onclick="selOpt(this,\'auto-grp-remote\');nmAutoToggleRemote(false)" style="color:#333">No (app / hub only)</button>' +
+          '</div>' +
+        '</div>' +
+
+        // Remote detail — Automate DOES offer single-channel (unlike Norman Smart)
+        '<div id="auto-remote-detail" style="padding:10px 12px;background:rgba(255,255,255,.06);border-radius:8px;margin-bottom:12px">' +
+          '<div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px">Channels</div>' +
+          '<div class="opt-row" id="auto-grp-channel">' +
+            '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-channel\')" style="color:#333">Multi channel</button>' +
+            '<button class="opt-btn" onclick="selOpt(this,\'auto-grp-channel\')" style="color:#333">Single channel</button>' +
+          '</div>' +
+          '<div style="font-size:10px;color:var(--text-faint);margin-top:5px">Automate Paradigm remotes come in single-channel and multi-channel (up to 15-channel). Single: all shades move together. Multi: control each shade independently.</div>' +
+        '</div>' +
+
+        // Hub
+        '<div>' +
+          '<div style="font-size:12px;font-weight:600;color:var(--cream);margin-bottom:7px">Automate Pulse 2 hub</div>' +
+          '<div class="opt-row" id="auto-grp-hub">' +
+            '<button class="opt-btn sel" onclick="selOpt(this,\'auto-grp-hub\')" style="color:#333">Add hub (app + voice)</button>' +
+            '<button class="opt-btn" onclick="selOpt(this,\'auto-grp-hub\')" style="color:#333">No hub</button>' +
+          '</div>' +
+          '<div style="font-size:10px;color:var(--text-faint);margin-top:5px;line-height:1.5">The Automate Pulse 2 hub enables the Automate app and voice control (Alexa, Google Home, Apple HomeKit).</div>' +
+        '</div>' +
+        autoAddons +
       '</div>'
     : '';
 
@@ -1464,7 +2151,14 @@ function normanMotorSection(containerId, productName, onChange) {
 
   if (containerId) {
     var el = document.getElementById(containerId);
-    if (el) el.innerHTML = html;
+    if (el) {
+      el.innerHTML = html;
+      // Bind this section's recalc to its own container. A page can render more than one
+      // Norman motor section (shades.html does: cellular + roller), so a single global
+      // callback would make the last-rendered product steal everyone else's recalc.
+      el.setAttribute('data-nm-root', '1');
+      el._nmCb = (typeof onChange === 'function') ? onChange : null;
+    }
   }
   return html;
 }
@@ -1487,28 +2181,270 @@ function nmToggleRemote(show) {
   var el = document.getElementById('nm-remote-detail');
   if (el) el.style.display = show ? 'block' : 'none';
 }
+function nmAutoToggleRemote(show) {
+  var el = document.getElementById('auto-remote-detail');
+  if (el) el.style.display = show ? 'block' : 'none';
+}
 function nmGetMotorSummary() {
   var brandBtn = document.querySelector('#nm-grp-brand .opt-btn.sel');
   var isRollease = brandBtn && brandBtn.textContent.toLowerCase().indexOf('rollease') !== -1;
-  if (isRollease) return 'Rollease Acmeda Automate — custom priced (for existing Rollease Acmeda system integration)';
-  var power   = (document.querySelector('#nm-grp-power .opt-btn.sel') || {}).textContent || '—';
-  var wire    = (document.querySelector('#nm-grp-wire .opt-btn.sel') || {}).textContent || '';
+  if (isRollease) {
+    var aPower  = ((document.querySelector('#auto-grp-power .opt-btn.sel')   || {}).textContent || '').replace(/[^\w\s\-\(\)]/g,'').trim();
+    var aRemote = ((document.querySelector('#auto-grp-remote .opt-btn.sel')  || {}).textContent || '');
+    var aChan   = ((document.querySelector('#auto-grp-channel .opt-btn.sel') || {}).textContent || '').trim();
+    var aHub    = ((document.querySelector('#auto-grp-hub .opt-btn.sel')     || {}).textContent || '').trim();
+    var aHasRemote = aRemote.indexOf('Yes') !== -1;
+    var aAcc = [];
+    document.querySelectorAll('#nm-rollease-section .opt-btn[data-nm-acc].sel').forEach(function(b){ aAcc.push(b.textContent.replace(/\s*\+?\$[\d,]+/g, '').trim()); });
+    return 'Rollease Acmeda Automate (custom priced) — Power: ' + (aPower || '—') +
+      ' | Remote: ' + (aHasRemote ? 'Yes (' + aChan + ')' : 'No — app/hub only') +
+      ' | Hub: ' + (aHub.indexOf('Add') === 0 ? 'Automate Pulse 2' : 'None') +
+      (aAcc.length ? ' | Add-ons: ' + aAcc.join(', ') : '');
+  }
+  function nmClean(t){ return (t||'').replace(/\s*\+?\$[\d,]+/g,'').replace(/\b(included|recommended|not rec\.?)\b/gi,'').replace(/[^\w\s\-]/g,'').replace(/\s+/g,' ').trim(); }
+  var power   = nmClean((document.querySelector('#nm-grp-power .opt-btn.sel') || {}).textContent) || '—';
+  var charge  = nmClean((document.querySelector('#nm-grp-battery-type .opt-btn.sel') || {}).textContent);
+  var wire    = nmClean((document.querySelector('#nm-grp-wire .opt-btn.sel') || {}).textContent);
   var remote  = (document.querySelector('#nm-grp-remote .opt-btn.sel') || {}).textContent || '—';
-  var remotes = (document.querySelector('#nm-grp-remotes .opt-btn.sel') || {}).textContent || '';
-  var channel = (document.querySelector('#nm-grp-channel .opt-btn.sel') || {}).textContent || '';
-  var smart   = (document.querySelector('#nm-grp-smart .opt-btn.sel') || {}).textContent || 'None';
-  return 'Norman Smart — Power: ' + power.replace(/[^\w\s]/g,'').trim() +
+  var remotes = nmClean((document.querySelector('#nm-grp-remotes .opt-btn.sel') || {}).textContent);
+  var rtype   = nmClean((document.querySelector('#nm-grp-remote-type .opt-btn.sel') || {}).textContent);
+  var channel = nmClean((document.querySelector('#nm-grp-channel .opt-btn.sel') || {}).textContent);
+  var hub     = (document.querySelector('#nm-grp-hub .opt-btn.sel') || {}).textContent || '';
+  var isBattery = power.toLowerCase().indexOf('battery') !== -1;
+  var noRemote  = remote.toLowerCase().indexOf('no') === 0;
+  var nmAcc = [];
+  document.querySelectorAll('#nm-smart-section .opt-btn[data-nm-acc].sel').forEach(function(b){ nmAcc.push(nmClean(b.textContent)); });
+  return 'Norman Smart — Power: ' + power +
+    (isBattery && charge ? ' (' + charge + ')' : '') +
     (wire ? ' — ' + wire : '') +
-    ' | Remote: ' + remote.replace(/[^\w\s\-]/g,'').trim() +
-    (remotes ? ' × ' + remotes + ' (' + channel + ')' : '') +
-    ' | Smart home: ' + smart;
+    ' | Remote: ' + (noRemote ? 'None (app only)' : (rtype || 'Basic Remote') + (remotes ? ' ×' + remotes : '') + (channel ? ' ' + channel : '')) +
+    ' | Hub: ' + (hub.toLowerCase().indexOf('add') !== -1 ? 'ShadeAuto hub' : 'None') +
+    (nmAcc.length ? ' | Add-ons: ' + nmAcc.join(', ') : '');
+}
+
+// Motorization discount — 20% off retail, for BOTH Norman Smart and Rollease
+// Acmeda Automate (Justin, 2026-08). Shades are 25% off; motorization is 20%.
+var NM_MOTOR_DISC = 0.20;
+
+// The customer's motorization price: retail less the 20% motor discount.
+// Every total on the site adds this figure, so the discount is applied once, here,
+// rather than at each of the eight places motor cost feeds a total.
+//   productName  — same string passed to normanMotorSection (for base motor by product)
+//   count        — number of motorized shades (caller passes qty, ×2 for dual/D&N, etc.)
+//   baseOverride — optional Norman Smart motor base (e.g. 642 dual motor for cellular D&N/TDBU)
+function nmGetMotorPrice(productName, count, baseOverride) {
+  return Math.round(nmGetMotorRetail(productName, count, baseOverride) * (1 - NM_MOTOR_DISC));
+}
+
+// Returns the motorization surcharge at Norman suggested RETAIL for the currently-selected
+// motor options. Charger (AC adapter) is INCLUDED/free; motor, charging wands, hub, remotes
+// & the SmartDial G2 upgrade are all charged. Prices verified vs the Norman motorization
+// PDF (Norman Smart p.5; Rollease Acmeda Automate p.63–65).
+function nmGetMotorRetail(productName, count, baseOverride) {
+  count = count || 1;
+  var sel = function(id){ var b = document.querySelector('#' + id + ' .opt-btn.sel'); return b ? b.textContent : ''; };
+  var brandBtn = document.querySelector('#nm-grp-brand .opt-btn.sel');
+  var isRollease = brandBtn && /rollease/i.test(brandBtn.textContent);
+
+  if (isRollease) {
+    // Rollease Acmeda Automate (custom priced). Honeycomb has no DC motor. No free items:
+    var pwrA = sel('auto-grp-power');
+    var dc = /dc|low voltage/i.test(pwrA);
+    var total = (dc ? 814 : 682) * count;                         // motor per shade
+    if (dc) total += 19 * count;                                  // DC connection harness
+    else if (/battery|rechargeable/i.test(pwrA) || !pwrA) total += 103 * count; // charging kit (AC Adapter = plug-in, no kit)
+    if (/add/i.test(sel('auto-grp-hub'))) total += 483;           // hub (once)
+    if (/yes/i.test(sel('auto-grp-remote'))) total += 140;        // 15-channel remote
+    document.querySelectorAll('#nm-rollease-section .opt-btn[data-nm-acc].sel').forEach(function(b){ total += parseInt(b.getAttribute('data-nm-price'), 10) || 0; }); // optional add-ons
+    return total;
+  }
+
+  // Norman Smart — no free items: every power source carries its charger/harness cost.
+  var pn = (productName || '').toLowerCase();
+  var base = baseOverride || ((pn.indexOf('smartdrape') !== -1 || pn.indexOf('smart drape') !== -1) ? 642 : 482);
+  var total = base * count;                                       // motor per shade
+  var power = sel('nm-grp-power');                                // power source
+  if (/battery|rechargeable/i.test(power) || !power) {            // rechargeable battery (default)
+    var ch = sel('nm-grp-battery-type');                          // charging method
+    if (/wired/i.test(ch))         total += 161 * count;          // Wired Charging Wand
+    else if (/wireless/i.test(ch)) total += 428 * count;          // Wireless Charging Wand
+    else                           total += 43 * count;           // AC Adapter Charger / charging kit (charged)
+  } else if (/dc|hardwire/i.test(power)) {
+    total += 11 * count;                                          // DC Connection Harness
+  }                                                               // AC plug-in = permanent power, no charger
+  if (/add/i.test(sel('nm-grp-hub'))) total += 321;               // ShadeAuto hub (once)
+  if (/include remote/i.test(sel('nm-grp-remote'))) {             // remote(s) — "No remote (app only)" charges nothing
+    var unit = /g2/i.test(sel('nm-grp-remote-type')) ? 268 : 75;  // SmartDial G2 vs Basic
+    var rc = parseInt((sel('nm-grp-remotes') || '1').replace(/\D/g, ''), 10) || 1;
+    total += unit * rc;
+  }
+  document.querySelectorAll('#nm-smart-section .opt-btn[data-nm-acc].sel').forEach(function(b){ total += parseInt(b.getAttribute('data-nm-price'), 10) || 0; }); // optional add-ons
+  return total;
+}
+
+/**
+ * The single "Motorization" figure for a quote or estimate box.
+ *
+ * Motor, charger, remotes, hub and accessories are summed internally — the
+ * per-option prices are deliberately not displayed anywhere in the configurator.
+ * Motorization carries its own 20% discount (shades are 25%), so the line shows
+ * retail struck through and the customer's price beside it.
+ *
+ * @param {number} net   — discounted motor total for the order (from nmGetMotorPrice)
+ * @param {number} count — number of motorized shades
+ * @returns {string} e.g. "$750 retail → $600 (20% off) · $300/shade"
+ */
+function nmMotorLineText(net, count) {
+  if (!net) return '';
+  var n = count && count > 1 ? count : 1;
+  var retail = Math.round(net / (1 - NM_MOTOR_DISC));
+  var txt = '$' + retail.toLocaleString() + ' retail → $' + net.toLocaleString() +
+            ' (' + Math.round(NM_MOTOR_DISC * 100) + '% off)';
+  if (n > 1) txt += ' · $' + Math.round(net / n).toLocaleString() + '/shade';
+  return txt;
 }
 
 // ---- INSTALLATION ADD-ON — auto-injects into every quote form ----
+// ── Add-to-Cart extras: "files / notes" + "Professional installation" block ──
+// Injected immediately before every "+ Add to Cart" button so it is consistent across
+// all configurators (which use varying button/section classes). Captured into the cart
+// item by _pbMergeCartExtras when pbAddToCart runs.
+function _initCartExtras() {
+  var btns = document.querySelectorAll('button');
+  Array.prototype.forEach.call(btns, function(btn) {
+    if (!/add to cart/i.test(btn.textContent || '')) return;
+    if (/pbEstimateAddCart/.test(btn.getAttribute('onclick') || '')) return; // estimate panel has its own notes/files
+    var container = btn.parentNode;
+    if (!container || container.querySelector('.pb-cart-extras')) return;
+    var id = 'ce-' + Math.random().toString(36).slice(2, 7);
+    var wrap = document.createElement('div');
+    wrap.className = 'pb-cart-extras';
+    wrap.style.cssText = 'margin:0 0 12px';
+    wrap.innerHTML =
+      // Files / notes
+      '<div style="border:1.5px dashed #ddd;border-radius:10px;padding:14px 16px;margin-bottom:12px;background:#fafaf8">' +
+        '<div style="font-size:12px;font-weight:600;color:#333;margin-bottom:7px">&#128206; Add files / notes <span style="font-weight:400;color:#999">(optional)</span></div>' +
+        '<textarea id="' + id + '-notes" placeholder="Room, timeline, questions, special requirements&hellip;" ' +
+          'style="width:100%;box-sizing:border-box;font-family:inherit;font-size:12px;padding:8px 10px;border:1px solid #e8e8e4;border-radius:8px;resize:vertical;min-height:40px;margin-bottom:8px"></textarea>' +
+        '<input type="file" id="' + id + '-files" class="pb-ce-files" multiple accept="image/*,.pdf,.heic,.png,.jpg,.jpeg" ' +
+          'style="width:100%;font-size:12px;color:#555;font-family:inherit;cursor:pointer;padding:4px 0" onchange="pbShowFileNames(this,\'' + id + '-names\')">' +
+        '<div id="' + id + '-names" style="font-size:11px;color:#555;margin-top:6px;line-height:1.8"></div>' +
+        '<div style="font-size:11px;color:#aaa;margin-top:4px;line-height:1.5">Window/room photos, measurements, inspiration &mdash; anything that helps.</div>' +
+      '</div>' +
+      // Professional installation (flag only — priced at quote)
+      '<div style="border:2px solid var(--gold,#C8973F);border-radius:12px;padding:14px 16px;background:var(--gold-mid,#FBF7F0)">' +
+        '<label style="display:flex;align-items:flex-start;gap:11px;cursor:pointer">' +
+          '<input type="checkbox" id="' + id + '-install" class="pb-ce-install" ' +
+            'style="margin-top:2px;flex-shrink:0;width:19px;height:19px;cursor:pointer;accent-color:var(--espresso,#1C1510)">' +
+          '<div>' +
+            '<div style="font-size:14px;font-weight:700;color:#1a1a1a;margin-bottom:3px">&#128295; Add professional installation</div>' +
+            '<div style="font-size:12px;color:#555;line-height:1.55">Our team installs it for you. Priced separately by location &amp; product &mdash; Justin confirms installation pricing in your quote.</div>' +
+          '</div>' +
+        '</label>' +
+      '</div>';
+    container.insertBefore(wrap, btn);
+  });
+}
+// Pull notes / files / installation flag from the in-form block into the cart item, then reset it.
+function _pbMergeCartExtras(item) {
+  var ce = document.querySelector('.pb-cart-extras');
+  if (!ce) return;
+  var nEl = ce.querySelector('textarea');
+  var fEl = ce.querySelector('.pb-ce-files');
+  var iEl = ce.querySelector('.pb-ce-install');
+  if (!item.notes && nEl && nEl.value.trim()) item.notes = nEl.value.trim();
+  if ((!item._files || !item._files.length) && fEl && fEl.files && fEl.files.length) item._files = Array.prototype.slice.call(fEl.files);
+  if (iEl && iEl.checked) {
+    item.installation = true;
+    item.lines = (item.lines || []).concat([{ label: 'Professional Installation', value: 'Requested — priced at quote' }]);
+  }
+  // Per-unit labels (see _initShadeLabels) captured into the cart line
+  var labels = pbGetShadeLabels();
+  if (labels) {
+    item.labels = labels;
+    item.lines = (item.lines || []).concat([{ label: 'Labels', value: labels }]);
+  }
+  // Reset for the next item added from the same form
+  if (nEl) nEl.value = '';
+  if (fEl) fEl.value = '';
+  var nm = ce.querySelector('[id$="-names"]'); if (nm) nm.innerHTML = '';
+  if (iEl) iEl.checked = false;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PER-UNIT LABELS — consistent on every product. Auto-injected right after the
+// shared quantity stepper (.qty-btns). Quantity 1 → a single optional label box;
+// quantity N → one label field per unit so the customer can name each shade/panel.
+// Captured into the cart (via _pbMergeCartExtras) and appended to the quote notes
+// on submit (via the data-pb-require-contact interceptor). One source of truth.
+function pbRenderShadeLabels(wrap) {
+  if (!wrap) return;
+  var qtyEl = wrap._pbQtyEl;
+  var count = 1;
+  if (qtyEl) {
+    var raw = (qtyEl.tagName === 'INPUT') ? qtyEl.value : qtyEl.textContent;
+    count = parseInt(raw, 10) || 1;
+  }
+  if (count < 1) count = 1; if (count > 50) count = 50;
+  // preserve any values the customer already typed
+  var prev = {};
+  Array.prototype.forEach.call(wrap.querySelectorAll('.pb-shade-label'), function(inp) {
+    prev[inp.getAttribute('data-idx')] = inp.value;
+  });
+  var inStyle = 'padding:7px 10px;border:1px solid #ddd;border-radius:7px;font-size:12px;font-family:inherit;box-sizing:border-box';
+  var html;
+  if (count === 1) {
+    html = '<div style="font-size:12px;font-weight:600;color:#555;margin-bottom:6px">Label <span style="font-weight:400;color:#999">(optional)</span></div>' +
+           '<input type="text" class="pb-shade-label" data-idx="1" placeholder="e.g. Master bedroom window" style="' + inStyle + ';width:100%">';
+  } else {
+    html = '<div style="font-size:12px;font-weight:600;color:#555;margin-bottom:6px">Label each one <span style="font-weight:400;color:#999">(optional)</span></div>';
+    for (var i = 1; i <= count; i++) {
+      html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">' +
+                '<span style="font-size:11px;color:#888;min-width:26px">#' + i + '</span>' +
+                '<input type="text" class="pb-shade-label" data-idx="' + i + '" placeholder="Room / window ' + i + '" style="' + inStyle + ';flex:1;min-width:0">' +
+              '</div>';
+    }
+  }
+  wrap.innerHTML = html;
+  Array.prototype.forEach.call(wrap.querySelectorAll('.pb-shade-label'), function(inp) {
+    var k = inp.getAttribute('data-idx'); if (prev[k]) inp.value = prev[k];
+  });
+}
+
+function _initShadeLabels() {
+  document.querySelectorAll('.qty-btns').forEach(function(q) {
+    if (q._pbLabelsInit) return; q._pbLabelsInit = true;
+    var qtyEl = q.querySelector('.qty-num') || q.querySelector('input, span');
+    var wrap = document.createElement('div');
+    wrap.className = 'pb-labels-wrap';
+    wrap.style.cssText = 'margin-top:12px';
+    wrap._pbQtyEl = qtyEl;
+    var host = q.parentNode; // the qty row
+    if (host && host.parentNode) host.parentNode.insertBefore(wrap, host.nextSibling);
+    else q.parentNode.appendChild(wrap);
+    var render = function() { setTimeout(function() { pbRenderShadeLabels(wrap); }, 0); };
+    if (qtyEl) { qtyEl.addEventListener('input', render); qtyEl.addEventListener('change', render); }
+    q.querySelectorAll('.qty-btn').forEach(function(b) { b.addEventListener('click', render); });
+    pbRenderShadeLabels(wrap);
+  });
+}
+
+// Collect the VISIBLE per-unit labels into a single string for the quote.
+function pbGetShadeLabels() {
+  var vals = [];
+  document.querySelectorAll('.pb-shade-label').forEach(function(inp) {
+    if (inp.offsetParent === null) return;         // skip hidden configurators
+    var v = (inp.value || '').trim();
+    if (v) vals.push(inp.getAttribute('data-idx') + ': ' + v);
+  });
+  return vals.join(' | ');
+}
 function _initInstallationAddons() {
   document.querySelectorAll('.delivery-section').forEach(function(del) {
     var parent = del.parentElement;
     if (!parent || parent.querySelector('.pb-install-wrap')) return;
+    // Skip configurator forms that already have the Add-to-Cart extras block (avoids a duplicate install block)
+    if (parent.querySelector('.pb-cart-extras')) return;
     var btn = parent.querySelector('.btn-gold');
     if (!btn) return;
 
@@ -1567,6 +2503,8 @@ function _initFileUploads() {
   document.querySelectorAll('.delivery-section').forEach(function(del) {
     var parent = del.parentElement;
     if (!parent || parent.querySelector('.pb-fu-wrap')) return;
+    // Skip configurator forms that already have the Add-to-Cart extras block (avoids a duplicate file input)
+    if (parent.querySelector('.pb-cart-extras')) return;
     var btn = parent.querySelector('.btn-gold');
     if (!btn) return;
     var id = 'fu-' + Math.random().toString(36).slice(2, 8);
@@ -1644,7 +2582,7 @@ function _initShippingEstimators() {
           'style="width:130px;padding:8px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;font-family:inherit;background:#fff">' +
         '<span class="pb-zip-result" style="font-size:13px;color:#555;min-width:140px"></span>' +
       '</div>' +
-      '<div style="font-size:10px;color:#aaa;margin-top:6px;line-height:1.5">UPS / FedEx Ground estimate from Huntingdon Valley PA 19006 &nbsp;&middot;&nbsp; Actual rate confirmed at order</div>';
+      '<div style="font-size:10px;color:#aaa;margin-top:6px;line-height:1.5">UPS / FedEx Ground estimate &nbsp;&middot;&nbsp; Actual rate confirmed at order</div>';
     el.appendChild(wrap);
     var input = wrap.querySelector('.pb-zip-input');
     var result = wrap.querySelector('.pb-zip-result');
@@ -1999,6 +2937,7 @@ function _initChatbot() {
 function reqMoreInfo(product) {
   var subj = product ? 'Request for more information: ' + product : 'Request for more information';
   var body = 'Hi, I would like to request more information about ' + (product || 'your products') + '.\n\nName:\nPhone:\nBest time to call:';
+  if (typeof pbTrackEvent === 'function') pbTrackEvent('generate_lead', { lead_type: 'request_info', product: product || '' });
   window.location.href = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
 }
 
@@ -2009,10 +2948,82 @@ function reqMoreInfo(product) {
 (function() {
   var pg = document.body && document.body.getAttribute('data-page');
   if (pg !== null) {
+    renderPromoBar();
     renderNav(pg);
     renderFooter(pg === 'home');
   }
 })();
+
+// ── Promo / announcement bar ──────────────────────────────────────────────
+// Dismissible offer bar shown above the sticky nav. Scrolls away on scroll.
+// Suppressed once dismissed (30 days) via localStorage.
+function renderPromoBar() {
+  try {
+    var KEY = 'pb_promo_dismissed_at';
+    var raw = window.localStorage ? localStorage.getItem(KEY) : null;
+    if (raw && (Date.now() - parseInt(raw, 10)) < 30 * 24 * 60 * 60 * 1000) return;
+  } catch (e) { /* localStorage blocked — still show the bar */ }
+  if (document.querySelector('.pb-promo-bar')) return;
+
+  var isHome = document.body.getAttribute('data-page') === 'home';
+  var consultHref = (isHome ? 'pages/' : '../pages/') + 'consult.html';
+
+  var bar = document.createElement('div');
+  bar.className = 'pb-promo-bar';
+  bar.setAttribute('role', 'region');
+  bar.setAttribute('aria-label', 'Special offer');
+  bar.innerHTML =
+    '<span>✨ <strong>Free in-home consultation &amp; design samples</strong>'
+    + '<span class="pb-promo-sep"> — family-owned, we measure &amp; install everything ourselves.</span> '
+    + '<a class="pb-promo-cta" href="' + consultHref + '">Book yours &rsaquo;</a>'
+    + ' &nbsp;or call/text <a class="pb-promo-tel" href="tel:6097421720">(609) 742-1720</a></span>'
+    + '<button class="pb-promo-close" aria-label="Dismiss offer" onclick="pbDismissPromo()">&times;</button>';
+  document.body.insertBefore(bar, document.body.firstChild);
+}
+
+function pbDismissPromo() {
+  var bar = document.querySelector('.pb-promo-bar');
+  if (bar) bar.remove();
+  try { localStorage.setItem('pb_promo_dismissed_at', String(Date.now())); } catch (e) {}
+}
+
+// ── Conversion event tracking (for Google Analytics + Google Ads) ──────────
+// Fires GA4 events on the actions that matter for advertising ROI:
+//   phone_call_click  — any tel: link tap/click
+//   consult_cta_click — any click through to the free-consultation page
+//   generate_lead     — a quote/consult email actually sent (see pbSendMail)
+// Mark these as conversions in GA4, then import them into Google Ads so
+// campaigns can optimize toward calls and booked consultations.
+// (No PII is sent — only the event name and a short label.)
+function pbTrackEvent(name, params) {
+  try {
+    if (typeof gtag === 'function') gtag('event', name, params || {});
+    else if (window.dataLayer) window.dataLayer.push(Object.assign({ event: name }, params || {}));
+  } catch (e) { /* analytics must never break the page */ }
+  // Also feed the Meta Pixel (if loaded) so ad audiences can optimize toward leads
+  try {
+    if (typeof fbq === 'function') {
+      if (name === 'phone_call_click' || name === 'generate_lead') fbq('track', 'Lead');
+      else if (name === 'consult_cta_click') fbq('track', 'Contact');
+    }
+  } catch (e) {}
+}
+
+document.addEventListener('click', function (e) {
+  var tel = e.target.closest && e.target.closest('a[href^="tel:"]');
+  if (tel) {
+    pbTrackEvent('phone_call_click', { link_url: tel.getAttribute('href'), page_path: location.pathname });
+    return;
+  }
+  var link = e.target.closest && e.target.closest('a[href]');
+  if (!link) return;
+  var href = link.getAttribute('href') || '';
+  if (href.indexOf('mailto:') === 0) {
+    pbTrackEvent('generate_lead', { lead_type: 'email_click', page_path: location.pathname });
+  } else if (/consult\.html/.test(href)) {
+    pbTrackEvent('consult_cta_click', { page_path: location.pathname });
+  }
+}, true);
 
 // ── LIVE SITE — CONTACT-FIRST MODE ───────────────────────────────────────────
 // On www.phillyblinds.com, configurator pages are replaced with a contact panel
@@ -2021,20 +3032,22 @@ function reqMoreInfo(product) {
 (function () {
   if (window.location.hostname !== 'www.phillyblinds.com') return;
 
-  var CONF_PAGES = [
-    'shades','hardware','norman-sheers',
-    'faux-wood-blinds','soluna-roller-shades','norman-centerpiece-roman',
-    'select-rods','kirsch-rods','paris-texas-rods','orion-rods','finial-company',
-    'hardware-quote','synchrony-verticals','city-lights-aluminum-blinds',
-    'wallace-3d-sheer','galaxy-woven-woods','dynasty-woven-woods',
-    'portfolio-dual-sheer','wallace-portfolio-roman',
-    'wallace-portfolio-natural-shades','wallace-natural-roller-shades',
-    'wallace-banded-shades','wallace-woven','wallace-verticals',
-    'kirsch-spec-complete','kirsch-estate-traverse','kirsch-2in-estate-traverse',
-    'walden-premier-woven','walden-select-woven','wallace-dynasty-woven',
-    'woven-wood-shades','sheer-shades',
-    'portrait-cellular','perfectsheer'
-  ]; // shutters, soft-treatments, upholstery removed — open for real quotes
+  // EMPTY — every configurator is open on the live site (Justin, Sept 2026).
+  //
+  // This list used to name 33 pages whose configurator was deleted on load and
+  // replaced with the "call us" panel below. That predated real pricing. It is
+  // what made cellular, Soluna roller and faux wood look like they had no
+  // pricing on www.phillyblinds.com — the configurator was never rendered at
+  // all, so there was nothing to price.
+  //
+  // Pricing is now gated on its own, per product, by PB_QUOTE_ONLY_PAGES: the
+  // six priced products quote a number, everything else configures fully and
+  // submits for a custom quote with no price shown. That is the correct control
+  // for this, so the page-level block is no longer needed.
+  //
+  // To take a page off the live site again, put its slug back in here — the
+  // block-and-redirect machinery below still works exactly as before.
+  var CONF_PAGES = [];
 
   var slug = window.location.pathname.split('/').pop().replace(/\.html$/i, '').toLowerCase();
   var isConfPage = CONF_PAGES.indexOf(slug) !== -1;
@@ -2106,15 +3119,42 @@ function reqMoreInfo(product) {
 // Runs on every page that includes shared.js.
 document.addEventListener('DOMContentLoaded', function() {
   pbAutoFillContact();
+  pbApplyPricingScope();
   // Intercept clicks on [data-pb-require-contact] buttons (capture phase = before onclick handler).
   // Prevents submission when name / phone / email are missing.
   document.addEventListener('click', function(e) {
     var btn = e.target.closest('[data-pb-require-contact]');
     if (!btn || btn.disabled) return;
+    // Honeypot: a filled hidden field means a bot — silently block submission.
+    // Scoped to the clicked form, since a page may carry one contact step per tab.
+    var _hpScope = btn.closest('.pb-cart-extras') || document;
+    var _hp = _hpScope.querySelector('.pb-hp') || document.getElementById('pb-hp');
+    if (_hp && _hp.value.trim() !== '') { e.stopImmediatePropagation(); e.preventDefault(); return; }
     var errId = btn.getAttribute('data-pb-require-contact');
     if (!pbContactValid(errId)) {
       e.stopImmediatePropagation();
       e.preventDefault();
+      return;
+    }
+    // Required Terms of Agreement acceptance — block submit-for-review if not checked.
+    var _termsScope = btn.closest('.pb-cart-extras') || btn.closest('.step-block') || document;
+    if (!pbTermsValid(_termsScope, errId)) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      return;
+    }
+    // Fold per-unit labels into the notes so they reach the quote email/cart.
+    var _lbl = pbGetShadeLabels();
+    var _n = (btn.closest('.pb-cart-extras') || document).querySelector('[data-pb-contact="notes"]')
+             || document.getElementById('cf-notes');
+    if (_lbl && _n && (_n.value || '').indexOf(_lbl) < 0) {
+      _n.value = (_n.value ? _n.value.replace(/\n?Labels: .*/,'') + '\n' : '') + 'Labels: ' + _lbl;
+    }
+    // Same for the hardware rod spec — exact length + bracket count reach the
+    // workroom through the notes, so no per-page quote builder has to know about it.
+    var _rod = (typeof pbGetRodSpec === 'function') ? pbGetRodSpec() : '';
+    if (_rod && _n && (_n.value || '').indexOf('Exact rod length:') < 0) {
+      _n.value = (_n.value ? _n.value.replace(/\n?Exact rod length:[\s\S]*?(?=\n\w|$)/, '') + '\n' : '') + _rod;
     }
   }, true);
 });
@@ -2143,4 +3183,46 @@ async function _apiSubmit(name, email, phone, productName, configText, successId
     if (btn && btn.parentElement) btn.insertAdjacentElement('afterend', eDiv);
     setTimeout(function(){ if (eDiv.parentElement) eDiv.remove(); }, 15000);
   }
+}
+
+// ════════════════════════════════════════════════════════════════
+// NORMAN COMPONENT COLOR PALETTES (May 2026 book)
+// Single source of truth — Soluna standalone page, shades.js Norman inline (rn-),
+// and Basic Roller (pb-) all read from here so the shared parts stay in sync.
+// NOTE: these are NOT the open-roll "Premium hardware" finishes (Brass/Bronze/
+// Brushed Black/Matte Silver/White) — that is a separate upgrade program and is
+// open-roll only. Metal fascia, side rails and plain hem bars use the lists below.
+// ════════════════════════════════════════════════════════════════
+var PB_SWATCH = {
+  'White':          '#f8f8f5',
+  'Cottage White':  '#efe9dc',
+  'Black':          'linear-gradient(135deg,#3a3a3a,#111)',
+  'Silver':         'linear-gradient(135deg,#dcdcdc,#a4a4a4)',
+  'Anodized Silver':'linear-gradient(135deg,#d8dade,#9aa0a6)',
+  'Bronze':         'linear-gradient(135deg,#a06f3e,#5e3f23)',
+  'Chocolate':      'linear-gradient(135deg,#6b4a33,#3b271a)'
+};
+// Per-component option lists — mirrors COLOR_OPTIONS in js/pages/shades.js.
+var PB_PALETTES = {
+  metalFascia: ['White','Cottage White','Black','Anodized Silver'],
+  plainHemBar: ['White','Cottage White','Black','Anodized Silver'],
+  lightGuard360:['White','Cottage White','Black','Silver','Bronze'],
+  cassette:    ['White','Cottage White','Black','Silver'],
+  endCaps:     ['White','Cottage White','Black','Silver','Chocolate']
+};
+/**
+ * Render a color-swatch option row.
+ * @param {string} groupId  — id for the opt-row (selOpt/getOpt group)
+ * @param {string} palette  — key into PB_PALETTES
+ * @param {string} recalcFn — name of the page's recalc fn, called on click
+ * @param {number} selIdx   — index pre-selected (default 0); -1 for none
+ */
+function pbColorRow(groupId, palette, recalcFn, selIdx) {
+  var list = PB_PALETTES[palette] || [];
+  if (selIdx === undefined) selIdx = 0;
+  return '<div class="opt-row" id="' + groupId + '" style="flex-wrap:wrap">' +
+    list.map(function(name, i) {
+      return '<button class="opt-btn' + (i === selIdx ? ' sel' : '') + '" onclick="selOpt(this,\'' + groupId + '\');' + recalcFn + '()">' +
+             '<span class="hw-sw" style="background:' + (PB_SWATCH[name] || '#ccc') + '"></span>' + name + '</button>';
+    }).join('') + '</div>';
 }

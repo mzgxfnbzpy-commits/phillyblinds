@@ -1,12 +1,12 @@
 // ── STATE ─────────────────────────────────────────────────────────────────────
 var S = {
-  type:'', qty:1, room:'', lift:'', headrail:'1.5',
+  type:'', qty:1, lift:'', headrail:'1.5',
   width:0, height:0, mount:'Inside mount', style:'',
   fabric:null, lining:'Translucent', banding:'none',
   ribbonColor:null, edgeBase:null, edgeBorder:null,
   rollerFabric:null, valance:false, sbs:false,
   holddown:false, pole:false, cordlessPole:false, shims:0,
-  motor:'', power:'Rechargeable battery', delivery:'ship'
+  delivery:'ship'
 };
 
 // ── FABRIC DATA ───────────────────────────────────────────────────────────────
@@ -140,16 +140,14 @@ function setType(type, el) {
   document.querySelectorAll('#grp-lift .opt-btn,#grp-lift-dn .opt-btn').forEach(function(b){b.classList.remove('sel');});
   document.getElementById('val3').textContent = '—';
   validateBanding(); updateSpec(); updateCalc();
-  openNext('step2');
+  openNext('step3');
 }
 
 // ── STEP 2 ────────────────────────────────────────────────────────────────────
 function setQtyVal(n) {
   n = Math.max(1, Math.min(50, n||1));
   S.qty = n;
-  document.getElementById('val2').textContent = n + (n===1?' shade':' shades');
-  document.getElementById('step2').classList.add('done');
-  updateSpec(); updateCalc(); openNext('step3');
+  updateSpec(); updateCalc();
 }
 function adjQty(d) {
   var el = document.getElementById('qty-inp');
@@ -171,6 +169,14 @@ function setLift(lift, el) {
   var isMotor = lift==='motor'||lift==='motor-dn';
   document.getElementById('step13').style.display    = isMotor ? 'block' : 'none';
   document.getElementById('sp-motor-row').style.display = isMotor ? '' : 'none';
+  if (isMotor) {
+    // Standardized onto the SHARED Norman motor section (Norman Smart only for Centerpiece Roman — no Rollease).
+    if (typeof normanMotorSection === 'function') normanMotorSection('centerpiece-motor-config', 'Centerpiece Roman', typeof updateCalc === 'function' ? updateCalc : null);
+    sp('sp-motor','Norman Smart Motor');
+    openNext('step13');
+  } else {
+    sp('sp-motor','');
+  }
   var noteEl = document.getElementById('lift-note');
   var notes = {
     'aerolite':       'Min 20″W · max 96″W · max 40 sqft. No cords — child-safe.',
@@ -184,14 +190,22 @@ function setLift(lift, el) {
   };
   if (notes[lift]) { noteEl.textContent = notes[lift]; noteEl.style.display = ''; }
   else noteEl.style.display = 'none';
-  validateDims(); updateSpec(); updateCalc(); openNext('step4');
+  validateDims(); updateSpec(); updateCalc(); openNext('step5');
 }
 
 function setHeadrail(size, el) {
   S.headrail = size; selBtn(el,'grp-headrail'); validateDims(); updateCalc();
 }
 
-// ── STEP 4 ────────────────────────────────────────────────────────────────────
+// ── MOUNT (Step 1) ────────────────────────────────────────────────────────────
+function setMount(m, el) {
+  S.mount = m==='outside' ? 'Outside mount' : 'Inside mount';
+  selBtn(el,'grp-mount');
+  sp('sp-mount', S.mount);
+  updateSpec();
+}
+
+// ── STEP 1 DIMENSIONS ─────────────────────────────────────────────────────────
 function validateDims() {
   var w = parseFloat(document.getElementById('inp-width').value)||0;
   var h = parseFloat(document.getElementById('inp-height').value)||0;
@@ -218,7 +232,7 @@ function validateDims() {
     html='<div class="ok-box">✓ '+w+'" × '+h+'" · '+sqft.toFixed(1)+' sqft — within '+lim.label+' limits.</div>';
     document.getElementById('step4').classList.add('done');
     document.getElementById('val4').textContent = w+'" × '+h+'"';
-    openNext('step5');
+    openNext('step1');
   }
   fb.innerHTML = html;
   updateValanceSurcharge(); updateSpec(); updateCalc();
@@ -438,13 +452,8 @@ function adjShims(d) {
 }
 
 // ── MOTOR ─────────────────────────────────────────────────────────────────────
-function setMotor(m, el) {
-  S.motor=m; selBtn(el,'grp-motor');
-  var labels={smart:'Norman Smart Motor',autowand:'AutoWand™',automate:'Automate Home by Norman'};
-  document.getElementById('val13').textContent=labels[m]||m;
-  sp('sp-motor',labels[m]||m);
-  document.getElementById('step13').classList.add('done');
-}
+// Motorization UI is now the SHARED normanMotorSection (see setLift). No custom
+// power-source picker/handler here. Quote summary uses nmGetMotorSummary().
 
 // ── DELIVERY ──────────────────────────────────────────────────────────────────
 function setDelivery(opt,card) {
@@ -461,8 +470,7 @@ function setDelivery(opt,card) {
 // ── SPEC PANEL ────────────────────────────────────────────────────────────────
 function updateSpec() {
   sp('sp-type', S.type==='standard'?'Standard Centerpiece Roman':S.type==='dn'?'Day & Night':'');
-  var room=document.getElementById('room-label').value.trim(); S.room=room;
-  sp('sp-qty', S.qty?(S.qty+' shade'+(S.qty>1?'s':''))+(room?' · '+room:''):'');
+  sp('sp-qty', S.qty?(S.qty+' shade'+(S.qty>1?'s':'')):'');
   sp('sp-lift', S.lift?(LIFT_LIMITS[S.lift]&&LIFT_LIMITS[S.lift].label)||S.lift:'');
   sp('sp-size', S.width&&S.height ? S.width+'"×'+S.height+'"' : '');
   var mountBtn=document.querySelector('#grp-mount .opt-btn.sel');
@@ -517,12 +525,18 @@ function updateCalc() {
   var isOversized=w>=90;
   var freight=S.delivery==='install'?0:isOversized?(80+(qty>1?(qty-1)*50:0)):(25+(qty>1?(qty-1)*11:0));
   showRow('pr-freight-row',freight>0); if(freight>0)setVal('pr-freight','$'+freight);
-  var NORMAN_DISC_CP=0.15;
+  // Detail hidden per owner request — base/lining/fold/banding/SmartRelease/valance/accessories roll into
+  // retail; only the Day & Night surcharge (an allowed add-on) stays visible.
+  ['pr-lining-row','pr-soft-row','pr-banding-row','pr-sr-row','pr-valance-row','pr-acc-row'].forEach(function(id){showRow(id,false);});
+  var _cpBaseRow=document.getElementById('pr-base'); if(_cpBaseRow&&_cpBaseRow.parentElement)_cpBaseRow.parentElement.style.display='none';
+  var NORMAN_DISC_CP=0.25;
   var cpRetailSub=(per*qty)+(srAdd*qty)+(dnAdd*qty)+(vSur*qty)+(accT*qty);
   var cpDiscountAmt=Math.round(cpRetailSub*NORMAN_DISC_CP);
   var cpYourPrice=cpRetailSub-cpDiscountAmt;
-  var total=cpYourPrice+freight;
-  setVal('pr-total','~$'+Math.round(total).toLocaleString()+' (Norman retail -15%; shipping at retail rate)');
+  var isMotCp=(S.lift==='motor'||S.lift==='motor-dn');
+  var cpMotor=(isMotCp&&typeof nmGetMotorPrice==='function')?nmGetMotorPrice('Centerpiece Roman', qty*(isDN?2:1)):0;
+  var total=cpYourPrice+freight+cpMotor;
+  setVal('pr-total','Retail $'+Math.round(cpRetailSub).toLocaleString()+' → 25% off → ~$'+Math.round(cpYourPrice+freight).toLocaleString()+(cpMotor>0?' + motorization '+nmMotorLineText(cpMotor,qty)+' = ~$'+Math.round(total).toLocaleString()+' total':'')+' (freight at retail)');
 }
 
 // ── SUBMIT ────────────────────────────────────────────────────────────────────
@@ -534,7 +548,8 @@ function addNormanCenterpieceToCart(){
   if(!S.fabric){ alert('Please select a fabric before adding to cart.'); return; }
 
   var sLabels={flat:'Flat Fold without Seams',batten:'Flat Fold with Batten Back',soft:'Soft Fold'};
-  var motorLabel={smart:'Norman Smart Motor',autowand:'AutoWand™',automate:'Automate Home by Norman'}[S.motor]||'—';
+  var isMotorized=(S.lift==='motor'||S.lift==='motor-dn');
+  var motorSummary=isMotorized?(typeof nmGetMotorSummary==='function'?nmGetMotorSummary():'Norman Smart Motor'):'None';
 
   var lines=[
     {label:'Product',value:'Norman Centerpiece™ Roman Shades — '+(S.type==='dn'?'Day & Night':'Standard')},
@@ -547,7 +562,7 @@ function addNormanCenterpieceToCart(){
     {label:'Fabric',value:S.fabric?S.fabric.name+' · '+S.fabric.coll+' (Group '+S.fabric.g+')':'—'},
     {label:'Lining',value:S.lining||'—'},
     {label:'Banding',value:S.banding==='none'?'None':S.banding},
-    {label:'Motorization',value:(S.lift==='motor'||S.lift==='motor-dn')?motorLabel:'None'}
+    {label:'Motorization',value:motorSummary}
   ];
   var specs=lines.map(function(l){return l.label+': '+l.value;}).join(' | ');
   pbAddToCart({product:'Norman Centerpiece™ Roman Shades',lines:lines,specs:specs,price:null,qty:S.qty||1});
@@ -555,20 +570,20 @@ function addNormanCenterpieceToCart(){
 }
 
 function submitQuote() {
-  var name=document.getElementById('q-name').value.trim();
-  var phone=document.getElementById('q-phone').value.trim();
-  var errEl=document.getElementById('submit-errors');
+  var name=document.getElementById('cf-name').value.trim();
+  var phone=document.getElementById('cf-phone').value.trim();
+  var errEl=document.getElementById('cf-contact-err');
   var errs=[];
   if(!name)         errs.push('Name required.');
   if(!phone)        errs.push('Phone required.');
-  if(!S.type)       errs.push('Select product type (Step 1).');
+  if(!S.type)       errs.push('Select product type (Step 2).');
   if(!S.lift)       errs.push('Select lift system (Step 3).');
-  if(!S.width||!S.height) errs.push('Enter dimensions (Step 4).');
-  if(!S.style)      errs.push('Select shade style (Step 5).');
-  if(!S.fabric)     errs.push('Select fabric (Step 6).');
-  if(S.type==='dn'&&!S.rollerFabric) errs.push('Select D&N rear roller fabric (Step 9).');
-  if(S.banding==='ribbon'&&!S.ribbonColor) errs.push('Select ribbon banding color (Step 8).');
-  if(S.banding==='edge'&&(!S.edgeBase||!S.edgeBorder)) errs.push('Select base and border colors for edge banding (Step 8).');
+  if(!S.width||!S.height) errs.push('Enter dimensions (Step 1).');
+  if(!S.style)      errs.push('Select shade style (Step 4).');
+  if(!S.fabric)     errs.push('Select fabric (Step 5).');
+  if(S.type==='dn'&&!S.rollerFabric) errs.push('Select D&N rear roller fabric (Step 8).');
+  if(S.banding==='ribbon'&&!S.ribbonColor) errs.push('Select ribbon banding color (Step 7).');
+  if(S.banding==='edge'&&(!S.edgeBase||!S.edgeBorder)) errs.push('Select base and border colors for edge banding (Step 7).');
   if(S.banding==='edge'&&S.edgeBase&&S.edgeBorder&&S.edgeBase.code===S.edgeBorder.code) errs.push('Edge banding: base and border must be different colors.');
   if(errs.length){errEl.innerHTML='⚠ Please complete: '+errs.join(' ');errEl.style.display='';document.getElementById('step15').scrollIntoView({behavior:'smooth',block:'start'});return;}
   errEl.style.display='none';
@@ -579,19 +594,17 @@ function submitQuote() {
   var valance=S.valance?'Fabric valance ($'+getValanceSurcharge(S.width)+')':'None';
   var sbs=S.sbs?'Yes':'No';
   var sLabels={flat:'Flat Fold without Seams',batten:'Flat Fold with Batten Back',soft:'Soft Fold'};
-  var delivery='Ship (UPS/FedEx from Huntingdon Valley PA)'||S.delivery;
-  var motorLabel={smart:'Norman Smart Motor',autowand:'AutoWand™',automate:'Automate Home by Norman'}[S.motor]||'—';
-  var _powerBtn=document.querySelector('#grp-power .opt-btn.sel');
-  var power=_powerBtn?_powerBtn.textContent.trim():'Rechargeable battery';
+  var delivery='Ship (UPS/FedEx)'||S.delivery;
+  var isMotorized=(S.lift==='motor'||S.lift==='motor-dn');
+  var motorSummary=isMotorized?(typeof nmGetMotorSummary==='function'?nmGetMotorSummary():'Norman Smart Motor'):('None — '+liftLabel);
   var accList=[(S.holddown?'Magnetic hold-down':''),(S.pole?'Pole attachment':''),(S.cordlessPole?'Cordless operating pole':''),((S.shims||0)>0?S.shims+' shim(s)':'')].filter(Boolean).join(', ')||'None';
   var bandDesc=S.banding==='none'?'None':S.banding==='ribbon'?'Ribbon banding (+15%) — color: '+(S.ribbonColor?S.ribbonColor.name+' '+S.ribbonColor.code:'TBD'):'Edge banding/Border (+30%) — base: '+(S.edgeBase?S.edgeBase.name+' '+S.edgeBase.code:'—')+' / border: '+(S.edgeBorder?S.edgeBorder.name+' '+S.edgeBorder.code:'—');
   var body=[
     '=== NORMAN CENTERPIECE™ ROMAN SHADE QUOTE ===','',
-    'CONTACT','Name: '+name,'Phone: '+phone,'Email: '+(document.getElementById('q-email').value.trim()||'—'),'',
+    'CONTACT','Name: '+name,'Phone: '+phone,'Email: '+(document.getElementById('cf-email').value.trim()||'—'),'',
     'CONFIGURATION',
     'Product: Norman Centerpiece™ Roman Shades — '+(S.type==='dn'?'Day & Night':'Standard'),
     'Quantity: '+S.qty+' shade(s)',
-    'Room/Window: '+(S.room||'—'),
     'Width: '+S.width+'"','Height: '+S.height+'"','Mount: '+mount,
     'Lift system: '+liftLabel+((S.lift==='ccl'||S.lift==='ccl-dn')?' — '+S.headrail+'" headrail':''),
     'Shade style: '+(sLabels[S.style]||S.style),'',
@@ -600,8 +613,8 @@ function submitQuote() {
     'Lining: '+lining,'Banding: '+bandDesc,'',
     (S.type==='dn'?'DAY & NIGHT\nRear roller fabric: '+(S.rollerFabric?S.rollerFabric.name+' · '+S.rollerFabric.coll+' · '+S.rollerFabric.code+' · max '+S.rollerFabric.maxW+'"W':'—')+'\n':''),
     'EXTRAS','Valance: '+valance,'Side-by-side alignment: '+sbs,'Accessories: '+accList,'',
-    'MOTORIZATION','Motorization: '+((S.lift==='motor'||S.lift==='motor-dn')?motorLabel+' · Power: '+power:'None — '+liftLabel),'',
-    'DELIVERY',delivery,'','NOTES',document.getElementById('q-notes').value.trim()||'None','',
+    'MOTORIZATION','Motorization: '+motorSummary,'',
+    'DELIVERY',delivery,'','NOTES',document.getElementById('cf-notes').value.trim()||'None','',
     '--- Sent from phillyblinds.com/pages/norman-centerpiece-roman.html ---'
   ].join('\n');
   var subj='Norman Centerpiece™ Roman — '+S.width+'"×'+S.height+'" '+(S.fabric?S.fabric.name:'')+' — '+name;
@@ -614,8 +627,6 @@ function submitQuote() {
 renderFabricGrid();
 renderRollerGrid();
 setQtyVal(1);
-document.getElementById('room-label').addEventListener('input', updateSpec);
-document.querySelectorAll('#grp-mount .opt-btn').forEach(function(b){b.addEventListener('click',function(){sp('sp-mount',this.textContent.trim());});});
 
 // Prefill from the custom Roman → Norman hand-off (soft-treatments.html ?w=&h=&qty=)
 (function(){

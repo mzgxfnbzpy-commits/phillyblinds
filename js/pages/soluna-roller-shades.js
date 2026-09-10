@@ -63,7 +63,7 @@ function solRenderCoupledFields(n) {
 
 var _SOL_OP_DESC = {
   cordless: '<strong style="color:#1a6b1a">⭐ PrecisionLift™ Cordless — Recommended</strong> — Pull the handle down to lower, push the hem bar up to raise. No cords, no chains. Norman\'s best-in-class cordless system. WCMA Best for Kids™ certified. Max 118″ W × 144″ H.',
-  loop:     '<strong style="color:#333">Continuous Cord Loop</strong> — Side-mounted bead chain operates the shade smoothly in both directions. Works for any window size. Best choice for large, heavy, or high windows. Max 118″ W × 144″ H.',
+  loop:     '<strong style="color:#333">Manual with chain</strong> — Side-mounted bead chain operates the shade smoothly in both directions. Works for any window size. Best choice for large, heavy, or high windows. Max 118″ W × 144″ H.',
   smartrelease: '<strong style="color:#333">SmartRelease™</strong> — Norman\'s patent-pending upgrade to the cord loop. A gentle tug releases the shade from any raised position — no reaching up required. Ideal for high or hard-to-reach windows. Raceway always included. Max 118″ W × 144″ H.',
   motor:    '<strong style="color:#333">Motorized</strong> — Battery or hardwired motor inside the roller tube. Control by app, remote, voice (Alexa/Google/HomeKit), or schedule. 100% cord-free. Available with Norman Smart or Rollease Acmeda Automate. Max 144″ W × 144″ H.'
 };
@@ -246,8 +246,13 @@ function solPickShadeType(type, btn) {
     if (cassetteBtn) cassetteBtn.classList.add('sel');
     var hwOpts = document.getElementById('sol-hw-subopts');
     var fasciaOpts = document.getElementById('sol-fascia-subopts');
+    var lgOpts = document.getElementById('sol-lg-subopts');
     if (hwOpts) hwOpts.style.display = 'none';
     if (fasciaOpts) fasciaOpts.style.display = 'none';
+    if (lgOpts) lgOpts.style.display = 'none';
+    // Cassette is the active headrail on dual, so the hem bar picker still applies.
+    var hemWrap = document.getElementById('sol-hembar-wrap');
+    if (hemWrap) hemWrap.style.display = 'block';
   }
   updateSummary();
 }
@@ -264,9 +269,96 @@ function solPickAddon(type, btn) {
   // Show/hide sub-panels
   var hwOpts = document.getElementById('sol-hw-subopts');
   var fasciaOpts = document.getElementById('sol-fascia-subopts');
+  var lgOpts = document.getElementById('sol-lg-subopts');
   if (hwOpts) hwOpts.style.display = (activeType === 'openroll') ? 'block' : 'none';
   if (fasciaOpts) fasciaOpts.style.display = (activeType === 'fascia') ? 'block' : 'none';
+  if (lgOpts) lgOpts.style.display = (activeType === 'lightguard') ? 'block' : 'none';
+  // Open roll's premium hardware finish already covers the hem bar, so the separate
+  // hem bar picker only applies to the other headrail types.
+  var hemWrap = document.getElementById('sol-hembar-wrap');
+  var hemNote = document.getElementById('sol-hembar-note');
+  if (hemWrap) hemWrap.style.display = (activeType === 'openroll') ? 'none' : 'block';
+  if (hemNote && activeType === 'lightguard') {
+    hemNote.textContent = 'Full Blackout Side Channels hem bar — fabric wrapped (matches shade fabric) or metal in the color you pick.';
+  } else if (hemNote) {
+    hemNote.textContent = 'Fabric wrapped: front matches your shade fabric, back matches the standard hardware color. Metal: painted hem bar in the color you pick above.';
+  }
   updateSummary();
+}
+
+// ─── Component material pickers ──────────────────────────────
+// Metal fascia / metal cassette / metal hem bar each reveal their own Norman
+// palette (see PB_PALETTES in shared.js). Fabric-wrapped parts take the shade
+// fabric instead, so no color picker is shown for them.
+function solPickFascia(material, btn) {
+  selOpt(btn, 'grp-fascia-style');
+  var wrap = document.getElementById('sol-fascia-color-wrap');
+  if (wrap) wrap.style.display = (material === 'metal') ? 'block' : 'none';
+  updateSummary();
+}
+
+function solPickLgCassette(material, btn) {
+  selOpt(btn, 'grp-lg-cassette-mat');
+  var wrap = document.getElementById('sol-lg-cassette-color-wrap');
+  if (wrap) wrap.style.display = (material === 'metal') ? 'block' : 'none';
+  updateSummary();
+}
+
+function solPickHemBar(material, btn) {
+  selOpt(btn, 'grp-hembar-mat');
+  var wrap = document.getElementById('sol-hembar-color-wrap');
+  if (wrap) wrap.style.display = (material === 'metal') ? 'block' : 'none';
+  updateSummary();
+}
+
+// Populate the color rows from the shared palettes so every metal part on this
+// page stays in sync with shades.js / Basic Roller.
+function solInitColorRows() {
+  var slots = [
+    ['sol-fascia-color-slot',      'grp-fascia-color',      'metalFascia'],
+    ['sol-lg-cassette-color-slot', 'grp-lg-cassette-color', 'lightGuard360'],
+    ['sol-lg-rail-color-slot',     'grp-lg-rail-color',     'lightGuard360'],
+    ['sol-hembar-color-slot',      'grp-hembar-color',      'plainHemBar']
+  ];
+  slots.forEach(function(s) {
+    var el = document.getElementById(s[0]);
+    if (el) el.innerHTML = pbColorRow(s[1], s[2], 'updateSummary');
+  });
+}
+document.addEventListener('DOMContentLoaded', solInitColorRows);
+
+// Material + color choices for the parts whose panel is actually on screen.
+// Shared by the live summary and the quote email so they can't drift apart.
+function solComponentParts() {
+  var vis = function(id) { var el = document.getElementById(id); return !!el && el.style.display !== 'none'; };
+  var out = [];
+  if (vis('sol-fascia-subopts')) {
+    var fStyle = getOpt('grp-fascia-style');
+    if (fStyle) out.push(fStyle);
+    if (vis('sol-fascia-color-wrap')) {
+      var fCol = getOpt('grp-fascia-color');
+      if (fCol) out.push('Fascia color: ' + fCol);
+    }
+  }
+  if (vis('sol-lg-subopts')) {
+    var cMat = getOpt('grp-lg-cassette-mat');
+    if (cMat) out.push('LG360 cassette: ' + cMat);
+    if (vis('sol-lg-cassette-color-wrap')) {
+      var cCol = getOpt('grp-lg-cassette-color');
+      if (cCol) out.push('Cassette color: ' + cCol);
+    }
+    var rCol = getOpt('grp-lg-rail-color');
+    if (rCol) out.push('Side rails (metal): ' + rCol);
+  }
+  if (vis('sol-hembar-wrap')) {
+    var hMat = getOpt('grp-hembar-mat');
+    if (hMat) out.push('Hem bar: ' + hMat);
+    if (vis('sol-hembar-color-wrap')) {
+      var hCol = getOpt('grp-hembar-color');
+      if (hCol) out.push('Hem bar color: ' + hCol);
+    }
+  }
+  return out;
 }
 
 function solPickDel(v, card) {
@@ -279,78 +371,19 @@ function toggleMotor(on) {
   document.getElementById('motor-sub').classList.toggle('show', on);
   var motorRow = document.getElementById('s-motor-row');
   if (motorRow) motorRow.style.display = on ? 'flex' : 'none';
+  var cfg = document.getElementById('sol-motor-config');
   if (on) {
-    solUpdateMotorBrand();
-    // sync wand qty to shade qty on first open
-    var shadeQty = parseInt((document.getElementById('inp-qty')||{}).value) || 1;
-    var wandQtyEl = document.getElementById('inp-wand-qty');
-    if (wandQtyEl) wandQtyEl.value = shadeQty;
-  } else {
-    ['s-power-row','s-wand-row'].forEach(function(id){
-      var el = document.getElementById(id);
-      if (el) el.style.display = 'none';
-    });
+    // Render the shared Norman motor UI (Soluna is a roller → Rollease + Charging Wand allowed)
+    if (typeof normanMotorSection === 'function') normanMotorSection('sol-motor-config', 'Soluna Roller Shade', updateSummary);
+  } else if (cfg) {
+    cfg.innerHTML = '';
   }
   updateSummary();
-}
-
-function solUpdateMotorBrand() {
-  var brand = (document.getElementById('sel-motor') || {}).value || 'Norman Smart';
-  var isNorman = brand === 'Norman Smart';
-  var powerWrap = document.getElementById('motor-power-wrap');
-  var rolleaseWrap = document.getElementById('motor-rollease-wrap');
-  if (powerWrap) powerWrap.style.display = isNorman ? 'block' : 'none';
-  if (rolleaseWrap) rolleaseWrap.style.display = isNorman ? 'none' : 'block';
-  if (isNorman) {
-    solShowPowerOpts(getOpt('grp-motor-power') === 'Rechargeable battery' ? 'rechargeable' : 'rechargeable');
-  }
-}
-
-function solShowPowerOpts(type) {
-  var wandWrap = document.getElementById('motor-wand-wrap');
-  if (wandWrap) wandWrap.style.display = type === 'rechargeable' ? 'block' : 'none';
-  if (type !== 'rechargeable') {
-    document.querySelectorAll('#grp-wand-type .opt-btn').forEach(function(b,i){ b.classList.toggle('sel', i===0); });
-    solShowWandExt(false);
-  }
-}
-
-function solShowWandExt(show) {
-  var wrap = document.getElementById('wand-ext-wrap');
-  if (wrap) wrap.style.display = show ? 'block' : 'none';
-  if (!show) {
-    var chk = document.getElementById('wand-ext-chk');
-    if (chk) chk.checked = false;
-  }
-}
-
-function solAdjWandQty(d) {
-  var el = document.getElementById('inp-wand-qty');
-  if (!el) return;
-  el.value = Math.min(20, Math.max(1, (parseInt(el.value)||1)+d));
-  updateSummary();
-}
-
-function solGetWandSummary() {
-  var wandWrap = document.getElementById('motor-wand-wrap');
-  if (!wandWrap || wandWrap.style.display === 'none') return null;
-  var type = getOpt('grp-wand-type') || 'Corded';
-  var extChk = document.getElementById('wand-ext-chk');
-  var hasExt = extChk && extChk.checked;
-  var qty = parseInt((document.getElementById('inp-wand-qty')||{}).value) || 1;
-  return qty + '× ' + type + (hasExt ? ' + extension' : '');
 }
 
 function adjustQty(d) {
   const el = document.getElementById('inp-qty');
   el.value = Math.min(20, Math.max(1, (parseInt(el.value) || 1) + d));
-  // keep wand qty in sync with shade qty when rechargeable motor is active
-  var motorSub = document.getElementById('motor-sub');
-  var wandWrap = document.getElementById('motor-wand-wrap');
-  var wandEl = document.getElementById('inp-wand-qty');
-  if (motorSub && motorSub.classList.contains('show') && wandWrap && wandWrap.style.display !== 'none' && wandEl) {
-    wandEl.value = el.value;
-  }
   updateSummary();
 }
 
@@ -358,32 +391,36 @@ function adjustQty(d) {
 var _SOL_W = [24,30,36,42,48,54,60,66,72,78,84,90,96,108,120];
 var _SOL_H = [36,48,60,72,84,96,108,120,132,144];
 var _SOL_GRIDS = {
-  f1:[[254,273,291,312,333,351,371,401,429,474,500,526,551,601,652],[274,298,318,345,368,397,422,464,495,547,576,608,639,697,750],[296,318,346,377,414,448,482,526,566,620,655,690,717,774,826],[313,345,382,420,457,497,538,591,628,689,717,749,779,841,903],[336,375,418,462,503,546,592,648,683,737,774,806,841,909,982],[357,406,453,501,549,598,639,696,730,791,828,866,903,982,1055],[383,437,488,544,594,640,677,737,779,842,885,923,968,1048,1130],[409,469,526,582,636,676,719,782,828,895,941,987,1030,1121,1207],[435,500,560,623,670,714,762,828,873,945,995,1042,1092,1188,1286],[462,530,596,649,701,750,802,871,923,997,1050,1103,1155,1255,1362]],
-  f2:[[278,299,323,341,367,389,412,446,476,529,558,587,617,672,731],[301,328,353,377,406,440,471,518,549,609,647,679,713,780,843],[325,353,384,420,462,497,537,587,628,692,733,772,803,868,927],[349,383,422,467,509,555,600,659,703,770,803,842,873,944,1017],[370,415,465,513,562,611,661,727,765,829,868,907,944,1023,1103],[396,449,503,561,613,670,714,777,820,887,932,973,1017,1103,1189],[423,486,543,605,667,717,763,829,873,945,994,1042,1091,1181,1276],[454,520,591,650,708,759,809,878,932,1005,1055,1107,1157,1261,1359],[485,558,627,697,748,801,854,932,985,1066,1122,1173,1230,1341,1449],[513,593,668,730,785,842,898,983,1042,1123,1183,1243,1299,1417,1537]],
-  f3:[[307,337,365,396,424,454,485,517,552,609,645,680,719,786,856],[337,372,407,443,482,522,563,605,648,715,755,800,841,927,1002],[366,407,449,497,545,594,643,693,745,817,868,918,957,1044,1126],[398,444,498,554,613,671,725,782,839,917,964,1011,1054,1153,1247],[428,487,549,617,677,740,809,869,920,999,1049,1103,1154,1261,1366],[462,530,602,674,745,817,879,940,995,1081,1137,1195,1254,1367,1489],[497,575,656,734,813,879,944,1005,1071,1160,1226,1289,1352,1480,1608],[534,622,707,792,871,940,1011,1079,1148,1242,1314,1382,1451,1592,1731],[572,667,759,846,921,999,1071,1148,1225,1325,1398,1473,1549,1704,1852],[607,708,811,897,976,1054,1138,1219,1301,1407,1485,1569,1647,1812,1974]],
-  f4:[[337,371,402,435,468,500,534,569,608,671,711,749,792,865,942],[371,409,448,487,529,574,620,668,713,787,834,879,924,1021,1103],[403,448,495,546,601,651,707,763,820,898,955,1011,1053,1148,1239],[437,488,547,609,674,738,798,863,922,1010,1058,1112,1160,1267,1372],[470,537,605,677,747,814,889,956,1014,1098,1155,1215,1268,1388,1504],[508,582,664,742,820,898,969,1035,1095,1189,1251,1316,1380,1505,1637],[546,634,723,809,895,969,1041,1106,1179,1278,1349,1420,1488,1628,1770],[590,682,778,870,959,1035,1112,1187,1263,1365,1446,1521,1596,1750,1904],[629,733,835,933,1015,1098,1179,1263,1348,1457,1539,1621,1704,1873,2040],[669,779,892,988,1075,1160,1252,1342,1431,1549,1633,1725,1812,1995,2172]],
-  s1:[[240,258,278,296,314,331,362,382,406,450,474,507,533,577,628],[259,282,302,325,350,372,412,439,468,519,545,587,614,671,723],[281,302,326,357,390,421,467,497,535,586,618,666,692,745,795],[297,325,359,397,430,468,522,558,595,650,677,721,749,809,870],[318,354,394,434,474,513,573,614,645,697,745,776,809,874,941],[336,383,428,471,518,563,618,656,690,745,797,831,870,941,1015],[361,411,461,511,558,600,659,697,737,795,850,890,932,1007,1088],[387,440,495,546,597,635,697,739,780,844,903,949,990,1078,1160],[408,470,526,582,627,670,737,780,826,894,956,1002,1049,1141,1235],[434,498,561,609,659,703,777,823,872,940,1010,1061,1111,1206,1309]],
-  s2:[[261,283,306,325,346,367,406,428,454,503,530,571,600,652,711],[284,309,334,357,384,416,462,495,526,581,617,660,692,761,818],[307,334,361,396,434,468,525,561,600,658,699,748,779,842,898],[328,359,398,439,477,522,587,627,671,733,766,817,846,918,986],[351,390,437,483,527,574,645,693,728,791,842,877,918,992,1069],[372,422,474,526,575,628,699,740,778,843,902,945,986,1069,1153],[399,456,510,571,624,672,745,791,831,902,966,1010,1055,1145,1235],[428,490,551,611,667,711,791,837,887,957,1023,1073,1123,1220,1317],[454,523,591,650,701,749,835,887,936,1014,1086,1139,1190,1297,1400],[483,554,626,684,737,789,877,935,990,1067,1146,1204,1258,1373,1488]],
-  s3:[[290,322,346,374,404,430,460,488,522,575,608,655,690,754,822],[322,354,385,419,454,495,533,573,611,673,713,768,805,891,963],[349,385,423,469,515,561,605,651,701,770,815,879,918,1000,1079],[376,420,470,525,577,633,683,738,791,863,905,969,1013,1105,1194],[406,462,519,579,641,699,762,818,868,940,1006,1057,1106,1206,1312],[436,501,570,636,701,770,829,885,938,1017,1090,1146,1200,1313,1426],[469,544,620,693,766,829,890,945,1010,1091,1173,1236,1294,1417,1541],[503,587,668,745,821,885,950,1015,1080,1169,1256,1325,1389,1523,1657],[541,627,714,799,869,940,1010,1080,1152,1246,1341,1413,1482,1628,1772],[574,669,764,844,920,992,1070,1146,1222,1320,1422,1499,1576,1732,1888]]
+  f1:[[246,265,282,302,323,340,360,389,416,460,485,510,534,583,633],[266,289,308,334,357,385,409,450,480,531,559,590,620,676,728],[287,308,335,366,401,434,467,510,549,601,635,669,696,751,801],[303,334,370,407,443,482,522,573,609,668,696,727,756,816,876],[326,364,405,448,488,530,574,629,663,715,751,782,816,882,953],[346,394,439,486,533,580,620,675,708,767,803,840,876,953,1024],[371,424,473,528,576,621,657,715,756,817,859,896,939,1017,1097],[397,455,510,565,617,656,698,759,803,868,913,958,1000,1088,1171],[422,485,543,604,650,693,739,803,847,917,966,1011,1060,1153,1248],[448,514,578,630,680,728,778,845,896,967,1019,1070,1121,1218,1322]],
+  f2:[[269,290,313,331,356,377,400,433,462,513,541,569,599,652,709],[292,318,342,366,394,427,457,502,533,591,628,659,692,757,818],[315,342,372,407,448,482,521,569,609,671,711,749,779,842,900],[338,371,409,453,494,538,582,639,682,747,779,817,847,916,987],[359,402,451,498,545,593,641,705,742,804,842,880,916,993,1070],[384,435,488,544,595,650,693,754,796,861,904,944,987,1070,1154],[410,471,527,587,647,696,740,804,847,917,965,1011,1059,1146,1238],[440,504,573,631,687,736,785,852,904,975,1024,1074,1123,1224,1319],[470,541,608,676,726,777,829,904,956,1034,1089,1138,1194,1301,1406],[498,575,648,708,762,817,871,954,1011,1090,1148,1206,1261,1375,1492]],
+  f3:[[298,327,354,384,411,440,470,501,535,591,626,660,698,763,831],[327,361,395,430,467,506,546,587,629,694,733,776,816,900,972],[355,395,435,482,529,576,624,672,723,793,842,891,929,1013,1093],[386,431,483,537,595,651,703,759,814,890,935,981,1023,1119,1210],[415,472,533,599,657,718,785,843,893,969,1018,1070,1120,1224,1326],[448,514,584,654,723,793,853,912,966,1049,1103,1160,1217,1327,1445],[482,558,636,712,789,853,916,975,1039,1126,1190,1251,1312,1436,1561],[518,603,686,768,845,912,981,1047,1114,1205,1275,1341,1408,1545,1680],[555,647,736,821,894,969,1039,1114,1189,1286,1357,1430,1503,1654,1798],[589,687,787,870,947,1023,1104,1183,1263,1366,1441,1523,1599,1759,1916]],
+  f4:[[327,360,390,422,454,485,518,552,590,651,690,727,768,839,914],[360,397,434,472,513,557,601,648,692,764,809,853,897,991,1070],[391,434,480,530,583,632,686,740,796,871,927,981,1022,1114,1202],[424,473,531,591,654,716,774,837,895,980,1027,1079,1126,1230,1332],[456,521,587,657,725,790,863,928,984,1066,1121,1179,1231,1347,1460],[493,565,644,720,796,871,940,1004,1063,1154,1214,1277,1339,1461,1589],[530,615,701,785,868,940,1010,1073,1144,1240,1309,1378,1444,1580,1718],[572,662,755,844,931,1004,1079,1152,1226,1325,1403,1476,1549,1699,1848],[610,711,810,905,985,1066,1144,1226,1308,1414,1494,1573,1654,1818,1980],[649,756,866,959,1043,1126,1215,1302,1389,1503,1585,1674,1759,1936,2108]],
+  s1:[[233,250,269,287,304,321,351,370,394,436,460,492,517,560,609],[251,273,293,315,339,361,400,426,454,503,529,569,596,651,701],[272,293,316,346,378,408,453,482,519,568,600,646,671,723,771],[288,315,348,385,417,454,506,541,577,631,657,700,727,785,844],[308,343,382,421,460,498,556,596,626,676,723,753,785,848,913],[326,371,415,457,502,546,600,636,669,723,773,806,844,913,985],[350,399,447,496,541,582,639,676,715,771,825,864,904,977,1056],[375,427,480,530,579,616,676,717,757,819,876,921,961,1046,1126],[396,456,510,565,608,650,715,757,801,867,928,972,1018,1107,1199],[421,483,544,591,639,682,754,799,846,912,980,1030,1078,1170,1270]],
+  s2:[[253,274,297,315,335,356,394,415,440,488,514,554,582,633,690],[275,300,324,346,372,403,448,480,510,564,599,640,671,738,794],[298,324,350,384,421,454,509,544,582,638,678,726,756,817,871],[318,348,386,426,463,506,569,608,651,711,743,793,821,891,957],[340,378,424,468,511,557,626,672,706,767,817,851,891,963,1037],[361,409,460,510,558,609,678,718,755,818,875,917,957,1037,1119],[387,442,495,554,605,652,723,767,806,875,937,980,1024,1111,1199],[415,475,534,593,647,690,767,812,861,929,993,1041,1090,1184,1278],[440,507,573,631,680,727,810,861,908,984,1054,1105,1155,1259,1359],[468,537,607,664,715,766,851,907,961,1035,1112,1168,1221,1333,1444]],
+  s3:[[281,312,335,363,392,417,446,473,506,558,590,635,669,732,798],[312,343,373,406,440,480,517,556,593,653,692,745,781,865,934],[338,373,410,455,500,544,587,632,680,747,791,853,891,970,1047],[365,407,456,509,560,614,663,716,767,837,878,940,983,1072,1159],[394,448,503,562,622,678,739,794,842,912,976,1026,1073,1170,1273],[423,486,553,617,680,747,804,859,910,987,1058,1112,1165,1274,1384],[455,528,601,672,743,804,864,917,980,1059,1138,1200,1256,1375,1496],[488,569,648,723,797,859,922,985,1048,1134,1219,1286,1348,1478,1608],[525,608,693,775,843,912,980,1048,1118,1209,1301,1371,1438,1580,1720],[557,649,741,819,893,963,1038,1112,1186,1281,1380,1455,1530,1681,1833]]
 };
 var _SOL_COLL_GROUP = {
-  // Solar PG1: higher-openness screents + commercial NA400
+  // Solar PG1 (book May 2026): Serene 7%, Flow 7%, Windsong 5%, NA400 3/5/10%, NA300 3/5%
   'Serene 7%':'s1','Flow 7%':'s1','Windsong 5%':'s1',
   'NA400 3%':'s1','NA400 5%':'s1','NA400 10%':'s1',
-  // Solar PG2: lower-openness screens, Moon, Breeze Screen + NA820
+  'NA300 3%':'s1','NA300 5%':'s1', // ⚠ book PG1 but NOT yet in swatch data (no color codes on site)
+  // Solar PG2 (book May 2026): Serene 1/3%, Flow 1/5%, Windsong 1%, W120 12%, Moon 5%, Breeze 1&3%, NA300 1%, NA400 1%, NA820 3%
   'Serene 1%':'s2','Serene 3%':'s2','Flow 1%':'s2','Flow 5%':'s2',
   'Windsong 1%':'s2','Moon 5%':'s2','Breeze Screen 1%':'s2','Breeze Screen 3%':'s2',
   'NA820 3%':'s2',
+  'W120 12%':'s2','NA300 1%':'s2','NA400 1%':'s2', // ⚠ book PG2 but NOT yet in swatch data
   // Solar PG3: Lakeview, Meadows, Jubilee, Galaxy
   'Lakeview 3%':'s3','Lakeview 7%':'s3','Lakeview 10%':'s3',
   'Meadows 1%':'s3','Meadows 3%':'s3','Jubilee 3%':'s3','Galaxy 3%':'s3',
-  // Fabric PG1: Scarlett, Catalina, Brook, Chelsea, Callie, Elements
+  // Fabric PG1 (book May 2026): Scarlett, Catalina, Brook, Chelsea, Verona LF, Callie, Callie RD, Elements
   'Scarlett':'f1','Catalina (Natural)':'f1','Brook':'f1','Chelsea':'f1',
   'Callie':'f1','Callie RD':'f1','Elements':'f1','Elements White Backing':'f1',
+  'Verona LF':'f1', // ⚠ book PG1 but NOT yet in swatch data
   // Fabric PG2: most sheers/naturals/designer/RD
   'Sheer':'f2','Dazzle':'f2','Lakeshore':'f2',
   'Samoa (Natural)':'f2','Phuket (Natural)':'f2','Bora Bora (Natural)':'f2',
   'Java (Natural)':'f2','Bali (Natural)':'f2','Riviera (Natural)':'f2',
+  'Sumatra (Natural)':'f2','Lake Tahoe (Natural)':'f2', // book PG2 naturals (Sumatra flagged discontinued in CLAUDE.md — verify before re-adding to swatches)
   'Francis':'f2','Hayes':'f2','Valerie':'f2','Emery':'f2','Sierra':'f2',
   'Shimmer':'f2','Amelia':'f2','Lola LF':'f2','Remy':'f2',
   'Jamaica':'f2','Bermuda':'f2','Fiji':'f2','Francis RD':'f2','Amelia RD':'f2',
@@ -399,6 +436,9 @@ var _SOL_COLL_GROUP = {
 function _solGridLookup(gKey, w, h) {
   var g = _SOL_GRIDS[gKey];
   if (!g) return 0;
+  // Norman charts cover 24–120" wide × 36–144" tall. Beyond that we do NOT clamp or
+  // extrapolate — return null so the caller flags it for manual review / quote.
+  if (w > _SOL_W[_SOL_W.length - 1] || h > _SOL_H[_SOL_H.length - 1]) return null;
   var ci = _SOL_W.length - 1;
   for (var i = 0; i < _SOL_W.length; i++) { if (w <= _SOL_W[i]) { ci = i; break; } }
   var ri = _SOL_H.length - 1;
@@ -409,6 +449,16 @@ function _solGridLookup(gKey, w, h) {
 function getSelectedFabricColl() {
   var sel = document.querySelector('#fabric-coll-inner .opt-btn.sel');
   return sel ? sel.getAttribute('data-coll') : null;
+}
+
+// Fascia / Wood Valance surcharge by width bucket (round UP). Norman book May 2026 p.18.
+// All three fascia styles (flat metal, flat/curved fabric-wrapped) price off this row — they are
+// all fascias; hanging fabric valances aren't offered in this configurator. Raceway is included.
+var _SOL_FASCIA_W   = [24,30,36,42,48,54,60,66,72,78,84,90,96,108,120,132,144];
+var _SOL_FASCIA_SUR = [113,118,129,134,145,156,166,182,198,209,225,241,257,284,316,338,364];
+function _solFasciaSurcharge(w) {
+  for (var i = 0; i < _SOL_FASCIA_W.length; i++) { if (w <= _SOL_FASCIA_W[i]) return _SOL_FASCIA_SUR[i]; }
+  return _SOL_FASCIA_SUR[_SOL_FASCIA_SUR.length - 1]; // >144" caught earlier by grid oversize → manual review
 }
 
 function _solEstimatePrice() {
@@ -422,28 +472,37 @@ function _solEstimatePrice() {
   var gKey = _SOL_COLL_GROUP[coll];
   if (!gKey) return null;
   var base = _solGridLookup(gKey, w, h);
+  if (base === null) return { review: true, qty: qty, motor: op === 'Motorized' };
   if (!base) return null;
-  var srFee = (op === 'SmartRelease™') ? 89 : 0;
-  if (shadeType === 'Dual Shade') base = base * 2 + 73;
-  var unitPrice, totalPrice;
+  var srFee = (op === 'SmartRelease™') ? 86 : 0;                 // book May 2026: SmartRelease $86
+  if (shadeType === 'Dual Shade') base = base * 2 + 70;          // book: price as 2 shades + $70 dual surcharge
+  var unitPrice;
   if (_solCoupledActive) {
     if (_solCoupledSameSize) {
-      unitPrice = (base + srFee) * _solCoupledCount + 117 * (_solCoupledCount - 1);
+      unitPrice = (base + srFee) * _solCoupledCount + 113 * (_solCoupledCount - 1);
     } else {
       var tally = 0;
       for (var ci2 = 1; ci2 <= _solCoupledCount; ci2++) {
         var pw = parseFloat((document.getElementById('coupled-w-'+ci2)||{}).value) || 0;
         var ph = parseFloat((document.getElementById('coupled-h-'+ci2)||{}).value) || 0;
         if (!pw || !ph) return null;
-        tally += _solGridLookup(gKey, pw, ph) + srFee;
+        var pcell = _solGridLookup(gKey, pw, ph);
+        if (pcell === null) return { review: true, qty: qty, motor: op === 'Motorized' };
+        tally += pcell + srFee;
       }
-      unitPrice = tally + 117 * (_solCoupledCount - 1);
+      unitPrice = tally + 113 * (_solCoupledCount - 1);
     }
-    totalPrice = unitPrice * qty;
   } else {
-    unitPrice  = base + srFee;
-    totalPrice = unitPrice * qty;
+    unitPrice = base + srFee;
   }
+  // Headrail add-on surcharges (book May 2026): LightGuard 360™ $364 flat; fascia/valance by width.
+  // Added once per shade unit / common headrail. Folded into the price, NOT itemized — owner rule
+  // hides this detail from customers (only motor/remote/charger/hub/TDBU/D&N/trim show a surcharge).
+  var lgEl = document.getElementById('sol-addon-lightguard');
+  if (lgEl && lgEl.classList.contains('sel')) unitPrice += 364;
+  var fasEl = document.getElementById('sol-addon-fascia');
+  if (fasEl && fasEl.classList.contains('sel')) unitPrice += _solFasciaSurcharge(w);
+  var totalPrice = unitPrice * qty;
   return { unit: unitPrice, total: totalPrice, qty: qty, motor: op === 'Motorized' };
 }
 
@@ -455,7 +514,6 @@ function updateSummary() {
   const w         = document.getElementById('inp-width').value;
   const h         = document.getElementById('inp-height').value;
   const qty       = document.getElementById('inp-qty').value || 1;
-  const mBrand    = document.getElementById('sel-motor').value;
   const fabric    = getSelectedFabricColor();
 
   var isDual = shadeType === 'Dual Shade';
@@ -473,26 +531,14 @@ function updateSummary() {
 
   var motorSub = document.getElementById('motor-sub');
   var motorOn = motorSub && motorSub.classList.contains('show');
-  var isNorman = mBrand === 'Norman Smart';
 
-  if (mBrand) {
-    document.getElementById('s-motor-brand').textContent = mBrand;
-  }
-
-  var powerRow = document.getElementById('s-power-row');
-  var powerEl  = document.getElementById('s-power');
-  if (powerRow && powerEl) {
-    var power = (motorOn && isNorman) ? (getOpt('grp-motor-power') || 'Rechargeable battery') : null;
-    powerRow.style.display = power ? '' : 'none';
-    if (power) powerEl.textContent = power;
-  }
-
-  var wandRow = document.getElementById('s-wand-row');
-  var wandEl2 = document.getElementById('s-wand');
-  if (wandRow && wandEl2) {
-    var wSum = motorOn ? solGetWandSummary() : null;
-    wandRow.style.display = wSum ? '' : 'none';
-    if (wSum) wandEl2.textContent = wSum;
+  // Motor summary comes from the shared Norman motor section (nmGetMotorSummary in shared.js)
+  var motorRow = document.getElementById('s-motor-row');
+  var motorBrandEl = document.getElementById('s-motor-brand');
+  if (motorRow && motorBrandEl) {
+    var mSum = (motorOn && typeof nmGetMotorSummary === 'function') ? nmGetMotorSummary() : null;
+    motorRow.style.display = mSum ? '' : 'none';
+    if (mSum) motorBrandEl.textContent = mSum;
   }
 
   const fabricRow = document.getElementById('s-fabric-row');
@@ -504,10 +550,9 @@ function updateSummary() {
 
   const addons = [...document.querySelectorAll('#grp-addons .opt-btn.sel')].map(b => b.textContent.trim());
   const hwColor = getOpt('grp-hw-color');
-  const fasciaStyle = getOpt('grp-fascia-style');
   var addonParts = addons.slice();
   if (hwColor) addonParts.push('Premium HW: ' + hwColor);
-  if (fasciaStyle) addonParts.push(fasciaStyle);
+  addonParts = addonParts.concat(solComponentParts());
   document.getElementById('s-addons').textContent = addonParts.length ? addonParts.join(', ') : 'None';
 
   var coupledRow = document.getElementById('s-coupled-row');
@@ -522,10 +567,22 @@ function updateSummary() {
   var priceRow = document.getElementById('s-price-row');
   var priceEl2 = document.getElementById('s-price');
   if (priceRow && priceEl2) {
-    if (priceResult) {
-      var pTxt = '$' + priceResult.total.toLocaleString();
-      if (priceResult.qty > 1 && !_solCoupledActive) pTxt += ' (' + priceResult.qty + ' × $' + priceResult.unit.toLocaleString() + ')';
-      if (priceResult.motor) pTxt += ' + motor est.';
+    if (priceResult && priceResult.review) {
+      priceEl2.textContent = 'Size exceeds our standard price chart (max 120″W × 144″H) — we’ll prepare a manual quote.';
+      priceRow.style.display = '';
+    } else if (priceResult) {
+      // Norman retail → 25% off → your price. 25% is the rate on every Norman product; it never applies to shipping.
+      var _solRetail = priceResult.total;
+      var _solYour   = Math.round(_solRetail * 0.75);
+      var pTxt = '$' + _solRetail.toLocaleString() + ' retail → $' + _solYour.toLocaleString() + ' your price (25% off)';
+      if (priceResult.qty > 1 && !_solCoupledActive) pTxt += ' · ' + priceResult.qty + ' × $' + Math.round(priceResult.unit * 0.75).toLocaleString();
+      if (priceResult.motor && typeof nmGetMotorPrice === 'function') {
+        var _mShades = (_solCoupledActive ? _solCoupledCount : (priceResult.qty || 1)) * (shadeType === 'Dual Shade' ? 2 : 1);
+        var _mPrice = nmGetMotorPrice('Soluna Roller Shade', _mShades);
+        if (_mPrice > 0) {
+          pTxt += ' + motorization ' + nmMotorLineText(_mPrice, priceResult.qty || 1) + ' = $' + (_solYour + _mPrice).toLocaleString() + ' total';
+        }
+      }
       priceEl2.textContent = pTxt;
       priceRow.style.display = '';
     } else {
@@ -550,17 +607,14 @@ function submitQuote() {
   const notes     = document.getElementById('cf-notes').value.trim();
   const motorSub  = document.getElementById('motor-sub');
   const motorOn   = motorSub && motorSub.classList.contains('show');
-  const motorVal  = motorOn ? (document.getElementById('sel-motor').value || '—') : 'None';
-  const isNormanMotor = motorOn && motorVal === 'Norman Smart';
-  const powerSrc = isNormanMotor ? (getOpt('grp-motor-power') || 'Rechargeable battery') : '';
-  const wandLine = isNormanMotor ? (solGetWandSummary() || '') : '';
+  // Motor details come from the shared Norman motor section (nmGetMotorSummary in shared.js)
+  const motorSummary = (motorOn && typeof nmGetMotorSummary === 'function') ? nmGetMotorSummary() : '';
   const addons    = [...document.querySelectorAll('#grp-addons .opt-btn.sel')].map(b => b.textContent.trim());
   const hwColor   = getOpt('grp-hw-color');
-  const fasciaStyle = getOpt('grp-fascia-style');
   if (hwColor) addons.push('Premium hardware: ' + hwColor);
-  if (fasciaStyle) addons.push('Fascia style: ' + fasciaStyle);
+  solComponentParts().forEach(function(p) { addons.push(p); });
   const fabricColor = getSelectedFabricColor();
-  const deliveryLabel = 'Ship to me — UPS / FedEx from Huntingdon Valley, PA (freight TBD)';
+  const deliveryLabel = 'Ship to me — UPS / FedEx (freight TBD)';
 
   const isDualSubmit = shadeType === 'Dual Shade';
   const dualFrontSubmit = isDualSubmit ? getOpt('grp-dual-front') : '';
@@ -571,8 +625,17 @@ function submitQuote() {
 
   const coupledLine = solGetCoupledSummary();
   const priceEst = _solEstimatePrice();
-  const priceEstLine = priceEst
-    ? 'Est. retail: $' + priceEst.total.toLocaleString() + (priceEst.motor ? ' (motor priced separately)' : '') + (priceEst.qty > 1 && !_solCoupledActive ? ' (' + priceEst.qty + ' × $' + priceEst.unit.toLocaleString() + ')' : '')
+  const priceEstLine = (priceEst && priceEst.review)
+    ? 'Size exceeds standard price chart (max 120"W x 144"H) — MANUAL QUOTE REQUIRED'
+    : priceEst
+    ? 'Est. retail: $' + priceEst.total.toLocaleString() + ' → 25% off → shade price: $' + Math.round(priceEst.total * 0.75).toLocaleString() + (function(){
+        if (priceEst.motor && typeof nmGetMotorPrice === 'function') {
+          var _ms = (_solCoupledActive ? _solCoupledCount : (priceEst.qty || 1)) * (shadeType === 'Dual Shade' ? 2 : 1);
+          var _mp = nmGetMotorPrice('Soluna Roller Shade', _ms);
+          if (_mp > 0) return ' + motorization ' + nmMotorLineText(_mp, priceEst.qty || 1) + ' = TOTAL $' + (Math.round(priceEst.total * 0.75) + _mp).toLocaleString();
+        }
+        return '';
+      })() + ' (freight additional)' + (priceEst.qty > 1 && !_solCoupledActive ? ' (' + priceEst.qty + ' × $' + priceEst.unit.toLocaleString() + ')' : '')
     : '';
   const body = [
     '=== PREMIER NORMAN ROLLER SHADE QUOTE REQUEST ===',
@@ -584,9 +647,8 @@ function submitQuote() {
     (fabricColor && !isDualSubmit ? 'Fabric selection: ' + fabricColor : ''),
     'Shade type: ' + shadeType,
     'Operating system: ' + op,
-    'Motorization: ' + motorVal,
-    (powerSrc ? 'Power source: ' + powerSrc : ''),
-    (wandLine ? 'Charging wand: ' + wandLine : ''),
+    'Motorization: ' + (motorOn ? 'Yes' : 'None'),
+    (motorSummary ? 'Motor details: ' + motorSummary : ''),
     'Mount type: ' + mount,
     'Width: ' + w + '"',
     'Height: ' + h + '"',
@@ -649,18 +711,19 @@ function addSolunaToCart() {
     });
   }
   if (op) {
-    var opMap = { cordless: 'PrecisionLift™ Cordless', loop: 'Continuous Cord Loop', smart: 'SmartRelease™', motor: 'Motorized' };
+    var opMap = { cordless: 'PrecisionLift™ Cordless', loop: 'Manual with chain', smart: 'SmartRelease™', motor: 'Motorized' };
     var target = opMap[op] || op;
     document.querySelectorAll('#grp-op .opt-btn').forEach(function(b) {
       if (b.textContent.trim() === target) b.click();
     });
   }
   if (motor && op === 'motor') {
-    var motorMap = { rollease: 'Rollease Acmeda Automate' };
-    var mTarget = motorMap[motor] || 'Norman Smart';
+    // The op click above already rendered the shared Norman motor section; select Rollease brand if requested
     setTimeout(function() {
-      var sel = document.getElementById('sel-motor');
-      if (sel) { sel.value = mTarget; solUpdateMotorBrand(); }
+      if (motor === 'rollease') {
+        var brandBtns = document.querySelectorAll('#nm-grp-brand .opt-btn');
+        if (brandBtns.length > 1) { brandBtns[1].click(); updateSummary(); }
+      }
     }, 100);
   }
   if (w || h || op) updateSummary();

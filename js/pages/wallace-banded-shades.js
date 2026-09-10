@@ -1,4 +1,4 @@
-﻿var S={prod:'',opacity:'lf',fabric:null,fabFilter:'all',w:0,h:0,ctrl:'',motorType:'std-li',cassColor:'White',cassette:'rounded',qty:1,room:'',del:'ship'};
+﻿var S={prod:'',opacity:'lf',fabric:null,fabFilter:'all',w:0,h:0,ctrl:'',motorType:'std-li',cassColor:'White',cassette:'rounded',qty:1,del:'ship'};
 
 // ── FABRIC DATA — Portfolio Dual Sheer (Wallace 2026 PDF) ─────────────────────
 var FABRICS=[
@@ -133,6 +133,7 @@ var CTRL_LIM={clutch:{minW:16,maxW:110,minH:20,maxH:108},cordless:{minW:24,maxW:
 var WRAP_P=[31,38,47,54,61,69,77,84,92,108,123,138]; // by width bracket
 
 // ── HELPERS ───────────────────────────────────────────────────────────────────
+// Tier bar: 'basic' is THIS page (Banded 2D); other tiers are direct <a> links. No-op keeps active state.
 function selB(el,g){document.getElementById(g).querySelectorAll('.opt-btn').forEach(function(b){b.classList.remove('sel');});el.classList.add('sel');}
 function tog(id){var e=document.getElementById(id);e.classList.toggle('active');}
 function openNext(id){
@@ -143,27 +144,39 @@ function spv(id,val){var e=document.getElementById(id);if(e){e.textContent=val||
 function showR(id,s){var e=document.getElementById(id);if(e)e.style.display=s?'':'none';}
 function setV(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
 
-// ── STEP 1 ────────────────────────────────────────────────────────────────────
+// ── STEP 1 / TIER ──────────────────────────────────────────────────────────────
+// Basic (Banded 2D) and Premium (Portfolio Dual Sheer) are BOTH hosted on this page.
+// Switching between them happens in place — no page navigation — so the customer can
+// flip back and forth with the tier bar / thumbnails always visible.
 function setProd(p,el){
-  if(p==='dual'){window.location.href='portfolio-dual-sheer.html';return;}
   S.prod=p;
+  var isDual=p==='dual';
+  // Sync the big Step-1 thumbnails.
   document.querySelectorAll('#step1 .product-card').forEach(function(c){c.classList.remove('sel');});
-  el.classList.add('sel');
-  document.getElementById('val1').textContent=p==='dual'?'Portfolio Dual Sheer':'Banded 2D Shades';
+  if(el&&el.classList){el.classList.add('sel');}
+  else{var card=document.getElementById(isDual?'prod-dual':'prod-2d');if(card)card.classList.add('sel');}
+  // Sync the compact tier bar.
+  var tb=document.getElementById('tier-basic'),td=document.getElementById('tier-dual');
+  if(tb)tb.classList.toggle('tier-active',!isDual);
+  if(td)td.classList.toggle('tier-active',isDual);
+
+  document.getElementById('val1').textContent=isDual?'Portfolio Dual Sheer':'Banded 2D Shades';
   document.getElementById('step1').classList.add('done');
 
-  document.getElementById('step2-dual').style.display=p==='dual'?'':'none';
-  document.getElementById('step2-2d').style.display=p==='2d'?'':'none';
-  document.getElementById('ctrl-dual').style.display=p==='dual'?'':'none';
-  document.getElementById('ctrl-2d').style.display=p==='2d'?'':'none';
-  document.getElementById('step5-dual').style.display=p==='dual'?'':'none';
-  document.getElementById('step5-2d').style.display=p==='2d'?'':'none';
-  document.getElementById('opts-2d').style.display=p==='2d'?'':'none';
-  document.getElementById('s2title').textContent=p==='dual'?'Fabric':'Fabric Preferences';
-  spv('sp-prod',p==='dual'?'Portfolio Dual Sheer':'Banded 2D Shades');
-  if(p==='2d'){render2dGrid();}
-  updateCalc();openNext('step2');
+  document.getElementById('step2-dual').style.display=isDual?'':'none';
+  document.getElementById('step2-2d').style.display=isDual?'none':'';
+  document.getElementById('ctrl-dual').style.display=isDual?'':'none';
+  document.getElementById('ctrl-2d').style.display=isDual?'none':'';
+  document.getElementById('step5-dual').style.display=isDual?'':'none';
+  document.getElementById('step5-2d').style.display=isDual?'none':'';
+  var opts2d=document.getElementById('opts-2d');if(opts2d)opts2d.style.display=isDual?'none':'';
+  document.getElementById('s2title').textContent=isDual?'Fabric':'Fabric Preferences';
+  spv('sp-prod',isDual?'Portfolio Dual Sheer':'Banded 2D Shades');
+  if(isDual){renderFabricGrid();}else{render2dGrid();}
+  updateCalc();openNext('step3'); // product chosen → open size (Step 2)
 }
+// Compact tier-bar switcher → delegates to setProd so both stay in sync.
+function selectTier(t){ setProd(t==='premium'||t==='dual'?'dual':'2d'); }
 
 // ── BANDED 2D: COLLECTION + COLOR DATA ────────────────────────────────────────
 var COLL2D=[
@@ -313,7 +326,7 @@ function pick2dFabric(collName,colorName,btn){
   spv('sp-op',b2dLight==='T'?'Translucent':'Blackout');
   document.getElementById('val2').textContent=label.length>32?collName:label;
   document.getElementById('step2').classList.add('done');
-  openNext('step3');
+  openNext('step4');
 }
 
 // ── STEP 2 ────────────────────────────────────────────────────────────────────
@@ -366,7 +379,7 @@ function selectFab(f){
   if(cb)cb.classList.toggle('blocked',!f.cordless);
   if(!f.cordless&&S.ctrl==='cordless'){S.ctrl='';document.getElementById('val4').textContent='—';}
   if(f.lb||f.op==='rd'){var lb=document.getElementById('btn-lb');if(lb)selB(lb,'grp-bar');}
-  renderFabricGrid();validateDims();updateCalc();openNext('step3');
+  renderFabricGrid();validateDims();updateCalc();openNext('step4');
 }
 
 // ── STEP 3 ────────────────────────────────────────────────────────────────────
@@ -412,7 +425,6 @@ function validateDims(){
     document.getElementById('step3').classList.add('done');
     document.getElementById('val3').textContent=S.w+'" W \xd7 '+S.h+'" H';
     spv('sp-sz',S.w+'" \xd7 '+S.h+'"');
-    openNext('step4');
   }
   fb.innerHTML=html;
   updateCalc();
@@ -462,8 +474,6 @@ function setQtyInp(v){
   var n=Math.max(1,Math.min(50,parseInt(v)||1));
   S.qty=n;
   spv('sp-qty',n+(n===1?' shade':' shades'));
-  document.getElementById('step6').classList.add('done');
-  document.getElementById('val6').textContent=n+' shade'+(n===1?'':'s');
   updateCalc();
 }
 function adjQty(d){
@@ -471,14 +481,13 @@ function adjQty(d){
   el.value=Math.max(1,Math.min(50,(parseInt(el.value)||1)+d));
   setQtyInp(el.value);
 }
-document.getElementById('room-lbl').addEventListener('input',function(){S.room=this.value.trim();updateSpec();});
 
 // ── STEP 7 ────────────────────────────────────────────────────────────────────
 function setDel(opt,card){
   S.del=opt;
   document.querySelectorAll('.delivery-opt-card').forEach(function(c){c.classList.remove('sel');});
   card.classList.add('sel');
-  var lbl={ship:'Ship to me',pickup:'Pick up',install:'Professional installation'}[opt]||opt;
+  var lbl='Ship to me';
   document.getElementById('val7').textContent=lbl;
   spv('sp-del',lbl);
   document.getElementById('step7').classList.add('done');
@@ -527,7 +536,8 @@ function updateCalc(){
   showR('pr-ctrl-row',ctrlUp>0); if(ctrlUp)setV('pr-ctrl','+$'+ctrlUp);
   showR('pr-wrap-row',wrapUp>0); if(wrapUp)setV('pr-wrap','+$'+wrapUp+'/shade');
   showR('pr-acc-row',accUp>0);   if(accUp)setV('pr-acc','+$'+accUp);
-  var freight=(S.del==='pickup'||S.del==='install')?0:25+(S.qty>1?(S.qty-1)*11:0);
+  var _bmax=Math.max(S.w||0,S.h||0), _bos=(_bmax>=100?80:_bmax>=90?40:0);
+  var freight=(S.del==='install')?0:25+(S.qty>1?(S.qty-1)*10:0)+_bos*S.qty;
   showR('pr-frt-row',freight>0); if(freight)setV('pr-frt','$'+freight);
   var total=(base+ctrlUp+wrapUp+accUp)*S.qty+freight;
   setV('pr-total','~$'+Math.round(total).toLocaleString());
@@ -574,21 +584,21 @@ function addBandedShadesToCart(){
 }
 
 function submitQ(){
-  var name=document.getElementById('q-name').value.trim();
-  var phone=document.getElementById('q-phone').value.trim();
-  var errEl=document.getElementById('sub-err');
+  var name=document.getElementById('cf-name').value.trim();
+  var phone=document.getElementById('cf-phone').value.trim();
+  var errEl=document.getElementById('cf-contact-err');
   var errs=[];
   if(!name)errs.push('Name required.');
   if(!phone)errs.push('Phone required.');
-  if(!S.prod)errs.push('Select product (Step 1).');
-  if(S.prod==='dual'&&!S.fabric)errs.push('Select fabric (Step 2).');
-  if(!S.w||!S.h)errs.push('Enter width and height (Step 3).');
+  if(!S.prod)errs.push('Select product (Step 2).');
+  if(S.prod==='dual'&&!S.fabric)errs.push('Select fabric (Step 3).');
+  if(!S.w||!S.h)errs.push('Enter width and height (Step 1).');
   if(S.prod==='dual'&&!S.ctrl)errs.push('Select control type (Step 4).');
   if(errs.length){errEl.innerHTML='&#9888; '+errs.join(' ');errEl.style.display='';return;}
   errEl.style.display='none';
 
   var mount=document.querySelector('#grp-mount .opt-btn.sel')?.textContent.trim()||'Inside mount';
-  var del={ship:'Ship (UPS/FedEx from Huntingdon Valley PA)',pickup:'Pick up',install:'Professional installation'}[S.del]||S.del;
+  var del='Ship (UPS/FedEx)';
   var sbs=document.querySelector('#grp-sbs .opt-btn.sel')?.textContent.trim().includes('Yes')?'Yes':'No';
   var bar=document.querySelector('#grp-bar .opt-btn.sel')?.textContent.trim()||'Standard';
   var barWrap=document.querySelector('#grp-bar-wrap .opt-btn.sel')?.textContent.trim().includes('wrap')?'Yes (+$'+getWrapP(S.w)+')':'No';
@@ -597,15 +607,15 @@ function submitQ(){
   var wrapUp=S.cassette==='square'?80:0;
   var bbW=document.querySelector('#grp-bar-wrap .opt-btn.sel');if(bbW&&bbW.textContent.includes('wrap'))wrapUp+=getWrapP(S.w);
   var accUp=(document.getElementById('acc-bat')?.checked?160:0)+(document.getElementById('acc-plug')?.checked?60:0)+(document.getElementById('acc-charger')?.checked?83:0)+(document.getElementById('acc-ext6')?.checked?32:0)+(document.getElementById('acc-ext48')?.checked?43:0)+(document.getElementById('acc-pole')?.checked?80:0);
-  var freight=(S.del==='pickup'||S.del==='install')?0:25+(S.qty>1?(S.qty-1)*11:0);
+  var _bmax=Math.max(S.w||0,S.h||0), _bos=(_bmax>=100?80:_bmax>=90?40:0);
+  var freight=(S.del==='install')?0:25+(S.qty>1?(S.qty-1)*10:0)+_bos*S.qty;
 
   var body=[
     '=== WALLACE ZEBRA / BANDED SHADE QUOTE ===','',
-    'CONTACT','Name: '+name,'Phone: '+phone,'Email: '+(document.getElementById('q-email').value||'—'),'',
+    'CONTACT','Name: '+name,'Phone: '+phone,'Email: '+(document.getElementById('cf-email').value||'—'),'',
     'ORDER DETAILS',
     'Product: '+(S.prod==='dual'?'Wallace Portfolio Dual Sheer Shades':'Wallace Banded 2D Shades'),
     'Quantity: '+S.qty+' shade(s)',
-    'Room: '+(S.room||'—'),
     'Width: '+S.w+'"','Height: '+S.h+'"','Mount: '+mount,''
   ].concat(S.prod==='dual'?[
     'FABRIC',
@@ -629,7 +639,7 @@ function submitQ(){
     'Est. total: ~$'+Math.round((base||0+ctrlUp+wrapUp+accUp)*S.qty+freight),
   ]:['CONTROL',document.querySelector('#grp-ctrl-2d .opt-btn.sel')?.textContent.trim()||'—']).concat([
     '','OPTIONS','Side-by-side matching: '+sbs,'Delivery: '+del,
-    '','NOTES',document.getElementById('q-notes').value||'None','',
+    '','NOTES',document.getElementById('cf-notes').value||'None','',
     '--- Sent from phillyblinds.com/pages/wallace-banded-shades.html ---'
   ]).join('\n');
 
@@ -638,3 +648,4 @@ function submitQ(){
   document.getElementById('step8-body').querySelectorAll(':not(#success-box)').forEach(function(el){el.style.display='none';});
   document.getElementById('success-box').style.display='block';
 }
+

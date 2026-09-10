@@ -202,6 +202,17 @@ function selectProduct(productId, productName, isInstant) {
   currentProduct = productId;
   currentBrand   = null;
 
+  // The shared configurator header carries one badge for whichever product is
+  // open. Only roller and cellular still quote a price through this form (see
+  // PB_QUOTE_ONLY_PAGES in shared.js) — zebra and woven ran on the placeholder
+  // sqft rates that are now switched off, so promising them a price is wrong.
+  const badge = document.getElementById('config-badge');
+  if (badge) {
+    const pricedProduct = (productId === 'roller' || productId === 'cellular');
+    badge.textContent = pricedProduct ? 'Instant price' : 'Custom quote';
+    badge.className   = 'badge ' + (pricedProduct ? 'badge-instant' : 'badge-quote');
+  }
+
   const sec = document.getElementById('configurator-section');
   sec.style.display = 'block';
 
@@ -441,12 +452,12 @@ function cellCheckConflict(source) {
 
   if (isTDBU && isDNFab) {
     if (source === 'tdbu') {
-      // User just selected TDBU while D&N fabric was active → switch fabric to Room Darkening
+      // User just selected TDBU while D&N fabric was active → switch fabric to the blackout option
       var rdBtn = Array.from(document.querySelectorAll('#grp-cell-fabric .opt-btn'))
-        .find(function(b){ return b.textContent.trim() === 'Room Darkening'; });
+        .find(function(b){ return pbIsBlackoutLabel(b.textContent); });
       if (rdBtn) { selOpt(rdBtn, 'grp-cell-fabric'); filterCellSizes('rd'); }
       el.style.cssText = 'display:block;background:#FEF9C3;border:1px solid #FDE68A;border-radius:8px;padding:10px 13px;font-size:12px;color:#92400E;margin-top:8px;line-height:1.5';
-      el.textContent = '⚠ Day & Night is not compatible with Top Down / Bottom Up — fabric auto-switched to Room Darkening. To use Day & Night, select Bottom Up lift.';
+      el.textContent = '⚠ Day & Night is not compatible with Top Down / Bottom Up — fabric auto-switched to Blackout. To use Day & Night, select Bottom Up lift.';
     } else if (source === 'dn_fabric') {
       // User just selected D&N fabric while TDBU was active → switch lift to Bottom Up
       var buBtn = Array.from(document.querySelectorAll('#grp-cellular-lift .opt-btn'))
@@ -483,7 +494,7 @@ function cellularOpChange(type) {
       var noteEl = document.getElementById('cellular-op-note');
       if (noteEl && noteEl.parentElement) noteEl.after(cellMotorWrap);
     }
-    if (typeof normanMotorSection === 'function') normanMotorSection('cell-motor-section', 'Cellular Shade');
+    if (typeof normanMotorSection === 'function') normanMotorSection('cell-motor-section', 'Cellular Shade', typeof updatePrice === 'function' ? updatePrice : null);
     else cellMotorWrap.innerHTML = '<div style="background:var(--espresso-mid);border-radius:8px;padding:12px 14px;margin-top:10px;font-size:12px;color:var(--text-dark)">Norman Smart Motorization: power source (battery/hardwired), remote, and smart home options confirmed at measurement visit.</div>';
   } else {
     if (motorOn) toggleMotor(false);
@@ -681,10 +692,10 @@ function selectCellSz(sizeCode) {
     if (lfBtn) { lfBtn.classList.add('sel'); filterCellSizes('lf'); return; }
   }
   var msgs = {
-    '38s':'3⁄8″S: Light Filtering and Sheer available. Room Darkening not available in 3⁄8″S.',
-    '916s':'9⁄16″S has a limited colour palette — 15 Light Filtering and 16 Room Darkening colors. Sheer not available.',
-    '12d':'1⁄2″D: Light Filtering and Room Darkening available. Sheer not available in double-cell.',
-    '34d':'3⁄4″D: Light Filtering and Room Darkening available. Sheer not available in double-cell.',
+    '38s':'3⁄8″S: Light Filtering and Sheer available. Blackout not available in 3⁄8″S.',
+    '916s':'9⁄16″S has a limited colour palette — 15 Light Filtering and 16 Blackout colors. Sheer not available.',
+    '12d':'1⁄2″D: Light Filtering and Blackout available. Sheer not available in double-cell.',
+    '34d':'3⁄4″D: Light Filtering and Blackout available. Sheer not available in double-cell.',
     '34s':'3⁄4″S: All fabric categories available.',
     '114s':'1 1⁄4″S: All fabric categories available.'
   };
@@ -699,12 +710,12 @@ const CELL_COMPAT = {
   // Source: Norman Portrait Honeycomb catalog Option Reference Chart
   'lf':   [0,1,2,3,4,5],  // Light Filtering — all 6 sizes
   'rd':   [  1,2,3,4,5],  // Room Darkening — 9/16"S (16-color limited palette), 1/2"D, 3/4"S, 3/4"D, 1¼"S. NOT 3/8"S.
-  'sheer':[0],             // Sheer — 3/8"S only as single shade (9/16"S top in D&N only)
+  'sheer':[0,3,5],         // Sheer single shade — 3/8"S, 3/4"S, 1¼"S (9/16"S is D&N-top only; not in double cells)
   'dn':   [0,1,2,3,4,5],  // Day & Night — all 6 cell sizes confirmed by owner 2026-05-16. Top & bottom same cell size.
 };
 const FABRIC_NOTES = {
   'lf':   'Light Filtering: available in all 6 cell sizes.',
-  'rd':   'Room Darkening: available in 9⁄16″S (16-color limited palette), 1⁄2″D, 3⁄4″S, 3⁄4″D, and 1 1⁄4″S. Not available in 3⁄8″S.',
+  'rd':   'Blackout: available in 9⁄16″S (16-color limited palette), 1⁄2″D, 3⁄4″S, 3⁄4″D, and 1 1⁄4″S. Not available in 3⁄8″S.',
   'sheer':'Sheer is available in 3⁄8″S only as a single shade. 9⁄16″S Sheer is available as the top (day) shade in Day &amp; Night mode.',
   'dn':   'Day &amp; Night: two shades in one headrail — all 6 cell sizes available. Top &amp; bottom use the same cell size. 1⁄2″D or 3⁄4″D bottom pairs with nearest single-cell Sheer top.',
 };
@@ -775,6 +786,20 @@ function clampQty() {
 // ─── updatePrice ─────────────────────────────────────────────
 function updatePrice() {
   if (!currentProduct || !(currentProduct in RATES)) return;
+
+  // ── Live pricing scope (see PB_QUOTE_ONLY_PAGES in shared.js) ──────────────
+  // Of the products routed through this shared form, only the Norman Portrait
+  // cellular shade quotes a real price. Roller/zebra/woven were running on the
+  // placeholder $/sqft rates in RATES — numbers that never came from a vendor
+  // book — so they now collect the spec and go out as a quote request instead.
+  // The size warnings below still run for every product; only the money stops.
+  // Re-evaluated on every call so switching products flips the box correctly.
+  const pricedHere = (currentProduct === 'cellular');
+  const priceBoxEl = document.getElementById('price-box');
+  if (priceBoxEl) {
+    if (pricedHere) priceBoxEl.removeAttribute('data-pb-price-hidden');
+    else            priceBoxEl.setAttribute('data-pb-price-hidden', '1');
+  }
 
   const w = parseFloat(document.getElementById('inp-width').value);
   const h = parseFloat(document.getElementById('inp-height').value);
@@ -863,7 +888,8 @@ function updatePrice() {
     const tableBase = res.price;
 
     // Fabric surcharge (+20%)
-    const rdAdd = (fabTxt === 'Room Darkening' || fabTxt === 'Sheer') ? Math.round(tableBase * 0.20) : 0;
+    // Match on meaning, not on the visible wording — the button now reads "Blackout".
+    const rdAdd = (pbIsBlackoutLabel(fabTxt) || fabTxt === 'Sheer') ? Math.round(tableBase * 0.20) : 0;
     cellRow('pb-sur-rd-row', 'pb-sur-rd-label', 'pb-sur-rd',
       fabTxt + ' fabric (+20%)', rdAdd > 0 ? '+$' + rdAdd : null);
 
@@ -873,8 +899,9 @@ function updatePrice() {
       'Cord Loop system', opAdd > 0 ? '+$73' : null);
 
     // Lift direction surcharge (TDBU/D&N +$89)
-    const liftAdd = (liftTxt === 'Top Down / Bottom Up') ? 89 : (liftTxt === 'Day & Night') ? 89 : 0;
-    const liftLabel = liftTxt === 'Top Down / Bottom Up' ? 'Top Down / Bottom Up' : liftTxt === 'Day & Night' ? 'Day & Night' : '';
+    // D&N is now selected via the fabric category (not lift), so key its surcharge off fabTxt.
+    const liftAdd = (liftTxt === 'Top Down / Bottom Up') ? 89 : (fabTxt === 'Day & Night') ? 89 : 0;
+    const liftLabel = liftTxt === 'Top Down / Bottom Up' ? 'Top Down / Bottom Up' : fabTxt === 'Day & Night' ? 'Day & Night' : '';
     cellRow('pb-sur-lift-row', 'pb-sur-lift-label', 'pb-sur-lift',
       liftLabel, liftAdd > 0 ? '+$89' : null);
 
@@ -883,20 +910,23 @@ function updatePrice() {
     cellRow('pb-freight-row', null, 'pb-freight', '', '$' + cellFreight + (w >= 90 ? ' (90″+ oversize)' : ''));
 
     const perShadeAll = tableBase + rdAdd + opAdd + liftAdd;
-    const activeMotorUp = cellMotorUpcharge;
-    const motorCost = motorOn ? activeMotorUp * qty : 0;
-    const NORMAN_DISC_CELL = 0.35;
-    const cellProductSub = (perShadeAll * qty) + motorCost;
+    // Motor charged at full Norman retail (NOT discounted). D&N / TDBU cellular = $642 dual motor.
+    const cellMotorBase = (fabTxt === 'Day & Night' || liftTxt === 'Top Down / Bottom Up') ? 642 : 482;
+    const motorCost = motorOn
+      ? ((typeof nmGetMotorPrice === 'function') ? nmGetMotorPrice('Cellular Shade', qty, cellMotorBase) : cellMotorUpcharge * qty)
+      : 0;
+    const NORMAN_DISC_CELL = 0.25;
+    const cellProductSub = (perShadeAll * qty);                 // shade only — motor not discounted
     const cellDiscountAmt = Math.round(cellProductSub * NORMAN_DISC_CELL);
     const cellYourPrice = cellProductSub - cellDiscountAmt;
-    const total = cellYourPrice + cellFreight;
+    const total = cellYourPrice + motorCost + cellFreight;
 
     document.getElementById('pb-dims').textContent = w + '" W × ' + h + '" H';
     document.getElementById('pb-sqft').textContent = res.name + '  ·  table: ' + res.pricedAt;
     document.getElementById('pb-base').textContent = '$' + tableBase + '/shade retail (Norman Portrait' + String.fromCharCode(0x2122) + ' MSRP)';
     if (motorOn) {
       document.getElementById('pb-motor-row').style.display = 'flex';
-      document.getElementById('pb-motor').textContent = '+$' + activeMotorUp + ' × ' + qty + ' = $' + (activeMotorUp * qty);
+      document.getElementById('pb-motor').textContent = nmMotorLineText(motorCost, qty);
     } else {
       document.getElementById('pb-motor-row').style.display = 'none';
     }
@@ -907,6 +937,11 @@ function updatePrice() {
 
   // Update custom roller standard chain label (75% of inp-height)
   updateChainStdLabel('chain-std-label', 'inp-height');
+
+  // Quote-only from here down — stop before any dollar figure is calculated or
+  // written. The box is already hidden above; returning keeps stale numbers from
+  // sitting in it if the customer switches back from cellular.
+  if (!pricedHere) return;
 
   // ── ALL OTHER PRODUCTS: sqft estimate ────────────────────────
   const sqft = (w / 12) * (h / 12);
@@ -919,7 +954,7 @@ function updatePrice() {
   document.getElementById('pb-sqft').textContent = sqft.toFixed(2) + ' sqft';
   document.getElementById('pb-base').textContent = '$' + rate + '/sqft → $' + basePerShade.toFixed(0) + ' est.';
   if (motorOn) {
-    document.getElementById('pb-motor').textContent = '+$' + activeMotorUp + ' × ' + qty + ' = $' + (activeMotorUp * qty).toFixed(0);
+    document.getElementById('pb-motor').textContent = nmMotorLineText(motorCost, qty);
   }
   document.getElementById('pb-total').textContent = '$' + total.toFixed(0) + ' est.';
 
@@ -970,6 +1005,7 @@ async function submitShadeForm(btn) {
   const chainType = '';   // field removed from current UI
   const chainLen  = '';
   const cellLift    = isCellular ? '\nLift:         ' + getOpt('grp-cellular-lift') : '';
+  const cellFabric  = isCellular ? '\nFabric:       ' + getOpt('grp-cell-fabric')   : '';
   const cellSize    = isCellular ? '\nCell size:    ' + getOpt('grp-cell-size')     : '';
   const cellType    = isCellular ? '\nCell type:    ' + getOpt('grp-cell-type')     : '';
 
@@ -986,7 +1022,7 @@ async function submitShadeForm(btn) {
     'Qty:          ' + (qty || 1) + '\n' +
     'Mount:        ' + getOpt('grp-mount') + '\n' +
     'Operating:    ' + getOpt('grp-op-' + currentProduct) +
-    cellLift + cellSize + cellType +
+    cellLift + cellFabric + cellSize + cellType +
     fascia + endcap + chainType + chainLen + '\n' +
     'Motorization: ' + (motorOn ? 'Yes — ' + motorBrand : 'No') + '\n' +
     (motorOn && currentBrand === 'norman' && typeof nmGetMotorSummary === 'function' ? 'Motor options: ' + nmGetMotorSummary() + '\n' : '') +
@@ -1007,7 +1043,11 @@ async function submitPBForm(btn) {
   const w     = document.getElementById('pb-width').value;   // fixed: was inp-width
   const h     = document.getElementById('pb-height').value;  // fixed: was inp-height
   const gPB   = function(id) { const b = document.querySelector('#' + id + ' .opt-btn.sel'); return b ? b.textContent.trim() : '—'; };
-  const notes = (document.getElementById('pb-fabric-notes') || {}).value || '';
+  // Two note fields on this product: the fabric description mid-form, and the
+  // general notes in the canonical final step. Send both.
+  const fabricNotes = (document.getElementById('pb-fabric-notes') || {}).value || '';
+  const generalNotes = (document.getElementById('pb-notes') || {}).value || '';
+  const notes = [fabricNotes, generalNotes].filter(function (s) { return s.trim(); }).join('\n');
   const body =
     'CUSTOM ROLLER SHADE REQUEST\n' +
     '══════════════════════════════════════════\n' +
@@ -1021,6 +1061,7 @@ async function submitPBForm(btn) {
     'Operation:      ' + gPB('pb-grp-operation') + '\n' +
     'Control side:   ' + gPB('pb-grp-control') + '\n' +
     'Fascia type:    ' + gPB('pb-grp-fascia') + '\n' +
+    (gPB('pb-grp-fascia') === 'Metal fascia' ? 'Fascia color:   ' + gPB('pb-grp-fascia-color') + '\n' : '') +
     'Hardware color: ' + gPB('pb-grp-hw-color') + '\n' +
     'End caps:       ' + gPB('pb-grp-endcap') + '\n' +
     'Fabric type:    ' + gPB('pb-grp-fabric-type') + '\n' +
@@ -1437,10 +1478,10 @@ const SOLUNA_COLLECTIONS = {
       {n:'Powder',c:'F1532'},{n:'Steel',c:'F1533'},{n:'Silver Satin',c:'F1534'},
       {n:'Golden Straw',c:'F1535'},{n:'Coffee Bean',c:'F1536'},{n:'Coal',c:'F1550'}
     ]},
-    {name:'Summerland Linen — Room Darkening (PG3)', colors:[
+    {name:'Summerland Linen — Blackout (PG3)', colors:[
       {n:'Pearl',c:'F1510'},{n:'Maize',c:'F1511'},{n:'Sterling',c:'F1512'}
     ]},
-    {name:'Breeze Linen — Room Darkening (PG3)', colors:[
+    {name:'Breeze Linen — Blackout (PG3)', colors:[
       {n:'Linen Flax',c:'F1768'},{n:'Linen Natural',c:'F1769'},{n:'Linen Khaki',c:'F1770'},
       {n:'Linen Dune',c:'F1771'},{n:'Linen Graphite',c:'F1772'},{n:'Linen Almond Milk',c:'F1773'},
       {n:'Linen Stone',c:'F1779'},{n:'Linen Cloud',c:'F1848'},{n:'Linen Warm Ivory',c:'F1852'}
@@ -1576,12 +1617,12 @@ const CELL_COLLECTIONS = {
     ]}
   ],
   'dn': [
-    {name:'Sheer + Room Darkening', colors:[]},
+    {name:'Sheer + Blackout', colors:[]},
     {name:'Sheer + Light Filtering', colors:[]},
-    {name:'Light Filtering + Room Darkening', colors:[]},
+    {name:'Light Filtering + Blackout', colors:[]},
     {name:'Light Filtering + Light Filtering', colors:[]},
     {name:'Woven Windsong + Light Filtering', colors:[]},
-    {name:'Woven Windsong + Room Darkening', colors:[]}
+    {name:'Woven Windsong + Blackout', colors:[]}
   ]
 };
 
@@ -1597,10 +1638,10 @@ CELL_COLLECTIONS['windsong'] = [
 // ─── Fabric type → human label maps ──────────────────────────
 const RN_FABRIC_LABELS = {
   'sheer':'Sheer','lf':'Light Filtering','natural':'Natural',
-  'rd':'Room Darkening','solar':'Solar Screen','commercial':'Commercial Solar','designer':'Designer'
+  'rd':'Blackout','solar':'Solar Screen','commercial':'Commercial Solar','designer':'Designer'
 };
 const CELL_FABRIC_LABELS = {
-  'lf':'Light Filtering','rd':'Room Darkening','sheer':'Sheer','dn':'Day & Night','windsong':'Woven Windsong'
+  'lf':'Light Filtering','rd':'Blackout','sheer':'Sheer','dn':'Day & Night','windsong':'Woven Windsong'
 };
 
 // ─── Color swatch map ────────────────────────────────────────
@@ -1930,12 +1971,12 @@ function rwbCalc() {
   if (valance.includes('Designer Crown')) valRetail = rwbValanceLookup(w, 'crown');
   else if (valance.includes('Contempo')) valRetail = rwbValanceLookup(w, 'contempo');
   var totalRetail = colorRetail + valRetail;
-  var customerEach = Math.round(totalRetail * 0.65);
+  var customerEach = Math.round(totalRetail * 0.75);
   var totalCustomer = customerEach * qty;
-  var lines = '<div class="price-line"><span>Retail (1 blind)</span><span>$' + totalRetail.toLocaleString() + '</span></div>';
-  if (colorMult > 1) lines += '<div class="price-line"><span>Color surcharge</span><span>' + (colorMult === 1.5 ? '+50%' : '+10%') + ' included</span></div>';
-  if (valRetail > 0) lines += '<div class="price-line"><span>Valance surcharge</span><span>+$' + valRetail + '</span></div>';
-  lines += '<div class="price-line"><span>Your price (35% off)</span><span style="color:var(--gold)">$' + customerEach.toLocaleString() + ' / blind</span></div>';
+  // Detail hidden per owner request — color/valance surcharges roll into retail (no motor/TDBU/D&N on wood blinds).
+  var lines = '<div class="price-line"><span><s>Retail (1 blind)</s></span><span style="text-decoration:line-through">$' + totalRetail.toLocaleString() + '</span></div>';
+  lines += '<div class="price-line"><span>25% Norman discount</span><span style="color:var(--gold)">&minus;$' + (totalRetail - customerEach).toLocaleString() + '</span></div>';
+  lines += '<div class="price-line"><span>Your price</span><span style="color:var(--gold)">$' + customerEach.toLocaleString() + ' / blind</span></div>';
   if (qty > 1) lines += '<div class="price-line"><span>Quantity</span><span>&times; ' + qty + '</span></div>';
   document.getElementById('rwb-price-lines').innerHTML = lines;
   document.getElementById('rwb-price-total').textContent = '$' + totalCustomer.toLocaleString();
@@ -1959,7 +2000,7 @@ async function submitRWBForm(btn) {
   var notes     = document.getElementById('rwb-notes').value.trim();
   var email     = document.getElementById('rwb-email').value.trim();
   var estEl     = document.getElementById('rwb-price-total');
-  var estLine   = (estEl && estEl.textContent !== '—') ? '\nEst. price: ' + estEl.textContent + ' (35% off MSRP — unconfirmed)' : '';
+  var estLine   = (estEl && estEl.textContent !== '—') ? '\nEst. price: ' + estEl.textContent + ' (25% off MSRP — unconfirmed)' : '';
   var body = 'Norman Normandy® Real Wood Blinds Quote Request\n\n'
     + 'Name: ' + name + '\nPhone: ' + phone + '\nEmail: ' + (email||'—') + '\n\n'
     + 'Slat size: ' + slat + '\nColor type: ' + colorType + '\nColor: ' + color
@@ -2009,9 +2050,9 @@ const PB_SOLAR   = {
   144: [434,498,561,609,659,703,777,823,872,940,1010,1061,1111,1206,1309]
 };
 const PB_FASCIA_W  = [24,30,36,42,48,54,60,66,72,78,84,90,96,108,120,132,144];
-const PB_FASCIA_P  = [117,122,133,139,150,161,171,188,204,216,232,249,265,293,326,349,375];
+const PB_FASCIA_P  = [113,118,129,134,145,156,166,182,198,209,225,241,257,284,316,338,364];
 // Cassette / 8" Fabric Valance surcharge (Soluna Feb 2026 MSRP)
-const PB_CASSETTE_P = [188,199,216,227,244,260,282,304,331,354,382,408,431,486,530,552,612];
+const PB_CASSETTE_P = [182,193,209,220,236,252,273,295,321,343,370,396,418,471,514,535,594];
 
 function _pbRoundUp(val, arr) {
   for (var i=0;i<arr.length;i++) if (val<=arr[i]) return arr[i];
@@ -2039,9 +2080,13 @@ function pbCalcPrice() {
 
   var fabBtn  = document.querySelector('#pb-grp-fabric-type .opt-btn.sel');
   var fabType = fabBtn ? fabBtn.textContent.trim() : '';
-  var isSolar   = fabType === 'Solar Screen';
+  // One chart (PB_SOLAR) covers both fabric types: Light Filtering is the base
+  // price, Blackout is the same chart +20%. The button read 'Solar Screen' until
+  // the June rename (ec5ed30) and that old label is still accepted, so a stale
+  // cached page keeps pricing instead of silently going blank.
   var isBlackout = fabType === 'Blackout';
-  var hasPricing = isSolar || isBlackout;
+  var isBase     = fabType === 'Light Filtering' || fabType === 'Solar Screen';
+  var hasPricing = isBase || isBlackout;
 
   // Show valance add-on when width known
   if (vWrap) vWrap.style.display = (hasPricing && w) ? 'block' : 'none';
@@ -2068,8 +2113,13 @@ function pbCalcPrice() {
   }
 
   var shadeTotal = result.price * qty;
-  var isOversized = result.oversized;
-  var freight = isOversized ? (80 + Math.max(0,qty-1)*50) : (25 + Math.max(0,qty-1)*11);
+  // Basic Roller is our own in-house fabrication, not Norman, so it takes our
+  // freight. A roller ships in a tube: the carton is set by WIDTH alone and the
+  // length never affects it. Tiers live in pbRollerFreight() in shared.js —
+  // ≤80″ parcel, 81–100″ $200, 101–150″ $300, 151″+ $500 minimum.
+  var rollerFreight = pbRollerFreight(w, qty);
+  var isOversized = rollerFreight.oversize;
+  var freight = rollerFreight.fee;
 
   // Metal Fascia
   var valTotal = 0;
@@ -2086,31 +2136,40 @@ function pbCalcPrice() {
   var grandTotal = shadeTotal + freight + valTotal;
 
   // Display: shade first, then valance, then freight
-  pRow((isBlackout?'Blackout (+20%)':'Solar Screen')+' ('+w+'→'+result.rw+'" × '+h+'→'+result.rh+'") × '+qty, shadeTotal);
+  pRow((isBlackout?'Blackout (+20%)':fabType)+' ('+w+'→'+result.rw+'" × '+h+'→'+result.rh+'") × '+qty, shadeTotal);
   rows += valRows;
-  pRow((isOversized?'Oversized freight (over 90")':'Standard freight')+' — '+qty+' shade'+(qty>1?'s':''), freight, true);
+  pRow(rollerFreight.label, freight, true);
 
   document.getElementById('pb-price-rows').innerHTML = rows;
   document.getElementById('pb-price-total').textContent = '$'+grandTotal.toFixed(0);
   var note = 'Dimensions rounded up to next standard size. ' +
     (isBlackout ? 'Blackout includes +20% upcharge. ' : '') +
-    (isOversized ? 'Oversized freight: $80 first + $50 each additional. ' : 'Freight: $25 first + $11 each additional. ') +
+    (isOversized
+      ? 'Oversize freight by width: 81–100" $200 · 101–150" $300 · over 150" $500 minimum' +
+        (rollerFreight.tbd ? ', confirmed at order. ' : '. ')
+      : 'Freight: $25 first + $11 each additional. ') +
     'Retail prices — installation quoted separately. Final confirmed at order.';
   document.getElementById('pb-price-note').textContent = note;
   box.style.display='block';
 
-  // Line-by-line estimate panel
-  var gPBs = function(id){ var b=document.querySelector('#'+id+' .pmm-opt.sel'); return b?b.textContent.trim():''; };
+  // Line-by-line estimate panel.
+  // gPB reads the selected option button in a group. It used to be spelled gPBs
+  // here while every line below called gPB — and the only real gPB is a const
+  // scoped inside submitPBForm, so this function threw ReferenceError the moment
+  // it reached selLines. The dark price box rendered, then the estimate panel and
+  // Add to Cart never did. Same selector as submitPBForm's copy (.opt-btn.sel);
+  // the old .pmm-opt.sel selector matched nothing in this form.
+  var gPB = function(id){ var b=document.querySelector('#'+id+' .opt-btn.sel'); return b?b.textContent.trim():''; };
   var selLines = [
     { label:'Product',     value:'Basic Roller Shade' },
     { label:'Fabric type', value: fabType },
     { label:'Size',        value: w+'″ W × '+h+'″ H → '+result.rw+'″ × '+result.rh+'"' },
     { label:'Operation',   value: gPB('pb-grp-operation') || '—' },
-    { label:'Fascia',      value: gPB('pb-grp-fascia') || '—' },
+    { label:'Fascia',      value: (gPB('pb-grp-fascia') || '—') + (gPB('pb-grp-fascia') === 'Metal fascia' && gPB('pb-grp-fascia-color') ? ' (' + gPB('pb-grp-fascia-color') + ')' : '') },
     { label:'End caps',    value: gPB('pb-grp-endcap') || '—' },
     { label:'Mount',       value: gPB('pb-grp-mount') || '—' },
     { label:'Quantity',    value: (parseInt(document.getElementById('pb-qty-inp').value)||1)+' shade(s)' },
-    { label:'Freight',     value: isOversized ? 'Oversized rate ($80 first + $50 ea.)' : 'Standard ($25 first + $11 ea.)' }
+    { label:'Freight',     value: isOversized ? rollerFreight.label + ' — $' + freight : 'Standard ($25 first + $11 ea.)' }
   ];
   pbRenderEstimate('pb-price-box', selLines, grandTotal, '', function(checkout) {
     pbCollectItem('Basic Roller Shade', selLines, grandTotal, gPB('pb-grp-operation')==='Motorized');
@@ -2123,15 +2182,23 @@ function pbCalcPrice() {
   });
 }
 
+// Basic Roller core palette — same five on both light-filtering and blackout,
+// and identical to CRS_BASIC_SOLIDS on the standalone Basic Roller page.
 const PB_FABRICS = {
-  'Light Filtering': ['White','Cream','Off-White','Gray','Linen','Beige'],
-  'Blackout':        ['White','Black','Cream','Off-White','Gray','Charcoal']
+  'Light Filtering': ['White','Off-White','Gray','Black','Brown'],
+  'Blackout':        ['White','Off-White','Gray','Black','Brown']
 };
 function pbToggleFasciaColor(isMetal) {
-  var lbl  = document.getElementById('pb-hw-color-label');
   var note = document.getElementById('pb-hw-color-note');
-  if (lbl)  lbl.textContent  = isMetal ? 'Hardware & metal fascia color' : 'Hardware color';
   if (note) note.style.display = isMetal ? 'block' : 'none';
+  // Metal fascia gets its own color picker (shared Norman metal-fascia palette),
+  // separate from the decorative hardware color for brackets/hem bar/end caps.
+  var wrap = document.getElementById('pb-fascia-color-wrap');
+  var slot = document.getElementById('pb-fascia-color-slot');
+  if (wrap) wrap.style.display = isMetal ? 'block' : 'none';
+  if (isMetal && slot && !slot.hasChildNodes() && typeof pbColorRow === 'function') {
+    slot.innerHTML = pbColorRow('pb-grp-fascia-color', 'metalFascia', 'pbCalcPrice');
+  }
 }
 function pbToggleMotor(show) {
   var el = document.getElementById('pb-motor-system-wrap');
@@ -2174,112 +2241,111 @@ const RN_H_SOLAR   = [36,48,60,72,84,96,108,120,132,144];
 // ─────────────────────────────────────────────────────────────────────
 
 // FABRIC PG1: Brook • Chelsea • Verona LF • Callie • Callie RD • Elements • Scarlett • Catalina
+// FABRIC PG1: Scarlett • Catalina • Brook • Chelsea • Verona LF • Callie • Callie RD • Elements  (book May 2026)
 const RN_PG1_FABRIC = {
-  36:  [278,299,323,341,367,389,412,446,476,529,558,587,617,672,731],
-  48:  [301,328,353,377,406,440,471,518,549,609,647,679,713,780,843],
-  60:  [325,353,384,420,462,497,537,587,628,692,733,772,803,868,927],
-  72:  [349,383,422,467,509,555,600,659,703,770,803,842,873,944,1017],
-  84:  [370,415,465,513,562,611,661,727,765,829,868,907,944,1023,1103],
-  96:  [396,449,503,561,613,670,714,777,820,887,932,973,1017,1103,1189],
-  108: [423,486,543,605,667,717,763,829,873,945,994,1042,1091,1181,1276],
-  120: [454,520,591,650,708,759,809,878,932,1005,1055,1107,1157,1261,1359],
-  132: [485,558,627,697,748,801,854,932,985,1066,1122,1173,1230,1341,1449],
-  144: [513,593,668,730,785,842,898,983,1042,1123,1183,1243,1299,1417,1537]
+  36:  [246,265,282,302,323,340,360,389,416,460,485,510,534,583,633],
+  48:  [266,289,308,334,357,385,409,450,480,531,559,590,620,676,728],
+  60:  [287,308,335,366,401,434,467,510,549,601,635,669,696,751,801],
+  72:  [303,334,370,407,443,482,522,573,609,668,696,727,756,816,876],
+  84:  [326,364,405,448,488,530,574,629,663,715,751,782,816,882,953],
+  96:  [346,394,439,486,533,580,620,675,708,767,803,840,876,953,1024],
+  108: [371,424,473,528,576,621,657,715,756,817,859,896,939,1017,1097],
+  120: [397,455,510,565,617,656,698,759,803,868,913,958,1000,1088,1171],
+  132: [422,485,543,604,650,693,739,803,847,917,966,1011,1060,1153,1248],
+  144: [448,514,578,630,680,728,778,845,896,967,1019,1070,1121,1218,1322]
 };
 
-// FABRIC PG2: Samoa • Phuket • Bora Bora • Sumatra • Java • Bali • Riviera • Lake Tahoe
-//             Francis • Hayes • Valerie • Emery • Sierra • Shimmer • Amelia • Lola LF • Remy
-//             Jamaica • Bermuda • Fiji • Francis RD • Amelia RD • Sheer (F0908) • Dazzle • Lakeshore
+// FABRIC PG2: Samoa • Phuket • Bora Bora • Sumatra • Java • Bali • Riviera • Lake Tahoe • Francis • Hayes • Valerie •
+//             Emery • Sierra • Shimmer • Amelia • Lola LF • Remy • Jamaica • Bermuda • Fiji • Francis RD • Amelia RD • Sheer • Dazzle • Lakeshore  (book May 2026)
 const RN_PG2_FABRIC = {
-  36:  [254,273,291,312,333,351,371,401,429,474,500,526,551,601,652],
-  48:  [274,298,318,345,368,397,422,464,495,547,576,608,639,697,750],
-  60:  [296,318,346,377,414,448,482,526,566,620,655,690,717,774,826],
-  72:  [313,345,382,420,457,497,538,591,628,689,717,749,779,841,903],
-  84:  [336,375,418,462,503,546,592,648,683,737,774,806,841,909,982],
-  96:  [357,406,453,501,549,598,639,696,730,791,828,866,903,982,1055],
-  108: [383,437,488,544,594,640,677,737,779,842,885,923,968,1048,1130],
-  120: [409,469,526,582,636,676,719,782,828,895,941,987,1030,1121,1207],
-  132: [435,500,560,623,670,714,762,828,873,945,995,1042,1092,1188,1286],
-  144: [462,530,596,649,701,750,802,871,923,997,1050,1103,1155,1255,1362]
+  36:  [269,290,313,331,356,377,400,433,462,513,541,569,599,652,709],
+  48:  [292,318,342,366,394,427,457,502,533,591,628,659,692,757,818],
+  60:  [315,342,372,407,448,482,521,569,609,671,711,749,779,842,900],
+  72:  [338,371,409,453,494,538,582,639,682,747,779,817,847,916,987],
+  84:  [359,402,451,498,545,593,641,705,742,804,842,880,916,993,1070],
+  96:  [384,435,488,544,595,650,693,754,796,861,904,944,987,1070,1154],
+  108: [410,471,527,587,647,696,740,804,847,917,965,1011,1059,1146,1238],
+  120: [440,504,573,631,687,736,785,852,904,975,1024,1074,1123,1224,1319],
+  132: [470,541,608,676,726,777,829,904,956,1034,1089,1138,1194,1301,1406],
+  144: [498,575,648,708,762,817,871,954,1011,1090,1148,1206,1261,1375,1492]
 };
 
-// FABRIC PG3: Caroline • Aruba • Maui Natural • Cove • Breeze • Clarissa
-//             Lola BO • Garden • Breeze RD • Remy RD • Summerland • Cory
+// FABRIC PG3: Caroline • Aruba • Maui • Cove • Breeze • Clarissa • Lola BO • Garden • Breeze RD • Remy RD • Summerland • Cory  (book May 2026, split chart)
 const RN_PG3_FABRIC = {
-  36:  [337,371,402,435,468,500,534,569,608,671,711,749,792,865,942],
-  48:  [371,409,448,487,529,574,620,668,713,787,834,879,924,1021,1103],
-  60:  [403,448,495,546,601,651,707,763,820,898,955,1011,1053,1148,1239],
-  72:  [437,488,547,609,674,738,798,863,922,1010,1058,1112,1160,1267,1372],
-  84:  [470,537,605,677,747,814,889,956,1014,1098,1155,1215,1268,1388,1504],
-  96:  [508,582,664,742,820,898,969,1035,1095,1189,1251,1316,1380,1505,1637],
-  108: [546,634,723,809,895,969,1041,1106,1179,1278,1349,1420,1488,1628,1770],
-  120: [590,682,778,870,959,1035,1112,1187,1263,1365,1446,1521,1596,1750,1904],
-  132: [629,733,835,933,1015,1098,1179,1263,1348,1457,1539,1621,1704,1873,2040],
-  144: [669,779,892,988,1075,1160,1252,1342,1431,1549,1633,1725,1812,1995,2172]
+  36:  [298,327,354,384,411,440,470,501,535,591,626,660,698,763,831],
+  48:  [327,361,395,430,467,506,546,587,629,694,733,776,816,900,972],
+  60:  [355,395,435,482,529,576,624,672,723,793,842,891,929,1013,1093],
+  72:  [386,431,483,537,595,651,703,759,814,890,935,981,1023,1119,1210],
+  84:  [415,472,533,599,657,718,785,843,893,969,1018,1070,1120,1224,1326],
+  96:  [448,514,584,654,723,793,853,912,966,1049,1103,1160,1217,1327,1445],
+  108: [482,558,636,712,789,853,916,975,1039,1126,1190,1251,1312,1436,1561],
+  120: [518,603,686,768,845,912,981,1047,1114,1205,1275,1341,1408,1545,1680],
+  132: [555,647,736,821,894,969,1039,1114,1189,1286,1357,1430,1503,1654,1798],
+  144: [589,687,787,870,947,1023,1104,1183,1263,1366,1441,1523,1599,1759,1916]
 };
 
-// FABRIC PG4: Kendra (LF Foliage — single color)
+// FABRIC PG4: Kendra  (book May 2026)
 const RN_PG4_FABRIC = {
-  36:  [307,337,365,396,424,454,485,517,552,609,645,680,719,786,856],
-  48:  [337,372,407,443,482,522,563,605,648,715,755,800,841,927,1002],
-  60:  [366,407,449,497,545,594,643,693,745,817,868,918,957,1044,1126],
-  72:  [398,444,498,554,613,671,725,782,839,917,964,1011,1054,1153,1247],
-  84:  [428,487,549,617,677,740,809,869,920,999,1049,1103,1154,1261,1366],
-  96:  [462,530,602,674,745,817,879,940,995,1081,1137,1195,1254,1367,1489],
-  108: [497,575,656,734,813,879,944,1005,1071,1160,1226,1289,1352,1480,1608],
-  120: [534,622,707,792,871,940,1011,1079,1148,1242,1314,1382,1451,1592,1731],
-  132: [572,667,759,846,921,999,1071,1148,1225,1325,1398,1473,1549,1704,1852],
-  144: [607,708,811,897,976,1054,1138,1219,1301,1407,1485,1569,1647,1812,1974]
+  36:  [327,360,390,422,454,485,518,552,590,651,690,727,768,839,914],
+  48:  [360,397,434,472,513,557,601,648,692,764,809,853,897,991,1070],
+  60:  [391,434,480,530,583,632,686,740,796,871,927,981,1022,1114,1202],
+  72:  [424,473,531,591,654,716,774,837,895,980,1027,1079,1126,1230,1332],
+  84:  [456,521,587,657,725,790,863,928,984,1066,1121,1179,1231,1347,1460],
+  96:  [493,565,644,720,796,871,940,1004,1063,1154,1214,1277,1339,1461,1589],
+  108: [530,615,701,785,868,940,1010,1073,1144,1240,1309,1378,1444,1580,1718],
+  120: [572,662,755,844,931,1004,1079,1152,1226,1325,1403,1476,1549,1699,1848],
+  132: [610,711,810,905,985,1066,1144,1226,1308,1414,1494,1573,1654,1818,1980],
+  144: [649,756,866,959,1043,1126,1215,1302,1389,1503,1585,1674,1759,1936,2108]
 };
 
-// SOLAR PG1: Serene 7% • Flow 7% • Windsong 5% • NA400 3/5/10% • NA300 3/5%
+// SOLAR PG1: Serene 7% • Flow 7% • Windsong 5% • NA400 3/5/10% • NA300 3/5%  (book May 2026)
 const RN_PG1_SOLAR = {
-  36:  [240,258,278,296,314,331,362,382,406,450,474,507,533,577,628],
-  48:  [259,282,302,325,350,372,412,439,468,519,545,587,614,671,723],
-  60:  [281,302,326,357,390,421,467,497,535,586,618,666,692,745,795],
-  72:  [297,325,359,397,430,468,522,558,595,650,677,721,749,809,870],
-  84:  [318,354,394,434,474,513,573,614,645,697,745,776,809,874,941],
-  96:  [336,383,428,471,518,563,618,656,690,745,797,831,870,941,1015],
-  108: [361,411,461,511,558,600,659,697,737,795,850,890,932,1007,1088],
-  120: [387,440,495,546,597,635,697,739,780,844,903,949,990,1078,1160],
-  132: [408,470,526,582,627,670,737,780,826,894,956,1002,1049,1141,1235],
-  144: [434,498,561,609,659,703,777,823,872,940,1010,1061,1111,1206,1309]
+  36:  [233,250,269,287,304,321,351,370,394,436,460,492,517,560,609],
+  48:  [251,273,293,315,339,361,400,426,454,503,529,569,596,651,701],
+  60:  [272,293,316,346,378,408,453,482,519,568,600,646,671,723,771],
+  72:  [288,315,348,385,417,454,506,541,577,631,657,700,727,785,844],
+  84:  [308,343,382,421,460,498,556,596,626,676,723,753,785,848,913],
+  96:  [326,371,415,457,502,546,600,636,669,723,773,806,844,913,985],
+  108: [350,399,447,496,541,582,639,676,715,771,825,864,904,977,1056],
+  120: [375,427,480,530,579,616,676,717,757,819,876,921,961,1046,1126],
+  132: [396,456,510,565,608,650,715,757,801,867,928,972,1018,1107,1199],
+  144: [421,483,544,591,639,682,754,799,846,912,980,1030,1078,1170,1270]
 };
 
-// SOLAR PG2: Serene 1/3% • Flow 1/5% • Windsong 1% • Moon 5%
-//            Breeze Screen 1/3% • NA300 1% • NA400 1% • NA820 3%
+// SOLAR PG2: Serene 1/3% • Flow 1/5% • Windsong 1% • W120 12% • Moon 5% • Breeze Screen 1/3% • NA300 1% • NA400 1% • NA820 3%  (book May 2026)
 const RN_PG2_SOLAR = {
-  36:  [261,283,306,325,346,367,406,428,454,503,530,571,600,652,711],
-  48:  [284,309,334,357,384,416,462,495,526,581,617,660,692,761,818],
-  60:  [307,334,361,396,434,468,525,561,600,658,699,748,779,842,898],
-  72:  [328,359,398,439,477,522,587,627,671,733,766,817,846,918,986],
-  84:  [351,390,437,483,527,574,645,693,728,791,842,877,918,992,1069],
-  96:  [372,422,474,526,575,628,699,740,778,843,902,945,986,1069,1153],
-  108: [399,456,510,571,624,672,745,791,831,902,966,1010,1055,1145,1235],
-  120: [428,490,551,611,667,711,791,837,887,957,1023,1073,1123,1220,1317],
-  132: [454,523,591,650,701,749,835,887,936,1014,1086,1139,1190,1297,1400],
-  144: [483,554,626,684,737,789,877,935,990,1067,1146,1204,1258,1373,1488]
+  36:  [253,274,297,315,335,356,394,415,440,488,514,554,582,633,690],
+  48:  [275,300,324,346,372,403,448,480,510,564,599,640,671,738,794],
+  60:  [298,324,350,384,421,454,509,544,582,638,678,726,756,817,871],
+  72:  [318,348,386,426,463,506,569,608,651,711,743,793,821,891,957],
+  84:  [340,378,424,468,511,557,626,672,706,767,817,851,891,963,1037],
+  96:  [361,409,460,510,558,609,678,718,755,818,875,917,957,1037,1119],
+  108: [387,442,495,554,605,652,723,767,806,875,937,980,1024,1111,1199],
+  120: [415,475,534,593,647,690,767,812,861,929,993,1041,1090,1184,1278],
+  132: [440,507,573,631,680,727,810,861,908,984,1054,1105,1155,1259,1359],
+  144: [468,537,607,664,715,766,851,907,961,1035,1112,1168,1221,1333,1444]
 };
 
-// SOLAR PG3: Lakeview 3/7/10% • Meadows 1/3% • Jubilee 3% • Galaxy 3%
+// SOLAR PG3: Lakeview 3/7/10% • Meadows 1/3% • Jubilee 3% • Galaxy 3%  (book May 2026)
 const RN_PG3_SOLAR = {
-  36:  [290,322,346,374,404,430,460,488,522,575,608,655,690,754,822],
-  48:  [322,354,385,419,454,495,533,573,611,673,713,768,805,891,963],
-  60:  [349,385,423,469,515,561,605,651,701,770,815,879,918,1000,1079],
-  72:  [376,420,470,525,577,633,683,738,791,863,905,969,1013,1105,1194],
-  84:  [406,462,519,579,641,699,762,818,868,940,1006,1057,1106,1206,1312],
-  96:  [436,501,570,636,701,770,829,885,938,1017,1090,1146,1200,1313,1426],
-  108: [469,544,620,693,766,829,890,945,1010,1091,1173,1236,1294,1417,1541],
-  120: [503,587,668,745,821,885,950,1015,1080,1169,1256,1325,1389,1523,1657],
-  132: [541,627,714,799,869,940,1010,1080,1152,1246,1341,1413,1482,1628,1772],
-  144: [574,669,764,844,920,992,1070,1146,1222,1320,1422,1499,1576,1732,1888]
+  36:  [281,312,335,363,392,417,446,473,506,558,590,635,669,732,798],
+  48:  [312,343,373,406,440,480,517,556,593,653,692,745,781,865,934],
+  60:  [338,373,410,455,500,544,587,632,680,747,791,853,891,970,1047],
+  72:  [365,407,456,509,560,614,663,716,767,837,878,940,983,1072,1159],
+  84:  [394,448,503,562,622,678,739,794,842,912,976,1026,1073,1170,1273],
+  96:  [423,486,553,617,680,747,804,859,910,987,1058,1112,1165,1274,1384],
+  108: [455,528,601,672,743,804,864,917,980,1059,1138,1200,1256,1375,1496],
+  120: [488,569,648,723,797,859,922,985,1048,1134,1219,1286,1348,1478,1608],
+  132: [525,608,693,775,843,912,980,1048,1118,1209,1301,1371,1438,1580,1720],
+  144: [557,649,741,819,893,963,1038,1112,1186,1281,1380,1455,1530,1681,1833]
 };
-// Metal Fascia / Fascia surcharges by width (17 cols: 24–144")
+
+// Fascia & Valance surcharges by width (17 cols: 24–144"). Norman book May 2026 p.18.
 const RN_VALANCE_W = [24,30,36,42,48,54,60,66,72,78,84,90,96,108,120,132,144];
-const RN_SURCHARGE_FASCIA_WOOD  = [117,122,133,139,150,161,171,188,204,216,232,249,265,293,326,349,375];
-const RN_SURCHARGE_FABRIC_SMALL = [133,139,155,161,171,183,199,216,232,249,271,288,304,342,375,403,431];
-const RN_SURCHARGE_FABRIC_8     = [188,199,216,227,244,260,282,304,331,354,382,408,431,486,530,552,612];
-const RN_SURCHARGE_RACEWAY      = [56,61,67,73,78,84,94,100,111,117,122,133,150,161,null,null];
+const RN_SURCHARGE_FASCIA_WOOD  = [113,118,129,134,145,156,166,182,198,209,225,241,257,284,316,338,364];
+const RN_SURCHARGE_FABRIC_SMALL = [129,134,150,156,166,177,193,209,225,241,263,279,295,332,364,391,418];
+const RN_SURCHARGE_FABRIC_8     = [182,193,209,220,236,252,273,295,321,343,370,396,418,471,514,535,594];
+const RN_SURCHARGE_RACEWAY      = [54,59,65,70,70,75,81,91,97,107,113,118,129,145,156,null,null];
 
 // Map: collection name → price group (verified against Feb 2026 PDF catalog)
 function rnGetPriceGroup() {
@@ -2335,24 +2401,24 @@ function rnLookupPrice(w, h, overrideFabType) {
   return { price: price || null, pricedAt: pW + '″ W × ' + pH + '″ H', group: pg };
 }
 
-var rnMotorUpcharge = 482; // Norman Smart default; updated by rnSetMotorType()
-function rnSetMotorType(price){ rnMotorUpcharge = price; rnUpdatePrice(); }
+var rnMotorUpcharge = 482; // Norman Smart base surcharge ($482/shade). Brand pick now lives in the shared normanMotorSection; Rollease Acmeda is custom priced, so the estimate stays at the $482 base (no double charge).
+function rnSetMotorType(price){ rnMotorUpcharge = price; rnUpdatePrice(); } // retained for pricing wiring; no longer bound to UI buttons
 const RN_MIN       = 85;   // minimum per shade
 
 const RN_SYSTEM_NOTES = {
   standard:  'Standard: single shade per bracket set — most straightforward.',
-  dual:      'Dual shade: Blackout (Room Darkening) back shade + your choice of Light Filtering, Sheer, or Solar Screen front shade — two rolls in one headrail. Priced as two individual shades. Extra mounting depth required.',
+  dual:      'Dual shade: Blackout back shade + your choice of Light Filtering, Sheer, or Solar Screen front shade — two rolls in one headrail. Priced as two individual shades. Extra mounting depth required.',
   coupled2:  'Coupled 2: two panels linked, operated together. Must use same lift system. Center gap applies.',
   coupled3:  'Coupled 3: three panels linked. Two coupled surcharges apply.',
   coupled4:  'Coupled 4: four panels linked. Three coupled surcharges apply.',
   sidebyside:'Side-by-Side: independent shades installed adjacent. Separate operation. Gap rules apply.',
-  dn:        'Day & Night: two fabrics in one headrail — sheer or light filtering on the day roll, Room Darkening on the night roll. Choose which roll faces the glass vs. the room.'
+  dn:        'Day & Night: two fabrics in one headrail — sheer or light filtering on the day roll, Blackout on the night roll. Choose which roll faces the glass vs. the room.'
 };
 const RN_FABRIC_NOTES = {
   sheer:      'Sheer: minimal privacy, maximum view-through. Works with all standard systems.',
   lf:         'Light Filtering: diffused light, medium privacy. Works with all systems.',
   natural:    '⚠ Natural fabrics (bamboo, jute, paper blends) may show variation, bowing, fraying, color shift over time — these are normal material characteristics and not defects.',
-  rd:         'Room Darkening: high privacy, coated backing. ⚠ Alone it still allows edge light gaps — add LightGuard 360™ in Step 7 for true blackout.',
+  rd:         'Blackout: high privacy, coated backing. ⚠ Alone it still allows edge light gaps — add Full Blackout Side Channels in Step 7 for the darkest result.',
   designer:   '⚠ Linen weaves: natural variation in texture, color, and drape is normal. LF designer fabrics at PG3–PG4 pricing; RD linen varieties also available. Breeze Screen (solar linen) is in the Solar Screen category.',
   solar:      'Solar Screen: UV and glare control. Openness factor = % of light allowed through. ⚠ ±10% tolerance is industry standard — not a defect.',
   commercial: 'Commercial Solar (NA series): PVC/polyester construction rated for high UV environments. Same openness rules as residential solar.'
@@ -2524,9 +2590,21 @@ function rnSetLift(type) {
   const motorWrap = document.getElementById('rn-motor-wrap');
   if (motorWrap) {
     motorWrap.style.display = type === 'motor' ? 'block' : 'none';
+    var rnMotorCfg = document.getElementById('rn-motor-config');
     if (type === 'motor') {
+      // Base surcharge stays Norman Smart $482/shade. The shared section lets the
+      // customer pick Norman Smart vs Rollease Acmeda (Rollease is custom priced),
+      // so it does NOT change the estimate — no double charge.
       rnMotorUpcharge = 482;
-      document.querySelectorAll('#grp-rn-motor-type .opt-btn').forEach(function(b,i){b.classList.toggle('sel',i===0);});
+      // Render the shared Norman motor UI (same as cellular + standalone pages).
+      if (typeof normanMotorSection === 'function') {
+        normanMotorSection('rn-motor-config', 'Roller Shade', typeof rnUpdatePrice === 'function' ? rnUpdatePrice : null);
+      } else if (rnMotorCfg) {
+        rnMotorCfg.innerHTML = '<div style="background:var(--espresso-mid);border-radius:8px;padding:12px 14px;margin-top:10px;font-size:12px;color:var(--text-dark)">Norman Smart Motorization: power source (battery/hardwired), remote, and smart home options confirmed at measurement visit.</div>';
+      }
+    } else if (rnMotorCfg) {
+      // Clear the shared section when a non-motor lift is chosen.
+      rnMotorCfg.innerHTML = '';
     }
   }
 
@@ -2547,7 +2625,7 @@ function rnSetLift(type) {
   const liftNotes = {
     cordless: 'PrecisionLift™ Cordless: child & pet safe, no exposed chain. Max width varies by fabric weight — not recommended for oversized or very heavy shades.',
     cord:     'Continuous Cord Loop: handles large widths & heavy fabrics. Child-safe tensioner required. Choose chain or cord control below.',
-    smart:    'AutoLift™: Norman spring-tension pull system. Pull down to lower, release to raise. SmartRelease™ controlled-descent upgrade available (+$89). Best for smaller windows.',
+    smart:    'AutoLift™: Norman spring-tension pull system. Pull down to lower, release to raise. SmartRelease™ controlled-descent upgrade available (+$86). Best for smaller windows.',
     motor:    'Motorized: required for large shades, hard-to-reach windows, dual & coupled systems. Battery or hardwired options available.'
   };
   const note = document.getElementById('rn-lift-note');
@@ -2813,9 +2891,9 @@ function rnSetHeadrail(type) {
   document.getElementById('rn-cassette-opts').style.display = type === 'cassette' ? 'block' : 'none';
   // Note
   const notes = {
-    open:     'Open Roll: exposed tube, most compact profile. Brackets are visible. Not compatible with LightGuard 360™.',
+    open:     'Open Roll: exposed tube, most compact profile. Brackets are visible. Not compatible with Full Blackout Side Channels.',
     fascia:   'Fascia System: covers the tube with a decorative front panel. Choose shape and material below.',
-    cassette: 'Cassette System: fully enclosed headrail. Required for LightGuard 360™ and most Room Darkening/blackout setups.'
+    cassette: 'Cassette System: fully enclosed headrail. Required for Full Blackout Side Channels and most blackout setups.'
   };
   const n = document.getElementById('rn-headrail-note');
   if (n) n.textContent = notes[type] || '';
@@ -2885,10 +2963,11 @@ function rnRunValidation() {
   if (rnLiftType === 'cordless' && w && w > 72) {
     warnings.push('Cordless lift may not support widths over ~72″ depending on fabric weight. Consider Continuous Cord Loop or Motorized.');
   }
+  // Norman's collection names still read "Room Darkening"; ours read "Blackout".
   var isRdFabric = rnFabricType === 'rd' ||
-    (rnFabricType === 'designer' && (currentRollerColl || '').toLowerCase().includes('room darkening'));
-  if (lgType === 'LightGuard 360™' && !isRdFabric) {
-    errors.push('LightGuard 360™ requires Room Darkening fabric to be effective. Select Room Darkening (or a Designer Room Darkening collection) in Step 2.');
+    (rnFabricType === 'designer' && pbIsBlackoutLabel(currentRollerColl || ''));
+  if (pbIsFullBlackoutLabel(lgType) && !isRdFabric) {
+    errors.push('Full Blackout Side Channels require a Blackout fabric to be effective. Select Blackout (or a Designer Blackout collection) in Step 2.');
   }
   if (rnSystemType === 'dual' || rnSystemType === 'dn') {
     warnings.push('Dual / Day & Night shades require extra mounting depth — confirm depth at order. Price calculated as two individual shades.');
@@ -2912,7 +2991,7 @@ function rnRunValidation() {
     warnings.push('Natural fabrics may show variation, bowing, fraying, shrinkage, stretching, or color change over time. These are normal material characteristics — not defects.');
   }
   if (rnFabricType === 'rd') {
-    warnings.push('Room Darkening fabrics may show temporary creases or dents near the roller tube, especially after shipping or when left partially raised. Leave fully lowered to resolve.');
+    warnings.push('Blackout fabrics may show temporary creases or dents near the roller tube, especially after shipping or when left partially raised. Leave fully lowered to resolve.');
   }
   if (rnFabricType === 'solar' || rnFabricType === 'commercial') {
     warnings.push('Solar openness tolerance is approximately ±10%. Actual visibility and glare control will vary by lighting conditions.');
@@ -2975,7 +3054,7 @@ function rnUpdatePrice() {
 
   document.getElementById('rn-pb-fabric').textContent = {
     sheer:'Sheer', lf:'Light Filtering', natural:'Natural',
-    rd:'Room Darkening', solar:'Solar Screen', commercial:'Commercial Solar', designer:'Designer'
+    rd:'Blackout', solar:'Solar Screen', commercial:'Commercial Solar', designer:'Designer'
   }[rnFabricType] || rnFabricType;
   document.getElementById('rn-pb-qty').textContent = qty;
 
@@ -2984,7 +3063,7 @@ function rnUpdatePrice() {
     document.getElementById('rn-pb-sqft').textContent = '—';
     document.getElementById('rn-pb-base').textContent = '—';
     document.getElementById('rn-pb-total').textContent = '—';
-    if (isMotor) { document.getElementById('rn-pb-motor-row').style.display = 'flex'; document.getElementById('rn-pb-motor').textContent = '+$' + rnMotorUpcharge + '/shade'; }
+    if (isMotor) { document.getElementById('rn-pb-motor-row').style.display = 'flex'; document.getElementById('rn-pb-motor').textContent = '—'; }
     else { document.getElementById('rn-pb-motor-row').style.display = 'none'; }
     return;
   }
@@ -2996,9 +3075,15 @@ function rnUpdatePrice() {
   const basePrice = lookup ? lookup.price : null;
   var perShade    = basePrice ? Math.max(RN_MIN, basePrice) : null;
   // Dual shade = 2 individual shades priced per Norman spec (front + back both same W×H)
-  if (isDualSystem && perShade) perShade = perShade * 2;
-  // Motorized dual shade needs 2 motors (one per roll)
-  const motorCost = isMotor ? rnMotorUpcharge * qty * (isDualSystem ? 2 : 1) : 0;
+  // Dual = 2 rolls in one headrail; coupled = N linked panels. Book: price coupled as N individual
+  // shades (base x N), then add the coupled surcharge x (N-1) via sysSur below.
+  var rnUnitMult = isDualSystem ? 2 : (rnSystemType === 'coupled2' ? 2 : rnSystemType === 'coupled3' ? 3 : rnSystemType === 'coupled4' ? 4 : 1);
+  if (perShade) perShade = perShade * rnUnitMult;
+  // Motor charged at full Norman retail (NOT discounted) via shared nmGetMotorPrice.
+  // Motorized dual shade needs 2 motors (one per roll).
+  const motorCost = isMotor
+    ? ((typeof nmGetMotorPrice === 'function') ? nmGetMotorPrice('Roller Shade', qty * (isDualSystem ? 2 : 1)) : rnMotorUpcharge * qty * (isDualSystem ? 2 : 1))
+    : 0;
 
   // ── Headrail / fascia surcharge ──────────────────────────────
   var hrBtn2     = document.querySelector('#rn-grp-headrail .opt-btn.sel');
@@ -3036,10 +3121,10 @@ function rnUpdatePrice() {
   var sysRow    = document.getElementById('rn-pb-system-row');
   var sysSurEl  = document.getElementById('rn-pb-system');
   var sysLblEl  = document.getElementById('rn-pb-system-label');
-  if (sysText.includes('Dual'))      { sysSur = 73;  }
-  else if (sysText.includes('2 Sh')) { sysSur = 117; }
-  else if (sysText.includes('3 Sh')) { sysSur = 234; }
-  else if (sysText.includes('4 Sh')) { sysSur = 351; }
+  if (sysText.includes('Dual'))      { sysSur = 70;  }
+  else if (sysText.includes('2 Sh')) { sysSur = 113; }
+  else if (sysText.includes('3 Sh')) { sysSur = 226; }
+  else if (sysText.includes('4 Sh')) { sysSur = 339; }
   if (sysSur > 0 && sysRow) {
     sysRow.style.display = 'flex';
     if (sysLblEl) sysLblEl.textContent = sysText;
@@ -3049,21 +3134,22 @@ function rnUpdatePrice() {
   // ── Lift system surcharge (SmartRelease only) ──────────────
   var liftBtn2  = document.querySelector('#rn-grp-lift .opt-btn.sel');
   var liftText2 = liftBtn2 ? liftBtn2.textContent.trim() : '';
-  var liftSur   = liftText2.includes('AutoLift') ? 89 : 0;
+  var liftSur   = liftText2.includes('AutoLift') ? 86 : 0;
   var liftRow   = document.getElementById('rn-pb-liftsur-row');
   var liftSurEl = document.getElementById('rn-pb-liftsur');
   var liftLblEl = document.getElementById('rn-pb-liftsur-label');
   if (liftSur > 0 && liftRow) {
     liftRow.style.display = 'flex';
     if (liftLblEl) liftLblEl.textContent = 'AutoLift™';
-    if (liftSurEl) liftSurEl.textContent = '+$89';
+    if (liftSurEl) liftSurEl.textContent = '+$86';
   } else if (liftRow) { liftRow.style.display = 'none'; }
 
   // ── Light guard surcharge ─────────────────────────────────
   var lgSelBtn  = document.querySelector('#rn-grp-lg .opt-btn.sel');
   var lgText    = lgSelBtn ? lgSelBtn.textContent.trim() : 'None';
-  var lgSur     = lgText.includes('360') ? 375 : lgText.includes('LightGap') ? 45 : 0;
-  var lgLabel   = lgText.includes('360') ? 'LightGuard 360™' : lgText.includes('LightGap') ? 'Basic light guard' : '';
+  // Match on meaning — the button now reads "Full Blackout Side Channels".
+  var lgSur     = pbIsFullBlackoutLabel(lgText) ? 364 : lgText.includes('LightGap') ? 43 : 0;
+  var lgLabel   = pbIsFullBlackoutLabel(lgText) ? PB_LIGHTGUARD_LABEL : lgText.includes('LightGap') ? 'Basic light guard' : '';
   var lgRow     = document.getElementById('rn-pb-lg-row');
   var lgEl      = document.getElementById('rn-pb-lg');
   var lgLblEl   = document.getElementById('rn-pb-lg-label');
@@ -3076,12 +3162,12 @@ function rnUpdatePrice() {
   // ── Hold-down (door application) ──────────────────────────
   var mountBtn  = document.querySelector('#rn-grp-mount .opt-btn.sel');
   var isDoor    = mountBtn && mountBtn.textContent.includes('Door');
-  var hdSur     = isDoor ? (28 * qty) : 0;
+  var hdSur     = isDoor ? (27 * qty) : 0;
   var hdRow     = document.getElementById('rn-pb-holddown-row');
   var hdEl      = document.getElementById('rn-pb-holddown');
   if (isDoor && hdRow) {
     hdRow.style.display = 'flex';
-    if (hdEl) hdEl.textContent = '+$28 × ' + qty + ' = $' + hdSur;
+    if (hdEl) hdEl.textContent = '+$27 × ' + qty + ' = $' + hdSur;
   } else if (hdRow) { hdRow.style.display = 'none'; }
 
   // ── Freight estimate ───────────────────────────────────────
@@ -3095,12 +3181,12 @@ function rnUpdatePrice() {
   }
 
 
-  // ── Grand total with 35% Norman discount on product subtotal only ──
-  const NORMAN_DISC_RN = 0.35;
-  const productSubtotalRN = perShade ? (perShade * qty) + motorCost + hrSurcharge + sysSur + liftSur + lgSur + hdSur : null;
+  // ── Grand total with 25% Norman discount on product subtotal only ──
+  const NORMAN_DISC_RN = 0.25;
+  const productSubtotalRN = perShade ? (perShade * qty) + hrSurcharge + sysSur + liftSur + lgSur + hdSur : null;
   const discountAmtRN = productSubtotalRN ? Math.round(productSubtotalRN * NORMAN_DISC_RN) : 0;
   const yourPriceRN = productSubtotalRN ? productSubtotalRN - discountAmtRN : null;
-  const total = yourPriceRN !== null ? yourPriceRN + freightAmt : null;
+  const total = yourPriceRN !== null ? yourPriceRN + motorCost + freightAmt : null;
 
   // Update standard chain label (75% of height)
   updateChainStdLabel('rn-clen-std-label', 'rn-height');
@@ -3116,7 +3202,7 @@ function rnUpdatePrice() {
     var rnDivider2 = document.querySelector('#rn-price-box .price-divider');
     if (rnDivider2) {
       var dr2 = document.createElement('div'); dr2.className='price-line'; dr2.id='rn-pb-disc-row';
-      dr2.innerHTML='<span style="color:#2DE0C1">35% Norman discount</span><span style="color:#2DE0C1" id="rn-pb-disc-val">—</span>';
+      dr2.innerHTML='<span style="color:#2DE0C1">25% Norman discount</span><span style="color:#2DE0C1" id="rn-pb-disc-val">—</span>';
       rnDivider2.parentNode.insertBefore(dr2, rnDivider2);
       var yr2 = document.createElement('div'); yr2.className='price-line'; yr2.id='rn-pb-your-row';
       yr2.innerHTML='<span style="font-weight:600;color:#fff">Your price (before shipping)</span><span style="font-weight:600;color:#fff" id="rn-pb-your-val">—</span>';
@@ -3133,9 +3219,9 @@ function rnUpdatePrice() {
   document.getElementById('rn-pb-total').textContent = total ? '\$' + total.toFixed(0) + ' est.' : '—';
   document.getElementById('rn-pb-min-note').style.display = (perShade === RN_MIN) ? 'block' : 'none';
   if (isMotor) {
-    var motorQtyLabel = isDualSystem ? qty + ' × 2 shades' : qty + ' shade' + (qty > 1 ? 's' : '');
     document.getElementById('rn-pb-motor-row').style.display = 'flex';
-    document.getElementById('rn-pb-motor').textContent = '+\$' + rnMotorUpcharge + ' × ' + motorQtyLabel + ' = \$' + motorCost.toFixed(0);
+    // Divided by shades, not motors — a dual system carries two motors per shade.
+    document.getElementById('rn-pb-motor').textContent = nmMotorLineText(motorCost, qty);
   } else {
     document.getElementById('rn-pb-motor-row').style.display = 'none';
   }
@@ -3205,7 +3291,7 @@ async function rnSubmitForm(btn) {
       'Room Dark pos:  ' + g('rn-grp-bo-pos')  + '\n' +
       'Day roll type:  ' + g('rn-grp-day-type') + '\n' +
       'Day roll fabric:' + (currentRollerColl ? ' ' + currentRollerColl + (currentRollerColor ? ' – ' + currentRollerColor : '') : ' —') + '\n' +
-      'Night roll:     Room Darkening\n' +
+      'Night roll:     Blackout\n' +
       'Night fabric:   (see notes / confirmation)\n'
     ) : (
       'Fabric type:    ' + g('rn-grp-fabric')   + '\n' +
@@ -3245,6 +3331,14 @@ function showCartForm() {
 function extToggleMotor(show) {
   var el = document.getElementById('ext-motor-note');
   if (el) el.style.display = show ? 'block' : 'none';
+  // The Left/Right side selector applies to both operation modes — only its wording changes:
+  // hand crank side when manual, motor side when motorized.
+  var lbl  = document.getElementById('ext-side-label');
+  var note = document.getElementById('ext-side-note');
+  if (lbl)  lbl.textContent  = show ? 'Motor side' : 'Hand crank side';
+  if (note) note.textContent = show
+    ? 'Which side of the window the motor head sits on (also where the charging port / power lead exits).'
+    : 'Which side of the window you want the hand crank on.';
 }
 function extChannelNote(btn) {
   var note = document.getElementById('ext-channel-note');
@@ -3279,7 +3373,7 @@ async function submitExteriorForm(btn) {
     'Side channels: '+ gExt('ext-grp-channels') + '\n' +
     'Operation: '   + gExt('ext-grp-op')       + '\n' +
     (motorReq ? 'Motor preference: ' + motorReq + '\n' : '') +
-    'Control side: '+ gExt('ext-grp-control')  + '\n' +
+    (/motor/i.test(gExt('ext-grp-op')) ? 'Motor side: ' : 'Hand crank side: ') + gExt('ext-grp-control')  + '\n' +
     'Fabric: '      + gExt('ext-grp-fabric')   + '\n' +
     'Delivery: '    + delivery                  + '\n\n' +
     'Notes:\n' + (document.getElementById('ext-notes').value.trim() || 'None');
@@ -3372,6 +3466,10 @@ function psCalc() {
   var h  = parseFloat(document.getElementById('ps-height').value) || 0;
   var pb = document.getElementById('ps-price-box');
   var pn = document.getElementById('ps-price-note');
+  // PerfectSheer is quote-only (see PB_QUOTE_ONLY_PAGES in shared.js). The size
+  // and compatibility warnings below still run — they are what keep an order
+  // from being submitted at an impossible size — but the price box stays down.
+  if (pb) pb.setAttribute('data-pb-price-hidden', '1');
   pb.style.display = 'none'; pn.style.display = 'none';
   if (!w || !h) return;
 
@@ -3417,10 +3515,10 @@ function psCalc() {
   var lines = ['Base price (' + PS_WIDTHS[wi] + '″W × ' + PS_HEIGHTS[hi] + '″H): $' + base.toLocaleString()];
   var total = base;
 
-  // Room Darkening +20%
+  // Blackout (vendor: Room Darkening) +20% — match on meaning, not visible wording.
   var rdBtn = document.querySelector('#grp-ps-opacity .opt-btn.sel');
-  var isRD = rdBtn && rdBtn.textContent.indexOf('Room Darkening') >= 0;
-  if (isRD) { var rdAdd = Math.round(base*0.20); total+=rdAdd; lines.push('Room Darkening (+20%): +$'+rdAdd.toLocaleString()); }
+  var isRD = rdBtn && pbIsBlackoutLabel(rdBtn.textContent);
+  if (isRD) { var rdAdd = Math.round(base*0.20); total+=rdAdd; lines.push('Blackout (+20%): +$'+rdAdd.toLocaleString()); }
 
   // Metal Fascia surcharge
   var valBtn = document.querySelector('#grp-ps-valance .opt-btn.sel');
@@ -3447,10 +3545,10 @@ function psCalc() {
   var liftBtn = document.querySelector('#grp-ps-lift .opt-btn.sel');
   if (liftBtn && liftBtn.textContent.indexOf('motor') >= 0) lines.push('Motorization surcharge: added to final quote');
 
-  const NORMAN_DISC_PS = 0.35;
+  const NORMAN_DISC_PS = 0.25;
   const psDiscountAmt = Math.round(total * NORMAN_DISC_PS);
   const psYourPrice = total - psDiscountAmt;
-  lines.push('<span style="color:#2DE0C1;font-weight:500">Retail: $' + total.toLocaleString() + ' &rarr; 35% Norman discount: -$' + psDiscountAmt.toLocaleString() + ' &rarr; Your price: $' + psYourPrice.toLocaleString() + '</span>');
+  lines.push('<span style="color:#2DE0C1;font-weight:500">Retail: $' + total.toLocaleString() + ' &rarr; 25% Norman discount: -$' + psDiscountAmt.toLocaleString() + ' &rarr; Your price: $' + psYourPrice.toLocaleString() + '</span>');
   document.getElementById('ps-price-num').textContent = '$' + psYourPrice.toLocaleString();
   document.getElementById('ps-price-breakdown').innerHTML = lines.join('<br>');
   pb.style.display = 'block';
@@ -3491,7 +3589,6 @@ async function submitPSForm(btn) {
     if (wvc) woodValColor = ' — Color: ' + wvc.value;
   }
   var qty    = document.getElementById('ps-qty').value;
-  var loc    = document.getElementById('ps-location').value;
   var notes  = document.getElementById('ps-notes').value;
   var email  = document.getElementById('ps-email').value;
   var delBtn = document.querySelector('#grp-del-ps .delivery-opt-card.sel')?.querySelector('.delivery-opt-title')?.textContent.trim() || '';
@@ -3515,7 +3612,6 @@ async function submitPSForm(btn) {
     + 'Shims: ' + shims + '\n\n'
     + 'ORDER DETAILS\n'
     + 'Quantity: ' + qty + '\n'
-    + 'Room/location: ' + (loc||'not specified') + '\n'
     + 'Delivery: ' + delBtn + '\n'
     + 'Estimated price: ' + price + ' per shade\n\n'
     + 'Notes: ' + (notes||'none');

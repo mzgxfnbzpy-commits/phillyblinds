@@ -1,4 +1,4 @@
-﻿// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 // WALLACE 3D DUAL SHEER — DATA
 // Source: Wallace - Sheer 3D Horizontals.pdf (10/01/2024)
 // ═══════════════════════════════════════════════════════════
@@ -160,13 +160,14 @@ buildCollGrid();
 // Build HW color dots
 function buildHWColors(suggested){
   const g=document.getElementById('hw-colors');
+  if(!S.hwColorManual) S.hwColor=suggested;   // keep a manually-chosen hardware color across fabric changes
+  const cur=S.hwColor;
   g.innerHTML=HW_COLORS.map(c=>`
     <div class="hw-col-item">
-      <div class="hw-dot${c.name===suggested?' sel':''}" style="background:${c.hex};border-color:${c.name===suggested?'var(--gold)':'transparent'}"
+      <div class="hw-dot${c.name===cur?' sel':''}" style="background:${c.hex};border-color:${c.name===cur?'var(--gold)':'transparent'}"
         onclick="pickHWColor(this,'${c.name}')" title="${c.name}"></div>
       <div class="hw-dot-label">${c.name}</div>
     </div>`).join('');
-  S.hwColor=suggested;
 }
 
 // ── STEP TOGGLES ──────────────────────────────────────────────────────────
@@ -204,6 +205,20 @@ function pickCollection(idx){
 function buildColorGrid(){
   if(!S.coll) return;
   const g=document.getElementById('color-grid');
+  // Consistent shared swatch style for choosing a color (colors come straight from S.coll — unchanged).
+  if(window.pbFabricPicker){
+    var cols=S.coll.colors.map(function(c){ return {n:c.label, c:c.code, hex:(CHIP_SWATCHES[c.hw]||'#ccc')}; });
+    pbFabricPicker.render('color-grid', {
+      hideTabs:true, showPriceGroups:false,
+      types:[{key:'clr', label:S.coll.name}],
+      collections:[{type:'clr', name:'', colors:cols}],
+      onSelect:function(sel){ pick3DColor(sel.code); }
+    });
+    S.color=null;
+    document.getElementById('s2val').textContent='—';
+    return;
+  }
+  // Fallback — original chips (component unavailable)
   g.innerHTML=S.coll.colors.map(c=>`
     <div class="color-chip" onclick="pickColor(this,'${c.code}','${c.label}','${c.hw}')">
       <div class="chip-swatch" style="background:${CHIP_SWATCHES[c.hw]||'#ccc'}"></div>
@@ -211,6 +226,18 @@ function buildColorGrid(){
     </div>`).join('');
   S.color=null;
   document.getElementById('s2val').textContent='—';
+}
+
+// Select a color from the shared picker (mirrors pickColor without needing the clicked element)
+function pick3DColor(code){
+  var c=(S.coll&&S.coll.colors||[]).find(function(x){return x.code===code;});
+  if(!c) return;
+  S.color={code:c.code,label:c.label};
+  document.getElementById('s2val').textContent=c.label+' ('+c.code+')';
+  markDone('step2');
+  buildHWColors(c.hw);
+  updateSpec();
+  openStep('step3');
 }
 
 function pickColor(el,code,label,hwSuggested){
@@ -226,7 +253,7 @@ function pickColor(el,code,label,hwSuggested){
 
 // ── STEP 3: MOUNT & DIMS ──────────────────────────────────────────────────
 function pickMount(el,key){
-  document.querySelectorAll('#step3 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step3 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.mount=key;
   calcDims();
@@ -234,10 +261,8 @@ function pickMount(el,key){
 
 function calcDims(){
   const wW=parseFloat(document.getElementById('w-whole').value)||0;
-  const wF=parseFloat(document.getElementById('w-frac').value)||0;
   const hW=parseFloat(document.getElementById('h-whole').value)||0;
-  const hF=parseFloat(document.getElementById('h-frac').value)||0;
-  S.w=+(wW+wF).toFixed(3); S.h=+(hW+hF).toFixed(3);
+  S.w=+wW.toFixed(3); S.h=+hW.toFixed(3);
   const msg=document.getElementById('dim-msg');
   const dd=document.getElementById('dim-deduct');
   msg.style.display='none'; dd.style.display='none';
@@ -292,7 +317,7 @@ function fmtDim(v){
 
 // ── STEP 4: CASSETTE ─────────────────────────────────────────────────────
 function pickCassette(el,key){
-  document.querySelectorAll('#step4 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step4 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.cassette=key;
   document.getElementById('s4val').textContent=(key==='round'?'Round':'Square')+' cassette · '+(S.hwColor||'—');
@@ -306,6 +331,7 @@ function pickHWColor(el,name){
   el.classList.add('sel');
   el.style.borderColor='var(--gold)';
   S.hwColor=name;
+  S.hwColorManual=true;
   document.getElementById('s4val').textContent=(S.cassette==='round'?'Round':'Square')+' · '+name;
   updateSpec();
 }
@@ -358,7 +384,7 @@ buildChainColorGrid();
 buildStainlessGrid();
 
 function pickControl(el,key){
-  document.querySelectorAll('#step6 .opt-card').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('#step6 .opt-btn').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   S.ctrl=key;
   const note=document.getElementById('ctrl-msg');
@@ -449,6 +475,16 @@ function pickDel(btn,key){
   S.del=key;
     }
 
+// ── QUANTITY STEPPER ─────────────────────────────────────────────────────────
+function adjQty(delta){
+  const inp=document.getElementById('qty');
+  if(!inp) return;
+  let v=(parseInt(inp.value)||1)+delta;
+  if(v<1) v=1; if(v>50) v=50;
+  inp.value=v;
+  updateSpec();
+}
+
 // ── SPEC PANEL ─────────────────────────────────────────────────────────────
 function updateSpec(){
   const ready=S.coll&&S.color&&S.w&&S.h&&S.ctrl;
@@ -460,7 +496,7 @@ function updateSpec(){
   document.getElementById('sp-pg').textContent='Group '+S.coll.group;
   document.getElementById('sp-color').textContent=(S.color.label||'—')+' ('+S.color.code+')';
   document.getElementById('sp-band').textContent=S.coll.band+' · '+S.coll.lc;
-  document.getElementById('sp-mount').textContent=S.mount==='inside'?'Inside Mount':'Outside Mount';
+  document.getElementById('sp-mount').textContent=S.mount==='inside'?'Inside mount':'Outside mount';
   document.getElementById('sp-size').textContent=S.w+'″ × '+S.h+'″';
   document.getElementById('sp-cassette').textContent=(S.cassette==='round'?'Round':'Square')+' cassette';
   document.getElementById('sp-hwcolor').textContent=S.hwColor||'—';
@@ -485,7 +521,7 @@ function updateSpec(){
   const qty=parseInt(document.getElementById('qty').value)||1;
   S.qty=qty;
   document.getElementById('sp-qty').textContent=qty+' shade'+(qty>1?'s':'');
-  document.getElementById('s8val').textContent=qty+' shade'+(qty>1?'s':'')+' · '+(S.del==='ship'?'Ship':'Pickup');
+  document.getElementById('s8val').textContent=qty+' shade'+(qty>1?'s':'')+' · '+'Ship';
 
   // Oversize warning
   document.getElementById('sp-warn-os').style.display=S.w>=90?'block':'none';
@@ -533,7 +569,7 @@ function addWallace3dSheerToCart(){
     {label:'Price Group',value:coll?'Group '+coll.group:'—'},
     {label:'Band Size',value:coll?coll.band:'—'},
     {label:'Color',value:S.color?S.color.label+' ('+S.color.code+')':'—'},
-    {label:'Mount',value:S.mount==='inside'?'Inside Mount':'Outside Mount'},
+    {label:'Mount',value:S.mount==='inside'?'Inside mount':'Outside mount'},
     {label:'Width',value:(S.w||'—')+'″'},
     {label:'Height',value:(S.h||'—')+'″'},
     {label:'Control',value:ctrlLabel},
@@ -547,10 +583,10 @@ function addWallace3dSheerToCart(){
 }
 
 function submitQuote(){
-  const name=document.getElementById('f-name').value.trim();
-  const phone=document.getElementById('f-phone').value.trim();
-  const err=document.getElementById('form-err');
-  if(!name||!phone){err.style.display='block';return;}
+  const name=document.getElementById('cf-name').value.trim();
+  const phone=document.getElementById('cf-phone').value.trim();
+  const err=document.getElementById('cf-contact-err');
+  if(!name||!phone){err.textContent='Please enter your name and phone number.';err.style.display='block';return;}
   err.style.display='none';
 
   const qty=S.qty||1;
@@ -580,7 +616,7 @@ function submitQuote(){
     'Color: '+(S.color?S.color.label+' ('+S.color.code+')':'—'),
     '',
     'DIMENSIONS:',
-    'Mount type: '+(S.mount==='inside'?'Inside Mount':'Outside Mount'),
+    'Mount type: '+(S.mount==='inside'?'Inside mount':'Outside mount'),
     'Ordered width: '+S.w+'″',
     'Ordered height: '+S.h+'″',
     'Finished shade height (vanes open): '+(S.h?S.h-0.5+'″':'—'),
@@ -603,16 +639,15 @@ function submitQuote(){
     '',
     'QUANTITY & DELIVERY:',
     'Quantity: '+qty+' shade'+(qty>1?'s':''),
-    'Room/window: '+(document.getElementById('room-label').value.trim()||'—'),
-    'Delivery: '+(S.del==='ship'?'Ship (UPS/FedEx from Huntingdon Valley PA)':'Will pick up'),
+    'Delivery: '+'Ship (UPS/FedEx)',
     '',
     'NOTES:',
-    document.getElementById('f-notes').value.trim()||'None',
+    document.getElementById('cf-notes').value.trim()||'None',
     '',
     'CUSTOMER:',
     'Name: '+name,
     'Phone: '+phone,
-    'Email: '+(document.getElementById('f-email').value.trim()||'—'),
+    'Email: '+(document.getElementById('cf-email').value.trim()||'—'),
     '',
     'ESTIMATED PRICE (MSRP — confirmed at order):',
     (()=>{const pr=calcPrice();if(!pr)return 'Not calculated';

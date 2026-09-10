@@ -17,7 +17,7 @@ function hwPickType(type) {
   document.getElementById('sec-functional').classList.remove('on');
   document.getElementById('dec-brand-step').classList.remove('on');
   document.getElementById('sec-quote').classList.remove('on');
-  document.querySelectorAll('#dec-type-cards .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#dec-type-cards .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
   document.querySelectorAll('#dec-brand-cards .brand-card').forEach(function(c){ c.classList.remove('sel'); });
 
   if (type === 'decorative') {
@@ -33,7 +33,7 @@ var kfType = '';
 
 function kfSetType(type, el) {
   kfType = type;
-  document.querySelectorAll('#kf-step1 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#kf-step1 .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
   if (el) el.classList.add('sel');
 
   // Show/hide sub-option panels
@@ -349,7 +349,7 @@ function archToggleBaton(sku, el) {
     if (type === 'functional') {
       // Auto-select Traverse as default
       setTimeout(function() {
-        var traverseCard = document.querySelector('#kf-step1 .opt-card:first-child');
+        var traverseCard = document.querySelector('#kf-step1 .opt-btn:first-child');
         if (traverseCard && !traverseCard.classList.contains('sel')) {
           kfSetType('traverse', traverseCard);
         }
@@ -360,7 +360,7 @@ function archToggleBaton(sku, el) {
 
 function hwPickStyle(el, style) {
   hwState.style = style; hwState.brand = '';
-  document.querySelectorAll('#dec-type-cards .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#dec-type-cards .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
   document.getElementById('dec-brand-step').classList.remove('on');
   document.getElementById('sec-quote').classList.remove('on');

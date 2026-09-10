@@ -1,4 +1,4 @@
-﻿// ── STATE ─────────────────────────────────────────────────────────────────────
+// ── STATE ─────────────────────────────────────────────────────────────────────
 var S = {
   qty:1, room:'', mount:'inside', width:0, length:0,
   shadeStyle:'', panelStyle:'',
@@ -30,11 +30,9 @@ var FABRICS = [
   {code:'LDN01',pattern:'Ladner',color:'Midnight', priceGroup:'A',noFlat:true,composition:'100% Polyester',weightGsm:320,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#4A4850'},
   {code:'LDN02',pattern:'Ladner',color:'Shore',    priceGroup:'A',noFlat:true,composition:'100% Polyester',weightGsm:320,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#A8B4B8'},
   // Miller — 100% Polyester — TDBU Y
-  {code:'MIL01',pattern:'Miller',color:'Snow',     priceGroup:'A',noFlat:false,composition:'100% Polyester',weightGsm:214,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#F5F2EE'},
 
   // ── GROUP B ───────────────────────────────────────────────────────────────
   // Barlow — 100% Polyester — TDBU Y
-  {code:'BRL01',pattern:'Barlow',color:'Gold',       priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:257,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#C8A84A'},
   // Callaway — 100% Polyester — TDBU Y — 116"W
   {code:'CLL01',pattern:'Callaway',color:'Granite',  priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:260,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#8A8880'},
   {code:'CLL02',pattern:'Callaway',color:'Limestone',priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:260,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#C4BDB0'},
@@ -84,10 +82,6 @@ var FABRICS = [
   {code:'DBY04',pattern:'Darby',color:'Thunder', priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:405,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#606880'},
   {code:'DBY05',pattern:'Darby',color:'Tide',    priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:405,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#7A9098'},
   // Kiernan — 100% Polyester — TDBU Y — 116"W
-  {code:'KRN01',pattern:'Kiernan',color:'Ash',     priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:240,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#A8A8A0'},
-  {code:'KRN02',pattern:'Kiernan',color:'Birch',   priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:240,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#C8C0A8'},
-  {code:'KRN03',pattern:'Kiernan',color:'Tapenade',priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:240,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#706858'},
-  {code:'KRN04',pattern:'Kiernan',color:'Winter',  priceGroup:'C',noFlat:false,composition:'100% Polyester',weightGsm:240,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#E8E8E8'},
   // Laken — [1] No Flat — 70% Poly 20% Viscose 10% Linen — TDBU Y — 114"W
   {code:'LKN01',pattern:'Laken',color:'Aqua',    priceGroup:'C',noFlat:true,composition:'70% Polyester, 20% Viscose, 10% Linen',weightGsm:350,cordLoopColor:'Gray',tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#6AA8A8'},
   {code:'LKN03',pattern:'Laken',color:'Contrast',priceGroup:'C',noFlat:true,composition:'70% Polyester, 20% Viscose, 10% Linen',weightGsm:350,cordLoopColor:'Gray',tdbuAvailable:true,fabricWidth:114,repeatWidth:null,repeatHeight:null,hex:'#787878'},
@@ -123,15 +117,7 @@ var FABRICS = [
   {code:'EDN02',pattern:'Eden',color:'Ink',      priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:320,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:106,repeatWidth:null,repeatHeight:18,hex:'#2A3048'},
   {code:'EDN03',pattern:'Eden',color:'Moonlight',priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:320,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:106,repeatWidth:null,repeatHeight:18,hex:'#C0C8D8'},
   // Kenlie — 98% Poly 2% Lurex — TDBU Y — 116"W
-  {code:'KEN01',pattern:'Kenlie',color:'Charcoal', priceGroup:'D',noFlat:false,composition:'98% Polyester, 2% Lurex',weightGsm:420,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#404848'},
-  {code:'KEN02',pattern:'Kenlie',color:'Diamond',  priceGroup:'D',noFlat:false,composition:'98% Polyester, 2% Lurex',weightGsm:420,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#E8E8E8'},
-  {code:'KEN03',pattern:'Kenlie',color:'Evergreen',priceGroup:'D',noFlat:false,composition:'98% Polyester, 2% Lurex',weightGsm:420,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#3A6040'},
-  {code:'KEN04',pattern:'Kenlie',color:'Silver',   priceGroup:'D',noFlat:false,composition:'98% Polyester, 2% Lurex',weightGsm:420,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#C0C0C8'},
-  {code:'KEN05',pattern:'Kenlie',color:'Twilight', priceGroup:'D',noFlat:false,composition:'98% Polyester, 2% Lurex',weightGsm:420,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#4A4868'},
   // LeBeau — 51% Poly 49% Viscose — TDBU Y
-  {code:'LBU01',pattern:'LeBeau',color:'Gold',  priceGroup:'D',noFlat:false,composition:'51% Polyester, 49% Viscose',weightGsm:290,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#C8A040'},
-  {code:'LBU02',pattern:'LeBeau',color:'Silver',priceGroup:'D',noFlat:false,composition:'51% Polyester, 49% Viscose',weightGsm:290,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#C0C0C8'},
-  {code:'LBU03',pattern:'LeBeau',color:'White', priceGroup:'D',noFlat:false,composition:'51% Polyester, 49% Viscose',weightGsm:290,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#F0EEEC'},
   // Lumen — 100% Polyester — TDBU Y
   {code:'LUM01',pattern:'Lumen',color:'Gray',  priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:305,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#909090'},
   {code:'LUM02',pattern:'Lumen',color:'Mist',  priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:305,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#C0C8C8'},
@@ -142,12 +128,12 @@ var FABRICS = [
   {code:'MDA03',pattern:'Merida',color:'Citron',   priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:320,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:106,repeatWidth:null,repeatHeight:18,hex:'#D4C040'},
   {code:'MDA04',pattern:'Merida',color:'Laurel',   priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:320,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:106,repeatWidth:null,repeatHeight:18,hex:'#6A8A50'},
   // Merida (MTT — solid, 110"W, no repeat)
-  {code:'MTT01',pattern:'Merida',color:'Celadon',  priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#88B0A0'},
-  {code:'MTT02',pattern:'Merida',color:'Lagoon',   priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#508898'},
-  {code:'MTT03',pattern:'Merida',color:'Metallic', priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#A8A8B0'},
-  {code:'MTT04',pattern:'Merida',color:'Storm',    priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#707880'},
-  {code:'MTT05',pattern:'Merida',color:'Taupe',    priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#908070'},
-  {code:'MTT06',pattern:'Merida',color:'Tungsten', priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#606468'},
+  {code:'MTT01',pattern:'Mattie',color:'Celadon',  priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#88B0A0'},
+  {code:'MTT02',pattern:'Mattie',color:'Lagoon',   priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#508898'},
+  {code:'MTT03',pattern:'Mattie',color:'Metallic', priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#A8A8B0'},
+  {code:'MTT04',pattern:'Mattie',color:'Storm',    priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#707880'},
+  {code:'MTT05',pattern:'Mattie',color:'Taupe',    priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#908070'},
+  {code:'MTT06',pattern:'Mattie',color:'Tungsten', priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#606468'},
   // Ramsey — 100% Polyester — TDBU Y
   {code:'RAM01',pattern:'Ramsey',color:'Alloy',      priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:305,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#989088'},
   {code:'RAM02',pattern:'Ramsey',color:'PDF CONFIRM',priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:305,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#B0A8A0',pdfConfirm:true},
@@ -165,6 +151,15 @@ var FABRICS = [
   {code:'WIN01',pattern:'Windham',color:'Chateau',    priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:14.5,repeatHeight:17.5,hex:'#C8B890'},
   {code:'WIN02',pattern:'Windham',color:'Luxe',       priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:14.5,repeatHeight:17.5,hex:'#808898'},
   {code:'WIN03',pattern:'Windham',color:'PDF CONFIRM',priceGroup:'D',noFlat:false,composition:'100% Polyester',weightGsm:285,cordLoopColor:'Gray', tdbuAvailable:true,fabricWidth:110,repeatWidth:14.5,repeatHeight:17.5,hex:'#989090',pdfConfirm:true},
+  // ── Added from 2026 Portfolio Fabric Roman book (new options not previously on site) ──
+  {code:'AND03',pattern:'Andie',color:'Beige',       priceGroup:'C',noFlat:true, composition:'100% Polyester',weightGsm:275,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#D4C4A8'},
+  {code:'NAO01',pattern:'Naomi',color:'Chocolate',   priceGroup:'C',noFlat:false,composition:'63% Cotton, 37% Polyester',weightGsm:317,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:110,repeatWidth:null,repeatHeight:null,hex:'#5A4032'},
+  {code:'ORI06',pattern:'Oriana',color:'Black',      priceGroup:'A',noFlat:false,noHobbled:true,composition:'100% Polyester',weightGsm:210,cordLoopColor:'Black',tdbuAvailable:true,fabricWidth:118,repeatWidth:null,repeatHeight:null,hex:'#2A2A2A'},
+  {code:'ORI09',pattern:'Oriana',color:'Tan',        priceGroup:'A',noFlat:false,noHobbled:true,composition:'100% Polyester',weightGsm:210,cordLoopColor:'Beige',tdbuAvailable:true,fabricWidth:118,repeatWidth:null,repeatHeight:null,hex:'#C9A876'},
+  {code:'ORI12',pattern:'Oriana',color:'Pearl',      priceGroup:'A',noFlat:false,noHobbled:true,composition:'100% Polyester',weightGsm:210,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:118,repeatWidth:null,repeatHeight:null,hex:'#EDE8DF'},
+  {code:'SPK01',pattern:'Speckled',color:'Fog',      priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:230,cordLoopColor:'Gray',tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#B8BCC0'},
+  {code:'SPK02',pattern:'Speckled',color:'Ivory',    priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:230,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#F5EFE0'},
+  {code:'SPK03',pattern:'Speckled',color:'Latte',    priceGroup:'B',noFlat:false,composition:'100% Polyester',weightGsm:230,cordLoopColor:'White',tdbuAvailable:true,fabricWidth:116,repeatWidth:null,repeatHeight:null,hex:'#C7AD8E'},
 ];
 
 // ── INTERNAL PRICING TABLES (do not expose in public UI) ─────────────────────
@@ -174,27 +169,14 @@ var FABRICS = [
 // FLAT and KNIFE PLEAT shades — Cordless or Clutch (base price per shade)
 var W_BRKT=[24,30,36,42,48,54,60,66,72,78,84,96];
 var L_BRKT=[24,30,36,42,48,54,60,66,72,78,84,96];
-var PRICE_FLAT={
-  A:[[496,528,553,560,599,709,732,800,825,831,872,977],[501,532,558,565,604,715,738,807,833,838,879,986],[505,537,563,570,609,721,744,814,840,846,887,995],[526,568,596,604,646,764,789,863,891,897,941,1057],[548,593,622,630,663,796,822,901,930,954,1004,1072],[571,618,649,657,686,831,858,940,971,1024,1079,1153],[596,645,666,675,699,867,896,982,1014,1092,1153,1232],[621,673,683,692,724,905,935,1025,1059,1161,1226,1311],[648,702,713,723,750,949,979,1062,1095,1242,1313,1405],[676,733,745,755,776,999,1031,1119,1153,1310,1386,1484],[706,766,778,788,804,1050,1083,1177,1213,1380,1461,1565],[737,800,812,824,847,1119,1185,1288,1329,1514,1605,1721]],
-  'A[1]':[[538,595,615,627,646,800,834,918,936,952,963,1036],[542,600,620,633,652,807,841,926,944,960,972,1045],[547,605,625,638,657,814,849,934,953,969,981,1055],[556,628,650,666,692,858,907,940,958,974,1025,1151],[582,635,669,695,728,930,982,1027,1040,1060,1117,1252],[605,663,698,726,767,997,1059,1102,1114,1139,1202,1329],[622,695,742,758,808,1062,1100,1148,1177,1217,1286,1351],[644,736,786,791,851,1128,1171,1235,1259,1295,1369,1439],[675,753,827,838,897,1169,1213,1299,1343,1386,1466,1543],[707,776,864,882,946,1211,1257,1370,1409,1464,1550,1632],[767,814,903,928,998,1255,1303,1445,1502,1543,1635,1722],[823,889,944,1015,1053,1301,1351,1546,1625,1696,1800,1896]],
-  C:[[553,617,630,643,660,820,853,940,966,992,1014,1055],[560,622,638,663,686,844,875,965,988,1014,1045,1078],[564,633,651,676,747,870,908,998,1031,1049,1084,1163],[573,649,672,718,812,902,972,1053,1078,1100,1133,1273],[606,680,687,779,881,980,1056,1084,1116,1175,1236,1386],[622,698,738,835,945,1052,1135,1204,1224,1268,1333,1496],[641,734,785,892,1007,1122,1213,1279,1331,1358,1427,1604],[682,781,832,946,1070,1192,1291,1334,1398,1451,1521,1711],[715,821,887,1009,1140,1268,1373,1393,1466,1550,1629,1835],[749,849,934,1064,1202,1338,1433,1468,1553,1626,1723,1942],[782,869,983,1120,1266,1410,1480,1535,1615,1716,1820,2052],[840,916,1035,1155,1305,1454,1511,1644,1775,1889,2006,2264]],
-  D:[[623,696,711,727,746,926,964,1065,1095,1125,1150,1196],[631,703,721,750,776,954,989,1093,1120,1150,1185,1223],[636,715,737,765,846,984,1028,1131,1170,1190,1230,1321],[646,733,760,813,922,1021,1102,1195,1223,1249,1286,1448],[685,770,778,883,1000,1111,1198,1230,1267,1335,1405,1578],[703,790,836,948,1074,1193,1289,1368,1391,1442,1516,1704],[725,832,890,1013,1146,1274,1379,1454,1514,1545,1624,1828],[null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null]]
-};
+var PRICE_FLAT={A:[[571,607,636,645,689,815,841,920,949,956,1002,1124],[576,612,642,650,695,822,848,928,958,964,1011,1134],[581,617,647,656,701,829,856,936,966,973,1020,1144],[605,654,686,695,743,878,907,993,1025,1032,1083,1215],[630,682,715,725,762,916,946,1036,1070,1097,1155,1232],[657,711,746,756,789,955,987,1081,1117,1177,1241,1325],[685,742,766,776,804,997,1030,1129,1166,1256,1326,1417],[714,774,786,796,832,1040,1075,1179,1218,1335,1410,1508],[745,808,820,831,862,1091,1126,1221,1259,1428,1510,1616],[778,843,856,868,893,1148,1185,1286,1326,1507,1594,1707],[812,881,894,907,924,1207,1246,1353,1395,1587,1680,1800],[847,920,934,947,974,1286,1363,1481,1528,1742,1846,1979]],B:[[618,684,707,721,743,920,959,1056,1076,1095,1108,1191],[624,690,713,728,749,928,967,1065,1086,1105,1118,1202],[629,696,719,734,756,936,976,1074,1096,1114,1128,1213],[639,722,747,766,796,987,1043,1081,1101,1120,1179,1324],[669,731,769,799,837,1069,1129,1181,1196,1218,1284,1440],[696,762,803,834,882,1146,1218,1267,1281,1310,1383,1528],[716,799,854,871,929,1222,1265,1320,1353,1399,1479,1554],[741,846,904,910,979,1297,1346,1420,1448,1489,1575,1655],[776,866,951,964,1032,1344,1395,1493,1545,1594,1686,1775],[813,892,993,1015,1088,1393,1446,1576,1620,1683,1782,1876],[883,936,1038,1067,1148,1443,1498,1661,1727,1775,1881,1980],[946,1022,1085,1167,1211,1496,1553,1778,1869,1951,2070,2181]],C:[[636,709,724,739,759,943,981,1081,1111,1141,1166,1213],[644,716,734,762,789,971,1006,1109,1136,1166,1201,1240],[649,727,749,777,859,1001,1044,1148,1186,1206,1246,1338],[659,746,772,826,934,1038,1118,1211,1239,1265,1303,1464],[697,782,791,896,1013,1127,1215,1246,1283,1351,1421,1594],[716,803,848,960,1087,1209,1306,1385,1407,1458,1532,1721],[737,844,903,1025,1158,1290,1395,1470,1530,1562,1641,1844],[784,898,957,1088,1230,1371,1485,1534,1607,1669,1749,1967],[823,944,1020,1160,1311,1458,1579,1602,1686,1782,1874,2110],[861,976,1074,1223,1383,1539,1647,1688,1786,1870,1982,2234],[899,999,1130,1288,1456,1621,1702,1765,1857,1973,2093,2360],[966,1053,1190,1328,1500,1673,1738,1891,2041,2172,2307,2603]],D:[[716,801,818,835,858,1065,1109,1224,1259,1293,1322,1376],[726,809,830,862,893,1098,1138,1257,1288,1322,1362,1407],[732,822,847,880,973,1132,1182,1301,1345,1368,1414,1519],[743,843,874,935,1060,1174,1267,1374,1406,1436,1479,1665],[787,885,895,1015,1151,1277,1378,1414,1456,1535,1615,1814],[809,908,961,1090,1235,1372,1483,1573,1600,1658,1743,1960],[834,956,1024,1165,1318,1465,1585,1672,1741,1777,1868,2102],[887,1018,1086,1237,1400,1557,1688,1745,1829,1900,1992,2243],[931,1072,1159,1320,1493,1658,1797,1823,1920,2031,2136,2408],[976,1108,1221,1392,1576,1751,1876,1922,2035,2131,2260,2550],[1020,1135,1286,1467,1660,1845,1938,2011,2117,2250,2388,2695],[1096,1196,1354,1513,1711,1905,1980,2156,2329,2479,2634,2975]]};
 // HOBBLED and FRONT SLAT shades — Cordless or Clutch
 // Length max 72" for hobbled. Width max 78" for standard LI/DC/AC motor.
-var PRICE_HOBBLED={
-  A:[[518,550,574,593,649,750,785,833,866,892,905,1011],[534,560,595,616,674,776,800,863,918,963,1009,1063],[547,577,624,646,733,814,876,945,1007,1061,1114,1139],[559,605,649,703,797,884,954,1030,1100,1160,1221,1246],[575,622,680,767,869,963,1039,1125,1206,1273,1341,1361],[590,643,729,823,931,1033,1117,1210,1299,1373,1448,1468],[612,683,774,876,992,1102,1193,1292,1388,1469,1553,1573],[636,722,821,931,1055,1171,1270,1376,1480,1567,1658,1677],[678,773,878,995,1126,1250,1355,1469,1594,1690,1788,1811],[710,812,925,1050,1187,1318,1431,1553,1686,1788,1893,1915],[744,853,972,1105,1250,1388,1509,1638,1777,1887,1999,2023],[809,933,1067,1213,1373,1526,1660,1803,1957,2080,2208,2231]],
-  C:[[576,640,664,704,730,856,886,982,1055,1092,1127,1197],[586,653,709,749,772,898,949,1031,1133,1155,1209,1272],[614,667,727,789,849,941,1015,1097,1197,1262,1330,1381],[625,691,779,821,929,1032,1115,1206,1290,1363,1439,1476],[660,721,797,900,1018,1129,1221,1322,1419,1501,1586,1620],[685,757,859,972,1098,1219,1321,1431,1537,1629,1723,1759],[709,808,918,1041,1177,1306,1417,1536,1651,1752,1856,1893],[749,858,978,1110,1255,1394,1513,1641,1766,1875,1988,2027],[801,919,1048,1189,1343,1491,1619,1757,1905,2023,2146,2189],[843,970,1107,1258,1421,1578,1716,1862,2020,2147,2278,2323],[887,1023,1169,1330,1502,1669,1815,1971,2138,2274,2415,2462],[970,1124,1288,1468,1657,1843,2007,2181,2366,2520,2679,2729]]
-};
+var PRICE_HOBBLED={A:[[596,632,661,682,747,862,903,958,996,1026,1041,1163],[614,644,684,708,775,892,920,992,1055,1108,1160,1223],[629,664,717,743,843,936,1008,1087,1159,1220,1281,1310],[642,696,746,808,917,1017,1097,1185,1265,1334,1404,1433],[661,716,782,882,999,1108,1195,1294,1386,1463,1542,1565],[678,740,838,946,1071,1188,1285,1392,1493,1579,1665,1688],[704,785,890,1008,1141,1267,1372,1486,1597,1690,1786,1809],[731,831,945,1071,1213,1346,1460,1583,1702,1802,1907,1929],[780,889,1010,1144,1295,1437,1558,1690,1833,1944,2056,2082],[817,934,1064,1208,1365,1516,1646,1786,1938,2056,2177,2202],[855,982,1118,1271,1437,1597,1735,1884,2043,2170,2299,2326],[931,1073,1227,1395,1579,1754,1909,2073,2250,2392,2539,2566]],B:[[636,709,741,793,816,963,1009,1093,1136,1148,1206,1246],[652,729,762,784,833,996,1036,1124,1206,1231,1253,1287],[677,739,782,803,910,1043,1089,1174,1253,1320,1390,1424],[689,754,829,876,994,1103,1190,1287,1374,1451,1530,1566],[710,793,850,959,1085,1204,1301,1407,1511,1595,1684,1714],[734,806,913,1032,1167,1295,1402,1518,1632,1726,1824,1855],[755,857,974,1102,1248,1385,1502,1626,1749,1852,1961,1993],[796,910,1036,1174,1328,1476,1600,1735,1867,1979,2096,2130],[852,973,1108,1257,1420,1576,1711,1856,2014,2136,2263,2300],[894,1025,1169,1328,1500,1667,1809,1963,2131,2263,2397,2437],[938,1080,1232,1400,1583,1758,1912,2075,2252,2392,2539,2579],[1024,1183,1355,1542,1742,1937,2108,2292,2487,2646,2811,2852]],C:[[662,736,764,809,839,984,1019,1129,1213,1256,1296,1376],[674,751,816,861,888,1033,1091,1186,1303,1328,1390,1463],[706,767,836,908,976,1082,1168,1262,1376,1452,1530,1588],[719,794,896,944,1069,1186,1282,1387,1483,1567,1655,1698],[759,829,916,1035,1170,1298,1405,1520,1632,1726,1824,1863],[788,871,987,1117,1263,1402,1519,1645,1768,1873,1982,2022],[816,929,1056,1197,1353,1502,1629,1766,1899,2014,2134,2176],[862,987,1125,1276,1443,1603,1740,1887,2031,2156,2286,2331],[922,1057,1205,1368,1544,1715,1862,2020,2191,2327,2468,2518],[970,1116,1273,1447,1634,1815,1973,2141,2323,2469,2620,2672],[1020,1176,1345,1530,1727,1919,2087,2267,2459,2615,2777,2831],[1116,1293,1481,1688,1906,2119,2308,2508,2721,2898,3081,3139]],D:[[775,864,898,952,1018,1126,1168,1300,1400,1452,1500,1597],[790,882,960,1014,1047,1184,1254,1368,1508,1538,1613,1701],[828,902,984,1070,1152,1244,1346,1459,1597,1687,1781,1851],[844,934,1056,1113,1263,1368,1483,1609,1724,1825,1930,1982],[891,976,1080,1223,1385,1503,1630,1769,1903,2016,2134,2180],[926,1025,1166,1322,1497,1627,1768,1919,2066,2192,2323,2372],[960,1095,1248,1417,1604,1748,1900,2064,2224,2362,2506,2557],[1015,1165,1330,1512,1712,1868,2033,2210,2381,2532,2688,2741],[1087,1250,1427,1622,1834,2003,2180,2369,2574,2737,2906,2966],[1144,1320,1509,1717,1941,2123,2312,2514,2732,2907,3089,3151],[1204,1392,1594,1816,2053,2248,2450,2665,2895,3083,3278,3342],[1319,1532,1758,2006,2268,2488,2714,2955,3210,3422,3642,3711]]};
 
 // VALANCE ONLY pricing — widths 24-96
 var VALANCE_ONLY_W=[24,30,36,42,48,54,60,66,72,78,84,96];
-var VALANCE_ONLY_PRICE={
-  A:[275,296,314,318,344,400,415,461,478,482,508,580],
-  B:[303,341,355,363,375,461,484,539,551,562,570,618],
-  C:[313,356,365,373,385,474,496,554,571,589,603,631],
-  D:[346,395,406,415,430,530,556,620,641,661,679,709]
-};
+var VALANCE_ONLY_PRICE={A:[316,340,361,366,396,460,477,530,550,554,584,667],B:[348,392,408,417,431,530,557,620,634,646,656,711],C:[360,409,420,429,443,545,570,637,657,677,693,726],D:[398,454,467,477,494,610,639,713,737,760,781,815]};
 
 // Surcharge pricing (internal — included in quote email, not shown publicly)
 var SURCHARGES={
@@ -220,8 +202,8 @@ var SURCHARGES={
   cutFabricFreightFirst:25,cutFabricFreightAdditional:5
 };
 
-function getPriceFlat(w,l,group,noFlat){
-  var tbl=noFlat?PRICE_FLAT['A[1]']:PRICE_FLAT[group];
+function getPriceFlat(w,l,group){
+  var tbl=PRICE_FLAT[group];
   if(!tbl)return null;
   var wi=W_BRKT.findIndex(function(v){return w<=v;}); if(wi<0)wi=W_BRKT.length-1;
   var li=L_BRKT.findIndex(function(v){return l<=v;}); if(li<0)li=L_BRKT.length-1;
@@ -270,10 +252,7 @@ function sp(id,val) { var el=document.getElementById(id); if(el){el.textContent=
 function setQtyVal(n) {
   n = Math.max(1, Math.min(50, n||1));
   S.qty = n;
-  document.getElementById('val1').textContent = n + (n===1?' shade':' shades');
-  document.getElementById('step1').classList.add('done');
   sp('sp-qty', n + (n===1?' shade':' shades'));
-  openNext('step2');
 }
 function adjQty(d) {
   var el = document.getElementById('qty-inp');
@@ -281,28 +260,18 @@ function adjQty(d) {
   setQtyVal(parseInt(el.value));
 }
 
-// ── STEP 2 ────────────────────────────────────────────────────────────────────
-document.getElementById('room-label').addEventListener('input',function(){
-  S.room=this.value.trim();
-  document.getElementById('val2').textContent=S.room||'—';
-  sp('sp-room',S.room);
-  document.getElementById('step2').classList.add('done');
-});
-
-// ── STEP 3 ────────────────────────────────────────────────────────────────────
+// ── MOUNT (Step 1) ────────────────────────────────────────────────────────────
 function setMount(m, el) {
   S.mount=m; selBtn(el,'grp-mount');
   var label=m==='inside'?'Inside mount':'Outside mount';
-  document.getElementById('val3').textContent=label;
   sp('sp-mount',label);
-  document.getElementById('step3').classList.add('done');
   // Outside mount: extended returns available; inside: standard only
   var extBtn=document.getElementById('btn-ext-returns');
   if(extBtn) extBtn.classList.toggle('blocked',m==='inside');
-  validateTDBU(); validateReturns(); openNext('step4');
+  validateTDBU(); validateReturns(); validateDims();
 }
 
-// ── STEP 4 ────────────────────────────────────────────────────────────────────
+// ── DIMENSIONS (Step 1) ───────────────────────────────────────────────────────
 function validateDims() {
   S.width=parseFloat(document.getElementById('inp-w').value)||0;
   S.length=parseFloat(document.getElementById('inp-l').value)||0;
@@ -335,8 +304,8 @@ function validateDims() {
   if(warns.length) html+=warns.map(function(e){return'<div class="warn-box" style="margin-top:6px">&#9888; '+e+'</div>';}).join('');
   if(!errs.length&&S.width&&S.length){
     html='<div class="ok-box">&#10003; '+S.width+'" W &times; '+S.length+'" L — dimensions accepted.</div>';
-    document.getElementById('step4').classList.add('done');
-    document.getElementById('val4').textContent=S.width+'" W &times; '+S.length+'" L';
+    document.getElementById('step1').classList.add('done');
+    document.getElementById('val1').textContent=S.width+'" W &times; '+S.length+'" L';
     sp('sp-size',S.width+'" × '+S.length+'"');
     openNext('step5');
   }
@@ -393,11 +362,17 @@ function setShadeStyle(style, el) {
   if(hobBtn) hobBtn.classList.toggle('blocked',!isWaterfall||isRV);
   // Auto-select Flat if Roman Valance and no flat-compatible style chosen
   if(isRV&&S.panelStyle&&S.panelStyle!=='flat'&&S.panelStyle!=='knife'){
+    if(!S.panelStyleBeforeRV) S.panelStyleBeforeRV=S.panelStyle;   // remember it to restore when leaving Roman Valance
     S.panelStyle='flat';
     document.querySelectorAll('#grp-panel-style .opt-btn').forEach(function(b){b.classList.remove('sel');});
     if(flatBtn) flatBtn.classList.add('sel');
     document.getElementById('val6').textContent='Flat';
     sp('sp-panel-style','Flat');
+  } else if(!isRV && S.panelStyleBeforeRV){
+    // Leaving Roman Valance — restore the panel style the user had before.
+    var _prev=S.panelStyleBeforeRV; S.panelStyleBeforeRV='';
+    var _pbtn=document.querySelector('#grp-panel-style .opt-btn[onclick*="\''+_prev+'\'"]');
+    if(_pbtn && !_pbtn.classList.contains('blocked')) setPanelStyle(_prev,_pbtn);
   }
   // Show/hide total-height note
   var rvHNote=document.getElementById('roman-valance-height-note');
@@ -659,7 +634,7 @@ function setDelivery(opt,card) {
   S.delivery=opt;
   document.querySelectorAll('.delivery-opt-card').forEach(function(c){c.classList.remove('sel');});
   card.classList.add('sel');
-  var labels={ship:'Ship to me',pickup:'Pick up',install:'Professional installation'};
+  var labels={ship:'Ship to me',install:'Professional installation'};
   document.getElementById('val15').textContent=labels[opt]||opt;
   sp('sp-delivery',labels[opt]||opt);
   document.getElementById('step15').classList.add('done');
@@ -697,19 +672,19 @@ function addWallaceRomanToCart(){
 }
 
 function submitQuote() {
-  var name=document.getElementById('q-name').value.trim();
-  var phone=document.getElementById('q-phone').value.trim();
-  var errEl=document.getElementById('submit-errors');
+  var name=document.getElementById('cf-name').value.trim();
+  var phone=document.getElementById('cf-phone').value.trim();
+  var errEl=document.getElementById('cf-contact-err');
   var errs=[];
   if(!name)         errs.push('Name required.');
   if(!phone)        errs.push('Phone required.');
   if(!S.qty)        errs.push('Select number of shades (Step 1).');
-  if(!S.width||!S.length) errs.push('Enter width and length (Step 4).');
-  if(!S.shadeStyle) errs.push('Select shade construction style (Step 5).');
-  if(!S.panelStyle) errs.push('Select panel style (Step 6).');
-  if(!S.fabric)     errs.push('Select a fabric (Step 7).');
-  if(!S.control&&S.shadeStyle!=='roman-valance') errs.push('Select control type (Step 10).');
-  if(S.control==='motor'&&!S.motorType&&S.shadeStyle!=='roman-valance') errs.push('Select motor type (Step 10).');
+  if(!S.width||!S.length) errs.push('Enter width and length (Step 1).');
+  if(!S.shadeStyle) errs.push('Select shade construction style (Step 3).');
+  if(!S.panelStyle) errs.push('Select panel style (Step 4).');
+  if(!S.fabric)     errs.push('Select a fabric (Step 5).');
+  if(!S.control&&S.shadeStyle!=='roman-valance') errs.push('Select control type (Step 8).');
+  if(S.control==='motor'&&!S.motorType&&S.shadeStyle!=='roman-valance') errs.push('Select motor type (Step 8).');
 
   // Validation warnings to flag in email
   var validationFlags=[];
@@ -741,7 +716,7 @@ function submitQuote() {
   var wandLen=document.querySelector('#grp-wand-len .opt-btn.sel')?.textContent.trim()||'—';
   var controlSide=document.querySelector('#grp-control-side .opt-btn.sel')?.textContent.trim()||'—';
   var returnLabel={none:'No returns',standard:'Standard 4½" returns',extended:'Extended depth returns',custom:'Custom — '+document.getElementById('return-depth').value+'"'}[S.returns]||S.returns;
-  var delivery={ship:'Ship (UPS/FedEx from Huntingdon Valley PA)',pickup:'Pick up (Huntingdon Valley PA)',install:'Professional installation'}[S.delivery]||S.delivery;
+  var delivery='Ship (UPS/FedEx)'||S.delivery;
 
   // Motor accessories
   var motorAcc=[];
@@ -757,12 +732,11 @@ function submitQuote() {
     'CONTACT',
     'Name: '+name,
     'Phone: '+phone,
-    'Email: '+(document.getElementById('q-email').value.trim()||'—'),
-    'Address: '+(document.getElementById('q-address').value.trim()||'—'),'',
+    'Email: '+(document.getElementById('cf-email').value.trim()||'—'),
+    'Address: '+(document.getElementById('cf-address').value.trim()||'—'),'',
     'ORDER DETAILS',
     'Product: Wallace Portfolio Collection Fabric Roman Shades',
     'Quantity: '+S.qty+' shade(s)',
-    'Room/Window: '+(S.room||'—'),
     'Mount: '+(S.mount==='inside'?'Inside mount':'Outside mount'),
     'Width: '+S.width+'"',
     'Length: '+S.length+'"','',
@@ -806,14 +780,14 @@ function submitQuote() {
       if(!f||!w||!l) return 'Enter dims + fabric to calculate';
       var isHob=S.panelStyle==='hobbled';
       // Roman Valance: priced as flat roman using total height (already in S.length)
-var p=isHob?getPriceHobbled(w,l,f.priceGroup):getPriceFlat(w,l,f.priceGroup,f.noFlat);
+var p=isHob?getPriceHobbled(w,l,f.priceGroup):getPriceFlat(w,l,f.priceGroup);
       if(!p) return 'Out of table range — call for price';
       var tot=p;var ns=[];
       if(S.liner==='BO01'){tot=Math.round(tot*1.10);ns.push('blackout +10%');}
       return '$'+tot+'/shade Group '+f.priceGroup+(ns.length?' ('+ns.join(', ')+')':'');
     })(),
     'NOTES',
-    document.getElementById('q-notes').value.trim()||'None','',
+    document.getElementById('cf-notes').value.trim()||'None','',
     '⚠ INTERNAL NOTE: Fabric codes marked "ENTER" are placeholders. Enter all codes from Wallace PDF pages 3-5 before finalizing this quote.','',
     '--- Sent from phillyblinds.com/pages/wallace-portfolio-roman.html ---',
   ].filter(function(l){return l!==undefined&&l!==null;}).join('\n');
@@ -827,11 +801,5 @@ var p=isHob?getPriceHobbled(w,l,f.priceGroup):getPriceFlat(w,l,f.priceGroup,f.no
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 renderFabricGrid();
-// Auto-advance step 1 since qty defaults to 1 (valid)
+// Initialize quantity spec (qty defaults to 1)
 setQtyVal(1);
-document.getElementById('room-label').addEventListener('input',function(){
-  S.room=this.value.trim();
-  document.getElementById('val2').textContent=S.room||'—';
-  sp('sp-room',S.room);
-  if(S.room)document.getElementById('step2').classList.add('done');
-});

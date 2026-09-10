@@ -163,72 +163,12 @@
     <!-- LEFT: CONFIGURATOR -->
     <div id="configurator">
 
-      <!-- ── STEP 1: DIMENSIONS ── -->
-      <div class="step-block active" id="sec-dims">
-        <div class="step-head" onclick="pbToggleStep('sec-dims')">
-          <span class="step-num" id="badge-1">1</span>
-          <span class="step-head-title">Window dimensions</span>
-          <span class="step-head-val" id="shv-1"></span>
-        </div>
-        <div class="step-body">
-          <p class="step-subhead">Enter width × height in inches (e.g., 36⅛). Measure to 1/8″ precision. We take 3W × 3H — the installer records final measurements at the home visit.</p>
-          <div class="opening-card">
-            <div class="dim-row">
-              <div class="form-group" style="margin:0"><label>Width (inches)</label><input type="text" placeholder='e.g. 36⅛"' id="dim-w-0" oninput="S.dims[0].w=this.value;updateQuote();checkDimWarn(0,this.value)"></div>
-              <div class="form-group" style="margin:0"><label>Height (inches)</label><input type="text" placeholder='e.g. 60½"' id="dim-h-0" oninput="S.dims[0].h=this.value;updateQuote();checkDimHWarn(0,this.value)"></div>
-            </div>
-            <div id="dim-warn-0" class="warn-note"></div>
-          </div>
-          <div style="margin-top:10px">
-            <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:#555;cursor:pointer">
-              <input type="checkbox" id="exact-frame-chk" onchange="document.getElementById('exact-frame-row').style.display=this.checked?'block':'none'" style="width:16px;height:16px;flex-shrink:0">
-              I have my exact ordered / frame width from a previous measurement or order
-            </label>
-            <div id="exact-frame-row" style="display:none;margin-top:8px">
-              <div class="form-group" style="margin:0">
-                <label>Exact frame / ordered width</label>
-                <input type="text" id="exact-frame-w" placeholder='e.g. 35⅝"' oninput="S.exactFrameW=this.value;updateQuote()">
-              </div>
-              <div class="spec-note" style="margin-top:4px">Enter only if your installer or a prior order confirmation already established the exact manufactured width.</div>
-            </div>
-          </div>
-          <div class="info-note" style="margin-top:8px">
-            <strong>Multiple windows with different sizes?</strong> Add each set of measurements in the Notes step below.
-          </div>
-          <div class="step-continue-wrap">
-            <button class="btn-step-continue" onclick="continueStep1()">Continue →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── STEP 2: MOUNT ── -->
-      <div class="step-block" id="sec-mount">
-        <div class="step-head" onclick="pbToggleStep('sec-mount')">
-          <span class="step-num" id="badge-2">2</span>
-          <span class="step-head-title">Mount &amp; frame situation</span>
-          <span class="step-head-val" id="shv-2"></span>
-        </div>
-        <div class="step-body">
-          <p class="step-subhead">Inside mount fits within the window opening. Direct mount frame attaches to the face of the frame. Tracking &amp; sliding systems for bypass, bi-fold, or barn-door configurations.</p>
-          <div class="opt-row">
-            <button class="opt-btn" onclick="selOpt(this,'mount');updateQuote();setTimeout(continueStep2,400)" data-val="Inside mount">Inside Mount <span style="font-size:10px;color:#999">(most common)</span></button>
-            <button class="opt-btn" onclick="checkMount(this)" data-val="Direct mount frame (exact or window opening)">Direct Mount Frame <span style="font-size:10px;color:#999">(exact or window opening)</span></button>
-            <button class="opt-btn" onclick="checkMount(this)" data-val="Tracking and sliding systems">Tracking &amp; Sliding Systems</button>
-          </div>
-          <div id="mount-note" class="warn-note"></div>
-          <div class="spec-note">
-            <strong>Inside mount minimum depth</strong>
-            Measure the depth of your window opening. 1⅞″ louvers need ~¾″ clearance; 4½″ louvers need ~1¾″. We'll confirm during measurement.
-          </div>
-        </div>
-      </div>
-
-      <!-- ── STEP 3: SHUTTER LINE ── -->
-      <div class="step-block" id="sec-line">
+      <!-- ── STEP 1: SHUTTER LINE (choose before entering size) ── -->
+      <div class="step-block active" id="sec-line">
         <div class="step-head" onclick="pbToggleStep('sec-line')">
-          <span class="step-num" id="badge-3">3</span>
+          <span class="step-num" id="badge-1">1</span>
           <span class="step-head-title">Which Norman shutter line?</span>
-          <span class="step-head-val" id="shv-3"></span>
+          <span class="step-head-val" id="shv-1"></span>
         </div>
         <div class="step-body">
           <p class="step-subhead">This determines available colors, louver sizes, and max panel widths.</p>
@@ -251,6 +191,83 @@
             </div>
           </div>
           <div id="line-note" style="display:none" class="info-note"></div>
+        </div>
+      </div>
+
+      <!-- ── STEP 2: DIMENSIONS ── -->
+      <div class="step-block" id="sec-dims">
+        <div class="step-head" onclick="pbToggleStep('sec-dims')">
+          <span class="step-num" id="badge-2">2</span>
+          <span class="step-head-title">Window dimensions</span>
+          <span class="step-head-val" id="shv-2"></span>
+        </div>
+        <div class="step-body">
+          <p class="step-subhead">Enter width × height in inches (e.g., 36⅛). Measure to 1/8″ precision. We take 3W × 3H — the installer records final measurements at the home visit.</p>
+          <div class="opening-card">
+            <div class="dim-row">
+              <div class="form-group" style="margin:0"><label>Width (inches)</label><input type="text" placeholder='e.g. 36⅛"' id="dim-w-0" oninput="S.dims[0].w=this.value;updateQuote();checkDimWarn(0,this.value)"></div>
+              <div class="form-group" style="margin:0"><label>Height (inches)</label><input type="text" placeholder='e.g. 60½"' id="dim-h-0" oninput="S.dims[0].h=this.value;updateQuote();checkDimHWarn(0,this.value)"></div>
+            </div>
+            <div id="dim-warn-0" class="warn-note"></div>
+          </div>
+
+          <!-- Quantity (shared .qty-btns stepper) -->
+          <div class="step-group-label">Quantity</div>
+          <div class="qty-btns">
+            <button class="qty-btn" type="button" onclick="adjQty(-1)">&#8722;</button>
+            <input class="qty-num" type="number" id="shutter-qty" value="1" min="1" max="50" oninput="onQtyInput(this.value,'shutter-qty')">
+            <button class="qty-btn" type="button" onclick="adjQty(1)">&#43;</button>
+          </div>
+
+          <!-- Mount / measurement type -->
+          <div class="step-group-label">Mount / measurement type</div>
+          <div class="opt-row">
+            <button class="opt-btn sel" type="button" onclick="selOpt(this,'measureType')" data-val="Inside mount (frame-to-frame)">Inside mount <span style="font-size:10px;color:#999">(frame-to-frame)</span></button>
+            <button class="opt-btn" type="button" onclick="selOpt(this,'measureType')" data-val="Outside mount">Outside mount</button>
+          </div>
+          <div class="step-note">Inside mount &mdash; measure frame-to-frame inside the window opening. Outside mount &mdash; measure the full area you want to cover.</div>
+
+          <div style="margin-top:10px">
+            <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:#555;cursor:pointer">
+              <input type="checkbox" id="exact-frame-chk" onchange="document.getElementById('exact-frame-row').style.display=this.checked?'block':'none'" style="width:16px;height:16px;flex-shrink:0">
+              I have my exact ordered / frame width from a previous measurement or order
+            </label>
+            <div id="exact-frame-row" style="display:none;margin-top:8px">
+              <div class="form-group" style="margin:0">
+                <label>Exact frame / ordered width</label>
+                <input type="text" id="exact-frame-w" placeholder='e.g. 35⅝"' oninput="S.exactFrameW=this.value;updateQuote()">
+              </div>
+              <div class="spec-note" style="margin-top:4px">Enter only if your installer or a prior order confirmation already established the exact manufactured width.</div>
+            </div>
+          </div>
+          <div class="info-note" style="margin-top:8px">
+            <strong>Multiple windows with different sizes?</strong> Add each set of measurements in the Notes step below.
+          </div>
+          <div class="step-continue-wrap">
+            <button class="btn-step-continue" onclick="continueStep1()">Continue →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STEP 3: MOUNT ── -->
+      <div class="step-block" id="sec-mount">
+        <div class="step-head" onclick="pbToggleStep('sec-mount')">
+          <span class="step-num" id="badge-3">3</span>
+          <span class="step-head-title">Mount &amp; frame situation</span>
+          <span class="step-head-val" id="shv-3"></span>
+        </div>
+        <div class="step-body">
+          <p class="step-subhead">Inside mount fits within the window opening. Direct mount frame attaches to the face of the frame. Tracking &amp; sliding systems for bypass, bi-fold, or barn-door configurations.</p>
+          <div class="opt-row">
+            <button class="opt-btn" onclick="selOpt(this,'mount');updateQuote();setTimeout(continueStep2,400)" data-val="Inside mount">Inside mount <span style="font-size:10px;color:#999">(most common)</span></button>
+            <button class="opt-btn" onclick="checkMount(this)" data-val="Direct mount frame (exact or window opening)">Direct Mount Frame <span style="font-size:10px;color:#999">(exact or window opening)</span></button>
+            <button class="opt-btn" onclick="checkMount(this)" data-val="Tracking and sliding systems">Tracking &amp; Sliding Systems</button>
+          </div>
+          <div id="mount-note" class="warn-note"></div>
+          <div class="spec-note">
+            <strong>Inside mount minimum depth</strong>
+            Measure the depth of your window opening. 1⅞″ louvers need ~¾″ clearance; 4½″ louvers need ~1¾″. We'll confirm during measurement.
+          </div>
         </div>
       </div>
 
@@ -484,10 +501,6 @@
         </div>
         <div class="step-body">
           <div class="form-group">
-            <label>Room(s) / location</label>
-            <input type="text" id="field-room" placeholder="e.g. Master bedroom, living room, kitchen" oninput="updateQuote()">
-          </div>
-          <div class="form-group">
             <label>Special instructions or questions</label>
             <textarea id="field-notes" placeholder="Any per-opening differences, stile preferences, obstructions (handles, cranks), match to existing shutters, or questions for the installer..."></textarea>
           </div>
@@ -497,76 +510,30 @@
         </div>
       </div>
 
-      <!-- ── STEP 14: QUANTITY ── -->
-      <div class="step-block" id="sec-qty">
-        <div class="step-head" onclick="pbToggleStep('sec-qty')">
+      <!-- ── STEP 14: DELIVERY ── -->
+      <div class="step-block" id="sec-delivery">
+        <div class="step-head" onclick="pbToggleStep('sec-delivery')">
           <span class="step-num" id="badge-14">14</span>
-          <span class="step-head-title">Quantity</span>
+          <span class="step-head-title">Delivery</span>
           <span class="step-head-val" id="shv-14"></span>
         </div>
         <div class="step-body">
-          <p class="step-subhead">How many windows or openings are you ordering shutters for?</p>
-          <div style="display:flex;align-items:center;gap:8px;margin-top:10px">
-            <button onclick="adjQty(-1)" style="width:38px;height:38px;border:1.5px solid #e8e8e4;border-radius:8px 0 0 8px;background:#fff;font-size:22px;cursor:pointer;color:#333;font-family:inherit;display:flex;align-items:center;justify-content:center;transition:border-color .12s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='#e8e8e4'">−</button>
-            <input type="number" id="qty-input" min="1" max="50" value="1"
-              style="width:62px;height:38px;border-top:1.5px solid #e8e8e4;border-bottom:1.5px solid #e8e8e4;border-left:none;border-right:none;font-size:18px;font-weight:600;color:#111;font-family:inherit;text-align:center;background:#fff"
-              oninput="S.count=parseInt(this.value)||1;updateQuote()">
-            <button onclick="adjQty(1)" style="width:38px;height:38px;border:1.5px solid #e8e8e4;border-radius:0 8px 8px 0;background:#fff;font-size:22px;cursor:pointer;color:#333;font-family:inherit;display:flex;align-items:center;justify-content:center;transition:border-color .12s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='#e8e8e4'">+</button>
-            <span style="font-size:13px;color:#666;margin-left:6px">window(s)</span>
-          </div>
-          <div class="step-continue-wrap">
-            <button class="btn-step-continue" onclick="continueStep14()">Continue →</button>
+          <div class="delivery-section">
+            <div class="delivery-note">Shipped via <strong>UPS or FedEx</strong>. Freight quoted separately.<div class="delivery-tariff">⚠ <strong>Tariff notice:</strong> Norman shutters ship from overseas. Import duties and tariffs are the buyer's responsibility and are charged separately by the carrier. We will disclose all freight charges before finalizing the order.</div></div>
           </div>
         </div>
       </div>
 
-      <!-- ── STEP 15: DELIVERY ── -->
-      <div class="step-block" id="sec-delivery">
-        <div class="step-head" onclick="pbToggleStep('sec-delivery')">
+      <!-- ── STEP 15: CONTACT & SUBMIT ── -->
+      <div class="step-block" id="sec-contact">
+        <div class="step-head" onclick="pbToggleStep('sec-contact')">
           <span class="step-num" id="badge-15">15</span>
-          <span class="step-head-title">Delivery</span>
+          <span class="step-head-title">Contact information</span>
           <span class="step-head-val" id="shv-15"></span>
         </div>
         <div class="step-body">
-          <div class="delivery-section">
-            <div class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA. Freight quoted separately.<div class="delivery-tariff">⚠ <strong>Tariff notice:</strong> Norman shutters ship from overseas. Import duties and tariffs are the buyer's responsibility and are charged separately by the carrier. We will disclose all freight charges before finalizing the order.</div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── STEP 16: CONTACT & SUBMIT ── -->
-      <div class="step-block" id="sec-contact">
-        <div class="step-head" onclick="pbToggleStep('sec-contact')">
-          <span class="step-num" id="badge-16">16</span>
-          <span class="step-head-title">Contact information</span>
-          <span class="step-head-val" id="shv-16"></span>
-        </div>
-        <div class="step-body">
-          <div class="dim-row">
-            <div class="form-group">
-              <label>First &amp; last name *</label>
-              <input type="text" id="field-name" data-pb-contact="name" placeholder="Your full name" required>
-            </div>
-            <div class="form-group">
-              <label>Phone number *</label>
-              <input type="tel" id="field-phone" data-pb-contact="phone" placeholder="(215) 555-0100" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Email address *</label>
-            <input type="email" id="field-email" data-pb-contact="email" placeholder="you@example.com" required>
-          </div>
-          <div class="form-group">
-            <label>Address <span style="font-weight:400;color:#888">(optional)</span></label>
-            <input type="text" id="field-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA">
-          </div>
-          <div class="form-group">
-            <label>Your city / zip code</label>
-            <input type="text" id="field-zip" placeholder="Philadelphia PA / 19103">
-          </div>
-          <div id="field-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
-          <button class="btn-cart-add" onclick="addShuttersToCart()" style="margin-bottom:8px">+ Add to Cart</button>
-          <button class="submit-btn" onclick="submitQuote()" data-pb-require-contact="field-contact-err">Submit Order for Review &rarr;</button>
+          <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->
+          <div id="pb-final-step"></div>
 
           <div class="success-box" id="success-box">
             <h3 style="font-size:20px">Request for Quote Submitted!</h3>
@@ -590,6 +557,7 @@
         <div class="q-row"><span class="q-lbl">Quantity</span><span class="q-val" id="qs-count">—</span></div>
         <div class="q-row"><span class="q-lbl">Type</span><span class="q-val" id="qs-opentype">—</span></div>
         <div class="q-row"><span class="q-lbl">Mount</span><span class="q-val" id="qs-mount">—</span></div>
+        <div class="q-row"><span class="q-lbl">Measurement</span><span class="q-val" id="qs-measure">—</span></div>
         <hr class="q-divider">
         <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px">Dimensions</div>
         <ul class="q-opening-list" id="qs-openings"></ul>
@@ -602,7 +570,7 @@
         <div class="q-row"><span class="q-lbl">Divider rail</span><span class="q-val" id="qs-divider">—</span></div>
         <div class="q-row"><span class="q-lbl">Color</span><span class="q-val" id="qs-color">—</span></div>
         <hr class="q-divider">
-        <div class="q-inline-note">We review your spec, take measurements at your home, then send you a formal invoice — Norman retail with 35% off. No payment until you approve.</div>
+        <div class="q-inline-note">We review your spec, take measurements at your home, then send you a formal invoice — Norman retail with 25% off. No payment until you approve.</div>
         <div class="q-phone">Questions? <a href="tel:6097421720">(609) 742-1720</a></div>
       </div>
     </div>
@@ -613,5 +581,10 @@
 <div id="site-footer"></div>
 <script src="../js/shared.js"></script>
 <script src="../js/pages/shutters.js"></script>
+<script>
+// Canonical final "Your details" contact + files step — identical on every product.
+document.getElementById('pb-final-step').innerHTML =
+  pbContactStepHTML({ bare: true, cartFn: 'addShuttersToCart()', submitFn: 'submitQuote()' });
+</script>
 </body>
 </html>

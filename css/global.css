@@ -35,6 +35,49 @@ body {
   z-index: 100;
 }
 
+/* ── Promo / announcement bar (dismissible, scrolls away above sticky nav) ── */
+.pb-promo-bar {
+  background: var(--gold);
+  color: #241a0d;
+  font-size: 12.5px;
+  line-height: 1.4;
+  font-weight: 500;
+  text-align: center;
+  padding: 8px 40px 8px 16px;
+  position: relative;
+}
+.pb-promo-bar a.pb-promo-cta {
+  color: #241a0d;
+  font-weight: 700;
+  text-decoration: underline;
+  white-space: nowrap;
+}
+.pb-promo-bar a.pb-promo-tel {
+  color: #241a0d;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.pb-promo-bar .pb-promo-close {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #241a0d;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  opacity: 0.7;
+}
+.pb-promo-bar .pb-promo-close:hover { opacity: 1; }
+@media (max-width: 480px) {
+  .pb-promo-bar { font-size: 11.5px; padding: 7px 34px 7px 12px; }
+  .pb-promo-bar .pb-promo-sep { display: none; }
+}
+
 /* Compensate for sticky nav height (~86px) on all anchor targets */
 html { scroll-padding-top: 96px; }
 [id] { scroll-margin-top: 96px; }
@@ -141,6 +184,15 @@ html { scroll-padding-top: 96px; }
 .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
 
 .opt-row { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
+/* Small helper note under an option row (used by the Soluna-pill standardization). Pages may override locally. */
+.step-note { font-size: 11px; color: #888; line-height: 1.6; margin-top: 6px; }
+/* Consistent Quantity stepper (Soluna style) — used by the canonical Step 1 on every product */
+.qty-btns { display: flex; align-items: center; }
+.qty-btn { width: 32px; height: 32px; border: 1px solid #ddd; background: #fff; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: var(--font); }
+.qty-btn:first-child { border-radius: 8px 0 0 8px; }
+.qty-btn:last-child { border-radius: 0 8px 8px 0; }
+.qty-num { width: 44px; text-align: center; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; border-left: none; border-right: none; height: 32px; font-size: 13px; font-weight: 500; font-family: var(--font); background: #fff; }
+.dim-unit { font-size: 11px; color: #999; margin-top: 4px; line-height: 1.4; }
 
 /* ---- CARDS ---- */
 .card { background: #fff; border: 1px solid #e8e8e4; border-radius: 12px; overflow: hidden; transition: border-color 0.15s; }
@@ -873,22 +925,69 @@ html, body { overflow-x: hidden; }
 }
 
 /* ============================================================
-   LIVE MODE — hide all public pricing displays
+   QUOTE-ONLY PRODUCTS — hide every public pricing display
+   ------------------------------------------------------------
+   Scoped to body.pb-quote-only, which shared.js adds on the pages
+   listed in PB_QUOTE_ONLY_PAGES. It catches the surcharge chips
+   ("+$45", "$7 each") as well as the estimate boxes, so a
+   quote-only product shows no dollar figure anywhere.
+
+   This block used to have no body scope, which meant it hid these
+   class names on EVERY page — so whether a product showed a price
+   came down to whether it happened to use one of these class names.
+   Faux wood was priced in JS but silenced here; cellular survived
+   only because its classes are named differently. The six priced
+   products (soft treatments, Basic Roller, Norman Soluna roller,
+   Portrait cellular, faux wood, real wood) now keep their prices.
    ============================================================ */
-.addon-price, .mo-price, .opt-card-price,
-.qtotal, .price-box, .price-pending,
-.price-estimate, .price-est-label,
-.price-line, .price-total-line, .price-note,
-.calc-price, .price-result, .price-display,
-.price-row, .price-summary, .price-breakdown,
-.price-out, .step-price, .configurator-price,
-#price-box, #price-pending, #qr-total, #q-total,
-#inline-total, #cv-pricesize, #pr-total,
-[class*="price-val"], [class*="qtotal-val"],
-[id^="pr-base"], [id^="pr-lining"], [id^="pr-soft"],
-[id^="pr-banding"], [id^="pr-sr"], [id^="pr-dn"],
-[id^="pr-valance"], [id^="pr-acc"], [id^="pr-freight"],
-[id^="pr-rd"], [id^="pr-motor"], [id^="pr-cargo"] {
+.pb-quote-only .addon-price,
+.pb-quote-only .mo-price,
+.pb-quote-only .opt-card-price,
+.pb-quote-only .qtotal,
+.pb-quote-only .price-box,
+.pb-quote-only .price-pending,
+.pb-quote-only .price-estimate,
+.pb-quote-only .price-est-label,
+.pb-quote-only .price-line,
+.pb-quote-only .price-total-line,
+.pb-quote-only .price-note,
+.pb-quote-only .calc-price,
+.pb-quote-only .price-result,
+.pb-quote-only .price-display,
+.pb-quote-only .price-row,
+.pb-quote-only .price-summary,
+.pb-quote-only .price-breakdown,
+.pb-quote-only .price-out,
+.pb-quote-only .step-price,
+.pb-quote-only .configurator-price,
+.pb-quote-only #price-box,
+.pb-quote-only #price-pending,
+.pb-quote-only #qr-total,
+.pb-quote-only #q-total,
+.pb-quote-only #inline-total,
+.pb-quote-only #cv-pricesize,
+.pb-quote-only #pr-total,
+.pb-quote-only [class*="price-val"],
+.pb-quote-only [class*="qtotal-val"],
+.pb-quote-only [id^="pr-base"],
+.pb-quote-only [id^="pr-lining"],
+.pb-quote-only [id^="pr-soft"],
+.pb-quote-only [id^="pr-banding"],
+.pb-quote-only [id^="pr-sr"],
+.pb-quote-only [id^="pr-dn"],
+.pb-quote-only [id^="pr-valance"],
+.pb-quote-only [id^="pr-acc"],
+.pb-quote-only [id^="pr-freight"],
+.pb-quote-only [id^="pr-rd"],
+.pb-quote-only [id^="pr-motor"],
+.pb-quote-only [id^="pr-cargo"],
+/* Catch-all for the surcharge chips — pages have coined .check-price,
+   .addon-price, .mo-price and more over time, and enumerating them one at a
+   time keeps missing new ones. Matched on CLASS only, deliberately: several
+   pages carry size and compatibility warnings in elements whose *id* contains
+   "price" (#ps-price-note is the "width over 110in, call us" message), and
+   those must keep showing on a quote-only product. */
+.pb-quote-only [class*="price"] {
   display: none !important;
 }
 
@@ -997,3 +1096,12 @@ html, body { overflow-x: hidden; }
 .v-active-check{display:none;position:absolute;top:7px;right:8px;background:var(--gold);color:#0A4A42;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;align-items:center;justify-content:center}
 .v-active .v-active-check{display:flex}
 @media(max-width:600px){.variant-select{padding:14px 16px}.variant-cards{grid-template-columns:1fr 1fr;gap:8px}.vcard-img{height:110px}}
+
+/* Hardware / component color swatch dot — used by pbColorRow() in shared.js
+   (Soluna open-roll + metal fascia, LightGuard 360 rails, hem bars, Basic Roller fascia) */
+.hw-sw{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:7px;vertical-align:-2px;border:1px solid rgba(0,0,0,.18);box-shadow:inset 0 1px 2px rgba(255,255,255,.3)}
+
+/* Long option lists (fabric / colour / pattern swatches) live in a fixed-height
+   window you scroll inside, so a 30–60 item collection doesn't stretch the page.
+   280px matches the Norman Soluna roller picker, which is the reference. */
+.pb-scrollbox{max-height:280px;overflow-y:auto;padding-right:4px;overscroll-behavior:contain}

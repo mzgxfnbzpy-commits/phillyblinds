@@ -312,7 +312,7 @@
         <div class="bracket-card" onclick="selBracket(this,'stat-bracket-grid','Double Wall Bracket')"><div class="bc-name">Double Wall Bracket</div><div class="bc-desc">Two rods — sheer + drape</div></div>
         <div class="bracket-card" onclick="selBracket(this,'stat-bracket-grid','Ceiling Bracket')"><div class="bc-name">Ceiling Bracket</div><div class="bc-desc">Drop: 2¾"–3" · Floor-to-ceiling look</div></div>
         <div class="bracket-card" onclick="selBracket(this,'stat-bracket-grid','Adjustable Swivel Bracket')"><div class="bc-name">Adjustable Swivel Bracket</div><div class="bc-desc">Bay windows &amp; curved poles · 4"–5½"</div></div>
-        <div class="bracket-card" onclick="selBracket(this,'stat-bracket-grid','Inside Mount Recess Bracket')"><div class="bc-name">Inside Mount Recess Bracket</div><div class="bc-desc">Inside window frame · Minimal look</div></div>
+        <div class="bracket-card" onclick="selBracket(this,'stat-bracket-grid','Inside mount Recess Bracket')"><div class="bc-name">Inside mount Recess Bracket</div><div class="bc-desc">Inside window frame · Minimal look</div></div>
         <div class="bracket-card" onclick="selBracket(this,'stat-bracket-grid','Square Wall Bracket')"><div class="bc-name">Square Wall Bracket</div><div class="bc-desc">Modern / geometric look · 3½"–3¾"</div></div>
         <div class="bracket-card" onclick="selBracket(this,'stat-bracket-grid','Square Extended Bracket')"><div class="bc-name">Square Extended Bracket</div><div class="bc-desc">Modern look · 7"–7¼" return</div></div>
         <div class="bracket-card" onclick="selBracket(this,'stat-bracket-grid','Square Double Bracket')"><div class="bc-name">Square Double Bracket</div><div class="bc-desc">Two rods · Modern style</div></div>
@@ -471,15 +471,11 @@
     </div>
 
     <div style="margin-bottom:22px">
-      <div style="font-size:13px;font-weight:600;color:#222;margin-bottom:8px">Track width (inches)</div>
-      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-        <div class="dim-box" style="flex:0 0 auto;padding:12px 16px;margin-bottom:0">
-          <div class="dim-box-label" style="margin-bottom:8px">Track width</div>
-          <input type="number" id="brass-width" min="12" max="384" step="0.5" placeholder="84" oninput="tBrassUpdate()" style="font-size:22px;font-weight:600;height:50px;text-align:center;width:110px">
-          <div class="dim-unit">inches</div>
-        </div>
-        <div style="font-size:12px;color:#666;line-height:1.7">Max continuous: 16ft (192"). Over 16ft: spliced 2-way center draw (up to 32ft).</div>
+      <div class="dim-box">
+        <div class="dim-box-label">Enter your rod width</div>
+        <div class="form-group"><label>Width</label><input type="number" id="brass-width" min="12" max="384" step="0.125" placeholder="84" oninput="tBrassUpdate()"><div class="dim-unit">inches &middot; max continuous 16ft (192&Prime;) &middot; over 16ft spliced 2-way, up to 32ft</div></div>
       </div>
+      <div class="step-note" style="margin-bottom:6px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm before fabrication.</div>
       <div id="brass-bracket-note" style="display:none;margin-top:8px" class="tooltip-note"></div>
     </div>
 
@@ -544,7 +540,7 @@
         <div class="bracket-card" onclick="selBracket(this,'brass-bracket-grid','Square decorative extended — 5½&quot; return')"><div class="bc-name">Square Dec. Extended</div><div class="bc-desc">5½" return · Modern look</div></div>
         <div class="bracket-card" onclick="selBracket(this,'brass-bracket-grid','Square decorative double — 7&quot; return')"><div class="bc-name">Square Dec. Double</div><div class="bc-desc">7" return · Two rods</div></div>
         <div class="bracket-card" onclick="selBracket(this,'brass-bracket-grid','Combo bracket — pole front / track back')"><div class="bc-name">Combo Bracket</div><div class="bc-desc">Pole on front, traverse on back · 7½"</div></div>
-        <div class="bracket-card" onclick="selBracket(this,'brass-bracket-grid','Ceiling mount bracket')"><div class="bc-name">Ceiling Mount</div><div class="bc-desc">Drop: 1½"–2"</div></div>
+        <div class="bracket-card" onclick="selBracket(this,'brass-bracket-grid','Ceiling mount bracket')"><div class="bc-name">Ceiling mount</div><div class="bc-desc">Drop: 1½"–2"</div></div>
       </div>
     </div>
 
@@ -659,15 +655,11 @@
     </div>
 
     <div style="margin-bottom:22px">
-      <div style="font-size:13px;font-weight:600;color:#222;margin-bottom:8px">Track width (inches)</div>
-      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-        <div class="dim-box" style="flex:0 0 auto;padding:12px 16px;margin-bottom:0">
-          <div class="dim-box-label" style="margin-bottom:8px">Track width</div>
-          <input type="number" id="cort-width" min="12" max="236" step="0.5" placeholder="84" oninput="cUpdate()" style="font-size:22px;font-weight:600;height:50px;text-align:center;width:110px">
-          <div class="dim-unit">inches</div>
-        </div>
-        <div style="font-size:12px;color:#666;line-height:1.7">Max continuous: 236". Brackets included — count auto-calculated.</div>
+      <div class="dim-box">
+        <div class="dim-box-label">Enter your rod width</div>
+        <div class="form-group"><label>Width</label><input type="number" id="cort-width" min="12" max="236" step="0.125" placeholder="84" oninput="cUpdate()"><div class="dim-unit">inches &middot; max continuous 236&Prime; &middot; brackets included, count auto-calculated</div></div>
       </div>
+      <div class="step-note" style="margin-bottom:6px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Approximate is fine &mdash; we confirm before fabrication.</div>
       <div id="cort-bracket-note" style="display:none;margin-top:8px" class="tooltip-note"></div>
     </div>
 
@@ -743,16 +735,6 @@
       <div class="step-title" style="margin-bottom:0">Request your quote</div>
     </div>
     <div id="sel-form">
-      <div class="form-row">
-        <div class="form-group"><label>Your name *</label><input type="text" id="sel-name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="sel-phone" placeholder="(215) 555-0100"></div>
-      </div>
-      <div class="form-group"><label>Email</label><input type="email" id="sel-email" placeholder="jane@example.com"></div>
-      <div class="form-group">
-        <label>Notes — panel weight, fabric, any details we should know</label>
-        <textarea id="sel-notes" style="min-height:80px" placeholder="e.g. Heavy velvet drapes, floor to ceiling 108&quot;, 3 windows side by side, ripple fold overlap masters preferred…"></textarea>
-      </div>
-
       <div style="background:var(--espresso-mid);border:.5px solid var(--border-dark);border-radius:12px;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:16px">
         <div style="font-size:13px;color:var(--cream)"><strong style="color:var(--gold)">Also need custom drapery panels?</strong><br><span style="font-size:12px;color:var(--text-muted)">We fabricate in-house — panels &amp; hardware quoted together.</span></div>
         <a href="soft-treatments.html" class="btn-gold" style="font-size:12px;padding:8px 14px;white-space:nowrap">Custom Drapery &rarr;</a>
@@ -763,11 +745,13 @@
         <div class="opt-row" id="grp-del-sel">
           <button class="opt-btn sel" onclick="selOpt(this,'grp-del-sel');document.getElementById('del-sel-s').style.display='block'">Ship to me</button>
         </div>
-        <div id="del-sel-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA.<div class="delivery-tariff">Note: tariffs and import fees are additional and itemized separately.</div></div>
+        <div id="del-sel-s" class="delivery-note">Shipped via <strong>UPS or FedEx</strong>.<div class="delivery-tariff">Note: tariffs and import fees are additional and itemized separately.</div></div>
       </div>
 
-      <button class="btn-cart-add" onclick="addSelectToCart()" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
-      <button class="btn-gold" onclick="submitSelect()" style="width:100%;padding:14px;font-size:14px;font-weight:600;margin-top:16px">Request Select Hardware Quote &rarr;</button>
+      <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->
+          <!-- Exact rod length + editable bracket count (shared.js pbRodSpecHTML) -->
+    <div id="pb-rod-spec"></div>
+    <div id="pb-final-step"></div>
     </div>
     <div class="success-box" id="sel-success" style="display:none">
       <strong>Quote request sent!</strong> We'll follow up within a few hours.<br>
@@ -792,6 +776,12 @@
 <footer class="site-footer" id="site-footer"></footer>
 <script src="../js/shared.js"></script>
 <script src="../js/pages/select-rods.js"></script>
+<script>
+// Canonical final "Your details" contact + files step — identical on every product.
+document.getElementById('pb-final-step').innerHTML = pbContactStepHTML({ bare: true, cartFn: 'addSelectToCart()', submitFn: 'submitSelect()' });
+
+document.getElementById('pb-rod-spec').innerHTML = pbRodSpecHTML({ title: 'Rod length &amp; brackets' });
+</script>
 </body>
 </html>
 

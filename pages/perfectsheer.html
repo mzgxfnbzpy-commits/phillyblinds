@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Configure and price Norman PerfectSheer™ shades. Soft horizontal sheer vanes, 32 colors, CCL or motorized. 35% Norman discount. Instant pricing. Philadelphia area.">
+<meta name="description" content="Configure Norman PerfectSheer™ shades. Soft horizontal sheer vanes, 32 colors, CCL or motorized. 25% Norman discount. Free custom quote. Philadelphia area.">
 <meta property="og:url" content="https://www.phillyblinds.com/pages/perfectsheer.html">
 <meta property="og:title" content="Norman PerfectSheer™ Shades — Philly Blinds">
-<meta property="og:description" content="Horizontal sheer vanes that tilt like blinds — diffuse light beautifully. 32 colors, CCL or motorized. 35% Norman discount. Instant pricing.">
+<meta property="og:description" content="Horizontal sheer vanes that tilt like blinds — diffuse light beautifully. 32 colors, CCL or motorized. 25% Norman discount. Free custom quote.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Philly Blinds">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Norman PerfectSheer™ Shades — Philly Blinds">
-<meta name="twitter:description" content="Configure and price Norman PerfectSheer™ shades. Instant pricing.">
+<meta name="twitter:description" content="Configure Norman PerfectSheer™ shades. Free custom quote.">
 <meta property="og:image" content="https://www.phillyblinds.com/img/social-preview.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -99,8 +99,8 @@
     <h1>Norman<br>PerfectSheer™</h1>
     <p class="sub">Soft horizontal sheer vanes that tilt open and closed like blinds — diffusing light beautifully while keeping your view. 100% polyester, 32 colors, CCL or motorized.</p>
     <div class="hero-pills">
-      <span class="hero-pill hero-pill-gold">Instant pricing</span>
-      <span class="hero-pill hero-pill-gold">35% Norman discount</span>
+      <span class="hero-pill">Free custom quote</span>
+      <span class="hero-pill hero-pill-gold">25% Norman discount</span>
       <span class="hero-pill">32 colors</span>
       <span class="hero-pill">CCL or motorized</span>
       <span class="hero-pill">NORMAN®</span>
@@ -115,50 +115,39 @@
   <div class="step-block" id="step1">
     <div class="step-head" onclick="toggleStep('step1')">
       <div class="step-num">1</div>
-      <div class="step-head-title">Window Measurements &amp; Mount</div>
+      <div class="step-head-title">Window measurements &amp; mount</div>
       <div class="step-head-val" id="s1val">—</div>
     </div>
     <div class="step-body">
-      <!-- Width + Height -->
-      <div class="dim-row">
-        <div>
-          <div class="dim-label">Width (inches)</div>
-          <input class="dim-whole" type="number" id="ps-width" min="12" max="110" placeholder="48" oninput="onDimChange()">
-          <div class="dim-unit">CCL: 12–98″ &bull; Motorized: up to 110″</div>
-        </div>
-        <div>
-          <div class="dim-label">Height (inches)</div>
-          <input class="dim-whole" type="number" id="ps-height" min="12" max="120" placeholder="60" oninput="onDimChange()">
-          <div class="dim-unit">CCL: 12–98″ &bull; Motorized: up to 120″</div>
+      <!-- Width + Height (canonical dim-box) -->
+      <div class="dim-box">
+        <div class="dim-box-label">Enter your window size</div>
+        <div class="form-row">
+          <div class="form-group"><label>Width</label><input type="number" id="ps-width" min="12" max="110" step="0.125" placeholder="48" oninput="onDimChange()"><div class="dim-unit">inches &middot; CCL 12&ndash;98&Prime; &middot; Motorized up to 110&Prime;</div></div>
+          <div class="form-group"><label>Height</label><input type="number" id="ps-height" min="12" max="120" step="0.125" placeholder="60" oninput="onDimChange()"><div class="dim-unit">inches &middot; CCL 12&ndash;98&Prime; &middot; Motorized up to 120&Prime;</div></div>
         </div>
       </div>
+      <div class="step-note" style="margin-bottom:10px"><a href="measure.html" style="color:var(--gold)">How to measure &rarr;</a> &bull; Measure to the nearest &frac14;&Prime;. For inside mount, give us the exact opening &mdash; we take the deduction.</div>
       <div id="ps-price-note" class="msg-box msg-warn" style="display:none"></div>
-      <div class="step-note">Measure to the nearest ¼″. For inside mount, give us the exact opening — we take the deduction.</div>
 
       <!-- Mount type -->
-      <div class="sub-label">Mount type</div>
-      <div class="opt-grid-3">
-        <div class="opt-card" onclick="pickMount(this,'Inside mount')">
-          <div class="opt-card-title">Inside Mount</div>
-          <div class="opt-card-desc">Fits inside window frame &middot; clean flush look &middot; mfr deducts 3/8″ automatically</div>
-        </div>
-        <div class="opt-card" onclick="pickMount(this,'Outside mount')">
-          <div class="opt-card-title">Outside Mount</div>
-          <div class="opt-card-desc">Mounts above or outside frame &middot; better light control &middot; covers more wall</div>
-        </div>
-        <div class="opt-card" onclick="pickMount(this,'Semi-inside mount')">
-          <div class="opt-card-title">Semi-Inside</div>
-          <div class="opt-card-desc">Partially recessed &middot; useful with shallow window frames</div>
-        </div>
+      <div style="font-size:12px;font-weight:600;color:#555;margin:14px 0 6px">Mount type</div>
+      <div class="opt-row" style="margin-bottom:6px">
+        <button class="opt-btn" onclick="pickMount(this,'Inside mount')">Inside mount</button>
+        <button class="opt-btn" onclick="pickMount(this,'Outside mount')">Outside mount</button>
+        <button class="opt-btn" onclick="pickMount(this,'Semi-inside mount')">Semi-Inside</button>
       </div>
+      <div class="step-note" style="margin-bottom:12px">Inside: fits inside frame &middot; clean flush look &middot; mfr deducts 3/8&Prime; automatically. Outside: mounts above/outside frame &middot; better light control &middot; covers more wall. Semi-Inside: partially recessed &middot; for shallow window frames.</div>
 
-      <!-- Quantity -->
-      <div class="sub-label">Quantity</div>
-      <div class="spinner-row">
-        <button class="spin-btn" onclick="adjPsQty(-1)">−</button>
-        <span class="spin-num" id="ps-qty-display">1</span>
-        <button class="spin-btn" onclick="adjPsQty(1)">+</button>
-        <span class="spin-label">shades (same size)</span>
+      <!-- Quantity (shared stepper) -->
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="font-size:12px;color:#666">Qty:</span>
+        <div class="qty-btns">
+          <button class="qty-btn" onclick="adjPsQty(-1)">&#8722;</button>
+          <span class="qty-num" id="ps-qty-display">1</span>
+          <button class="qty-btn" onclick="adjPsQty(1)">&#43;</button>
+        </div>
+        <span style="font-size:12px;color:#666">shades (same size)</span>
       </div>
       <div class="step-note">For different sizes, add each shade to cart separately. Freight is calculated on the full order.</div>
     </div>
@@ -172,17 +161,11 @@
       <div class="step-head-val" id="s3val">Light Filtering</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-2">
-        <div class="opt-card sel" onclick="pickFabric(this,'lf')">
-          <div class="opt-card-title">Light Filtering</div>
-          <div class="opt-card-desc">22 colors &middot; sheer vanes diffuse daylight &middot; view-through when open</div>
-        </div>
-        <div class="opt-card" onclick="pickFabric(this,'rd')">
-          <div class="opt-card-title">Room Darkening <span style="font-size:10px;opacity:.65">+20%</span></div>
-          <div class="opt-card-desc">10 colors &middot; more privacy when closed &middot; not a true blackout</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn sel" onclick="pickFabric(this,'lf')">Light Filtering</button>
+        <button class="opt-btn" onclick="pickFabric(this,'rd')">Blackout <span style="font-size:10px;opacity:.65">+20%</span></button>
       </div>
-      <div class="step-note">Room Darkening adds a liner to reduce light — best for bedrooms. Not a full blackout shade.</div>
+      <div class="step-note">Light Filtering: 22 colors &middot; sheer vanes diffuse daylight &middot; view-through when open. Blackout: 10 colors &middot; more privacy when closed &middot; adds a liner to reduce light, best for bedrooms &middot; not a true blackout.</div>
     </div>
   </div>
 
@@ -219,7 +202,7 @@
           <option value="Frosty Asphalt">Frosty Asphalt (F1194) — sheer dark</option>
           <option value="Nightfall">Nightfall (F1191) — deep charcoal</option>
         </optgroup>
-        <optgroup label="Room Darkening (10 colors — +20%)" id="ps-rd-group" style="display:none">
+        <optgroup label="Blackout (10 colors — +20%)" id="ps-rd-group" style="display:none">
           <option value="Moon">Moon (F1200) — white</option>
           <option value="Silk">Silk (F1201) — warm white</option>
           <option value="Chai Latte">Chai Latte (F1202) — blush cream</option>
@@ -244,29 +227,20 @@
       <div class="step-head-val" id="s5val">Cord Loop</div>
     </div>
     <div class="step-body">
-      <div class="opt-grid-2">
-        <div class="opt-card sel" onclick="pickLift(this,'ccl')">
-          <div class="opt-card-title">Continuous Cord Loop</div>
-          <div class="opt-card-desc">Max 98″W × 98″H &middot; smooth pull-chain &middot; most popular</div>
-        </div>
-        <div class="opt-card" onclick="pickLift(this,'motor')">
-          <div class="opt-card-title">Norman Motorization</div>
-          <div class="opt-card-desc">Up to 110″W × 120″H &middot; app, remote &amp; voice control &middot; rechargeable or plug-in</div>
-        </div>
+      <div class="opt-row">
+        <button class="opt-btn sel" onclick="pickLift(this,'ccl')">Continuous Cord Loop</button>
+        <button class="opt-btn" onclick="pickLift(this,'motor')">Norman Motorization</button>
       </div>
+      <div class="step-note">Continuous Cord Loop: max 98″W × 98″H &middot; smooth pull-chain &middot; most popular. Norman Motorization: up to 110″W × 120″H &middot; app, remote &amp; voice control &middot; rechargeable or plug-in.</div>
       <div id="ps-motor-note" class="msg-box msg-info" style="display:none;margin-top:8px">Norman Smart Motorization — rechargeable battery or AC plug-in. Surcharge (+$482) added to your final quote.</div>
+      <div id="ps-motor-config" style="display:none;margin-top:8px"><!-- Populated by normanMotorSection when Motorized is selected --></div>
       <div id="ps-chain-len-wrap" style="margin-top:14px">
         <div class="sub-label">Chain length</div>
-        <div class="opt-grid-2">
-          <div class="opt-card sel" onclick="pickCLen(this,'default')">
-            <div class="opt-card-title">Default</div>
-            <div class="opt-card-desc">75% of shade height — comfortable reach</div>
-          </div>
-          <div class="opt-card" onclick="pickCLen(this,'custom')">
-            <div class="opt-card-title">Custom</div>
-            <div class="opt-card-desc">Specify length below (min 75% of height)</div>
-          </div>
+        <div class="opt-row">
+          <button class="opt-btn sel" onclick="pickCLen(this,'default')">Default</button>
+          <button class="opt-btn" onclick="pickCLen(this,'custom')">Custom</button>
         </div>
+        <div class="step-note">Default: 75% of shade height — comfortable reach. Custom: specify length below (min 75% of height).</div>
         <div id="ps-clen-custom" style="display:none;align-items:center;gap:8px;margin-top:8px">
           <input type="number" id="ps-clen-in" placeholder="e.g. 54" min="9" style="width:100px;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px">
           <span style="font-size:12px;color:#666">inches</span>
@@ -283,24 +257,13 @@
       <div class="step-head-val" id="s6val">Curved fascia</div>
     </div>
     <div class="step-body">
-      <div class="val-grid" id="grp-ps-valance">
-        <div class="opt-card sel" onclick="pickValance(this,'Curved fascia (free)')">
-          <div class="opt-card-title">Curved Fascia — Free</div>
-          <div class="opt-card-desc">Fabric-covered headrail cover matching your shade fabric &middot; included at no charge</div>
-        </div>
-        <div class="opt-card" id="ps-val-fab35" onclick="pickValance(this,'Fabric valance 3½″')">
-          <div class="opt-card-title">Fabric Valance 3½″</div>
-          <div class="opt-card-desc">Flat front valance panel &middot; available for heights ≤72″ only</div>
-        </div>
-        <div class="opt-card" onclick="pickValance(this,'Fabric valance 4½″')">
-          <div class="opt-card-title">Fabric Valance 4½″</div>
-          <div class="opt-card-desc">Flat front panel, taller fascia &middot; available for all heights</div>
-        </div>
-        <div class="opt-card" onclick="pickValance(this,'Wood valance 4½″')">
-          <div class="opt-card-title">Wood Valance 4½″</div>
-          <div class="opt-card-desc">Painted or stained hardwood &middot; 6 paint &amp; 6 stain colors</div>
-        </div>
+      <div class="opt-row" id="grp-ps-valance">
+        <button class="opt-btn sel" onclick="pickValance(this,'Curved fascia (free)')">Curved Fascia — Free</button>
+        <button class="opt-btn" id="ps-val-fab35" onclick="pickValance(this,'Fabric valance 3½″')">Fabric Valance 3½″</button>
+        <button class="opt-btn" onclick="pickValance(this,'Fabric valance 4½″')">Fabric Valance 4½″</button>
+        <button class="opt-btn" onclick="pickValance(this,'Wood valance 4½″')">Wood Valance 4½″</button>
       </div>
+      <div class="step-note">Curved Fascia (free): fabric-covered headrail cover matching your shade fabric. Fabric Valance 3½″: flat front panel, heights ≤72″ only. Fabric Valance 4½″: taller fascia, all heights. Wood Valance 4½″: painted or stained hardwood &middot; 6 paint &amp; 6 stain colors.</div>
       <div id="ps-val-size-warn" class="msg-box msg-warn" style="display:none;margin-top:8px">Height over 72″ — 3½″ valance not available. Only 4½″ options can be ordered.</div>
       <div id="ps-wood-val-wrap" style="display:none;margin-top:10px">
         <div class="sub-label">Wood valance color (paint or stain)</div>
@@ -383,21 +346,12 @@
       <div class="step-head-val" id="s9val">—</div>
     </div>
     <div class="step-body">
-      <div class="form-row">
-        <div class="form-group"><label>Your name *</label><input type="text" id="ps-name" data-pb-contact="name" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Phone *</label><input type="tel" id="ps-phone" data-pb-contact="phone" placeholder="(215) 555-0100"></div>
-      </div>
-      <div class="form-group"><label>Email *</label><input type="email" id="ps-email" data-pb-contact="email" placeholder="jane@example.com"></div>
-      <div class="form-group"><label>Address <span style="font-weight:400;color:#888">(optional)</span></label><input type="text" id="ps-address" data-pb-contact="address" placeholder="123 Main St, Philadelphia PA"></div>
-      <div class="form-group"><label>Notes / questions</label><textarea id="ps-notes" placeholder="e.g. three windows side by side, prefer right cord side, bedroom"></textarea></div>
-
       <div class="delivery-section" style="margin-bottom:14px">
-        <div class="delivery-note">Shipped via <strong>UPS or FedEx</strong> from Huntingdon Valley, PA. Shipping estimated in your quote.<div class="delivery-tariff">Note: tariffs and import fees are additional.</div></div>
+        <div class="delivery-note">Shipped via <strong>UPS or FedEx</strong>. Shipping estimated in your quote.<div class="delivery-tariff">Note: tariffs and import fees are additional.</div></div>
       </div>
 
-      <div id="ps-contact-err" style="display:none;background:#FEE2E2;border-radius:8px;padding:9px 13px;font-size:12px;color:#991B1B;margin-bottom:8px"></div>
-      <button class="btn-cart-add" onclick="psAddToCart()" style="width:100%;margin-bottom:8px">+ Add to Cart</button>
-      <button class="submit-btn" onclick="submitPSQuote(this)" data-pb-require-contact="ps-contact-err">Submit Order for Review &rarr;</button>
+      <!-- Canonical final contact + files step (shared.js pbContactStepHTML) -->
+      <div id="pb-final-step"></div>
       <div class="success-box" id="ps-success">
         <h3>Order submitted!</h3>
         <p>We'll confirm your exact price within a few hours. For anything urgent, call Justin at <strong>(609) 742-1720</strong> &mdash; 24/7.</p>
@@ -411,7 +365,7 @@
 <div>
   <div class="quote-panel">
     <div class="qp-title">Your Estimate</div>
-    <div class="qp-pending" id="qp-pending">Complete the steps on the left to see your live price estimate.</div>
+    <div class="qp-pending" id="qp-pending">Complete the steps on the left and we&rsquo;ll prepare your quote.</div>
 
     <div id="ps-selection-summary" style="display:none">
       <div class="qrow"><span class="qrow-label">Product</span><span class="qrow-val">Norman PerfectSheer™</span></div>
@@ -426,19 +380,18 @@
     </div>
 
     <div id="ps-price-box" style="display:none">
-      <div style="font-size:10px;color:var(--text-dark);letter-spacing:1px;margin-bottom:4px">35% NORMAN DISCOUNT APPLIED</div>
+      <div style="font-size:10px;color:var(--text-dark);letter-spacing:1px;margin-bottom:4px">25% NORMAN DISCOUNT APPLIED</div>
       <div class="ps-per-shade" id="ps-price-num">—</div>
       <div class="ps-breakdown" id="ps-price-breakdown"></div>
       <div class="ps-grand-row">
         <div class="ps-grand-label">Est. total (incl. freight)</div>
         <div class="ps-grand-val" id="ps-price-total">—</div>
       </div>
-      <div class="qnote">Norman retail pricing with 35% discount. Freight at retail rate. Final price confirmed at order.</div>
+      <div class="qnote">Norman retail pricing with 25% discount. Freight at retail rate. Final price confirmed at order.</div>
     </div>
 
-    <div id="ps-cart-wrap" style="display:none;margin-top:16px">
-      <button class="btn-cart-add" onclick="psAddToCart()" style="width:100%">+ Add to Cart</button>
-    </div>
+    <!-- Add to Cart lives in the final step, directly above Submit Order for Review —
+         a second copy here left the pair split across the page. -->
   </div>
 </div>
 
@@ -448,6 +401,9 @@
 <script src="../js/shared.js"></script>
 <script src="../js/pages/perfectsheer.js"></script>
 <script>
+// Canonical final "Your details" contact + files step — identical on every product.
+document.getElementById('pb-final-step').innerHTML =
+  pbContactStepHTML({ bare: true, cartFn: 'psAddToCart()', submitFn: 'submitPSQuote(this)' });
 function updateStep1Val() {
   var w = document.getElementById('ps-width').value;
   var h = document.getElementById('ps-height').value;
@@ -458,7 +414,7 @@ function updateStep1Val() {
   document.getElementById('s1val').textContent = parts.length ? parts.join(' · ') : '—';
 }
 function pickMount(el, label) {
-  document.querySelectorAll('#step1 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#step1 .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
   PS.mount = label;
   document.getElementById('qr-mount').textContent = label;
@@ -474,10 +430,10 @@ function onDimChange() {
   psCalc();
 }
 function pickFabric(el, type) {
-  document.querySelectorAll('#step2 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#step2 .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
   PS.fabric = type;
-  document.getElementById('s3val').textContent = type === 'rd' ? 'Room Darkening' : 'Light Filtering';
+  document.getElementById('s3val').textContent = type === 'rd' ? 'Blackout' : 'Light Filtering';
   markDone('step2');
   psUpdateColors(type);
 }
@@ -491,23 +447,33 @@ function onColorChange() {
   psCalc();
 }
 function pickLift(el, type) {
-  document.querySelectorAll('#step4 .opt-grid-2 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#step4 .opt-row .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
   PS.lift = type;
   document.getElementById('s5val').textContent = type === 'motor' ? 'Motorization' : 'Cord Loop';
   document.getElementById('qr-lift').textContent = type === 'motor' ? 'Norman Motorization' : 'Continuous Cord Loop';
   document.getElementById('ps-motor-note').style.display   = type === 'motor' ? 'block' : 'none';
   document.getElementById('ps-chain-len-wrap').style.display = type === 'ccl'   ? 'block' : 'none';
+  var mc = document.getElementById('ps-motor-config');
+  if (mc) {
+    if (type === 'motor') {
+      mc.style.display = 'block';
+      if (typeof normanMotorSection === 'function') normanMotorSection('ps-motor-config', 'PerfectSheer', typeof psCalc === 'function' ? psCalc : null);
+    } else {
+      mc.style.display = 'none';
+      mc.innerHTML = '';
+    }
+  }
   markDone('step4');
   psCalc();
 }
 function pickCLen(el, type) {
-  document.querySelectorAll('#ps-chain-len-wrap .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#ps-chain-len-wrap .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
   document.getElementById('ps-clen-custom').style.display = type === 'custom' ? 'flex' : 'none';
 }
 function pickValance(el, label) {
-  document.querySelectorAll('#step5 .opt-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('#step5 .opt-btn').forEach(function(c){ c.classList.remove('sel'); });
   el.classList.add('sel');
   PS.valance = label;
   var short = label.replace(' (free)', '');

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Cart / Checkout / Order-Review System — Developer Handoff</title>
+<style>
+  :root{
+    --espresso:#1C1510; --espresso-mid:#251E16; --espresso-deep:#120E09;
+    --gold:#C8973F; --cream:#F5ECD7; --gold-mid:#FBF7F0;
+    --ink:#1a1a1a; --muted:#666; --faint:#999; --line:#e8e8e4; --paper:#faf9f6;
+    --green:#1d7a4d; --red:#991B1B; --amber:#b45309;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;font-size:15px}
+  a{color:var(--gold)}
+  code,pre{font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace}
+  code{background:#f0ede7;padding:1px 6px;border-radius:5px;font-size:.86em;color:#7a4b12}
+  pre{background:var(--espresso-deep);color:#e9e3d4;padding:18px 20px;border-radius:10px;overflow-x:auto;font-size:13px;line-height:1.6}
+  pre code{background:none;color:inherit;padding:0}
+  .tok-key{color:#9ad0ff} .tok-str{color:#cdeb6a} .tok-com{color:#8a7f6a;font-style:italic} .tok-fn{color:#f3c969}
+
+  header{background:var(--espresso);color:var(--cream);padding:46px 24px 40px}
+  .wrap{max-width:1020px;margin:0 auto;padding:0 24px}
+  header .wrap{padding:0}
+  .eyebrow{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+  header h1{font-size:32px;margin:0 0 8px;font-weight:800;letter-spacing:-.5px}
+  header p{color:#cabba6;margin:0;max-width:680px}
+  .meta-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+  .pill{font-size:11.5px;font-weight:600;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:var(--cream);padding:5px 12px;border-radius:20px}
+
+  nav.toc{position:sticky;top:0;z-index:10;background:rgba(28,21,16,.97);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,.08)}
+  nav.toc .wrap{display:flex;flex-wrap:wrap;gap:4px 18px;padding:11px 24px}
+  nav.toc a{color:#cabba6;text-decoration:none;font-size:12.5px;font-weight:600;padding:4px 2px}
+  nav.toc a:hover{color:var(--gold)}
+
+  main{padding:14px 0 80px}
+  section{padding:34px 0;border-bottom:1px solid var(--line)}
+  section:last-child{border-bottom:none}
+  h2{font-size:23px;margin:0 0 4px;font-weight:800;letter-spacing:-.3px;scroll-margin-top:64px}
+  h2 .num{color:var(--gold);font-weight:800;margin-right:10px}
+  h3{font-size:16px;margin:26px 0 8px;font-weight:700;color:var(--espresso)}
+  .lead{color:var(--muted);margin:2px 0 18px;max-width:760px}
+  p{max-width:820px}
+  ul,ol{max-width:820px}
+  li{margin:4px 0}
+
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:16px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr}.meta-row{margin-top:14px}}
+
+  table{border-collapse:collapse;width:100%;margin:14px 0;font-size:13.5px;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  th,td{text-align:left;padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:var(--gold-mid);font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:#7a5a23}
+  tr:last-child td{border-bottom:none}
+  td code{white-space:nowrap}
+
+  .tag{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px;vertical-align:middle}
+  .tag.ok{background:#e3f5ea;color:var(--green)} .tag.gap{background:#fdeaea;color:var(--red)} .tag.partial{background:#fdf3e0;color:var(--amber)}
+
+  .callout{border-left:4px solid var(--gold);background:var(--gold-mid);padding:14px 18px;border-radius:0 8px 8px 0;margin:16px 0}
+  .callout.warn{border-color:var(--amber);background:#fff7ec}
+  .callout.danger{border-color:var(--red);background:#fdeeee}
+  .callout .k{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+  .callout.warn .k{color:var(--amber)} .callout.danger .k{color:var(--red)}
+
+  .flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:16px 0;font-size:13px}
+  .flow .node{background:#fff;border:1.5px solid var(--espresso);border-radius:8px;padding:8px 12px;font-weight:600}
+  .flow .node.alt{border-color:var(--gold);background:var(--gold-mid)}
+  .flow .arr{color:var(--gold);font-weight:800}
+
+  .filetag{font-size:11px;font-weight:700;color:#fff;background:var(--espresso-mid);padding:2px 8px;border-radius:5px;margin-right:6px}
+  .checklist{list-style:none;padding:0;max-width:820px}
+  .checklist li{display:flex;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line)}
+  .checklist .box{flex:0 0 18px;height:18px;border:2px solid var(--gold);border-radius:4px;margin-top:2px}
+  footer{background:var(--espresso-deep);color:#9A8570;padding:26px 24px;font-size:12.5px;text-align:center}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Terminal 2 · Developer Handoff</div>
+    <h1>Cart, Checkout &amp; Order-Review System</h1>
+    <p>Universal cart architecture for Philly Blinds &amp; Blindznation. One cart, one saved contact, one bundled order across every product line — roller, cellular, roman, drapery, shutters, blinds.</p>
+    <div class="meta-row">
+      <span class="pill">Vanilla JS · no framework</span>
+      <span class="pill">Engine: <code style="background:none;color:#cabba6;padding:0">js/shared.js</code></span>
+      <span class="pill">Backend: <code style="background:none;color:#cabba6;padding:0">api/quote.js</code> (Vercel + Resend)</span>
+      <span class="pill">Storage: localStorage</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#overview">Overview</a>
+    <a href="#buttons">Buttons</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#storage">Data Storage</a>
+    <a href="#localstorage">LocalStorage</a>
+    <a href="#payload">Email Payload</a>
+    <a href="#validation">Validation</a>
+    <a href="#gaps">Gaps &amp; Spec</a>
+    <a href="#checklist">Build Checklist</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ============ OVERVIEW ============ -->
+  <section id="overview">
+    <h2><span class="num">1</span>System Overview</h2>
+    <p class="lead">The cart is one shared engine loaded on every page via <code>js/shared.js</code>. Each product configurator only has to hand the engine a normalized item; the engine owns storage, the drawer UI, contact persistence, checkout, and the email handoff.</p>
+
+    <div class="flow">
+      <span class="node">Product configurator</span>
+      <span class="arr">→</span>
+      <span class="node alt">pbAddToCart(item)</span>
+      <span class="arr">→</span>
+      <span class="node">localStorage <code style="background:none;padding:0;color:inherit">pb_cart_v1</code></span>
+      <span class="arr">→</span>
+      <span class="node alt">Cart drawer</span>
+      <span class="arr">→</span>
+      <span class="node">pbGoCheckout()</span>
+      <span class="arr">→</span>
+      <span class="node alt">Quote modal</span>
+      <span class="arr">→</span>
+      <span class="node">POST /api/quote</span>
+      <span class="arr">→</span>
+      <span class="node">Resend → team + customer email</span>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3 style="margin-top:0">Two persistence layers</h3>
+        <p style="margin:0"><b><code>pb_cart_v1</code></b> — the array of configured products (the "basket").<br>
+        <b><code>pb_contact_v1</code></b> — name / email / phone, entered <i>once</i> and reused on every product page and at checkout.</p>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0">Two submit paths, one button text</h3>
+        <p style="margin:0"><b>Add to Cart</b> — saves config silently, no contact required.<br>
+        <b>Submit Order for Review</b> — requires name + email + phone, bundles the whole cart, fires the email. No payment is taken.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="k">Dual-site rule</div>
+      Everything in this document is identical on <b>phillyblinds</b> and <b>blindznation</b>. Only swap brand-specific values: team email addresses, <code>BRAND</code>/<code>SITE_URL</code> in <code>api/quote.js</code>, the mailto fallback address, and the CSS color tokens. The cart logic, schemas, and validation are byte-for-byte the same.
+    </div>
+  </section>
+
+  <!-- ============ BUTTONS ============ -->
+  <section id="buttons">
+    <h2><span class="num">2</span>The Two Buttons (every product page)</h2>
+    <p class="lead">Every configurator renders its estimate/CTA block through <code>pbRenderEstimate()</code> in <code>shared.js</code>. That block is where the two buttons live, so adding them to a new product page is automatic once the page calls that function.</p>
+
+    <table>
+      <tr><th>Button</th><th>Function called</th><th>Requires contact?</th><th>Behavior</th></tr>
+      <tr>
+        <td><b>Add to Cart</b></td>
+        <td><code>pbEstimateAddCart(id)</code> → <code>pbAddToCart(item)</code></td>
+        <td><span class="tag ok">No</span></td>
+        <td>Saves configuration, price estimate, notes &amp; attachments to <code>pb_cart_v1</code>. Shows toast, increments badge. Stays on page.</td>
+      </tr>
+      <tr>
+        <td><b>Submit Order for Review</b></td>
+        <td><code>pbOpenQuoteFromPanel(id)</code> / from drawer <code>pbGoCheckout()</code></td>
+        <td><span class="tag gap">Yes</span></td>
+        <td>Opens quote modal pre-filled from saved contact. Validates name + email + phone, then POSTs the whole cart to <code>/api/quote</code>. No charge.</td>
+      </tr>
+    </table>
+
+    <div class="callout warn">
+      <div class="k">Naming — action required</div>
+      The cart drawer's checkout button already reads <b>"Submit Order for Review →"</b> (<code>shared.js</code> <code>_initCart()</code>). The per-product panel button currently reads <b>"Get My Free Estimate →"</b> (<code>pbRenderEstimate()</code>). Per the payment-flow spec the per-product button should also read <b>"Submit Order for Review"</b>. This is a one-line label change — see <a href="#checklist">Build Checklist</a> item 3.
+    </div>
+
+    <h3>Drop-in markup for a new product page</h3>
+    <p>A configurator only needs to call <code>pbRenderEstimate()</code> after each price calc. The engine injects both buttons, the line-item summary, and the estimate disclaimer:</p>
+<pre><code><span class="tok-com">// after computing the price for the current selection:</span>
+<span class="tok-fn">pbRenderEstimate</span>(
+  <span class="tok-str">'price-box'</span>,                    <span class="tok-com">// id of the existing dark price element</span>
+  lines,                          <span class="tok-com">// [{label, value}] of chosen options</span>
+  subtotal,                       <span class="tok-com">// Number — or null for custom-quote products</span>
+  conflictMsg,                    <span class="tok-com">// '' = ok; non-empty blocks submit &amp; shows error</span>
+  <span class="tok-key">function</span>(isCheckout){ <span class="tok-com">/* optional custom add-to-cart hook */</span> }
+);</code></pre>
+  </section>
+
+  <!-- ============ ARCHITECTURE ============ -->
+  <section id="architecture">
+    <h2><span class="num">3</span>Cart Architecture</h2>
+    <p class="lead">All cart code lives in <code>js/shared.js</code>, loaded on every page. No per-page cart code is needed. Functions are grouped into five concerns.</p>
+
+    <table>
+      <tr><th>Concern</th><th>Key functions</th><th>What it does</th></tr>
+      <tr>
+        <td><b>Contact persistence</b></td>
+        <td><code>pbGetContact()</code> · <code>pbSaveContact()</code> · <code>pbAutoFillContact()</code> · <code>pbContactValid()</code></td>
+        <td>Reads/writes <code>pb_contact_v1</code>; auto-fills any <code>[data-pb-contact]</code> input and rebinds a save-on-input listener on every page load.</td>
+      </tr>
+      <tr>
+        <td><b>Cart engine</b></td>
+        <td><code>pbGetCart()</code> · <code>pbAddToCart()</code> · <code>pbRemoveCartItem()</code> · <code>pbClearCart()</code> · <code>_pbSaveCart()</code></td>
+        <td>CRUD over the <code>pb_cart_v1</code> array. Each item gets a unique <code>cartId</code>. Save triggers badge + toast.</td>
+      </tr>
+      <tr>
+        <td><b>Drawer UI</b></td>
+        <td><code>pbOpenCart()</code> · <code>pbCloseCart()</code> · <code>_renderCartBody()</code> · <code>_initCart()</code> · <code>_updateCartBadge()</code></td>
+        <td>Injects the slide-out drawer + overlay + toast into <code>&lt;body&gt;</code> once. Renders line items, per-item + running estimate, remove buttons.</td>
+      </tr>
+      <tr>
+        <td><b>Estimate / CTA panel</b></td>
+        <td><code>pbRenderEstimate()</code> · <code>pbEstimateAddCart()</code> · <code>pbOpenQuoteFromPanel()</code> · <code>pbCollectItem()</code></td>
+        <td>Renders the per-product configuration summary + the two buttons. Bridges a configurator's selection into a cart item.</td>
+      </tr>
+      <tr>
+        <td><b>Checkout / quote</b></td>
+        <td><code>pbGoCheckout()</code> · <code>pbShowQuoteModal()</code> · <code>pbSubmitQuote()</code></td>
+        <td>Flattens the whole cart into one selection list, opens the contact modal, POSTs to <code>/api/quote</code>, renders success / mailto-fallback.</td>
+      </tr>
+      <tr>
+        <td><b>Motorization sub-modal</b></td>
+        <td><code>pbAddToCartWithMotor()</code> · <code>_pmmConfirm()</code> · <code>normanMotorSection()</code></td>
+        <td>Optional motor-options overlay for motorizable products; result stored on the item as <code>motorized</code> + <code>motorOptions</code>.</td>
+      </tr>
+    </table>
+
+    <h3>Why a single shared engine</h3>
+    <ul>
+      <li><b>One basket across product types.</b> A roller shade, a roman, and a set of shutters all land in the same <code>pb_cart_v1</code> array and submit together.</li>
+      <li><b>Contact entered once.</b> <code>pb_contact_v1</code> is read by every product page's contact fields and by the checkout modal — the customer never re-types name/email/phone.</li>
+      <li><b>Add a product = call one function.</b> New configurators inherit cart, drawer, checkout, validation, and email for free.</li>
+    </ul>
+  </section>
+
+  <!-- ============ DATA STORAGE ============ -->
+  <section id="storage">
+    <h2><span class="num">4</span>Data Storage Structure</h2>
+    <p class="lead">Two JSON values in <code>localStorage</code>. Versioned keys (<code>_v1</code>) so the schema can be migrated without colliding with old data.</p>
+
+    <h3>4.1 — Cart item schema <span class="tag partial">notes &amp; files: to add</span></h3>
+    <p>Current shape written by <code>pbAddToCart()</code>, plus the two fields required by the Terminal 2 spec (<span class="tag gap">NEW</span>):</p>
+<pre><code><span class="tok-key">localStorage</span>[<span class="tok-str">'pb_cart_v1'</span>] = [
+  {
+    <span class="tok-key">cartId</span>:    <span class="tok-str">"1718999999999-4823"</span>,   <span class="tok-com">// unique id: Date.now()+'-'+rand</span>
+    <span class="tok-key">product</span>:   <span class="tok-str">"Norman Soluna Roller Shade"</span>,
+    <span class="tok-key">specs</span>:     <span class="tok-str">"Width: 36in | Height: 60in | Fabric: Oyster"</span>, <span class="tok-com">// flat string</span>
+    <span class="tok-key">lines</span>:     [ {label:<span class="tok-str">"Width"</span>, value:<span class="tok-str">"36 in"</span>}, ... ], <span class="tok-com">// structured</span>
+    <span class="tok-key">price</span>:     312,                       <span class="tok-com">// Number estimate, or null = custom quote</span>
+    <span class="tok-key">qty</span>:       1,
+    <span class="tok-key">motorized</span>: <span class="tok-key">false</span>,
+    <span class="tok-key">motorOptions</span>: <span class="tok-key">null</span>,             <span class="tok-com">// {power, remote, channel, remotes, ...}</span>
+
+    <span class="tok-com">// ▼▼▼ NEW — required by Terminal 2 spec ▼▼▼</span>
+    <span class="tok-key">notes</span>:        <span class="tok-str">"2nd-floor bedroom, need by July"</span>,  <span class="tok-com">// per-item note</span>
+    <span class="tok-key">attachments</span>: [                       <span class="tok-com">// see §5.3 for the size constraint</span>
+      { name:<span class="tok-str">"window.jpg"</span>, type:<span class="tok-str">"image/jpeg"</span>, size:184320, data:<span class="tok-str">"data:image/jpeg;base64,..."</span> }
+    ]
+  },
+  ...
+]</code></pre>
+
+    <h3>4.2 — Contact schema</h3>
+    <p>Written by <code>pbSaveContact()</code>; read by <code>pbAutoFillContact()</code> and pre-filled into the checkout modal. <code>address</code> is <span class="tag partial">optional / proposed</span> per spec:</p>
+<pre><code><span class="tok-key">localStorage</span>[<span class="tok-str">'pb_contact_v1'</span>] = {
+  <span class="tok-key">name</span>:    <span class="tok-str">"Jane Smith"</span>,      <span class="tok-com">// full name (modal splits into first/last)</span>
+  <span class="tok-key">email</span>:   <span class="tok-str">"jane@example.com"</span>,
+  <span class="tok-key">phone</span>:   <span class="tok-str">"(215) 555-0100"</span>,
+  <span class="tok-key">address</span>: <span class="tok-str">"123 Main St, Huntingdon Valley PA"</span>  <span class="tok-com">// NEW — optional, proposed</span>
+}</code></pre>
+
+    <div class="callout">
+      <div class="k">How contact auto-fill works</div>
+      Any input on any page tagged <code>data-pb-contact="name|email|phone|address"</code> is auto-populated from <code>pb_contact_v1</code> on load, and re-saves on every keystroke. That is the entire "enter once, carry everywhere" mechanism — a configurator just needs to add the attribute to its contact inputs.
+    </div>
+  </section>
+
+  <!-- ============ LOCALSTORAGE ============ -->
+  <section id="localstorage">
+    <h2><span class="num">5</span>LocalStorage / Session Handling</h2>
+
+    <h3>5.1 — Keys &amp; access functions</h3>
+    <table>
+      <tr><th>Key</th><th>Type</th><th>Read</th><th>Write</th><th>Lifetime</th></tr>
+      <tr><td><code>pb_cart_v1</code></td><td>JSON array</td><td><code>pbGetCart()</code></td><td><code>_pbSaveCart()</code></td><td>Persistent (until checkout/clear)</td></tr>
+      <tr><td><code>pb_contact_v1</code></td><td>JSON object</td><td><code>pbGetContact()</code></td><td><code>pbSaveContact()</code></td><td>Persistent (reused indefinitely)</td></tr>
+    </table>
+    <p>Every read is wrapped in <code>try/catch</code> and falls back to <code>[]</code> / <code>{}</code>, so corrupt or absent storage never throws. Writes are also guarded (private-mode / quota errors fail silently).</p>
+
+    <h3>5.2 — Why localStorage, not sessionStorage</h3>
+    <p>The cart and contact must survive page navigation between product pages and across browser sessions (a customer configuring shades over several days). <code>sessionStorage</code> would drop the cart on tab close. localStorage is the correct choice; there is no server-side cart — the basket is entirely client-side until the order is submitted.</p>
+
+    <div class="callout danger">
+      <div class="k">⚠ Critical constraint — attachments &amp; the 5 MB quota</div>
+      <p style="margin:0 0 8px">localStorage is capped at <b>~5 MB per origin</b> and only stores strings. Storing uploaded photos/PDFs as base64 inside <code>pb_cart_v1</code> will overflow that quota after just 2–3 phone photos (base64 inflates size ~33%, and a single iPhone photo is 3–5 MB). When the quota is hit, <code>setItem</code> throws and — because writes are silently caught — the cart save fails <i>without warning</i>.</p>
+      <p style="margin:0"><b>Recommended handling for files (pick one):</b></p>
+      <ol style="margin:8px 0 0">
+        <li><b>Defer upload to checkout (simplest).</b> Keep only file <i>metadata</i> (<code>name/type/size</code>) in the cart for display; attach the actual <code>File</code> objects only at submit time via <code>FormData</code> to <code>/api/quote</code>. Files never enter localStorage. <b>← recommended.</b></li>
+        <li><b>IndexedDB for blobs.</b> Store <code>File</code>/<code>Blob</code> objects in IndexedDB keyed by <code>cartId</code> (no 5 MB string cap, holds binary natively); keep only the metadata reference in <code>pb_cart_v1</code>.</li>
+        <li><b>Direct-to-storage.</b> Upload on selection to Vercel Blob / S3, store only the returned URL in the cart item. Best for large files but adds infra.</li>
+      </ol>
+    </div>
+
+    <h3>5.3 — Recommended file handling (option 1, no infra)</h3>
+<pre><code><span class="tok-com">// At Add-to-Cart: keep lightweight metadata only (safe for localStorage)</span>
+item.attachments = Array.from(fileInput.files).<span class="tok-fn">map</span>(f => ({
+  name: f.name, type: f.type, size: f.size
+}));
+<span class="tok-com">// Hold the real File objects in memory keyed by cartId (not serialized):</span>
+window._pbFiles = window._pbFiles || {};
+window._pbFiles[item.cartId] = Array.from(fileInput.files);
+
+<span class="tok-com">// At checkout: send as multipart so binaries never touch localStorage or JSON</span>
+<span class="tok-key">const</span> fd = <span class="tok-key">new</span> <span class="tok-fn">FormData</span>();
+fd.<span class="tok-fn">append</span>(<span class="tok-str">'payload'</span>, <span class="tok-fn">JSON.stringify</span>(orderPayload));
+<span class="tok-fn">Object.values</span>(window._pbFiles).<span class="tok-fn">flat</span>().<span class="tok-fn">forEach</span>(f => fd.<span class="tok-fn">append</span>(<span class="tok-str">'attachments'</span>, f));
+<span class="tok-fn">fetch</span>(<span class="tok-str">'/api/quote'</span>, { method:<span class="tok-str">'POST'</span>, body: fd });</code></pre>
+    <p style="font-size:13px;color:var(--muted)">Trade-off: in-memory files are lost on hard page reload (metadata still shows in the cart so the customer can re-attach). For cross-reload durability use option 2 (IndexedDB).</p>
+  </section>
+
+  <!-- ============ PAYLOAD ============ -->
+  <section id="payload">
+    <h2><span class="num">6</span>Email Payload Structure</h2>
+    <p class="lead">Checkout POSTs to the Vercel serverless function <code>api/quote.js</code>, which sends two emails through Resend: one to the team and one confirmation to the customer.</p>
+
+    <h3>6.1 — Current request contract (JSON)</h3>
+    <p><code>POST /api/quote</code> · <code>Content-Type: application/json</code> — built in <code>pbSubmitQuote()</code>:</p>
+<pre><code>{
+  <span class="tok-key">name</span>:       <span class="tok-str">"Jane Smith"</span>,          <span class="tok-com">// required</span>
+  <span class="tok-key">email</span>:      <span class="tok-str">"jane@example.com"</span>,    <span class="tok-com">// required, regex-validated</span>
+  <span class="tok-key">phone</span>:      <span class="tok-str">"(215) 555-0100"</span>,
+  <span class="tok-key">product</span>:    <span class="tok-str">"3 items"</span>,             <span class="tok-com">// or single product name</span>
+  <span class="tok-key">selections</span>: [ {label, value}, ... ],  <span class="tok-com">// whole cart flattened; max 60 rows server-side</span>
+  <span class="tok-key">estimate</span>:   <span class="tok-str">"$1,240 (estimate only)"</span>,  <span class="tok-com">// or null</span>
+  <span class="tok-key">notes</span>:      <span class="tok-str">"..."</span>,
+  <span class="tok-key">sourceUrl</span>:  <span class="tok-str">"https://www.phillyblinds.com/pages/shades.html"</span>,
+  <span class="tok-key">_hp</span>:        <span class="tok-str">""</span>,                    <span class="tok-com">// honeypot — must stay empty</span>
+  <span class="tok-key">_t</span>:         8423                    <span class="tok-com">// ms since form load (anti-bot timing)</span>
+}</code></pre>
+
+    <h3>6.2 — How the cart maps into the payload</h3>
+    <p><code>pbGoCheckout()</code> flattens every cart item into the <code>selections</code> array, inserting a divider row per item and expanding lines / motorization / per-item estimate:</p>
+<pre><code>selections = [
+  { label:<span class="tok-str">"─── Item 1"</span>, value:<span class="tok-str">"Norman Soluna Roller Shade"</span> },
+  { label:<span class="tok-str">"Width"</span>,      value:<span class="tok-str">"36 in"</span> },
+  { label:<span class="tok-str">"Estimate"</span>,   value:<span class="tok-str">"$312 (estimate only)"</span> },
+  { label:<span class="tok-str">"─── Item 2"</span>, value:<span class="tok-str">"Custom Roman Shade"</span> },
+  { label:<span class="tok-str">"Price"</span>,      value:<span class="tok-str">"Custom quote"</span> },
+  ...
+]</code></pre>
+
+    <h3>6.3 — Response &amp; server actions</h3>
+    <table>
+      <tr><th>Outcome</th><th>HTTP</th><th>Body</th><th>Client behavior</th></tr>
+      <tr><td>Success</td><td>200</td><td><code>{ ok: true }</code></td><td>Show success state; <code>pbSaveContact()</code>; (clear cart — see checklist)</td></tr>
+      <tr><td>Bot / honeypot / too-fast</td><td>200</td><td><code>{ ok: true }</code></td><td>Silent accept, no email sent</td></tr>
+      <tr><td>Validation</td><td>400</td><td><code>{ error }</code></td><td>Show inline error</td></tr>
+      <tr><td>Rate limited</td><td>429</td><td><code>{ error }</code></td><td>Show "wait a few minutes"</td></tr>
+      <tr><td>Email key missing</td><td>503</td><td><code>{ error }</code></td><td>Fall back to mailto link</td></tr>
+      <tr><td>Send failed</td><td>500</td><td><code>{ error, fallback }</code></td><td>Render mailto + phone fallback</td></tr>
+    </table>
+    <p>On success the server sends: <b>(a)</b> a styled team email to <code>justin / sarah / mike / tarin @phillyblinds.com</code> with the full configuration table and <code>reply_to</code> set to the customer, and <b>(b)</b> a branded confirmation to the customer (only if their email is valid). Env vars required in Vercel: <code>RESEND_API_KEY</code> (and optional <code>RESEND_FROM</code>).</p>
+
+    <h3>6.4 — Proposed: attachments + address <span class="tag gap">NEW</span></h3>
+    <p>To carry files and the optional address through, switch the request to <code>multipart/form-data</code> and extend the server to forward Resend <code>attachments</code>:</p>
+<pre><code><span class="tok-com">// CLIENT — multipart instead of JSON</span>
+fd.<span class="tok-fn">append</span>(<span class="tok-str">'payload'</span>, <span class="tok-fn">JSON.stringify</span>({ ...order, address }));
+files.<span class="tok-fn">forEach</span>(f => fd.<span class="tok-fn">append</span>(<span class="tok-str">'attachments'</span>, f));
+
+<span class="tok-com">// SERVER (api/quote.js) — Resend supports base64 attachments:</span>
+attachments: files.<span class="tok-fn">map</span>(f => ({ filename: f.name, content: f.base64 }))</code></pre>
+    <div class="callout warn">
+      <div class="k">Server note</div>
+      The current <code>api/quote.js</code> has a 20 KB body guard and parses JSON only. Multipart + attachments needs: raised body limit, a multipart parser (or Vercel's built-in), and a per-file size/type allow-list mirroring the client (<code>image/* , .pdf, .heic</code>). Keep total attachment size within Resend's 40 MB message cap.
+    </div>
+  </section>
+
+  <!-- ============ VALIDATION ============ -->
+  <section id="validation">
+    <h2><span class="num">7</span>Validation Requirements</h2>
+    <p class="lead">Validation runs in two places: the browser (UX + fast feedback) and the server (authoritative + anti-abuse). Add to Cart requires nothing; Submit Order for Review requires name + email + phone.</p>
+
+    <h3>7.1 — Client-side (shared.js)</h3>
+    <table>
+      <tr><th>Field</th><th>Rule</th><th>Enforced by</th></tr>
+      <tr><td>Name</td><td>Non-empty (first + last in modal)</td><td><code>pbContactValid()</code>, <code>pbSubmitQuote()</code></td></tr>
+      <tr><td>Email</td><td>Non-empty + <code>/^[^\s@]+@[^\s@]+\.[^\s@]+$/</code></td><td><code>pbContactValid()</code>, <code>pbSubmitQuote()</code></td></tr>
+      <tr><td>Phone</td><td>Required for Submit Order (per spec)</td><td><code>pbContactValid()</code> <span class="tag partial">modal: make required</span></td></tr>
+      <tr><td>Address</td><td>Optional</td><td>—</td></tr>
+      <tr><td>Config conflict</td><td>Non-empty <code>conflictMsg</code> disables submit</td><td><code>pbRenderEstimate()</code></td></tr>
+      <tr><td>Files</td><td><code>accept="image/*,.pdf,.heic,.png,.jpg,.jpeg"</code></td><td>file input + (add size cap, see §5.2)</td></tr>
+    </table>
+    <div class="callout warn">
+      <div class="k">Spec gap — phone</div>
+      Terminal 2 requires <b>phone</b> for Submit Order. <code>pbContactValid()</code> already enforces name + phone + email, but the standalone checkout modal (<code>pbSubmitQuote()</code>) validates only name + email and treats phone as preferred-but-optional. Make phone required in the modal to fully match the spec.
+    </div>
+
+    <h3>7.2 — Server-side (api/quote.js)</h3>
+    <table>
+      <tr><th>Check</th><th>Mechanism</th><th>On fail</th></tr>
+      <tr><td>Method</td><td>POST only (OPTIONS preflight handled)</td><td>405</td></tr>
+      <tr><td>Origin</td><td>Allow-list + <code>*.vercel.app</code> preview regex</td><td>Forced to canonical origin</td></tr>
+      <tr><td>Rate limit</td><td>In-memory 5 req / 10 min per IP</td><td>429</td></tr>
+      <tr><td>Honeypot</td><td><code>_hp</code> must be empty</td><td>Silent 200, no send</td></tr>
+      <tr><td>Timing</td><td><code>_t</code> ≥ 2000 ms since load</td><td>Silent 200, no send</td></tr>
+      <tr><td>Body size</td><td>Stringified body &lt; 20 KB</td><td>413</td></tr>
+      <tr><td>Field limits</td><td>name 200 · email 254 · phone 30 · product 200 · notes 5000 · url 500</td><td>Truncated</td></tr>
+      <tr><td>Selections cap</td><td>Max 60 rows</td><td>Sliced</td></tr>
+      <tr><td>Required name</td><td>Non-empty</td><td>400</td></tr>
+      <tr><td>URL scheme</td><td><code>http(s)://</code> only (blocks <code>javascript:</code>)</td><td>Nulled</td></tr>
+      <tr><td>XSS</td><td><code>&lt; &gt; "</code> escaped before HTML email build</td><td>Sanitized</td></tr>
+    </table>
+
+    <div class="callout">
+      <div class="k">Design principle</div>
+      The client validates for UX; the server never trusts the client. Every field is length-capped and HTML-escaped server-side before being interpolated into the email template, and silent 200s on bot signals avoid teaching scrapers what tripped them.
+    </div>
+  </section>
+
+  <!-- ============ GAPS ============ -->
+  <section id="gaps">
+    <h2><span class="num">8</span>Spec Conformance &amp; Gaps</h2>
+    <p class="lead">Status of each Terminal 2 requirement against the live system.</p>
+    <table>
+      <tr><th>Requirement</th><th>Status</th><th>Where / what's needed</th></tr>
+      <tr><td>Universal cart on every product page</td><td><span class="tag ok">Done</span></td><td><code>shared.js</code> loaded site-wide</td></tr>
+      <tr><td>Add to Cart — no contact required</td><td><span class="tag ok">Done</span></td><td><code>pbAddToCart()</code></td></tr>
+      <tr><td>Add to Cart — saves configuration &amp; pricing</td><td><span class="tag ok">Done</span></td><td><code>specs</code>, <code>lines</code>, <code>price</code></td></tr>
+      <tr><td>Add to Cart — saves notes</td><td><span class="tag gap">Gap</span></td><td>Add <code>notes</code> field to cart item + UI in drawer</td></tr>
+      <tr><td>Add to Cart — saves uploaded files</td><td><span class="tag gap">Gap</span></td><td>Add <code>attachments</code> (§5.3 in-memory + metadata)</td></tr>
+      <tr><td>Submit Order requires name/email/phone</td><td><span class="tag partial">Partial</span></td><td>Make phone required in checkout modal (§7.1)</td></tr>
+      <tr><td>Address optional</td><td><span class="tag gap">Gap</span></td><td>Add optional address field + <code>pb_contact_v1.address</code></td></tr>
+      <tr><td>Contact entered once, carried across all products</td><td><span class="tag ok">Done</span></td><td><code>pb_contact_v1</code> + <code>[data-pb-contact]</code></td></tr>
+      <tr><td>Retain notes / attachments / PDFs / images</td><td><span class="tag gap">Gap</span></td><td>Depends on notes + attachments items above</td></tr>
+      <tr><td>Checkout uses same contact, editable</td><td><span class="tag ok">Done</span></td><td>Modal pre-fills + lets user edit</td></tr>
+      <tr><td>Checkout sends all products together</td><td><span class="tag ok">Done</span></td><td><code>pbGoCheckout()</code> bundles cart</td></tr>
+      <tr><td>Button text "Submit Order for Review"</td><td><span class="tag partial">Partial</span></td><td>Drawer ✓; rename per-product panel button</td></tr>
+      <tr><td>No payment / manual review</td><td><span class="tag ok">Done</span></td><td>Quote-only; "No payment now" copy present</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ CHECKLIST ============ -->
+  <section id="checklist">
+    <h2><span class="num">9</span>Build Checklist to Close Gaps</h2>
+    <p class="lead">Ordered, low-risk steps. All changes are in <code>js/shared.js</code> and <code>api/quote.js</code> — then mirror to blindznation.</p>
+    <ul class="checklist">
+      <li><span class="box"></span><div><b>1. Per-item notes.</b> Add a <code>notes</code> field to the cart item in <code>pbAddToCart</code>/<code>pbCollectItem</code>; render an editable note line per item in <code>_renderCartBody()</code>; include each item's note in the <code>pbGoCheckout()</code> selections.</div></li>
+      <li><span class="box"></span><div><b>2. Attachments.</b> Add file metadata to the cart item; hold <code>File</code> objects in <code>window._pbFiles[cartId]</code> (§5.3); show "📎 N files" per item in the drawer; send via <code>FormData</code> at checkout.</div></li>
+      <li><span class="box"></span><div><b>3. Rename panel button.</b> In <code>pbRenderEstimate()</code> change <i>"Get My Free Estimate →"</i> to <b>"Submit Order for Review →"</b> to match the drawer + spec.</div></li>
+      <li><span class="box"></span><div><b>4. Require phone in checkout modal.</b> In <code>pbSubmitQuote()</code> add a non-empty phone check (mirror <code>pbContactValid()</code>); mark the modal phone field required.</div></li>
+      <li><span class="box"></span><div><b>5. Optional address.</b> Add an address input to the checkout modal tagged <code>data-pb-contact="address"</code>; persist to <code>pb_contact_v1</code>; pass through to the payload.</div></li>
+      <li><span class="box"></span><div><b>6. Server attachments.</b> Extend <code>api/quote.js</code> to accept multipart, forward Resend <code>attachments</code>, raise the body limit, and enforce per-file type/size (§6.4).</div></li>
+      <li><span class="box"></span><div><b>7. Clear cart on success.</b> Call <code>pbClearCart()</code> after a 200 from checkout so a submitted order doesn't resubmit.</div></li>
+      <li><span class="box"></span><div><b>8. Mirror to blindznation.</b> Apply 1–7 to the sister repo, swapping only email/domain/brand/colors.</div></li>
+    </ul>
+
+    <div class="callout">
+      <div class="k">Files touched</div>
+      <span class="filetag">js/shared.js</span> cart engine, drawer, estimate panel, checkout modal &nbsp;
+      <span class="filetag">api/quote.js</span> payload + attachments &nbsp;
+      <span class="filetag">css/global.css</span> only if new drawer styles are added
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Philly Blinds · Blindznation — Cart / Checkout / Order-Review · Developer Handoff (Terminal 2)<br>
+  Engine: js/shared.js · Backend: api/quote.js (Vercel + Resend) · Storage: localStorage <code style="background:none;color:inherit">pb_cart_v1</code> + <code style="background:none;color:inherit">pb_contact_v1</code>
+</footer>
+
+</body>
+</html>
