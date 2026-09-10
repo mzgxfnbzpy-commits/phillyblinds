@@ -718,9 +718,6 @@ function calcRoman() {
 }
 
 // ── DRAPERY PRICING CALCULATOR ───────────────────────────────
-// Rates (Justin confirmed): $120/width unlined · $130/width lined (liner included, BO=LF same price)
-// Goblet/Barrel: +$20/width · Interlining: +$10/width · Height >100": +$10/width per 10"
-// Width = ceil((rod width × fullness) ÷ 54), min 2
 // ── Drapery rates — Justin, Sept 2026 ───────────────────────────────────────
 // Priced per cut (one 54" width of fabric). The rate climbs with finished
 // length, because a longer drape is more fabric handling and more labour per
