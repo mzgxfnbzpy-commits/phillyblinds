@@ -528,7 +528,10 @@ function updateCalc() {
   // Detail hidden per owner request — base/lining/fold/banding/SmartRelease/valance/accessories roll into
   // retail; only the Day & Night surcharge (an allowed add-on) stays visible.
   ['pr-lining-row','pr-soft-row','pr-banding-row','pr-sr-row','pr-valance-row','pr-acc-row'].forEach(function(id){showRow(id,false);});
-  var _cpBaseRow=document.getElementById('pr-base'); if(_cpBaseRow&&_cpBaseRow.parentElement)_cpBaseRow.parentElement.style.display='none';
+  // Hide the itemised base figure, NOT its parent: #pr-base is a bare span sitting
+  // directly inside .price-estimate, so hiding parentElement blanked the whole price
+  // panel. That went unnoticed while this product was quote-only.
+  var _cpBaseRow=document.getElementById('pr-base'); if(_cpBaseRow)_cpBaseRow.style.display='none';
   var NORMAN_DISC_CP=0.25;
   var cpRetailSub=(per*qty)+(srAdd*qty)+(dnAdd*qty)+(vSur*qty)+(accT*qty);
   var cpDiscountAmt=Math.round(cpRetailSub*NORMAN_DISC_CP);
