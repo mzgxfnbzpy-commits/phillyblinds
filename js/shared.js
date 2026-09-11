@@ -364,8 +364,8 @@ function renderFooter(isHome) {
         <div class="footer-tagline">Serving Philadelphia, South Jersey, Salt Lake City &amp; surrounding areas. Out-of-state available — product ships nationwide.</div>
         <a href="tel:6097421720" style="display:block;font-size:15px;font-weight:600;color:var(--gold);text-decoration:none;margin-bottom:2px">(609) 742-1720</a>
         <div style="font-size:11px;color:var(--text-faint);margin-bottom:6px">Justin Healy &mdash; call or text 24/7</div>
-        <a href="mailto:justin@phillyblinds.com" style="font-size:12px;color:var(--text-muted);text-decoration:none;display:block;margin-bottom:4px">justin@phillyblinds.com</a>
-        <a href="mailto:sarah@phillyblinds.com" style="font-size:12px;color:var(--text-muted);text-decoration:none;display:block;margin-bottom:14px">sarah@phillyblinds.com</a>
+        <a href="mailto:justin@phillyblinds.com,sarah@phillyblinds.com,mike@phillyblinds.com,tarin@phillyblinds.com" style="font-size:12px;color:var(--text-muted);text-decoration:none;display:block;margin-bottom:4px">justin@phillyblinds.com</a>
+        <a href="mailto:justin@phillyblinds.com,sarah@phillyblinds.com,mike@phillyblinds.com,tarin@phillyblinds.com" style="font-size:12px;color:var(--text-muted);text-decoration:none;display:block;margin-bottom:14px">justin@phillyblinds.com</a>
         ${(_PB_REVIEW_URL || true) ? `<a href="${_PB_REVIEW_URL || 'https://www.google.com/search?q=Philly+Blinds+Huntingdon+Valley+PA+window+treatments'}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#fbbc04;text-decoration:none;background:rgba(251,188,4,0.10);border:1px solid rgba(251,188,4,0.25);border-radius:6px;padding:6px 12px">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Leave us a Google review</a>` : ''}
       </div>
@@ -1875,7 +1875,7 @@ async function pbSubmitQuote() {
     }
     if (notes.trim()) mailLines.push('', 'Notes:', notes.trim());
     if (_pbQuoteFiles && _pbQuoteFiles.length) mailLines.push('', '(' + _pbQuoteFiles.length + ' file attachment(s) — please reply to this email with the photos/PDFs attached.)');
-    var mailHref = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent('Quote Request — ' + name) +
+    var mailHref = 'mailto:justin@phillyblinds.com,sarah@phillyblinds.com,mike@phillyblinds.com,tarin@phillyblinds.com?subject=' + encodeURIComponent('Quote Request — ' + name) +
       '&body=' + encodeURIComponent(mailLines.join('\n'));
 
     if (errEl) {
@@ -2467,7 +2467,7 @@ function _initInstallationAddons() {
         '<div style="font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">We\'ll follow up with installation pricing</div>' +
         '<div style="font-size:13px;color:var(--cream);margin-bottom:6px">Philadelphia, South Jersey, Salt Lake City &amp; surrounding areas. Out-of-state installation available at reasonable rates.</div>' +
         '<a href="tel:6097421720" style="display:inline-flex;align-items:center;gap:7px;background:var(--gold);color:var(--espresso);font-size:13px;font-weight:700;padding:9px 16px;border-radius:7px;text-decoration:none;margin-bottom:6px">&#128222; (609) 742-1720</a>' +
-        '<div style="font-size:12px;color:var(--text-dark);margin-top:4px">Or email: <a href="mailto:justin@phillyblinds.com" style="color:var(--gold);text-decoration:none">justin@phillyblinds.com</a></div>' +
+        '<div style="font-size:12px;color:var(--text-dark);margin-top:4px">Or email: <a href="mailto:justin@phillyblinds.com,sarah@phillyblinds.com,mike@phillyblinds.com,tarin@phillyblinds.com" style="color:var(--gold);text-decoration:none">justin@phillyblinds.com</a></div>' +
       '</div>';
     btn.before(wrap);
     btn.setAttribute('data-install-id', id);
@@ -2518,7 +2518,7 @@ function _initFileUploads() {
         'onchange="pbShowFileNames(this,\'' + id + '-names\')">' +
       '<div id="' + id + '-names" style="font-size:11px;color:#555;margin-top:6px;line-height:1.8"></div>' +
       '<div style="font-size:11px;color:#aaa;margin-top:5px;line-height:1.5">Window photos, room photos, measurements, inspiration — anything that helps. ' +
-        'After submitting, email files directly to <a href="mailto:justin@phillyblinds.com" style="color:inherit">justin@phillyblinds.com</a> if needed.</div>';
+        'After submitting, email files directly to <a href="mailto:justin@phillyblinds.com,sarah@phillyblinds.com,mike@phillyblinds.com,tarin@phillyblinds.com" style="color:inherit">justin@phillyblinds.com</a> if needed.</div>';
     btn.before(wrap);
     btn.setAttribute('data-fu-id', id);
   });
@@ -2639,7 +2639,7 @@ function _initContactPanel() {
       '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:6px">' +
         '<a href="tel:6097421720" class="pb-cp-action" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:#1C1510;color:#2DE0C1;text-decoration:none;font-size:12px;font-weight:700;padding:12px 8px;border-radius:10px;transition:opacity .15s" onmouseover="this.style.opacity=\'.82\'" onmouseout="this.style.opacity=\'1\'">&#128222;<span>Call now</span></a>' +
         '<a href="sms:6097421720" class="pb-cp-action" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:#1C1510;color:#2DE0C1;text-decoration:none;font-size:12px;font-weight:700;padding:12px 8px;border-radius:10px;transition:opacity .15s" onmouseover="this.style.opacity=\'.82\'" onmouseout="this.style.opacity=\'1\'">&#128172;<span>Text now</span></a>' +
-        '<a href="mailto:justin@phillyblinds.com" class="pb-cp-action" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:#1C1510;color:#2DE0C1;text-decoration:none;font-size:12px;font-weight:700;padding:12px 8px;border-radius:10px;transition:opacity .15s" onmouseover="this.style.opacity=\'.82\'" onmouseout="this.style.opacity=\'1\'">&#9993;&#65039;<span>Email</span></a>' +
+        '<a href="mailto:justin@phillyblinds.com,sarah@phillyblinds.com,mike@phillyblinds.com,tarin@phillyblinds.com" class="pb-cp-action" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:#1C1510;color:#2DE0C1;text-decoration:none;font-size:12px;font-weight:700;padding:12px 8px;border-radius:10px;transition:opacity .15s" onmouseover="this.style.opacity=\'.82\'" onmouseout="this.style.opacity=\'1\'">&#9993;&#65039;<span>Email</span></a>' +
       '</div>' +
       '<div style="text-align:center;font-size:11px;color:#999;margin-bottom:14px">(609) 742-1720 &nbsp;&middot;&nbsp; justin@phillyblinds.com &nbsp;&middot;&nbsp; 24/7</div>' +
       '<div style="border:1.5px solid #e5f7f4;border-radius:9px;padding:11px 13px;margin-bottom:14px;background:#f4fdfb">' +
@@ -2690,7 +2690,7 @@ function pbShowContact(title) {
           '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px">' +
             '<a href="tel:6097421720" style="display:flex;flex-direction:column;align-items:center;gap:4px;background:#1C1510;color:var(--gold);padding:12px 6px;border-radius:10px;text-decoration:none;font-size:12px;font-weight:700;text-align:center">📞<span>Call now</span><span style="font-size:10px;font-weight:400;color:#A89880">(609) 742-1720</span></a>' +
             '<a href="sms:6097421720" style="display:flex;flex-direction:column;align-items:center;gap:4px;background:#1C1510;color:var(--gold);padding:12px 6px;border-radius:10px;text-decoration:none;font-size:12px;font-weight:700;text-align:center">💬<span>Text us</span><span style="font-size:10px;font-weight:400;color:#A89880">24/7</span></a>' +
-            '<a href="mailto:justin@phillyblinds.com" style="display:flex;flex-direction:column;align-items:center;gap:4px;background:#1C1510;color:var(--gold);padding:12px 6px;border-radius:10px;text-decoration:none;font-size:12px;font-weight:700;text-align:center">✉️<span>Email</span><span style="font-size:10px;font-weight:400;color:#A89880">Same day reply</span></a>' +
+            '<a href="mailto:justin@phillyblinds.com,sarah@phillyblinds.com,mike@phillyblinds.com,tarin@phillyblinds.com" style="display:flex;flex-direction:column;align-items:center;gap:4px;background:#1C1510;color:var(--gold);padding:12px 6px;border-radius:10px;text-decoration:none;font-size:12px;font-weight:700;text-align:center">✉️<span>Email</span><span style="font-size:10px;font-weight:400;color:#A89880">Same day reply</span></a>' +
           '</div>' +
           '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><div style="flex:1;height:1px;background:#eee"></div><span style="font-size:11px;color:#bbb">or send us a message</span><div style="flex:1;height:1px;background:#eee"></div></div>' +
           '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">' +
@@ -2713,7 +2713,7 @@ function pbShowContact(title) {
             'var fn=fi&&fi.files.length?\'\\n\\nFiles: \'+Array.from(fi.files).map(function(f){return f.name}).join(\', \')+\'\\n(Please email to justin@phillyblinds.com)\':\'\';' +
             'var subj=\'Quote Request — \'+n;' +
             'var body=\'QUOTE REQUEST\\n\\nName: \'+n+\'\\nPhone: \'+p+\'\\n\\nMessage:\\n\'+(m||\'(none)\')+fn;' +
-            'window.location.href=\'mailto:blindznation@gmail.com?subject=\'+encodeURIComponent(subj)+\'&body=\'+encodeURIComponent(body);' +
+            'window.location.href=\'mailto:justin@phillyblinds.com,sarah@phillyblinds.com,mike@phillyblinds.com,tarin@phillyblinds.com?subject=\'+encodeURIComponent(subj)+\'&body=\'+encodeURIComponent(body);' +
             'document.getElementById(\'' + uid + '\').remove();' +
           '})()" style="width:100%;background:#1C1510;color:var(--gold);border:none;border-radius:8px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">Send request →</button>' +
         '</div>' +
@@ -2762,7 +2762,7 @@ async function pbSubmitContact() {
     if (btn) btn.style.display = 'none';
   } catch(err) {
     if (btn) { btn.disabled = false; btn.textContent = 'Request free consultation →'; }
-    alert('Something went wrong. Please call (609) 742-1720 or email blindznation@gmail.com');
+    alert('Something went wrong. Please call (609) 742-1720 or email justin@phillyblinds.com');
   }
 }
 
@@ -2938,7 +2938,7 @@ function reqMoreInfo(product) {
   var subj = product ? 'Request for more information: ' + product : 'Request for more information';
   var body = 'Hi, I would like to request more information about ' + (product || 'your products') + '.\n\nName:\nPhone:\nBest time to call:';
   if (typeof pbTrackEvent === 'function') pbTrackEvent('generate_lead', { lead_type: 'request_info', product: product || '' });
-  window.location.href = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
+  window.location.href = 'mailto:justin@phillyblinds.com,sarah@phillyblinds.com,mike@phillyblinds.com,tarin@phillyblinds.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
 }
 
 // ── Auto-init nav/footer from data-page body attribute ────────────────────
@@ -3084,7 +3084,7 @@ document.addEventListener('click', function (e) {
         '<div class="plb-btns">' +
           '<a href="tel:6097421720" class="plb-btn">&#128222; Call now<small>(609) 742-1720</small></a>' +
           '<a href="sms:6097421720" class="plb-btn">&#128172; Text us<small>24/7</small></a>' +
-          '<a href="mailto:justin@phillyblinds.com" class="plb-btn">&#9993;&#65039; Email<small>Same day reply</small></a>' +
+          '<a href="mailto:justin@phillyblinds.com,sarah@phillyblinds.com,mike@phillyblinds.com,tarin@phillyblinds.com" class="plb-btn">&#9993;&#65039; Email<small>Same day reply</small></a>' +
         '</div>' +
         '<a href="consult.html" style="font-size:13px;color:#C8973F;font-weight:600;text-decoration:none">Book a free in-home consultation &#8594;</a>';
 
@@ -3176,7 +3176,7 @@ async function _apiSubmit(name, email, phone, productName, configText, successId
     if (sEl) { sEl.classList.add('show'); sEl.style.display = 'block'; sEl.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   } catch(err) {
     if (btn) { btn.disabled = false; btn.textContent = btn._origText || 'Send quote request'; }
-    var mh = 'mailto:blindznation@gmail.com?subject=' + encodeURIComponent('Quote — ' + name) + '&body=' + encodeURIComponent('Name: ' + name + '\nPhone: ' + phone + '\nProduct: ' + productName + '\n\n' + configText);
+    var mh = 'mailto:justin@phillyblinds.com,sarah@phillyblinds.com,mike@phillyblinds.com,tarin@phillyblinds.com?subject=' + encodeURIComponent('Quote — ' + name) + '&body=' + encodeURIComponent('Name: ' + name + '\nPhone: ' + phone + '\nProduct: ' + productName + '\n\n' + configText);
     var eDiv = document.createElement('div');
     eDiv.style.cssText = 'background:#FEE2E2;border-radius:8px;padding:10px 13px;margin-top:10px;font-size:12px;color:#991B1B;line-height:1.5';
     eDiv.innerHTML = '<strong>Issue sending.</strong> <a href="' + mh + '" style="color:#991B1B;font-weight:700;text-decoration:underline">Email directly →</a> or call <a href="tel:6097421720" style="color:#991B1B">(609) 742-1720</a>';
