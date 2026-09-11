@@ -2902,10 +2902,15 @@ function rnSetHeadrail(type) {
 
   // If LightGuard 360 is selected but headrail changes away from cassette → deselect LG360
   const lgBtn = document.querySelector('#rn-grp-lg .opt-btn.sel');
-  if (lgBtn && lgBtn.textContent.includes('360') && type !== 'cassette') {
+  // Match on meaning: the option is shown as PB_LIGHTGUARD_LABEL ('Full Blackout
+  // Side Channels') and contains no '360', so this never fired — the incompatible
+  // option stayed selected AND kept charging its $364 surcharge.
+  if (lgBtn && pbIsFullBlackoutLabel(lgBtn.textContent) && type !== 'cassette') {
     lgBtn.classList.remove('sel');
-    document.querySelector('#rn-grp-lg .opt-btn').classList.add('sel');
-    document.getElementById('rn-lg-note').style.display = 'none';
+    var lgFirst = document.querySelector('#rn-grp-lg .opt-btn');
+    if (lgFirst) lgFirst.classList.add('sel');
+    var lgNote = document.getElementById('rn-lg-note');
+    if (lgNote) lgNote.style.display = 'none';
   }
   rnRunValidation();
   setTimeout(rnUpdatePrice, 0);
